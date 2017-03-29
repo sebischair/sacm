@@ -13,6 +13,16 @@ router.get('/', (req, res, next)=>{
     })
 });
 
+router.get('/:id', (req, res, next)=>{
+  CaseDefinition.findById(req.params.id)
+    .then(cd=>{
+        res.status(200).send(cd);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
 
 router.post('/', (req, res, next)=>{
   new CaseDefinition({
