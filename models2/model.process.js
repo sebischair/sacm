@@ -11,6 +11,7 @@ const ProcessSchema = new mongoose.Schema({
   name: String,
   isRepeatable: Boolean,
   isMandatory: Boolean,
+  parent: {type: ObjectId, ref: 'Process'}
 }, options);
 let Process = mongoose.model('Process', ProcessSchema)
 
