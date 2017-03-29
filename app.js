@@ -7,6 +7,7 @@ import bodyParser from 'body-parser';
 import users from './routes/users';
 import casedefinition from './routes/casedefinition';
 import stagedefinition from './routes/stagedefiniton';
+import humantaskdefinition from './routes/humantaskdefiniton';
 
 var app = express();
 //var sequelize = new Sequelize(config.db.name, config.db.user, config.db.pw, config.db.options);
@@ -20,6 +21,7 @@ app.use(cookieParser());
 
 app.use('/api/casedefinition', casedefinition);
 app.use('/api/stagedefinition', stagedefinition);
+app.use('/api/humantaskdefinition', humantaskdefinition);
 app.use('/api/users', users);
 
 // catch 404 and forward to error handler
