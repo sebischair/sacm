@@ -5,7 +5,7 @@ import ProcessDefinition from './model.processdefinition';
 var options = {discriminatorKey: 'type'};
 
 const TaskDefinitionSchema = new mongoose.Schema({
-  param: String,
+  param: [{isReadOnly: Boolean, attrDef: ObjectId}],
 }, options);
 
 
