@@ -1,9 +1,6 @@
 import mongoose from 'mongoose';
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
-
-
-
 var options = {discriminatorKey: 'type'};
 
 const ProcessDefinitionSchema = new mongoose.Schema({
@@ -12,7 +9,10 @@ const ProcessDefinitionSchema = new mongoose.Schema({
   isMandatory: Boolean,
   parent: {type: ObjectId, ref: 'Process'}
 }, options);
+
+ProcessDefinitionSchema.statics.findSubProcesses = processId=>{
+  return ProcessDefinition.find({parent:processId});
+}
+
 let ProcessDefinition = mongoose.model('ProcessDefinition', ProcessDefinitionSchema)
-
-
 export default  ProcessDefinition;

@@ -7,7 +7,10 @@ var options = {discriminatorKey: 'type'};
 const StageDefinitionSchema = new mongoose.Schema({
   owner: String,
 }, options);
-let StageDefinition = ProcessDefinition.discriminator('StageDefinition', StageDefinitionSchema);
 
+
+
+
+let StageDefinition = ProcessDefinition.discriminator('StageDefinition', StageDefinitionSchema);
 
 export default  StageDefinition;
