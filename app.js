@@ -4,7 +4,7 @@ import favicon from 'serve-favicon';
 import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
-import users from './routes/users';
+import test from './routes/test';
 import importer from './routes/import';
 import casedefinition from './routes/casedefinition';
 import stagedefinition from './routes/stagedefinition';
@@ -27,7 +27,7 @@ app.use('/api/stagedefinition', stagedefinition);
 
 app.use('/api/humantaskdefinition', humantaskdefinition);
 
-app.use('/api/users', users);
+app.use('/api/test', test);
 
 // catch 404 and forward to error handler
 app.use((req, res, next)=>{
