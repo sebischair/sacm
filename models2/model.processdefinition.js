@@ -8,7 +8,8 @@ const ProcessDefinitionSchema = new mongoose.Schema({
   name: String,
   isRepeatable: Boolean,
   isMandatory: Boolean,
-  parent: {type: ObjectId, ref: 'Process'}
+  parent: {type: ObjectId, ref: 'ProcessDefintion'},
+  preconditions: {type: ObjectId, ref: 'SentryDefinition'}
 }, options);
 
 ProcessDefinitionSchema.statics.findSubById = processId=>{
