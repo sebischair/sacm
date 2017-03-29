@@ -41,18 +41,18 @@ module.exports = class XMLImporter {
 
     createCaseDefinition(){
         return new Promise((resolve, reject)=>{
-            console.log(JSON.stringify(this.json));
             if(!this.json.CaseDefinition)
                 reject('Has no CaseDefinition!');
             if(this.json.CaseDefinition.length != 1)
-                reject('Only one Case Definition Allowed!');    
-             console.log('here1');
+                reject('Only one Case Definition Allowed!');  
+            if(!this.json.CaseDefinition[0].$.name)
+                reject('No Case Definition Name defined!');     
             sacmAPI.createCaseDefinition({
                 name: this.json.CaseDefinition[0].$.name
             })
             .then(caseDefinition=>{
-                console.log('here');
-                this.caseDefinitionId = caseDefinition.id;
+                console.log('here', caseDefinition);
+                //this.caseDefinitionId = caseDefinition.id;
                 //TODO add more here
                 resolve();
             })

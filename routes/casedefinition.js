@@ -30,7 +30,7 @@ router.get('/', (req, res, next)=>{
 
 /* POST create case definition */
 router.post('/', (req, res, next)=>{
-
+  console.log('here4');
   res.status(200).json({asd:2323});
 
 });
