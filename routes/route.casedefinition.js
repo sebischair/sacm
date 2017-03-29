@@ -23,6 +23,15 @@ router.get('/:id', (req, res, next)=>{
     })
 });
 
+router.delete('/:id', (req, res, next)=>{
+  CaseDefinition.remove({_id: req.params.id})
+    .then(()=>{
+        res.status(200).send();
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
 
 router.post('/', (req, res, next)=>{
   new CaseDefinition({
