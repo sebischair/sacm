@@ -6,7 +6,7 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import test from './routes/test';
 import importer from './routes/import';
-import casedefinition from './routes/casedefinition';
+import routeCasedefinition from './routes/route.casedefinition';
 import stagedefinition from './routes/stagedefinition';
 import humantaskdefinition from './routes/humantaskdefiniton';
 import mongoose from 'mongoose';
@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/api/import', importer);
-app.use('/api/casedefinition', casedefinition);
+app.use('/api/casedefinition', routeCasedefinition);
 app.use('/api/stagedefinition', stagedefinition);
 
 app.use('/api/humantaskdefinition', humantaskdefinition);
