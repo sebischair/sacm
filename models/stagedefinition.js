@@ -22,23 +22,18 @@ module.exports = function(sequelize, DataTypes) {
       createStage: function(arg) {
         console.log(ProcessDefinition);
         var self = this;
-        var processDefinitionInstance;
         return ProcessDefinition.create(arg)
-        .then((processDefinition) => {
-          processDefinitionInstance = processDefinition;
-          arg.processId = processDefinition.id;
-          return self.create(arg);
-        })
-        .then((stageDefinition) => {
-
-          // Compose stage
-          let result = {
-            process: processDefinitionInstance,
-            stage:  stageDefinition
-          };
-
-          return result;
-        })
+          .then(processDef => {
+            arg.processId = processDef.id;
+            return [processDef, self.create(arg)];
+          })
+          .spread((processDef, stageDef) => {
+            // Compose stage
+            return {
+              process: processDef,
+              stage:  stageDef
+            };
+          })
       }
 
     },
