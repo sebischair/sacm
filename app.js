@@ -4,10 +4,12 @@ import favicon from 'serve-favicon';
 import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
-import users from './server/routes/users';
+import users from './routes/users';
+
+
 
 var app = express();
-
+//var sequelize = new Sequelize(config.db.name, config.db.user, config.db.pw, config.db.options);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
