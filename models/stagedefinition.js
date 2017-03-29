@@ -73,8 +73,6 @@ module.exports = function(sequelize, DataTypes) {
               }
             })
 
-            innerStage.getSubStages();
-
             if(innerStage != null){
               subStages.push({
                 process: value,
