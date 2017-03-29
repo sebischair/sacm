@@ -1,6 +1,6 @@
 import express from 'express';
 var router = express.Router();
-import CaseDefinition from './../models2/model.casedefinition';
+import CaseDefinition from './../models/model.casedefinition';
 
 
 router.get('/', (req, res, next)=>{
