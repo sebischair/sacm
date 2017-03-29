@@ -6,24 +6,50 @@ import TaskDefinition from './../models2/model.taskdefinition';
 
 router.get('/', (req, res, next)=>{
 
-  let p = new ProcessDefinition({
-    name: 'myProcess',
+  let s1_1 = null;
+  let s2_1 = null;
+  let s2_2 = null;
+  let s3_1 = null;
+
+  new StageDefinition({
+    name: 'Stage1.1',
     isRepeatable: false,
-    isMandatory: false
-  }).save().then(p=>{
-    let s = new StageDefinition({
-      name: 'myStage',
+    isMandatory: false,
+    parent: null
+  })
+  .save().then(s=>{
+    s1_1 = s;
+    return new StageDefinition({
+      name: 'Stage2.1',
       isRepeatable: false,
       isMandatory: false,
-      owner: 'Max Musterman',
-      parent: p._id
-    });
-    return s.save();
+      parent: s1_1._id
+    }).save();
   })
-  .then(s=>{    
-    return ProcessDefinition.findSubProcesses(p._id);
+  .then(s=>{
+    s2_1 = s;
+    return new StageDefinition({
+      name: 'Stage2.2',
+      isRepeatable: false,
+      isMandatory: false,
+      parent: s1_1._id
+    }).save();
+  })
+  .then(s=>{
+    s2_2 = s;
+    return new StageDefinition({
+      name: 'Stage2.2',
+      isRepeatable: false,
+      isMandatory: false,
+      parent: s2_1._id
+    }).save();
+  })
+  .then(s=>{ 
+    s3_1  = s; 
+    return ProcessDefinition.findSubProcesses(s1_1._id);
   })
   .then(subProcesses=>{
+    console.log(subProcesses);
     return new TaskDefinition({
       name: 'myStage',
       isRepeatable: false,
@@ -34,7 +60,6 @@ router.get('/', (req, res, next)=>{
     }).save();
   })
   .then(taskDef=>{
-    console.log(taskDef);
     res.send('ok');
   });
   
