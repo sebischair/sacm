@@ -5,6 +5,7 @@ import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import users from './routes/users';
+import importer from './routes/import';
 import casedefinition from './routes/casedefinition';
 import stagedefinition from './routes/stagedefinition';
 import humantaskdefinition from './routes/humantaskdefiniton';
@@ -20,6 +21,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+app.use('/api/import', importer);
 app.use('/api/casedefinition', casedefinition);
 app.use('/api/stagedefinition', stagedefinition);
 
