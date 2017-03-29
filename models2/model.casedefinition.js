@@ -4,12 +4,9 @@ mongoose.Promise = Promise;
 
 
 
-
 const CaseDefinitionSchema = new mongoose.Schema({
   name: String,
-  isRepeatable: Boolean,
-  isMandatory: Boolean
-}, options);
+});
 
 let CaseDefinition = mongoose.model('CaseDefinition', CaseDefinitionSchema)
 

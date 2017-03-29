@@ -4,6 +4,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 var options = {discriminatorKey: 'type'};
 
 const ProcessDefinitionSchema = new mongoose.Schema({
+  caseDefinition: {type: ObjectId, ref: 'CaseDefinition'},
   name: String,
   isRepeatable: Boolean,
   isMandatory: Boolean,
