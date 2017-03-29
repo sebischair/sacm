@@ -5,10 +5,9 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 var options = {discriminatorKey: 'type'};
 
 const TaskDefinitionSchema = new mongoose.Schema({
-  param: String 
+  param: [{isReadOnly: Boolean, attrDef: ObjectId}] 
 }, options);
 
-//[{isReadOnly: Boolean, attrDef: ObjectId}],
 
 
 let TaskDefinition = ProcessDefinition.discriminator('TaskDefinition', TaskDefinitionSchema);

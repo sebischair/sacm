@@ -65,7 +65,7 @@ router.get('/', (req, res, next)=>{
       isMandatory: false,
       owner: 'Max Musterman',
       parent: s1_1._id,
-      param: '23'
+      param: [{isReadOnly: Boolean, attrDef: null}]
     }).save();    
   })
   .then(t2_1=>{
