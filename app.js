@@ -9,10 +9,13 @@ import importer from './routes/import';
 import casedefinition from './routes/casedefinition';
 import stagedefinition from './routes/stagedefinition';
 import humantaskdefinition from './routes/humantaskdefiniton';
+import mongoose from 'mongoose';
 
 
 var app = express();
 //var sequelize = new Sequelize(config.db.name, config.db.user, config.db.pw, config.db.options);
+mongoose.connect('mongodb://localhost:27017/sacm');
+mongoose.Promise = Promise;
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

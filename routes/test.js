@@ -1,15 +1,16 @@
 import express from 'express';
 var router = express.Router();
-import Model from './../models2/model.process';
+import ProcessDefinition from './../models2/model.processdefinition';
+import StageDefinition from './../models2/model.stagedefinition';
 
 router.get('/', (req, res, next)=>{
-  let p = new Model.Process({
+  let p = new ProcessDefinition({
     name: 'myProcess',
     isRepeatable: false,
     isMandatory: false
   });
   p.save().then(p=>{
-    let s = new Model.Stage({
+    let s = new StageDefinition({
       name: 'myStage',
       isRepeatable: false,
       isMandatory: false,
