@@ -33,15 +33,57 @@ module.exports = function(sequelize, DataTypes) {
 
           // Compose stage
           let result = {
-            id: processDefinitionInstance.id,
-            stageId: stageDefinition.id,
-            parentId: stageDefinition.parentId,
-            name: processDefinitionInstance.name,
-            createdAt: stageDefinition.createdAt,
-            updatedAt: stageDefinition.updatedAt
+            process: processDefinitionInstance,
+            stage:  stageDefinition
           };
 
           return result;
+        })
+      }
+
+    },
+
+    instanceMethods: {
+
+      /*
+        Get SubStageDefinitions of StageDefinition
+      */
+
+      getSubStages: function() {
+
+        var getAsyncProcessDefinition = function(stageDefinition) {
+          return ProcessDefinition.findOne({where:{id: stageDefinition.processId}});
+        }
+
+        var stageDefinitionsInstance = [];
+        return StageDefinition.findAll({where: {parentId: this.id}})
+        .then((stageDefinitions) => {
+          stageDefinitionsInstance = stageDefinitions;
+          return Promise.all(stageDefinitions.map(getAsyncProcessDefinition));
+        })
+        .then((processDefinitions) => {
+
+          var subStages = [];
+          processDefinitions.forEach((value) => {
+
+            var innerStage = null;
+            stageDefinitionsInstance.forEach((stage) => {
+              if(stage.processId == value.id) {
+                innerStage = stage;
+              }
+            })
+
+            if(innerStage != null){
+              subStages.push({
+                process: value,
+                stage: innerStage
+              })
+            }
+
+          });
+
+
+          return subStages;
         })
       }
     }

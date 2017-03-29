@@ -27,6 +27,16 @@ router.get('/', (req, res, next)=>{
 });
 
 
+router.get('/sub', (req, res, next)=>{
+  StageDefinition.findOne({where: {id: 2}})
+  .then( (sd) => {
+    return sd.getSubStages();
+  })
+  .then((ssd) => {
+    res.status(200).json(ssd);
+  })
+});
+
 /* POST create case definition */
 router.post('/', (req, res, next)=>{
   StageDefinition.createStage({name: 'CooleStage', parentId: 2, isMandatory: true, isRepeatable: false})
