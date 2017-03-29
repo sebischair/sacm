@@ -10,7 +10,7 @@ const ProcessDefinitionSchema = new mongoose.Schema({
   parent: {type: ObjectId, ref: 'Process'}
 }, options);
 
-ProcessDefinitionSchema.statics.findSubProcesses = processId=>{
+ProcessDefinitionSchema.statics.findSubById = processId=>{
   return ProcessDefinition.find({parent:processId});
 }
 

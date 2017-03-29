@@ -38,7 +38,7 @@ router.get('/', (req, res, next)=>{
   .then(s=>{
     s2_2 = s;
     return new StageDefinition({
-      name: 'Stage2.2',
+      name: 'Stage3.1',
       isRepeatable: false,
       isMandatory: false,
       parent: s2_1._id
@@ -46,20 +46,26 @@ router.get('/', (req, res, next)=>{
   })
   .then(s=>{ 
     s3_1  = s; 
-    return ProcessDefinition.findSubProcesses(s1_1._id);
-  })
-  .then(subProcesses=>{
-    console.log(subProcesses);
     return new TaskDefinition({
-      name: 'myStage',
+      name: 'Task2.1',
       isRepeatable: false,
       isMandatory: false,
       owner: 'Max Musterman',
-      parent: null,
+      parent: s1_1._id,
       param: '23'
-    }).save();
+    }).save();    
   })
-  .then(taskDef=>{
+  .then(t2_1=>{
+    return ProcessDefinition.findSubById(s1_1._id);
+  })
+  .then(subProcesses=>{
+    console.log('findSubProcesses')
+    console.log(subProcesses);
+    return StageDefinition.findSubById(s1_1._id);
+  })
+  .then(subStages=>{
+    console.log('findSubStages')
+    console.log(subStages);
     res.send('ok');
   });
   

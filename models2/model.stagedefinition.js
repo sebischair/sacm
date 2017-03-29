@@ -8,6 +8,9 @@ const StageDefinitionSchema = new mongoose.Schema({
 
 }, options);
 
+StageDefinitionSchema.statics.findSubById = processId=>{
+  return StageDefinition.find({parent:processId});
+}
 
 
 
