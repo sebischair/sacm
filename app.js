@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import users from './routes/users';
 import casedefinition from './routes/casedefinition';
+import stagedefinition from './routes/stagedefinition';
 
 
 var app = express();
@@ -19,6 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/api/casedefinition', casedefinition);
+app.use('/api/stagedefinition', stagedefinition);
 app.use('/api/users', users);
 
 // catch 404 and forward to error handler
