@@ -2,6 +2,7 @@ import express from 'express';
 import casedefinition from './route.casedefinition';
 import stagedefinition from './route.stagedefinition';
 import humantaskdefinition from './route.humantaskdefinition';
+import automatedtaskdefinition from './route.automatedtaskdefinition';
 import sentrydefinition from './route.sentrydefinition';
 import importer from './route.import';
 import test from './route.test';
@@ -14,6 +15,10 @@ function routes(){
     router.use('/casedefinitions', casedefinition);
     router.use('/stagedefinition', stagedefinition);
     router.use('/stagedefinitions', stagedefinition);
+    router.use('/humantaskdefinition', humantaskdefinition);
+    router.use('/humantaskdefinitions', humantaskdefinition);
+    router.use('/automatedtaskdefinition', automatedtaskdefinition);
+    router.use('/automatedtaskdefinitions', automatedtaskdefinition);
     router.use('/sentrydefinition', sentrydefinition);
     router.use('/sentrydefinitions', sentrydefinition);
 
