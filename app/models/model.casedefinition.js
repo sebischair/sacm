@@ -20,13 +20,23 @@ CaseDefinitionSchema.statics.calcCaseDefTree = caseDefId=>{
   new Promise((resolve, reject)=>{
     CaseDefinition.findById(caseDefId)
       .then(caseDef=>{
-        console.log(caseDef)
         return [caseDef, ProcessDefinition.findByCaseDefinitionId(caseDefId)];
       })
       .spread((caseDef, processDefs)=>{
-        console.log('heer');
-        console.log(caseDef);
-        console.log(processDefs); 
+ 
+        console.log(processDefs.length); 
+        const map = new Map();
+        processDefs.forEach(p=>{
+          if(map.has(p.parent+''))
+            map.get(p.parent+'').push(p);
+          else
+            map.set(p.parent+'', [p]);
+        });
+        const res = [];
+        const parentIds = Array.from(map.keys());
+
+        console.log(parentIds);
+        
         resolve(caseDef);       
       })
       .catch(err=>{
