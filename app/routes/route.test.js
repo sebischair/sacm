@@ -3,7 +3,7 @@ var router = express.Router();
 import CaseDefinition from './../models/model.casedefinition';
 import ProcessDefinition from './../models/model.processdefinition';
 import StageDefinition from './../models/model.stagedefinition';
-import HumanTaskdefinition from './../models/model.HumanTaskdefinition';
+import HumanTaskdefinition from './../models/model.humantaskdefinition';
 
 router.get('/', (req, res, next)=>{
 

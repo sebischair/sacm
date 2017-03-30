@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
-var options = {discriminatorKey: 'type'};
+
 
 const ProcessDefinitionSchema = new mongoose.Schema({
   caseDefinition: {type: ObjectId, ref: 'CaseDefinition', required:true},
@@ -10,7 +10,7 @@ const ProcessDefinitionSchema = new mongoose.Schema({
   isMandatory: Boolean,
   parent: {type: ObjectId, ref: 'ProcessDefintion'},
   preconditions: {type: ObjectId, ref: 'SentryDefinition'}
-}, options);
+});
 
 ProcessDefinitionSchema.statics.findSubById = processId=>{
   return ProcessDefinition.find({parent:processId});

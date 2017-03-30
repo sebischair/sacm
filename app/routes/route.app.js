@@ -1,6 +1,7 @@
 import express from 'express';
 import casedefinition from './route.casedefinition';
 import stagedefinition from './route.stagedefinition';
+import humantaskdefinition from './route.humantaskdefinition';
 import importer from './route.import';
 import test from './route.test';
 
