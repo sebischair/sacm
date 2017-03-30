@@ -6,7 +6,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const AutomatedTaskDefinitionSchema = new mongoose.Schema({
   param: [{isReadOnly: Boolean, attrDef: ObjectId}] 
-});
+},{discriminatorKey: 'type'});
 
 
 
