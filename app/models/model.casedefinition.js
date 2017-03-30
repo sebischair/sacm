@@ -17,32 +17,41 @@ CaseDefinitionSchema.post('remove', function(doc) {
 });
 
 CaseDefinitionSchema.statics.calcCaseDefTree = caseDefId=>{
-  new Promise((resolve, reject)=>{
+  return new Promise((resolve, reject)=>{
     CaseDefinition.findById(caseDefId)
       .then(caseDef=>{
         return [caseDef, ProcessDefinition.findByCaseDefinitionId(caseDefId)];
       })
       .spread((caseDef, processDefs)=>{
- 
-        console.log(processDefs.length); 
         const map = new Map();
         processDefs.forEach(p=>{
           if(map.has(p.parent+''))
             map.get(p.parent+'').push(p);
           else
             map.set(p.parent+'', [p]);
-        });
-        const res = [];
-        const parentIds = Array.from(map.keys());
-
-        console.log(parentIds);
-        
-        resolve(caseDef);       
+        });        
+        console.log(Array.from(map.keys()));
+        resolve(calcTree(map.get(null+''), map));       
       })
       .catch(err=>{
         reject(err);
       });
   })
+
+  function calcTree(rootProcesses, processParentMap){
+    console.log('calc tree');
+    //console.log(rootProcesses)
+    if(rootProcesses == null)
+      return [];
+    return rootProcesses.map(p => {
+      if(processParentMap.has(p._id+'')) {
+        console.log('has parent')
+        let children = processParentMap.get(p._id+'');
+        p.children = calcTree(children, processParentMap);
+      }
+      return p;
+    });
+  };
 
 
 }
