@@ -1,9 +1,15 @@
 import express from 'express';
 var router = express.Router();
+
+// Models
 import CaseDefinition from './../models/model.casedefinition';
 
+// Middlewares
+import Auth from './../middlewares/middleware.auth';
 
-router.get('/', (req, res, next)=>{
+
+router.get('/', Auth('admin'), (req, res, next)=>{
+
   CaseDefinition.find({})
     .then(cds=>{
         res.status(200).send(cds);
@@ -27,7 +33,7 @@ router.delete('/:id', (req, res, next)=>{
   CaseDefinition.findById(req.params.id)
     .then(cd=>{
         console.log(cd);
-        return cd.remove();       
+        return cd.remove();
     })
     .then(()=>{
        res.status(200).send();
