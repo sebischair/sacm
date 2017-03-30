@@ -27,7 +27,7 @@ router.delete('/:id', (req, res, next)=>{
   StageDefinition.findById(req.params.id)
     .then(sd=>{
         console.log(sd);
-        return sd.remove();       
+        return sd.remove();
     })
     .then(()=>{
        res.status(200).send();

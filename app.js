@@ -26,9 +26,13 @@ app.use(cookieParser());
 
 app.use('/api/import', importer);
 app.use('/api/casedefinition', routeCasedefinition);
+app.use('/api/casedefinitions', routeCasedefinition);
+
 app.use('/api/stagedefinition', routeStagedefinition);
+app.use('/api/stagedefinitions', routeStagedefinition);
 
 app.use('/api/humantaskdefinition', humantaskdefinition);
+app.use('/api/humantaskdefinitions', humantaskdefinition);
 
 app.use('/api/test', test);
 
