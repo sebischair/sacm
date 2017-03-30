@@ -8,12 +8,17 @@ import routes from './app/routes/route.app'
 import Promise from 'bluebird';
 
 
+
 import mongoose from 'mongoose';
 mongoose.Promise = Promise;
 
 var app = express();
 //var sequelize = new Sequelize(config.db.name, config.db.user, config.db.pw, config.db.options);
-mongoose.connect('mongodb://localhost:27017/sacm');
+try {
+   mongoose.connect('mongodb://localhost:27017/sacm');
+} catch(e) {
+
+}
 mongoose.Promise = Promise;
 
 // uncomment after placing your favicon in /public

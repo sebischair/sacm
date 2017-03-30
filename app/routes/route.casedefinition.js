@@ -1,4 +1,5 @@
 import express from 'express';
+
 var router = express.Router();
 
 // Models
@@ -6,9 +7,11 @@ import CaseDefinition from './../models/model.casedefinition';
 
 // Middlewares
 import Auth from './../middlewares/middleware.auth';
+import Authorizer from './../middlewares/middleware.authorize';
 
 
-router.get('/', Auth('admin'), (req, res, next)=>{
+
+router.get('/', (req, res, next)=>{
   CaseDefinition.find({})
     .then(cds=>{
         res.status(200).send(cds);
@@ -42,16 +45,39 @@ router.delete('/:id', (req, res, next)=>{
     })
 });
 
-router.post('/', (req, res, next)=>{
-  new CaseDefinition({
-    name: 'test case'
-  }).save().then(cd=>{
-    res.status(200).send(cd);
-  })
-  .catch(err=>{
-    res.status(500).send(err);
-  });
-});
+router.post(
+
+  // Path
+  '/',
+
+  // Middleware
+  [
+    // Authentication
+    Auth.authenticate(
+    'useOAuth2', {
+      session: false
+    })
+    ,
+
+    // Authorization of general resources
+    new Authorizer().authorizeResource('create'),
+
+    // Authorization on instance level
+    new Authorizer().authorizeInstance()
+  ],
+
+  // Controller
+  (req, res, next)=>{
+    new CaseDefinition({
+      name: 'test case'
+    }).save().then(cd=>{
+      res.status(200).send(cd);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    });
+  }
+);
 
 router.get('/:id/tree', (req, res, next)=>{
   CaseDefinition.calcCaseDefTree(req.params.id)
