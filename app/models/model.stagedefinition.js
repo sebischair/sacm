@@ -4,7 +4,7 @@ import ProcessDefinition from './model.processdefinition';
 
 
 const StageDefinitionSchema = new mongoose.Schema({
-
+  
 },{discriminatorKey: 'type'});
 
 StageDefinitionSchema.statics.findSubById = processId=>{

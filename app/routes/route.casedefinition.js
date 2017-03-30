@@ -56,8 +56,6 @@ router.post('/', (req, res, next)=>{
 router.get('/:id/tree', (req, res, next)=>{
   CaseDefinition.calcCaseDefTree(req.params.id)
     .then(t=>{
-      console.log('api level');
-      console.log(t);
       res.status(200).send(t);
     })
     .catch(err=>{
