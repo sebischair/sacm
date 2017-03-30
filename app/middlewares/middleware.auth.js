@@ -1,13 +1,44 @@
-// Modules
 import passport from 'passport';
-import BasicStrategy from 'passport-http';
+import Strategy from 'passport-local';
+import CustomStrategy from 'passport-custom';
 
-module.exports =
-function Auth(param) {
+passport.use('ll', new Strategy(
+  function(username, password, done) {
+    // database dummy - find user and verify password
+    if(username === 'devils name' && password === '666'){
+      done(null, {
+        id: 666,
+        firstname: 'devils',
+        lastname: 'name',
+        email: 'devil@he.ll',
+        verified: true
+      });
+    }
+    else {
+      done(null, false);
+    }
+  }
+));
+
+passport.use('useOAuth2', new CustomStrategy(
+  function(req, done) {
+    var username = req.body.username;
+    var password = req.body.password;
+    // database dummy - find user and verify password
+    if(username === 'devils name' && password === '666'){
+      done(null, {
+        id: 666,
+        firstname: 'devils',
+        lastname: 'name',
+        email: 'devil@he.ll',
+        verified: true
+      });
+    }
+    else {
+      done(null, false);
+    }
+  }
+));
 
 
-  return function (req, res, next) {
-    return next();
-  };
-
-}
+module.exports = passport;
