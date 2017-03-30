@@ -18,9 +18,9 @@ CaseDefinitionSchema.post('remove', function(doc) {
 
 CaseDefinitionSchema.statics.calcCaseDefTree = caseDefId=>{
   return new Promise((resolve, reject)=>{
-    CaseDefinition.findById(caseDefId)
+    CaseDefinition.findById(caseDefId).lean()
       .then(caseDef=>{
-        return [caseDef, ProcessDefinition.findByCaseDefinitionId(caseDefId)];
+        return [caseDef, ProcessDefinition.findByCaseDefinitionId(caseDefId).lean()];
       })
       .spread((caseDef, processDefs)=>{
         const map = new Map();
@@ -30,7 +30,6 @@ CaseDefinitionSchema.statics.calcCaseDefTree = caseDefId=>{
           else
             map.set(p.parent+'', [p]);
         });        
-        console.log(Array.from(map.keys()));
         resolve(calcTree(map.get(null+''), map));       
       })
       .catch(err=>{
@@ -39,13 +38,10 @@ CaseDefinitionSchema.statics.calcCaseDefTree = caseDefId=>{
   })
 
   function calcTree(rootProcesses, processParentMap){
-    console.log('calc tree');
-    //console.log(rootProcesses)
     if(rootProcesses == null)
       return [];
     return rootProcesses.map(p => {
-      if(processParentMap.has(p._id+'')) {
-        console.log('has parent')
+      if(processParentMap.has(p._id+'')) {     
         let children = processParentMap.get(p._id+'');
         p.children = calcTree(children, processParentMap);
       }
