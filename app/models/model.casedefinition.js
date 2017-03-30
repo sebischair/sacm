@@ -6,6 +6,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const CaseDefinitionSchema = new mongoose.Schema({
   name: String,
+  __v: { type: Number, select: false}
 });
 
 CaseDefinitionSchema.post('remove', function(doc) {
@@ -29,8 +30,9 @@ CaseDefinitionSchema.statics.calcCaseDefTree = caseDefId=>{
             map.get(p.parent+'').push(p);
           else
             map.set(p.parent+'', [p]);
-        });        
-        resolve(calcTree(map.get(null+''), map));       
+        });     
+        caseDef.processes = calcTree(map.get(null+''), map);
+        resolve(caseDef);       
       })
       .catch(err=>{
         reject(err);

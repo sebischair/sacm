@@ -5,12 +5,13 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const ProcessDefinitionSchema = new mongoose.Schema({
   caseDefinition: {type: ObjectId, ref: 'CaseDefinition', required:true},
-  name: String,
+  name: {type:String, required:true},
   label: String,
   isRepeatable: Boolean,
   isMandatory: Boolean,
   parent: {type: ObjectId, ref: 'ProcessDefintion'},
-  preconditions: {type: ObjectId, ref: 'SentryDefinition'}
+  preconditions: {type: ObjectId, ref: 'SentryDefinition'},
+  __v: { type: Number, select: false}
 },{discriminatorKey: 'type'});
 
 ProcessDefinitionSchema.statics.findSubById = processId=>{

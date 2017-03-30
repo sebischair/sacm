@@ -6,7 +6,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const HumanTaskDefinitionSchema = new mongoose.Schema({
   owner: String,
-  param: [] 
+  param: []
 },{discriminatorKey: 'type'});
 
 
