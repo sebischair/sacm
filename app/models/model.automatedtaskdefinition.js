@@ -4,12 +4,12 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 
 var options = {discriminatorKey: 'type'};
 
-const TaskDefinitionSchema = new mongoose.Schema({
+const AutomatedTaskDefinitionSchema = new mongoose.Schema({
   param: [{isReadOnly: Boolean, attrDef: ObjectId}] 
 }, options);
 
 
 
-let TaskDefinition = ProcessDefinition.discriminator('TaskDefinition', TaskDefinitionSchema);
+let AutomatedTaskDefinition = ProcessDefinition.discriminator('AutomatedTaskDefinition', AutomatedTaskDefinitionSchema);
 
-export default  TaskDefinition;
+export default  AutomatedTaskDefinition;

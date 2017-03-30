@@ -3,7 +3,7 @@ var router = express.Router();
 import CaseDefinition from './../models/model.casedefinition';
 import ProcessDefinition from './../models/model.processdefinition';
 import StageDefinition from './../models/model.stagedefinition';
-import TaskDefinition from './../models/model.taskdefinition';
+import HumanTaskdefinition from './../models/model.HumanTaskdefinition';
 
 router.get('/', (req, res, next)=>{
 
@@ -58,7 +58,7 @@ router.get('/', (req, res, next)=>{
   })
   .then(s=>{ 
     s3_1  = s; 
-    return new TaskDefinition({
+    return new HumanTaskdefinition({
       caseDefinition: cd._id,
       name: 'Task2.1',
       isRepeatable: false,
