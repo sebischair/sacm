@@ -24,9 +24,13 @@ router.get('/:id', (req, res, next)=>{
 });
 
 router.delete('/:id', (req, res, next)=>{
-  CaseDefinition.remove({_id: req.params.id})
+  CaseDefinition.findById(req.params.id)
+    .then(cd=>{
+        console.log(cd);
+        return cd.remove();       
+    })
     .then(()=>{
-        res.status(200).send();
+       res.status(200).send();
     })
     .catch(err=>{
       res.status(500).send(err);
