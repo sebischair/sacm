@@ -63,8 +63,8 @@ router.get('/', (req, res, next)=>{
       name: 'Task2.1',
       isRepeatable: false,
       isMandatory: false,
-      owner: 'Max Musterman',
       parent: s1_1._id,
+      owner: 'Max Musterman',
       param: [{isReadOnly: Boolean, attrDef: null}]
     }).save();    
   })
