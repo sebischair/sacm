@@ -16,5 +16,9 @@ ProcessDefinitionSchema.statics.findSubById = processId=>{
   return ProcessDefinition.find({parent:processId});
 }
 
+ProcessDefinitionSchema.statics.findByCaseDefinitionId = caseDefinitionId=>{
+  return ProcessDefinition.find({caseDefinition:caseDefinitionId});
+}
+
 let ProcessDefinition = mongoose.model('ProcessDefinition', ProcessDefinitionSchema)
 export default  ProcessDefinition;
