@@ -16,6 +16,27 @@ CaseDefinitionSchema.post('remove', function(doc) {
   });
 });
 
+CaseDefinitionSchema.statics.calcCaseDefTree = caseDefId=>{
+  new Promise((resolve, reject)=>{
+    CaseDefinition.findById(caseDefId)
+      .then(caseDef=>{
+        console.log(caseDef)
+        return [caseDef, ProcessDefinition.findByCaseDefinitionId(caseDefId)];
+      })
+      .spread((caseDef, processDefs)=>{
+        console.log('heer');
+        console.log(caseDef);
+        console.log(processDefs); 
+        resolve(caseDef);       
+      })
+      .catch(err=>{
+        reject(err);
+      });
+  })
+
+
+}
+
 let CaseDefinition = mongoose.model('CaseDefinition', CaseDefinitionSchema)
 
 

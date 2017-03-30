@@ -9,7 +9,6 @@ import Auth from './../middlewares/middleware.auth';
 
 
 router.get('/', Auth('admin'), (req, res, next)=>{
-
   CaseDefinition.find({})
     .then(cds=>{
         res.status(200).send(cds);
@@ -54,6 +53,15 @@ router.post('/', (req, res, next)=>{
   });
 });
 
+router.get('/:id/tree', (req, res, next)=>{
+  CaseDefinition.calcCaseDefTree(req.params.id)
+    .then(t=>{
+      res.status(200).send(t);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    });
+});
 
 
 module.exports = router;
