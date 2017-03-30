@@ -1,12 +1,11 @@
 import express from 'express';
 import casedefinition from './route.casedefinition';
 import stagedefinition from './route.stagedefinition';
+import humantaskdefinition from './route.humantaskdefinition';
 import importer from './route.import';
 import test from './route.test';
 
-
 function routes(){
-    console.log('here');
     const router = express.Router();
     router.use('/casedefinition', casedefinition);
     router.use('/casedefinitions', casedefinition);
@@ -14,8 +13,7 @@ function routes(){
     router.use('/stagedefinitions', stagedefinition);
     router.use('/import', importer);
     router.use('/test', test);
-     console.log('heree');
-     return router;
+    return router;
 };
 
 export default routes;
