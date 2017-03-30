@@ -4,11 +4,9 @@ import favicon from 'serve-favicon';
 import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
-import test from './routes/test';
-import importer from './routes/import';
-import routeCasedefinition from './routes/route.casedefinition';
-import routeStagedefinition from './routes/route.stagedefinition';
-import humantaskdefinition from './routes/humantaskdefiniton';
+import routes from './app/routes/route.app'
+
+
 import mongoose from 'mongoose';
 
 
@@ -23,18 +21,8 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use('/api', routes())
 
-app.use('/api/import', importer);
-app.use('/api/casedefinition', routeCasedefinition);
-app.use('/api/casedefinitions', routeCasedefinition);
-
-app.use('/api/stagedefinition', routeStagedefinition);
-app.use('/api/stagedefinitions', routeStagedefinition);
-
-app.use('/api/humantaskdefinition', humantaskdefinition);
-app.use('/api/humantaskdefinitions', humantaskdefinition);
-
-app.use('/api/test', test);
 
 // catch 404 and forward to error handler
 app.use((req, res, next)=>{
