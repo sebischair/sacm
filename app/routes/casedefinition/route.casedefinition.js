@@ -3,11 +3,11 @@ import express from 'express';
 var router = express.Router();
 
 // Models
-import CaseDefinition from './../models/model.casedefinition';
+import CaseDefinition from './../../models/casedefinition/model.casedefinition';
 
 // Middlewares
-import Auth from './../middlewares/middleware.auth';
-import Authorizer from './../middlewares/middleware.authorize';
+import Auth from './../../middlewares/middleware.auth';
+import Authorizer from './../../middlewares/middleware.authorize';
 
 
 

@@ -1,6 +1,6 @@
 import express from 'express';
 var router = express.Router();
-import StageDefinition from './../models/model.stagedefinition';
+import StageDefinition from './../../models/casedefinition/model.stagedefinition';
 
 
 router.get('/', (req, res, next)=>{

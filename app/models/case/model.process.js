@@ -3,10 +3,11 @@ import Promise from 'bluebird';
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 
-const CaseSchema = new mongoose.Schema({
+const ProcessSchema = new mongoose.Schema({
   name: String,
   label: String,
-  caseDefintion: {type: ObjectId, ref: 'CaseDefintion'},
+  case: {type: ObjectId, ref: 'Case'},
+  processDefinition: {type: ObjectId, ref: 'ProcessDefintion'},
   state: {type: String, enum: ['available', 'enabled', 'active', 'completed', 'terminated']},
   statedates: {
     available: Date,
@@ -16,12 +17,12 @@ const CaseSchema = new mongoose.Schema({
     terminated: Date
   },
   __v: { type: Number, select: false}
-});
+},{discriminatorKey: 'type'});
 
 
 
 
-let Case = mongoose.model('Case', CaseSchema)
+let Process = mongoose.model('Process', ProcessSchema)
 
 
-export default Case;
+export default Process;

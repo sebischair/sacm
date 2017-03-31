@@ -1,10 +1,10 @@
 import express from 'express';
 var router = express.Router();
-import HumanTaskDefinition from './../models/model.humantaskdefinition';
+import SentryDefinition from './../../models/casedefinition/model.sentrydefinition';
 
 
 router.get('/', (req, res, next)=>{
-  HumanTaskDefinition.find({})
+  SentryDefinition.find({})
     .then(sds=>{
         res.status(200).send(sds);
     })
@@ -14,7 +14,7 @@ router.get('/', (req, res, next)=>{
 });
 
 router.get('/:id', (req, res, next)=>{
-  HumanTaskDefinition.findById(req.params.id)
+  SentryDefinition.findById(req.params.id)
     .then(sd=>{
         res.status(200).send(sd);
     })
@@ -24,7 +24,7 @@ router.get('/:id', (req, res, next)=>{
 });
 
 router.delete('/:id', (req, res, next)=>{
-  HumanTaskDefinition.findById(req.params.id)
+  SentryDefinition.findById(req.params.id)
     .then(sd=>{
         console.log(sd);
         return sd.remove();
@@ -38,14 +38,13 @@ router.delete('/:id', (req, res, next)=>{
 });
 
 router.post('/', (req, res, next)=>{
-  new HumanTaskDefinition({
+  new SentryDefinition({
     caseDefinition: null,
     name: String,
     isRepeatable: Boolean,
     isMandatory: Boolean,
     parent: null,
-    preconditions: [],
-    owner: 'Max Musterman',
+    preconditions: []
   }).save().then(sd=>{
     res.status(200).send(sd);
   })
@@ -53,5 +52,7 @@ router.post('/', (req, res, next)=>{
     res.status(500).send(err);
   });
 });
+
+
 
 module.exports = router;

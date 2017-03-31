@@ -1,9 +1,9 @@
 import express from 'express';
 var router = express.Router();
-import CaseDefinition from './../models/model.casedefinition';
-import ProcessDefinition from './../models/model.processdefinition';
-import StageDefinition from './../models/model.stagedefinition';
-import HumanTaskdefinition from './../models/model.humantaskdefinition';
+import CaseDefinition from './../models/casedefinition/model.casedefinition';
+import ProcessDefinition from './../models/casedefinition/model.processdefinition';
+import StageDefinition from './../models/casedefinition/model.stagedefinition';
+import HumanTaskdefinition from './../models/casedefinition/model.humantaskdefinition';
 
 router.get('/', (req, res, next)=>{
 

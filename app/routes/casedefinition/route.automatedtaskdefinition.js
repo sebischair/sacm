@@ -1,6 +1,6 @@
 import express from 'express';
 var router = express.Router();
-import AutomatedTaskDefinition from './../models/model.automatedtaskdefinition';
+import AutomatedTaskDefinition from './../../models/casedefinition/model.automatedtaskdefinition';
 
 
 router.get('/', (req, res, next)=>{
