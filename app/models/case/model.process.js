@@ -4,18 +4,19 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 
 
 const ProcessSchema = new mongoose.Schema({
-  name: String,
-  label: String,
-  case: {type: ObjectId, ref: 'Case'},
-  processDefinition: {type: ObjectId, ref: 'ProcessDefintion'},
-  state: {type: String, enum: ['available', 'enabled', 'active', 'completed', 'terminated']},
+  name: {type: String, required: true},
+  label: {type: String, required: true},
+  case: {type: ObjectId, ref: 'Case', required:true},
+  processDefinition: {type: ObjectId, ref: 'ProcessDefintion', required: true},
+  state: {type: String, enum: ['available', 'enabled', 'active', 'completed', 'terminated'], required: true},
   statedates: {
-    available: Date,
+    available: {type: Date, default: Date.now}
     enabled: Date,
     active: Date,
     completed: Date,
     terminated: Date
   },
+  parent: {type: ObjectId, ref: 'Process'}
   __v: { type: Number, select: false}
 },{discriminatorKey: 'type'});
 

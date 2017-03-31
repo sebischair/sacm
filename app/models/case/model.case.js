@@ -6,7 +6,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 const CaseSchema = new mongoose.Schema({
   name: String,
   label: String,
-  caseDefintion: {type: ObjectId, ref: 'CaseDefintion'},
+  caseDefintion: {type: ObjectId, ref: 'CaseDefintion', required: true},
   state: {type: String, enum: ['available', 'enabled', 'active', 'completed', 'terminated']},
   statedates: {
     available: Date,
