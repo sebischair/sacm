@@ -11,4 +11,4 @@ const StageSchema = new mongoose.Schema({
 
 
 let Stage = mongoose.model('Stage', StageSchema)
-export default Process;
+export default Stage;

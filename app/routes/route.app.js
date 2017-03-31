@@ -5,6 +5,7 @@ import humantaskdefinition from './casedefinition/route.humantaskdefinition';
 import automatedtaskdefinition from './casedefinition/route.automatedtaskdefinition';
 import sentrydefinition from './casedefinition/route.sentrydefinition';
 import case1 from './case/route.case';
+import stage from './case/route.stage';
 import importer from './route.import';
 import test from './route.test';
 
@@ -25,6 +26,7 @@ function routes(){
 
     /** Case routes */
     router.use('/case', case1);
+    router.use('/stage', stage);
 
     /** Import route */
     router.use('/import', importer);

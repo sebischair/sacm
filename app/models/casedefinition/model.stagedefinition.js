@@ -14,5 +14,4 @@ StageDefinitionSchema.statics.findSubById = processId=>{
 
 
 let StageDefinition = ProcessDefinition.discriminator('StageDefinition', StageDefinitionSchema);
-
 export default  StageDefinition;
