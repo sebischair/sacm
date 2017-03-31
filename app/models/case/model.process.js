@@ -10,13 +10,13 @@ const ProcessSchema = new mongoose.Schema({
   processDefinition: {type: ObjectId, ref: 'ProcessDefintion', required: true},
   state: {type: String, enum: ['available', 'enabled', 'active', 'completed', 'terminated'], required: true},
   statedates: {
-    available: {type: Date, default: Date.now}
+    available: {type: Date, default: Date.now},
     enabled: Date,
     active: Date,
     completed: Date,
     terminated: Date
   },
-  parent: {type: ObjectId, ref: 'Process'}
+  parent: {type: ObjectId, ref: 'Process'},
   __v: { type: Number, select: false}
 },{discriminatorKey: 'type'});
 
