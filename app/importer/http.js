@@ -1,5 +1,5 @@
 var express = require('express');
-var config = require('../config');
+var config = require('../../config');
 var request = require('request');
 var Promise = require('promise');
 var colors = require('colors');
@@ -57,6 +57,9 @@ module.exports = {
     },
     post2: function(path, data){
         return new Promise(function (resolve, reject){
+            console.log('###### POST 2 #######');
+            console.log(data);
+            console.log('###### POST 2 END #######');
             request.post({
                 url: config.sc.url + path,
                 headers: headers,
@@ -103,4 +106,3 @@ module.exports = {
         });
     }
 };
-

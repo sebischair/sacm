@@ -7,6 +7,8 @@ import sacmAPI from './sacmapi';
 import SocioCortex from './sociocortex';
 const xml = Promise.promisifyAll(xml2js);
 
+const WORKSPACE_ID = 'a2j7z68u5m1d';
+
 
 module.exports = class XMLImporter {
 
@@ -27,18 +29,13 @@ module.exports = class XMLImporter {
                 .then(json=>{
                     this.json = json.SACMDefinition;
 
-                    //this.resolveReferences('all', this.json);
-
                     this.processDataDefinition().then((result) => {
                       console.log('%%%%%% RESULT %%%%%%');
                         result.forEach((res)=> {
                           console.log(res.entityType.attributeDefinitions[0])
                         })
                     });
-                    return;
 
-
-                    return this.createEntityType();
                 })
                 .then(()=>{
                   return;
@@ -70,7 +67,7 @@ module.exports = class XMLImporter {
 
                 let xmlAttributeDefinitions = entityType.source.AttributeDefinition;
                 let createdAttributeDefinitions = Promise.all(xmlAttributeDefinitions.map(
-                  (x) => { return this.createAttributeDefinition(x, entityTypes)}
+                  (x) => { return this.createAttributeDefinition(x, entityTypes, entityType.id)}
                 ));
 
                 // Create all attributes and resolve potential references to entities
@@ -116,16 +113,21 @@ module.exports = class XMLImporter {
       return Promise.resolve({_type: 'DerivedAttributeDefinition', name: derivedAttributeDefinition.$.name, source: derivedAttributeDefinition});
     }
 
-    createAttributeDefinition(attributeDefinition, entities=[]) {
+    createAttributeDefinition(attributeDefinition, entities=[], entityTypeId) {
       // Attach actual entity ids
       let type = attributeDefinition.$.type;
 
-      //console.log('#### ATTRIBUTE DEFINITION ####');
-      //console.log(attributeDefinition);
+      var data = {
+        name: attributeDefinition.$.name,
+        attributeType: attributeDefinition.$.type,
+        options: {},
+        multiplicity: 'any'
+      }
 
       // Resolve dot notation
       let xtype = type.split('.');
       if(xtype.length > 2) {
+        data.attributeType = xtype[0];
         // Get last element in dot notation
         let elementCandidate = xtype[xtype.length - 1];
 
@@ -138,12 +140,35 @@ module.exports = class XMLImporter {
                 if(entitiy.name === elementCandidate) {
                   // Attach actual entitiy id to attributeDefinition
                   attributeDefinition.reference = entitiy;
+
+                  // Set options object with referecing EntityType ID
+                  data.options = {
+                    "entityType": {
+                      "id": entitiy.id
+                    },
+                    "resourceType": "entities"
+                  }
+
                 }
             });
+        }
+      } else if(xtype.length > 1) {
+        data.attributeType = xtype[0];
+        data.options = {
+          "resourceType": "entities"
         }
       }
 
       // Create element here ...
+      console.log(attributeDefinition.$.name);
+
+      return SocioCortex.attributeDefinition.create(WORKSPACE_ID, entityTypeId, data).then(
+        (result) => {
+          console.log('THIS ADD SC:::::');
+          return Promise.resolve(result);
+        }
+      )
+
 
 
 
@@ -152,16 +177,12 @@ module.exports = class XMLImporter {
 
 
     createEntityType(entityType){
-        SocioCortex.createEntityType(workspaceId, typeId).then(
-          (result) => {
-            console.log('CREATED ET');
-            console.log(result);
-          }
-        )
-        return Promise.resolve({name: entityType.$.name, source: entityType});
-        return new Promise((resolve, reject)=>{
-            return resolve();
-        })
+      return SocioCortex.entityType.create(WORKSPACE_ID, entityType.$.name).then(
+        (result) => {
+          result.source = entityType;
+          return Promise.resolve(result);
+        }
+      )
     }
 
     createCaseDefinition(){

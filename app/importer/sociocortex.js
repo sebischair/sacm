@@ -1,6 +1,6 @@
 var express = require('express');
 var http = require('./http');
-var config = require('../config');
+var config = require('../../config');
 var Promise = require('promise');
 
 function deleteWorkspace(workspaceId, ifexist){
@@ -31,11 +31,11 @@ function getEntityTypes(workspaceId){
 function createAttributeDefinition(workspaceId, typeId, definition) {
     var data = {
         name: definition.name,
-        attributeType: definition.type,
+        attributeType: definition.attributeType,
         options: definition.options,
         multiplicity: definition.multiplicity
     };
-    return http.post2('/entityTypes/'+typeId+'/attributeDefinitions', definition);
+    return http.post2('/entityTypes/'+typeId+'/attributeDefinitions', data);
 }
 
 function createDerivedAttributeDefinition(workspaceId, typeId, definition) {
