@@ -1,5 +1,5 @@
 var express = require('express');
-var http = require('../util/http');
+var http = require('./http');
 var config = require('../config');
 var Promise = require('promise');
 
@@ -269,4 +269,3 @@ module.exports = {
     mxl: mxlWorkspace,
     mxl2: mxlWorkspace2
 };
-

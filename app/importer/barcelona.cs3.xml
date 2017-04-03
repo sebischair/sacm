@@ -1,29 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SACMDefinition>
-    <EntityDefinition name="Case Data" label="">
-        <AttributeDefinition name="" multiplicity="" label=""></AttributeDefinition>
-        
-    </EntityDefinition>
-    <EntityDefinition name="Case Evaluation" label="">
-    
-    </EntityDefinition>
-    <CaseDefinition name="Case 3" label="">
+
+    <DataDefinition>
+      <EntityType name="CaseData" label="">
+          <AttributeDefinition name="" type="Ref.EntityType.CaseEvaluation" type="Person|Group|SCTypes" multiplicity="" label=""></AttributeDefinition>
+          <AttributeDefinition name="" type="Person|Group|SCTypes" multiplicity="" label=""></AttributeDefinition>
+          <DerivedAttributeDefinition name="" expression="" label=""></DerivedAttributeDefinition>
+      </EntityType>
+
+      <EntityType name="CaseEvaluation" label="">
+        <AttributeDefinition name="" type="Ref.EntityType.CaseData" multiplicity="" label=""></AttributeDefinition>
+      </EntityType>
+    </DataDefinition>
+
+    <CaseDefinition name="Case 3" label="" id="3434">
+
         <StageDefinition name="Case Identification" isMandetory="true" isRepeatable="false">
-            <HumanTaskDefinition name="" isMandetory="false" isRepeatable="false">
-                <TaskParamDefinition attributeDefinitionId="" isReadonly="true"/>
-                <TaskParamDefinition attributeDefinitionId="" isReadonly="false"/>
-                <TaskParamDefinition attributeDefinitionId="" isReadonly="false"/>
+            <HumanTaskDefinition name="" owner="" isMandetory="false" isRepeatable="false">
+                <TaskParamDefinition attributeDefinitionId="" isDerived="true" isReadonly="true"/>
+                <TaskParamDefinition attributeDefinitionId="" isDerived="true" isReadonly="false"/>
+                <TaskParamDefinition attributeDefinitionId="" isDerived="true" isReadonly="false"/>
             </HumanTaskDefinition>
+            <AutomatedTaskDefinition name="" label=""></AutomatedTaskDefinition>
             <HumanTaskDefinition name="" isMandetory="false" isRepeatable="false">
-                <TaskParamDefinition attributeDefinitionId="" isReadonly="true"/>
-                <TaskParamDefinition attributeDefinitionId="" isReadonly="false"/>
+                <TaskParamDefinition attributeDefinitionId="" isDerived="true" isReadonly="true"/>
+                <TaskParamDefinition attributeDefinitionId="" isDerived="true" isReadonly="false"/>
             </HumanTaskDefinition>
         </StageDefinition>
+
+
         <StageDefinition name="Case Evaluation" isMandetory="false" isRepeatable="true">
             <HumanTaskDefinition name="" isMandetory="false" isRepeatable="false">
-                <TaskParamDefinition attributeDefinitionId="" isReadonly="true"/>
-                <TaskParamDefinition attributeDefinitionId="" isReadonly="false"/>
-                <TaskParamDefinition attributeDefinitionId="" isReadonly="false"/>
+                <TaskParamDefinition attributeDefinitionId="" isDerived="true" isReadonly="true"/>
+                <TaskParamDefinition attributeDefinitionId="" isDerived="true" isReadonly="false"/>
+                <TaskParamDefinition attributeDefinitionId="" isDerived="true" isReadonly="false"/>
             </HumanTaskDefinition>
         </StageDefinition>
     </CaseDefinition>
