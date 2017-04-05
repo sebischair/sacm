@@ -204,6 +204,61 @@ function deleteAttributeValue(entityId, attributeName, value, cb){
     });
 }
 
+// CASE RElATED STUFF
+// TODO Relook at this
+function createCaseDefinition(workspaceId, data){
+  return http.post2('/workspaces/'+workspaceId+'/casedefinitions/', data);
+}
+
+function getCaseDefinitions(workspaceId) {
+  return http.get2('/workspaces/'+workspaceId+'/casedefinitions/', {});
+}
+
+function getCaseDefinition(caseDefinitionId){
+  return http.get2('/casedefinition/'+caseDefinitionId, {});
+}
+
+function deleteCaseDefinition() {
+  return http.del2('/casedefinition/'+caseDefinitionId, {});
+}
+
+// StageDefinition
+function createStageDefinition(workspaceId, data) {
+  return http.post2('/workspaces/'+workspaceId+'/stagedefinitions/', data);
+}
+
+function getStageDefinitions(workspaceId) {
+  return http.get2('workspaces/'+workspaceId+'/stagedefinitions/');
+}
+
+function getStageDefinition(stageDefinitionId) {
+  return http.get2('/stagedefinition/'+stageDefinitionId, {});
+}
+
+function deleteStageDefinition(stageDefinitionId) {
+  return http.del2('/stagedefinition/'+stageDefinitionId, {});
+}
+
+// HumanTaskDefinition
+function createHumanTaskDefinition(workspaceId, data) {
+  return http.post2('/workspaces/'+workspaceId+'/stagedefinitions/', data);
+}
+
+function getHumanTaskDefinitions(workspaceId) {
+  return http.get2('workspaces/'+workspaceId+'/humantaskdefinitions/');
+}
+
+function getHumanTaskDefinition(taskId) {
+  return http.get2('/humantaskdefinition/'+taskId, {});
+}
+
+function deleteHumanTaskDefinition(stageDefinitionId) {
+  return http.del2('/humantaskdefinitions/'+taskId, {});
+}
+
+
+// ----
+
 function convertEntitiesToFlatJSON(attributes, entities){
     var results = [];
     for(var i=0; i< entities.length; i++)

@@ -7,7 +7,7 @@ import sacmAPI from './sacmapi';
 import SocioCortex from './sociocortex';
 const xml = Promise.promisifyAll(xml2js);
 
-const WORKSPACE_ID = 'a2j7z68u5m1d';
+const WORKSPACE_ID = 'connecare2017';
 
 
 module.exports = class XMLImporter {
@@ -29,13 +29,12 @@ module.exports = class XMLImporter {
                 .then(json=>{
                     this.json = json.SACMDefinition;
 
-                    this.processDataDefinition().then((result) => {
-                      console.log('%%%%%% RESULT %%%%%%');
-                        result.forEach((res)=> {
-                          console.log(res.entityType.attributeDefinitions[0])
-                        })
-                    });
+                    // Reset workspace
+                    return this.resetWorkspace(WORKSPACE_ID);
 
+                })
+                .then(() => {
+                    return this.processDataDefinition();
                 })
                 .then(()=>{
                   return;
@@ -49,6 +48,14 @@ module.exports = class XMLImporter {
                 });
         });
     }
+
+
+    resetWorkspace(name) {
+      return SocioCortex.workspace.delete(name, true).then(() => {
+        return SocioCortex.workspace.create(name);
+      });
+    }
+
 
     /**
       This method creates all EntityTypes, AttributeDefinitions and DerivedAttributeDefinitions including all references
