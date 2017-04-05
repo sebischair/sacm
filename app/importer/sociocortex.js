@@ -256,6 +256,23 @@ function deleteHumanTaskDefinition(stageDefinitionId) {
   return http.del2('/humantaskdefinitions/'+taskId, {});
 }
 
+// CaseDefinition
+function createCase(workspaceId, data){
+  return http.post2('/workspaces/'+workspaceId+'/cases/', data);
+}
+
+function getCases(workspaceId) {
+  return http.get2('/workspaces/'+workspaceId+'/cases/', {});
+}
+
+function getCase(caseId){
+  return http.get2('/case/'+caseDefinitionId, {});
+}
+
+function deleteCase() {
+  return http.del2('/case/'+caseId, {});
+}
+
 
 // ----
 
