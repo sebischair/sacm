@@ -215,8 +215,8 @@ function deleteCaseDefinition() {
 }
 
 // StageDefinition
-function createStageDefinition(workspaceId, data) {
-  return http.post2('/workspaces/'+workspaceId+'/stagedefinitions/', data);
+function createStageDefinition(data) {
+  return http.post2('/stagedefinitions/', data);
 }
 
 function getStageDefinitions(workspaceId) {
@@ -333,6 +333,9 @@ module.exports = {
     },
     caseDefinitions: {
         find: findCaseDefinitions
+    },
+    stageDefintion: {
+        create: createStageDefinition
     },
     case: {
         create: createCase,

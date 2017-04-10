@@ -16,7 +16,6 @@ module.exports = class XMLImporter {
         this.entityDefinitionMap = new Map(); //<entityName, sociocortexId>
         this.attributeDefinitionMap = new Map(); //<entityName.attrName, sociocortexId>
         this.derivedAttributeDefinitionMap = new Map(); //<entityName.derAttrName, sociocortexId>
-        
         this.caseDefinitionMap = new Map(); //<name, sociocortexId>
         this.humanTaskDefinitionMap = new Map(); //<name, sociocortexId>
     }
@@ -25,41 +24,45 @@ module.exports = class XMLImporter {
       return this.entityDefinitionMap.get(entityDefinitionName);
     }
 
-    import(filePath){
-        if(!fs.existsSync(filePath)) {
-          console.log('Filex does not exist ' + filePath);
-          return Promise.reject('File does not exist');
-        }
+    getCaseDefinitionIdByName(caseDefinitionName){
+      return this.caseDefinitionMap.get(caseDefinitionName);
+    }
 
-        const xmlString = fs.readFileSync(filePath).toString();
-        return new Promise((resolve, reject)=>{
-            xml.parseStringAsync(xmlString)
-                .then(json=>{
-                    this.json = json.SACMDefinition;
-                    return this.resetWorkspace(WORKSPACE_ID);
-                })
-                .then(() => {
-                    return this.createEntityDefinitions();
-                })
-                .then(() => {
-                    return this.createAttributeDefintions();
-                })
-                .then(() => {
-                    return this.createCaseDefinitions();
-                })
-                .then(()=>{
-                    resolve();
-                })
-                .catch(err=>{
-                    reject(err);
-                });
+    import(filePath){
+      return new Promise((resolve, reject)=>{
+        if(!fs.existsSync(filePath)) 
+          reject('File does not exist' + filePath);
+
+        xml.parseStringAsync(fs.readFileSync(filePath).toString())
+          .then(json=>{
+              this.json = json.SACMDefinition;
+              return this.deleteAndCreateWorkspace();
+          })
+          .then(() => {
+              return this.createEntityDefinitions();
+          })
+          .then(() => {
+              return this.createAttributeDefintions();
+          })
+          .then(() => {
+              return this.createCaseDefinitions();
+          })
+          .then(() => {
+              return this.createStageDefinitions();
+          })
+          .then(()=>{
+              resolve();
+          })
+          .catch(err=>{
+              reject(err);
+          });
         });
     }
 
 
-    resetWorkspace(name) {
-      return SocioCortex.workspace.delete(name, true).then(() => {
-        return SocioCortex.workspace.create(name);
+    deleteAndCreateWorkspace() {
+      return SocioCortex.workspace.delete(WORKSPACE_ID, true).then(() => {
+        return SocioCortex.workspace.create(WORKSPACE_ID);
       });
     }
 
@@ -72,7 +75,6 @@ module.exports = class XMLImporter {
           });
       });
     }
-
 
     createAttributeDefintions() {
       return Promise.each(this.json.EntityDefinition, ed=>{
@@ -113,6 +115,38 @@ module.exports = class XMLImporter {
             return Promise.reject(err);
           })  
       });     
+    }
+
+    createStageDefinitions() {     
+      return Promise.each(this.json.CaseDefinition, cd=>{   
+        if(cd.StageDefinition)
+          createStageDefinitionRecursive(getCaseDefinitionIdByName(cd.$.id), null, cd.StageDefinition);
+        return Promise.resolve();
+      });   
+    }
+
+    createStageDefinitionRecursive(caseDefId, parentStageDefId, json){   
+      console.log('stage def');   
+      return Promise.each(json, sd=>{
+        console.log(sd.$.id);        
+        const data = {
+          name: sd.$.id,
+          label: sd.$.id,
+          isRepeatable: sd.$.isRepeatable,
+          isMandatory: sd.$.isMandetory,
+          caseDefinition: {id: caseDefId},
+          parentStageDefintion: {id: parentStageDefId}
+        }
+        SocioCortex.stageDefintion.create(data)
+          .then(persistedStageDef=>{
+            console.log(persistedStageDef)
+            Promise.resolve();
+          })
+          .catch(err=>{
+            Promise.reject(err);
+          });
+      });
+      
     }
 
 
