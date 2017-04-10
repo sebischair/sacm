@@ -81,7 +81,6 @@ module.exports = class XMLImporter {
 
     createAttributeDefintions() {
       return Promise.each(this.json.EntityDefinition, ed=>{
-        console.log(ed.AttributeDefinition);
         return Promise.each(ed.AttributeDefinition, ad=>{
           let data = {
             name: ad.$.id,
@@ -102,33 +101,30 @@ module.exports = class XMLImporter {
       });
     }
 
-    createCaseDefinitions() {
-      return Promise.each(this.json.CaseDefinition, cd=>{  
-        const data = {
-          name: cd.$.id,
-          label: cd.$.label,
-          entityDefinition: {id: this.getEntityDefinitionIdByName(cd.$.entityDefinitionId)}
-        };
-        SocioCortex.caseDefinition.create(data)
-          .then(persistedCaseDefinition =>{
-            this.caseDefinitionMap.set(cd.$.id, persistedCaseDefinition.id);            
-            return Promise.resolve();
-          })
-          .catch(err=>{
-            return Promise.reject(err);
-          })  
-      });     
+    createCaseDefinitions() {      
+      return Promise.each(this.json.CaseDefinition, cd=>{ 
+        return new Promise((resolve, reject)=>{   
+          const data = {
+            name: cd.$.id,
+            label: cd.$.label,
+            entityDefinition: {id: this.getEntityDefinitionIdByName(cd.$.entityDefinitionId)}
+          };
+          SocioCortex.caseDefinition.create(data)
+            .then(persistedCaseDefinition =>{
+              this.caseDefinitionMap.set(cd.$.id, persistedCaseDefinition.id);            
+              resolve();
+            })
+            .catch(err=>{
+              reject(err);
+            });           
+        });
+      });  
     }
 
-    createStageDefinitions() {  
-      console.log('stage def0')    
-      return Promise.each(this.json.CaseDefinition, cd=>{  
-        console.log('stage def1')
-        console.log(cd.$.id);
-        console.log(this.caseDefinitionMap);
-        console.log(this.getCaseDefinitionIdByName(cd.$.id)) 
+    createStageDefinitions() {       
+      return Promise.each(this.json.CaseDefinition, cd=>{        
         if(cd.StageDefinition)
-          return createStageDefinitionRecursive(this.getCaseDefinitionIdByName(cd.$.id), null, cd.StageDefinition);
+          return this.createStageDefinitionRecursive(this.getCaseDefinitionIdByName(cd.$.id), null, cd.StageDefinition);
         else
           return Promise.resolve();
       });   
@@ -154,8 +150,7 @@ module.exports = class XMLImporter {
           .catch(err=>{
             Promise.reject(err);
           });
-      });
-      
+      });      
     }
 
 
