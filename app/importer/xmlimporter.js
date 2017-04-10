@@ -13,7 +13,15 @@ const WORKSPACE_ID = 'connecare2017';
 module.exports = class XMLImporter {
 
     constructor() {
-        this.caseDefinitions = new Map();
+        this.entityDefinitionMap = new Map(); //<entityName, sociocortexId>
+        this.attributeDefinitionMap = new Map(); //<entityName.attrName, sociocortexId>
+        this.derivedAttributeDefinition = new Map(); //<entityName.derAttrName, sociocortexId>
+        this.caseDefinitions = new Map(); //<name, sociocortexId>
+        this.humanTaskDefinitions = new Map(); //<name, sociocortexId>
+    }
+
+    getEntityDefinitionIdByName(entityDefinitionName){
+      return this.entityDefinitionMap.get(entityDefinitionName);
     }
 
     import(filePath){
@@ -31,13 +39,18 @@ module.exports = class XMLImporter {
                     return this.resetWorkspace(WORKSPACE_ID);
                 })
                 .then(() => {
-                    return this.processDataDefinition();
+                    return this.createEntityDefinitions();
                 })
-                .then(()=>{
-                  return;
+                .then(() => {
+                    return this.createAttributeDefintions();
+                })
+                /*
+                .then((data)=>{
+                    console.log('TYPES ARE CREATED')
+                    console.log(JSON.stringify(data));
                     return this.createCaseDefinition();
-                })
-                .thne(()=>{
+                })*/
+                .then(()=>{
                     resolve();
                 })
                 .catch(err=>{
@@ -52,6 +65,39 @@ module.exports = class XMLImporter {
         return SocioCortex.workspace.create(name);
       });
     }
+
+
+    createEntityDefinitions() {
+      return Promise.each(this.json.DataDefinition[0].EntityType, ed=>{
+        return SocioCortex.entityType.create(WORKSPACE_ID, ed.$.name)
+          .then(persistedEntityDefinition =>{
+            this.entityDefinitionMap.set(ed.$.name, persistedEntityDefinition.id);            
+            return Promise.resolve();
+          });
+      });
+    }
+
+
+    createAttributeDefintions() {
+      return Promise.each(this.json.DataDefinition[0].EntityType, ed=>{
+        console.log(ed.AttributeDefinition);
+        return Promise.each(ed.AttributeDefinition, ad=>{
+          let data = {
+            name: ad.$.name,
+            attributeType: 'notype', //ad.$.type,
+            options: {},
+            multiplicity: 'any'
+          }
+          const entityDefId = this.getEntityDefinitionIdByName(ed.$.name);
+          return SocioCortex.attributeDefinition.create(WORKSPACE_ID, entityDefId, data).then(persistedAttributeDefinition =>{
+            this.attributeDefinitionMap.set(ed.$.name+ad.$.name, persistedAttributeDefinition.id);            
+            return Promise.resolve();
+          });
+        });
+      });
+    }
+
+
 
 
     /**
