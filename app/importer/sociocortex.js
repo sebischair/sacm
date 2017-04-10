@@ -334,7 +334,7 @@ module.exports = {
     caseDefinitions: {
         find: findCaseDefinitions
     },
-    stageDefintion: {
+    stageDefinition: {
         create: createStageDefinition
     },
     humanTaskDefinitions:{

@@ -27,7 +27,7 @@ module.exports = class XMLImporter {
 
     getCaseDefinitionIdByName(caseDefinitionName){
       if(!this.caseDefinitionMap.has(caseDefinitionName))
-        console.log('ERR CaseDefintion ID not found')
+        console.log('ERR CaseDefinition ID not found')
       return this.caseDefinitionMap.get(caseDefinitionName);
     }
 
@@ -44,7 +44,7 @@ module.exports = class XMLImporter {
             return this.createEntityDefinitions();
         })
         .then(() => {
-            return this.createAttributeDefintions();
+            return this.createAttributeDefinitions();
         })
         .then(() => {
             return this.createCaseDefinitions();
@@ -77,7 +77,7 @@ module.exports = class XMLImporter {
       });
     }
 
-    createAttributeDefintions() {
+    createAttributeDefinitions() {
       return Promise.each(this.json.EntityDefinition, ed=>{
         return Promise.each(ed.AttributeDefinition, ad=>{
           let data = {
@@ -133,17 +133,17 @@ module.exports = class XMLImporter {
           label: sd.$.id,
           isRepeatable: sd.$.isRepeatable,
           isMandatory: sd.$.isMandetory,
-          caseDefinition: {id: caseDefId},
-          parentStageDefintion: {id: parentStageDefId}
+          caseDefinition: {id: caseDefId}
         }
-        return SocioCortex.stageDefintion.create(data)
+        if(parentStageDefId != null) 
+          data.parentStageDefinition = {id: parentStageDefId};
+        return SocioCortex.stageDefinition.create(data)
           .then(persistedStageDef=>{
-            console.log(persistedStageDef)
             this.stageDefinitionMap.set(sd.$.id, persistedStageDef.id);     
             return this.createStageDefinitionRecursive(caseDefId, persistedStageDef.id, sd.StageDefinition);
           })
           .catch(err=>{
-            Promise.reject(err);
+            return Promise.reject(err);
           });
       });      
     }
