@@ -198,8 +198,8 @@ function deleteAttributeValue(entityId, attributeName, value, cb){
 
 // CASE RElATED STUFF
 // TODO Relook at this
-function createCaseDefinition(workspaceId, data){
-  return http.post2('/workspaces/'+workspaceId+'/casedefinitions/', data);
+function createCaseDefinition(data){
+  return http.post2('/casedefinitions/', data);
 }
 
 function findCaseDefinitions(workspaceId) {

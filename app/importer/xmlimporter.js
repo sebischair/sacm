@@ -15,9 +15,10 @@ module.exports = class XMLImporter {
     constructor() {
         this.entityDefinitionMap = new Map(); //<entityName, sociocortexId>
         this.attributeDefinitionMap = new Map(); //<entityName.attrName, sociocortexId>
-        this.derivedAttributeDefinition = new Map(); //<entityName.derAttrName, sociocortexId>
-        this.caseDefinitions = new Map(); //<name, sociocortexId>
-        this.humanTaskDefinitions = new Map(); //<name, sociocortexId>
+        this.derivedAttributeDefinitionMap = new Map(); //<entityName.derAttrName, sociocortexId>
+        
+        this.caseDefinitionMap = new Map(); //<name, sociocortexId>
+        this.humanTaskDefinitionMap = new Map(); //<name, sociocortexId>
     }
 
     getEntityDefinitionIdByName(entityDefinitionName){
@@ -62,7 +63,6 @@ module.exports = class XMLImporter {
       });
     }
 
-
     createEntityDefinitions() {
       return Promise.each(this.json.EntityDefinition, ed=>{
         return SocioCortex.entityType.create(WORKSPACE_ID, ed.$.id)
@@ -98,42 +98,21 @@ module.exports = class XMLImporter {
     }
 
     createCaseDefinitions() {
-      console.log(this.json.CaseDefinition);
-      return Promise.each(this.json.CaseDefinition, cd=>{   
-        const id = cd.$.id;
-        SocioCortex.caseDefinition.create(WORKSPACE_ID, entityDefId, data)
+      return Promise.each(this.json.CaseDefinition, cd=>{  
+        const data = {
+          name: cd.$.id,
+          label: cd.$.label,
+          entityDefinition: {id: this.getEntityDefinitionIdByName(cd.$.entityDefinitionId)}
+        };
+        SocioCortex.caseDefinition.create(data)
           .then(persistedCaseDefinition =>{
-            this.caseDefinitionMap.set(ed.$.id+ad.$.id, persistedCaseDefinition.id);            
+            this.caseDefinitionMap.set(cd.$.id+cd.$.id, persistedCaseDefinition.id);            
             return Promise.resolve();
           })
           .catch(err=>{
             return Promise.reject(err);
-          })
-  
-      });
-
-      /*
-      return Promise.each(this.json.CaseDefinition[0], ed=>{
-        console.log(ed.AttributeDefinition);
-        return Promise.each(ed.AttributeDefinition, ad=>{
-          let data = {
-            name: ad.$.name,
-            attributeType: 'notype', //ad.$.type, //TODO add here
-            options: {},
-            multiplicity: 'any'
-          }
-          const entityDefId = this.getEntityDefinitionIdByName(ed.$.name);
-          SocioCortex.attributeDefinition.create(WORKSPACE_ID, entityDefId, data)
-            .then(persistedAttributeDefinition =>{
-              this.attributeDefinitionMap.set(ed.$.name+ad.$.name, persistedAttributeDefinition.id);            
-              return Promise.resolve();
-            })
-            .catch(err=>{
-              return Promise.reject(err);
-            })
-        });
-      });
-      */
+          })  
+      });     
     }
 
 
