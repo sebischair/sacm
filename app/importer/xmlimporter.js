@@ -45,33 +45,33 @@ module.exports = class XMLImporter {
 
       return xml.parseStringAsync(fs.readFileSync(filePath).toString())
         .then(json=>{
-            this.json = json.SACMDefinition;
-            return this.deleteAndCreateWorkspace();
+          this.json = json.SACMDefinition;
+          return this.deleteAndCreateWorkspace();
         })
         .then(() => {
             return this.createEntityDefinitions();
         })
         .then(() => {
-            return this.createAttributeDefinitions();
+          return this.createAttributeDefinitions();
         })
         .then(() => {
-            return Promise.resolve();
-            //return this.createDerivedAttributeDefinitions();
+          return Promise.resolve();
+          //return this.createDerivedAttributeDefinitions();
         })
         .then(() => {
-            return this.createCaseDefinitions();
+          return this.createCaseDefinitions();
         })
         .then(() => {
-            return this.createStageDefinitions();
+          return this.createStageDefinitions();
         })
         .then(() => {          
           return this.createTaskDefinitions();
         })
         .then(()=>{
-            return Promise.resolve();
+          return Promise.resolve();
         })
         .catch(err=>{
-            return Promise.reject(err);
+          return Promise.reject(err);
         });        
     }
 
@@ -192,6 +192,10 @@ module.exports = class XMLImporter {
     }
 
     createHumanTaskDefiniton(){
+
+    }
+
+    createAutomatedTaskDefiniton(){
 
     }
 
