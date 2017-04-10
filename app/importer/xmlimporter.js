@@ -21,7 +21,7 @@ module.exports = class XMLImporter {
       this.humanTaskDefinitionMap = new Map(); //<xmlId, sociocortexId>
     }
 
-    entityDefinitionIdByName(entityDefinitionName){
+    getEntityDefinitionIdByName(entityDefinitionName){
       return this.entityDefinitionMap.get(entityDefinitionName);
     }
 
@@ -108,25 +108,25 @@ module.exports = class XMLImporter {
         };
         return SocioCortex.caseDefinition.create(data)
           .then(persistedCaseDefinition =>{
-            this.caseDefinitionMap.set(cd.$.id, persistedCaseDefinition.id);            
-            Promise.resolve();
+            this.caseDefinitionMap.set(cd.$.id, persistedCaseDefinition.id);         
+            return Promise.resolve();
           })
           .catch(err=>{
-            Promise.reject(err);
+            return Promise.reject(err);
           });     
       });  
     }
 
     createStageDefinitions() {       
-      return Promise.each(this.json.CaseDefinition, cd=>{        
-        if(cd.StageDefinition)
-          return this.createStageDefinitionRecursive(this.getCaseDefinitionIdByName(cd.$.id), null, cd.StageDefinition);
-        else
-          return Promise.resolve();
+      return Promise.each(this.json.CaseDefinition, cd=>{ 
+        const caseDefId = this.getCaseDefinitionIdByName(cd.$.id);
+        return this.createStageDefinitionRecursive(caseDefId, null, cd.StageDefinition);
       });   
     }
 
     createStageDefinitionRecursive(caseDefId, parentStageDefId, stageDefinitions){   
+      if(stageDefinitions == null)
+        return Promise.resolve();
       return Promise.each(stageDefinitions, sd=>{        
         const data = {
           name: sd.$.id,
@@ -139,14 +139,8 @@ module.exports = class XMLImporter {
         return SocioCortex.stageDefintion.create(data)
           .then(persistedStageDef=>{
             console.log(persistedStageDef)
-            this.stageDefinitionMap.set(sd.$.id, persistedStageDef.id);
-            if(sd.StageDefinition)
-              return this.createStageDefinitionRecursive(caseDefId, persistedStageDef.id, sd.StageDefinition);
-            else
-              return Promise.resolve();
-          })
-          .then(()=>{
-
+            this.stageDefinitionMap.set(sd.$.id, persistedStageDef.id);     
+            return this.createStageDefinitionRecursive(caseDefId, persistedStageDef.id, sd.StageDefinition);
           })
           .catch(err=>{
             Promise.reject(err);
