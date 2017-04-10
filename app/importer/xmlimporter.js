@@ -64,10 +64,10 @@ module.exports = class XMLImporter {
 
 
     createEntityDefinitions() {
-      return Promise.each(this.json.DataDefinition[0].EntityDefinition, ed=>{
-        return SocioCortex.entityType.create(WORKSPACE_ID, ed.$.name)
+      return Promise.each(this.json.EntityDefinition, ed=>{
+        return SocioCortex.entityType.create(WORKSPACE_ID, ed.$.id)
           .then(persistedEntityDefinition =>{
-            this.entityDefinitionMap.set(ed.$.name, persistedEntityDefinition.id);            
+            this.entityDefinitionMap.set(ed.$.id, persistedEntityDefinition.id);            
             return Promise.resolve();
           });
       });
@@ -75,19 +75,19 @@ module.exports = class XMLImporter {
 
 
     createAttributeDefintions() {
-      return Promise.each(this.json.DataDefinition[0].EntityDefinition, ed=>{
+      return Promise.each(this.json.EntityDefinition, ed=>{
         console.log(ed.AttributeDefinition);
         return Promise.each(ed.AttributeDefinition, ad=>{
           let data = {
-            name: ad.$.name,
+            name: ad.$.id,
             attributeType: 'notype', //ad.$.type, //TODO add here
             options: {},
             multiplicity: 'any'
           }
-          const entityDefId = this.getEntityDefinitionIdByName(ed.$.name);
+          const entityDefId = this.getEntityDefinitionIdByName(ed.$.id);
           SocioCortex.attributeDefinition.create(WORKSPACE_ID, entityDefId, data)
             .then(persistedAttributeDefinition =>{
-              this.attributeDefinitionMap.set(ed.$.name+ad.$.name, persistedAttributeDefinition.id);            
+              this.attributeDefinitionMap.set(ed.$.id+ad.$.id, persistedAttributeDefinition.id);            
               return Promise.resolve();
             })
             .catch(err=>{
@@ -100,10 +100,10 @@ module.exports = class XMLImporter {
     createCaseDefinitions() {
       console.log(this.json.CaseDefinition);
       return Promise.each(this.json.CaseDefinition, cd=>{   
-        const name = cd.$.name;
+        const id = cd.$.id;
         SocioCortex.caseDefinition.create(WORKSPACE_ID, entityDefId, data)
           .then(persistedCaseDefinition =>{
-            this.caseDefinitionMap.set(ed.$.name+ad.$.name, persistedCaseDefinition.id);            
+            this.caseDefinitionMap.set(ed.$.id+ad.$.id, persistedCaseDefinition.id);            
             return Promise.resolve();
           })
           .catch(err=>{
