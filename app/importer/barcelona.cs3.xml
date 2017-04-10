@@ -6,7 +6,7 @@
     <!--<AttributeDefinition id="" type="Ref.EntityType.CaseEvaluation" type="Person|Group|SCTypes" multiplicity="" label=""></AttributeDefinition> -->
         <AttributeDefinition id="CoolesAttribute" type="Link.EntityType.CaseEvaluation" multiplicity="" label=""></AttributeDefinition>
         <AttributeDefinition id="CoolesSuperAttribute" type="Link.EntityType" multiplicity="" label=""></AttributeDefinition>
-        <DerivedAttributeDefinition id="" expression="" label=""></DerivedAttributeDefinition>
+        <DerivedAttributeDefinition id="indedx" expression="1" label="my indedx"></DerivedAttributeDefinition>
     </EntityDefinition>
 
     <EntityDefinition id="CaseEvaluation" label="">
@@ -18,14 +18,19 @@
 
         <StageDefinition id="CaseIdentification" isMandetory="true" isRepeatable="false">
             <HumanTaskDefinition id="" owner="" isMandetory="false" isRepeatable="false">
-                <TaskParamDefinition attributePath="" isReadonly="true"/>
-                <TaskParamDefinition attributePath="" isReadonly="false"/>
+                <TaskParamDefinition attributePath="this.name" isReadonly="true"/>
+                <TaskParamDefinition attributePath="this.owner.name" isReadonly="false"/>
                 <TaskParamDefinition attributePath="" isReadonly="false"/>
             </HumanTaskDefinition>
             <AutomatedTaskDefinition id="" label=""></AutomatedTaskDefinition>
             <HumanTaskDefinition id="" isMandetory="false" isRepeatable="false">
                 <TaskParamDefinition attributePath="" isReadonly="true"/>
                 <TaskParamDefinition attributePath="" isReadonly="false"/>
+                <SentryDefinition>
+                    <precondition humanTaskId=""></precondition>
+                    <precondition automatedTaskId=""></precondition>
+                    <precondition stageId=""></precondition>
+                </SentryDefinition>
             </HumanTaskDefinition>
             <StageDefinition id="Case Discharge" isMandetory="false" isRepeatable="true"></StageDefinition>
         </StageDefinition>

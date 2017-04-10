@@ -21,14 +21,22 @@ module.exports = class XMLImporter {
       this.humanTaskDefinitionMap = new Map(); //<xmlId, sociocortexId>
     }
 
-    getEntityDefinitionIdByName(entityDefinitionName){
-      return this.entityDefinitionMap.get(entityDefinitionName);
+    getEntityDefinitionIdByName(entityDefinitionXMLId){
+      if(!this.entityDefinitionMap.has(entityDefinitionXMLId))
+        console.log('ERR EntityDefintion ID not found')
+      return this.entityDefinitionMap.get(entityDefinitionXMLId);
     }
 
-    getCaseDefinitionIdByName(caseDefinitionName){
-      if(!this.caseDefinitionMap.has(caseDefinitionName))
+    getCaseDefinitionIdByName(caseDefinitionXMLId){
+      if(!this.caseDefinitionMap.has(caseDefinitionXMLId))
         console.log('ERR CaseDefinition ID not found')
-      return this.caseDefinitionMap.get(caseDefinitionName);
+      return this.caseDefinitionMap.get(caseDefinitionXMLId);
+    }
+
+    getStageDefinitionIdByName(stageDefinitionXMLId){
+      if(!this.stageDefinitionMap.has(stageDefinitionXMLId))
+        console.log('ERR StageDefinition ID not found')
+      return this.stageDefinitionMap.get(stageDefinitionXMLId);
     }
 
     import(filePath){
@@ -47,10 +55,17 @@ module.exports = class XMLImporter {
             return this.createAttributeDefinitions();
         })
         .then(() => {
+            return Promise.resolve();
+            //return this.createDerivedAttributeDefinitions();
+        })
+        .then(() => {
             return this.createCaseDefinitions();
         })
         .then(() => {
             return this.createStageDefinitions();
+        })
+        .then(() => {          
+          return this.createTaskDefinitions();
         })
         .then(()=>{
             return Promise.resolve();
@@ -90,6 +105,27 @@ module.exports = class XMLImporter {
           SocioCortex.attributeDefinition.create(WORKSPACE_ID, entityDefId, data)
             .then(persistedAttributeDefinition =>{
               this.attributeDefinitionMap.set(ed.$.id+ad.$.id, persistedAttributeDefinition.id);            
+              return Promise.resolve();
+            })
+            .catch(err=>{
+              return Promise.reject(err);
+            })
+        });
+      });
+    }
+
+    createDerivedAttributeDefinitions() {
+      return Promise.each(this.json.EntityDefinition, ed=>{
+        return Promise.each(ed.DerivedAttributeDefinition, ad=>{
+          const data = {
+            name: ad.$.id,
+            description: ad.$.label,    
+            expression: ad.$.expression
+          };
+          const entityDefId = this.getEntityDefinitionIdByName(ed.$.id);
+          SocioCortex.derivedAttributeDefinition.create(WORKSPACE_ID, entityDefId, data)
+            .then(persistedAttributeDefinition =>{
+              this.derivedAttributeDefinitionMap.set(ed.$.id+ad.$.id, persistedAttributeDefinition.id);            
               return Promise.resolve();
             })
             .catch(err=>{
@@ -146,6 +182,13 @@ module.exports = class XMLImporter {
             return Promise.reject(err);
           });
       });      
+    }
+
+    createTaskDefinitions(){
+      return Promise.each(this.json.CaseDefinition, cd=>{ 
+        const caseDefId = this.getCaseDefinitionIdByName(cd.$.id);
+        return this.createStageDefinitionRecursive(caseDefId, null, cd.StageDefinition);
+      });   
     }
 
     createHumanTaskDefiniton(){
@@ -290,29 +333,7 @@ module.exports = class XMLImporter {
       )
     }
 
-    createCaseDefinition(){
-        return new Promise((resolve, reject)=>{
-            if(!this.json.CaseDefinition)
-                reject('Has no CaseDefinition!');
-            if(this.json.CaseDefinition.length != 1)
-                reject('Only one Case Definition Allowed!');
-            if(!this.json.CaseDefinition[0].$.name)
-                reject('No Case Definition Name defined!');
-            SocioCortex.caseDefinition.create({
-                name: this.json.CaseDefinition[0].$.name,
-                label: this.json.CaseDefinition[0].$.label
-            })
-            .then(caseDefinition=>{
-                console.log('here', caseDefinition);
-                //this.caseDefinitionId = caseDefinition.id;
-                //TODO add more here
-                resolve();
-            })
-            .catch(err=>{
-                reject(err);
-            })
-        });
-    }
+  
 
 
 }
