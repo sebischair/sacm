@@ -35,7 +35,6 @@ module.exports = class XMLImporter {
             xml.parseStringAsync(xmlString)
                 .then(json=>{
                     this.json = json.SACMDefinition;
-                    // Reset workspace
                     return this.resetWorkspace(WORKSPACE_ID);
                 })
                 .then(() => {
@@ -44,12 +43,9 @@ module.exports = class XMLImporter {
                 .then(() => {
                     return this.createAttributeDefintions();
                 })
-                /*
-                .then((data)=>{
-                    console.log('TYPES ARE CREATED')
-                    console.log(JSON.stringify(data));
-                    return this.createCaseDefinition();
-                })*/
+                .then(() => {
+                    return this.createCaseDefinitions();
+                })
                 .then(()=>{
                     resolve();
                 })
@@ -68,7 +64,7 @@ module.exports = class XMLImporter {
 
 
     createEntityDefinitions() {
-      return Promise.each(this.json.DataDefinition[0].EntityType, ed=>{
+      return Promise.each(this.json.DataDefinition[0].EntityDefinition, ed=>{
         return SocioCortex.entityType.create(WORKSPACE_ID, ed.$.name)
           .then(persistedEntityDefinition =>{
             this.entityDefinitionMap.set(ed.$.name, persistedEntityDefinition.id);            
@@ -79,22 +75,65 @@ module.exports = class XMLImporter {
 
 
     createAttributeDefintions() {
-      return Promise.each(this.json.DataDefinition[0].EntityType, ed=>{
+      return Promise.each(this.json.DataDefinition[0].EntityDefinition, ed=>{
         console.log(ed.AttributeDefinition);
         return Promise.each(ed.AttributeDefinition, ad=>{
           let data = {
             name: ad.$.name,
-            attributeType: 'notype', //ad.$.type,
+            attributeType: 'notype', //ad.$.type, //TODO add here
             options: {},
             multiplicity: 'any'
           }
           const entityDefId = this.getEntityDefinitionIdByName(ed.$.name);
-          return SocioCortex.attributeDefinition.create(WORKSPACE_ID, entityDefId, data).then(persistedAttributeDefinition =>{
-            this.attributeDefinitionMap.set(ed.$.name+ad.$.name, persistedAttributeDefinition.id);            
-            return Promise.resolve();
-          });
+          SocioCortex.attributeDefinition.create(WORKSPACE_ID, entityDefId, data)
+            .then(persistedAttributeDefinition =>{
+              this.attributeDefinitionMap.set(ed.$.name+ad.$.name, persistedAttributeDefinition.id);            
+              return Promise.resolve();
+            })
+            .catch(err=>{
+              return Promise.reject(err);
+            })
         });
       });
+    }
+
+    createCaseDefinitions() {
+      console.log(this.json.CaseDefinition);
+      return Promise.each(this.json.CaseDefinition, cd=>{   
+        const name = cd.$.name;
+        SocioCortex.caseDefinition.create(WORKSPACE_ID, entityDefId, data)
+          .then(persistedCaseDefinition =>{
+            this.caseDefinitionMap.set(ed.$.name+ad.$.name, persistedCaseDefinition.id);            
+            return Promise.resolve();
+          })
+          .catch(err=>{
+            return Promise.reject(err);
+          })
+  
+      });
+
+      /*
+      return Promise.each(this.json.CaseDefinition[0], ed=>{
+        console.log(ed.AttributeDefinition);
+        return Promise.each(ed.AttributeDefinition, ad=>{
+          let data = {
+            name: ad.$.name,
+            attributeType: 'notype', //ad.$.type, //TODO add here
+            options: {},
+            multiplicity: 'any'
+          }
+          const entityDefId = this.getEntityDefinitionIdByName(ed.$.name);
+          SocioCortex.attributeDefinition.create(WORKSPACE_ID, entityDefId, data)
+            .then(persistedAttributeDefinition =>{
+              this.attributeDefinitionMap.set(ed.$.name+ad.$.name, persistedAttributeDefinition.id);            
+              return Promise.resolve();
+            })
+            .catch(err=>{
+              return Promise.reject(err);
+            })
+        });
+      });
+      */
     }
 
 
