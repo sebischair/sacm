@@ -13,11 +13,12 @@ const WORKSPACE_ID = 'connecare2017';
 module.exports = class XMLImporter {
 
     constructor() {
-      this.entityDefinitionMap = new Map(); //<entityName, sociocortexId>
-      this.attributeDefinitionMap = new Map(); //<entityName.attrName, sociocortexId>
+      this.entityDefinitionMap = new Map(); //<xmlId, sociocortexId>
+      this.attributeDefinitionMap = new Map(); //<xmlEntityId+xmlAttrId, sociocortexId>
       this.derivedAttributeDefinitionMap = new Map(); //<entityName.derAttrName, sociocortexId>
-      this.caseDefinitionMap = new Map(); //<name, sociocortexId>
-      this.humanTaskDefinitionMap = new Map(); //<name, sociocortexId>
+      this.caseDefinitionMap = new Map(); //<xmlId, sociocortexId>
+      this.stageDefinitionMap = new Map(); //<xmlId, sociocortexId>
+      this.humanTaskDefinitionMap = new Map(); //<xmlId, sociocortexId>
     }
 
     getEntityDefinitionIdByName(entityDefinitionName){
@@ -125,10 +126,8 @@ module.exports = class XMLImporter {
       });   
     }
 
-    createStageDefinitionRecursive(caseDefId, parentStageDefId, json){   
-      console.log('stage def');   
-      return Promise.each(json, sd=>{
-        console.log(sd.$.id);        
+    createStageDefinitionRecursive(caseDefId, parentStageDefId, stageDefinitions){   
+      return Promise.each(stageDefinitions, sd=>{        
         const data = {
           name: sd.$.id,
           label: sd.$.id,
@@ -137,10 +136,14 @@ module.exports = class XMLImporter {
           caseDefinition: {id: caseDefId},
           parentStageDefintion: {id: parentStageDefId}
         }
-        SocioCortex.stageDefintion.create(data)
+        return SocioCortex.stageDefintion.create(data)
           .then(persistedStageDef=>{
             console.log(persistedStageDef)
-            Promise.resolve();
+            this.stageDefinitionMap.set(sd.$.id, persistedStageDef.id);
+            if(sd.StageDefinition)
+              return this.createStageDefinitionRecursive(caseDefId, persistedStageDef.id, sd.StageDefinition);
+            else
+              Promise.resolve();
           })
           .catch(err=>{
             Promise.reject(err);

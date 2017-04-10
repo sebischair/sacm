@@ -232,8 +232,8 @@ function deleteStageDefinition(stageDefinitionId) {
 }
 
 // HumanTaskDefinition
-function createHumanTaskDefinition(workspaceId, data) {
-  return http.post2('/workspaces/'+workspaceId+'/stagedefinitions/', data);
+function createHumanTaskDefinition(data) {
+  return http.post2('/humantaskdefinitions/', data);
 }
 
 function getHumanTaskDefinitions(workspaceId) {
@@ -336,6 +336,9 @@ module.exports = {
     },
     stageDefintion: {
         create: createStageDefinition
+    },
+    humanTaskDefinitions:{
+        create: createHumanTaskDefinition
     },
     case: {
         create: createCase,
