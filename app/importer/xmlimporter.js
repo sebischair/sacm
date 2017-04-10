@@ -13,11 +13,11 @@ const WORKSPACE_ID = 'connecare2017';
 module.exports = class XMLImporter {
 
     constructor() {
-        this.entityDefinitionMap = new Map(); //<entityName, sociocortexId>
-        this.attributeDefinitionMap = new Map(); //<entityName.attrName, sociocortexId>
-        this.derivedAttributeDefinitionMap = new Map(); //<entityName.derAttrName, sociocortexId>
-        this.caseDefinitionMap = new Map(); //<name, sociocortexId>
-        this.humanTaskDefinitionMap = new Map(); //<name, sociocortexId>
+      this.entityDefinitionMap = new Map(); //<entityName, sociocortexId>
+      this.attributeDefinitionMap = new Map(); //<entityName.attrName, sociocortexId>
+      this.derivedAttributeDefinitionMap = new Map(); //<entityName.derAttrName, sociocortexId>
+      this.caseDefinitionMap = new Map(); //<name, sociocortexId>
+      this.humanTaskDefinitionMap = new Map(); //<name, sociocortexId>
     }
 
     getEntityDefinitionIdByName(entityDefinitionName){
@@ -31,35 +31,32 @@ module.exports = class XMLImporter {
     }
 
     import(filePath){
-      return new Promise((resolve, reject)=>{
-        if(!fs.existsSync(filePath)) 
-          reject('File does not exist' + filePath);
+      if(!fs.existsSync(filePath)) 
+        return Promise.reject('File does not exist' + filePath);
 
-        xml.parseStringAsync(fs.readFileSync(filePath).toString())
-          .then(json=>{
-              this.json = json.SACMDefinition;
-              return this.deleteAndCreateWorkspace();
-          })
-          .then(() => {
-              return this.createEntityDefinitions();
-          })
-          .then(() => {
-              return this.createAttributeDefintions();
-          })
-          .then(() => {
-              return this.createCaseDefinitions();
-          })
-          .then(() => {
-              //return Promise.resolve();
-              return this.createStageDefinitions();
-          })
-          .then(()=>{
-              resolve();
-          })
-          .catch(err=>{
-              reject(err);
-          });
-        });
+      return xml.parseStringAsync(fs.readFileSync(filePath).toString())
+        .then(json=>{
+            this.json = json.SACMDefinition;
+            return this.deleteAndCreateWorkspace();
+        })
+        .then(() => {
+            return this.createEntityDefinitions();
+        })
+        .then(() => {
+            return this.createAttributeDefintions();
+        })
+        .then(() => {
+            return this.createCaseDefinitions();
+        })
+        .then(() => {
+            return this.createStageDefinitions();
+        })
+        .then(()=>{
+            return Promise.resolve();
+        })
+        .catch(err=>{
+            return Promise.reject(err);
+        });        
     }
 
 
@@ -102,22 +99,20 @@ module.exports = class XMLImporter {
     }
 
     createCaseDefinitions() {      
-      return Promise.each(this.json.CaseDefinition, cd=>{ 
-        return new Promise((resolve, reject)=>{   
-          const data = {
-            name: cd.$.id,
-            label: cd.$.label,
-            entityDefinition: {id: this.getEntityDefinitionIdByName(cd.$.entityDefinitionId)}
-          };
-          SocioCortex.caseDefinition.create(data)
-            .then(persistedCaseDefinition =>{
-              this.caseDefinitionMap.set(cd.$.id, persistedCaseDefinition.id);            
-              resolve();
-            })
-            .catch(err=>{
-              reject(err);
-            });           
-        });
+      return Promise.each(this.json.CaseDefinition, cd=>{         
+        const data = {
+          name: cd.$.id,
+          label: cd.$.label,
+          entityDefinition: {id: this.getEntityDefinitionIdByName(cd.$.entityDefinitionId)}
+        };
+        return SocioCortex.caseDefinition.create(data)
+          .then(persistedCaseDefinition =>{
+            this.caseDefinitionMap.set(cd.$.id, persistedCaseDefinition.id);            
+            Promise.resolve();
+          })
+          .catch(err=>{
+            Promise.reject(err);
+          });     
       });  
     }
 
