@@ -25,6 +25,8 @@ module.exports = class XMLImporter {
     }
 
     getCaseDefinitionIdByName(caseDefinitionName){
+      if(!this.caseDefinitionMap.has(caseDefinitionName))
+        console.log('ERR CaseDefintion ID not found')
       return this.caseDefinitionMap.get(caseDefinitionName);
     }
 
@@ -48,6 +50,7 @@ module.exports = class XMLImporter {
               return this.createCaseDefinitions();
           })
           .then(() => {
+              //return Promise.resolve();
               return this.createStageDefinitions();
           })
           .then(()=>{
@@ -108,7 +111,7 @@ module.exports = class XMLImporter {
         };
         SocioCortex.caseDefinition.create(data)
           .then(persistedCaseDefinition =>{
-            this.caseDefinitionMap.set(cd.$.id+cd.$.id, persistedCaseDefinition.id);            
+            this.caseDefinitionMap.set(cd.$.id, persistedCaseDefinition.id);            
             return Promise.resolve();
           })
           .catch(err=>{
@@ -117,11 +120,17 @@ module.exports = class XMLImporter {
       });     
     }
 
-    createStageDefinitions() {     
-      return Promise.each(this.json.CaseDefinition, cd=>{   
+    createStageDefinitions() {  
+      console.log('stage def0')    
+      return Promise.each(this.json.CaseDefinition, cd=>{  
+        console.log('stage def1')
+        console.log(cd.$.id);
+        console.log(this.caseDefinitionMap);
+        console.log(this.getCaseDefinitionIdByName(cd.$.id)) 
         if(cd.StageDefinition)
-          createStageDefinitionRecursive(getCaseDefinitionIdByName(cd.$.id), null, cd.StageDefinition);
-        return Promise.resolve();
+          return createStageDefinitionRecursive(this.getCaseDefinitionIdByName(cd.$.id), null, cd.StageDefinition);
+        else
+          return Promise.resolve();
       });   
     }
 
