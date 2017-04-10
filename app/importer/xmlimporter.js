@@ -21,7 +21,7 @@ module.exports = class XMLImporter {
       this.humanTaskDefinitionMap = new Map(); //<xmlId, sociocortexId>
     }
 
-    getEntityDefinitionIdByName(entityDefinitionName){
+    entityDefinitionIdByName(entityDefinitionName){
       return this.entityDefinitionMap.get(entityDefinitionName);
     }
 
@@ -143,12 +143,19 @@ module.exports = class XMLImporter {
             if(sd.StageDefinition)
               return this.createStageDefinitionRecursive(caseDefId, persistedStageDef.id, sd.StageDefinition);
             else
-              Promise.resolve();
+              return Promise.resolve();
+          })
+          .then(()=>{
+
           })
           .catch(err=>{
             Promise.reject(err);
           });
       });      
+    }
+
+    createHumanTaskDefiniton(){
+
     }
 
 
