@@ -17,7 +17,6 @@ module.exports = class XMLImporter {
     }
 
     import(filePath){
-
         if(!fs.existsSync(filePath)) {
           console.log('Filex does not exist ' + filePath);
           return Promise.reject('File does not exist');
@@ -28,10 +27,8 @@ module.exports = class XMLImporter {
             xml.parseStringAsync(xmlString)
                 .then(json=>{
                     this.json = json.SACMDefinition;
-
                     // Reset workspace
                     return this.resetWorkspace(WORKSPACE_ID);
-
                 })
                 .then(() => {
                     return this.processDataDefinition();
@@ -200,8 +197,9 @@ module.exports = class XMLImporter {
                 reject('Only one Case Definition Allowed!');
             if(!this.json.CaseDefinition[0].$.name)
                 reject('No Case Definition Name defined!');
-            sacmAPI.createCaseDefinition({
-                name: this.json.CaseDefinition[0].$.name
+            SocioCortex.caseDefinition.create({
+                name: this.json.CaseDefinition[0].$.name,
+                label: this.json.CaseDefinition[0].$.label
             })
             .then(caseDefinition=>{
                 console.log('here', caseDefinition);

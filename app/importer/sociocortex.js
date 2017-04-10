@@ -1,7 +1,7 @@
 var express = require('express');
 var http = require('./http');
 var config = require('../../config');
-var Promise = require('promise');
+var Promise = require('bluebird');
 
 function deleteWorkspace(workspaceId, ifexist){
     var p = http.del2('/workspaces/' + workspaceId, {});
@@ -78,14 +78,6 @@ function createEntity(data){
 
 function createAttribute(data){
     return http.post2('/attributes', data);
-}
-
-function createAttributeGroup(data){
-    return http.post2('/attributegroups', data);
-}
-
-function findAttributeGroup(attrGroupId){
-    return http.get2('/attributegroups/'+attrGroupId);
 }
 
 
@@ -210,11 +202,11 @@ function createCaseDefinition(workspaceId, data){
   return http.post2('/workspaces/'+workspaceId+'/casedefinitions/', data);
 }
 
-function getCaseDefinitions(workspaceId) {
+function findCaseDefinitions(workspaceId) {
   return http.get2('/workspaces/'+workspaceId+'/casedefinitions/', {});
 }
 
-function getCaseDefinition(caseDefinitionId){
+function findCaseDefinition(caseDefinitionId){
   return http.get2('/casedefinition/'+caseDefinitionId, {});
 }
 
@@ -261,11 +253,11 @@ function createCase(workspaceId, data){
   return http.post2('/workspaces/'+workspaceId+'/cases/', data);
 }
 
-function getCases(workspaceId) {
+function findCases(workspaceId) {
   return http.get2('/workspaces/'+workspaceId+'/cases/', {});
 }
 
-function getCase(caseId){
+function findCase(caseId){
   return http.get2('/case/'+caseDefinitionId, {});
 }
 
@@ -331,12 +323,24 @@ module.exports = {
         findByEntity: findAttributesByEntityId,
         findByEntityAndAttributeName: findAttributeIdByEntityIdAndAttibuteName
     },
-    attributeGroup:{
-        find: findAttributeGroup,
-        create: createAttributeGroup
-    },
     derivedAttributeDefinition:{
         create: createDerivedAttributeDefinition
+    },
+    caseDefinition: {
+        create: createCaseDefinition,
+        delete: deleteCaseDefinition,
+        find: findCaseDefinition
+    },
+    caseDefinitions: {
+        find: findCaseDefinitions
+    },
+    case: {
+        create: createCase,
+        delete: deleteCase,
+        find: findCase
+    },
+    cases: {
+        find: findCases
     },
     mxl: mxlWorkspace,
     mxl2: mxlWorkspace2

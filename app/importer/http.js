@@ -1,7 +1,7 @@
 var express = require('express');
 var config = require('../../config');
 var request = require('request');
-var Promise = require('promise');
+var Promise = require('bluebird');
 var colors = require('colors');
 
 var headers = {
