@@ -23,25 +23,25 @@ module.exports = class XMLImporter {
 
     getEntityDefinitionIdByXMLId(entityDefinitionXMLId){
       if(!this.entityDefinitionMap.has(entityDefinitionXMLId))
-        return Promise.reject('ERR EntityDefintion ID not found');
+        return Promise.reject('ERROR: EntityDefintion ID not found');
       return Promise.resolve(this.entityDefinitionMap.get(entityDefinitionXMLId));
     }
 
     getCaseDefinitionIdByXMLId(caseDefinitionXMLId){
       if(!this.caseDefinitionMap.has(caseDefinitionXMLId))
-        console.log('ERR CaseDefinition ID not found')
-      return this.caseDefinitionMap.get(caseDefinitionXMLId);
+        return Promise.reject('ERROR: CaseDefinition ID not found')
+      return Promise.resolve(this.caseDefinitionMap.get(caseDefinitionXMLId));
     }
 
     getStageDefinitionIdByXMLId(stageDefinitionXMLId){
       if(!this.stageDefinitionMap.has(stageDefinitionXMLId))
-        console.log('ERR StageDefinition ID not found')
-      return this.stageDefinitionMap.get(stageDefinitionXMLId);
+        Promise.reject('ERROR: StageDefinition ID not found')
+      return Promise.resolve(this.stageDefinitionMap.get(stageDefinitionXMLId));
     }
 
     import(filePath){
       if(!fs.existsSync(filePath)) 
-        return Promise.reject('File does not exist' + filePath);
+        return Promise.reject('ERROR: File does not exist' + filePath);
 
       return xml.parseStringAsync(fs.readFileSync(filePath).toString())
         .then(json=>{
@@ -53,22 +53,20 @@ module.exports = class XMLImporter {
         })
         .then(() => {
           return this.createAttributeDefinitions();
-        })
-        
+        })        
         .then(() => {
           return Promise.resolve();
           //return this.createDerivedAttributeDefinitions();
         })  
         .then(() => {
           return this.createCaseDefinitions();
-        })
-      /*
+        })    
         .then(() => {
           return this.createStageDefinitions();
-        })
+        })  
         .then(() => {          
           return this.createTaskDefinitions();
-        })*/
+        })
         .then(()=>{
           return Promise.resolve();
         })
@@ -167,7 +165,7 @@ module.exports = class XMLImporter {
         return this.getCaseDefinitionIdByXMLId(cd.$.id)
           .then(caseDefId=>{
             return this.createStageDefinitionRecursive(caseDefId, null, cd.StageDefinition);
-          })        
+          });        
       });   
     }
 
@@ -197,8 +195,12 @@ module.exports = class XMLImporter {
 
     createTaskDefinitions(){
       return Promise.each(this.json.CaseDefinition, cd=>{ 
-        const caseDefId = this.getCaseDefinitionIdByXMLId(cd.$.id);
-        return this.createHumanTaskDefinitons(caseDefId, null, cd.HumanTaskDefinition)
+        let caseDefId = null;
+        return this.getCaseDefinitionIdByXMLId(cd.$.id)
+          .then(caseDefeinitionId=>{   
+            caseDefId = caseDefeinitionId;         
+            return this.createHumanTaskDefinitons(caseDefId, null, cd.HumanTaskDefinition);
+          })
           .then(()=>{
             return this.createAutomatedTaskDefinitons(caseDefId, null, cd.AutomatedTaskDefinition);
           })
@@ -212,8 +214,12 @@ module.exports = class XMLImporter {
       if(stageDefinitions == null)
         return Promise.resolve();
       return Promise.each(stageDefinitions, sd=>{ 
-        const parentStageDefId = this.getStageDefinitionIdByXMLId(sd.$.id);
-        return this.createTaskDefinitionRecursive(caseDefId, parentStageDefId, sd.StageDefinition)
+        let parentStageDefId = null;
+        return this.getStageDefinitionIdByXMLId(sd.$.id)
+          .then(parentStageDefinitionId=>{
+            parentStageDefId = parentStageDefinitionId;
+            return this.createTaskDefinitionRecursive(caseDefId, parentStageDefId, sd.StageDefinition)
+          })
           .then(()=>{
             return this.createHumanTaskDefinitons(caseDefId, parentStageDefId, sd.HumanTaskDefinition)
           })
