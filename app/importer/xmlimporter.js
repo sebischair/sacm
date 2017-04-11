@@ -6,12 +6,13 @@ import xml2js from 'xml2js';
 import SocioCortex from './sociocortex';
 const xml = Promise.promisifyAll(xml2js);
 
-const WORKSPACE_ID = 'connecare2017';
+
 
 
 module.exports = class XMLImporter {
 
     constructor() {
+      this.workspaceId = 'connecare2017'+new Date().getTime();
       this.entityDefinitionMap = new Map(); //<xmlId, sociocortexId>
       this.attributeDefinitionMap = new Map(); //<xmlEntityId+xmlAttrId, sociocortexId>
       this.derivedAttributeDefinitionMap = new Map(); //<entityName.derAttrName, sociocortexId>
@@ -77,14 +78,12 @@ module.exports = class XMLImporter {
 
 
     deleteAndCreateWorkspace() {
-      return SocioCortex.workspace.delete(WORKSPACE_ID, true).then(() => {
-        return SocioCortex.workspace.create(WORKSPACE_ID);
-      });
+      return SocioCortex.workspace.create(this.workspaceId);
     }
 
     createEntityDefinitions() {
       return Promise.each(this.json.EntityDefinition, ed=>{
-        return SocioCortex.entityDefinition.create(WORKSPACE_ID, ed.$.id)
+        return SocioCortex.entityDefinition.create(this.workspaceId, ed.$.id)
           .then(persistedEntityDefinition =>{
             this.entityDefinitionMap.set(ed.$.id, persistedEntityDefinition.id);            
             return Promise.resolve();
@@ -103,7 +102,7 @@ module.exports = class XMLImporter {
           }
           return this.getEntityDefinitionIdByXMLId(ed.$.id)
             .then(entityDefId => {
-              return SocioCortex.attributeDefinition.create(WORKSPACE_ID, entityDefId, data);
+              return SocioCortex.attributeDefinition.create(this.workspaceId, entityDefId, data);
             })
             .then(persistedAttributeDefinition =>{
               this.attributeDefinitionMap.set(ed.$.id+ad.$.id, persistedAttributeDefinition.id);            
@@ -126,7 +125,7 @@ module.exports = class XMLImporter {
             expression: ad.$.expression
           };
           const entityDefId = this.getEntityDefinitionIdByXMLId(ed.$.id);
-          return SocioCortex.derivedAttributeDefinition.create(WORKSPACE_ID, entityDefId, data)
+          return SocioCortex.derivedAttributeDefinition.create(this.workspaceId, entityDefId, data)
             .then(persistedAttributeDefinition =>{
               this.derivedAttributeDefinitionMap.set(ed.$.id+ad.$.id, persistedAttributeDefinition.id);            
               return Promise.resolve();
@@ -415,7 +414,7 @@ module.exports = class XMLImporter {
       // Create element here ...
       console.log(attributeDefinition.$.name);
 
-      return SocioCortex.attributeDefinition.create(WORKSPACE_ID, entityTypeId, data).then(
+      return SocioCortex.attributeDefinition.create(this.workspaceId, entityTypeId, data).then(
         (result) => {
           console.log('THIS ADD SC:::::');
           return Promise.resolve(result);
@@ -430,7 +429,7 @@ module.exports = class XMLImporter {
 
 
     createEntityType(entityType){
-      return SocioCortex.entityType.create(WORKSPACE_ID, entityType.$.name).then(
+      return SocioCortex.entityType.create(this.workspaceId, entityType.$.name).then(
         (result) => {
           result.source = entityType;
           return Promise.resolve(result);
