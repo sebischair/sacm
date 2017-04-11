@@ -19,6 +19,7 @@ module.exports = class XMLImporter {
       this.caseDefinitionMap = new Map(); //<xmlId, sociocortexId>
       this.stageDefinitionMap = new Map(); //<xmlId, sociocortexId>
       this.humanTaskDefinitionMap = new Map(); //<xmlId, sociocortexId>
+      this.automatedTaskDefinitionMap = new Map(); //<xmlId, sociocortexId>
     }
 
     getEntityDefinitionIdByName(entityDefinitionXMLId){
@@ -123,7 +124,7 @@ module.exports = class XMLImporter {
             expression: ad.$.expression
           };
           const entityDefId = this.getEntityDefinitionIdByName(ed.$.id);
-          SocioCortex.derivedAttributeDefinition.create(WORKSPACE_ID, entityDefId, data)
+          return SocioCortex.derivedAttributeDefinition.create(WORKSPACE_ID, entityDefId, data)
             .then(persistedAttributeDefinition =>{
               this.derivedAttributeDefinitionMap.set(ed.$.id+ad.$.id, persistedAttributeDefinition.id);            
               return Promise.resolve();
@@ -185,17 +186,69 @@ module.exports = class XMLImporter {
     }
 
     createTaskDefinitions(){
+      //TODO task on case level currently not imported
       return Promise.each(this.json.CaseDefinition, cd=>{ 
         const caseDefId = this.getCaseDefinitionIdByName(cd.$.id);
-        return this.createStageDefinitionRecursive(caseDefId, null, cd.StageDefinition);
+        return this.createTaskDefinitionRecursive(caseDefId, null, cd.StageDefinition);
       });   
     }
 
-    createHumanTaskDefiniton(){
-
+    createTaskDefinitionRecursive(caseDefId, parentStageDefId, stageDefinitions){
+       if(stageDefinitions == null)
+        return Promise.resolve();
+      return Promise.each(stageDefinitions, sd=>{ 
+        console.log(sd.$.id);
+        return this.createTaskDefinitionRecursive(caseDefId, null, sd.StageDefinition);
+      });   
     }
 
-    createAutomatedTaskDefiniton(){
+    createHumanTaskDefiniton(caseDefId, parentStageDefId, humanTaskDefinitions){
+      if(humanTaskDefinitions == null)
+        return Promise.resolve();
+      return Promise.each(humanTaskDefinitions, td=>{        
+        const data = {
+          name: td.$.id,
+          label: td.$.id,
+          isRepeatable: td.$.isRepeatable,
+          isMandatory: td.$.isMandetory,
+          caseDefinition: {id: caseDefId}
+        }
+        if(parentStageDefId != null) 
+          data.parentStageDefinition = {id: parentStageDefId};
+        return SocioCortex.humanTaskDefinition.create(data)
+          .then(persistedHumanTaskDef=>{
+            this.humanTaskDefinitionMap.set(sd.$.id, persistedHumanTaskDef.id);     
+          })
+          .catch(err=>{
+            return Promise.reject(err);
+          });
+      });      
+    }
+
+    createAutomatedTaskDefiniton(caseDefId, parentStageDefId, automatedTaskDefinitions){
+      if(automatedTaskDefinitions == null)
+        return Promise.resolve();
+      return Promise.each(automatedTaskDefinitions, td=>{        
+        const data = {
+          name: td.$.id,
+          label: td.$.id,
+          isRepeatable: td.$.isRepeatable,
+          isMandatory: td.$.isMandetory,
+          caseDefinition: {id: caseDefId}
+        }
+        if(parentStageDefId != null) 
+          data.parentStageDefinition = {id: parentStageDefId};
+        return SocioCortex.automatedTaskDefinition.create(data)
+          .then(persistedAutomatedTaskDef=>{
+            this.automatedTaskDefinitionMap.set(sd.$.id, persistedAutomatedTaskDef.id);     
+          })
+          .catch(err=>{
+            return Promise.reject(err);
+          });
+      });      
+    }
+
+    createTaskParamDefinition(){
 
     }
 
