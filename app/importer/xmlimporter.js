@@ -47,9 +47,10 @@ module.exports = class XMLImporter {
       return xml.parseStringAsync(fs.readFileSync(filePath).toString())
         .then(json=>{
           this.json = json.SACMDefinition;
-          return this.deleteAndCreateWorkspace();
+          return SocioCortex.workspace.create(this.workspaceId);
         })
-        .then(() => {
+        .then(workspace => {
+          this.workspaceId = workspace.id;
           return this.createEntityDefinitions();
         })
         .then(() => {
@@ -78,7 +79,7 @@ module.exports = class XMLImporter {
 
 
     deleteAndCreateWorkspace() {
-      return SocioCortex.workspace.create(this.workspaceId);
+      
     }
 
     createEntityDefinitions() {

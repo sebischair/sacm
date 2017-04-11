@@ -16,12 +16,12 @@ function deleteWorkspace(workspaceId, ifexist){
 }
 
 function createWorkspace(workspaceId){
-   return http.post('/workspaces', {name:workspaceId, id:workspaceId});
+   return http.post('/workspaces', {name:workspaceId});
 }
 
 function createEntityDefinition(workspaceId, typeId){
-    var data = {name: typeId, namePlural: typeId};
-    return http.post('/workspaces/'+workspaceId+'/entityTypes/', data);
+    var data = {name: typeId, namePlural: typeId, workspace: {id: workspaceId}};
+    return http.post('/workspaces/'+workspaceId+'/entityTypes', data);
 }
 
 function getEntityTypes(workspaceId){
