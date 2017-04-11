@@ -19,7 +19,7 @@ function createWorkspace(workspaceId){
    return http.post('/workspaces', {name:workspaceId, id:workspaceId});
 }
 
-function createEntityType(workspaceId, typeId){
+function createEntityDefinition(workspaceId, typeId){
     var data = {name: typeId, namePlural: typeId};
     return http.post('/workspaces/'+workspaceId+'/entityTypes/', data);
 }
@@ -59,8 +59,8 @@ function createCaseDefinition(data){
   return http.post('/casedefinitions/', data);
 }
 
-function findCaseDefinitions(workspaceId) {
-  return http.get('/workspaces/'+workspaceId+'/casedefinitions/', {});
+function findCaseDefinitions() {
+  return http.get('/casedefinitions/', {});
 }
 
 function findCaseDefinition(caseDefinitionId){
@@ -76,11 +76,11 @@ function createStageDefinition(data) {
   return http.post('/stagedefinitions/', data);
 }
 
-function getStageDefinitions(workspaceId) {
-  return http.get('workspaces/'+workspaceId+'/stagedefinitions/');
+function findStageDefinitions() {
+  return http.get('/stagedefinitions/');
 }
 
-function getStageDefinition(stageDefinitionId) {
+function findStageDefinition(stageDefinitionId) {
   return http.get('/stagedefinition/'+stageDefinitionId, {});
 }
 
@@ -93,10 +93,6 @@ function createHumanTaskDefinition(data) {
   return http.post('/humantaskdefinitions/', data);
 }
 
-function createAutomatedTaskDefinition(data) {
-  return http.post('/automatedtaskdefinitions/', data);
-}
-
 function getHumanTaskDefinitions(workspaceId) {
   return http.get('workspaces/'+workspaceId+'/humantaskdefinitions/');
 }
@@ -106,9 +102,15 @@ function getHumanTaskDefinition(taskId) {
 }
 
 function deleteHumanTaskDefinition(stageDefinitionId) {
-  return http.del('/humantaskdefinitions/'+taskId, {});
+  return http.del('/humantaskdefinition/'+taskId, {});
 }
 
+// AutomatedTaskDefinition
+function createAutomatedTaskDefinition(data) {
+  return http.post('/automatedtaskdefinitions/', data);
+}
+
+// TaskParamDefinition
 function createTaskParamDefinition(data){
   return http.post('/taskparamdefinitions/', data); 
 }
@@ -135,19 +137,16 @@ module.exports = {
         create: createWorkspace,
         delete: deleteWorkspace
     },
-    entityType:{
+    entityDefinition:{
         find: getEntityTypes,
-        create: createEntityType
-    },
-    attributeDefinition:{
-        create: createAttributeDefinition
+        create: createEntityDefinition
     },
     entity:{
         create: createEntity,
         createOfType: createEntityOfType
     },
-    entities:{
-        find: false
+    attributeDefinition:{
+        create: createAttributeDefinition
     },
     attribute:{
         create : createAttribute,
@@ -158,29 +157,27 @@ module.exports = {
     caseDefinition: {
         create: createCaseDefinition,
         delete: deleteCaseDefinition,
-        find: findCaseDefinition
-    },
-    caseDefinitions: {
+        findById: findCaseDefinition,
         find: findCaseDefinitions
     },
     stageDefinition: {
-        create: createStageDefinition
+        create: createStageDefinition,
+        findById: findStageDefinition,
+        find: findStageDefinitions
     },
-    humanTaskDefinitions:{
+    humanTaskDefinition:{
         create: createHumanTaskDefinition
     },
-    taskParamDefinitions:{
-        create: createTaskParamDefinition
-    },
-    automatedTaskDefinitions: {
+    automatedTaskDefinition: {
         create: createAutomatedTaskDefinition
+    },
+    taskParamDefinition: {
+        create: createTaskParamDefinition
     },
     case: {
         create: createCase,
         delete: deleteCase,
-        find: findCase
-    },
-    cases: {
-        find: findCases
+        find: findCase,
+        findAll: findCases
     }
 };

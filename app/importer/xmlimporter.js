@@ -84,7 +84,7 @@ module.exports = class XMLImporter {
 
     createEntityDefinitions() {
       return Promise.each(this.json.EntityDefinition, ed=>{
-        return SocioCortex.entityType.create(WORKSPACE_ID, ed.$.id)
+        return SocioCortex.entityDefinition.create(WORKSPACE_ID, ed.$.id)
           .then(persistedEntityDefinition =>{
             this.entityDefinitionMap.set(ed.$.id, persistedEntityDefinition.id);            
             return Promise.resolve();
@@ -242,7 +242,7 @@ module.exports = class XMLImporter {
         }  
         if(parentStageDefId != null) 
           data.parentStageDefinition = {id: parentStageDefId};
-        return SocioCortex.humanTaskDefinitions.create(data)
+        return SocioCortex.humanTaskDefinition.create(data)
           .then(persistedHumanTaskDef=>{
             this.humanTaskDefinitionMap.set(td.$.id, persistedHumanTaskDef.id);  
             return this.createTaskParamDefinitions(persistedHumanTaskDef.id, td.TaskParamDefinition);
@@ -269,7 +269,7 @@ module.exports = class XMLImporter {
         }
         if(parentStageDefId != null) 
           data.parentStageDefinition = {id: parentStageDefId};
-        return SocioCortex.automatedTaskDefinitions.create(data)
+        return SocioCortex.automatedTaskDefinition.create(data)
           .then(persistedAutomatedTaskDef=>{
             this.automatedTaskDefinitionMap.set(td.$.id, persistedAutomatedTaskDef.id);    
             return this.createTaskParamDefinitions(persistedAutomatedTaskDef.id, td.TaskParamDefinition);
@@ -292,7 +292,7 @@ module.exports = class XMLImporter {
           isReadOnly: tp.$.isReadOnly,
           taskDefinition: {id: taskDefinitionId}
         }
-        return SocioCortex.taskParamDefinitions.create(data);
+        return SocioCortex.taskParamDefinition.create(data);
       });      
     }
 
