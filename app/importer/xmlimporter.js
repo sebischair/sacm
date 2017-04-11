@@ -194,11 +194,14 @@ module.exports = class XMLImporter {
     }
 
     createTaskDefinitionRecursive(caseDefId, parentStageDefId, stageDefinitions){
-       if(stageDefinitions == null)
+      if(stageDefinitions == null)
         return Promise.resolve();
       return Promise.each(stageDefinitions, sd=>{ 
-        console.log(sd.$.id);
-        return this.createTaskDefinitionRecursive(caseDefId, null, sd.StageDefinition);
+        const parentStageDefId = this.getStageDefinitionIdByName(sd.$.id);
+        return this.createTaskDefinitionRecursive(caseDefId, parentStageDefId, sd.StageDefinition)
+          .then(()=>{
+            return this.createHumanTaskDefiniton(caseDefId, parentStageDefId, sd.HumanTaskDefinition)
+          });
       });   
     }
 
@@ -211,13 +214,14 @@ module.exports = class XMLImporter {
           label: td.$.id,
           isRepeatable: td.$.isRepeatable,
           isMandatory: td.$.isMandetory,
-          caseDefinition: {id: caseDefId}
-        }
+          caseDefinition: {id: caseDefId},
+        }  
         if(parentStageDefId != null) 
           data.parentStageDefinition = {id: parentStageDefId};
-        return SocioCortex.humanTaskDefinition.create(data)
+        return SocioCortex.humanTaskDefinitions.create(data)
           .then(persistedHumanTaskDef=>{
-            this.humanTaskDefinitionMap.set(sd.$.id, persistedHumanTaskDef.id);     
+            this.humanTaskDefinitionMap.set(td.$.id, persistedHumanTaskDef.id);  
+            return Promise.resolve();   
           })
           .catch(err=>{
             return Promise.reject(err);
