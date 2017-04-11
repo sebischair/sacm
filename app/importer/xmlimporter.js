@@ -224,6 +224,9 @@ module.exports = class XMLImporter {
         return SocioCortex.humanTaskDefinitions.create(data)
           .then(persistedHumanTaskDef=>{
             this.humanTaskDefinitionMap.set(td.$.id, persistedHumanTaskDef.id);  
+            return this.createTaskParamDefinitions(persistedHumanTaskDef.id, td.TaskParamDefinition);
+          })
+          .then(()=>{
             return Promise.resolve();   
           })
           .catch(err=>{
@@ -248,6 +251,9 @@ module.exports = class XMLImporter {
         return SocioCortex.automatedTaskDefinitions.create(data)
           .then(persistedAutomatedTaskDef=>{
             this.automatedTaskDefinitionMap.set(td.$.id, persistedAutomatedTaskDef.id);    
+            return this.createTaskParamDefinitions(persistedAutomatedTaskDef.id, td.TaskParamDefinition);
+          })
+          .then(()=>{
             return Promise.resolve();   
           })
           .catch(err=>{
@@ -256,8 +262,17 @@ module.exports = class XMLImporter {
       });      
     }
 
-    createTaskParamDefinitions(){
-
+    createTaskParamDefinitions(taskDefinitionId, taskDefinitionParams){
+      if(taskDefinitionParams == null)
+        return Promise.resolve();
+      return Promise.each(taskDefinitionParams, tp=>{        
+        const data = {
+          path: tp.$.path,
+          isReadOnly: tp.$.isReadOnly,
+          taskDefinition: {id: taskDefinitionId}
+        }
+        return SocioCortex.taskParamDefinitions.create(data);
+      });      
     }
 
     createSentryDefintions(){

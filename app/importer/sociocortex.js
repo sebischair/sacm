@@ -252,6 +252,10 @@ function deleteHumanTaskDefinition(stageDefinitionId) {
   return http.del2('/humantaskdefinitions/'+taskId, {});
 }
 
+function createTaskParamDefinition(data){
+  return http.post2('/taskparamdefinitions/', data); 
+}
+
 // CaseDefinition
 function createCase(workspaceId, data){
   return http.post2('/workspaces/'+workspaceId+'/cases/', data);
@@ -343,6 +347,9 @@ module.exports = {
     },
     humanTaskDefinitions:{
         create: createHumanTaskDefinition
+    },
+    taskParamDefinitions:{
+        create: createTaskParamDefinition
     },
     automatedTaskDefinitions: {
         create: createAutomatedTaskDefinition
