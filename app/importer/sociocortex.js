@@ -16,7 +16,24 @@ function deleteWorkspace(workspaceId, ifexist){
 }
 
 function createWorkspace(workspaceId){
-   return http.post('/workspaces', {name:workspaceId});
+    const data = {
+        name: workspaceId, 
+        /*
+        permissions: {
+            readers: [{
+                name: "Everybody",
+                id: "everybody"
+            }],
+            writers: [{
+                name: "All registered users",
+                id: "allusers"
+            }],
+            //contributors: [],
+            //administrators: []
+        }
+        */
+    };
+   return http.post('/workspaces', data);
 }
 
 function createEntityDefinition(workspaceId, typeId){
