@@ -42,32 +42,6 @@ function createDerivedAttributeDefinition(workspaceId, typeId, definition) {
     return http.post2('/entityTypes/'+typeId+'/derivedAttributeDefinitions', definition);
 }
 
-function mxlWorkspace(workspaceId, entityTypeId, attributes, query, cb) {
-    var data = {expression: 'find '+entityTypeId+' .where('+query+')'};
-    http.post('/workspaces/' + workspaceId + '/mxlQuery?attributes=*&meta=', data, function (err, res, body) {
-        if (err || res.statusCode != 200) {
-            console.error(arguments);
-            console.error('Error during mxl Query "' + JSON.stringify(data) + '"!');
-            cb(err, null);
-        } else {
-            //console.log(JSON.stringify(body));
-            cb(err, convertEntitiesToFlatJSON(attributes, body.value));
-        }
-    });
-}
-
-function mxlWorkspace2(workspaceId, query, attributes, cb) {
-    var data = {expression: query};
-    http.post('/workspaces/' + workspaceId + '/mxlQuery?attributes=*&meta=', data, function (err, res, body) {
-        if (err || res.statusCode != 200) {
-            console.error('Error during mxl Query "' + JSON.stringify(data) + '"!');
-            cb(err, null);
-        } else {
-            cb(err, body.value);//
-        }
-    });
-}
-
 function createEntityOfType(entityTypeId, data){
     return http.post2('/entityTypes/'+entityTypeId+'/entities', data);
 }
@@ -81,123 +55,6 @@ function createAttribute(data){
 }
 
 
-function updateEntity(entityId, attributes, data, cb){
-    http.put('/entities/'+entityId, data, function (err, res, body) {
-        if (err || res.statusCode != 200) {
-            console.error('Error updating Entity "' + entityId + '"!');
-            console.error(JSON.stringify(body));
-        } else {
-            console.log(JSON.stringify(body));
-            cb(err, convertEntityToFlatJSON(attributes, body));
-        }
-    });
-}
-
-function deleteEntity(entityId, cb){
-    http.del('/entities/'+entityId, {}, function (err, res, body) {
-        if (err || res.statusCode != 200) {
-            console.error('Error deleting Entity "' + entityId + '"!');
-        } else {
-            cb(err);
-        }
-    });
-}
-
-function findEntities(entityTypeId, attributes, cb){
-    http.get('/entityTypes/'+entityTypeId+'/entities?attributes=*', function (err, res, body) {
-        if (err || res.statusCode != 200) {
-            console.error('Error listing all Entities "' + entityTypeId + '"!');
-            console.error(body);
-        } else {
-            cb(err, convertEntitiesToFlatJSON(attributes, JSON.parse(body)));
-        }
-    });
-}
-
-function findEntityById(entityId, attributes, cb){
-    http.get('/entities/'+entityId+'?attributes=*', function (err, res, body) {
-        if (err || res.statusCode != 200) {
-            console.error('Error finging Entity "' + entityId + '"!');
-            console.error(body);
-        } else {
-            cb(err, convertEntityToFlatJSON(attributes, JSON.parse(body)));
-        }
-    });
-}
-
-//ToDO Remove this method, not needed anymore
-function findAttributesByEntityId(entityId, cb){
-    http.get('/entities/'+entityId+'/attributes', function (err, res, body) {
-        if (err || res.statusCode != 200) {
-            console.error('Error finging Attributes by Entity "' + entityId + '"!');
-            console.error(body);
-        } else {
-            console.log(JSON.stringify(JSON.parse(body)));
-            cb();
-           // cb(err, convertEntityToFlatJSON(attributes, JSON.parse(body)));
-        }
-    });
-}
-
-function findAttributeIdByEntityIdAndAttibuteName(entityId, attributeName, cb){
-    http.get('/entities/'+entityId+'/attributes', function (err, res, body) {
-        if (err || res.statusCode != 200) {
-            console.error('Error finging Attributes by Entity "' + entityId + '"!');
-            console.error(body);
-        } else {
-            var attributes = JSON.parse(body);
-            var attrId = null;
-            for(var i =0; i<attributes.length; i++)
-                if(attributes[i].name == attributeName) {
-                    attrId = attributes[i].id;
-                    break;
-                }
-            if(attrId != null)
-                cb(err, attrId);
-            else
-                cb(new Error('Attribute name not found!'), null);
-        }
-    });
-}
-
-function createAttributeValue(entityId, attributeName, value, cb){
-    findAttributeIdByEntityIdAndAttibuteName(entityId, attributeName, function(err, attrId){
-        if(!err) {
-            console.log(attrId);
-            http.post('/attributes/' + attrId + '/values', value, function (err, res, body) {
-                if (err || res.statusCode != 200) {
-                    console.error('Error during creating Attribute '+attrId+' value "' + JSON.stringify(value)  + '"!');
-                    console.error(body);
-                    cb(err);
-                } else
-                    cb(err);
-            });
-        }else
-            cb(err);
-    });
-}
-
-function deleteAttributeValue(entityId, attributeName, value, cb){
-    console.log('delAttibuteValue: '+entityId, attributeName, value);
-    findAttributeIdByEntityIdAndAttibuteName(entityId, attributeName, function(err, attrId){
-        if(!err) {
-            //console.log(attrId);
-            var values = [value];
-            http.del('/attributes/' + attrId + '/values', values, function (err, res, body) {
-                if (err || res.statusCode != 200) {
-                    console.error('Error during deleting Attribute '+attrId+' values "' + JSON.stringify(values)  + '"!');
-                    console.error(body);
-                    cb(err);
-                } else
-                    cb(err);
-            });
-        }else
-            cb(err);
-    });
-}
-
-// CASE RElATED STUFF
-// TODO Relook at this
 function createCaseDefinition(data){
   return http.post2('/casedefinitions/', data);
 }
@@ -314,22 +171,13 @@ module.exports = {
     },
     entity:{
         create: createEntity,
-        createOfType: createEntityOfType,
-        update: updateEntity,
-        delete: deleteEntity,
-        findById: findEntityById
+        createOfType: createEntityOfType
     },
     entities:{
-        find: findEntities
+        find: false
     },
     attribute:{
         create : createAttribute,
-        value:{
-            create: createAttributeValue,
-            delete: deleteAttributeValue
-        },
-        findByEntity: findAttributesByEntityId,
-        findByEntityAndAttributeName: findAttributeIdByEntityIdAndAttibuteName
     },
     derivedAttributeDefinition:{
         create: createDerivedAttributeDefinition
@@ -361,7 +209,5 @@ module.exports = {
     },
     cases: {
         find: findCases
-    },
-    mxl: mxlWorkspace,
-    mxl2: mxlWorkspace2
+    }
 };
