@@ -3,7 +3,6 @@ import fs from 'fs';
 import Promise from 'bluebird';
 import request from 'request-promise';
 import xml2js from 'xml2js';
-import sacmAPI from './sacmapi';
 import SocioCortex from './sociocortex';
 const xml = Promise.promisifyAll(xml2js);
 
