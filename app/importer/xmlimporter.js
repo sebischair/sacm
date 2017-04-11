@@ -200,15 +200,15 @@ module.exports = class XMLImporter {
         const parentStageDefId = this.getStageDefinitionIdByName(sd.$.id);
         return this.createTaskDefinitionRecursive(caseDefId, parentStageDefId, sd.StageDefinition)
           .then(()=>{
-            return this.createHumanTaskDefiniton(caseDefId, parentStageDefId, sd.HumanTaskDefinition)
+            return this.createHumanTaskDefinitons(caseDefId, parentStageDefId, sd.HumanTaskDefinition)
           })
           .then(()=>{
-            return this.createAutomatedTaskDefiniton(caseDefId, parentStageDefId, sd.AutomatedTaskDefinition)
+            return this.createAutomatedTaskDefinitons(caseDefId, parentStageDefId, sd.AutomatedTaskDefinition)
           });
       });   
     }
 
-    createHumanTaskDefiniton(caseDefId, parentStageDefId, humanTaskDefinitions){
+    createHumanTaskDefinitons(caseDefId, parentStageDefId, humanTaskDefinitions){
       if(humanTaskDefinitions == null)
         return Promise.resolve();
       return Promise.each(humanTaskDefinitions, td=>{        
@@ -232,7 +232,7 @@ module.exports = class XMLImporter {
       });      
     }
 
-    createAutomatedTaskDefiniton(caseDefId, parentStageDefId, automatedTaskDefinitions){
+    createAutomatedTaskDefinitons(caseDefId, parentStageDefId, automatedTaskDefinitions){
       if(automatedTaskDefinitions == null)
         return Promise.resolve();
       return Promise.each(automatedTaskDefinitions, td=>{        
@@ -256,7 +256,11 @@ module.exports = class XMLImporter {
       });      
     }
 
-    createTaskParamDefinition(){
+    createTaskParamDefinitions(){
+
+    }
+
+    createSentryDefintions(){
 
     }
 
