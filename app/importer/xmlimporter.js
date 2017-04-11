@@ -50,7 +50,7 @@ module.exports = class XMLImporter {
           return this.deleteAndCreateWorkspace();
         })
         .then(() => {
-            return this.createEntityDefinitions();
+          return this.createEntityDefinitions();
         })
         .then(() => {
           return this.createAttributeDefinitions();
