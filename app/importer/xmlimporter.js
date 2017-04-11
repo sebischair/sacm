@@ -23,8 +23,8 @@ module.exports = class XMLImporter {
 
     getEntityDefinitionIdByXMLId(entityDefinitionXMLId){
       if(!this.entityDefinitionMap.has(entityDefinitionXMLId))
-        console.log('ERR EntityDefintion ID not found')
-      return this.entityDefinitionMap.get(entityDefinitionXMLId);
+        return Promise.reject('ERR EntityDefintion ID not found');
+      return Promise.resolve(this.entityDefinitionMap.get(entityDefinitionXMLId));
     }
 
     getCaseDefinitionIdByXMLId(caseDefinitionXMLId){
@@ -54,19 +54,21 @@ module.exports = class XMLImporter {
         .then(() => {
           return this.createAttributeDefinitions();
         })
+        
         .then(() => {
           return Promise.resolve();
           //return this.createDerivedAttributeDefinitions();
-        })
+        })  
         .then(() => {
           return this.createCaseDefinitions();
         })
+      /*
         .then(() => {
           return this.createStageDefinitions();
         })
         .then(() => {          
           return this.createTaskDefinitions();
-        })
+        })*/
         .then(()=>{
           return Promise.resolve();
         })
@@ -101,19 +103,22 @@ module.exports = class XMLImporter {
             options: {},
             multiplicity: 'any'
           }
-          const entityDefId = this.getEntityDefinitionIdByXMLId(ed.$.id);
-          SocioCortex.attributeDefinition.create(WORKSPACE_ID, entityDefId, data)
+          return this.getEntityDefinitionIdByXMLId(ed.$.id)
+            .then(entityDefId => {
+              return SocioCortex.attributeDefinition.create(WORKSPACE_ID, entityDefId, data);
+            })
             .then(persistedAttributeDefinition =>{
               this.attributeDefinitionMap.set(ed.$.id+ad.$.id, persistedAttributeDefinition.id);            
               return Promise.resolve();
             })
             .catch(err=>{
               return Promise.reject(err);
-            })
+            });       
         });
       });
     }
 
+/*
     createDerivedAttributeDefinitions() {
       return Promise.each(this.json.EntityDefinition, ed=>{
         return Promise.each(ed.DerivedAttributeDefinition, ad=>{
@@ -134,15 +139,19 @@ module.exports = class XMLImporter {
         });
       });
     }
+    */
 
     createCaseDefinitions() {      
-      return Promise.each(this.json.CaseDefinition, cd=>{         
-        const data = {
-          name: cd.$.id,
-          label: cd.$.label,
-          entityDefinition: {id: this.getEntityDefinitionIdByXMLId(cd.$.entityDefinitionId)}
-        };
-        return SocioCortex.caseDefinition.create(data)
+      return Promise.each(this.json.CaseDefinition, cd=>{    
+        return this.getEntityDefinitionIdByXMLId(cd.$.entityDefinitionId)
+          .then(entityDefinitionId=>{
+            const data = {
+              name: cd.$.id,
+              label: cd.$.label,
+              entityDefinition: {id: entityDefinitionId}
+            };
+            return SocioCortex.caseDefinition.create(data)
+          })        
           .then(persistedCaseDefinition =>{
             this.caseDefinitionMap.set(cd.$.id, persistedCaseDefinition.id);         
             return Promise.resolve();
@@ -155,8 +164,10 @@ module.exports = class XMLImporter {
 
     createStageDefinitions() {       
       return Promise.each(this.json.CaseDefinition, cd=>{ 
-        const caseDefId = this.getCaseDefinitionIdByXMLId(cd.$.id);
-        return this.createStageDefinitionRecursive(caseDefId, null, cd.StageDefinition);
+        return this.getCaseDefinitionIdByXMLId(cd.$.id)
+          .then(caseDefId=>{
+            return this.createStageDefinitionRecursive(caseDefId, null, cd.StageDefinition);
+          })        
       });   
     }
 
