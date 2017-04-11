@@ -201,6 +201,9 @@ module.exports = class XMLImporter {
         return this.createTaskDefinitionRecursive(caseDefId, parentStageDefId, sd.StageDefinition)
           .then(()=>{
             return this.createHumanTaskDefiniton(caseDefId, parentStageDefId, sd.HumanTaskDefinition)
+          })
+          .then(()=>{
+            return this.createAutomatedTaskDefiniton(caseDefId, parentStageDefId, sd.AutomatedTaskDefinition)
           });
       });   
     }
@@ -242,9 +245,10 @@ module.exports = class XMLImporter {
         }
         if(parentStageDefId != null) 
           data.parentStageDefinition = {id: parentStageDefId};
-        return SocioCortex.automatedTaskDefinition.create(data)
+        return SocioCortex.automatedTaskDefinitions.create(data)
           .then(persistedAutomatedTaskDef=>{
-            this.automatedTaskDefinitionMap.set(sd.$.id, persistedAutomatedTaskDef.id);     
+            this.automatedTaskDefinitionMap.set(td.$.id, persistedAutomatedTaskDef.id);    
+            return Promise.resolve();   
           })
           .catch(err=>{
             return Promise.reject(err);

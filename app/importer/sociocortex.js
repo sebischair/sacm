@@ -236,6 +236,10 @@ function createHumanTaskDefinition(data) {
   return http.post2('/humantaskdefinitions/', data);
 }
 
+function createAutomatedTaskDefinition(data) {
+  return http.post2('/automatedtaskdefinitions/', data);
+}
+
 function getHumanTaskDefinitions(workspaceId) {
   return http.get2('workspaces/'+workspaceId+'/humantaskdefinitions/');
 }
@@ -339,6 +343,9 @@ module.exports = {
     },
     humanTaskDefinitions:{
         create: createHumanTaskDefinition
+    },
+    automatedTaskDefinitions: {
+        create: createAutomatedTaskDefinition
     },
     case: {
         create: createCase,
