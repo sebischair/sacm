@@ -21,19 +21,19 @@ module.exports = class XMLImporter {
       this.automatedTaskDefinitionMap = new Map(); //<xmlId, sociocortexId>
     }
 
-    getEntityDefinitionIdByName(entityDefinitionXMLId){
+    getEntityDefinitionIdByXMLId(entityDefinitionXMLId){
       if(!this.entityDefinitionMap.has(entityDefinitionXMLId))
         console.log('ERR EntityDefintion ID not found')
       return this.entityDefinitionMap.get(entityDefinitionXMLId);
     }
 
-    getCaseDefinitionIdByName(caseDefinitionXMLId){
+    getCaseDefinitionIdByXMLId(caseDefinitionXMLId){
       if(!this.caseDefinitionMap.has(caseDefinitionXMLId))
         console.log('ERR CaseDefinition ID not found')
       return this.caseDefinitionMap.get(caseDefinitionXMLId);
     }
 
-    getStageDefinitionIdByName(stageDefinitionXMLId){
+    getStageDefinitionIdByXMLId(stageDefinitionXMLId){
       if(!this.stageDefinitionMap.has(stageDefinitionXMLId))
         console.log('ERR StageDefinition ID not found')
       return this.stageDefinitionMap.get(stageDefinitionXMLId);
@@ -101,7 +101,7 @@ module.exports = class XMLImporter {
             options: {},
             multiplicity: 'any'
           }
-          const entityDefId = this.getEntityDefinitionIdByName(ed.$.id);
+          const entityDefId = this.getEntityDefinitionIdByXMLId(ed.$.id);
           SocioCortex.attributeDefinition.create(WORKSPACE_ID, entityDefId, data)
             .then(persistedAttributeDefinition =>{
               this.attributeDefinitionMap.set(ed.$.id+ad.$.id, persistedAttributeDefinition.id);            
@@ -122,7 +122,7 @@ module.exports = class XMLImporter {
             description: ad.$.label,    
             expression: ad.$.expression
           };
-          const entityDefId = this.getEntityDefinitionIdByName(ed.$.id);
+          const entityDefId = this.getEntityDefinitionIdByXMLId(ed.$.id);
           return SocioCortex.derivedAttributeDefinition.create(WORKSPACE_ID, entityDefId, data)
             .then(persistedAttributeDefinition =>{
               this.derivedAttributeDefinitionMap.set(ed.$.id+ad.$.id, persistedAttributeDefinition.id);            
@@ -140,7 +140,7 @@ module.exports = class XMLImporter {
         const data = {
           name: cd.$.id,
           label: cd.$.label,
-          entityDefinition: {id: this.getEntityDefinitionIdByName(cd.$.entityDefinitionId)}
+          entityDefinition: {id: this.getEntityDefinitionIdByXMLId(cd.$.entityDefinitionId)}
         };
         return SocioCortex.caseDefinition.create(data)
           .then(persistedCaseDefinition =>{
@@ -155,7 +155,7 @@ module.exports = class XMLImporter {
 
     createStageDefinitions() {       
       return Promise.each(this.json.CaseDefinition, cd=>{ 
-        const caseDefId = this.getCaseDefinitionIdByName(cd.$.id);
+        const caseDefId = this.getCaseDefinitionIdByXMLId(cd.$.id);
         return this.createStageDefinitionRecursive(caseDefId, null, cd.StageDefinition);
       });   
     }
@@ -186,7 +186,7 @@ module.exports = class XMLImporter {
 
     createTaskDefinitions(){
       return Promise.each(this.json.CaseDefinition, cd=>{ 
-        const caseDefId = this.getCaseDefinitionIdByName(cd.$.id);
+        const caseDefId = this.getCaseDefinitionIdByXMLId(cd.$.id);
         return this.createHumanTaskDefinitons(caseDefId, null, cd.HumanTaskDefinition)
           .then(()=>{
             return this.createAutomatedTaskDefinitons(caseDefId, null, cd.AutomatedTaskDefinition);
@@ -201,7 +201,7 @@ module.exports = class XMLImporter {
       if(stageDefinitions == null)
         return Promise.resolve();
       return Promise.each(stageDefinitions, sd=>{ 
-        const parentStageDefId = this.getStageDefinitionIdByName(sd.$.id);
+        const parentStageDefId = this.getStageDefinitionIdByXMLId(sd.$.id);
         return this.createTaskDefinitionRecursive(caseDefId, parentStageDefId, sd.StageDefinition)
           .then(()=>{
             return this.createHumanTaskDefinitons(caseDefId, parentStageDefId, sd.HumanTaskDefinition)
