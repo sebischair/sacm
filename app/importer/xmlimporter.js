@@ -185,10 +185,15 @@ module.exports = class XMLImporter {
     }
 
     createTaskDefinitions(){
-      //TODO task on case level currently not imported
       return Promise.each(this.json.CaseDefinition, cd=>{ 
         const caseDefId = this.getCaseDefinitionIdByName(cd.$.id);
-        return this.createTaskDefinitionRecursive(caseDefId, null, cd.StageDefinition);
+        return this.createHumanTaskDefinitons(caseDefId, null, cd.HumanTaskDefinition)
+          .then(()=>{
+            return this.createAutomatedTaskDefinitons(caseDefId, null, cd.AutomatedTaskDefinition);
+          })
+          .then(()=>{
+            return this.createTaskDefinitionRecursive(caseDefId, null, cd.StageDefinition);
+          });        
       });   
     }
 
