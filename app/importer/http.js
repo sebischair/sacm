@@ -25,14 +25,7 @@ console.log(headers.Authorization);
 
 module.exports = {
 
-    get: function(path, cb){
-        console.log('SC-GET: '+ config.sc.url + path);
-        request.get({
-            url: config.sc.url + path,
-            headers: headers
-        }, cb);
-    },
-    get2: function(path){
+    get: function(path){
         return new Promise(function (resolve, reject){
             console.log('SC-GET: '+ config.sc.url + path);
             request.get({
@@ -47,15 +40,7 @@ module.exports = {
             });
         });
     },
-    post: function(path, data, cb){
-        console.log('SC-POST: '+ config.sc.url + path + " "+JSON.stringify(data));
-        request.post({
-            url: config.sc.url + path,
-            headers: headers,
-            json: data
-        }, cb);
-    },
-    post2: function(path, data){
+    post: function(path, data){
         return new Promise(function (resolve, reject){
             console.log('###### POST 2 #######');
             console.log(data);
@@ -73,6 +58,7 @@ module.exports = {
             });
         });
     },
+    //TODO add promise stuff
     put: function(path, data, cb){
         console.log('SC-PUT: '+ config.sc.url + path + " "+JSON.stringify(data));
         request.put({
@@ -81,15 +67,7 @@ module.exports = {
             json: data
         }, cb);
     },
-    del: function(path, data, cb){
-        console.log('SC-DEL: '+ config.sc.url + path + " "+JSON.stringify(data));
-        request.del({
-            url: config.sc.url + path,
-            headers: headers,
-            json: data
-        }, cb);
-    },
-    del2: function(path, data){
+    del: function(path, data){
         return new Promise(function (resolve, reject) {
             console.log('SC-DEL: ' + config.sc.url + path + " " + JSON.stringify(data));
             request.del({

@@ -4,7 +4,7 @@ var config = require('../../config');
 var Promise = require('bluebird');
 
 function deleteWorkspace(workspaceId, ifexist){
-    var p = http.del2('/workspaces/' + workspaceId, {});
+    var p = http.del('/workspaces/' + workspaceId, {});
     if(ifexist){
         return new Promise(function (resolve, reject) {
             p.then(()=>{ resolve(); });
@@ -16,16 +16,16 @@ function deleteWorkspace(workspaceId, ifexist){
 }
 
 function createWorkspace(workspaceId){
-   return http.post2('/workspaces', {name:workspaceId, id:workspaceId});
+   return http.post('/workspaces', {name:workspaceId, id:workspaceId});
 }
 
 function createEntityType(workspaceId, typeId){
     var data = {name: typeId, namePlural: typeId};
-    return http.post2('/workspaces/'+workspaceId+'/entityTypes/', data);
+    return http.post('/workspaces/'+workspaceId+'/entityTypes/', data);
 }
 
 function getEntityTypes(workspaceId){
-    return http.get2('/workspaces/'+workspaceId+'/entityTypes/', {});
+    return http.get('/workspaces/'+workspaceId+'/entityTypes/', {});
 }
 
 function createAttributeDefinition(workspaceId, typeId, definition) {
@@ -35,126 +35,99 @@ function createAttributeDefinition(workspaceId, typeId, definition) {
         options: definition.options,
         multiplicity: definition.multiplicity
     };
-    return http.post2('/entityTypes/'+typeId+'/attributeDefinitions', data);
+    return http.post('/entityTypes/'+typeId+'/attributeDefinitions', data);
 }
 
 function createDerivedAttributeDefinition(workspaceId, typeId, definition) {
-    return http.post2('/entityTypes/'+typeId+'/derivedAttributeDefinitions', definition);
+    return http.post('/entityTypes/'+typeId+'/derivedAttributeDefinitions', definition);
 }
 
 function createEntityOfType(entityTypeId, data){
-    return http.post2('/entityTypes/'+entityTypeId+'/entities', data);
+    return http.post('/entityTypes/'+entityTypeId+'/entities', data);
 }
 
 function createEntity(data){
-    return http.post2('/entities', data);
+    return http.post('/entities', data);
 }
 
 function createAttribute(data){
-    return http.post2('/attributes', data);
+    return http.post('/attributes', data);
 }
 
 
 function createCaseDefinition(data){
-  return http.post2('/casedefinitions/', data);
+  return http.post('/casedefinitions/', data);
 }
 
 function findCaseDefinitions(workspaceId) {
-  return http.get2('/workspaces/'+workspaceId+'/casedefinitions/', {});
+  return http.get('/workspaces/'+workspaceId+'/casedefinitions/', {});
 }
 
 function findCaseDefinition(caseDefinitionId){
-  return http.get2('/casedefinition/'+caseDefinitionId, {});
+  return http.get('/casedefinition/'+caseDefinitionId, {});
 }
 
 function deleteCaseDefinition() {
-  return http.del2('/casedefinition/'+caseDefinitionId, {});
+  return http.del('/casedefinition/'+caseDefinitionId, {});
 }
 
 // StageDefinition
 function createStageDefinition(data) {
-  return http.post2('/stagedefinitions/', data);
+  return http.post('/stagedefinitions/', data);
 }
 
 function getStageDefinitions(workspaceId) {
-  return http.get2('workspaces/'+workspaceId+'/stagedefinitions/');
+  return http.get('workspaces/'+workspaceId+'/stagedefinitions/');
 }
 
 function getStageDefinition(stageDefinitionId) {
-  return http.get2('/stagedefinition/'+stageDefinitionId, {});
+  return http.get('/stagedefinition/'+stageDefinitionId, {});
 }
 
 function deleteStageDefinition(stageDefinitionId) {
-  return http.del2('/stagedefinition/'+stageDefinitionId, {});
+  return http.del('/stagedefinition/'+stageDefinitionId, {});
 }
 
 // HumanTaskDefinition
 function createHumanTaskDefinition(data) {
-  return http.post2('/humantaskdefinitions/', data);
+  return http.post('/humantaskdefinitions/', data);
 }
 
 function createAutomatedTaskDefinition(data) {
-  return http.post2('/automatedtaskdefinitions/', data);
+  return http.post('/automatedtaskdefinitions/', data);
 }
 
 function getHumanTaskDefinitions(workspaceId) {
-  return http.get2('workspaces/'+workspaceId+'/humantaskdefinitions/');
+  return http.get('workspaces/'+workspaceId+'/humantaskdefinitions/');
 }
 
 function getHumanTaskDefinition(taskId) {
-  return http.get2('/humantaskdefinition/'+taskId, {});
+  return http.get('/humantaskdefinition/'+taskId, {});
 }
 
 function deleteHumanTaskDefinition(stageDefinitionId) {
-  return http.del2('/humantaskdefinitions/'+taskId, {});
+  return http.del('/humantaskdefinitions/'+taskId, {});
 }
 
 function createTaskParamDefinition(data){
-  return http.post2('/taskparamdefinitions/', data); 
+  return http.post('/taskparamdefinitions/', data); 
 }
 
 // CaseDefinition
 function createCase(workspaceId, data){
-  return http.post2('/workspaces/'+workspaceId+'/cases/', data);
+  return http.post('/workspaces/'+workspaceId+'/cases/', data);
 }
 
 function findCases(workspaceId) {
-  return http.get2('/workspaces/'+workspaceId+'/cases/', {});
+  return http.get('/workspaces/'+workspaceId+'/cases/', {});
 }
 
 function findCase(caseId){
-  return http.get2('/case/'+caseDefinitionId, {});
+  return http.get('/case/'+caseDefinitionId, {});
 }
 
 function deleteCase() {
-  return http.del2('/case/'+caseId, {});
-}
-
-
-// ----
-
-function convertEntitiesToFlatJSON(attributes, entities){
-    var results = [];
-    for(var i=0; i< entities.length; i++)
-        results.push(convertEntityToFlatJSON(attributes, entities[i]));
-    return results;
-}
-
-function convertEntityToFlatJSON(attributes, entity){
-    var e = entity;
-    var r = {};
-    for(var j=0; j< e.attributes.length; j++) {
-        var attrInst = e.attributes[j];
-        var attrDef = attributes[attrInst.name];
-        if(attrDef && attrDef.multiplicity  && (attrDef.multiplicity == 'many' || attrDef.multiplicity == 'any')){
-            r[attrInst.name] = [];
-            for(var i=0; i<attrInst.values.length; i++)
-                r[attrInst.name].push(attrInst.values[i]);
-        }else
-            r[attrInst.name] = attrInst.values[0];
-    }
-    r.id = e.id;
-    return r;
+  return http.del('/case/'+caseId, {});
 }
 
 module.exports = {
