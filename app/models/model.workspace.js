@@ -62,7 +62,7 @@ export default class Workspace extends Model{
     return Workspace.findAll()
       .then(workspaces=>{
         return Promise.map(workspaces, w=>{
-          if(w.id != "root")
+          if(w.id != "root" && w.id != "northwind")
             return Workspace.deleteById(w.id);
         });
       });
