@@ -19,26 +19,6 @@ function createAttribute(data){
 
 
 
-// StageDefinition
-
-
-// HumanTaskDefinition
-function createHumanTaskDefinition(data) {
-  return http.post('/humantaskdefinitions/', data);
-}
-
-function getHumanTaskDefinitions(workspaceId) {
-  return http.get('workspaces/'+workspaceId+'/humantaskdefinitions/');
-}
-
-function getHumanTaskDefinition(taskId) {
-  return http.get('/humantaskdefinition/'+taskId, {});
-}
-
-function deleteHumanTaskDefinition(stageDefinitionId) {
-  return http.del('/humantaskdefinition/'+taskId, {});
-}
-
 // AutomatedTaskDefinition
 function createAutomatedTaskDefinition(data) {
   return http.post('/automatedtaskdefinitions/', data);
@@ -56,9 +36,6 @@ module.exports = {
     },
     attribute:{
         create : createAttribute,
-    },
-    humanTaskDefinition:{
-        create: createHumanTaskDefinition
     },
     automatedTaskDefinition: {
         create: createAutomatedTaskDefinition

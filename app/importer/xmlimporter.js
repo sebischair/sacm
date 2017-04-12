@@ -10,6 +10,7 @@ import AttributeDefinition from '../scmodels/model.attributeDefinition';
 import DerivedAttributeDefinition from '../scmodels/model.derivedAttributeDefinition';
 import CaseDefinition from '../scmodels/model.caseDefinition';
 import StageDefinition from '../scmodels/model.stageDefinition';
+import HumanTaskDefinition from '../scmodels/model.humanTaskDefinition';
 
 const xml = Promise.promisifyAll(xml2js);
 
@@ -247,7 +248,7 @@ module.exports = class XMLImporter {
         }  
         if(parentStageDefId != null) 
           data.parentStageDefinition = {id: parentStageDefId};
-        return SocioCortex.humanTaskDefinition.create(data)
+        return HumanTaskDefinition.create(data)
           .then(persistedHumanTaskDef=>{
             this.humanTaskDefinitionMap.set(td.$.id, persistedHumanTaskDef.id);  
             return this.createTaskParamDefinitions(persistedHumanTaskDef.id, td.TaskParamDefinition);
