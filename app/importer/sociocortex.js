@@ -16,14 +16,6 @@ function createAttribute(data){
     return http.post('/attributes', data);
 }
 
-
-
-
-// AutomatedTaskDefinition
-function createAutomatedTaskDefinition(data) {
-  return http.post('/automatedtaskdefinitions/', data);
-}
-
 // TaskParamDefinition
 function createTaskParamDefinition(data){
   return http.post('/taskparamdefinitions/', data); 
@@ -36,9 +28,6 @@ module.exports = {
     },
     attribute:{
         create : createAttribute,
-    },
-    automatedTaskDefinition: {
-        create: createAutomatedTaskDefinition
     },
     taskParamDefinition: {
         create: createTaskParamDefinition
