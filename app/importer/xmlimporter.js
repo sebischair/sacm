@@ -4,7 +4,7 @@ import Promise from 'bluebird';
 import request from 'request-promise';
 import xml2js from 'xml2js';
 import SocioCortex from './sociocortex';
-import Workspace from './workspace';
+import Workspace from '../scmodels/model.workspace';
 const xml = Promise.promisifyAll(xml2js);
 
 

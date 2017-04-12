@@ -1,5 +1,5 @@
 var express = require('express');
-var http = require('./http');
+var http = require('../scmodels/http');
 var config = require('../../config');
 var Promise = require('bluebird');
 
