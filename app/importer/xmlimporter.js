@@ -12,6 +12,7 @@ import StageDefinition from '../models/casedefinition/model.stagedefinition';
 import HumanTaskDefinition from '../models/casedefinition/model.humantaskdefinition';
 import AutomatedTaskDefinition from '../models/casedefinition/model.automatedtaskdefinition';
 import TaskParamDefinition from '../models/casedefinition/model.taskparamdefinition';
+import Case from '../models/case/model.case';
 const xml = Promise.promisifyAll(xml2js);
 
 
@@ -78,6 +79,9 @@ module.exports = class XMLImporter {
         })  
         .then(() => {          
           return this.createTaskDefinitions();
+        })
+        .then(() => {          
+          return this.createCase();
         })
         .then(()=>{
           return Promise.resolve();
@@ -306,7 +310,11 @@ module.exports = class XMLImporter {
 
     }
 
-
+    createCase(){
+      const caseDefinitionId = this.caseDefinitionMap.values().next().value;
+      console.log(caseDefinitionId);
+      return Case.create({caseDefinition: caseDefinitionId});
+    }
 
 
     /**
