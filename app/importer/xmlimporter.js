@@ -312,7 +312,6 @@ module.exports = class XMLImporter {
 
     createCase(){
       const caseDefinitionId = this.caseDefinitionMap.values().next().value;
-      console.log(caseDefinitionId);
       return Case.create({caseDefinition: caseDefinitionId});
     }
 
