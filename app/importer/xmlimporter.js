@@ -5,14 +5,14 @@ import request from 'request-promise';
 import xml2js from 'xml2js';
 import SocioCortex from './sociocortex';
 import Workspace from '../scmodels/model.workspace';
-import EntityDefinition from '../scmodels/model.entityDefinition';
-import AttributeDefinition from '../scmodels/model.attributeDefinition';
-import DerivedAttributeDefinition from '../scmodels/model.derivedAttributeDefinition';
-import CaseDefinition from '../scmodels/model.caseDefinition';
-import StageDefinition from '../scmodels/model.stageDefinition';
-import HumanTaskDefinition from '../scmodels/model.humanTaskDefinition';
-import AutomatedTaskDefinition from '../scmodels/model.automatedTaskDefinition';
-import TaskParamDefinition from '../scmodels/model.TaskParamDefinition';
+import EntityDefinition from '../scmodels/model.entitydefinition';
+import AttributeDefinition from '../scmodels/model.attributedefinition';
+import DerivedAttributeDefinition from '../scmodels/model.derivedattributedefinition';
+import CaseDefinition from '../scmodels/model.casedefinition';
+import StageDefinition from '../scmodels/model.stagedefinition';
+import HumanTaskDefinition from '../scmodels/model.humantaskdefinition';
+import AutomatedTaskDefinition from '../scmodels/model.automatedtaskdefinition';
+import TaskParamDefinition from '../scmodels/model.taskparamdefinition';
 
 const xml = Promise.promisifyAll(xml2js);
 
