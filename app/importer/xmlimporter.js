@@ -8,6 +8,8 @@ import Workspace from '../scmodels/model.workspace';
 import EntityDefinition from '../scmodels/model.entityDefinition';
 import AttributeDefinition from '../scmodels/model.attributeDefinition';
 import DerivedAttributeDefinition from '../scmodels/model.derivedAttributeDefinition';
+import CaseDefinition from '../scmodels/model.caseDefinition';
+
 const xml = Promise.promisifyAll(xml2js);
 
 
@@ -150,7 +152,7 @@ module.exports = class XMLImporter {
               label: cd.$.label,
               entityDefinition: {id: entityDefinitionId}
             };
-            return SocioCortex.caseDefinition.create(data)
+            return CaseDefinition.create(data)
           })        
           .then(persistedCaseDefinition =>{
             this.caseDefinitionMap.set(cd.$.id, persistedCaseDefinition.id);         

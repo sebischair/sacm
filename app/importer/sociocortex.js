@@ -17,21 +17,7 @@ function createAttribute(data){
 }
 
 
-function createCaseDefinition(data){
-  return http.post('/casedefinitions/', data);
-}
 
-function findCaseDefinitions() {
-  return http.get('/casedefinitions/', {});
-}
-
-function findCaseDefinition(caseDefinitionId){
-  return http.get('/casedefinition/'+caseDefinitionId, {});
-}
-
-function deleteCaseDefinition() {
-  return http.del('/casedefinition/'+caseDefinitionId, {});
-}
 
 // StageDefinition
 function createStageDefinition(data) {
@@ -77,9 +63,6 @@ function createTaskParamDefinition(data){
   return http.post('/taskparamdefinitions/', data); 
 }
 
-// CaseDefinition
-
-
 module.exports = {
     entity:{
         create: createEntity,
@@ -87,12 +70,6 @@ module.exports = {
     },
     attribute:{
         create : createAttribute,
-    },
-    caseDefinition: {
-        create: createCaseDefinition,
-        delete: deleteCaseDefinition,
-        findById: findCaseDefinition,
-        find: findCaseDefinitions
     },
     stageDefinition: {
         create: createStageDefinition,
