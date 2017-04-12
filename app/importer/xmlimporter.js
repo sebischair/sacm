@@ -3,15 +3,15 @@ import fs from 'fs';
 import Promise from 'bluebird';
 import request from 'request-promise';
 import xml2js from 'xml2js';
-import Workspace from '../scmodels/model.workspace';
-import EntityDefinition from '../scmodels/casedefinition/model.entitydefinition';
-import AttributeDefinition from '../scmodels/casedefinition/model.attributedefinition';
-import DerivedAttributeDefinition from '../scmodels/casedefinition/model.derivedattributedefinition';
-import CaseDefinition from '../scmodels/casedefinition/model.casedefinition';
-import StageDefinition from '../scmodels/casedefinition/model.stagedefinition';
-import HumanTaskDefinition from '../scmodels/casedefinition/model.humantaskdefinition';
-import AutomatedTaskDefinition from '../scmodels/casedefinition/model.automatedtaskdefinition';
-import TaskParamDefinition from '../scmodels/casedefinition/model.taskparamdefinition';
+import Workspace from '../models/model.workspace';
+import EntityDefinition from '../models/casedefinition/model.entitydefinition';
+import AttributeDefinition from '../models/casedefinition/model.attributedefinition';
+import DerivedAttributeDefinition from '../models/casedefinition/model.derivedattributedefinition';
+import CaseDefinition from '../models/casedefinition/model.casedefinition';
+import StageDefinition from '../models/casedefinition/model.stagedefinition';
+import HumanTaskDefinition from '../models/casedefinition/model.humantaskdefinition';
+import AutomatedTaskDefinition from '../models/casedefinition/model.automatedtaskdefinition';
+import TaskParamDefinition from '../models/casedefinition/model.taskparamdefinition';
 const xml = Promise.promisifyAll(xml2js);
 
 
