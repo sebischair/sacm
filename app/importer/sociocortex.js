@@ -16,11 +16,6 @@ function createAttribute(data){
     return http.post('/attributes', data);
 }
 
-// TaskParamDefinition
-function createTaskParamDefinition(data){
-  return http.post('/taskparamdefinitions/', data); 
-}
-
 module.exports = {
     entity:{
         create: createEntity,
@@ -28,8 +23,5 @@ module.exports = {
     },
     attribute:{
         create : createAttribute,
-    },
-    taskParamDefinition: {
-        create: createTaskParamDefinition
     }
 };

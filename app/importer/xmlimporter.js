@@ -12,6 +12,7 @@ import CaseDefinition from '../scmodels/model.caseDefinition';
 import StageDefinition from '../scmodels/model.stageDefinition';
 import HumanTaskDefinition from '../scmodels/model.humanTaskDefinition';
 import AutomatedTaskDefinition from '../scmodels/model.automatedTaskDefinition';
+import TaskParamDefinition from '../scmodels/model.TaskParamDefinition';
 
 const xml = Promise.promisifyAll(xml2js);
 
@@ -299,7 +300,7 @@ module.exports = class XMLImporter {
           isReadOnly: tp.$.isReadOnly,
           taskDefinition: {id: taskDefinitionId}
         }
-        return SocioCortex.taskParamDefinition.create(data);
+        return TaskParamDefinition.create(data);
       });      
     }
 
