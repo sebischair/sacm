@@ -5,7 +5,7 @@ import XMLImporter from './../importer/xmlimporter';
 
 router.get('/', (req, res, next)=>{
   const xml = new XMLImporter();
-  xml.import('app/importer/barcelona.cs3.xml')
+  xml.import('app/importer/barcelona.xml')
     .then(()=>{
       res.status(200).send();
     })
