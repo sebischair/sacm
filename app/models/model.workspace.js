@@ -10,7 +10,7 @@ export default class Workspace extends Model{
     console.log('CREATE WORKSPACE');
     const data = {
         name: workspaceName, 
-        /*
+      
         permissions: {
             readers: [{
                 name: "Everybody",
@@ -23,7 +23,7 @@ export default class Workspace extends Model{
             //contributors: [],
             //administrators: []
         }
-        */
+        
     };
     return http.post('/workspaces', data);
   }
