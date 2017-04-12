@@ -7,6 +7,7 @@ import SocioCortex from './sociocortex';
 import Workspace from '../scmodels/model.workspace';
 import EntityDefinition from '../scmodels/model.entityDefinition';
 import AttributeDefinition from '../scmodels/model.attributeDefinition';
+import DerivedAttributeDefinition from '../scmodels/model.derivedAttributeDefinition';
 const xml = Promise.promisifyAll(xml2js);
 
 
@@ -127,7 +128,7 @@ module.exports = class XMLImporter {
             expression: ad.$.expression
           };
           const entityDefId = this.getEntityDefinitionIdByXMLId(ed.$.id);
-          return SocioCortex.derivedAttributeDefinition.create(this.workspaceId, entityDefId, data)
+          return DerivedAttributeDefinition.create(entityDefId, data)
             .then(persistedAttributeDefinition =>{
               this.derivedAttributeDefinitionMap.set(ed.$.id+ad.$.id, persistedAttributeDefinition.id);            
               return Promise.resolve();

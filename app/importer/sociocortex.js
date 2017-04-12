@@ -4,10 +4,6 @@ var config = require('../../config');
 var Promise = require('bluebird');
 
 
-function createDerivedAttributeDefinition(workspaceId, typeId, definition) {
-    return http.post('/entityTypes/'+typeId+'/derivedAttributeDefinitions', definition);
-}
-
 function createEntityOfType(entityTypeId, data){
     return http.post('/entityTypes/'+entityTypeId+'/entities', data);
 }
@@ -91,9 +87,6 @@ module.exports = {
     },
     attribute:{
         create : createAttribute,
-    },
-    derivedAttributeDefinition:{
-        create: createDerivedAttributeDefinition
     },
     caseDefinition: {
         create: createCaseDefinition,

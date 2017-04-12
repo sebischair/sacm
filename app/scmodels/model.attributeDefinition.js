@@ -15,5 +15,5 @@ export default class AttributeDefinition extends Model{
     };
     return http.post('/entityTypes/'+typeId+'/attributeDefinitions', data);
   }
-  
+
 }
