@@ -14,7 +14,7 @@ import test from './route.test';
 function routes(){
     const router = express.Router();
 
-    /** CaseDefinition routes */
+    /** CaseDefinition routes *
     router.use('/casedefinition', casedefinition);
     router.use('/casedefinitions', casedefinition);
     router.use('/stagedefinition', stagedefinition);
@@ -26,7 +26,7 @@ function routes(){
     router.use('/sentrydefinition', sentrydefinition);
     router.use('/sentrydefinitions', sentrydefinition);
 
-    /** Case routes */
+    /** Case routes *
     router.use('/case', case1);
     router.use('/cases', case1);
     router.use('/stage', stage);
@@ -35,6 +35,7 @@ function routes(){
     router.use('/humantasks', stage);
     router.use('/automatedtask', stage);
     router.use('/automatedtasks', stage);
+    */
 
     /** Import route */
     router.use('/import', importer);
