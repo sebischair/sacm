@@ -40,6 +40,24 @@ export default class Workspace extends Model{
     }
   }
 
+  static deleteAndCreateByName(workspaceName){
+    return Workspace.findAll()
+      .then(workspaces=>{
+        let wId = null;
+        workspaces.forEach(w=>{
+          if(w.name == workspaceName)
+            wId = w.id;
+        });
+        if(wId == null)
+          return Promise.resolve();
+        else
+          return Workspace.deleteById(wId);
+      })
+      .then(()=>{
+        return Workspace.create(wokspaceName);
+      });
+  }
+
   static deleteAll(){
     return Workspace.findAll()
       .then(workspaces=>{
