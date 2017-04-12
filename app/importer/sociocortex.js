@@ -3,38 +3,8 @@ var http = require('./http');
 var config = require('../../config');
 var Promise = require('bluebird');
 
-function deleteWorkspace(workspaceId, ifexist){
-    var p = http.del('/workspaces/' + workspaceId, {});
-    if(ifexist){
-        return new Promise(function (resolve, reject) {
-            p.then(()=>{ resolve(); });
-            p.catch(()=>{ resolve(); });
-        });
-    }else{
-       return p;
-    }
-}
 
-function createWorkspace(workspaceId){
-    const data = {
-        name: workspaceId, 
-        /*
-        permissions: {
-            readers: [{
-                name: "Everybody",
-                id: "everybody"
-            }],
-            writers: [{
-                name: "All registered users",
-                id: "allusers"
-            }],
-            //contributors: [],
-            //administrators: []
-        }
-        */
-    };
-   return http.post('/workspaces', data);
-}
+
 
 function createEntityDefinition(workspaceId, typeId){
     var data = {name: typeId, namePlural: typeId, workspace: {id: workspaceId}};
@@ -150,10 +120,6 @@ function deleteCase() {
 }
 
 module.exports = {
-    workspace:{
-        create: createWorkspace,
-        delete: deleteWorkspace
-    },
     entityDefinition:{
         find: getEntityTypes,
         create: createEntityDefinition

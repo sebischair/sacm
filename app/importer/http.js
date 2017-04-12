@@ -36,7 +36,7 @@ module.exports = {
                 if(err || res.statusCode != 200)
                     reject(body);
                 else
-                    resolve(body)
+                    resolve(JSON.parse(body))
             });
         });
     },

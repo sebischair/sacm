@@ -4,6 +4,7 @@ import Promise from 'bluebird';
 import request from 'request-promise';
 import xml2js from 'xml2js';
 import SocioCortex from './sociocortex';
+import Workspace from './workspace';
 const xml = Promise.promisifyAll(xml2js);
 
 
@@ -12,7 +13,8 @@ const xml = Promise.promisifyAll(xml2js);
 module.exports = class XMLImporter {
 
     constructor() {
-      this.workspaceId = 'connecare2017'+new Date().getTime();
+      this.workspaceName = 'connecare2017';
+      this.workspaceId = null;
       this.entityDefinitionMap = new Map(); //<xmlId, sociocortexId>
       this.attributeDefinitionMap = new Map(); //<xmlEntityId+xmlAttrId, sociocortexId>
       this.derivedAttributeDefinitionMap = new Map(); //<entityName.derAttrName, sociocortexId>
@@ -47,7 +49,10 @@ module.exports = class XMLImporter {
       return xml.parseStringAsync(fs.readFileSync(filePath).toString())
         .then(json=>{
           this.json = json.SACMDefinition;
-          return SocioCortex.workspace.create(this.workspaceId);
+          return Workspace.deleteAll();          
+        })
+        .then(()=>{
+          return Workspace.create(this.workspaceName);
         })
         .then(workspace => {
           this.workspaceId = workspace.id;
@@ -77,10 +82,6 @@ module.exports = class XMLImporter {
         });        
     }
 
-
-    deleteAndCreateWorkspace() {
-      
-    }
 
     createEntityDefinitions() {
       return Promise.each(this.json.EntityDefinition, ed=>{
