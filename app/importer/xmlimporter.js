@@ -9,6 +9,7 @@ import EntityDefinition from '../scmodels/model.entityDefinition';
 import AttributeDefinition from '../scmodels/model.attributeDefinition';
 import DerivedAttributeDefinition from '../scmodels/model.derivedAttributeDefinition';
 import CaseDefinition from '../scmodels/model.caseDefinition';
+import StageDefinition from '../scmodels/model.stageDefinition';
 
 const xml = Promise.promisifyAll(xml2js);
 
@@ -186,7 +187,7 @@ module.exports = class XMLImporter {
         }
         if(parentStageDefId != null) 
           data.parentStageDefinition = {id: parentStageDefId};
-        return SocioCortex.stageDefinition.create(data)
+        return StageDefinition.create(data)
           .then(persistedStageDef=>{
             this.stageDefinitionMap.set(sd.$.id, persistedStageDef.id);     
             return this.createStageDefinitionRecursive(caseDefId, persistedStageDef.id, sd.StageDefinition);

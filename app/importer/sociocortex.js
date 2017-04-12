@@ -20,21 +20,7 @@ function createAttribute(data){
 
 
 // StageDefinition
-function createStageDefinition(data) {
-  return http.post('/stagedefinitions/', data);
-}
 
-function findStageDefinitions() {
-  return http.get('/stagedefinitions/');
-}
-
-function findStageDefinition(stageDefinitionId) {
-  return http.get('/stagedefinition/'+stageDefinitionId, {});
-}
-
-function deleteStageDefinition(stageDefinitionId) {
-  return http.del('/stagedefinition/'+stageDefinitionId, {});
-}
 
 // HumanTaskDefinition
 function createHumanTaskDefinition(data) {
@@ -70,11 +56,6 @@ module.exports = {
     },
     attribute:{
         create : createAttribute,
-    },
-    stageDefinition: {
-        create: createStageDefinition,
-        findById: findStageDefinition,
-        find: findStageDefinitions
     },
     humanTaskDefinition:{
         create: createHumanTaskDefinition
