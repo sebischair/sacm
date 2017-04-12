@@ -4,17 +4,6 @@ var config = require('../../config');
 var Promise = require('bluebird');
 
 
-
-
-function createEntityDefinition(workspaceId, typeId){
-    var data = {name: typeId, namePlural: typeId, workspace: {id: workspaceId}};
-    return http.post('/workspaces/'+workspaceId+'/entityTypes', data);
-}
-
-function getEntityTypes(workspaceId){
-    return http.get('/workspaces/'+workspaceId+'/entityTypes/', {});
-}
-
 function createAttributeDefinition(workspaceId, typeId, definition) {
     var data = {
         name: definition.name,
@@ -106,10 +95,6 @@ function createTaskParamDefinition(data){
 
 
 module.exports = {
-    entityDefinition:{
-        find: getEntityTypes,
-        create: createEntityDefinition
-    },
     entity:{
         create: createEntity,
         createOfType: createEntityOfType

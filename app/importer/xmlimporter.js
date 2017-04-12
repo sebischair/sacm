@@ -5,6 +5,7 @@ import request from 'request-promise';
 import xml2js from 'xml2js';
 import SocioCortex from './sociocortex';
 import Workspace from '../scmodels/model.workspace';
+import EntityDefinition from '../scmodels/model.entityDefinition';
 const xml = Promise.promisifyAll(xml2js);
 
 
@@ -85,7 +86,7 @@ module.exports = class XMLImporter {
 
     createEntityDefinitions() {
       return Promise.each(this.json.EntityDefinition, ed=>{
-        return SocioCortex.entityDefinition.create(this.workspaceId, ed.$.id)
+        return EntityDefinition.create(this.workspaceId, ed.$.id)
           .then(persistedEntityDefinition =>{
             this.entityDefinitionMap.set(ed.$.id, persistedEntityDefinition.id);            
             return Promise.resolve();
