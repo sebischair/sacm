@@ -103,21 +103,7 @@ function createTaskParamDefinition(data){
 }
 
 // CaseDefinition
-function createCase(workspaceId, data){
-  return http.post('/workspaces/'+workspaceId+'/cases/', data);
-}
 
-function findCases(workspaceId) {
-  return http.get('/workspaces/'+workspaceId+'/cases/', {});
-}
-
-function findCase(caseId){
-  return http.get('/case/'+caseDefinitionId, {});
-}
-
-function deleteCase() {
-  return http.del('/case/'+caseId, {});
-}
 
 module.exports = {
     entityDefinition:{
@@ -156,11 +142,5 @@ module.exports = {
     },
     taskParamDefinition: {
         create: createTaskParamDefinition
-    },
-    case: {
-        create: createCase,
-        delete: deleteCase,
-        find: findCase,
-        findAll: findCases
     }
 };
