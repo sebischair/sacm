@@ -191,18 +191,18 @@ module.exports = class XMLImporter {
     createStageDefinitionRecursive(caseDefId, parentStageDefId, stageDefinitions){   
       if(stageDefinitions == null)
         return Promise.resolve();
-      return Promise.each(stageDefinitions, sd=>{        
-        const data = {
-          name: sd.$.id,
-          label: sd.$.id,
-          isRepeatable: sd.$.isRepeatable,
-          isMandatory: sd.$.isMandetory,
-          caseDefinition: {id: caseDefId},
-        }
-        if(parentStageDefId != null) 
-          data.parentStageDefinition = {id: parentStageDefId};
+      return Promise.each(stageDefinitions, sd=>{   
         return this.getEntityDefinitionIdByXMLId(sd.$.entityDefinitionId) 
           .then(entityDefinitionId=>{
+            const data = {
+              name: sd.$.id,
+              label: sd.$.id,
+              isRepeatable: sd.$.isRepeatable,
+              isMandatory: sd.$.isMandetory,
+              caseDefinition: {id: caseDefId},
+            }
+            if(parentStageDefId != null) 
+              data.parentStageDefinition = {id: parentStageDefId};
             if(entityDefinitionId != null)
               data.newEntityDefinition = {id: entityDefinitionId};
             return StageDefinition.create(data);
