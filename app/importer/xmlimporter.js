@@ -201,8 +201,6 @@ module.exports = class XMLImporter {
         }
         if(parentStageDefId != null) 
           data.parentStageDefinition = {id: parentStageDefId};
-          console.log(sd.$.entityDefinitionId);
-          console.log(this.entityDefinitionMap);
         return this.getEntityDefinitionIdByXMLId(sd.$.entityDefinitionId) 
           .then(entityDefinitionId=>{
             if(entityDefinitionId != null)
