@@ -31,21 +31,29 @@ module.exports = class XMLImporter {
     }
 
     getEntityDefinitionIdByXMLId(entityDefinitionXMLId){
-      if(!this.entityDefinitionMap.has(entityDefinitionXMLId))
-        return Promise.reject('ERROR: EntityDefintion ID not found');
-      return Promise.resolve(this.entityDefinitionMap.get(entityDefinitionXMLId));
+      if(entityDefinitionXMLId == null)
+        return Promise.resolve(null);
+      else if(!this.entityDefinitionMap.has(entityDefinitionXMLId))
+        return Promise.reject('ERROR: EntityDefintion ID "'+entityDefinitionXMLId+'" not found');
+      else 
+        return Promise.resolve(this.entityDefinitionMap.get(entityDefinitionXMLId));
     }
 
     getCaseDefinitionIdByXMLId(caseDefinitionXMLId){
       if(!this.caseDefinitionMap.has(caseDefinitionXMLId))
-        return Promise.reject('ERROR: CaseDefinition ID not found')
-      return Promise.resolve(this.caseDefinitionMap.get(caseDefinitionXMLId));
+        return Promise.reject('ERROR: CaseDefinition ID "'+caseDefinitionXMLId+'" not found')
+      else 
+        return Promise.resolve(this.caseDefinitionMap.get(caseDefinitionXMLId));
     }
 
     getStageDefinitionIdByXMLId(stageDefinitionXMLId){
-      if(!this.stageDefinitionMap.has(stageDefinitionXMLId))
-        Promise.reject('ERROR: StageDefinition ID not found')
-      return Promise.resolve(this.stageDefinitionMap.get(stageDefinitionXMLId));
+      console.log(this.stageDefinitionMap);
+      if(stageDefinitionXMLId == null)
+        return Promise.resolve(null);
+      else if(!this.stageDefinitionMap.has(stageDefinitionXMLId))
+        Promise.reject('ERROR: StageDefinition ID "'+stageDefinitionXMLId+'" not found')
+      else 
+        return Promise.resolve(this.stageDefinitionMap.get(stageDefinitionXMLId));
     }
 
     import(filePath){
@@ -188,11 +196,18 @@ module.exports = class XMLImporter {
           label: sd.$.id,
           isRepeatable: sd.$.isRepeatable,
           isMandatory: sd.$.isMandetory,
-          caseDefinition: {id: caseDefId}
+          caseDefinition: {id: caseDefId},
         }
         if(parentStageDefId != null) 
           data.parentStageDefinition = {id: parentStageDefId};
-        return StageDefinition.create(data)
+          console.log(sd.$.entityDefinitionId);
+          console.log(this.entityDefinitionMap);
+        return this.getEntityDefinitionIdByXMLId(sd.$.entityDefinitionId) 
+          .then(entityDefinitionId=>{
+            if(entityDefinitionId != null)
+              data.newEntityDefinition = {id: entityDefinitionId};
+            return StageDefinition.create(data);
+          })         
           .then(persistedStageDef=>{
             this.stageDefinitionMap.set(sd.$.id, persistedStageDef.id);     
             return this.createStageDefinitionRecursive(caseDefId, persistedStageDef.id, sd.StageDefinition);
