@@ -40,14 +40,15 @@ module.exports = class XMLImporter {
     }
 
     getCaseDefinitionIdByXMLId(caseDefinitionXMLId){
-      if(!this.caseDefinitionMap.has(caseDefinitionXMLId))
+      if(caseDefinitionXMLId == null)
+        return Promise.resolve(null);
+      else if(!this.caseDefinitionMap.has(caseDefinitionXMLId))
         return Promise.reject('ERROR: CaseDefinition ID "'+caseDefinitionXMLId+'" not found')
       else 
         return Promise.resolve(this.caseDefinitionMap.get(caseDefinitionXMLId));
     }
 
     getStageDefinitionIdByXMLId(stageDefinitionXMLId){
-      console.log(this.stageDefinitionMap);
       if(stageDefinitionXMLId == null)
         return Promise.resolve(null);
       else if(!this.stageDefinitionMap.has(stageDefinitionXMLId))
