@@ -203,8 +203,10 @@ module.exports = class XMLImporter {
             }
             if(parentStageDefId != null) 
               data.parentStageDefinition = {id: parentStageDefId};
-            if(entityDefinitionId != null)
+            if(entityDefinitionId != null){
               data.newEntityDefinition = {id: entityDefinitionId};
+              data.newEntityAttachPath = sd.$.entityAttachPath; 
+            }
             return StageDefinition.create(data);
           })         
           .then(persistedStageDef=>{
