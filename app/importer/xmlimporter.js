@@ -298,10 +298,15 @@ module.exports = class XMLImporter {
         }  
         if(parentStageDefId != null) 
           data.parentStageDefinition = {id: parentStageDefId};
+        let humanTaskDefinitionId = null;
         return HumanTaskDefinition.create(data)
           .then(persistedHumanTaskDef=>{
-            this.humanTaskDefinitionMap.set(td.$.id, persistedHumanTaskDef.id);  
+            this.humanTaskDefinitionMap.set(td.$.id, persistedHumanTaskDef.id); 
+            humanTaskDefinitionId = persistedHumanTaskDef.id;
             return this.createTaskParamDefinitions(persistedHumanTaskDef.id, td.TaskParamDefinition);
+          })
+          .then(()=>{
+            return this.createHttpHookDefinitions(humanTaskDefinitionId, td.HttpHookDefinition);
           })
           .then(()=>{
             return Promise.resolve();   
@@ -362,6 +367,7 @@ module.exports = class XMLImporter {
           method: hhd.$.method,
           processDefinition: {id: processDefinitionId}
         }
+        console.log(data);
         return HttpHookDefinition.create(data);
       });      
     }
