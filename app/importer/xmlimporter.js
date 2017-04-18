@@ -409,11 +409,11 @@ module.exports = class XMLImporter {
         return Promise.resolve();
       return Promise.each(sentryDefinitions, sd=>{
         const data = {
-            enablesProcess: enablesProcessDefinitionId,
-            completedProcesses: []
-          };
+          enablesProcess: {id: enablesProcessDefinitionId},
+          completedProcesses: []
+        };
         return Promise.each(sd.precondition, p=>{
-            return this.getProcessDefinitionIdByXMLId(p.processDefinitionId)
+            return this.getProcessDefinitionIdByXMLId(p.$.processDefinitionId)
               .then(processDefinitionId=>{
                 data.completedProcesses.push({id: processDefinitionId});
                 return Promise.resolve();
