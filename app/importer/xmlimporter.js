@@ -377,13 +377,11 @@ module.exports = class XMLImporter {
           method: hhd.$.method,
           processDefinition: {id: processDefinitionId}
         }
-        console.log(data);
         return HttpHookDefinition.create(data);
       });      
     }
 
     createSentryDefinitions(){
-      console.log('create sentry definitions 0')
       return Promise.each(this.json.CaseDefinition, cd=>{         
         return this.createSentryDefinitionsRecursive(cd.StageDefinition)
           .then(()=>{
@@ -399,7 +397,6 @@ module.exports = class XMLImporter {
     }
 
     createSentryDefinitionsRecursive(stageDefinitions){      
-      console.log('create sentry definitions recursily 0')
       if(stageDefinitions == null)
         return Promise.resolve();
       return Promise.each(stageDefinitions, sd=>{ 
@@ -416,8 +413,7 @@ module.exports = class XMLImporter {
       });   
     }
 
-    createSentryDefinitionOfProcesses(processDefinitions){      
-      console.log('create sentry definition of processes 0')      
+    createSentryDefinitionOfProcesses(processDefinitions){        
       if(processDefinitions == null)
         return Promise.resolve();
       return Promise.each(processDefinitions, pd=>{
@@ -434,7 +430,6 @@ module.exports = class XMLImporter {
     }
 
     createSentryDefinition(enablesProcessDefinitionId, sentryDefinitions){
-      console.log('create sentry definition 0')
       if(sentryDefinitions == null)
         return Promise.resolve();
       return Promise.each(sentryDefinitions, sd=>{
