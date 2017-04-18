@@ -12,6 +12,7 @@ import StageDefinition from '../models/casedefinition/model.stagedefinition';
 import HumanTaskDefinition from '../models/casedefinition/model.humantaskdefinition';
 import AutomatedTaskDefinition from '../models/casedefinition/model.automatedtaskdefinition';
 import TaskParamDefinition from '../models/casedefinition/model.taskparamdefinition';
+import SentryDefinition from '../models/casedefinition/model.sentrydefinition';
 import Case from '../models/case/model.case';
 const xml = Promise.promisifyAll(xml2js);
 
@@ -397,14 +398,21 @@ module.exports = class XMLImporter {
       })
     }
 
-    createSentryDefinition(parentProcessDefinitionId, sentryDefinitions){
+    createSentryDefinition(enablesProcessDefinitionId, sentryDefinitions){
       if(sentryDefinitions == null)
         return Promise.resolve();
       return Promise.each(sentryDefinitions, sd=>{
-        return Promise.each(sd.precondition, pre=>{
-          console.log(pre);
-          return Promise.resolve();
-        });
+        return Promise.map(sd.precondition, p=>{
+            console.log(p);
+            return {id: this.getProcessDefinitionIdByXMLId(p.processDefinitionId)};
+          })
+          .then(compProcesses=>{
+            const data = {
+              enablesProcess: enablesProcessDefinitionId,
+              completedProcesses: compProcesses
+            };
+            return SentryDefinition.create(data);
+          });
       });       
     }
 
