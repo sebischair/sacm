@@ -12,6 +12,7 @@ import StageDefinition from '../models/casedefinition/model.stagedefinition';
 import HumanTaskDefinition from '../models/casedefinition/model.humantaskdefinition';
 import AutomatedTaskDefinition from '../models/casedefinition/model.automatedtaskdefinition';
 import TaskParamDefinition from '../models/casedefinition/model.taskparamdefinition';
+import HttpHookDefinition from '../models/casedefinition/model.httphookdefinition';
 import SentryDefinition from '../models/casedefinition/model.sentrydefinition';
 import Case from '../models/case/model.case';
 const xml = Promise.promisifyAll(xml2js);
@@ -348,6 +349,20 @@ module.exports = class XMLImporter {
           taskDefinition: {id: taskDefinitionId}
         }
         return TaskParamDefinition.create(data);
+      });      
+    }
+
+    createHttpHookDefinitions(processDefinitionId, httpHookDefinitions){
+      if(httpHookDefinitions == null)
+        return Promise.resolve();
+      return Promise.each(httpHookDefinitions, hhd=>{        
+        const data = {
+          on: hhd.$.on,
+          url: hhd.$.url,
+          method: hhd.$.method,
+          processDefinition: {id: processDefinitionId}
+        }
+        return HttpHookDefinition.create(data);
       });      
     }
 
