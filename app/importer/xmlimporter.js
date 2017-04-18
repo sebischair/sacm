@@ -414,11 +414,11 @@ module.exports = class XMLImporter {
         return Promise.each(sd.precondition, p=>{
             return this.getProcessDefinitionIdByXMLId(p.$.processDefinitionId)
               .then(processDefinitionId=>{
-                data.completedProcesses.push({id: processDefinitionId});
+                data.completedProcessDefinitions.push({id: processDefinitionId});
                 return Promise.resolve();
               });            
           })
-          .then(()=>{           
+          .then(()=>{        
             return SentryDefinition.create(data);
           });
       });       
