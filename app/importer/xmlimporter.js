@@ -52,9 +52,34 @@ module.exports = class XMLImporter {
       if(stageDefinitionXMLId == null)
         return Promise.resolve(null);
       else if(!this.stageDefinitionMap.has(stageDefinitionXMLId))
-        Promise.reject('ERROR: StageDefinition ID "'+stageDefinitionXMLId+'" not found')
+        return Promise.reject('ERROR: StageDefinition ID "'+stageDefinitionXMLId+'" not found')
       else 
         return Promise.resolve(this.stageDefinitionMap.get(stageDefinitionXMLId));
+    }
+
+    getProcessDefinitionIdByXMLId(processDefinitionXMLId){
+      if(processDefinitionXMLId == null)
+        return Promise.resolve(null);
+      else{
+        let processDefinitionId = null;
+        let count = 0;
+        if(this.stageDefinitionMap.has(processDefinitionXMLId)){
+          processDefinitionId = this.stageDefinitionMap.get(processDefinitionXMLId);
+          count++;
+        }
+        if(this.humanTaskDefinitionMap.has(processDefinitionXMLId)){
+          processDefinitionId = this.humanTaskDefinitionMap.get(processDefinitionXMLId);
+          count++;
+        }
+        if(this.autoamtedTaskDefinitionMap.has(processDefinitionXMLId)){
+          processDefinitionId = this.autoamtedTaskDefinitionMap.get(processDefinitionXMLId);
+          count++;
+        }
+        if(count == 1)
+          return Promise.resolve(processDefinitionId);
+        else
+          return Promise.reject('ERROR: ProcessDefinition ID "'+processDefinitionXMLId+'" not found or not unique!');
+      }
     }
 
     import(filePath){
@@ -88,6 +113,9 @@ module.exports = class XMLImporter {
         })  
         .then(() => {          
           return this.createTaskDefinitions();
+        })
+        .then(() => {          
+          return this.createSentryDefinitions();
         })
         .then(() => {          
           return this.createCase();
@@ -322,8 +350,62 @@ module.exports = class XMLImporter {
       });      
     }
 
-    createSentryDefintions(){
+    createSentryDefinitions(){
+      return Promise.each(this.json.CaseDefinition, cd=>{         
+        return this.createSentryDefinitionsRecursive(cd.StageDefinition)
+          .then(()=>{
+            return this.createSentryDefinitionOfProcesses(cd.StageDefinition);
+          })
+          .then(()=>{
+            return this.createSentryDefinitionOfProcesses(cd.HumanTaskDefinition)
+          })
+          .then(()=>{            
+            return this.createSentryDefinitionOfProcesses(cd.AutomatedTaskDefinition);            
+          });  
+      });   
+    }
 
+    createSentryDefinitionsRecursive(stageDefinitions){
+      if(stageDefinitions == null)
+        return Promise.resolve();
+      return Promise.each(stageDefinitions, sd=>{ 
+        return this.createSentryDefinitionsRecursive(sd.StageDefinition)
+          .then(()=>{
+            return this.createSentryDefinitionOfProcesses(sd.StageDefinition);
+          })
+          .then(()=>{
+            return this.createSentryDefinitionOfProcesses(sd.HumanTaskDefinition)
+          })
+          .then(()=>{            
+            return this.createSentryDefinitionOfProcesses(sd.AutomatedTaskDefinition);            
+          });  
+      });   
+    }
+
+    createSentryDefinitionOfProcesses(processDefinitions){
+      if(processDefinitions == null)
+        return Promise.resolve();
+      return Promise.each(processDefinitions, processDefinition=>{
+        if(processDefinition.SentryDefinition == null){
+          return Promise.resolve();                  
+        }else{
+          return this.getProcessDefinitionIdByXMLId(processDefinition.$.id)
+            .then(processDefinitionId=>{
+              return this.createSentryDefinition(processDefinitionId, processDefinition.SentryDefinition);
+            });
+        }
+      })
+    }
+
+    createSentryDefinition(parentProcessDefinitionId, sentryDefinitions){
+      if(sentryDefinitions == null)
+        return Promise.resolve();
+      return Promise.each(sentryDefinitions, sd=>{
+        return Promise.each(sd.precondition, pre=>{
+          console.log(pre);
+          return Promise.resolve();
+        });
+      });       
     }
 
     createCase(){
