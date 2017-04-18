@@ -368,17 +368,27 @@ module.exports = class XMLImporter {
     }
 
     createHttpHookDefinitions(processDefinitionId, httpHookDefinitions){
-      if(httpHookDefinitions == null)
-        return Promise.resolve();
-      return Promise.each(httpHookDefinitions, hhd=>{        
-        const data = {
-          on: hhd.$.on,
-          url: hhd.$.url,
-          method: hhd.$.method,
-          processDefinition: {id: processDefinitionId}
-        }
-        return HttpHookDefinition.create(data);
-      });      
+      return new Promise((resolve, reject)=>{   
+        if(httpHookDefinitions == null)
+          resolve();
+        Promise.each(httpHookDefinitions, hhd=>{        
+          const data = {
+            on: hhd.$.on,
+            url: hhd.$.url,
+            method: hhd.$.method,
+            processDefinition: {id: processDefinitionId}
+          }
+          return HttpHookDefinition.create(data);
+        })
+        .then(()=>{
+          resolve()
+        })
+        .catch(err=>{
+          console.log(err);
+          reject(err);
+        });  
+      });   
+          
     }
 
     createSentryDefinitions(){
