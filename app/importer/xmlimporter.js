@@ -222,6 +222,7 @@ module.exports = class XMLImporter {
       if(stageDefinitions == null)
         return Promise.resolve();
       return Promise.each(stageDefinitions, sd=>{   
+        let stageDefinitionId = null;
         return this.getEntityDefinitionIdByXMLId(sd.$.entityDefinitionId) 
           .then(entityDefinitionId=>{
             const data = {
@@ -240,8 +241,12 @@ module.exports = class XMLImporter {
             return StageDefinition.create(data);
           })         
           .then(persistedStageDef=>{
-            this.stageDefinitionMap.set(sd.$.id, persistedStageDef.id);     
+            this.stageDefinitionMap.set(sd.$.id, persistedStageDef.id); 
+            stageDefinitionId = persistedStageDef.id; 
             return this.createStageDefinitionRecursive(caseDefId, persistedStageDef.id, sd.StageDefinition);
+          })
+          .then(()=>{
+            return this.createHttpHookDefinitions(stageDefinitionId, sd.HttpHookDefinition);
           })
           .catch(err=>{
             return Promise.reject(err);
