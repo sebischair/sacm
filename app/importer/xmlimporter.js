@@ -386,8 +386,7 @@ module.exports = class XMLImporter {
     }
 
     createSentryDefinitionOfProcesses(processDefinitions){      
-      console.log('create sentry definition of processes 0')
-      console.log(processDefinitions)
+      console.log('create sentry definition of processes 0')      
       if(processDefinitions == null)
         return Promise.resolve();
       return Promise.each(processDefinitions, pd=>{
@@ -409,8 +408,8 @@ module.exports = class XMLImporter {
         return Promise.resolve();
       return Promise.each(sentryDefinitions, sd=>{
         const data = {
-          enablesProcess: {id: enablesProcessDefinitionId},
-          completedProcesses: []
+          enablesProcessDefinition: {id: enablesProcessDefinitionId},
+          completedProcessDefinitions: []
         };
         return Promise.each(sd.precondition, p=>{
             return this.getProcessDefinitionIdByXMLId(p.$.processDefinitionId)
