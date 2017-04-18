@@ -330,10 +330,15 @@ module.exports = class XMLImporter {
         }
         if(parentStageDefId != null) 
           data.parentStageDefinition = {id: parentStageDefId};
+        let automatedTaskDefinitionId = null;
         return AutomatedTaskDefinition.create(data)
           .then(persistedAutomatedTaskDef=>{
-            this.automatedTaskDefinitionMap.set(td.$.id, persistedAutomatedTaskDef.id);    
+            this.automatedTaskDefinitionMap.set(td.$.id, persistedAutomatedTaskDef.id); 
+            automatedTaskDefinitionId = persistedAutomatedTaskDef.id;  
             return this.createTaskParamDefinitions(persistedAutomatedTaskDef.id, td.TaskParamDefinition);
+          })
+          .then(()=>{
+            return this.createHttpHookDefinitions(automatedTaskDefinitionId, td.HttpHookDefinition);
           })
           .then(()=>{
             return Promise.resolve();   
