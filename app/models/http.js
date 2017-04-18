@@ -43,7 +43,7 @@ module.exports = {
     post: function(path, data){
         return new Promise(function (resolve, reject){
             console.log('###### POST 2 #######');
-            console.log(data);
+            console.log(JSON.stringify(data));
             console.log('###### POST 2 END #######');
             request.post({
                 url: config.sc.url + path,

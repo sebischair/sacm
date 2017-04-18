@@ -72,8 +72,8 @@ module.exports = class XMLImporter {
           processDefinitionId = this.humanTaskDefinitionMap.get(processDefinitionXMLId);
           count++;
         }
-        if(this.autoamtedTaskDefinitionMap.has(processDefinitionXMLId)){
-          processDefinitionId = this.autoamtedTaskDefinitionMap.get(processDefinitionXMLId);
+        if(this.automatedTaskDefinitionMap.has(processDefinitionXMLId)){
+          processDefinitionId = this.automatedTaskDefinitionMap.get(processDefinitionXMLId);
           count++;
         }
         if(count == 1)
@@ -352,6 +352,7 @@ module.exports = class XMLImporter {
     }
 
     createSentryDefinitions(){
+      console.log('create sentry definitions 0')
       return Promise.each(this.json.CaseDefinition, cd=>{         
         return this.createSentryDefinitionsRecursive(cd.StageDefinition)
           .then(()=>{
@@ -366,7 +367,8 @@ module.exports = class XMLImporter {
       });   
     }
 
-    createSentryDefinitionsRecursive(stageDefinitions){
+    createSentryDefinitionsRecursive(stageDefinitions){      
+      console.log('create sentry definitions recursily 0')
       if(stageDefinitions == null)
         return Promise.resolve();
       return Promise.each(stageDefinitions, sd=>{ 
@@ -383,34 +385,41 @@ module.exports = class XMLImporter {
       });   
     }
 
-    createSentryDefinitionOfProcesses(processDefinitions){
+    createSentryDefinitionOfProcesses(processDefinitions){      
+      console.log('create sentry definition of processes 0')
+      console.log(processDefinitions)
       if(processDefinitions == null)
         return Promise.resolve();
-      return Promise.each(processDefinitions, processDefinition=>{
-        if(processDefinition.SentryDefinition == null){
+      return Promise.each(processDefinitions, pd=>{
+        if(pd.SentryDefinition == null){
           return Promise.resolve();                  
         }else{
-          return this.getProcessDefinitionIdByXMLId(processDefinition.$.id)
+          return this.getProcessDefinitionIdByXMLId(pd.$.id)
             .then(processDefinitionId=>{
-              return this.createSentryDefinition(processDefinitionId, processDefinition.SentryDefinition);
+              console.log(processDefinitionId);
+              return this.createSentryDefinition(processDefinitionId, pd.SentryDefinition);
             });
         }
       })
     }
 
     createSentryDefinition(enablesProcessDefinitionId, sentryDefinitions){
+      console.log('create sentry definition 0')
       if(sentryDefinitions == null)
         return Promise.resolve();
       return Promise.each(sentryDefinitions, sd=>{
-        return Promise.map(sd.precondition, p=>{
-            console.log(p);
-            return {id: this.getProcessDefinitionIdByXMLId(p.processDefinitionId)};
+        const data = {
+            enablesProcess: enablesProcessDefinitionId,
+            completedProcesses: []
+          };
+        return Promise.each(sd.precondition, p=>{
+            return this.getProcessDefinitionIdByXMLId(p.processDefinitionId)
+              .then(processDefinitionId=>{
+                data.completedProcesses.push({id: processDefinitionId});
+                return Promise.resolve();
+              });            
           })
-          .then(compProcesses=>{
-            const data = {
-              enablesProcess: enablesProcessDefinitionId,
-              completedProcesses: compProcesses
-            };
+          .then(()=>{           
             return SentryDefinition.create(data);
           });
       });       
