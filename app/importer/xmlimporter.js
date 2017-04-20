@@ -122,9 +122,6 @@ module.exports = class XMLImporter {
         .then(() => {          
           return this.createCase();
         })
-        .then(()=>{
-          return Promise.resolve();
-        })
         .catch(err=>{
           return Promise.reject(err);
         });        
@@ -462,7 +459,10 @@ module.exports = class XMLImporter {
 
     createCase(){
       const caseDefinitionId = this.caseDefinitionMap.values().next().value;
-      return Case.create({caseDefinition: caseDefinitionId});
+      return Case.create({caseDefinition: caseDefinitionId})
+        .then(case1=>{
+          return Case.findTreebyId(case1.id);
+        });
     }
 
 
