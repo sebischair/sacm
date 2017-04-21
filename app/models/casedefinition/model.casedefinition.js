@@ -9,8 +9,8 @@ export default class CaseDefinition extends Model{
     return http.post('/casedefinitions/', data);
   }
 
-  static findAll() {
-    return http.get('/casedefinitions/');
+  static findByWorkspaceId(workspaceId){    
+    return http.get('/workspaces/'+workspaceId+'/casedefinitions');
   }
 
   static findById(caseDefinitionId){
