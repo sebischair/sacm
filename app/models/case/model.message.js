@@ -6,7 +6,7 @@ import Model from '../model';
 export default class Message extends Model{
 
   static create(data) {
-    return http.post('case/'+data.case+'/messages', data);
+    return http.post('messages', data);
   }
 
   static findByCaseId(caseId) {
