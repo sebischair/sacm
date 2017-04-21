@@ -17,6 +17,10 @@ export default class CaseDefinition extends Model{
     return http.get('/casedefinition/'+caseDefinitionId);
   }
 
+  static findTreeById(caseDefinitionId){
+    return http.get('/casedefinition/'+caseDefinitionId+'/tree');
+  }
+
   static deleteById(caseDefinitionId) {
     return http.del('/casedefinition/'+caseDefinitionId);
   }
