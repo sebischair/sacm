@@ -10,7 +10,7 @@ export default class CaseDefinition extends Model{
   }
 
   static findByWorkspaceId(workspaceId){    
-    return http.get('/workspaces/'+workspaceId+'/casedefinitions');
+    return http.get('/workspace/'+workspaceId+'/casedefinitions');
   }
 
   static findById(caseDefinitionId){
