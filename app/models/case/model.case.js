@@ -9,6 +9,9 @@ export default class Case extends Model{
     return http.post('/cases/', data);
   }
 
+  static findbyWorkspaceId(workspaceId){
+    return http.get('/workspace/'+workspaceId+'/cases');
+  }
   static findbyId(caseId){
     return http.get('/case/'+caseId);
   }
