@@ -2,7 +2,7 @@ import Promise from 'bluebird';
 import http from '../http';
 import Model from '../model';
 
-
+// Status: Implementd
 export default class CaseDefinition extends Model{
 
   static create(data){

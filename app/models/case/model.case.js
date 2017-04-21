@@ -2,7 +2,7 @@ import Promise from 'bluebird';
 import http from '../http';
 import Model from '../model';
 
-
+// Status: Implementd
 export default class Case extends Model{
 
   static create(data){
@@ -12,6 +12,7 @@ export default class Case extends Model{
   static findbyWorkspaceId(workspaceId){
     return http.get('/workspace/'+workspaceId+'/cases');
   }
+  
   static findbyId(caseId){
     return http.get('/case/'+caseId);
   }
