@@ -13,6 +13,18 @@ export default class HumanTaskDefinition extends Model{
     return http.get('/humantaskdefinition/'+humanTaskDefinitionId);
   }
 
+  static findByCaseDefinitionId(caseDefinitionId) {
+    return http.get('/casedefinition/'+caseDefinitionId+'/humantaskdefinitions');
+  }
+
+  static findByStageDefinitionId(stageDefinitionId) {
+    return http.get('/stagedefinition/'+stageDefinitionId+'/humantaskdefinitions');
+  }
+
+  static updateById(humanTaskDefinitionId) {
+    return http.put('/humantaskdefinition/'+humanTaskDefinitionId, data);
+  }
+
   static deleteById(humanTaskDefinitionId) {
     return http.del('/humantaskdefinition/'+humanTaskDefinitionId);
   }

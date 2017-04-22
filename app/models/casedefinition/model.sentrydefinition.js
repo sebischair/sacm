@@ -9,12 +9,16 @@ export default class SentryDefinition extends Model{
     return http.post('/sentrydefinitions/', data);
   }
 
-  static findAll() {
-    return http.get('/sentrydefinitions/');
-  }
-
   static findById(sentryDefinitionId){
     return http.get('/sentrydefinition/'+sentryDefinitionId);
+  }
+
+  static findByProcessDefinitionId(processDefinitionId) {
+    return http.get('/processdefinition/'+processDefinitionId+'/sentrydefinitions');
+  }
+
+  static updateById(sentryDefinitionId, data) {
+    return http.put('/sentrydefinition/'+sentryDefinitionId, data);
   }
 
   static deleteById(sentryDefinitionId) {
