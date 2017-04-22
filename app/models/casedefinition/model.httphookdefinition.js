@@ -17,6 +17,10 @@ export default class HttpHookDefinition extends Model{
     return http.get('/processdefinition/'+processDefinitionId+'/httphookdefinitions');
   }
 
+  static updateById(httpHookDefinitionId, data) {
+    return http.put('/httphookdefinition/'+httpHookDefinitionId, data);
+  }
+
   static deleteById(httpHookDefinitionId) {
     return http.del('/httphookdefinition/'+httpHookDefinitionId);
   }
