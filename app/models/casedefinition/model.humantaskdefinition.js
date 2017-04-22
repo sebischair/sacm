@@ -21,7 +21,7 @@ export default class HumanTaskDefinition extends Model{
     return http.get('/stagedefinition/'+stageDefinitionId+'/humantaskdefinitions');
   }
 
-  static updateById(humanTaskDefinitionId) {
+  static updateById(humanTaskDefinitionId, data) {
     return http.put('/humantaskdefinition/'+humanTaskDefinitionId, data);
   }
 
