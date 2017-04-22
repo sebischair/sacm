@@ -58,14 +58,22 @@ module.exports = {
             });
         });
     },
-    //TODO add promise stuff
     put: function(path, data, cb){
         console.log('SC-PUT: '+ config.sc.url + path + " "+JSON.stringify(data));
-        request.put({
-            url: config.sc.url + path,
-            headers: headers,
-            json: data
-        }, cb);
+        return new Promise(function (resolve, reject) {
+            console.log('SC-PUT: ' + config.sc.url + path + " " + JSON.stringify(data));
+            request.del({
+                url: config.sc.url + path,
+                headers: headers,
+                json: data
+            }, function(err, res, body){
+                printRequest('PUT', config.sc.url+path, data, body, res.statusCode);
+                if(err || res.statusCode != 200)
+                    reject(body);
+                else
+                    resolve(body)
+            });
+        });
     },
     del: function(path, data){
         return new Promise(function (resolve, reject) {
