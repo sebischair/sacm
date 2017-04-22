@@ -8,13 +8,17 @@ export default class Case extends Model{
   static create(data){
     return http.post('/cases/', data);
   }
+ 
+  static findbyId(caseId){
+    return http.get('/case/'+caseId);
+  }
 
   static findbyWorkspaceId(workspaceId){
     return http.get('/workspace/'+workspaceId+'/cases');
   }
-  
-  static findbyId(caseId){
-    return http.get('/case/'+caseId);
+
+  static findbyCaseDefinitionId(caseDefinitionId){
+    return http.get('/casedefinition/'+caseDefinitionId+'/cases');
   }
 
   static findTreebyId(caseId){
@@ -23,6 +27,14 @@ export default class Case extends Model{
 
   static deleteById() {
     return http.del('/case/'+caseId);
+  }
+
+  static complete() {
+    return http.post('/case/'+caseId+'/complete');
+  }
+
+  static terminate() {
+    return http.post('/case/'+caseId+'/terminate');
   }
    
 }
