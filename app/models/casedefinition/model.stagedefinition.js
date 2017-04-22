@@ -9,12 +9,16 @@ export default class StageDefinition extends Model{
     return http.post('/stagedefinitions/', data);
   }
 
-  static findAll() {
-    return http.get('/stagedefinitions/');
-  }
-
   static findById(stageDefinitionId) {
     return http.get('/stagedefinition/'+stageDefinitionId);
+  }
+
+  static findByCaseDefinitionId(caseDefinitionId) {
+    return http.get('/casedefinition/'+caseDefinitionId+'/stagedefinition');
+  }
+
+  static updateById(stageDefinitionId, data) {
+    return http.del('/stagedefinition/'+stageDefinitionId, data);
   }
 
   static deleteById(stageDefinitionId) {
