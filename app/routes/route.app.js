@@ -14,7 +14,7 @@ import test from './route.test';
 function routes(){
     const router = express.Router();
 
-    /** CaseDefinition routes *
+    /** CaseDefinition routes */
     router.use('/casedefinition', casedefinition);
     router.use('/casedefinitions', casedefinition);
     router.use('/stagedefinition', stagedefinition);
@@ -43,7 +43,7 @@ function routes(){
     /** Other routes */
     router.use('/test', test);
 
-    
+
     return router;
 };
 

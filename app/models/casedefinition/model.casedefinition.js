@@ -12,8 +12,8 @@ export default class CaseDefinition extends Model{
   static findById(caseDefinitionId){
     return http.get('/casedefinition/'+caseDefinitionId);
   }
-  
-  static findByWorkspaceId(workspaceId){    
+
+  static findByWorkspaceId(workspaceId){
     return http.get('/workspace/'+workspaceId+'/casedefinitions');
   }
 
@@ -22,11 +22,11 @@ export default class CaseDefinition extends Model{
   }
 
   static updateById(caseDefinitionId, data) {
-    return http.del('/casedefinition/'+caseDefinitionId, data);
+    return http.put('/casedefinition/'+caseDefinitionId, data);
   }
 
   static deleteById(caseDefinitionId) {
     return http.del('/casedefinition/'+caseDefinitionId);
   }
-  
+
 }

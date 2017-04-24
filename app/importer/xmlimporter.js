@@ -37,7 +37,7 @@ module.exports = class XMLImporter {
         return Promise.resolve(null);
       else if(!this.entityDefinitionMap.has(entityDefinitionXMLId))
         return Promise.reject('ERROR: EntityDefintion ID "'+entityDefinitionXMLId+'" not found');
-      else 
+      else
         return Promise.resolve(this.entityDefinitionMap.get(entityDefinitionXMLId));
     }
 
@@ -46,7 +46,7 @@ module.exports = class XMLImporter {
         return Promise.resolve(null);
       else if(!this.caseDefinitionMap.has(caseDefinitionXMLId))
         return Promise.reject('ERROR: CaseDefinition ID "'+caseDefinitionXMLId+'" not found')
-      else 
+      else
         return Promise.resolve(this.caseDefinitionMap.get(caseDefinitionXMLId));
     }
 
@@ -55,7 +55,7 @@ module.exports = class XMLImporter {
         return Promise.resolve(null);
       else if(!this.stageDefinitionMap.has(stageDefinitionXMLId))
         return Promise.reject('ERROR: StageDefinition ID "'+stageDefinitionXMLId+'" not found')
-      else 
+      else
         return Promise.resolve(this.stageDefinitionMap.get(stageDefinitionXMLId));
     }
 
@@ -85,46 +85,50 @@ module.exports = class XMLImporter {
     }
 
     import(filePath){
-      if(!fs.existsSync(filePath)) 
+      if(!fs.existsSync(filePath))
         return Promise.reject('ERROR: File does not exist' + filePath);
 
       return xml.parseStringAsync(fs.readFileSync(filePath).toString())
         .then(json=>{
           this.json = json.SACMDefinition;
-          return Workspace.deleteAll();          
+          return Workspace.deleteAll();
         })
         .then(()=>{
           return Workspace.create(this.workspaceName);
         })
+
         .then(workspace => {
           this.workspaceId = workspace.id;
           return this.createEntityDefinitions();
         })
+
         .then(() => {
           return this.createAttributeDefinitions();
-        })        
+        })
+
         .then(() => {
           return Promise.resolve();
           //return this.createDerivedAttributeDefinitions();
-        })  
+        })
+
         .then(() => {
           return this.createCaseDefinitions();
-        })    
+        })
         .then(() => {
           return this.createStageDefinitions();
-        })  
-        .then(() => {          
+        })
+        .then(() => {
           return this.createTaskDefinitions();
         })
-        .then(() => {          
+        .then(() => {
           return this.createSentryDefinitions();
         })
-        .then(() => {          
+        .then(() => {
           return this.createCase();
         })
         .catch(err=>{
           return Promise.reject(err);
-        });        
+        });
     }
 
 
@@ -132,7 +136,7 @@ module.exports = class XMLImporter {
       return Promise.each(this.json.EntityDefinition, ed=>{
         return EntityDefinition.create(this.workspaceId, ed.$.id)
           .then(persistedEntityDefinition =>{
-            this.entityDefinitionMap.set(ed.$.id, persistedEntityDefinition.id);            
+            this.entityDefinitionMap.set(ed.$.id, persistedEntityDefinition.id);
             return Promise.resolve();
           });
       });
@@ -152,12 +156,12 @@ module.exports = class XMLImporter {
               return AttributeDefinition.create(entityDefId, data);
             })
             .then(persistedAttributeDefinition =>{
-              this.attributeDefinitionMap.set(ed.$.id+ad.$.id, persistedAttributeDefinition.id);            
+              this.attributeDefinitionMap.set(ed.$.id+ad.$.id, persistedAttributeDefinition.id);
               return Promise.resolve();
             })
             .catch(err=>{
               return Promise.reject(err);
-            });       
+            });
         });
       });
     }
@@ -168,13 +172,13 @@ module.exports = class XMLImporter {
         return Promise.each(ed.DerivedAttributeDefinition, ad=>{
           const data = {
             name: ad.$.id,
-            description: ad.$.label,    
+            description: ad.$.label,
             expression: ad.$.expression
           };
           const entityDefId = this.getEntityDefinitionIdByXMLId(ed.$.id);
           return DerivedAttributeDefinition.create(entityDefId, data)
             .then(persistedAttributeDefinition =>{
-              this.derivedAttributeDefinitionMap.set(ed.$.id+ad.$.id, persistedAttributeDefinition.id);            
+              this.derivedAttributeDefinitionMap.set(ed.$.id+ad.$.id, persistedAttributeDefinition.id);
               return Promise.resolve();
             })
             .catch(err=>{
@@ -185,8 +189,8 @@ module.exports = class XMLImporter {
     }
     */
 
-    createCaseDefinitions() {      
-      return Promise.each(this.json.CaseDefinition, cd=>{    
+    createCaseDefinitions() {
+      return Promise.each(this.json.CaseDefinition, cd=>{
         return this.getEntityDefinitionIdByXMLId(cd.$.entityDefinitionId)
           .then(entityDefinitionId=>{
             const data = {
@@ -195,32 +199,32 @@ module.exports = class XMLImporter {
               entityDefinition: {id: entityDefinitionId}
             };
             return CaseDefinition.create(data)
-          })        
+          })
           .then(persistedCaseDefinition =>{
-            this.caseDefinitionMap.set(cd.$.id, persistedCaseDefinition.id);         
+            this.caseDefinitionMap.set(cd.$.id, persistedCaseDefinition.id);
             return Promise.resolve();
           })
           .catch(err=>{
             return Promise.reject(err);
-          });     
-      });  
+          });
+      });
     }
 
-    createStageDefinitions() {       
-      return Promise.each(this.json.CaseDefinition, cd=>{ 
+    createStageDefinitions() {
+      return Promise.each(this.json.CaseDefinition, cd=>{
         return this.getCaseDefinitionIdByXMLId(cd.$.id)
           .then(caseDefId=>{
             return this.createStageDefinitionRecursive(caseDefId, null, cd.StageDefinition);
-          });        
-      });   
+          });
+      });
     }
 
-    createStageDefinitionRecursive(caseDefId, parentStageDefId, stageDefinitions){   
+    createStageDefinitionRecursive(caseDefId, parentStageDefId, stageDefinitions){
       if(stageDefinitions == null)
         return Promise.resolve();
-      return Promise.each(stageDefinitions, sd=>{   
+      return Promise.each(stageDefinitions, sd=>{
         let stageDefinitionId = null;
-        return this.getEntityDefinitionIdByXMLId(sd.$.entityDefinitionId) 
+        return this.getEntityDefinitionIdByXMLId(sd.$.entityDefinitionId)
           .then(entityDefinitionId=>{
             const data = {
               name: sd.$.id,
@@ -229,17 +233,17 @@ module.exports = class XMLImporter {
               isMandatory: sd.$.isMandetory,
               caseDefinition: {id: caseDefId},
             }
-            if(parentStageDefId != null) 
+            if(parentStageDefId != null)
               data.parentStageDefinition = {id: parentStageDefId};
             if(entityDefinitionId != null){
               data.newEntityDefinition = {id: entityDefinitionId};
-              data.newEntityAttachPath = sd.$.entityAttachPath; 
+              data.newEntityAttachPath = sd.$.entityAttachPath;
             }
             return StageDefinition.create(data);
-          })         
+          })
           .then(persistedStageDef=>{
-            this.stageDefinitionMap.set(sd.$.id, persistedStageDef.id); 
-            stageDefinitionId = persistedStageDef.id; 
+            this.stageDefinitionMap.set(sd.$.id, persistedStageDef.id);
+            stageDefinitionId = persistedStageDef.id;
             return this.createStageDefinitionRecursive(caseDefId, persistedStageDef.id, sd.StageDefinition);
           })
           .then(()=>{
@@ -248,15 +252,15 @@ module.exports = class XMLImporter {
           .catch(err=>{
             return Promise.reject(err);
           });
-      });      
+      });
     }
 
     createTaskDefinitions(){
-      return Promise.each(this.json.CaseDefinition, cd=>{ 
+      return Promise.each(this.json.CaseDefinition, cd=>{
         let caseDefId = null;
         return this.getCaseDefinitionIdByXMLId(cd.$.id)
-          .then(caseDefeinitionId=>{   
-            caseDefId = caseDefeinitionId;         
+          .then(caseDefeinitionId=>{
+            caseDefId = caseDefeinitionId;
             return this.createHumanTaskDefinitons(caseDefId, null, cd.HumanTaskDefinition);
           })
           .then(()=>{
@@ -264,14 +268,14 @@ module.exports = class XMLImporter {
           })
           .then(()=>{
             return this.createTaskDefinitionRecursive(caseDefId, null, cd.StageDefinition);
-          });        
-      });   
+          });
+      });
     }
 
     createTaskDefinitionRecursive(caseDefId, parentStageDefId, stageDefinitions){
       if(stageDefinitions == null)
         return Promise.resolve();
-      return Promise.each(stageDefinitions, sd=>{ 
+      return Promise.each(stageDefinitions, sd=>{
         let parentStageDefId = null;
         return this.getStageDefinitionIdByXMLId(sd.$.id)
           .then(parentStageDefinitionId=>{
@@ -284,26 +288,26 @@ module.exports = class XMLImporter {
           .then(()=>{
             return this.createAutomatedTaskDefinitons(caseDefId, parentStageDefId, sd.AutomatedTaskDefinition)
           });
-      });   
+      });
     }
 
     createHumanTaskDefinitons(caseDefId, parentStageDefId, humanTaskDefinitions){
       if(humanTaskDefinitions == null)
         return Promise.resolve();
-      return Promise.each(humanTaskDefinitions, td=>{        
+      return Promise.each(humanTaskDefinitions, td=>{
         const data = {
           name: td.$.id,
           label: td.$.id,
           isRepeatable: td.$.isRepeatable,
           isMandatory: td.$.isMandetory,
           caseDefinition: {id: caseDefId},
-        }  
-        if(parentStageDefId != null) 
+        }
+        if(parentStageDefId != null)
           data.parentStageDefinition = {id: parentStageDefId};
         let humanTaskDefinitionId = null;
         return HumanTaskDefinition.create(data)
           .then(persistedHumanTaskDef=>{
-            this.humanTaskDefinitionMap.set(td.$.id, persistedHumanTaskDef.id); 
+            this.humanTaskDefinitionMap.set(td.$.id, persistedHumanTaskDef.id);
             humanTaskDefinitionId = persistedHumanTaskDef.id;
             return this.createTaskParamDefinitions(persistedHumanTaskDef.id, td.TaskParamDefinition);
           })
@@ -311,18 +315,18 @@ module.exports = class XMLImporter {
             return this.createHttpHookDefinitions(humanTaskDefinitionId, td.HttpHookDefinition);
           })
           .then(()=>{
-            return Promise.resolve();   
+            return Promise.resolve();
           })
           .catch(err=>{
             return Promise.reject(err);
           });
-      });      
+      });
     }
 
     createAutomatedTaskDefinitons(caseDefId, parentStageDefId, automatedTaskDefinitions){
       if(automatedTaskDefinitions == null)
         return Promise.resolve();
-      return Promise.each(automatedTaskDefinitions, td=>{        
+      return Promise.each(automatedTaskDefinitions, td=>{
         const data = {
           name: td.$.id,
           label: td.$.id,
@@ -330,45 +334,45 @@ module.exports = class XMLImporter {
           isMandatory: td.$.isMandetory,
           caseDefinition: {id: caseDefId}
         }
-        if(parentStageDefId != null) 
+        if(parentStageDefId != null)
           data.parentStageDefinition = {id: parentStageDefId};
         let automatedTaskDefinitionId = null;
         return AutomatedTaskDefinition.create(data)
           .then(persistedAutomatedTaskDef=>{
-            this.automatedTaskDefinitionMap.set(td.$.id, persistedAutomatedTaskDef.id); 
-            automatedTaskDefinitionId = persistedAutomatedTaskDef.id;  
+            this.automatedTaskDefinitionMap.set(td.$.id, persistedAutomatedTaskDef.id);
+            automatedTaskDefinitionId = persistedAutomatedTaskDef.id;
             return this.createTaskParamDefinitions(persistedAutomatedTaskDef.id, td.TaskParamDefinition);
           })
           .then(()=>{
             return this.createHttpHookDefinitions(automatedTaskDefinitionId, td.HttpHookDefinition);
           })
           .then(()=>{
-            return Promise.resolve();   
+            return Promise.resolve();
           })
           .catch(err=>{
             return Promise.reject(err);
           });
-      });      
+      });
     }
 
     createTaskParamDefinitions(taskDefinitionId, taskDefinitionParams){
       if(taskDefinitionParams == null)
         return Promise.resolve();
-      return Promise.each(taskDefinitionParams, tp=>{        
+      return Promise.each(taskDefinitionParams, tp=>{
         const data = {
           path: tp.$.path,
           isReadOnly: tp.$.isReadOnly,
           taskDefinition: {id: taskDefinitionId}
         }
         return TaskParamDefinition.create(data);
-      });      
+      });
     }
 
     createHttpHookDefinitions(processDefinitionId, httpHookDefinitions){
-      return new Promise((resolve, reject)=>{   
+      return new Promise((resolve, reject)=>{
         if(httpHookDefinitions == null)
           resolve();
-        Promise.each(httpHookDefinitions, hhd=>{        
+        Promise.each(httpHookDefinitions, hhd=>{
           const data = {
             on: hhd.$.on,
             url: hhd.$.url,
@@ -383,13 +387,13 @@ module.exports = class XMLImporter {
         .catch(err=>{
           console.log(err);
           reject(err);
-        });  
-      });   
-          
+        });
+      });
+
     }
 
     createSentryDefinitions(){
-      return Promise.each(this.json.CaseDefinition, cd=>{         
+      return Promise.each(this.json.CaseDefinition, cd=>{
         return this.createSentryDefinitionsRecursive(cd.StageDefinition)
           .then(()=>{
             return this.createSentryDefinitionOfProcesses(cd.StageDefinition);
@@ -397,16 +401,16 @@ module.exports = class XMLImporter {
           .then(()=>{
             return this.createSentryDefinitionOfProcesses(cd.HumanTaskDefinition)
           })
-          .then(()=>{            
-            return this.createSentryDefinitionOfProcesses(cd.AutomatedTaskDefinition);            
-          });  
-      });   
+          .then(()=>{
+            return this.createSentryDefinitionOfProcesses(cd.AutomatedTaskDefinition);
+          });
+      });
     }
 
-    createSentryDefinitionsRecursive(stageDefinitions){      
+    createSentryDefinitionsRecursive(stageDefinitions){
       if(stageDefinitions == null)
         return Promise.resolve();
-      return Promise.each(stageDefinitions, sd=>{ 
+      return Promise.each(stageDefinitions, sd=>{
         return this.createSentryDefinitionsRecursive(sd.StageDefinition)
           .then(()=>{
             return this.createSentryDefinitionOfProcesses(sd.StageDefinition);
@@ -414,18 +418,18 @@ module.exports = class XMLImporter {
           .then(()=>{
             return this.createSentryDefinitionOfProcesses(sd.HumanTaskDefinition)
           })
-          .then(()=>{            
-            return this.createSentryDefinitionOfProcesses(sd.AutomatedTaskDefinition);            
-          });  
-      });   
+          .then(()=>{
+            return this.createSentryDefinitionOfProcesses(sd.AutomatedTaskDefinition);
+          });
+      });
     }
 
-    createSentryDefinitionOfProcesses(processDefinitions){        
+    createSentryDefinitionOfProcesses(processDefinitions){
       if(processDefinitions == null)
         return Promise.resolve();
       return Promise.each(processDefinitions, pd=>{
         if(pd.SentryDefinition == null){
-          return Promise.resolve();                  
+          return Promise.resolve();
         }else{
           return this.getProcessDefinitionIdByXMLId(pd.$.id)
             .then(processDefinitionId=>{
@@ -449,12 +453,12 @@ module.exports = class XMLImporter {
               .then(processDefinitionId=>{
                 data.completedProcessDefinitions.push({id: processDefinitionId});
                 return Promise.resolve();
-              });            
+              });
           })
-          .then(()=>{        
+          .then(()=>{
             return SentryDefinition.create(data);
           });
-      });       
+      });
     }
 
     createCase(){
