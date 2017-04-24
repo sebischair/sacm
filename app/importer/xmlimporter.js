@@ -192,6 +192,7 @@ module.exports = class XMLImporter {
             const data = {
               name: cd.$.id,
               label: cd.$.label,
+              ownerPath: cd.$.ownerPath,
               entityDefinition: {id: entityDefinitionId}
             };
             return CaseDefinition.create(data)
@@ -293,7 +294,8 @@ module.exports = class XMLImporter {
       return Promise.each(humanTaskDefinitions, td=>{        
         const data = {
           name: td.$.id,
-          label: td.$.id,
+          label: td.$.id,          
+          ownerPath: td.$.ownerPath,
           isRepeatable: td.$.isRepeatable,
           isMandatory: td.$.isMandetory,
           caseDefinition: {id: caseDefId},
