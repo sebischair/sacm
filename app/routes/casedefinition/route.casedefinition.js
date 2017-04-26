@@ -11,7 +11,16 @@ import Authorizer from './../../middlewares/middleware.authorize';
 
 
 /**
- * @api {post} /api/casedefinitions
+ * @api {post} /casedefinitions Creates a new CaseDefinition
+ * @apiName CreateCaseDefinition
+ * @apiGroup CaseDefinition
+ *
+ * @apiParam {String} name A name for CaseDefinition (internal usage)
+ * @apiParam {String} label A label for the CaseDefinition
+ * @apiParam {String} entityDefinition The ID the EntityDefinition that belongs to the CaseDefinition
+ * @apiParam {String} ownerPath A string notation-based path to the owner of the CaseDefinition
+ *
+ * @apiSampleRequest /casedefinitions
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
@@ -37,7 +46,7 @@ router.post('/', (req, res, next)=>{
   var data = {
     name: req.body.name,
     label: req.body.label,
-    entityDefinition: {id: req.body.entityDefinition},
+    entityDefinition: req.body.entityDefinition,
     ownerPath: req.body.ownerPath
   }
   CaseDefinition.create(data)
@@ -50,7 +59,14 @@ router.post('/', (req, res, next)=>{
 });
 
 /**
- * @api {get} /api/casedefinition/:id
+ * @api {get} /casedefinition/:id Get CaseDefinition
+ *
+ * @apiName GetCaseDefinition
+ * @apiGroup CaseDefinition
+ *
+ * @apiParam {String} ID The ID of the requested CaseDefinition
+ *
+ * @apiSampleRequest /casedefinition/:id
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
@@ -82,9 +98,57 @@ router.get('/:id', (req, res, next)=>{
     })
 });
 
+/**
+ * @api {get} /casedefinition/:id/tree Get CaseDefinition including all its childern
+ *
+ * @apiName GetCaseDefinitionTree
+ * @apiGroup CaseDefinition
+ *
+ * @apiParam {String} ID The ID of the requested CaseDefinition
+ *
+ * @apiSampleRequest /casedefinition/:id
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "workspace": "l304i3u2y91u",
+ *       "entityDefinition": "1hvr3q9rvtys3",
+ *       "children": [],
+ *       "name": "CaseDefinition1",
+ *       "id": "qkx51pgpkgbi",
+ *       "label": "Test Case Definition",
+ *       "type": "CaseDefinition"
+ *     }
+ *
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 404 NotFound
+ *    {
+ *      "handler":"CaseDefinitionHandler2",
+ *      "cause":"EntityNotFoundException",
+ *      "message":"Could not find entity 'qkx51pgpkgbis'",
+ *      "statusCode":404
+ *    }
+ */
+router.get('/:id/tree', (req, res, next)=>{
+  CaseDefinition.findTreeById(req.params.id)
+    .then(cd=>{
+        res.status(200).send(cd);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
 
 /**
- * @api {delete} /api/casedefinition/:id
+ * @api {delete} /casedefinition/:id Delete a CaseDefinition
+ *
+ * @apiName DeleteCaseDefinition
+ * @apiGroup CaseDefinition
+ *
+ * @apiParam {String} ID The ID of the CaseDefinition that should be deleted
+ *
+ * @apiSampleRequest /casedefinition/:id
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
@@ -115,7 +179,18 @@ router.delete('/:id', (req, res, next)=>{
 
 
 /**
- * @api {patch} /api/casedefinition/:id
+ * @api {patch} /casedefinition/:id Updates a specific CaseDefinition
+ *
+ * @apiName UpdateCaseDefinition
+ * @apiGroup CaseDefinition
+ *
+ * @apiParam {String} ID The ID of the CaseDefinition
+ * @apiParam {String} name (optional) Sets a name for the CaseDefinition
+ * @apiParam {String} label (optional) Sets a label for the CaseDefinition
+ * @apiParam {String} entityDefinition (optional) Assigns a new EntityDefinition
+ * @apiParam {String} name (optional) Sets a owner path for the CaseDefinition
+ *
+ * @apiSampleRequest /casedefinition/:id
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
@@ -154,7 +229,7 @@ router.patch('/:id', (req, res, next)=>{
 });
 
 
-router.get('/', (req, res, next)=>{
+router.get('workspaces/:id/casedefinitions', (req, res, next)=>{
   CaseDefinition.find({})
     .then(cds=>{
         res.status(200).send(cds);
