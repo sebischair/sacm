@@ -49,13 +49,12 @@ router.post('/', (req, res, next)=>{
   var data = {
     caseDefinition: req.body.caseDefinition,
     name: req.body.name,
-    label: 'asdasdasd',
+    label: req.body.label,
     isRepeatable: req.body.isRepeatable,
     isMandatory: req.body.isMandatory,
     parent: req.body.parent,
     preconditions: req.body.preconditions
   }
-  console.log('lasdad');
   StageDefinition.create(data).then(sd=>{
     res.status(200).send(sd);
   })
