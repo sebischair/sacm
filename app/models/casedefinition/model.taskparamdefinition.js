@@ -24,5 +24,5 @@ export default class TaskParamDefinition extends Model{
   static deleteById(taskParamDefinitionId) {
     return http.del('/taskparamdefinition/'+taskParamDefinitionId);
   }
-  
+
 }

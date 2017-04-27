@@ -40,7 +40,7 @@ router.get('/:id', (req, res, next)=>{
 
 
 /**
- * @api {get} /humantaskdefinition/:id Delete HumanTaskDefinition
+ * @api {delete} /humantaskdefinition/:id Delete HumanTaskDefinition
  *
  * @apiName Delete HumanTaskDefinition
  * @apiGroup HumanTaskDefinition
@@ -56,7 +56,7 @@ router.get('/:id', (req, res, next)=>{
  * @apiErrorExample {json} Error-Response:
  *     HTTP/1.1 404 Not found
  *    {
- *       "handler": "StageDefinitionsHandler2",
+ *       "handler": "HumanTaskDefinition2",
  *       "cause":"EntityNotFoundException",
  *       "message":"Could not find entity '1swihwfirljjhx'"
  *       "statusCode": 404
@@ -87,7 +87,7 @@ router.delete('/:id', (req, res, next)=>{
  * @apiParam {String} parent ID of the parent stage (if there is one)
  * @apiParam {Array} preconditions Array of preconditions for the stage
  *
- * @apiSampleRequest /stagedefinitions
+ * @apiSampleRequest /humantaskdefinitions
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
