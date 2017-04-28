@@ -279,7 +279,7 @@ module.exports = class XMLImporter {
               name: cd.$.id,
               label: cd.$.label,
               ownerPath: cd.$.ownerPath,
-              entityDefinition: {id: entityDefinitionId}
+              entityDefinition: entityDefinitionId
             };
             return CaseDefinition.create(data)
           })
@@ -314,12 +314,12 @@ module.exports = class XMLImporter {
               label: sd.$.id,
               isRepeatable: sd.$.isRepeatable,
               isMandatory: sd.$.isMandetory,
-              caseDefinition: {id: caseDefId},
+              caseDefinition: caseDefId,
             }
             if(parentStageDefId != null)
-              data.parentStageDefinition = {id: parentStageDefId};
+              data.parentStageDefinition = parentStageDefId;
             if(entityDefinitionId != null){
-              data.newEntityDefinition = {id: entityDefinitionId};
+              data.newEntityDefinition = entityDefinitionId;
               data.newEntityAttachPath = sd.$.entityAttachPath;
             }
             return StageDefinition.create(data);
