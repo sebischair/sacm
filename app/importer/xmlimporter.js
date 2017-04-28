@@ -3,6 +3,7 @@ import Promise from 'bluebird';
 import request from 'request-promise';
 import xml2js from 'xml2js';
 import Workspace from '../models/model.workspace';
+import User from '../models/case/model.user';
 import Group from '../models/casedefinition/model.group';
 import EntityDefinition from '../models/casedefinition/model.entitydefinition';
 import AttributeDefinition from '../models/casedefinition/model.attributedefinition';
@@ -24,6 +25,7 @@ module.exports = class XMLImporter {
     constructor() {
       this.workspaceName = 'connecare2017';
       this.workspaceId = null;      
+      this.userMap = new Map(); //<xmlId, sociocortexId>
       this.groupMap = new Map(); //<xmlId, sociocortexId>
       this.entityDefinitionMap = new Map(); //<xmlId, sociocortexId>
       this.attributeDefinitionMap = new Map(); //<xmlEntityId+xmlAttrId, sociocortexId>
@@ -32,6 +34,17 @@ module.exports = class XMLImporter {
       this.stageDefinitionMap = new Map(); //<xmlId, sociocortexId>
       this.humanTaskDefinitionMap = new Map(); //<xmlId, sociocortexId>
       this.automatedTaskDefinitionMap = new Map(); //<xmlId, sociocortexId>
+    }
+
+    getUserIdByXMLId(userXMLId){
+      return new Promise((resolve, reject) =>{
+        if(userXMLId == null)
+          resolve(null);
+        else if(!this.userMap.has(userXMLId))
+          reject('ERROR: User ID "'+userXMLId+'" not found');
+        else
+          resolve(this.userMap.get(userXMLId));
+      });     
     }
 
     getEntityDefinitionIdByXMLId(entityDefinitionXMLId){
@@ -111,7 +124,12 @@ module.exports = class XMLImporter {
         })
         .then(workspace => {
           this.workspaceId = workspace.id;          
-          return this.createGroups();
+          //return this.createUsers();
+          return Promise.resolve();
+        })
+        .then(()=>{
+          //return this.createGroups();
+          return Promise.resolve();
         })
         .then(()=>{
           return this.createEntityDefinitions();
@@ -149,18 +167,49 @@ module.exports = class XMLImporter {
       });
     }
 
+    createUsers(){
+      return Promise.each(this.json.User, u=>{
+        const data = {
+          name: u.$.id,
+          email: u.$.email,
+        }
+        return User.create(data)
+          .then(persistedUser =>{
+            this.userMap.set(u.$.id, persistedUser.id);
+            return Promise.resolve();
+          });
+      });
+    }
+
     createGroups(){
       return Promise.each(this.json.Group, g=>{
         const data = {
           name: g.$.id,
           administrators: []
         }
-        return Group.create(data)
-          .then(persistedGroup =>{
-            this.groupMap.set(g.$.id, persistedGroup.id);
-            return Promise.resolve();
-          });
-      });
+        return Promise.each(g.Administrator, a=>{
+          return this.getUserIdByXMLId(a.$.principalId)
+            .then(userId=>{
+              administrators.push(userId);
+              return Promise.resolve();
+            })
+            .catch(err=>{
+              return Promise.reject(err);
+            });
+        })
+        .then(()=>{
+          return Group.create(data)
+        })        
+        .then(persistedGroup =>{
+          this.groupMap.set(g.$.id, persistedGroup.id);
+          return Promise.resolve();
+        })
+        .catch(err=>{
+          return Promise.reject(err);
+        })
+      }).catch(err=>{
+        return Promise.reject(err);
+      })
     }
 
     createEntityDefinitions() {
