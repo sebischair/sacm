@@ -315,11 +315,9 @@ module.exports = class XMLImporter {
               isRepeatable: sd.$.isRepeatable,
               isMandatory: sd.$.isMandetory,
               caseDefinition: caseDefId,
-              parentStageDefinition: parentStageDefId
-            }
-            if(entityDefinitionId != null){
-              data.newEntityDefinition = entityDefinitionId;
-              data.newEntityAttachPath = sd.$.entityAttachPath;
+              parentStageDefinition: parentStageDefId,              
+              newEntityDefinition: entityDefinitionId,
+              newEntityAttachPath: sd.$.entityAttachPath
             }
             return StageDefinition.create(data);
           })
@@ -514,7 +512,6 @@ module.exports = class XMLImporter {
         }else{
           return this.getProcessDefinitionIdByXMLId(pd.$.id)
             .then(processDefinitionId=>{
-              console.log(processDefinitionId);
               return this.createSentryDefinition(processDefinitionId, pd.SentryDefinition);
             });
         }
@@ -526,7 +523,7 @@ module.exports = class XMLImporter {
         return Promise.resolve();
       return Promise.each(sentryDefinitions, sd=>{
         const data = {
-          enablesProcessDefinition: {id: enablesProcessDefinitionId},
+          enablesProcessDefinition: enablesProcessDefinitionId,
           completedProcessDefinitions: []
         };
         return Promise.each(sd.precondition, p=>{
