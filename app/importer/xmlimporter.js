@@ -3,6 +3,7 @@ import Promise from 'bluebird';
 import request from 'request-promise';
 import xml2js from 'xml2js';
 import Workspace from '../models/model.workspace';
+import Group from '../models/casedefinition/model.group';
 import EntityDefinition from '../models/casedefinition/model.entitydefinition';
 import AttributeDefinition from '../models/casedefinition/model.attributedefinition';
 import DerivedAttributeDefinition from '../models/casedefinition/model.derivedattributedefinition';
@@ -22,7 +23,8 @@ module.exports = class XMLImporter {
 
     constructor() {
       this.workspaceName = 'connecare2017';
-      this.workspaceId = null;
+      this.workspaceId = null;      
+      this.groupMap = new Map(); //<xmlId, sociocortexId>
       this.entityDefinitionMap = new Map(); //<xmlId, sociocortexId>
       this.attributeDefinitionMap = new Map(); //<xmlEntityId+xmlAttrId, sociocortexId>
       this.derivedAttributeDefinitionMap = new Map(); //<entityName.derAttrName, sociocortexId>
@@ -108,7 +110,10 @@ module.exports = class XMLImporter {
           return Workspace.create(this.workspaceName);
         })
         .then(workspace => {
-          this.workspaceId = workspace.id;
+          this.workspaceId = workspace.id;          
+          return this.createGroups();
+        })
+        .then(()=>{
           return this.createEntityDefinitions();
         })
         .then(() => {
@@ -141,6 +146,20 @@ module.exports = class XMLImporter {
           resolve(true);
         else
           resolve(false)
+      });
+    }
+
+    createGroups(){
+      return Promise.each(this.json.Group, g=>{
+        const data = {
+          name: g.$.id,
+          administrators: []
+        }
+        return Group.create(data)
+          .then(persistedGroup =>{
+            this.groupMap.set(g.$.id, persistedGroup.id);
+            return Promise.resolve();
+          });
       });
     }
 
