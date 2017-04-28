@@ -1,5 +1,4 @@
 'use strict';
-import fs from 'fs';
 import Promise from 'bluebird';
 import request from 'request-promise';
 import xml2js from 'xml2js';
@@ -16,6 +15,7 @@ import HttpHookDefinition from '../models/casedefinition/model.httphookdefinitio
 import SentryDefinition from '../models/casedefinition/model.sentrydefinition';
 import Case from '../models/case/model.case';
 const xml = Promise.promisifyAll(xml2js);
+const fs = Promise.promisifyAll(require("fs"));
 
 
 module.exports = class XMLImporter {
@@ -92,58 +92,57 @@ module.exports = class XMLImporter {
       });
     }
 
-    import(filePath){
-      return new Promise((resolve, reject) =>{
-        if(!fs.existsSync(filePath))
-          reject('ERROR: File does not exist' + filePath);
-
-        return xml.parseStringAsync(fs.readFileSync(filePath).toString())
-          .then(json=>{
-            this.json = json.SACMDefinition;
-            return Workspace.deleteAll();
-          })
-          .then(()=>{
-            return Workspace.create(this.workspaceName);
-          })
-
-          .then(workspace => {
-            this.workspaceId = workspace.id;
-            return this.createEntityDefinitions();
-          })
-
-          .then(() => {
-            return this.createAttributeDefinitions();
-          })
-
-          .then(() => {
-            return Promise.resolve();
-            //return this.createDerivedAttributeDefinitions();
-          })
-
-          .then(() => {
-            return this.createCaseDefinitions();
-          })
-          .then(() => {
-            return this.createStageDefinitions();
-          })
-          .then(() => {
-            return this.createTaskDefinitions();
-          })
-          .then(() => {
-            return this.createSentryDefinitions();
-          })
-          .then(() => {
-            return this.createCase();
-          })
-          .then(case1 =>{
-            resolve(case1);
-          })
-          .catch(err=>{
-            reject(err);
-          });
-      });
+    import(filePath){      
+      return this.fileExists(filePath)
+        .then(exist =>{
+          if(!exist)
+            throw new Error('File does not exist' + filePath);
+          else          
+            return xml.parseStringAsync(fs.readFileSync(filePath).toString());
+        })
+        .then(json=>{
+          this.json = json.SACMDefinition;
+          return Workspace.deleteAll();
+        })
+        .then(()=>{
+          return Workspace.create(this.workspaceName);
+        })
+        .then(workspace => {
+          this.workspaceId = workspace.id;
+          return this.createEntityDefinitions();
+        })
+        .then(() => {
+          return this.createAttributeDefinitions();
+        })
+        .then(() => {
+          return Promise.resolve();
+          //return this.createDerivedAttributeDefinitions();
+        })
+        .then(() => {
+          return this.createCaseDefinitions();
+        })
+        .then(() => {
+          return this.createStageDefinitions();
+        })
+        .then(() => {
+          return this.createTaskDefinitions();
+        })
+        .then(() => {
+          return this.createSentryDefinitions();
+        })
+        .then(() => {
+          return this.createCase();
+        });
     }
 
+    fileExists(filePath) {
+      return new Promise((resolve, reject)=>{
+        if(fs.existsSync(filePath))
+          resolve(true);
+        else
+          resolve(false);
+      });
+    }
 
     createEntityDefinitions() {
       return Promise.each(this.json.EntityDefinition, ed=>{
