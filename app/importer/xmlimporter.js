@@ -383,10 +383,9 @@ module.exports = class XMLImporter {
           ownerPath: td.$.ownerPath,
           isRepeatable: td.$.isRepeatable,
           isMandatory: td.$.isMandetory,
-          caseDefinition: {id: caseDefId},
+          caseDefinition: caseDefId,          
+          parentStageDefinition: parentStageDefId
         }
-        if(parentStageDefId != null)
-          data.parentStageDefinition = {id: parentStageDefId};
         let humanTaskDefinitionId = null;
         return HumanTaskDefinition.create(data)
           .then(persistedHumanTaskDef=>{
@@ -415,10 +414,9 @@ module.exports = class XMLImporter {
           label: td.$.id,
           isRepeatable: td.$.isRepeatable,
           isMandatory: td.$.isMandetory,
-          caseDefinition: {id: caseDefId}
-        }
-        if(parentStageDefId != null)
-          data.parentStageDefinition = {id: parentStageDefId};
+          caseDefinition: caseDefId,
+          parentStageDefinition: parentStageDefId
+        }          
         let automatedTaskDefinitionId = null;
         return AutomatedTaskDefinition.create(data)
           .then(persistedAutomatedTaskDef=>{
@@ -445,7 +443,7 @@ module.exports = class XMLImporter {
         const data = {
           path: tp.$.path,
           isReadOnly: tp.$.isReadOnly,
-          taskDefinition: {id: taskDefinitionId}
+          taskDefinition: taskDefinitionId
         }
         return TaskParamDefinition.create(data);
       });
@@ -460,7 +458,7 @@ module.exports = class XMLImporter {
             on: hhd.$.on,
             url: hhd.$.url,
             method: hhd.$.method,
-            processDefinition: {id: processDefinitionId}
+            processDefinition: processDefinitionId
           }
           return HttpHookDefinition.create(data);
         })
