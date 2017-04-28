@@ -33,30 +33,36 @@ module.exports = class XMLImporter {
     }
 
     getEntityDefinitionIdByXMLId(entityDefinitionXMLId){
-      if(entityDefinitionXMLId == null)
-        return Promise.resolve(null);
-      else if(!this.entityDefinitionMap.has(entityDefinitionXMLId))
-        return Promise.reject('ERROR: EntityDefintion ID "'+entityDefinitionXMLId+'" not found');
-      else
-        return Promise.resolve(this.entityDefinitionMap.get(entityDefinitionXMLId));
+      return new Promise((resolve, reject) =>{
+        if(entityDefinitionXMLId == null)
+          resolve(null);
+        else if(!this.entityDefinitionMap.has(entityDefinitionXMLId))
+          reject('ERROR: EntityDefintion ID "'+entityDefinitionXMLId+'" not found');
+        else
+          resolve(this.entityDefinitionMap.get(entityDefinitionXMLId));
+      });     
     }
 
     getCaseDefinitionIdByXMLId(caseDefinitionXMLId){
-      if(caseDefinitionXMLId == null)
-        return Promise.resolve(null);
-      else if(!this.caseDefinitionMap.has(caseDefinitionXMLId))
-        return Promise.reject('ERROR: CaseDefinition ID "'+caseDefinitionXMLId+'" not found')
-      else
-        return Promise.resolve(this.caseDefinitionMap.get(caseDefinitionXMLId));
+      return new Promise((resolve, reject) =>{
+        if(caseDefinitionXMLId == null)
+          resolve(null);
+        else if(!this.caseDefinitionMap.has(caseDefinitionXMLId))
+          reject('ERROR: CaseDefinition ID "'+caseDefinitionXMLId+'" not found')
+        else
+          resolve(this.caseDefinitionMap.get(caseDefinitionXMLId));
+      });
     }
 
     getStageDefinitionIdByXMLId(stageDefinitionXMLId){
-      if(stageDefinitionXMLId == null)
-        return Promise.resolve(null);
-      else if(!this.stageDefinitionMap.has(stageDefinitionXMLId))
-        return Promise.reject('ERROR: StageDefinition ID "'+stageDefinitionXMLId+'" not found')
-      else
-        return Promise.resolve(this.stageDefinitionMap.get(stageDefinitionXMLId));
+      return new Promise((resolve, reject) =>{
+        if(stageDefinitionXMLId == null)
+          resolve(null);
+        else if(!this.stageDefinitionMap.has(stageDefinitionXMLId))
+          reject('ERROR: StageDefinition ID "'+stageDefinitionXMLId+'" not found')
+        else
+          resolve(this.stageDefinitionMap.get(stageDefinitionXMLId));
+      });
     }
 
     getProcessDefinitionIdByXMLId(processDefinitionXMLId){
