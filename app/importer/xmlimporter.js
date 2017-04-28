@@ -315,9 +315,8 @@ module.exports = class XMLImporter {
               isRepeatable: sd.$.isRepeatable,
               isMandatory: sd.$.isMandetory,
               caseDefinition: caseDefId,
+              parentStageDefinition: parentStageDefId
             }
-            if(parentStageDefId != null)
-              data.parentStageDefinition = parentStageDefId;
             if(entityDefinitionId != null){
               data.newEntityDefinition = entityDefinitionId;
               data.newEntityAttachPath = sd.$.entityAttachPath;
