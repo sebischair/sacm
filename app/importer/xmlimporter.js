@@ -66,75 +66,82 @@ module.exports = class XMLImporter {
     }
 
     getProcessDefinitionIdByXMLId(processDefinitionXMLId){
-      if(processDefinitionXMLId == null)
-        return Promise.resolve(null);
-      else{
-        let processDefinitionId = null;
-        let count = 0;
-        if(this.stageDefinitionMap.has(processDefinitionXMLId)){
-          processDefinitionId = this.stageDefinitionMap.get(processDefinitionXMLId);
-          count++;
+      return new Promise((resolve, reject) =>{
+        if(processDefinitionXMLId == null)
+          resolve(null);
+        else{
+          let processDefinitionId = null;
+          let count = 0;
+          if(this.stageDefinitionMap.has(processDefinitionXMLId)){
+            processDefinitionId = this.stageDefinitionMap.get(processDefinitionXMLId);
+            count++;
+          }
+          if(this.humanTaskDefinitionMap.has(processDefinitionXMLId)){
+            processDefinitionId = this.humanTaskDefinitionMap.get(processDefinitionXMLId);
+            count++;
+          }
+          if(this.automatedTaskDefinitionMap.has(processDefinitionXMLId)){
+            processDefinitionId = this.automatedTaskDefinitionMap.get(processDefinitionXMLId);
+            count++;
+          }
+          if(count == 1)
+            resolve(processDefinitionId);
+          else
+            reject('ERROR: ProcessDefinition ID "'+processDefinitionXMLId+'" not found or not unique!');
         }
-        if(this.humanTaskDefinitionMap.has(processDefinitionXMLId)){
-          processDefinitionId = this.humanTaskDefinitionMap.get(processDefinitionXMLId);
-          count++;
-        }
-        if(this.automatedTaskDefinitionMap.has(processDefinitionXMLId)){
-          processDefinitionId = this.automatedTaskDefinitionMap.get(processDefinitionXMLId);
-          count++;
-        }
-        if(count == 1)
-          return Promise.resolve(processDefinitionId);
-        else
-          return Promise.reject('ERROR: ProcessDefinition ID "'+processDefinitionXMLId+'" not found or not unique!');
-      }
+      });
     }
 
     import(filePath){
-      if(!fs.existsSync(filePath))
-        return Promise.reject('ERROR: File does not exist' + filePath);
+      return new Promise((resolve, reject) =>{
+        if(!fs.existsSync(filePath))
+          reject('ERROR: File does not exist' + filePath);
 
-      return xml.parseStringAsync(fs.readFileSync(filePath).toString())
-        .then(json=>{
-          this.json = json.SACMDefinition;
-          return Workspace.deleteAll();
-        })
-        .then(()=>{
-          return Workspace.create(this.workspaceName);
-        })
+        return xml.parseStringAsync(fs.readFileSync(filePath).toString())
+          .then(json=>{
+            this.json = json.SACMDefinition;
+            return Workspace.deleteAll();
+          })
+          .then(()=>{
+            return Workspace.create(this.workspaceName);
+          })
 
-        .then(workspace => {
-          this.workspaceId = workspace.id;
-          return this.createEntityDefinitions();
-        })
+          .then(workspace => {
+            this.workspaceId = workspace.id;
+            return this.createEntityDefinitions();
+          })
 
-        .then(() => {
-          return this.createAttributeDefinitions();
-        })
+          .then(() => {
+            return this.createAttributeDefinitions();
+          })
 
-        .then(() => {
-          return Promise.resolve();
-          //return this.createDerivedAttributeDefinitions();
-        })
+          .then(() => {
+            return Promise.resolve();
+            //return this.createDerivedAttributeDefinitions();
+          })
 
-        .then(() => {
-          return this.createCaseDefinitions();
-        })
-        .then(() => {
-          return this.createStageDefinitions();
-        })
-        .then(() => {
-          return this.createTaskDefinitions();
-        })
-        .then(() => {
-          return this.createSentryDefinitions();
-        })
-        .then(() => {
-          return this.createCase();
-        })
-        .catch(err=>{
-          return Promise.reject(err);
-        });
+          .then(() => {
+            return this.createCaseDefinitions();
+          })
+          .then(() => {
+            return this.createStageDefinitions();
+          })
+          .then(() => {
+            return this.createTaskDefinitions();
+          })
+          .then(() => {
+            return this.createSentryDefinitions();
+          })
+          .then(() => {
+            return this.createCase();
+          })
+          .then(case1 =>{
+            resolve(case1);
+          })
+          .catch(err=>{
+            reject(err);
+          });
+      });
     }
 
 
