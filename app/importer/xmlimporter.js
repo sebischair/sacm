@@ -140,7 +140,7 @@ module.exports = class XMLImporter {
         if(fs.existsSync(filePath))
           resolve(true);
         else
-          resolve(false);
+          resolve(false)
       });
     }
 
@@ -157,23 +157,25 @@ module.exports = class XMLImporter {
     createAttributeDefinitions() {
       return Promise.each(this.json.EntityDefinition, ed=>{
         return Promise.each(ed.AttributeDefinition, ad=>{
-          let data = {
-            name: ad.$.id,
-            attributeType: 'notype', //ad.$.type, //TODO add here
-            options: {},
-            multiplicity: 'any'
-          }
-          return this.getEntityDefinitionIdByXMLId(ed.$.id)
-            .then(entityDefId => {
-              return AttributeDefinition.create(entityDefId, data);
-            })
-            .then(persistedAttributeDefinition =>{
-              this.attributeDefinitionMap.set(ed.$.id+ad.$.id, persistedAttributeDefinition.id);
-              return Promise.resolve();
-            })
-            .catch(err=>{
-              return Promise.reject(err);
-            });
+          return new Promise((resolve, reject)=>{
+            let data = {
+              name: ad.$.id,
+              attributeType: 'notype', //ad.$.type, //TODO add here
+              options: {},
+              multiplicity: 'any'
+            }
+            return this.getEntityDefinitionIdByXMLId(ed.$.id)
+              .then(entityDefId => {
+                return AttributeDefinition.create(entityDefId, data);
+              })
+              .then(persistedAttributeDefinition =>{
+                this.attributeDefinitionMap.set(ed.$.id+ad.$.id, persistedAttributeDefinition.id);
+                resolve();
+              })
+              .catch(err=>{
+                reject(err);
+              });
+          });         
         });
       });
     }
