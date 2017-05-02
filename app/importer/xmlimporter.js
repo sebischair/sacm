@@ -242,9 +242,10 @@ module.exports = class XMLImporter {
               .then(entityDefId => {       
                 let data = this.resolveAttributeType(ad.$.type);
                 data.name = ad.$.id;
-                data.description = ad.$.description;
-                data.multiplicity = ad.$.multiplicity;         
-                return AttributeDefinition.create(entityDefId, data);
+                data.description = ad.$.label;
+                data.multiplicity = ad.$.multiplicity; 
+                data.entityType = entityDefId;        
+                return AttributeDefinition.create(data);
               })
               .then(persistedAttributeDefinition =>{
                 this.attributeDefinitionMap.set(ed.$.id+ad.$.id, persistedAttributeDefinition.id);
