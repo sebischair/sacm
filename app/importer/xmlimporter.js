@@ -447,10 +447,10 @@ module.exports = class XMLImporter {
       });
     }
 
-    createHttpHookDefinitions(processDefinitionId, httpHookDefinitions){
+    createHttpHookDefinitions(processDefinitionId, httpHookDefinitions){      
       return new Promise((resolve, reject)=>{
         if(httpHookDefinitions == null)
-          resolve();
+          return resolve();
         Promise.each(httpHookDefinitions, hhd=>{
           const data = {
             on: hhd.$.on,
