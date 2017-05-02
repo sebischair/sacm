@@ -241,7 +241,8 @@ module.exports = class XMLImporter {
               .then(entityDefId => {       
                 let data = this.resolveAttributeType(ad.$.type);
                 data.name = ad.$.id;
-                data.multiplicity = 'any';         
+                data.description = ad.$.description;
+                data.multiplicity = ad.$.multiplicity;         
                 return AttributeDefinition.create(entityDefId, data);
               })
               .then(persistedAttributeDefinition =>{
@@ -279,7 +280,6 @@ module.exports = class XMLImporter {
       }
       return attrDef;    
     }
-
 
     createDerivedAttributeDefinitions() {
       return Promise.each(this.json.EntityDefinition, ed=>{  
