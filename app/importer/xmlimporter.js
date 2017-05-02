@@ -146,7 +146,7 @@ module.exports = class XMLImporter {
         })
         .then(() => {
           return this.createAttributeDefinitions();
-        })/*
+        })
         .then(() => {
           return this.createDerivedAttributeDefinitions();
         })
@@ -164,7 +164,7 @@ module.exports = class XMLImporter {
         })
         .then(() => {
           return this.createCase();
-        });*/
+        });
     }
 
     fileExists(filePath) {
