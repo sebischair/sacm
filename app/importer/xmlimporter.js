@@ -225,6 +225,8 @@ module.exports = class XMLImporter {
 
     createAttributeDefinitions() {
       return Promise.each(this.json.EntityDefinition, ed=>{
+        if(ed.AttributeDefinition == null)  
+            return Promise.resolve();
         return Promise.each(ed.AttributeDefinition, ad=>{
           return new Promise((resolve, reject)=>{
             let data = {
@@ -251,26 +253,23 @@ module.exports = class XMLImporter {
 
 
     createDerivedAttributeDefinitions() {
-      return Promise.each(this.json.EntityDefinition, ed=>{    
-        return Promise.each(ed.DerivedAttributeDefinition, ad=>{ 
-          return new Promise((resolve, reject)=>{        
-            this.getEntityDefinitionIdByXMLId(ed.$.id)
-              .then(entityDefId=>{          
-                return DerivedAttributeDefinition.create({
-                  name: ad.$.id,
-                  description: ad.$.label,
-                  expression: ad.$.expression,
-                  entityType: entityDefId
-                });
-              })
-              .then(persistedAttributeDefinition =>{
-                this.derivedAttributeDefinitionMap.set(ed.$.id+ad.$.id, persistedAttributeDefinition.id);
-                resolve();
-              })
-              .catch(err=>{
-                reject(err);
+      return Promise.each(this.json.EntityDefinition, ed=>{  
+        if(ed.DerivedAttributeDefinition == null)  
+            return Promise.resolve();
+        return Promise.each(ed.DerivedAttributeDefinition, ad=>{                 
+          return this.getEntityDefinitionIdByXMLId(ed.$.id)
+            .then(entityDefId=>{          
+              return DerivedAttributeDefinition.create({
+                name: ad.$.id,
+                description: ad.$.label,
+                expression: ad.$.expression,
+                entityType: entityDefId
               });
-          });
+            })
+            .then(persistedAttributeDefinition =>{
+              this.derivedAttributeDefinitionMap.set(ed.$.id+ad.$.id, persistedAttributeDefinition.id);
+              return Promise.resolve();
+            });     
         });
       });
     }
