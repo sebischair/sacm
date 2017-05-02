@@ -275,7 +275,7 @@ module.exports = class XMLImporter {
       }else{
         attrDef.attributeType = ref[0].toLowerCase();
       }
-      if(attrDef.attributeType == 'link' && ref.length > 2 && ref[1] == 'EntityType'){
+      if(attrDef.attributeType == 'link' && ref.length > 2 && ref[1] == 'EntityDefinition'){
         attrDef.options.entityType = {
           id: this.getEntityDefinitionIdByXMLIdSync(ref[2])
         };          
