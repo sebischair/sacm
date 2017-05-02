@@ -38,17 +38,20 @@ module.exports = {
 
     get: function(path){
         return new Promise(function (resolve, reject){
-            console.log('SC-GET: '+ config.sc.url + path);
-            request.get({
-                url: config.sc.url + path,
-                headers: headers
-            }, function(err, res, body){
-                printRequest('GET', config.sc.url+path, '', body, res!=undefined? res.statusCode: '');
-                if(err || res.statusCode != 200)
-                    reject(body);
-                else
-                    resolve(JSON.parse(body))
-            });
+            rq.get({
+                uri: config.sc.url +path,
+                headers: headers,                
+                json: true,
+                resolveWithFullResponse: true 
+            })
+            .then(res=>{
+                successRequest('GET', config.sc.url+path, '', res.body, res.statusCode);
+                resolve(res.body);
+            })
+            .catch(res=>{
+                errorRequest('GET', config.sc.url+path, '', res.error, res.statusCode);
+                reject(res.error);
+            });          
         });
     },
     post: function(path, data){
