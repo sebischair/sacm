@@ -138,8 +138,8 @@ module.exports = class XMLImporter {
           return this.createAttributeDefinitions();
         })
         .then(() => {
-          return Promise.resolve();
-          //return this.createDerivedAttributeDefinitions();
+          //return Promise.resolve();
+          return this.createDerivedAttributeDefinitions();
         })
         .then(() => {
           return this.createCaseDefinitions();
@@ -248,17 +248,20 @@ module.exports = class XMLImporter {
       });
     }
 
-/*
+
     createDerivedAttributeDefinitions() {
       return Promise.each(this.json.EntityDefinition, ed=>{
-        return Promise.each(ed.DerivedAttributeDefinition, ad=>{
-          const data = {
-            name: ad.$.id,
-            description: ad.$.label,
-            expression: ad.$.expression
-          };
-          const entityDefId = this.getEntityDefinitionIdByXMLId(ed.$.id);
-          return DerivedAttributeDefinition.create(entityDefId, data)
+        return Promise.each(ed.DerivedAttributeDefinition, ad=>{ 
+          return this.getEntityDefinitionIdByXMLId(ed.$.id)
+            .then(entityDefId=>{   
+              const data = {
+                name: ad.$.id,
+                description: ad.$.label,
+                expression: ad.$.expression,
+                entityType: entityDefId
+              };           
+              return DerivedAttributeDefinition.create(data);
+            })
             .then(persistedAttributeDefinition =>{
               this.derivedAttributeDefinitionMap.set(ed.$.id+ad.$.id, persistedAttributeDefinition.id);
               return Promise.resolve();
@@ -269,7 +272,7 @@ module.exports = class XMLImporter {
         });
       });
     }
-    */
+    
 
     createCaseDefinitions() {
       return Promise.each(this.json.CaseDefinition, cd=>{
