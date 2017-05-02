@@ -163,6 +163,7 @@ module.exports = class XMLImporter {
           return this.createSentryDefinitions();
         })
         .then(() => {
+          console.log(this.attributeDefinitionMap);
           return this.createCase();
         });
     }
