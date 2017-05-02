@@ -58,6 +58,16 @@ module.exports = class XMLImporter {
       });     
     }
 
+    getEntityDefinitionIdByXMLIdSync(entityDefinitionXMLId){      
+      if(entityDefinitionXMLId == null)
+        return null;
+      if(!this.entityDefinitionMap.has(entityDefinitionXMLId)){
+        console.log('EntityDefintion ID "'+entityDefinitionXMLId+'" not found');
+        throw new Error('EntityDefintion ID "'+entityDefinitionXMLId+'" not found');
+      }else
+        return this.entityDefinitionMap.get(entityDefinitionXMLId);     
+    }
+
     getCaseDefinitionIdByXMLId(caseDefinitionXMLId){
       return new Promise((resolve, reject) =>{
         if(caseDefinitionXMLId == null)
@@ -136,13 +146,11 @@ module.exports = class XMLImporter {
         })
         .then(() => {
           return this.createAttributeDefinitions();
-        })
+        })/*
         .then(() => {
-          //return Promise.resolve();
           return this.createDerivedAttributeDefinitions();
         })
         .then(() => {
-          console.log('hhhhsdf')
           return this.createCaseDefinitions();
         })
         .then(() => {
@@ -156,7 +164,7 @@ module.exports = class XMLImporter {
         })
         .then(() => {
           return this.createCase();
-        });
+        });*/
     }
 
     fileExists(filePath) {
@@ -228,15 +236,12 @@ module.exports = class XMLImporter {
         if(ed.AttributeDefinition == null)  
             return Promise.resolve();
         return Promise.each(ed.AttributeDefinition, ad=>{
-          return new Promise((resolve, reject)=>{
-            let data = {
-              name: ad.$.id,
-              attributeType: 'notype', //ad.$.type, //TODO add here
-              options: {},
-              multiplicity: 'any'
-            }
+          return new Promise((resolve, reject)=>{            
             return this.getEntityDefinitionIdByXMLId(ed.$.id)
-              .then(entityDefId => {
+              .then(entityDefId => {       
+                let data = this.resolveAttributeType(ad.$.type);
+                data.name = ad.$.id;
+                data.multiplicity = 'any';         
                 return AttributeDefinition.create(entityDefId, data);
               })
               .then(persistedAttributeDefinition =>{
@@ -249,6 +254,30 @@ module.exports = class XMLImporter {
           });         
         });
       });
+    }
+
+    resolveAttributeType(type){
+      /** e.g. {type: 'link', options:{entityType: entityTypeId}} */
+      let attrDef = {
+        attributeType: 'notype',
+        options: {}
+      };
+      if(type == null)
+        return attrDef;
+      const ref = type.split('.');   
+      const validTypes = ['link', 'notype', 'string', 'longtext', 'boolean', 'number', 'enumeration', 'date'];
+      if(validTypes.indexOf(ref[0].toLowerCase()) == -1){        
+        console.log('Could not resolve attibute type!');
+        throw new Error('Could not resolve attibute type!');
+      }else{
+        attrDef.attributeType = ref[0].toLowerCase();
+      }
+      if(attrDef.attributeType == 'link' && ref.length > 2 && ref[1] == 'EntityType'){
+        attrDef.options.entityType = {
+          id: this.getEntityDefinitionIdByXMLIdSync(ref[2])
+        };          
+      }
+      return attrDef;    
     }
 
 
