@@ -142,6 +142,7 @@ module.exports = class XMLImporter {
           return this.createDerivedAttributeDefinitions();
         })
         .then(() => {
+          console.log('hhhhsdf')
           return this.createCaseDefinitions();
         })
         .then(() => {
@@ -250,25 +251,33 @@ module.exports = class XMLImporter {
 
 
     createDerivedAttributeDefinitions() {
-      return Promise.each(this.json.EntityDefinition, ed=>{
+      return Promise.each(this.json.EntityDefinition, ed=>{        
+        console.log('first each done'+ ed)
         return Promise.each(ed.DerivedAttributeDefinition, ad=>{ 
-          return this.getEntityDefinitionIdByXMLId(ed.$.id)
-            .then(entityDefId=>{   
-              const data = {
-                name: ad.$.id,
-                description: ad.$.label,
-                expression: ad.$.expression,
-                entityType: entityDefId
-              };           
-              return DerivedAttributeDefinition.create(data);
-            })
-            .then(persistedAttributeDefinition =>{
-              this.derivedAttributeDefinitionMap.set(ed.$.id+ad.$.id, persistedAttributeDefinition.id);
-              return Promise.resolve();
-            })
-            .catch(err=>{
-              return Promise.reject(err);
-            })
+          console.log('hsdf '+JSON.stringify(ad)); 
+          return new Promise((resolve, reject)=>{        
+            this.getEntityDefinitionIdByXMLId(ed.$.id)
+              .then(entityDefId=>{   
+                console.log(entityDefId)
+                const data = {
+                  name: ad.$.id,
+                  description: ad.$.label,
+                  expression: ad.$.expression,
+                  entityType: entityDefId
+                };          
+                console.log('h1'); 
+                return DerivedAttributeDefinition.create(data);
+              })
+              .then(persistedAttributeDefinition =>{
+                this.derivedAttributeDefinitionMap.set(ed.$.id+ad.$.id, persistedAttributeDefinition.id);
+                console.log('h2');
+                resolve();
+              })
+              .catch(err=>{
+                console.log('h3');
+                reject(err);
+              });
+          });
         });
       });
     }
