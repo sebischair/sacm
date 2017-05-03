@@ -244,7 +244,7 @@ module.exports = class XMLImporter {
                 data.name = ad.$.id;
                 data.description = ad.$.label;
                 data.multiplicity = ad.$.multiplicity; 
-                data.entityType = entityDefId;        
+                data.entityDefinition = entityDefId;        
                 return AttributeDefinition.create(data);
               })
               .then(persistedAttributeDefinition =>{
@@ -260,7 +260,7 @@ module.exports = class XMLImporter {
     }
 
     resolveAttributeType(type){
-      /** e.g. {type: 'link', options:{entityType: entityTypeId}} */
+      /** e.g. {type: 'link', options:{entityDefinition: entityDefinitionId}} */
       let attrDef = {
         attributeType: 'notype',
         options: {}
@@ -276,7 +276,7 @@ module.exports = class XMLImporter {
         attrDef.attributeType = ref[0].toLowerCase();
       }
       if(attrDef.attributeType == 'link' && ref.length > 2 && ref[1] == 'EntityDefinition'){
-        attrDef.options.entityType = {
+        attrDef.options.entityDefinition = {
           id: this.getEntityDefinitionIdByXMLIdSync(ref[2])
         };          
       }
@@ -294,7 +294,7 @@ module.exports = class XMLImporter {
                 name: ad.$.id,
                 description: ad.$.label,
                 expression: ad.$.expression,
-                entityType: entityDefId
+                entityDefinition: entityDefId
               });
             })
             .then(persistedAttributeDefinition =>{
