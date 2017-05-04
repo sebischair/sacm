@@ -1,3 +1,4 @@
+/*
 class Doctor {
 
   constructor(acl) {
@@ -23,3 +24,4 @@ class Doctor {
 }
 
 export default Doctor
+*/

@@ -1,3 +1,4 @@
+/*
 import passport from 'passport';
 import Strategy from 'passport-local';
 import CustomStrategy from 'passport-custom';
@@ -42,3 +43,4 @@ passport.use('useOAuth2', new CustomStrategy(
 
 
 module.exports = passport;
+*/

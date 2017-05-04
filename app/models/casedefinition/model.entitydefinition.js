@@ -7,9 +7,9 @@ export default class EntityDefinition extends Model{
 
   static create(workspaceId, typeName){
     var data = {
-      name: typeName, 
-      namePlural: typeName, 
-      workspace: {id: workspaceId}
+      name: typeName,
+      namePlural: typeName,
+      workspace: workspaceId
     };
     return http.post('/workspaces/'+workspaceId+'/entityTypes', data);
   }

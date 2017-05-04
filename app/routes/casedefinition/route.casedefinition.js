@@ -243,49 +243,5 @@ router.get('workspaces/:id/casedefinitions', (req, res, next)=>{
 
 
 
-router.post(
-
-  // Path
-  '/x',
-
-  // Middleware
-  [
-    // Authentication
-    Auth.authenticate(
-    'useOAuth2', {
-      session: false
-    })
-    ,
-
-    // Authorization of general resources
-    new Authorizer().authorizeResource('create'),
-
-    // Authorization on instance level
-    new Authorizer().authorizeInstance()
-  ],
-
-  // Controller
-  (req, res, next)=>{
-    new CaseDefinition({
-      name: 'test case'
-    }).save().then(cd=>{
-      res.status(200).send(cd);
-    })
-    .catch(err=>{
-      res.status(500).send(err);
-    });
-  }
-);
-
-router.get('/:id/tree', (req, res, next)=>{
-  CaseDefinition.calcCaseDefTree(req.params.id)
-    .then(t=>{
-      res.status(200).send(t);
-    })
-    .catch(err=>{
-      res.status(500).send(err);
-    });
-});
-
 
 module.exports = router;

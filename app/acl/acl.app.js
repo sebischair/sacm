@@ -1,3 +1,4 @@
+/*
 import acl from 'acl';
 import mongoose from 'mongoose';
 import Doctor from './acl.doctor';
@@ -43,3 +44,4 @@ class ACL {
 }
 
 export let sacm_acl = new ACL();
+*/

@@ -28,7 +28,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use('/doc', express.static(__dirname + '/app/doc'));
+app.use('/doc', express.static(__dirname + '/doc'));
 app.use('/api', routes())
 
 
