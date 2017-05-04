@@ -3,10 +3,10 @@ import http from '../http';
 import Model from '../model';
 
 
-export default class AttributeDefinition extends Model{
+export default class User extends Model{
 
   static create(data) {
-    return http.post('/attributeDefinitions', data);
+    return http.post('/users', data);
   }
 
 }

@@ -5,16 +5,28 @@ AttributeDefintion types = richstring, text, notype, json, link, string, mxl, lo
 One entit defintion can only belong to one casedefintnion, meaning a entityDefinition can be used only once
 -->
 <SACMDefinition>
+    
+    <Workspace id=""></Workspace>
+    <Group id="" label=""></Group>
+    <Group id="" label="">
+        <Administrator principalId="Max Mustermann"/>
+        <Membership principalId=""/>
+        <Membership principalId=""/>
+        <Membership principalId=""/>
+        <Membership principalId=""/>
+    </Group>
+    <User id="Max Mustermann" email="max5@gmail.com"></User>
 
     <!-- Case Data Defintion -->   
     <EntityDefinition id="CaseData" label="">
-        <AttributeDefinition id="CoolesAttribute" type="Link.EntityType.CaseEvaluation" multiplicity="" label=""></AttributeDefinition>
-        <AttributeDefinition id="CoolesSuperAttribute" type="Link.EntityType" multiplicity="" label=""></AttributeDefinition>
-        <DerivedAttributeDefinition id="indedx" expression="1" label="my indedx"></DerivedAttributeDefinition>
+        <AttributeDefinition id="CoolesAttribute" type="Link.EntityDefinition.CaseEvaluationData" multiplicity="maximalOne" label="some notes here2"></AttributeDefinition>
+        <AttributeDefinition id="CoolesSuperAttribute" type="Link.EntityDefinition" multiplicity="maximalOne" label="sone notes here"></AttributeDefinition>
+        <AttributeDefinition id="CoolesAttribute2" type="string" multiplicity="any" label="sone notes here"></AttributeDefinition>
+        <DerivedAttributeDefinition id="index" expression="true" label="my indedx"></DerivedAttributeDefinition>
     </EntityDefinition>
 
     <EntityDefinition id="CaseEvaluationData" label="">
-        <AttributeDefinition id="SuperKrass" type="string" multiplicity="" label=""></AttributeDefinition>
+        <AttributeDefinition id="SuperKrass" type="string" multiplicity="any" label=""></AttributeDefinition>
     </EntityDefinition>
 
     <!-- Case Definition -->
@@ -44,6 +56,8 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
         
             <HumanTaskDefinition id="t4" label="" isMandetory="false" isRepeatable="false">
                 <TaskParamDefinition path="CoolesAttribute" isReadOnly="true"/>
+                <TaskParamDefinition path="CoolesAttribute2" isReadOnly="true"/>
+                <TaskParamDefinition path="index" isReadOnly="true"/>
                 <!--<SentryDefinition>
                     <precondition processDefinitionId="CaseEvaluation"></precondition>
                 </SentryDefinition>-->

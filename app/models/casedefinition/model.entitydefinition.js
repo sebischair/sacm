@@ -11,10 +11,10 @@ export default class EntityDefinition extends Model{
       namePlural: typeName,
       workspace: workspaceId
     };
-    return http.post('/workspaces/'+workspaceId+'/entityTypes', data);
+    return http.post('/workspaces/'+workspaceId+'/entityDefinitions', data);
   }
 
   static findByWorkspaceId(workspaceId){
-    return http.get('/workspaces/'+workspaceId+'/entityTypes/');
+    return http.get('/workspaces/'+workspaceId+'/entityDefinitions/');
   }
 }
