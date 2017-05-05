@@ -240,7 +240,7 @@ module.exports = class XMLImporter {
           return new Promise((resolve, reject)=>{            
             return this.getEntityDefinitionIdByXMLId(ed.$.id)
               .then(entityDefId => {       
-                let data = this.resolveAttributeType(ad.$.type);
+                let data = this.resolveAttributeType(ad.$.type, ad);
                 data.name = ad.$.id;
                 data.description = ad.$.label;
                 data.multiplicity = ad.$.multiplicity; 
@@ -259,7 +259,7 @@ module.exports = class XMLImporter {
       });
     }
 
-    resolveAttributeType(type){
+    resolveAttributeType(type, AttributeDefinition){
       /** e.g. {type: 'link', options:{entityDefinition: entityDefinitionId}} */
       let attrDef = {
         attributeType: 'notype',
@@ -279,6 +279,18 @@ module.exports = class XMLImporter {
         attrDef.options.entityDefinition = {
           id: this.getEntityDefinitionIdByXMLIdSync(ref[2])
         };          
+      }
+      if(attrDef.attributeType == 'enumeration'){
+        if(AttributeDefinition.EnumerationOption == null){
+          console.log('A Enumeration should provide at least one value!');
+          throw new Error('A Enumeration should provide at least one value!');
+        }else{
+          attrDef.options.enumerationValues = []; 
+          for(let i=0; i<AttributeDefinition.EnumerationOption.length; i++){
+            const option = AttributeDefinition.EnumerationOption[i];
+            attrDef.options.enumerationValues.push(option.$.value);
+          }          
+        }     
       }
       return attrDef;    
     }
