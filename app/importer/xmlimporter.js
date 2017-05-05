@@ -309,12 +309,13 @@ module.exports = class XMLImporter {
     createCaseDefinitions() {
       return Promise.each(this.json.CaseDefinition, cd=>{
         return this.getEntityDefinitionIdByXMLId(cd.$.entityDefinitionId)
-          .then(entityDefinitionId=>{
+          .then(entityDefinitionId=>{            
             const data = {
               name: cd.$.id,
               label: cd.$.label,
               ownerPath: cd.$.ownerPath,
-              entityDefinition: entityDefinitionId
+              entityDefinition: entityDefinitionId,
+              summaryPaths: this.getSummaryDefinitionParam(cd)
             };
             return CaseDefinition.create(data)
           })
@@ -323,9 +324,22 @@ module.exports = class XMLImporter {
             return Promise.resolve();
           })
           .catch(err=>{
+            console.log(err);
             return Promise.reject(err);
           });
       });
+    }
+
+    getSummaryDefinitionParam(CaseDefinition){
+      if(CaseDefinition.SummaryDefinitionParam == null)
+        return [];
+      let params = [];
+      for(let i=0; i<CaseDefinition.SummaryDefinitionParam.length; i++){
+        const param = CaseDefinition.SummaryDefinitionParam[i];
+        if(param.$.path != null)
+          params.push(param.$.path);
+      };
+      return params;
     }
 
     createStageDefinitions() {
