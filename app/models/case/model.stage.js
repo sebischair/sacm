@@ -13,6 +13,10 @@ export default class Stage extends Model{
     return http.get('/case/'+caseId+'/stages');
   }
 
+  static findAllbyCaseId(caseId){
+    return http.get('/case/'+caseId+'/stages/all');
+  }
+
   static findbyStageDefinitionId(stageDefinitionId){
     return http.get('/stagedefinition/'+stageDefinitionId+'/stages');
   }

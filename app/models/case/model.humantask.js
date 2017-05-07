@@ -13,6 +13,10 @@ export default class HumanTask extends Model{
     return http.get('/case/'+caseId+'/humantasks');
   }
 
+  static findAllByCaseId(caseId) {
+    return http.get('/case/'+caseId+'/humantasks/all');
+  }
+
   static findByStageId(stageId) {
     return http.get('/stage/'+stageId+'/humantasks');
   }

@@ -13,6 +13,10 @@ export default class AutomatedTask extends Model{
     return http.get('/case/'+caseId+'/automatedtasks');
   }
 
+  static findAllByCaseId(caseId) {
+    return http.get('/case/'+caseId+'/automatedtasks/all');
+  }
+
   static findByStageId(stageId) {
     return http.get('/stage/'+stageId+'/automatedtasks');
   }
