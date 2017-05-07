@@ -6,19 +6,19 @@ import Model from '../model';
 export default class AutomatedTask extends Model{
 
   static findById(automatedTaskId) {
-    return http.get('automatedtask/'+automatedTaskId);
+    return http.get('/automatedtask/'+automatedTaskId);
   }
 
   static findByCaseId(caseId) {
-    return http.get('case/'+caseId+'/automatedtasks');
+    return http.get('/case/'+caseId+'/automatedtasks');
   }
 
   static findByStageId(stageId) {
-    return http.get('stage/'+stageId+'/automatedtasks');
+    return http.get('/stage/'+stageId+'/automatedtasks');
   }
 
   static findByAutomatedTaskDefinitionId(automatedTaskDefinitionId) {
-    return http.get('automatedtaskdefinition/'+automatedTaskDefinitionId+'/automatedtasks');
+    return http.get('/automatedtaskdefinition/'+automatedTaskDefinitionId+'/automatedtasks');
   }
 
 }
