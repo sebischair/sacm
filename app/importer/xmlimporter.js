@@ -618,12 +618,12 @@ module.exports = class XMLImporter {
         .then(humanTasks=>{
           console.log(JSON.stringify(humanTasks, null, 2));
           const humanTask = humanTasks[0];
-          humanTask.taskParams[0].values.push("Hello");
+          humanTask.taskParams[0].values.push("Hello3");
           return HumanTask.complete(humanTask);
         })
         .then((humanTask)=>{
           console.log(JSON.stringify(humanTask, null, 2));
-          return Promise.resolve();
+          return Promise.resolve(humanTask);
         })
         .catch(err=>{
           console.log(err);
