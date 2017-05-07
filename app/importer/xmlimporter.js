@@ -16,6 +16,7 @@ import TaskParamDefinition from '../models/casedefinition/model.taskparamdefinit
 import HttpHookDefinition from '../models/casedefinition/model.httphookdefinition';
 import SentryDefinition from '../models/casedefinition/model.sentrydefinition';
 import Case from '../models/case/model.case';
+import HumanTask from '../models/case/model.humantask';
 const xml = Promise.promisifyAll(xml2js);
 const fs = Promise.promisifyAll(require("fs"));
 
@@ -163,8 +164,10 @@ module.exports = class XMLImporter {
           return this.createSentryDefinitions();
         })
         .then(() => {
-          console.log(this.attributeDefinitionMap);
           return this.createCase();
+        })
+        .then(() => {
+          return this.completeTask();
         });
     }
 
@@ -606,6 +609,25 @@ module.exports = class XMLImporter {
         .then(case1=>{
           return Case.findTreebyId(case1.id);
         });
+    }
+
+    completeTask(){
+      console.log(this.humanTaskDefinitionMap);
+      let t5Id = this.humanTaskDefinitionMap.get('t5');
+      return HumanTask.findByHumanTaskDefinitionId(t5Id)
+        .then(humanTasks=>{
+          console.log(JSON.stringify(humanTasks, null, 2));
+          const humanTask = humanTasks[0];
+          humanTask.taskParams[0].values.push("Hello");
+          return HumanTask.complete(humanTask);
+        })
+        .then((humanTask)=>{
+          console.log(JSON.stringify(humanTask, null, 2));
+          return Promise.resolve();
+        })
+        .catch(err=>{
+          console.log(err);
+        })
     }
 
 }
