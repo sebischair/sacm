@@ -21,8 +21,8 @@ export default class Alert extends Model{
     return http.get('/alert/'+alertId);
   }
 
-  static deleteById(alertId) {
-    return http.del('/alert/'+alertId);
+  static seen(alertId) {
+    return http.post('/alert/'+alertId+'/seen');
   }
 
 }

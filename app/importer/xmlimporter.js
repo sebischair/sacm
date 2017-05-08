@@ -278,10 +278,17 @@ module.exports = class XMLImporter {
       }else{
         attrDef.attributeType = ref[0].toLowerCase();
       }
-      if(attrDef.attributeType == 'link' && ref.length > 2 && ref[1] == 'EntityDefinition'){
-        attrDef.options.entityDefinition = {
-          id: this.getEntityDefinitionIdByXMLIdSync(ref[2])
-        };          
+      if(attrDef.attributeType == 'link'){
+        if(ref.length > 2 && ref[1] == 'EntityDefinition'){
+          attrDef.options.entityDefinition = {
+            id: this.getEntityDefinitionIdByXMLIdSync(ref[2])
+          };          
+        }
+        /*else if(ref[1] == 'Principals'){
+          attrDef.options.entityDefinition = {
+            id: this.getEntityDefinitionIdByXMLIdSync(ref[2])
+          };    
+        }*/
       }
       if(attrDef.attributeType == 'enumeration'){
         if(AttributeDefinition.EnumerationOption == null){

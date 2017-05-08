@@ -17,8 +17,4 @@ export default class Message extends Model{
     return http.get('/message/'+messageId);
   }
 
-  static deleteById(messageId) {
-    return http.del('/message/'+messageId);
-  }
-
 }
