@@ -13,6 +13,10 @@ export default class Process extends Model{
     return http.get('/case/'+caseId+'/processes');
   }
 
+  static findAllbyCaseId(caseId){
+    return http.get('/case/'+caseId+'/processes/all');
+  }
+
   static findbyProcessDefinitionId(processDefinitionId){
     return http.get('/processdefinition/'+processDefinitionId+'/processes');
   }
