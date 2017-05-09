@@ -39,6 +39,39 @@ router.get('/:id', (req, res, next)=>{
 });
 
 
+
+/**
+ * @api {post} /cases Create Case
+ *
+ * @apiName CreateCase
+ * @apiGroup Case
+ *
+ * @apiParam {String} caseDefinitionId ID of the CaseDefinition
+ *
+ * @apiSampleRequest /cases
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *   {
+ *    caseDefinitionId: "ahsd64bshdy"
+ *   }
+ *
+ */
+ router.post('/', (req, res, next)=>{
+   var data = {
+     caseDefinitionId: req.body.caseDefinitionId
+   }
+   Case.create(data)
+     .then(c=>{
+         res.status(200).send(c);
+     })
+     .catch(err=>{
+       res.status(500).send(err);
+     })
+ });
+
+
+
 /**
  * @api {get} /case/:id Get complete Case tree
  *

@@ -34,4 +34,42 @@ router.get('/:id', (req, res, next)=>{
 
 
 
+/**
+ * @api {post} /message Create Message
+ *
+ * @apiName CreateMessage
+ * @apiGroup Message
+ *
+ * @apiParam {String} case ID of the case
+ * @apiParam {String} text Content of the message
+ *
+ * @apiSampleRequest /message
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *   {
+ *     case: "sdhd77348dcx",
+ *     text: "Hello world!"
+ *   }
+ *
+ */
+router.post('/', (req, res, next)=>{
+  var data = {
+    case: req.body.case,
+    text: req.body.text
+  }
+  Message.create(data)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+
+
+
+
+
 module.exports = router;
