@@ -8,7 +8,8 @@
   "scripts": {
     "lint": "eslint app.js",
     "start": "nodemon ./bin/www --exec babel-node --presets es2015,stage-2",
-    "auto-start": "nodemon --exec \"npm run lint && npm start\" --ignore public/js"
+    "auto-start": "nodemon --exec \"npm run lint && npm start\" --ignore public/js",
+    "test": "NODE_ENV=test mocha --compilers js:babel-core/register app/test/**/*.js"
   },
   "dependencies": {
     "acl": "^0.4.10",
@@ -32,9 +33,13 @@
   "devDependencies": {
     "babel": "^5.8.21",
     "babel-eslint": "^4.0.10",
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
     "eslint": "^1.1.0",
     "gulp-apidoc": "^0.2.6",
     "gulp-watch": "^4.3.11",
-    "nodemon": "^1.4.1"
+    "mocha": "^3.3.0",
+    "nodemon": "^1.4.1",
+    "supertest": "^3.0.0"
   }
 }

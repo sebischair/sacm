@@ -1,11 +1,36 @@
 import assert from "assert"; // node.js core module
+import chai from "chai";
+import chaiHttp from "chai-http";
+import Workspace from '../models/model.workspace';
+import server from "../../app";
+
+let should = chai.should();
+chai.use(chaiHttp);
+
+//Our parent block
+describe('Test Definitions', () => {
+    beforeEach((done) => { //Before each test we empty the database
+        Workspace.deleteAll().then((res)=>{
+            console.log(res)
+            done();
+        });
+    });
 
 
-describe('Array', function(){
-  describe('#indexOf()', function(){
-    it('should return -1 when the value is not present', function(){
-      console.log('d');
-      assert.equal(-1, [1,2,3].indexOf(4)); // 4 is not present in this array so indexOf returns -1
-    })
-  })
+    /*
+    * Test the /GET route
+    */
+    describe('/GET book', () => {
+        it('it should GET all the books', (done) => {
+          chai.request(server)
+              .get('/casedefinition/432')
+              .end((err, res) => {
+                  res.should.have.status(200);
+                done();
+              });
+        });
+    });
+
+
+
 });
