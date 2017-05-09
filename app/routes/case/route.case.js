@@ -73,7 +73,7 @@ router.get('/:id', (req, res, next)=>{
 
 
 /**
- * @api {get} /case/:id Get complete Case tree
+ * @api {get} /case/:id Get Case Tree
  *
  * @apiName GetCaseTree
  * @apiGroup Case
@@ -186,7 +186,7 @@ router.delete('/:id', (req, res, next)=>{
 // processes
 
 /**
- * @api {get} /case/:id/processes Return direct child processes for the given case
+ * @api {get} /case/:id/processes Get Child Processes
  *
  * @apiName GetDirectChildProcesses
  * @apiGroup Case
@@ -214,7 +214,7 @@ router.get('/:id/processes', (req, res, next)=>{
 
 
 /**
- * @api {get} /case/:id/processes/all Return all processes for the given case
+ * @api {get} /case/:id/processes/all Get All Processes
  *
  * @apiName GetAllProcesses
  * @apiGroup Case
@@ -243,7 +243,7 @@ router.get('/:id/processes/all', (req, res, next)=>{
 // stages
 
 /**
- * @api {get} /case/:id/stages Return direct child stages for the given case
+ * @api {get} /case/:id/stages Get Child Stages
  *
  * @apiName GetDirectChildStages
  * @apiGroup Case
@@ -272,7 +272,7 @@ router.get('/:id/stages', (req, res, next)=>{
 
 
 /**
- * @api {get} /case/:id/stages/all Get stages for the given case
+ * @api {get} /case/:id/stages/all Get All Stages
  *
  * @apiName GetStages
  * @apiGroup Case
@@ -302,7 +302,7 @@ router.get('/:id/stages/all', (req, res, next)=>{
 // tasks
 
 /**
- * @api {get} /case/:id/tasks Get direct child tasks for the given case
+ * @api {get} /case/:id/tasks Get Child Tasks
  *
  * @apiName GetTasks
  * @apiGroup Case
@@ -330,7 +330,7 @@ router.get('/:id/tasks/all', (req, res, next)=>{
 
 
 /**
- * @api {get} /case/:id/tasks/all Get all tasks for the given case
+ * @api {get} /case/:id/tasks/all Get All Tasks
  *
  * @apiName GetAllTasks
  * @apiGroup Case
@@ -359,7 +359,7 @@ router.get('/:id/tasks/all', (req, res, next)=>{
 
 
 /**
- * @api {get} /case/:id/humantasks Get direct child human tasks for the given case
+ * @api {get} /case/:id/humantasks Get Child HumanTasks
  *
  * @apiName GetHumanTasks
  * @apiGroup Case
@@ -387,7 +387,7 @@ router.get('/:id/humantasks/all', (req, res, next)=>{
 
 
 /**
- * @api {get} /case/:id/humantasks/all Get all human tasks for the given case
+ * @api {get} /case/:id/humantasks/all Get All HumanTasks
  *
  * @apiName GetAllHumanTasks
  * @apiGroup Case
@@ -416,7 +416,7 @@ router.get('/:id/humantasks/all', (req, res, next)=>{
 
 
 /**
- * @api {get} /case/:id/automatedtasks Get direct child automated tasks for the given case
+ * @api {get} /case/:id/automatedtasks Get ChildAutomatedTasks
  *
  * @apiName GetAutomatedTasks
  * @apiGroup Case
@@ -444,7 +444,7 @@ router.get('/:id/automatedtasks', (req, res, next)=>{
 
 
 /**
- * @api {get} /case/:id/automatedtasks/all Get all tasks for the given case
+ * @api {get} /case/:id/automatedtasks/all Get All AutomatedTasks
  *
  * @apiName GetAllAutomatedTasks
  * @apiGroup Case
@@ -474,7 +474,7 @@ router.get('/:id/automatedtasks/all', (req, res, next)=>{
 // messages
 
 /**
- * @api {get} /case/:id/messages Get all messages for the given case
+ * @api {get} /case/:id/messages Get Messages
  *
  * @apiName GetMessages
  * @apiGroup Case
@@ -505,7 +505,7 @@ router.get('/:id/messages', (req, res, next)=>{
 
 
 /**
- * @api {get} /case/:id/alerts Get all alerts for the given case
+ * @api {get} /case/:id/alerts Get Alerts
  *
  * @apiName GetAlerts
  * @apiGroup Case
@@ -534,7 +534,7 @@ router.get('/:id/alerts', (req, res, next)=>{
 // summary
 
 /**
- * @api {get} /case/:id/summary Get Case summary
+ * @api {get} /case/:id/summary Get Summary
  *
  * @apiName GetSummary
  * @apiGroup Case

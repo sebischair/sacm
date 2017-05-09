@@ -33,7 +33,7 @@ router.get('/:id', (req, res, next)=>{
 
 
 /**
- * @api {get} /process/:id/alerts Get Process alerts
+ * @api {get} /process/:id/alerts Get Alerts
  *
  * @apiName GetProcessAlerts
  * @apiGroup Process

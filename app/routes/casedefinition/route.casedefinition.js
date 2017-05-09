@@ -15,7 +15,7 @@ import Authorizer from './../../middlewares/middleware.authorize';
 
 
 /**
- * @api {post} /casedefinitions Creates a new CaseDefinition
+ * @api {post} /casedefinitions Create CaseDefinition
  * @apiName CreateCaseDefinition
  * @apiGroup CaseDefinition
  *
@@ -87,7 +87,7 @@ router.get('/:id', (req, res, next)=>{
 });
 
 /**
- * @api {get} /casedefinition/:id/tree Get CaseDefinition including all its childern
+ * @api {get} /casedefinition/:id/tree Get CaseDefinition Tree
  *
  * @apiName GetCaseDefinitionTree
  * @apiGroup CaseDefinition
@@ -121,7 +121,7 @@ router.get('/:id/tree', (req, res, next)=>{
 
 
 /**
- * @api {delete} /casedefinition/:id Delete a CaseDefinition
+ * @api {delete} /casedefinition/:id Delete CaseDefinition
  *
  * @apiName DeleteCaseDefinition
  * @apiGroup CaseDefinition
@@ -151,7 +151,7 @@ router.delete('/:id', (req, res, next)=>{
 
 
 /**
- * @api {patch} /casedefinition/:id Updates a specific CaseDefinition
+ * @api {patch} /casedefinition/:id Update CaseDefinition
  *
  * @apiName UpdateCaseDefinition
  * @apiGroup CaseDefinition
@@ -194,7 +194,7 @@ router.patch('/:id', (req, res, next)=>{
 
 
 /**
- * @api {get} /casedefinition/:id/stagedefinitions Returns all direct child StageDefinitions
+ * @api {get} /casedefinition/:id/stagedefinitions Get Child StageDefinitions
  *
  * @apiName GetStageDefinitionByCaseDefinitionID
  * @apiGroup StageDefinition
@@ -232,7 +232,7 @@ router.get('/:id/stagedefinitions', (req, res, next)=>{
 });
 
 /**
- * @api {get} /casedefinition/:id/stagedefinitions/all Returns all StageDefinitions for the given CaseDefinition
+ * @api {get} /casedefinition/:id/stagedefinitions/all Get All StageDefinitions
  *
  * @apiName GetAllStageDefinitionByCaseDefinitionID
  * @apiGroup StageDefinition
@@ -272,7 +272,7 @@ router.get('/:id/stagedefinitions/all', (req, res, next)=>{
 
 
 /**
- * @api {get} /casedefinition/:id/automatedtaskdefinitions Returns all direct child AutomatedTaskDefinitions
+ * @api {get} /casedefinition/:id/automatedtaskdefinitions Get Child AutomatedTaskDefinitions
  *
  * @apiName GetAutomatedTaskDefinitionByCaseDefinitionID
  * @apiGroup AutomatedTaskDefinition
@@ -311,7 +311,7 @@ router.get('/:id/automatedtaskdefinitions', (req, res, next)=>{
 
 
 /**
- * @api {get} /casedefinition/:id/automatedtaskdefinitions/all Returns all AutomatedTaskDefinitions for the given CaseDefinition
+ * @api {get} /casedefinition/:id/automatedtaskdefinitions/all Get All AutomatedTaskDefinitions
  *
  * @apiName GetAutomatedTaskDefinitionByCaseDefinitionID
  * @apiGroup AutomatedTaskDefinition
@@ -350,7 +350,7 @@ router.get('/:id/automatedtaskdefinitions/all', (req, res, next)=>{
 
 
 /**
- * @api {get} /casedefinition/:id/humantaskdefinitions Returns all direct child HumanTaskDefinitions
+ * @api {get} /casedefinition/:id/humantaskdefinitions Get Child HumanTaskDefinitions
  *
  * @apiName GetHumanTaskDefinitionByCaseDefinitionID
  * @apiGroup HumanTaskDefinition
@@ -391,7 +391,7 @@ router.get('/:id/humantaskdefinitions', (req, res, next)=>{
 
 
 /**
- * @api {get} /casedefinition/:id/humantaskdefinitions/all Returns all HumanTaskDefinitions for the given CaseDefinition
+ * @api {get} /casedefinition/:id/humantaskdefinitions/all Get All HumanTaskDefinitions
  *
  * @apiName GetHumanTaskDefinitionByCaseDefinitionID
  * @apiGroup HumanTaskDefinition
@@ -432,7 +432,7 @@ router.get('/:id/humantaskdefinitions/all', (req, res, next)=>{
 // INSTANCE LEVEL
 
 /**
- * @api {get} /casedefinition/:id/cases Get all instances of the given CaseDefinition
+ * @api {get} /casedefinition/:id/cases Get CaseDefinitions
  *
  * @apiName GetCasesByCaseDefinition
  * @apiGroup Case

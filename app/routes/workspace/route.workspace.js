@@ -7,7 +7,7 @@ import CaseDefinition from './../../models/casedefinition/model.casedefinition';
 import Case from './../../models/case/model.case';
 
 /**
- * @api {get} /workspace/:id/casedefinitions Return all CaseDefinitions of the given Workspace
+ * @api {get} /workspace/:id/casedefinitions Get CaseDefinition by Workspace
  *
  * @apiName GetCaseDefinitionsByWorkspaceID
  * @apiGroup CaseDefinition
@@ -44,7 +44,7 @@ router.get('/:id', (req, res, next)=>{
 // INSTANCE LEVEL
 
 /**
- * @api {get} /workspace/:id/cases Get all instances of the given Workspace
+ * @api {get} /workspace/:id/cases Get Case by Workspace
  *
  * @apiName GetCasesByWorkspaceID
  * @apiGroup Case

@@ -69,7 +69,7 @@ router.delete('/:id', (req, res, next)=>{
 
 
 /**
- * @api {post} /automatedtaskdefinitions Creates a new AutomatedTaskDefinition
+ * @api {post} /automatedtaskdefinitions Create AutomatedTaskDefinition
  *
  * @apiName CreateAutomatedTaskDefinition
  * @apiGroup AutomatedTaskDefinition
@@ -123,7 +123,7 @@ router.post('/', (req, res, next)=>{
 
 
 /**
- * @api {patch} /automatedtaskdefinition/:id Updates an AutomatedTaskDefinition
+ * @api {patch} /automatedtaskdefinition/:id Update AutomatedTaskDefinition
  *
  * @apiName UpdateAutomatedTaskDefinition
  * @apiGroup AutomatedTaskDefinition
@@ -176,7 +176,7 @@ router.patch('/:id', (req, res, next)=>{
 });
 
 /**
- * @api {get} /automatedtaskdefinition/:id/automatedtasks Get AutomatedTasks for the given AutomatedTaskDefinition
+ * @api {get} /automatedtaskdefinition/:id/automatedtasks Get AutomatedTasks
  *
  * @apiName GetAutomatedTasks
  * @apiGroup AutomatedTaskDefinition

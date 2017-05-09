@@ -9,7 +9,7 @@ import Process from './../../models/case/model.process'
 
 
 /**
- * @api {get} /processdefinition/:id/sentrydefinitions Returns all SentryDefinitions for a ProcessDefinition
+ * @api {get} /processdefinition/:id/sentrydefinitions Get SentryDefinitions
  *
  * @apiName GetSentryDefinitionByProcessDefinitionID
  * @apiGroup SentryDefinition
@@ -39,7 +39,7 @@ router.get('/:id/sentrydefinitions', (req, res, next)=>{
 
 
 /**
- * @api {get} /processdefinition/:id/httphookdefinitions Returns all HttpHookDefinitions for a ProcessDefinition
+ * @api {get} /processdefinition/:id/httphookdefinitions Get HttpHookDefinitions
  *
  * @apiName GetHttpHookDefinitionByProcessDefinitionID
  * @apiGroup HttpHookDefinition
@@ -69,7 +69,7 @@ router.get(':id/httphookdefinitions', (req, res, next)=>{
 
 
 /**
- * @api {get} /processdefinition/:id/process Returns all Processes for a ProcessDefinition
+ * @api {get} /processdefinition/:id/process Get Processes
  *
  * @apiName GetProcessesByProcessDefinitionID
  * @apiGroup Process

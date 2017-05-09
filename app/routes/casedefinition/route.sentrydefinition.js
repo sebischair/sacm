@@ -67,7 +67,7 @@ router.delete('/:id', (req, res, next)=>{
 
 
 /**
- * @api {post} /sentrydefinitions Creates a new SentryDefinition
+ * @api {post} /sentrydefinitions Create SentryDefinition
  *
  * @apiName CreateSentryDefinition
  * @apiGroup SentryDefinition
@@ -106,7 +106,7 @@ router.post('/', (req, res, next)=>{
 });
 
 /**
- * @api {patch} /sentrydefinition/:id Updates a specific SentryDefinition
+ * @api {patch} /sentrydefinition/:id Update SentryDefinition
  *
  * @apiName UpdateSentryDefinition
  * @apiGroup SentryDefinition

@@ -70,7 +70,7 @@ router.delete('/:id', (req, res, next)=>{
 
 
 /**
- * @api {post} /humantaskdefinitions Creates a new HumanTaskDefinition
+ * @api {post} /humantaskdefinitions Create HumanTaskDefinition
  *
  * @apiName CreateHumanTaskDefinition
  * @apiGroup HumanTaskDefinition
@@ -123,7 +123,7 @@ router.post('/', (req, res, next)=>{
 
 
 /**
- * @api {patch} /humantaskdefinition/:id Updates a specific HumanTaskDefinition
+ * @api {patch} /humantaskdefinition/:id Update HumanTaskDefinition
  *
  * @apiName UpdateHumanTaskDefinition
  * @apiGroup HumanTaskDefinition
@@ -177,7 +177,7 @@ router.patch('/:id', (req, res, next)=>{
 
 
 /**
- * @api {get} /humantaskdefinition/:id/humantasks Get HumanTasks for the given HumanTaskDefinition
+ * @api {get} /humantaskdefinition/:id/humantasks Get HumanTasks
  *
  * @apiName GetHumanTasks
  * @apiGroup HumanTaskDefinition

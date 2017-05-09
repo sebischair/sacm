@@ -7,7 +7,7 @@ var router = express.Router();
 import Task from './../../models/case/model.task';
 
 /**
- * @api {get} /taskdefinition/:id/taskparamdefinitions Get all TaskParamDefinitions for the given TaskDefinition
+ * @api {get} /taskdefinition/:id/taskparamdefinitions Get TaskParamDefinitions
  *
  * @apiName GetTaskParamDefinitionByTaskDefinitionID
  * @apiGroup TaskDefinition
@@ -35,7 +35,7 @@ router.get('/:id', (req, res, next)=>{
 
 
 /**
- * @api {get} /taskdefinition/:id/tasks Get all Tasks for the given TaskDefinition
+ * @api {get} /taskdefinition/:id/tasks Get Tasks
  *
  * @apiName GetTasksByTaskDefinitionID
  * @apiGroup TaskDefinition

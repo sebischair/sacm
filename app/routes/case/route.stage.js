@@ -92,7 +92,7 @@ router.post('/:id/complete', (req, res, next)=>{
 
 
 /**
- * @api {post} /stage/:id/terminate Complete Stage
+ * @api {post} /stage/:id/terminate Terminate Stage
  *
  * @apiName TerminateStage
  * @apiGroup Stage
@@ -122,7 +122,7 @@ router.post('/:id/terminate', (req, res, next)=>{
 // processes
 
 /**
- * @api {get} /stage/:id/processes Return direct child processes for the given stage
+ * @api {get} /stage/:id/processes Get Processes
  *
  * @apiName GetDirectChildProcesses
  * @apiGroup Stage
@@ -151,7 +151,7 @@ router.get('/:id/processes', (req, res, next)=>{
 // tasks
 
 /**
- * @api {get} /stage/:id/tasks Get tasks for the given stage
+ * @api {get} /stage/:id/tasks Get Tasks
  *
  * @apiName GetTasks
  * @apiGroup Stage
@@ -179,7 +179,7 @@ router.get('/:id/tasks', (req, res, next)=>{
 
 
 /**
- * @api {get} /stage/:id/automatedtasks Get automated tasks for the given stage
+ * @api {get} /stage/:id/automatedtasks Get AutomatedTasks
  *
  * @apiName GetAutomatedTasks
  * @apiGroup Stage
@@ -207,7 +207,7 @@ router.get('/:id/automatedtasks', (req, res, next)=>{
 
 
 /**
- * @api {get} /stage/:id/humantasks Get human tasks for the given stage
+ * @api {get} /stage/:id/humantasks Get HumanTasks
  *
  * @apiName GetHumanTasks
  * @apiGroup Stage

@@ -51,7 +51,7 @@ router.get('/:id', (req, res, next)=>{
  *   }
  *
  */
-router.post('/:idn', (req, res, next)=>{
+router.post('/:id', (req, res, next)=>{
   var data = {
     case: req.body.case,
     text: req.body.text
@@ -67,7 +67,7 @@ router.post('/:idn', (req, res, next)=>{
 
 
 /**
- * @api {post} /alert/:id/seen Set alert status
+ * @api {post} /alert/:id/seen Set Status
  *
  * @apiName SetAlertSeenStatus
  * @apiGroup Alert

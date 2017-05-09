@@ -7,7 +7,7 @@ import Stage from './../../models/case/model.stage';
 
 
 /**
- * @api {post} /stagedefinitions Creates a new StageDefinition
+ * @api {post} /stagedefinitions Create StageDefinition
  *
  * @apiName CreateStageDefinition
  * @apiGroup StageDefinition
@@ -60,7 +60,7 @@ router.post('/', (req, res, next)=>{
 
 
 /**
- * @api {patch} /stagedefinition/:id Updates a specific StageDefinition
+ * @api {patch} /stagedefinition/:id Update StageDefinition
  *
  * @apiName UpdateStageDefinition
  * @apiGroup StageDefinition
@@ -189,7 +189,7 @@ router.delete('/:id', (req, res, next)=>{
 
 
 /**
- * @api {get} /stagedefinition/:id/automatedtaskdefinitions Returns all direct child AutomatedTaskDefinitions
+ * @api {get} /stagedefinition/:id/automatedtaskdefinitions Get Child AutomatedTaskDefinitions
  *
  * @apiName GetAutomatedTaskDefinitionByStageDefinitionID
  * @apiGroup AutomatedTaskDefinition
@@ -229,7 +229,7 @@ router.get('/:id/automatedtaskdefinitions', (req, res, next)=>{
 
 
 /**
- * @api {get} /stagedefinition/:id/humantaskdefinitions Returns all direct child HumanTaskDefinitions
+ * @api {get} /stagedefinition/:id/humantaskdefinitions Get All HumanTaskDefinitions
  *
  * @apiName GetHumanTaskDefinitionByStageDefinitionID
  * @apiGroup HumanTaskDefinition
@@ -270,7 +270,7 @@ router.get('/:id/humantaskdefinitions', (req, res, next)=>{
 // stages
 
 /**
- * @api {get} /stagedefinition/:id/stages Get instances of StageDefinition
+ * @api {get} /stagedefinition/:id/stages Get StageDefinitions
  *
  * @apiName GetStagesByStageDefinitionId
  * @apiGroup StageDefinition
