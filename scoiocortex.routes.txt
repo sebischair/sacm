@@ -1,13 +1,63 @@
 // Query data / parameters?
 POST taskparamdefinitions
+{
+    path: String,
+    isReadOnly: boolean,
+    taskDefinition: taskDefinitionId
+}
+
 POST httphookdefinitions
+{
+    on: "AVAILABLE" ..., ENABLE, ACTIVATE, COMPLETE, TERMINATE
+    url: e.g. "http://google.com",
+    method: "GET" "PUT" "POST" "DEL",
+    processDefinition: processDefinitionId
+}
+
 POST cases
+{
+    case:caseId
+    text: text
+}
+
 POST humantask/:id/draft
+taskParms: [
+    {              
+        "id": "152mnpq6yoas5",
+        "values": ["Hello3"]
+    },
+    {              
+        "id": "152mnpqsyoas5",
+        "values": [ "somevalue" ]
+    }
+]
+
 POST humantask/:id/complete
+taskParms: [
+    {              
+        "id": "152mnpq6yoas5",
+        "values": ["Hello3"]
+    },
+    {              
+        "id": "152mnpqsyoas5",
+        "values": [ "somevalue" ]
+    }
+]
+
 POST messages
+{
+    case:caseId
+    text: text
+}
+
 POST alerts
+{
+    process: processId,
+    text: text
+}
 
-
+POST alert/:id/seen
+-> no parameter
 
 
 /**
