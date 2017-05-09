@@ -16,17 +16,9 @@ import HttpHookDefinition from './../../models/casedefinition/model.httphookdefi
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *   {
- *     TODO
+ *     TODO HTTP_HOOk_DEF_OBJ
  *   }
  *
- * @apiErrorExample {json} Error-Response:
- *     HTTP/1.1 404 Not found
- *    {
- *       "handler": "HttpHookDefinitionHandler2",
- *       "cause":"EntityNotFoundException",
- *       "message":"Could not find entity '1swihwfirljjhx'"
- *       "statusCode": 404
- *    }
  */
 router.get('/:id', (req, res, next)=>{
   HttpHookDefinition.findById(req.params.id)
@@ -51,17 +43,8 @@ router.get('/:id', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *   {
- *     TODO
+ *     
  *   }
- *
- * @apiErrorExample {json} Error-Response:
- *     HTTP/1.1 404 Not found
- *    {
- *       "handler": "HttpHookDefinitionHandler2",
- *       "cause":"EntityNotFoundException",
- *       "message":"Could not find entity '1swihwfirljjhx'"
- *       "statusCode": 404
- *    }
  */
 router.delete('/:id', (req, res, next)=>{
   HttpHookDefinition.deleteById(req.params.id)

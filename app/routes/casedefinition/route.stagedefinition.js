@@ -1,6 +1,9 @@
 import express from 'express';
 var router = express.Router();
 import StageDefinition from './../../models/casedefinition/model.stagedefinition';
+import HumanTaskDefinition from './../../models/casedefinition/model.humantaskdefinition';
+import AutomatedTaskDefinition from './../../models/casedefinition/model.automatedtaskdefinition';
+import Stage from './../../models/case/model.stage';
 
 
 /**
@@ -36,14 +39,6 @@ import StageDefinition from './../../models/casedefinition/model.stagedefinition
  *     "parentStageDefinition": null
  *   }
  *
- * @apiErrorExample {json} Error-Response:
- *     HTTP/1.1 406 IllegalStateException
- *    {
- *       "handler": "StageDefinitionsHandler2",
- *       "cause": "IllegalStateException",
- *       "message": "cannot make persistent because is not consistent: [uid=stageDefinition2/19spff10zvqnt, state: transient] invalid features: \"name\", value: \"null\", error message: \"Cannot be empty.\", \"label\", value: \"null\", error message: \"Cannot be empty.\", \"isRepeatable\", value: \"null\", error message: \"Cannot be empty.\", \"isMandatory\", value: \"null\", error message: \"Cannot be empty.\", \"caseDefinition\", value: \"null\", error message: \"Cannot be empty.\"",
- *       "statusCode": 406
- *    }
  */
 router.post('/', (req, res, next)=>{
   var data = {
@@ -98,14 +93,6 @@ router.post('/', (req, res, next)=>{
  *     "parentStageDefinition": null
  *   }
  *
- * @apiErrorExample {json} Error-Response:
- *     HTTP/1.1 406 IllegalStateException
- *    {
- *       "handler": "StageDefinitionsHandler2",
- *       "cause": "IllegalStateException",
- *       "message": "cannot make persistent because is not consistent: [uid=stageDefinition2/19spff10zvqnt, state: transient] invalid features: \"name\", value: \"null\", error message: \"Cannot be empty.\", \"label\", value: \"null\", error message: \"Cannot be empty.\", \"isRepeatable\", value: \"null\", error message: \"Cannot be empty.\", \"isMandatory\", value: \"null\", error message: \"Cannot be empty.\", \"caseDefinition\", value: \"null\", error message: \"Cannot be empty.\"",
- *       "statusCode": 406
- *    }
  */
 router.patch('/:id', (req, res, next)=>{
   var data = {
@@ -154,14 +141,6 @@ router.patch('/:id', (req, res, next)=>{
  *     "parentStageDefinition": null
  *   }
  *
- * @apiErrorExample {json} Error-Response:
- *     HTTP/1.1 404 Not found
- *    {
- *       "handler": "StageDefinitionsHandler2",
- *       "cause":"EntityNotFoundException",
- *       "message":"Could not find entity '1swihwfirljjhx'"
- *       "statusCode": 404
- *    }
  */
 router.get('/:id', (req, res, next)=>{
   StageDefinition.findById(req.params.id)
@@ -207,6 +186,115 @@ router.delete('/:id', (req, res, next)=>{
     })
 });
 
+
+
+/**
+ * @api {get} /stagedefinition/:id/automatedtaskdefinitions Returns all direct child AutomatedTaskDefinitions
+ *
+ * @apiName GetAutomatedTaskDefinitionByStageDefinitionID
+ * @apiGroup AutomatedTaskDefinition
+ *
+ * @apiParam {String} ID The ID of the StageDefinition
+ *
+ * @apiSampleRequest /stagedefinition/:id/automatedtaskdefinitions
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *   [{
+ *     "isRepeatable": "true",
+ *     "newEntityDefinition": null,
+ *     "name": "stageDef_1",
+ *     "sentryDefinitions": [],
+ *     "hookDefinitions": [],
+ *     "id": "1c8579tlziu8t",
+ *     "label": "asdasdasd",
+ *     "type": "StageDefinition",
+ *     "isMandatory": "true",
+ *     "newEntityAttachPath": null,
+ *     "caseDefinition": "1v77wsi7jdky8",
+ *     "parentStageDefinition": null
+ *   }]
+ *
+ */
+router.get('/:id/automatedtaskdefinitions', (req, res, next)=>{
+  AutomatedTaskDefinition.findByCaseDefinitionId(req.params.id)
+    .then(cd=>{
+        res.status(200).send(cd);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+
+
+/**
+ * @api {get} /stagedefinition/:id/humantaskdefinitions Returns all direct child HumanTaskDefinitions
+ *
+ * @apiName GetHumanTaskDefinitionByStageDefinitionID
+ * @apiGroup HumanTaskDefinition
+ *
+ * @apiParam {String} ID The ID of the StageDefinition
+ *
+ * @apiSampleRequest /StageDefinition/:id/humantaskdefinitions
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *   [{
+ *     "isRepeatable": "true",
+ *     "newEntityDefinition": null,
+ *     "name": "stageDef_1",
+ *     "sentryDefinitions": [],
+ *     "hookDefinitions": [],
+ *     "id": "1c8579tlziu8t",
+ *     "label": "asdasdasd",
+ *     "type": "StageDefinition",
+ *     "isMandatory": "true",
+ *     "newEntityAttachPath": null,
+ *     "caseDefinition": "1v77wsi7jdky8",
+ *     "parentStageDefinition": null
+ *   }]
+ *
+ */
+router.get('/:id/humantaskdefinitions', (req, res, next)=>{
+  HumanTaskDefinition.findALLByCaseDefinitionId(req.params.id)
+    .then(cd=>{
+        res.status(200).send(cd);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+
+// stages
+
+/**
+ * @api {get} /stagedefinition/:id/stages Get instances of StageDefinition
+ *
+ * @apiName GetStagesByStageDefinitionId
+ * @apiGroup StageDefinition
+ *
+ * @apiParam {String} id ID of the StageDefinition
+ *
+ * @apiSampleRequest /stagedefinition/:id/stages
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *   {
+ *     TODO STAGE_OBJ
+ *   }
+ *
+ */
+ router.get('/:id/stages', (req, res, next)=>{
+   Stage.findbyStageDefinitionId(req.params.id)
+     .then(cd=>{
+         res.status(200).send(cd);
+     })
+     .catch(err=>{
+       res.status(500).send(err);
+     })
+ });
 
 
 module.exports = router;

@@ -16,17 +16,9 @@ import TaskParamDefinition from './../../models/casedefinition/model.taskparamde
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *   {
- *     TODO
+ *     TODO TASK_PARAM_DEF_OBJ
  *   }
  *
- * @apiErrorExample {json} Error-Response:
- *     HTTP/1.1 404 Not found
- *    {
- *       "handler": "TaskParamDefinitionHandler2",
- *       "cause":"EntityNotFoundException",
- *       "message":"Could not find entity '1swihwfirljjhx'"
- *       "statusCode": 404
- *    }
  */
 router.get('/:id', (req, res, next)=>{
   TaskParamDefinition.findById(req.params.id)
@@ -54,14 +46,6 @@ router.get('/:id', (req, res, next)=>{
  *     TODO
  *   }
  *
- * @apiErrorExample {json} Error-Response:
- *     HTTP/1.1 404 Not found
- *    {
- *       "handler": "TaskParamDefinitionHandler2",
- *       "cause":"EntityNotFoundException",
- *       "message":"Could not find entity '1swihwfirljjhx'"
- *       "statusCode": 404
- *    }
  */
 router.delete('/:id', (req, res, next)=>{
   TaskParamDefinition.deleteById(req.params.id)

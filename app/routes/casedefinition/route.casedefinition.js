@@ -4,6 +4,10 @@ var router = express.Router();
 
 // Models
 import CaseDefinition from './../../models/casedefinition/model.casedefinition';
+import HumanTaskDefinition from './../../models/casedefinition/model.humantaskdefinition';
+import AutomatedTaskDefinition from './../../models/casedefinition/model.automatedtaskdefinition';
+import Case from './../../models/case/model.case';
+import StageDefinition from './../../models/casedefinition/model.stagedefinition';
 
 // Middlewares
 import Auth from './../../middlewares/middleware.auth';
@@ -33,14 +37,6 @@ import Authorizer from './../../middlewares/middleware.authorize';
  *       "type": "CaseDefinition"
  *     }
  *
- * @apiErrorExample {json} Error-Response:
- *     HTTP/1.1 406 IllegalStateException
- *     {
- *       "handler": "CaseDefinitionsHandler2",
- *       "cause": "IllegalStateException",
- *       "message": "cannot make persistent because is not consistent: [uid=caseDefinition2/1hvl6nyxyn8, state: transient] invalid features: \"name\", value: \"null\", error message: \"Cannot be empty.\", \"entityDefinition\", value: \"null\", error message: \"Cannot be empty.\"",
- *       "statusCode": 406
- *     }
  */
 router.post('/', (req, res, next)=>{
   var data = {
@@ -79,14 +75,6 @@ router.post('/', (req, res, next)=>{
  *       "type": "CaseDefinition"
  *     }
  *
- * @apiErrorExample {json} Error-Response:
- *     HTTP/1.1 404 NotFound
- *    {
- *      "handler":"CaseDefinitionHandler2",
- *      "cause":"EntityNotFoundException",
- *      "message":"Could not find entity 'qkx51pgpkgbis'",
- *      "statusCode":404
- *    }
  */
 router.get('/:id', (req, res, next)=>{
   CaseDefinition.findById(req.params.id)
@@ -120,14 +108,6 @@ router.get('/:id', (req, res, next)=>{
  *       "type": "CaseDefinition"
  *     }
  *
- * @apiErrorExample {json} Error-Response:
- *     HTTP/1.1 404 NotFound
- *    {
- *      "handler":"CaseDefinitionHandler2",
- *      "cause":"EntityNotFoundException",
- *      "message":"Could not find entity 'qkx51pgpkgbis'",
- *      "statusCode":404
- *    }
  */
 router.get('/:id/tree', (req, res, next)=>{
   CaseDefinition.findTreeById(req.params.id)
@@ -154,14 +134,6 @@ router.get('/:id/tree', (req, res, next)=>{
  *     HTTP/1.1 200 OK
  *     {}
  *
- * @apiErrorExample {json} Error-Response:
- *     HTTP/1.1 404 NotFound
- *    {
- *      "handler":"CaseDefinitionHandler2",
- *      "cause":"EntityNotFoundException",
- *      "message":"Could not find entity 'qkx51pgpkgbis'",
- *      "statusCode":404
- *    }
  */
 router.delete('/:id', (req, res, next)=>{
   CaseDefinition.findById(req.params.id)
@@ -203,14 +175,6 @@ router.delete('/:id', (req, res, next)=>{
  *       "type": "CaseDefinition"
  *     }
  *
- * @apiErrorExample {json} Error-Response:
- *     HTTP/1.1 405 NotFound
- *    {
- *      "handler":"CaseDefinitionHandler2",
- *      "cause":"EntityNotFoundException",
- *      "message":"Could not find entity 'qkx51pgpkgbis'",
- *      "statusCode":404
- *    }
  */
 router.patch('/:id', (req, res, next)=>{
   var data = {
@@ -219,7 +183,7 @@ router.patch('/:id', (req, res, next)=>{
     entityDefinition: {id: req.body.entityDefinition},
     ownerPath: req.body.ownerPath
   }
-  CaseDefinition.updateById(data)
+  CaseDefinition.updateById(req.params.id, data)
     .then(cd=>{
         res.status(200).send(cd);
     })
@@ -229,10 +193,76 @@ router.patch('/:id', (req, res, next)=>{
 });
 
 
-router.get('workspaces/:id/casedefinitions', (req, res, next)=>{
-  CaseDefinition.find({})
-    .then(cds=>{
-        res.status(200).send(cds);
+/**
+ * @api {get} /casedefinition/:id/stagedefinitions Returns all direct child StageDefinitions
+ *
+ * @apiName GetStageDefinitionByCaseDefinitionID
+ * @apiGroup StageDefinition
+ *
+ * @apiParam {String} ID The ID of the CaseDefinition
+ *
+ * @apiSampleRequest /casedefinition/:id/stagedefinitions
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *   [{
+ *     "isRepeatable": "true",
+ *     "newEntityDefinition": null,
+ *     "name": "stageDef_1",
+ *     "sentryDefinitions": [],
+ *     "hookDefinitions": [],
+ *     "id": "1c8579tlziu8t",
+ *     "label": "asdasdasd",
+ *     "type": "StageDefinition",
+ *     "isMandatory": "true",
+ *     "newEntityAttachPath": null,
+ *     "caseDefinition": "1v77wsi7jdky8",
+ *     "parentStageDefinition": null
+ *   }]
+ *
+ */
+router.get('/:id/stagedefinitions', (req, res, next)=>{
+  StageDefinition.findByCaseDefinitionId(req.params.id)
+    .then(cd=>{
+        res.status(200).send(cd);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
+ * @api {get} /casedefinition/:id/stagedefinitions/all Returns all StageDefinitions for the given CaseDefinition
+ *
+ * @apiName GetAllStageDefinitionByCaseDefinitionID
+ * @apiGroup StageDefinition
+ *
+ * @apiParam {String} ID The ID of the CaseDefinition
+ *
+ * @apiSampleRequest /casedefinition/:id/stagedefinitions/all
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *   [{
+ *     "isRepeatable": "true",
+ *     "newEntityDefinition": null,
+ *     "name": "stageDef_1",
+ *     "sentryDefinitions": [],
+ *     "hookDefinitions": [],
+ *     "id": "1c8579tlziu8t",
+ *     "label": "asdasdasd",
+ *     "type": "StageDefinition",
+ *     "isMandatory": "true",
+ *     "newEntityAttachPath": null,
+ *     "caseDefinition": "1v77wsi7jdky8",
+ *     "parentStageDefinition": null
+ *   }]
+ *
+ */
+router.get('/:id/stagedefinitions/all', (req, res, next)=>{
+  StageDefinition.findALLByCaseDefinitionId(req.params.id)
+    .then(cd=>{
+        res.status(200).send(cd);
     })
     .catch(err=>{
       res.status(500).send(err);
@@ -240,6 +270,193 @@ router.get('workspaces/:id/casedefinitions', (req, res, next)=>{
 });
 
 
+
+/**
+ * @api {get} /casedefinition/:id/automatedtaskdefinitions Returns all direct child AutomatedTaskDefinitions
+ *
+ * @apiName GetAutomatedTaskDefinitionByCaseDefinitionID
+ * @apiGroup AutomatedTaskDefinition
+ *
+ * @apiParam {String} ID The ID of the CaseDefinition
+ *
+ * @apiSampleRequest /casedefinition/:id/automatedtaskdefinitions
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *   [{
+ *     "isRepeatable": "true",
+ *     "newEntityDefinition": null,
+ *     "name": "stageDef_1",
+ *     "sentryDefinitions": [],
+ *     "hookDefinitions": [],
+ *     "id": "1c8579tlziu8t",
+ *     "label": "asdasdasd",
+ *     "type": "StageDefinition",
+ *     "isMandatory": "true",
+ *     "newEntityAttachPath": null,
+ *     "caseDefinition": "1v77wsi7jdky8",
+ *     "parentStageDefinition": null
+ *   }]
+ *
+ */
+router.get('/:id/automatedtaskdefinitions', (req, res, next)=>{
+  AutomatedTaskDefinition.findByCaseDefinitionId(req.params.id)
+    .then(cd=>{
+        res.status(200).send(cd);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+
+/**
+ * @api {get} /casedefinition/:id/automatedtaskdefinitions/all Returns all AutomatedTaskDefinitions for the given CaseDefinition
+ *
+ * @apiName GetAutomatedTaskDefinitionByCaseDefinitionID
+ * @apiGroup AutomatedTaskDefinition
+ *
+ * @apiParam {String} ID The ID of the CaseDefinition
+ *
+ * @apiSampleRequest /casedefinition/:id/automatedtaskdefinitions/all
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *   [{
+ *     "isRepeatable": "true",
+ *     "newEntityDefinition": null,
+ *     "name": "stageDef_1",
+ *     "sentryDefinitions": [],
+ *     "hookDefinitions": [],
+ *     "id": "1c8579tlziu8t",
+ *     "label": "asdasdasd",
+ *     "type": "StageDefinition",
+ *     "isMandatory": "true",
+ *     "newEntityAttachPath": null,
+ *     "caseDefinition": "1v77wsi7jdky8",
+ *     "parentStageDefinition": null
+ *   }]
+ *
+ */
+router.get('/:id/automatedtaskdefinitions/all', (req, res, next)=>{
+  AutomatedTaskDefinition.findALLByCaseDefinitionId(req.params.id)
+    .then(cd=>{
+        res.status(200).send(cd);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+
+/**
+ * @api {get} /casedefinition/:id/humantaskdefinitions Returns all direct child HumanTaskDefinitions
+ *
+ * @apiName GetHumanTaskDefinitionByCaseDefinitionID
+ * @apiGroup HumanTaskDefinition
+ *
+ * @apiParam {String} ID The ID of the CaseDefinition
+ *
+ * @apiSampleRequest /casedefinition/:id/humantaskdefinitions
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *   [{
+ *     "isRepeatable": "true",
+ *     "newEntityDefinition": null,
+ *     "name": "stageDef_1",
+ *     "sentryDefinitions": [],
+ *     "hookDefinitions": [],
+ *     "id": "1c8579tlziu8t",
+ *     "label": "asdasdasd",
+ *     "type": "StageDefinition",
+ *     "isMandatory": "true",
+ *     "newEntityAttachPath": null,
+ *     "caseDefinition": "1v77wsi7jdky8",
+ *     "parentStageDefinition": null
+ *   }]
+ *
+ */
+router.get('/:id/humantaskdefinitions', (req, res, next)=>{
+  HumanTaskDefinition.findALLByCaseDefinitionId(req.params.id)
+    .then(cd=>{
+        res.status(200).send(cd);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+
+
+
+/**
+ * @api {get} /casedefinition/:id/humantaskdefinitions/all Returns all HumanTaskDefinitions for the given CaseDefinition
+ *
+ * @apiName GetHumanTaskDefinitionByCaseDefinitionID
+ * @apiGroup HumanTaskDefinition
+ *
+ * @apiParam {String} ID The ID of the CaseDefinition
+ *
+ * @apiSampleRequest /casedefinition/:id/humantaskdefinitions/all
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *   [{
+ *     "isRepeatable": "true",
+ *     "newEntityDefinition": null,
+ *     "name": "stageDef_1",
+ *     "sentryDefinitions": [],
+ *     "hookDefinitions": [],
+ *     "id": "1c8579tlziu8t",
+ *     "label": "asdasdasd",
+ *     "type": "StageDefinition",
+ *     "isMandatory": "true",
+ *     "newEntityAttachPath": null,
+ *     "caseDefinition": "1v77wsi7jdky8",
+ *     "parentStageDefinition": null
+ *   }]
+ *
+ */
+router.get('/:id/humantaskdefinitions/all', (req, res, next)=>{
+  HumanTaskDefinition.findALLByCaseDefinitionId(req.params.id)
+    .then(cd=>{
+        res.status(200).send(cd);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+
+// INSTANCE LEVEL
+
+/**
+ * @api {get} /casedefinition/:id/cases Get all instances of the given CaseDefinition
+ *
+ * @apiName GetCasesByCaseDefinition
+ * @apiGroup Case
+ *
+ * @apiParam {String} ID The ID of the the CaseDefinition
+ *
+ * @apiSampleRequest /casedefinition/:id/cases
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       TODO CASE_OBJ
+ *     }
+ *
+ */
+router.get('/:id/cases', (req, res, next)=>{
+  Case.findbyCaseDefinitionId(req.params.id)
+    .then(cd=>{
+        res.status(200).send(cd);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
 
 
 

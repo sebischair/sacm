@@ -1,6 +1,7 @@
 import express from 'express';
 var router = express.Router();
 import AutomatedTaskDefinition from './../../models/casedefinition/model.automatedtaskdefinition';
+import AutomatedTask from './../../models/case/model.automatedtask';
 
 /**
  * @api {get} /automatedtaskdefinition/:id Get AutomatedTaskDefinition
@@ -15,17 +16,20 @@ import AutomatedTaskDefinition from './../../models/casedefinition/model.automat
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *   {
- *     TODO
+ *     "isRepeatable": "true",
+ *     "newEntityDefinition": null,
+ *     "name": "stageDef_1",
+ *     "sentryDefinitions": [],
+ *     "hookDefinitions": [],
+ *     "id": "1c8579tlziu8t",
+ *     "label": "asdasdasd",
+ *     "type": "StageDefinition",
+ *     "isMandatory": "true",
+ *     "newEntityAttachPath": null,
+ *     "caseDefinition": "1v77wsi7jdky8",
+ *     "parentStageDefinition": null
  *   }
  *
- * @apiErrorExample {json} Error-Response:
- *     HTTP/1.1 404 Not found
- *    {
- *       "handler": "AutomatedTaskDefinitionHandler2",
- *       "cause":"EntityNotFoundException",
- *       "message":"Could not find entity '1swihwfirljjhx'"
- *       "statusCode": 404
- *    }
  */
 router.get('/:id', (req, res, next)=>{
   AutomatedTaskDefinition.findById(req.params.id)
@@ -46,20 +50,12 @@ router.get('/:id', (req, res, next)=>{
  *
  * @apiParam {String} id ID of the AutomatedTaskDefinition
  *
- * @apiSampleRequest test
+ * @apiSampleRequest /automatedtaskdefinition/:id
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *   {}
  *
- * @apiErrorExample {json} Error-Response:
- *     HTTP/1.1 404 Not found
- *    {
- *       "handler": "AutomatedTaskDefinitionHandler2",
- *       "cause":"EntityNotFoundException",
- *       "message":"Could not find entity '1swihwfirljjhx'"
- *       "statusCode": 404
- *    }
  */
 router.delete('/:id', (req, res, next)=>{
   AutomatedTaskDefinition.deleteById(req.params.id)
@@ -105,14 +101,6 @@ router.delete('/:id', (req, res, next)=>{
  *     "parentStageDefinition": null
  *   }
  *
- * @apiErrorExample {json} Error-Response:
- *     HTTP/1.1 406 IllegalStateException
- *    {
- *       "handler": "AutomatedTaskDefinitionHandler2",
- *       "cause": "IllegalStateException",
- *       "message": "cannot make persistent because is not consistent: [uid=stageDefinition2/19spff10zvqnt, state: transient] invalid features: \"name\", value: \"null\", error message: \"Cannot be empty.\", \"label\", value: \"null\", error message: \"Cannot be empty.\", \"isRepeatable\", value: \"null\", error message: \"Cannot be empty.\", \"isMandatory\", value: \"null\", error message: \"Cannot be empty.\", \"caseDefinition\", value: \"null\", error message: \"Cannot be empty.\"",
- *       "statusCode": 406
- *    }
  */
 router.post('/', (req, res, next)=>{
   var data = {
@@ -130,6 +118,88 @@ router.post('/', (req, res, next)=>{
   .catch(err=>{
     res.status(500).send(err);
   });
+});
+
+
+
+/**
+ * @api {patch} /automatedtaskdefinition/:id Updates an AutomatedTaskDefinition
+ *
+ * @apiName UpdateAutomatedTaskDefinition
+ * @apiGroup AutomatedTaskDefinition
+ *
+ * @apiParam {String} caseDefinition ID of the parent CaseDefinition
+ * @apiParam {String} name Name of the StageDefinition (internal usage)
+ * @apiParam {String} label Label of the StageDefinition
+ * @apiParam {Boolean} isRepeatable Indicator if the stage should be repeatable
+ * @apiParam {Boolean} isMandatory Indicator if the stage should be mandatory
+ * @apiParam {String} parent ID of the parent stage (if there is one)
+ * @apiParam {Array} preconditions Array of preconditions for the stage
+ *
+ * @apiSampleRequest /automatedtaskdefinition/:id
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *   {
+ *     "isRepeatable": "true",
+ *     "newEntityDefinition": null,
+ *     "name": "stageDef_1",
+ *     "sentryDefinitions": [],
+ *     "hookDefinitions": [],
+ *     "id": "1c8579tlziu8t",
+ *     "label": "asdasdasd",
+ *     "type": "StageDefinition",
+ *     "isMandatory": "true",
+ *     "newEntityAttachPath": null,
+ *     "caseDefinition": "1v77wsi7jdky8",
+ *     "parentStageDefinition": null
+ *   }
+ *
+ */
+router.patch('/:id', (req, res, next)=>{
+  var data = {
+    caseDefinition: req.body.caseDefinition,
+    name: req.body.name,
+    label: req.body.label,
+    isRepeatable: req.body.isRepeatable,
+    isMandatory: req.body.isMandatory,
+    parent: req.body.parent,
+    preconditions: req.body.preconditions
+  }
+  AutomatedTaskDefinition.updateById(data)
+    .then(cd=>{
+        res.status(200).send(cd);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
+ * @api {get} /automatedtaskdefinition/:id/automatedtasks Get AutomatedTasks for the given AutomatedTaskDefinition
+ *
+ * @apiName GetAutomatedTasks
+ * @apiGroup AutomatedTaskDefinition
+ *
+ * @apiParam {String} id ID of the AutomatedTaskDefinition
+ *
+ * @apiSampleRequest /automatedtaskdefinition/:id/automatedtasks
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *   {
+ *      TODO AUTOMATED_TASK_OBJ
+ *   }
+ *
+ */
+router.get('/:id/automatedtasks', (req, res, next)=>{
+  AutomatedTask.findbyTaskDefinitionId(req.params.id)
+    .then(sd=>{
+        res.status(200).send(sd);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
 });
 
 module.exports = router;

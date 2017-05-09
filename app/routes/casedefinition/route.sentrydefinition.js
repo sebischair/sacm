@@ -16,17 +16,9 @@ import SentryDefinition from './../../models/casedefinition/model.sentrydefiniti
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *   {
- *     TODO
+ *     TODO SENTRY_OBJ
  *   }
  *
- * @apiErrorExample {json} Error-Response:
- *     HTTP/1.1 404 Not found
- *    {
- *       "handler": "SentryDefinitionHandler2",
- *       "cause":"EntityNotFoundException",
- *       "message":"Could not find entity '1swihwfirljjhx'"
- *       "statusCode": 404
- *    }
  */
 router.get('/:id', (req, res, next)=>{
   SentryDefinition.findById(req.params.id)
@@ -94,14 +86,6 @@ router.delete('/:id', (req, res, next)=>{
  *     HTTP/1.1 200 OK
  *   {} TODO
  *
- * @apiErrorExample {json} Error-Response:
- *     HTTP/1.1 406 IllegalStateException
- *    {
- *       "handler": "SentryDefinitionHandler2",
- *       "cause": "IllegalStateException",
- *       "message": "cannot make persistent because is not consistent: [uid=stageDefinition2/19spff10zvqnt, state: transient] invalid features: \"name\", value: \"null\", error message: \"Cannot be empty.\", \"label\", value: \"null\", error message: \"Cannot be empty.\", \"isRepeatable\", value: \"null\", error message: \"Cannot be empty.\", \"isMandatory\", value: \"null\", error message: \"Cannot be empty.\", \"caseDefinition\", value: \"null\", error message: \"Cannot be empty.\"",
- *       "statusCode": 406
- *    }
  */
 router.post('/', (req, res, next)=>{
   var data = {
@@ -122,7 +106,7 @@ router.post('/', (req, res, next)=>{
 });
 
 /**
- * @api {patch} /sentrydefinitions Updates a specific SentryDefinition
+ * @api {patch} /sentrydefinition/:id Updates a specific SentryDefinition
  *
  * @apiName UpdateSentryDefinition
  * @apiGroup SentryDefinition
@@ -142,14 +126,6 @@ router.post('/', (req, res, next)=>{
  *     HTTP/1.1 200 OK
  *   {} TODO
  *
- * @apiErrorExample {json} Error-Response:
- *     HTTP/1.1 406 IllegalStateException
- *    {
- *       "handler": "SentryDefinitionHandler2",
- *       "cause": "IllegalStateException",
- *       "message": "cannot make persistent because is not consistent: [uid=stageDefinition2/19spff10zvqnt, state: transient] invalid features: \"name\", value: \"null\", error message: \"Cannot be empty.\", \"label\", value: \"null\", error message: \"Cannot be empty.\", \"isRepeatable\", value: \"null\", error message: \"Cannot be empty.\", \"isMandatory\", value: \"null\", error message: \"Cannot be empty.\", \"caseDefinition\", value: \"null\", error message: \"Cannot be empty.\"",
- *       "statusCode": 406
- *    }
  */
 router.patch('/', (req, res, next)=>{
   var data = {

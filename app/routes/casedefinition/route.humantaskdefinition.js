@@ -1,6 +1,7 @@
 import express from 'express';
 var router = express.Router();
 import HumanTaskDefinition from './../../models/casedefinition/model.humantaskdefinition';
+import HumanTask from './../../models/case/model.humantask';
 
 
 /**
@@ -16,17 +17,20 @@ import HumanTaskDefinition from './../../models/casedefinition/model.humantaskde
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *   {
- *     TODO
+ *     "isRepeatable": "true",
+ *     "newEntityDefinition": null,
+ *     "name": "stageDef_1",
+ *     "sentryDefinitions": [],
+ *     "hookDefinitions": [],
+ *     "id": "1c8579tlziu8t",
+ *     "label": "asdasdasd",
+ *     "type": "StageDefinition",
+ *     "isMandatory": "true",
+ *     "newEntityAttachPath": null,
+ *     "caseDefinition": "1v77wsi7jdky8",
+ *     "parentStageDefinition": null
  *   }
  *
- * @apiErrorExample {json} Error-Response:
- *     HTTP/1.1 404 Not found
- *    {
- *       "handler": "HumanTaskDefinitionHandler2",
- *       "cause":"EntityNotFoundException",
- *       "message":"Could not find entity '1swihwfirljjhx'"
- *       "statusCode": 404
- *    }
  */
 router.get('/:id', (req, res, next)=>{
   HumanTaskDefinition.findById(req.params.id)
@@ -53,14 +57,6 @@ router.get('/:id', (req, res, next)=>{
  *     HTTP/1.1 200 OK
  *   {}
  *
- * @apiErrorExample {json} Error-Response:
- *     HTTP/1.1 404 Not found
- *    {
- *       "handler": "HumanTaskDefinition2",
- *       "cause":"EntityNotFoundException",
- *       "message":"Could not find entity '1swihwfirljjhx'"
- *       "statusCode": 404
- *    }
  */
 router.delete('/:id', (req, res, next)=>{
   HumanTaskDefinition.deleteById(req.params.id)
@@ -106,14 +102,6 @@ router.delete('/:id', (req, res, next)=>{
  *     "parentStageDefinition": null
  *   }
  *
- * @apiErrorExample {json} Error-Response:
- *     HTTP/1.1 406 IllegalStateException
- *    {
- *       "handler": "StageDefinitionsHandler2",
- *       "cause": "IllegalStateException",
- *       "message": "cannot make persistent because is not consistent: [uid=stageDefinition2/19spff10zvqnt, state: transient] invalid features: \"name\", value: \"null\", error message: \"Cannot be empty.\", \"label\", value: \"null\", error message: \"Cannot be empty.\", \"isRepeatable\", value: \"null\", error message: \"Cannot be empty.\", \"isMandatory\", value: \"null\", error message: \"Cannot be empty.\", \"caseDefinition\", value: \"null\", error message: \"Cannot be empty.\"",
- *       "statusCode": 406
- *    }
  */
 router.post('/', (req, res, next)=>{
   var data = {
@@ -168,14 +156,6 @@ router.post('/', (req, res, next)=>{
  *     "parentStageDefinition": null
  *   }
  *
- * @apiErrorExample {json} Error-Response:
- *     HTTP/1.1 406 IllegalStateException
- *    {
- *       "handler": "StageDefinitionsHandler2",
- *       "cause": "IllegalStateException",
- *       "message": "cannot make persistent because is not consistent: [uid=stageDefinition2/19spff10zvqnt, state: transient] invalid features: \"name\", value: \"null\", error message: \"Cannot be empty.\", \"label\", value: \"null\", error message: \"Cannot be empty.\", \"isRepeatable\", value: \"null\", error message: \"Cannot be empty.\", \"isMandatory\", value: \"null\", error message: \"Cannot be empty.\", \"caseDefinition\", value: \"null\", error message: \"Cannot be empty.\"",
- *       "statusCode": 406
- *    }
  */
 router.patch('/:id', (req, res, next)=>{
   var data = {
@@ -193,6 +173,34 @@ router.patch('/:id', (req, res, next)=>{
   .catch(err=>{
     res.status(500).send(err);
   });
+});
+
+
+/**
+ * @api {get} /humantaskdefinition/:id/humantasks Get HumanTasks for the given HumanTaskDefinition
+ *
+ * @apiName GetHumanTasks
+ * @apiGroup HumanTaskDefinition
+ *
+ * @apiParam {String} id ID of the HumanTaskDefinition
+ *
+ * @apiSampleRequest /humantaskdefinition/:id/humantasks
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *   {
+ *      TODO HUMAN_TASK_OBJ
+ *   }
+ *
+ */
+router.get('/:id/humantasks', (req, res, next)=>{
+  HumanTask.findbyTaskDefinitionId(req.params.id)
+    .then(sd=>{
+        res.status(200).send(sd);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
 });
 
 
