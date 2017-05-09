@@ -1,4 +1,4 @@
-s/**
+/**
  * All routes are sorted according to the return types
  */
 
@@ -15,6 +15,7 @@ s/**
 +POST    casedefinitions                             DONE - Model
 
 // StageDefinition
+-GET     casedefinition/:id/stagedefinitions/all     DONE - Model
 -GET     casedefinition/:id/stagedefinitions         DONE - Model
 +GET     stagedefinition/:id                         DONE - Model
 *PUT     stagedefinition/:id                         DONE - Model
@@ -22,15 +23,17 @@ s/**
 +POST    stagedefinitions                            DONE - Model
 
 // AutomatedTaskDefinition
--GET     casedefinition/:id/automatedtaskdefinitions DONE - Model This route is only needed due to the fact that root tasks are allowed - priority low
--GET     stagedefinition/:id/automatedtaskdefinitionsDONE - Model
+-GET     casedefinition/:id/automatedtaskdefinitions/all    DONE - Model 
+-GET     casedefinition/:id/automatedtaskdefinitions        DONE - Model 
+-GET     stagedefinition/:id/automatedtaskdefinitions       DONE - Model
 *GET     automatedtaskdefinition/:id                 DONE - Model
 -PUT     automatedtaskdefinition/:id                 DONE - Model
 *DEL     automatedtaskdefinition/:id                 DONE - Model
 *POST    automatedtaskdefinitions                    DONE - Model
 
 // HumanTaskDefinition
--GET     casedefinition/:id/humantaskdefinitions     DONE - Model This route is only needed due to the fact that root tasks are allowed
+-GET     casedefinition/:id/humantaskdefinitions/all DONE - Model
+-GET     casedefinition/:id/humantaskdefinitions     DONE - Model
 -GET     stagedefinition/:id/humantaskdefinitions    DONE - Model
 *GET     humantaskdefinition/:id                     DONE - Model
 -PUT     humantaskdefinition/:id                     DONE - Model
@@ -73,6 +76,7 @@ GET     user/:id/cases                              DONE - needs tests and need 
 
 // Processes
 GET     processdefinition/:id/processes             DONE - Model
+GET     case/:id/processes/all                      DONE - Model
 GET     case/:id/processes                          DONE - Model
 GET     stage/:id/processes                         DONE - Model
 GET     process/:id                                 DONE - Model
@@ -80,28 +84,33 @@ GET     user/:id/processes                          Missing - need parameters fo
 
 // Stages
 GET     stagedefinition/:id/stages                  DONE - Model
-GET     case/:id/stages                             DONE - Model - all vs. direct childs
+GET     case/:id/stages/all                         DONE - Model
+GET     case/:id/stages                             DONE - Model
 GET     stage/:id                                   DONE - Model
 GET     stage/:id/stages                            DONE - Model
 POST    stage/:id/complete                          DONE - Model Logic missing
 POST    stage/:id/terminate                         DONE - Model Logic missing
 
 // Tasks
-GET     taskdefinition/:id/tasks                    missing - priorty low
-GET     case/:id/tasks                              missing - priorty low
-GET     stage/:id/tasks                             missing - priorty low
-GET     task/:id                                    missing - priorty low
+GET     taskdefinition/:id/tasks                    DONE - Model
+GET     case/:id/tasks/all                          DONE - Model
+GET     case/:id/tasks                              DONE - Model
+GET     stage/:id/tasks                             DONE - Model
+GET     task/:id                                    DONE - Model
 
 // HumanTasks
 GET     humantaskdefinition/:id/humantasks          DONE - Model
+GET     case/:id/humantasks/all                     DONE - Model
 GET     case/:id/humantasks                         DONE - Model
 GET     stage/:id/humantasks                        DONE - Model
 GET     humantask/:id                               DONE - Model
+POST    humantask/:id/draft                         DONE - Model
 POST    humantask/:id/complete                      DONE - Model Logic missing - priorty high
 POST    humantask/:id/terminate                     DONE - Model Logic missing - priorty high
 
 // AutomatedTasks
 GET     automatedtaskdefinition/:id/automatedtasks  DONE - Model
+GET     case/:id/automatedtasks/all                 DONE - Model
 GET     case/:id/automatedtasks                     DONE - Model
 GET     stage/:id/automatedtasks                    DONE - Model
 GET     automatedtask/:id                           DONE - Model
@@ -109,12 +118,14 @@ GET     automatedtask/:id                           DONE - Model
 // Messages
 GET     case/:id/messages                           DONE - Model
 GET     message/:id                                 DONE - Model
-DEL     message/:id                                 DONE - Model
 POST    messages                                    DONE - Model
 
 // Alerts
-GET     case/:id/alerts                             DONE 
-GET     process/:id/alerts                          DONE 
-GET     alerts/:id                                  DONE 
-DEL     alerts/:id                                  DONE 
-POST    alerts                                      DONE 
+GET     case/:id/alerts                             DONE - Model 
+GET     process/:id/alerts                          DONE - Model 
+GET     alerts/:id                                  DONE - Model 
+POST    alerts/:id/seen                             DONE - Model
+POST    alerts                                      DONE - Model 
+
+// Summary
+GET     case/:id/sumamry                            DONE - Model 

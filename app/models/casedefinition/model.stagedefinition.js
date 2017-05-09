@@ -14,7 +14,11 @@ export default class StageDefinition extends Model{
   }
 
   static findByCaseDefinitionId(caseDefinitionId) {
-    return http.get('/casedefinition/'+caseDefinitionId+'/stagedefinition');
+    return http.get('/casedefinition/'+caseDefinitionId+'/stagedefinitions');
+  }
+
+  static findALLByCaseDefinitionId(caseDefinitionId) {
+    return http.get('/casedefinition/'+caseDefinitionId+'/stagedefinitions/all');
   }
 
   static updateById(stageDefinitionId, data) {

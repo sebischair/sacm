@@ -17,6 +17,10 @@ export default class AutomatedTaskDefinition extends Model{
     return http.get('/casedefinition/'+caseDefinitionId+'/automatedtaskdefinitions');
   }
 
+  static findAllByCaseDefinitionId(caseDefinitionId) {
+    return http.get('/casedefinition/'+caseDefinitionId+'/automatedtaskdefinitions/all');
+  }
+
   static findByStageDefinitionId(stageDefinitionId) {
     return http.get('/stagedefinition/'+stageDefinitionId+'/automatedtaskdefinitions');
   }

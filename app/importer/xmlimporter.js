@@ -16,6 +16,7 @@ import TaskParamDefinition from '../models/casedefinition/model.taskparamdefinit
 import HttpHookDefinition from '../models/casedefinition/model.httphookdefinition';
 import SentryDefinition from '../models/casedefinition/model.sentrydefinition';
 import Case from '../models/case/model.case';
+import HumanTask from '../models/case/model.humantask';
 const xml = Promise.promisifyAll(xml2js);
 const fs = Promise.promisifyAll(require("fs"));
 
@@ -163,8 +164,10 @@ module.exports = class XMLImporter {
           return this.createSentryDefinitions();
         })
         .then(() => {
-          console.log(this.attributeDefinitionMap);
           return this.createCase();
+        })
+        .then(() => {
+          return this.completeTask();
         });
     }
 
@@ -240,7 +243,7 @@ module.exports = class XMLImporter {
           return new Promise((resolve, reject)=>{            
             return this.getEntityDefinitionIdByXMLId(ed.$.id)
               .then(entityDefId => {       
-                let data = this.resolveAttributeType(ad.$.type);
+                let data = this.resolveAttributeType(ad.$.type, ad);
                 data.name = ad.$.id;
                 data.description = ad.$.label;
                 data.multiplicity = ad.$.multiplicity; 
@@ -259,7 +262,7 @@ module.exports = class XMLImporter {
       });
     }
 
-    resolveAttributeType(type){
+    resolveAttributeType(type, AttributeDefinition){
       /** e.g. {type: 'link', options:{entityDefinition: entityDefinitionId}} */
       let attrDef = {
         attributeType: 'notype',
@@ -275,10 +278,29 @@ module.exports = class XMLImporter {
       }else{
         attrDef.attributeType = ref[0].toLowerCase();
       }
-      if(attrDef.attributeType == 'link' && ref.length > 2 && ref[1] == 'EntityDefinition'){
-        attrDef.options.entityDefinition = {
-          id: this.getEntityDefinitionIdByXMLIdSync(ref[2])
-        };          
+      if(attrDef.attributeType == 'link'){
+        if(ref.length > 2 && ref[1] == 'EntityDefinition'){
+          attrDef.options.entityDefinition = {
+            id: this.getEntityDefinitionIdByXMLIdSync(ref[2])
+          };          
+        }
+        /*else if(ref[1] == 'Principals'){
+          attrDef.options.entityDefinition = {
+            id: this.getEntityDefinitionIdByXMLIdSync(ref[2])
+          };    
+        }*/
+      }
+      if(attrDef.attributeType == 'enumeration'){
+        if(AttributeDefinition.EnumerationOption == null){
+          console.log('A Enumeration should provide at least one value!');
+          throw new Error('A Enumeration should provide at least one value!');
+        }else{
+          attrDef.options.enumerationValues = []; 
+          for(let i=0; i<AttributeDefinition.EnumerationOption.length; i++){
+            const option = AttributeDefinition.EnumerationOption[i];
+            attrDef.options.enumerationValues.push(option.$.value);
+          }          
+        }     
       }
       return attrDef;    
     }
@@ -309,12 +331,13 @@ module.exports = class XMLImporter {
     createCaseDefinitions() {
       return Promise.each(this.json.CaseDefinition, cd=>{
         return this.getEntityDefinitionIdByXMLId(cd.$.entityDefinitionId)
-          .then(entityDefinitionId=>{
+          .then(entityDefinitionId=>{            
             const data = {
               name: cd.$.id,
               label: cd.$.label,
               ownerPath: cd.$.ownerPath,
-              entityDefinition: entityDefinitionId
+              entityDefinition: entityDefinitionId,
+              summaryPaths: this.getSummaryDefinitionParam(cd)
             };
             return CaseDefinition.create(data)
           })
@@ -323,9 +346,22 @@ module.exports = class XMLImporter {
             return Promise.resolve();
           })
           .catch(err=>{
+            console.log(err);
             return Promise.reject(err);
           });
       });
+    }
+
+    getSummaryDefinitionParam(CaseDefinition){
+      if(CaseDefinition.SummaryDefinitionParam == null)
+        return [];
+      let params = [];
+      for(let i=0; i<CaseDefinition.SummaryDefinitionParam.length; i++){
+        const param = CaseDefinition.SummaryDefinitionParam[i];
+        if(param.$.path != null)
+          params.push(param.$.path);
+      };
+      return params;
     }
 
     createStageDefinitions() {
@@ -580,6 +616,25 @@ module.exports = class XMLImporter {
         .then(case1=>{
           return Case.findTreebyId(case1.id);
         });
+    }
+
+    completeTask(){
+      console.log(this.humanTaskDefinitionMap);
+      let t5Id = this.humanTaskDefinitionMap.get('t5');
+      return HumanTask.findByHumanTaskDefinitionId(t5Id)
+        .then(humanTasks=>{
+          console.log(JSON.stringify(humanTasks, null, 2));
+          const humanTask = humanTasks[0];
+          humanTask.taskParams[0].values.push("Hello3");
+          return HumanTask.complete(humanTask);
+        })
+        .then((humanTask)=>{
+          console.log(JSON.stringify(humanTask, null, 2));
+          return Promise.resolve(humanTask);
+        })
+        .catch(err=>{
+          console.log(err);
+        })
     }
 
 }

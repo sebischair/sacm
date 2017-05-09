@@ -22,6 +22,11 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
         <AttributeDefinition id="CoolesAttribute" type="Link.EntityDefinition.CaseEvaluationData" multiplicity="maximalOne" label="some notes here2"></AttributeDefinition>
         <AttributeDefinition id="CoolesSuperAttribute" type="Link.EntityDefinition" multiplicity="maximalOne" label="sone notes here"></AttributeDefinition>
         <AttributeDefinition id="CoolesAttribute2" type="string" multiplicity="any" label="sone notes here"></AttributeDefinition>
+        <AttributeDefinition id="EnumAttribute" type="enumeration" label="sone notes here">
+            <EnumerationOption value="Hallo" />
+            <EnumerationOption value="Hello" />
+        </AttributeDefinition>
+   
         <DerivedAttributeDefinition id="index" expression="true" label="my indedx"></DerivedAttributeDefinition>
     </EntityDefinition>
 
@@ -31,6 +36,8 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
 
     <!-- Case Definition -->
     <CaseDefinition id="Case3" label="here" entityDefinitionId="CaseData">
+        <SummaryDefinitionParam path="attr1.attr2"/>
+        <SummaryDefinitionParam path="CoolesAttribute"/>
         <!--
         <StageDefinition id="CaseIdentification" label="" isMandetory="true" isRepeatable="false">
             <HumanTaskDefinition id="t1" label="" owner="" isMandetory="false" isRepeatable="false">
@@ -58,13 +65,14 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
                 <TaskParamDefinition path="CoolesAttribute" isReadOnly="true"/>
                 <TaskParamDefinition path="CoolesAttribute2" isReadOnly="true"/>
                 <TaskParamDefinition path="index" isReadOnly="true"/>
+                <TaskParamDefinition path="EnumAttribute" isReadOnly="true"/>
                 <!--<SentryDefinition>
                     <precondition processDefinitionId="CaseEvaluation"></precondition>
                 </SentryDefinition>-->
                 <HttpHookDefinition on="ENABLE" url="http://google.com" method="GET"></HttpHookDefinition>
             </HumanTaskDefinition>
              <HumanTaskDefinition id="t5" label="" isMandetory="false" isRepeatable="false">
-                <TaskParamDefinition path="CoolesAttribute" isReadOnly="true"/>
+                <TaskParamDefinition path="EnumAttribute" isReadOnly="false"/>
             </HumanTaskDefinition>
 
         </StageDefinition>
