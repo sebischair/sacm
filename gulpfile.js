@@ -5,7 +5,8 @@ gulp.task('apidoc', function(done){
           apidoc({
             src: "app/routes",
             config: "./apidoc.json",
-            dest: "doc/"
+            template: "doc/template",
+            dest: "doc/dist"
           },done);
 });
 
