@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+         <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lato">
+        <style>
+            body{
+               /* font-family: Arial, Helvetica, sans-serif;*/
+                font-family: 'Lato', serif;
+                margin-left: 80px;
+                margin-right: 80px;
+                margin-bottom: 80px;
+            }
+            .container{
+                margin-top: 20px;
+                padding:5px 10px;
+                border-left: 5px solid gray;
+            }
+            .container:hover{
+                border-left: 5px solid red;
+            }
+            .container h2{
+                margin-top:10px;
+            }
+
+            .roles{
+                background-color:red;
+            }
+            .workspace{
+                border-color:gray;
+                background-color:red;
+            }
+            .datadefinition{
+                background-color:#ccc;
+            }
+        </style>
+    </head>
+<body>
+<h2> UML Diagram </h2>
+Figure 1 illustrates the SACM meta model notated in UML. In general, the UML diagram illustrates 6 core concepts in different colors. Centered the data schema (see section 1.4) and instances (see section 1.5) are represented in dark gray and light grey. The case schema (see section 1.6) and instances (see section 1.7) are indicated in dark yellow and light yellow. Other concepts such as the role management (see section 1.2) is represented on the left and the workspaces (see section 1.3) on the top.  In the following sections the main concepts explained more detailed.
+ Figure 1: SACM simplified meta model
+ <br/>
+<img src="datamodelv3.0.png" alt="UML Diagram" height="700">
+
+
+
+<div class="container roles">
+    <h2>Role Management</h2> 
+    The Role Management is considered on a system level, meaning roles work across workspace boundaries. 
+    <p><b>Principal</b> A principal is an abstraction of a group and a person. This helps to use the concept in a flexible way.</p>
+    <p><b>Group</b> A group consist of subgroups and persons who have a membership. </p>
+    <p><b>Person</b> A person represents a single user in the system. A user can contain multiple attributes.</p>
+    <p><b>Membership</b> A membership represents the relationship between person and a group. E.g. the data of creating the membership.</p>
+</div>
+
+<div class="container datadefinition">
+    <h2>Data Definition</h2>
+    <p><b>EntityDefintion</b> A entity definition is a container with read and write principals that contains attribute definitions.</p>
+    <p><b>AttributeDefinition</b> A attribute definition defines basically a name and the expected type of the value. Attribute types can be primitive types such as string, number or date. Additionally, it is possible to reference complex types or custom entity definitions.</p>  
+    <p><b>DerivedAttributeDefintion</b> A derived attribute is calculated automatically based on other attributes of an entity definition. Derived attribute definition cannot be nested.</p>
+</div>
+
+<div class="container datadefinition">
+    <h2>Data Instances</h2>
+    <p><b>Entity</b> A entity has inherited read and write principals and can contain multiple attribute values.</p>
+    <p><b>AttributeValue</b> A attribute value contains a value type that is defined in the attribute definition.</p>
+</div>
+
+<div class="container datadefinition">
+    <h2>Case Definition</h2>
+    <p><b>CaseDefintion</b> A case definition is a wrapper container for all process related elements, the data is excluded. Every case definition has a name and provides an owner who is responsible the instantiated cases. An owner is a principal, meaning a group or person. </p>
+    <p><b>ProcessDefintion</b> A process definition is an abstraction of a stage definition and task definition. Every process definition has a name and contains the information if the process is mandatory and if the process is repeatable. The process definition is an abstract class, meaning this just helps for the technical implementation to reuse the concepts. Most likely the process definition will not be visible on the API level.</p>
+    <p><b>SentryDefinition</b> A sentry expresses the preconditions of a process. One process can have multiple sentries that are linked with a logical or. Every sentry can consist of several processes that are linked with a logical and. A stage or task can only be executed when at least one sentry is fulfilled or no sentry is defined.</p>
+    <p><b>StageDefintion</b> A stage definition contain other stage definitions or task definitions. </p>
+    <p><b>HumanTaskDefintion</b> A human task definition has multiple task parameters that need to be accomplished to finish the task. Every human task definition has an assigned group that represents the potential task own during instantiation.</p>
+    <p><b>TaskParmDefinition</b> A task parameter represent an attribute definition or derived attribute that belongs to a task and is either in write or read-only state.</p>
+    <p><b>AutomatedTaskDefintion</b> A automated task definition can send GET or POST request to a third party system. They are triggered similar to the human tasks after the sentry is fulfilled. Additional, they can be used to model dependencies that are not based on the process states and based on the data values. E g. to create conditional flows automated will terminate instead of being completed that the following sentries will never be fulfilled. </p>
+</div>
+
+<div class="container datadefinition">
+    <h2>Case Instances</h2>
+    <p><b>Case</b> A case is instantiated based on the related case definition. Every case has a name and an owner represented by a person. The current state is expressed with a state variable and the according dates of state changes tracked.</p>
+    <p><b>Process</b> A process is instantiated based on the related process definition. Every process has a name, state and an index that express the current execution iteration. The process is an abstract class, meaning this just helps for the technical implementation to reuse the concepts. Most likely the process will not be visible on the API level.</p>
+    <p><b>Stage</b> A stage is instantiated based on the related stage definition. Every stage can contain several sub stages or tasks. </p>
+    <p><b>HumanTask</b> A human task has an owner that is represented by a principal, that means either a person or a group. Additional, a scheduled date expresses when the task should be executed. </p>
+    <p><b>AutomatedTask</b> A automated task represents an instigated automated task definition. The characteristic different to the human task is that an automated task needs no input from a user and is executed after the sentry is fulfilled. </p>
+    <p><b>State</b> Every process element has a state that is expressed with the following enumeration values:
+        <ul>
+            <li><i>Available</i> the model is instantiated</li>
+            <li><i>Enabled</i> at least on sentry is fulfilled, the process could be executed.</li>
+            <li><i>Active</i> the process is currently executed </li>
+            <li><i>Completed</i> the process was successfully completed </li>
+            <li><i>Terminated</i> the process was abort, not successfully completed </li>
+        </ul>
+    </p>
+</div>
+
+</body>
+</html>
