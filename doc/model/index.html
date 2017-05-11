@@ -23,14 +23,23 @@
             }
 
             .roles{
-                background-color:red;
+                background-color:#B3CB65;
             }
             .workspace{
                 border-color:gray;
-                background-color:red;
+                background-color:#B3CB65;
+            }
+            .casedefinition{
+                background-color: #FFD383;
+            }
+            .case{
+                background-color: #FFFF83;
             }
             .datadefinition{
-                background-color:#ccc;
+                background-color:#A5A5A5;
+            }
+            .data{
+                background-color:#E4E4E4;
             }
         </style>
     </head>
@@ -58,33 +67,34 @@ Figure below illustrates the SACM meta model notated in UML. In general, the UML
 <a name="datadefinition"/>
 <div class="container datadefinition">
     <h2>Data Definition</h2>
-    <p><b>EntityDefintion</b> A entity definition is a container with read and write principals that contains attribute definitions.</p>
+    <p><b>EntityDefinition</b> A entity definition is a container with read and write principals that contains attribute definitions.</p>
     <p><b>AttributeDefinition</b> A attribute definition defines basically a name and the expected type of the value. Attribute types can be primitive types such as string, number or date. Additionally, it is possible to reference complex types or custom entity definitions.</p>  
-    <p><b>DerivedAttributeDefintion</b> A derived attribute is calculated automatically based on other attributes of an entity definition. Derived attribute definition cannot be nested.</p>
+    <p><b>DerivedAttributeDefinition</b> A derived attribute is calculated automatically based on other attributes of an entity definition. Derived attribute definition cannot be nested.</p>
 </div>
 
 <a name="data"/>
-<div class="container datadefinition">
-    <h2>Data Instances</h2>
+<div class="container data">
+    <h2>Data</h2>
     <p><b>Entity</b> A entity has inherited read and write principals and can contain multiple attribute values.</p>
     <p><b>AttributeValue</b> A attribute value contains a value type that is defined in the attribute definition.</p>
 </div>
 
 <a name="casedefinition"/>
-<div class="container datadefinition">
+<div class="container casedefinition">
     <h2>Case Definition</h2>
-    <p><b>CaseDefintion</b> A case definition is a wrapper container for all process related elements, the data is excluded. Every case definition has a name and provides an owner who is responsible the instantiated cases. An owner is a principal, meaning a group or person. </p>
-    <p><b>ProcessDefintion</b> A process definition is an abstraction of a stage definition and task definition. Every process definition has a name and contains the information if the process is mandatory and if the process is repeatable. The process definition is an abstract class, meaning this just helps for the technical implementation to reuse the concepts. Most likely the process definition will not be visible on the API level.</p>
+    <p><b>CaseDefinition</b> A case definition is a wrapper container for all process related elements, the data is excluded. Every case definition has a name and provides an owner who is responsible the instantiated cases. An owner is a principal, meaning a group or person. </p>
+    <p><b>ProcessDefinition</b> A process definition is an abstraction of a stage definition and task definition. Every process definition has a name and contains the information if the process is mandatory and if the process is repeatable. The process definition is an abstract class, meaning this just helps for the technical implementation to reuse the concepts. Most likely the process definition will not be visible on the API level.</p>
     <p><b>SentryDefinition</b> A sentry expresses the preconditions of a process. One process can have multiple sentries that are linked with a logical or. Every sentry can consist of several processes that are linked with a logical and. A stage or task can only be executed when at least one sentry is fulfilled or no sentry is defined.</p>
-    <p><b>StageDefintion</b> A stage definition contain other stage definitions or task definitions. </p>
-    <p><b>HumanTaskDefintion</b> A human task definition has multiple task parameters that need to be accomplished to finish the task. Every human task definition has an assigned group that represents the potential task own during instantiation.</p>
+    <p><b>StageDefinition</b> A stage definition contain other stage definitions or task definitions. </p>
+    <p><b>HumanTaskDefinition</b> A human task definition has multiple task parameters that need to be accomplished to finish the task. Every human task definition has an assigned group that represents the potential task own during instantiation.</p>
+    <p><b>AutomatedTaskDefinition</b> A automated task definition can send GET or POST request to a third party system. They are triggered similar to the human tasks after the sentry is fulfilled. Additional, they can be used to model dependencies that are not based on the process states and based on the data values. E g. to create conditional flows automated will terminate instead of being completed that the following sentries will never be fulfilled. </p>
     <p><b>TaskParmDefinition</b> A task parameter represent an attribute definition or derived attribute that belongs to a task and is either in write or read-only state.</p>
-    <p><b>AutomatedTaskDefintion</b> A automated task definition can send GET or POST request to a third party system. They are triggered similar to the human tasks after the sentry is fulfilled. Additional, they can be used to model dependencies that are not based on the process states and based on the data values. E g. to create conditional flows automated will terminate instead of being completed that the following sentries will never be fulfilled. </p>
+    <p><b>HttpHookDefinition</b> A http hook definition defines an action that is triggered on a certain event. E.g. on process element action such as <i>AVAILABLE, ENABLE, ACTIVATE, COMPLETE, TERMINATE</i></p>
 </div>
 
 <a name="case"/>
-<div class="container datadefinition">
-    <h2>Case Instances</h2>
+<div class="container case">
+    <h2>Case</h2>
     <p><b>Case</b> A case is instantiated based on the related case definition. Every case has a name and an owner represented by a person. The current state is expressed with a state variable and the according dates of state changes tracked.</p>
     <p><b>Process</b> A process is instantiated based on the related process definition. Every process has a name, state and an index that express the current execution iteration. The process is an abstract class, meaning this just helps for the technical implementation to reuse the concepts. Most likely the process will not be visible on the API level.</p>
     <p><b>Stage</b> A stage is instantiated based on the related stage definition. Every stage can contain several sub stages or tasks. </p>
