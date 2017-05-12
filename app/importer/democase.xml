@@ -8,13 +8,8 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
     
     <!-- Case Data Defintion -->   
     <EntityDefinition id="CaseData" label="">
-        <AttributeDefinition id="EnumAttribute" type="enumeration" label="sone notes here">
-            <EnumerationOption value="Hallo" />
-            <EnumerationOption value="Hello" />
-        </AttributeDefinition>
-        <AttributeDefinition id="Owner" type="Link.User" label="sone notes here"></AttributeDefinition>
-   
-        <DerivedAttributeDefinition id="index" expression="true" label="my indedx"></DerivedAttributeDefinition>
+        <AttributeDefinition id="Owner" type="Link.User" label="Owner"></AttributeDefinition>
+        <AttributeDefinition id="Lace" type="Link.EntityDefinition.Lace" label="Lace"></AttributeDefinition>
     </EntityDefinition>
 
     <EntityDefinition id="Lace" label="Lace">
@@ -62,43 +57,43 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
             <EnumerationOption value="dependent"/>
             <EnumerationOption value="independent (or in shower)"/>
         </AttributeDefinition>   
-         <AttributeDefinition id="barthel3" type="enumeration" multiplicity="maximalOne" label="GROOMING">
+        <AttributeDefinition id="barthel3" type="enumeration" multiplicity="maximalOne" label="GROOMING">
             <EnumerationOption value="needs to help with personal care"/>
             <EnumerationOption value="independent face/hair/teeth/shaving (implements provided)"/>
         </AttributeDefinition>   
-         <AttributeDefinition id="barthel4" type="enumeration" multiplicity="maximalOne" label="DRESSING">
+        <AttributeDefinition id="barthel4" type="enumeration" multiplicity="maximalOne" label="DRESSING">
             <EnumerationOption value="dependent"/>
             <EnumerationOption value="needs help but can do about half unaided"/>
             <EnumerationOption value="independent (including buttons, zips, laces, etc.)"/>
         </AttributeDefinition>   
-         <AttributeDefinition id="barthel5" type="enumeration" multiplicity="maximalOne" label="BOWELS">
+        <AttributeDefinition id="barthel5" type="enumeration" multiplicity="maximalOne" label="BOWELS">
             <EnumerationOption value="incontinent (or needs to be given enemas)"/>
             <EnumerationOption value="occasional accident"/>
             <EnumerationOption value="continent"/>
         </AttributeDefinition>   
-         <AttributeDefinition id="barthel6" type="enumeration" multiplicity="maximalOne" label="BLADDER">
+        <AttributeDefinition id="barthel6" type="enumeration" multiplicity="maximalOne" label="BLADDER">
             <EnumerationOption value="incontinent, or catheterized and unable to manage alone"/>
             <EnumerationOption value="occasional accident"/>
             <EnumerationOption value="continent"/>
         </AttributeDefinition>   
-         <AttributeDefinition id="barthel7" type="enumeration" multiplicity="maximalOne" label="TOILET USE">
+        <AttributeDefinition id="barthel7" type="enumeration" multiplicity="maximalOne" label="TOILET USE">
             <EnumerationOption value="dependent"/>
             <EnumerationOption value="needs some help, but can do something alone"/>            
             <EnumerationOption value="independent (on and off, dressing, wiping)"/>
         </AttributeDefinition>   
-         <AttributeDefinition id="barthel8" type="enumeration" multiplicity="maximalOne" label="TRANSFERS (BED TO CHAIR AND BACK)">
+        <AttributeDefinition id="barthel8" type="enumeration" multiplicity="maximalOne" label="TRANSFERS (BED TO CHAIR AND BACK)">
             <EnumerationOption value="unable, no sitting balance"/>
             <EnumerationOption value="major help (one or two people, physical), can sit"/>
             <EnumerationOption value="minor help (verbal or physical)"/>
             <EnumerationOption value="independent"/>
         </AttributeDefinition>   
-         <AttributeDefinition id="barthel9" type="enumeration" multiplicity="maximalOne" label="MOBILITY (ON LEVEL SURFACES)">
+        <AttributeDefinition id="barthel9" type="enumeration" multiplicity="maximalOne" label="MOBILITY (ON LEVEL SURFACES)">
             <EnumerationOption value="immobile or < 50 yards"/>
             <EnumerationOption value="wheelchair independent, including corners, > 50 yards"/>
             <EnumerationOption value="walks with help of one person (verbal or physical) > 50 yards"/>
             <EnumerationOption value="independent (but may use any aid; for example, stick) > 50 yards"/>
         </AttributeDefinition>   
-         <AttributeDefinition id="barthel10" type="enumeration" multiplicity="maximalOne" label="STAIRS">
+        <AttributeDefinition id="barthel10" type="enumeration" multiplicity="maximalOne" label="STAIRS">
             <EnumerationOption value="unable"/>
             <EnumerationOption value="needs help (verbal, physical, carrying aid)"/>
             <EnumerationOption value="independent"/>
@@ -119,17 +114,35 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
 
     <!-- Case Definition -->
     <CaseDefinition id="Democase" label="Demo Case London" entityDefinitionId="CaseData">
- <!--
-        <StageDefinition id="CaseIdentification" label="Case Identification" isMandetory="false" isRepeatable="true" entityDefinitionId="CaseIdentificationData">
+ 
+        <StageDefinition id="CaseIdentification" label="Case Identification" isMandetory="false" isRepeatable="true">
         
-            <HumanTaskDefinition id="t4" label="" ownerPath="Owner" isMandetory="false" isRepeatable="false">
-                <TaskParamDefinition path="EnumAttribute" isReadOnly="true"/>
+            <HumanTaskDefinition id="Lace" label="Lace" ownerPath="Owner" isMandetory="false" isRepeatable="false" entityDefinitionId="Lace" entityAttachPath="Lace">
+                <TaskParamDefinition path="Lace.lace1" isReadOnly="true"/>
+                <TaskParamDefinition path="Lace.lace2" isReadOnly="true"/>
+                <TaskParamDefinition path="Lace.lace3" isReadOnly="true"/>
+                <TaskParamDefinition path="Lace.lace4" isReadOnly="true"/>
+                <TaskParamDefinition path="Lace.lace5" isReadOnly="true"/>
+                <TaskParamDefinition path="Lace.lace6" isReadOnly="true"/>
+                <TaskParamDefinition path="Lace.lace7" isReadOnly="true"/>
+                <TaskParamDefinition path="Lace.lace8" isReadOnly="true"/>
+                <TaskParamDefinition path="Lace.lace9" isReadOnly="true"/>
+                <TaskParamDefinition path="Lace.lace10" isReadOnly="true"/>
+                <TaskParamDefinition path="Lace.lace11" isReadOnly="true"/>
+                <TaskParamDefinition path="Lace.lace12" isReadOnly="true"/>
+                <TaskParamDefinition path="Lace.lace13" isReadOnly="true"/>
+                <TaskParamDefinition path="Lace.lace14" isReadOnly="true"/>
+                <TaskParamDefinition path="Lace.lace15" isReadOnly="true"/>
+                <TaskParamDefinition path="Lace.lace16" isReadOnly="true"/>
+                <TaskParamDefinition path="Lace.lace17" isReadOnly="true"/>                
+                <TaskParamDefinition path="Lace.lace18" isReadOnly="true"/>                
+                <TaskParamDefinition path="Lace.lace19" isReadOnly="true"/>
             </HumanTaskDefinition>
              <HumanTaskDefinition id="t5" label="" ownerPath="Owner" isMandetory="false" isRepeatable="false">
-                <TaskParamDefinition path="EnumAttribute" isReadOnly="false"/>
+                <TaskParamDefinition path="Owner" isReadOnly="false"/>
             </HumanTaskDefinition>
 
-        </StageDefinition>-->
+        </StageDefinition>
     </CaseDefinition>
 
 </SACMDefinition>
