@@ -15,7 +15,7 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
     </EntityDefinition>
 
     <EntityDefinition id="Lace" label="Lace">
-       <AttributeDefinition id="lace1" type="enumeration" multiplicity="maximalOne" label="Length of Stay (including day of admission and discharge)">
+        <AttributeDefinition id="lace1" type="enumeration" multiplicity="maximalOne" label="Length of Stay (including day of admission and discharge)">
             <EnumerationOption value="1 day"/>
             <EnumerationOption value="2 days"/>
             <EnumerationOption value="3 days"/>
@@ -116,7 +116,7 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
 
     <!-- Case Definition -->
     <CaseDefinition id="Democase" label="Demo Case London" entityDefinitionId="CaseData">
- 
+  
         <StageDefinition id="CaseIdentification" label="Case Identification" isMandetory="false" isRepeatable="true">        
             <HumanTaskDefinition id="Lace" label="Lace" ownerPath="Owner" isMandetory="false" isRepeatable="false" entityDefinitionId="Lace" entityAttachPath="Lace">
                 <TaskParamDefinition path="Lace.lace1" isReadOnly="false"/>
@@ -140,8 +140,12 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
                 <TaskParamDefinition path="Lace.lace19" isReadOnly="true"/>
             </HumanTaskDefinition>
         </StageDefinition>
+       
         <StageDefinition id="CaseEvaluation" label="Case Evaluation" isMandetory="false" isRepeatable="true">  
-             <HumanTaskDefinition id="Barthel" label="Barthel" ownerPath="Owner" isMandetory="false" isRepeatable="false" entityDefinitionId="Barthel" entityAttachPath="Barthel">
+            <SentryDefinition>
+                <precondition processDefinitionId="CaseIdentification"></precondition>
+            </SentryDefinition>
+            <HumanTaskDefinition id="Barthel" label="Barthel" ownerPath="Owner" isMandetory="false" isRepeatable="false" entityDefinitionId="Barthel" entityAttachPath="Barthel">
                 <TaskParamDefinition path="Barthel.barthel1" isReadOnly="false"/>
                 <TaskParamDefinition path="Barthel.barthel2" isReadOnly="false"/>
                 <TaskParamDefinition path="Barthel.barthel3" isReadOnly="false"/>
@@ -151,17 +155,22 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
                 <TaskParamDefinition path="Barthel.barthel7" isReadOnly="false"/>
             </HumanTaskDefinition>
         </StageDefinition>
+
         <StageDefinition id="WorkplanDefinition" label="Workplan Definition" isMandetory="false" isRepeatable="true">  
+            <SentryDefinition>
+                <precondition processDefinitionId="CaseEvaluation"></precondition>
+            </SentryDefinition>
             <HumanTaskDefinition id="PhysicalActivityPrescription" label="Physical Activity Prescription" ownerPath="Owner" isMandetory="false" isRepeatable="false" entityDefinitionId="PhysicalActivityPrescription" entityAttachPath="PhysicalActivityPrescription">
                 <TaskParamDefinition path="PhysicalActivityPrescription.phactp1" isReadOnly="false"/>
-                <TaskParamDefinition path="PhysicalActivityPrescription.phactp1" isReadOnly="false"/>
-                <TaskParamDefinition path="PhysicalActivityPrescription.phactp1" isReadOnly="false"/>
-                <TaskParamDefinition path="PhysicalActivityPrescription.phactp1" isReadOnly="false"/>
-                <TaskParamDefinition path="PhysicalActivityPrescription.phactp1" isReadOnly="false"/>
-                <TaskParamDefinition path="PhysicalActivityPrescription.phactp1" isReadOnly="false"/>
-                <TaskParamDefinition path="PhysicalActivityPrescription.phactp1" isReadOnly="false"/>
+                <TaskParamDefinition path="PhysicalActivityPrescription.phactp2" isReadOnly="false"/>
+                <TaskParamDefinition path="PhysicalActivityPrescription.phactp3" isReadOnly="false"/>
+                <TaskParamDefinition path="PhysicalActivityPrescription.phactp4" isReadOnly="false"/>
+                <TaskParamDefinition path="PhysicalActivityPrescription.phactp5" isReadOnly="false"/>
+                <TaskParamDefinition path="PhysicalActivityPrescription.phactp6" isReadOnly="false"/>
+                <TaskParamDefinition path="PhysicalActivityPrescription.phactp7" isReadOnly="false"/>
             </HumanTaskDefinition>
         </StageDefinition>
+        
     </CaseDefinition>
 
 </SACMDefinition>
