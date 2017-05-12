@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+AttributeDefintion types = richstring, text, notype, json, link, string, mxl, longtext, image, boolean, number, enumeration or date
+
+One entit defintion can only belong to one casedefintnion, meaning a entityDefinition can be used only once
+-->
+<SACMDefinition>
+    
+    <!-- Case Data Defintion -->   
+    <EntityDefinition id="CaseData" label="">
+        <AttributeDefinition id="EnumAttribute" type="enumeration" label="sone notes here">
+            <EnumerationOption value="Hallo" />
+            <EnumerationOption value="Hello" />
+        </AttributeDefinition>
+        <AttributeDefinition id="Owner" type="Link.User" label="sone notes here"></AttributeDefinition>
+   
+        <DerivedAttributeDefinition id="index" expression="true" label="my indedx"></DerivedAttributeDefinition>
+    </EntityDefinition>
+
+    <EntityDefinition id="Lace" label="Lace">
+       <AttributeDefinition id="lace1" type="enumeration" multiplicity="any" label="Length of Stay (including day of admission and discharge)">
+            <EnumerationOption value="1 day"/>
+            <EnumerationOption value="2 days"/>
+            <EnumerationOption value="3 days"/>
+            <EnumerationOption value="4-6 days"/>
+            <EnumerationOption value="7-13 days"/>
+            <EnumerationOption value="14 or more days"/>
+        </AttributeDefinition>        
+        <AttributeDefinition id="lace2" type="boolean" multiplicity="any" label="Was the patient admitted to hospital via the emergency department?"/>
+        <AttributeDefinition id="lace3" type="boolean" multiplicity="any" label="Conditions - Previous myocardial infarction"/>
+        <AttributeDefinition id="lace4" type="boolean" multiplicity="any" label="Conditions - Cerebrovascular disease"/>
+        <AttributeDefinition id="lace5" type="boolean" multiplicity="any" label="Conditions - Peripheral vascular disease"/>
+        <AttributeDefinition id="lace6" type="boolean" multiplicity="any" label="Conditions - Diabetes without complications"/>
+        <AttributeDefinition id="lace7" type="boolean" multiplicity="any" label="Conditions - Congestive heart failure"/>
+        <AttributeDefinition id="lace8" type="boolean" multiplicity="any" label="Conditions - Diabetes with end organ damage"/>
+        <AttributeDefinition id="lace9" type="boolean" multiplicity="any" label="Conditions – Chronic pulmonary disease"/>
+        <AttributeDefinition id="lace10" type="boolean" multiplicity="any" label="Conditions – Mild liver or renal disease"/>
+        <AttributeDefinition id="lace11" type="boolean" multiplicity="any" label="Conditions – Any tumor (including lymphoma or leukemia)"/>
+        <AttributeDefinition id="lace12" type="boolean" multiplicity="any" label="Conditions - Dementia"/>
+        <AttributeDefinition id="lace13" type="boolean" multiplicity="any" label="Conditions – Connective tissue disease"/>        
+        <AttributeDefinition id="lace14" type="boolean" multiplicity="any" label="Conditions – AIDS"/>        
+        <AttributeDefinition id="lace15" type="boolean" multiplicity="any" label="Conditions – Moderate or severe liver or renal disease"/>
+        <AttributeDefinition id="lace16" type="boolean" multiplicity="any" label="Conditions – Metastatic solid tumor"/>
+        <DerivedAttributeDefinition id="lace17" expression="true" label="Comorbidities"/>
+        <AttributeDefinition id="lace18" type="enumeration" multiplicity="any" label="Emergency department visits (six months prior to admission)">
+            <EnumerationOption value="0 visits"/>
+            <EnumerationOption value="1 visit"/>
+            <EnumerationOption value="2 visits"/>            
+            <EnumerationOption value="3 visits"/>
+            <EnumerationOption value="4 or more visits"/>
+        </AttributeDefinition>  
+        <DerivedAttributeDefinition id="lace19" expression="true" label="LACE Score Risk of Readmission"/>  
+    </EntityDefinition>
+
+
+    <!-- Case Definition -->
+    <CaseDefinition id="Democase" label="Demo Case London" entityDefinitionId="CaseData">
+ <!--
+        <StageDefinition id="CaseIdentification" label="Case Identification" isMandetory="false" isRepeatable="true" entityDefinitionId="CaseIdentificationData">
+        
+            <HumanTaskDefinition id="t4" label="" ownerPath="Owner" isMandetory="false" isRepeatable="false">
+                <TaskParamDefinition path="EnumAttribute" isReadOnly="true"/>
+            </HumanTaskDefinition>
+             <HumanTaskDefinition id="t5" label="" ownerPath="Owner" isMandetory="false" isRepeatable="false">
+                <TaskParamDefinition path="EnumAttribute" isReadOnly="false"/>
+            </HumanTaskDefinition>
+
+        </StageDefinition>-->
+    </CaseDefinition>
+
+</SACMDefinition>
