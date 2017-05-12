@@ -18,7 +18,7 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
     </EntityDefinition>
 
     <EntityDefinition id="Lace" label="Lace">
-       <AttributeDefinition id="lace1" type="enumeration" multiplicity="any" label="Length of Stay (including day of admission and discharge)">
+       <AttributeDefinition id="lace1" type="enumeration" multiplicity="maximalOne" label="Length of Stay (including day of admission and discharge)">
             <EnumerationOption value="1 day"/>
             <EnumerationOption value="2 days"/>
             <EnumerationOption value="3 days"/>
@@ -26,23 +26,23 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
             <EnumerationOption value="7-13 days"/>
             <EnumerationOption value="14 or more days"/>
         </AttributeDefinition>        
-        <AttributeDefinition id="lace2" type="boolean" multiplicity="any" label="Was the patient admitted to hospital via the emergency department?"/>
-        <AttributeDefinition id="lace3" type="boolean" multiplicity="any" label="Conditions - Previous myocardial infarction"/>
-        <AttributeDefinition id="lace4" type="boolean" multiplicity="any" label="Conditions - Cerebrovascular disease"/>
-        <AttributeDefinition id="lace5" type="boolean" multiplicity="any" label="Conditions - Peripheral vascular disease"/>
-        <AttributeDefinition id="lace6" type="boolean" multiplicity="any" label="Conditions - Diabetes without complications"/>
-        <AttributeDefinition id="lace7" type="boolean" multiplicity="any" label="Conditions - Congestive heart failure"/>
-        <AttributeDefinition id="lace8" type="boolean" multiplicity="any" label="Conditions - Diabetes with end organ damage"/>
-        <AttributeDefinition id="lace9" type="boolean" multiplicity="any" label="Conditions – Chronic pulmonary disease"/>
-        <AttributeDefinition id="lace10" type="boolean" multiplicity="any" label="Conditions – Mild liver or renal disease"/>
-        <AttributeDefinition id="lace11" type="boolean" multiplicity="any" label="Conditions – Any tumor (including lymphoma or leukemia)"/>
-        <AttributeDefinition id="lace12" type="boolean" multiplicity="any" label="Conditions - Dementia"/>
-        <AttributeDefinition id="lace13" type="boolean" multiplicity="any" label="Conditions – Connective tissue disease"/>        
-        <AttributeDefinition id="lace14" type="boolean" multiplicity="any" label="Conditions – AIDS"/>        
-        <AttributeDefinition id="lace15" type="boolean" multiplicity="any" label="Conditions – Moderate or severe liver or renal disease"/>
-        <AttributeDefinition id="lace16" type="boolean" multiplicity="any" label="Conditions – Metastatic solid tumor"/>
+        <AttributeDefinition id="lace2" type="boolean" multiplicity="maximalOne" label="Was the patient admitted to hospital via the emergency department?"/>
+        <AttributeDefinition id="lace3" type="boolean" multiplicity="maximalOne" label="Conditions - Previous myocardial infarction"/>
+        <AttributeDefinition id="lace4" type="boolean" multiplicity="maximalOne" label="Conditions - Cerebrovascular disease"/>
+        <AttributeDefinition id="lace5" type="boolean" multiplicity="maximalOne" label="Conditions - Peripheral vascular disease"/>
+        <AttributeDefinition id="lace6" type="boolean" multiplicity="maximalOne" label="Conditions - Diabetes without complications"/>
+        <AttributeDefinition id="lace7" type="boolean" multiplicity="maximalOne" label="Conditions - Congestive heart failure"/>
+        <AttributeDefinition id="lace8" type="boolean" multiplicity="maximalOne" label="Conditions - Diabetes with end organ damage"/>
+        <AttributeDefinition id="lace9" type="boolean" multiplicity="maximalOne" label="Conditions – Chronic pulmonary disease"/>
+        <AttributeDefinition id="lace10" type="boolean" multiplicity="maximalOne" label="Conditions – Mild liver or renal disease"/>
+        <AttributeDefinition id="lace11" type="boolean" multiplicity="maximalOne" label="Conditions – Any tumor (including lymphoma or leukemia)"/>
+        <AttributeDefinition id="lace12" type="boolean" multiplicity="maximalOne" label="Conditions - Dementia"/>
+        <AttributeDefinition id="lace13" type="boolean" multiplicity="maximalOne" label="Conditions – Connective tissue disease"/>        
+        <AttributeDefinition id="lace14" type="boolean" multiplicity="maximalOne" label="Conditions – AIDS"/>        
+        <AttributeDefinition id="lace15" type="boolean" multiplicity="maximalOne" label="Conditions – Moderate or severe liver or renal disease"/>
+        <AttributeDefinition id="lace16" type="boolean" multiplicity="maximalOne" label="Conditions – Metastatic solid tumor"/>
         <DerivedAttributeDefinition id="lace17" expression="true" label="Comorbidities"/>
-        <AttributeDefinition id="lace18" type="enumeration" multiplicity="any" label="Emergency department visits (six months prior to admission)">
+        <AttributeDefinition id="lace18" type="enumeration" multiplicity="maximalOne" label="Emergency department visits (six months prior to admission)">
             <EnumerationOption value="0 visits"/>
             <EnumerationOption value="1 visit"/>
             <EnumerationOption value="2 visits"/>            
@@ -50,6 +50,60 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
             <EnumerationOption value="4 or more visits"/>
         </AttributeDefinition>  
         <DerivedAttributeDefinition id="lace19" expression="true" label="LACE Score Risk of Readmission"/>  
+    </EntityDefinition>
+
+    <EntityDefinition id="Barthel" label="Barthel">
+       <AttributeDefinition id="barthel1" type="enumeration" multiplicity="maximalOne" label="FEEDING">
+            <EnumerationOption value="unable"/>
+            <EnumerationOption value="needs help cutting, spreading butter, etc., or requires modified diet"/>
+            <EnumerationOption value="independent"/>
+        </AttributeDefinition>        
+        <AttributeDefinition id="barthel2" type="enumeration" multiplicity="maximalOne" label="BATHING">
+            <EnumerationOption value="dependent"/>
+            <EnumerationOption value="independent (or in shower)"/>
+        </AttributeDefinition>   
+         <AttributeDefinition id="barthel3" type="enumeration" multiplicity="maximalOne" label="GROOMING">
+            <EnumerationOption value="needs to help with personal care"/>
+            <EnumerationOption value="independent face/hair/teeth/shaving (implements provided)"/>
+        </AttributeDefinition>   
+         <AttributeDefinition id="barthel4" type="enumeration" multiplicity="maximalOne" label="DRESSING">
+            <EnumerationOption value="dependent"/>
+            <EnumerationOption value="needs help but can do about half unaided"/>
+            <EnumerationOption value="independent (including buttons, zips, laces, etc.)"/>
+        </AttributeDefinition>   
+         <AttributeDefinition id="barthel5" type="enumeration" multiplicity="maximalOne" label="BOWELS">
+            <EnumerationOption value="incontinent (or needs to be given enemas)"/>
+            <EnumerationOption value="occasional accident"/>
+            <EnumerationOption value="continent"/>
+        </AttributeDefinition>   
+         <AttributeDefinition id="barthel6" type="enumeration" multiplicity="maximalOne" label="BLADDER">
+            <EnumerationOption value="incontinent, or catheterized and unable to manage alone"/>
+            <EnumerationOption value="occasional accident"/>
+            <EnumerationOption value="continent"/>
+        </AttributeDefinition>   
+         <AttributeDefinition id="barthel7" type="enumeration" multiplicity="maximalOne" label="TOILET USE">
+            <EnumerationOption value="dependent"/>
+            <EnumerationOption value="needs some help, but can do something alone"/>            
+            <EnumerationOption value="independent (on and off, dressing, wiping)"/>
+        </AttributeDefinition>   
+         <AttributeDefinition id="barthel8" type="enumeration" multiplicity="maximalOne" label="TRANSFERS (BED TO CHAIR AND BACK)">
+            <EnumerationOption value="unable, no sitting balance"/>
+            <EnumerationOption value="major help (one or two people, physical), can sit"/>
+            <EnumerationOption value="minor help (verbal or physical)"/>
+            <EnumerationOption value="independent"/>
+        </AttributeDefinition>   
+         <AttributeDefinition id="barthel9" type="enumeration" multiplicity="maximalOne" label="MOBILITY (ON LEVEL SURFACES)">
+            <EnumerationOption value="immobile or < 50 yards"/>
+            <EnumerationOption value="wheelchair independent, including corners, > 50 yards"/>
+            <EnumerationOption value="walks with help of one person (verbal or physical) > 50 yards"/>
+            <EnumerationOption value="independent (but may use any aid; for example, stick) > 50 yards"/>
+        </AttributeDefinition>   
+         <AttributeDefinition id="barthel10" type="enumeration" multiplicity="maximalOne" label="STAIRS">
+            <EnumerationOption value="unable"/>
+            <EnumerationOption value="needs help (verbal, physical, carrying aid)"/>
+            <EnumerationOption value="independent"/>
+        </AttributeDefinition>   
+        <DerivedAttributeDefinition id="barthel11" expression="true" label="Barthel Index"/>  
     </EntityDefinition>
 
 
