@@ -284,12 +284,19 @@ module.exports = class XMLImporter {
             id: this.getEntityDefinitionIdByXMLIdSync(ref[2])
           };          
         }
+
+        if(ref.length > 1 && ref[1].toLowerCase() == 'users'){
+          attrDef.options = {
+            resourceType: 'users',
+            groupType: {id: 'administrators'}          
+          };
+        }
         /*else if(ref[1] == 'Principals'){
           attrDef.options.entityDefinition = {
             id: this.getEntityDefinitionIdByXMLIdSync(ref[2])
           };    
         }*/
-      }
+      } 
       if(attrDef.attributeType == 'enumeration'){
         if(AttributeDefinition.EnumerationOption == null){
           console.log('A Enumeration should provide at least one value!');
