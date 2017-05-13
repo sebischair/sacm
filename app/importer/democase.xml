@@ -38,7 +38,7 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
         <AttributeDefinition id="lace14" type="boolean" multiplicity="maximalOne" label="Conditions – AIDS"/>        
         <AttributeDefinition id="lace15" type="boolean" multiplicity="maximalOne" label="Conditions – Moderate or severe liver or renal disease"/>
         <AttributeDefinition id="lace16" type="boolean" multiplicity="maximalOne" label="Conditions – Metastatic solid tumor"/>
-        <DerivedAttributeDefinition id="lace17" expression="true" label="Comorbidities"/>
+        <DerivedAttributeDefinition id="lace17" expression="number(lace3)+number(lace4)+number(lace5)+number(lace6)+number(lace7)+number(lace8)+number(lace9)+number(lace10)+number(lace11)+number(lace12)+number(lace13)+number(lace14)+number(lace15)+number(lace16)" label="Comorbidities"/>
         <AttributeDefinition id="lace18" type="enumeration" multiplicity="maximalOne" label="Emergency department visits (six months prior to admission)">
             <EnumerationOption value="0" description="0 visits"/>
             <EnumerationOption value="1" description="1 visit"/>
@@ -46,7 +46,7 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
             <EnumerationOption value="3" description="3 visits"/>
             <EnumerationOption value="4" description="4 or more visits"/>
         </AttributeDefinition>  
-        <DerivedAttributeDefinition id="lace19" expression="true" label="LACE Score Risk of Readmission"/>  
+        <DerivedAttributeDefinition id="lace19" expression="number(lace1)+number(lace2)+number(lace17)+number(lace18)" label="LACE Score Risk of Readmission"/>  
     </EntityDefinition>
 
     <EntityDefinition id="Barthel" label="Barthel">
@@ -100,7 +100,7 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
             <EnumerationOption value="5" description="needs help (verbal, physical, carrying aid)"/>
             <EnumerationOption value="10" description="independent"/>
         </AttributeDefinition>   
-        <DerivedAttributeDefinition id="barthel11" expression="true" label="Barthel Index"/>  
+        <DerivedAttributeDefinition id="barthel11" expression="number(barthel1)+number(barthel2)+number(barthel3)+number(barthel4)+number(barthel5)+number(barthel6)+number(barthel7)+number(barthel8)+number(barthel9)+number(barthel10)" label="Barthel Index"/>  
     </EntityDefinition>
 
     <EntityDefinition id="PhysicalActivityPrescription" label="Physical Activity Prescription">
