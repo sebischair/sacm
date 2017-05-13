@@ -165,10 +165,10 @@ module.exports = class XMLImporter {
         })
         .then(() => {
           return this.createCase();
-        })
+        })/*
         .then(() => {
           return this.completeTask();
-        });
+        });*/
     }
 
     fileExists(filePath) {
@@ -298,7 +298,11 @@ module.exports = class XMLImporter {
           attrDef.options.enumerationValues = []; 
           for(let i=0; i<AttributeDefinition.EnumerationOption.length; i++){
             const option = AttributeDefinition.EnumerationOption[i];
-            attrDef.options.enumerationValues.push(option.$.value);
+            const data = {
+              value: option.$.value,
+              description: option.$.description
+            }
+            attrDef.options.enumerationValues.push(data);
           }          
         }     
       }
@@ -446,17 +450,24 @@ module.exports = class XMLImporter {
       if(humanTaskDefinitions == null)
         return Promise.resolve();
       return Promise.each(humanTaskDefinitions, td=>{
-        const data = {
-          name: td.$.id,
-          label: td.$.id,          
-          ownerPath: td.$.ownerPath,
-          isRepeatable: td.$.isRepeatable,
-          isMandatory: td.$.isMandetory,
-          caseDefinition: caseDefId,          
-          parentStageDefinition: parentStageDefId
-        }
+        console.log('here');
         let humanTaskDefinitionId = null;
-        return HumanTaskDefinition.create(data)
+        return this.getEntityDefinitionIdByXMLId(td.$.entityDefinitionId)
+          .then(entityDefinitionId=>{
+            console.log('here2')
+            const data = {
+              name: td.$.id,
+              label: td.$.id,          
+              ownerPath: td.$.ownerPath,
+              isRepeatable: td.$.isRepeatable,
+              isMandatory: td.$.isMandetory,
+              caseDefinition: caseDefId,          
+              parentStageDefinition: parentStageDefId,                  
+              newEntityDefinition: entityDefinitionId,
+              newEntityAttachPath: td.$.entityAttachPath
+            }            
+            return HumanTaskDefinition.create(data)
+          })
           .then(persistedHumanTaskDef=>{
             this.humanTaskDefinitionMap.set(td.$.id, persistedHumanTaskDef.id);
             humanTaskDefinitionId = persistedHumanTaskDef.id;
@@ -469,6 +480,7 @@ module.exports = class XMLImporter {
             return Promise.resolve();
           })
           .catch(err=>{
+            console.log(err)
             return Promise.reject(err);
           });
       });
