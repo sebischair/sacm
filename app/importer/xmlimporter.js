@@ -193,12 +193,11 @@ module.exports = class XMLImporter {
         return User.create(data)
           .then(persistedUser =>{
             console.log(persistedUser)
-            this.userMap.set(u.$.id, persistedUser.id);
-            
+            this.userMap.set(u.$.id, persistedUser.id);            
             return Promise.resolve();
           })
           .catch(err=>{
-            console.log(err);
+            console.error(err);
           })
       });
     }
@@ -210,7 +209,7 @@ module.exports = class XMLImporter {
           administrators: []
         }
         if(g.Administrator == null){
-          console.log('No administrator defined for group!');
+          console.error('No administrator defined for group!');
           return Promise.reject('No administrator defined for group!');
         }
         return Promise.each(g.Administrator, a=>{
@@ -221,7 +220,7 @@ module.exports = class XMLImporter {
               return Promise.resolve();
             })
             .catch(err=>{
-              console.log(err);
+              console.error(err);
               return Promise.reject(err);
             });        
         })
