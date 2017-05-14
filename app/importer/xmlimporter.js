@@ -346,10 +346,10 @@ module.exports = class XMLImporter {
           };          
         }
 
-        if(ref.length > 1 && ref[1].toLowerCase() == 'users'){
+        if(ref.length > 2 && ref[1].toLowerCase() == 'users'){
           attrDef.options = {
             resourceType: 'users',
-            groupType: {id: 'administrators'}          
+            groupType: {id: this.getGroupIdByXMLId(ref[2])}          
           };
         }
         /*else if(ref[1] == 'Principals'){
