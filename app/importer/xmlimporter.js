@@ -131,15 +131,17 @@ module.exports = class XMLImporter {
           return Workspace.deleteAll();
         })
         .then(()=>{
+          return Group.deleteAll();
+        })
+        .then(()=>{
+          return this.createGroups();
+        })
+        .then(()=>{
           return Workspace.create(this.workspaceName);
         })
         .then(workspace => {
           this.workspaceId = workspace.id;          
           //return this.createUsers();
-          return Promise.resolve();
-        })
-        .then(()=>{
-          //return this.createGroups();
           return Promise.resolve();
         })
         .then(()=>{
