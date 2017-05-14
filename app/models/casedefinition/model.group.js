@@ -17,6 +17,10 @@ export default class Group extends Model{
     return http.del('/groups/'+groupId);
   }
 
+  static addMember(groupId, principalId) {
+    return http.post('/groups/'+groupId+'/member/'+principalId);
+  }
+
   static deleteAll() {
     return Group.find()
       .then(groups=>{

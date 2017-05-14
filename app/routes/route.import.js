@@ -5,7 +5,7 @@ import XMLImporter from './../importer/xmlimporter';
 
 router.get('/', (req, res, next)=>{
   const xml = new XMLImporter();
-  xml.import('app/importer/barcelona.xml')
+  xml.import('app/importer/democase.xml')
     .then(case1=>{
       res.status(200).send(case1);
     })

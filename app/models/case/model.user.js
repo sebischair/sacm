@@ -13,6 +13,14 @@ export default class User extends Model{
     return http.get('/users');
   }
 
+  static findById(userId) {
+    return http.get('/users/'+userId);
+  }
+
+  static updateById(userId, data) {
+    return http.put('/users/'+userId, data);
+  }
+
   static deleteById(userId) {
     return http.del('/users/'+userId);
   }

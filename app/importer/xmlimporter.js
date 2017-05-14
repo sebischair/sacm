@@ -48,6 +48,36 @@ module.exports = class XMLImporter {
       });     
     }
 
+    getGroupIdByXMLId(groupXMLId){
+      if(groupXMLId == null)
+        console.error('Group Id can not be null!');
+      else if(!this.groupMap.has(groupXMLId))
+        console.error('ERROR: Group ID "'+groupXMLId+'" not found');
+      else
+        return this.groupMap.get(groupXMLId);  
+    }
+
+    getPrincipalIdByXMLId(principalXMLId){
+      if(principalXMLId == null)
+          console.error('Principal Id can not be null!');
+      else{
+        let principalId = null;
+        let count = 0;
+        if(this.userMap.has(principalXMLId)){
+          principalId = this.userMap.get(principalXMLId);
+          count++;
+        }
+        if(this.groupMap.has(principalXMLId)){
+          principalId = this.groupMap.get(principalXMLId);
+          count++;
+        }
+        if(count == 1)
+          return principalId;
+        else
+          console.error('ERROR: PrincipalId "'+principalXMLId+'" not found or not unique!');
+      }
+    }
+
     getEntityDefinitionIdByXMLId(entityDefinitionXMLId){
       return new Promise((resolve, reject) =>{
         if(entityDefinitionXMLId == null)
@@ -143,6 +173,9 @@ module.exports = class XMLImporter {
           return this.createGroups();
         })
         .then(()=>{
+          return this.createMemberships();
+        })
+        .then(()=>{
           return Workspace.create(this.workspaceName);
         })
         .then(workspace => {
@@ -213,7 +246,6 @@ module.exports = class XMLImporter {
           return Promise.reject('No administrator defined for group!');
         }
         return Promise.each(g.Administrator, a=>{
-          console.log(this.userMap)
           return this.getUserIdByXMLId(a.$.principalId)
             .then(userId=>{
               data.administrators.push(userId);
@@ -240,6 +272,18 @@ module.exports = class XMLImporter {
         console.log(err);
         return Promise.reject(err);
       })
+    }
+
+    createMemberships(){
+      return Promise.each(this.json.Group, g=>{
+        if(g.Membership == null)
+          return Promise.resolve();
+        return Promise.each(g.Membership, m=>{
+          const groupId = this.getGroupIdByXMLId(g.$.id);
+          const principalId = this.getPrincipalIdByXMLId(m.$.principalId);
+          return Group.addMember(groupId, principalId);
+        });     
+      });
     }
 
     createEntityDefinitions() {
