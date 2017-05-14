@@ -20,10 +20,13 @@ export default class Group extends Model{
   static deleteAll() {
     return Group.find()
       .then(groups=>{
-        groups = groups.filter(group=>{group.id != 'administrators'});
+        groups = groups.filter(group=>group.id != 'administrators');
         return Promise.each(groups, group=>{
-          return http.del('/groups/'+group.id);
-        });
+          return Group.deleteById(group.id);
+        })
+        .catch(err=>{
+          console.log(err);
+        })
       });    
   }
 

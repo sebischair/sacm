@@ -130,8 +130,14 @@ module.exports = class XMLImporter {
           this.json = json.SACMDefinition;
           return Workspace.deleteAll();
         })
+        .then(us=>{
+          return Group.deleteAll();                  
+        })
         .then(()=>{
-          return Group.deleteAll();
+          return User.deleteAll();  
+        })
+        .then(()=>{
+          return this.createUsers();
         })
         .then(()=>{
           return this.createGroups();
@@ -141,10 +147,6 @@ module.exports = class XMLImporter {
         })
         .then(workspace => {
           this.workspaceId = workspace.id;          
-          //return this.createUsers();
-          return Promise.resolve();
-        })
-        .then(()=>{
           return this.createEntityDefinitions();
         })
         .then(() => {
@@ -190,9 +192,14 @@ module.exports = class XMLImporter {
         }
         return User.create(data)
           .then(persistedUser =>{
+            console.log(persistedUser)
             this.userMap.set(u.$.id, persistedUser.id);
+            
             return Promise.resolve();
-          });
+          })
+          .catch(err=>{
+            console.log(err);
+          })
       });
     }
 
@@ -202,15 +209,21 @@ module.exports = class XMLImporter {
           name: g.$.id,
           administrators: []
         }
+        if(g.Administrator == null){
+          console.log('No administrator defined for group!');
+          return Promise.reject('No administrator defined for group!');
+        }
         return Promise.each(g.Administrator, a=>{
+          console.log(this.userMap)
           return this.getUserIdByXMLId(a.$.principalId)
             .then(userId=>{
-              administrators.push(userId);
+              data.administrators.push(userId);
               return Promise.resolve();
             })
             .catch(err=>{
+              console.log(err);
               return Promise.reject(err);
-            });
+            });        
         })
         .then(()=>{
           return Group.create(data)
@@ -220,9 +233,12 @@ module.exports = class XMLImporter {
           return Promise.resolve();
         })
         .catch(err=>{
+          console.log(err);
           return Promise.reject(err);
-        })
+        });
+        
       }).catch(err=>{
+        console.log(err);
         return Promise.reject(err);
       })
     }
