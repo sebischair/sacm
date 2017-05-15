@@ -25,16 +25,35 @@ export default class Case extends Model{
     return http.get('/case/'+caseId+'/tree');
   }
 
-  static deleteById() {
+  static deleteById(caseId) {
     return http.del('/case/'+caseId);
   }
 
-  static complete() {
+  static complete(caseId) {
     return http.post('/case/'+caseId+'/complete');
   }
 
-  static terminate() {
+  static terminate(caseId) {
     return http.post('/case/'+caseId+'/terminate');
   }
+
+  static permissions(caseId) {
+    return http.get('/case/'+caseId+'/permissions');
+  }
+
+  static addReader(caseId, principalId) {
+    return http.post('/case/'+caseId+'/reader/'+principalId);
+  }
+
+  static removeReader(caseId, principalId) {
+    return http.del('/case/'+caseId+'/reader/'+principalId);
+  }
    
+  static addWriter(caseId, principalId) {
+    return http.post('/case/'+caseId+'/writer/'+principalId);
+  }
+
+  static removeWriter(caseId, principalId) {
+    return http.del('/case/'+caseId+'/writer/'+principalId);
+  }
 }
