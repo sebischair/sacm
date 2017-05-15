@@ -162,9 +162,12 @@ module.exports = class XMLImporter {
           return Workspace.deleteAll();
         })
         .then(()=>{
+          return this.deleteUserDefinitionAttributeDefinitions();
+        })
+        .then(()=>{
           return this.createUserDefinition();
-        })/*
-        .then(us=>{
+        })
+        .then(()=>{
           return Group.deleteAll();                  
         })
         .then(()=>{
@@ -221,8 +224,17 @@ module.exports = class XMLImporter {
       });
     }
 
+    deleteUserDefinitionAttributeDefinitions(){
+       return UserDefinition.find()
+        .then(userDefinition=>{
+          return Promise.each(userDefinition.attributeDefinitions, ad=>{
+            AttributeDefinition.deleteById(ad.id);
+          });
+        });
+    }
+
     createUserDefinition(){
-      if(this.json.UserDefinition == null )
+      if(this.json.UserDefinition == null)
         return Promise.resolve();
       const userDefintion = this.json.UserDefinition[0];
       return UserDefinition.find()

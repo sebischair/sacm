@@ -9,4 +9,8 @@ export default class AttributeDefinition extends Model{
     return http.post('/attributeDefinitions', data);
   }
 
+  static deleteById(adttributeDefinitionId) {
+    return http.del('/attributeDefinitions/'+adttributeDefinitionId);
+  }
+
 }

@@ -8,5 +8,4 @@ export default class UserDefinition extends Model{
   static find() {
     return http.get('/user/userType');
   }
-  
 }
