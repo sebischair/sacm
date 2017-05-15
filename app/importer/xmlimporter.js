@@ -3,6 +3,7 @@ import Promise from 'bluebird';
 import request from 'request-promise';
 import xml2js from 'xml2js';
 import Workspace from '../models/model.workspace';
+import UserDefinition from '../models/casedefinition/model.userdefinition';
 import User from '../models/case/model.user';
 import Group from '../models/casedefinition/model.group';
 import EntityDefinition from '../models/casedefinition/model.entitydefinition';
@@ -160,6 +161,9 @@ module.exports = class XMLImporter {
           this.json = json.SACMDefinition;
           return Workspace.deleteAll();
         })
+        .then(()=>{
+          return this.createUserDefinition();
+        })/*
         .then(us=>{
           return Group.deleteAll();                  
         })
@@ -215,6 +219,35 @@ module.exports = class XMLImporter {
         else
           resolve(false)
       });
+    }
+
+    createUserDefinition(){
+      if(this.json.UserDefinition == null )
+        return Promise.resolve();
+      const userDefintion = this.json.UserDefinition[0];
+      return UserDefinition.find()
+        .then(persistedUserDefinition =>{
+          if(userDefintion != null && userDefintion.AttributeDefinition != null){
+            const attributeDefinitions = userDefintion.AttributeDefinition;
+            return Promise.each(attributeDefinitions, ad=>{                            
+              let data = this.resolveAttributeType(ad.$.type, ad);
+              data.name = ad.$.id;
+              data.description = ad.$.label;
+              data.multiplicity = ad.$.multiplicity; 
+              data.entityDefinition = persistedUserDefinition.id;        
+              return AttributeDefinition.create(data)             
+                .then(persistedAttributeDefinition =>{
+                  return Promise.resolve();
+                })
+                .catch(err=>{
+                  console.error(err);
+                  return Promise.reject(err);
+                });
+            });
+          }else{
+            return Promise.resolve();
+          }
+        });
     }
 
     createUsers(){
