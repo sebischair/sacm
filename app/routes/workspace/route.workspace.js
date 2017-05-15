@@ -55,9 +55,24 @@ router.get('/:id', (req, res, next)=>{
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *     {
- *       TODO CASE_OBJ
- *     }
+ * [{
+ *   "id": "1q7nud4e2v1dl",
+ *   "stateDates": {
+ *     "enabled": "2017-05-15 17:29:14.0",
+ *     "terminated": null,
+ *     "active": null,
+ *     "available": "2017-05-15 17:29:14.0",
+ *     "completed": null
+ *   },
+ *   "caseDefinition": "1xzmymv4hf0tj",
+ *   "workspace": "1mwgok4jx7397",
+ *   "description": "Demo Case London",
+ *   "entity": "vcqm404srunk",
+ *   "name": "Democase",
+ *   "state": "ENABLED",
+ *   "owner": null,
+ *   "resourceType": "Case"
+ * }]
  *
  */
 router.get('/:id/cases', (req, res, next)=>{

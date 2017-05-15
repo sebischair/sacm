@@ -167,14 +167,6 @@ router.get('/:id', (req, res, next)=>{
  *     HTTP/1.1 200 OK
  *   {}
  *
- * @apiErrorExample {json} Error-Response:
- *     HTTP/1.1 404 Not found
- *    {
- *       "handler": "StageDefinitionsHandler2",
- *       "cause":"EntityNotFoundException",
- *       "message":"Could not find entity '1swihwfirljjhx'"
- *       "statusCode": 404
- *    }
  */
 router.delete('/:id', (req, res, next)=>{
   StageDefinition.deleteById(req.params.id)
@@ -281,9 +273,25 @@ router.get('/:id/humantaskdefinitions', (req, res, next)=>{
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {
- *     TODO STAGE_OBJ
- *   }
+ *     [{
+ *       "processDefinition": "raxxde6yecyz",
+ *       "id": "10kx8cvxs3t0w",
+ *       "parentStage": null,
+ *       "sentries": [],
+ *       "stateDates": {
+ *         "enabled": null,
+ *         "terminated": null,
+ *         "active": null,
+ *         "available": "2017-05-15 17:29:16.0",
+ *         "completed": null
+ *       },
+ *       "description": "Case Identification",
+ *       "name": "CaseIdentification",
+ *       "state": "AVAILABLE",
+ *       "children": [],
+ *       "case": "1q7nud4e2v1dl",
+ *       "resourceType": "Stage"
+ *     }]
  *
  */
  router.get('/:id/stages', (req, res, next)=>{

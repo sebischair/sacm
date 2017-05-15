@@ -227,8 +227,12 @@ module.exports = class XMLImporter {
     deleteUserDefinitionAttributeDefinitions(){
        return UserDefinition.find()
         .then(userDefinition=>{
+          if(userDefinition.attributeDefinitions == null) {
+            console.log('hiererer');
+            return Promise.reject();
+          }
           return Promise.each(userDefinition.attributeDefinitions, ad=>{
-            AttributeDefinition.deleteById(ad.id);
+            return AttributeDefinition.deleteById(ad.id);
           });
         });
     }

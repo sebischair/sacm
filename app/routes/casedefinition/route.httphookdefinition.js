@@ -16,7 +16,12 @@ import HttpHookDefinition from './../../models/casedefinition/model.httphookdefi
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *   {
- *     TODO HTTP_HOOk_DEF_OBJ
+ *     id: "hdze783ncv"
+ *     on: "AVAILABLE",
+ *     url: "http://example.com",
+ *     method: "GET",
+ *     processDefinition: "hka51pgpkgbi",
+ *     resourceType: "HttpHookDefinition"
  *   }
  *
  */
@@ -47,6 +52,7 @@ router.get('/:id', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *   {
+ *     id: "i938uejh378",
  *     on: "AVAILABLE",
  *     url: "http://example.com",
  *     method: "GET",
@@ -84,6 +90,7 @@ router.post('/', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *   {
+ *     id: "i938uejh378",
  *     on: "AVAILABLE",
  *     url: "http://example.com",
  *     method: "GET",
@@ -120,9 +127,7 @@ router.patch('/:id', (req, res, next)=>{
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {
- *
- *   }
+ *   {}
  */
 router.delete('/:id', (req, res, next)=>{
   HttpHookDefinition.deleteById(req.params.id)

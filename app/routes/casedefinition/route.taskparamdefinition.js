@@ -117,9 +117,7 @@ router.patch('/:id', (req, res, next)=>{
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {
- *     TODO
- *   }
+ *   {}
  *
  */
 router.delete('/:id', (req, res, next)=>{

@@ -50,9 +50,13 @@ router.get('/:id/sentrydefinitions', (req, res, next)=>{
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {
- *     TODO HTTP_HOOk_DEF_OBJ
- *   }
+ *   [{
+ *     id: "i938uejh378",
+ *     on: "AVAILABLE",
+ *     url: "http://example.com",
+ *     method: "GET",
+ *     processDefinition: "hka51pgpkgbi"
+ *   }]
  *
  */
 router.get(':id/httphookdefinitions', (req, res, next)=>{

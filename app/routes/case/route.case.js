@@ -23,9 +23,24 @@ import Summary from './../../models/case/model.summary';
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {
- *     TODO CASE_OBJ
- *   }
+ * {
+ *   "id": "1q7nud4e2v1dl",
+ *   "stateDates": {
+ *     "enabled": "2017-05-15 17:29:14.0",
+ *     "terminated": null,
+ *     "active": null,
+ *     "available": "2017-05-15 17:29:14.0",
+ *     "completed": null
+ *   },
+ *   "caseDefinition": "1xzmymv4hf0tj",
+ *   "workspace": "1mwgok4jx7397",
+ *   "description": "Demo Case London",
+ *   "entity": "vcqm404srunk",
+ *   "name": "Democase",
+ *   "state": "ENABLED",
+ *   "owner": null,
+ *   "resourceType": "Case"
+ * }
  *
  */
 router.get('/:id', (req, res, next)=>{
@@ -84,9 +99,25 @@ router.get('/:id', (req, res, next)=>{
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {
- *     TODO CASE_OBJ_TREE
- *   }
+ * {
+ *   "id": "1q7nud4e2v1dl",
+ *   "stateDates": {
+ *     "enabled": "2017-05-15 17:29:14.0",
+ *     "terminated": null,
+ *     "active": null,
+ *     "available": "2017-05-15 17:29:14.0",
+ *     "completed": null
+ *   },
+ *   "caseDefinition": "1xzmymv4hf0tj",
+ *   "workspace": "1mwgok4jx7397",
+ *   "description": "Demo Case London",
+ *   "entity": "vcqm404srunk",
+ *   "name": "Democase",
+ *   "state": "ENABLED",
+ *   "owner": null,
+ *   "children": [], // Tasks and Stages
+ *   "resourceType": "Case"
+ * }
  *
  */
 router.get('/:id/tree', (req, res, next)=>{
@@ -113,8 +144,7 @@ router.get('/:id/tree', (req, res, next)=>{
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {
- *   }
+ *   {}
  *
  */
 router.post('/:id/complete', (req, res, next)=>{
@@ -140,8 +170,7 @@ router.post('/:id/complete', (req, res, next)=>{
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {
- *   }
+ *   {}
  *
  */
 router.post('/:id/terminate', (req, res, next)=>{
@@ -168,8 +197,7 @@ router.post('/:id/terminate', (req, res, next)=>{
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {
- *   }
+ *   {}
  *
  */
 router.delete('/:id', (req, res, next)=>{
@@ -254,9 +282,25 @@ router.get('/:id/processes/all', (req, res, next)=>{
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {
- *     TODO STAGE_OBJ
- *   }
+ *     [{
+ *       "processDefinition": "1104j66pit6iz",
+ *       "id": "opifq3c2u1vn",
+ *       "parentStage": null,
+ *       "sentries": [],
+ *       "stateDates": {
+ *         "enabled": "2017-05-15 17:29:18.0",
+ *         "terminated": null,
+ *         "active": null,
+ *         "available": "2017-05-15 17:29:15.0",
+ *         "completed": null
+ *       },
+ *       "description": "Workplan Definition",
+ *       "name": "WorkplanDefinition",
+ *       "state": "ENABLED",
+ *       "children": [],
+ *       "case": "1q7nud4e2v1dl",
+ *       "resourceType": "Stage"
+ *     }]
  *
  */
 router.get('/:id/stages', (req, res, next)=>{
@@ -283,9 +327,25 @@ router.get('/:id/stages', (req, res, next)=>{
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {
- *     TODO STAGE_OBJ
- *   }
+ *     [{
+ *       "processDefinition": "1104j66pit6iz",
+ *       "id": "opifq3c2u1vn",
+ *       "parentStage": null,
+ *       "sentries": [],
+ *       "stateDates": {
+ *         "enabled": "2017-05-15 17:29:18.0",
+ *         "terminated": null,
+ *         "active": null,
+ *         "available": "2017-05-15 17:29:15.0",
+ *         "completed": null
+ *       },
+ *       "description": "Workplan Definition",
+ *       "name": "WorkplanDefinition",
+ *       "state": "ENABLED",
+ *       "children": [],
+ *       "case": "1q7nud4e2v1dl",
+ *       "resourceType": "Stage"
+ *     }]
  *
  */
 router.get('/:id/stages/all', (req, res, next)=>{
@@ -313,9 +373,26 @@ router.get('/:id/stages/all', (req, res, next)=>{
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {
- *     TODO TASK_OBJ
- *   }
+ *     [{
+ *          "processDefinition": "bq1iuo0uuzo9",
+ *          "id": "p503h6ephfqv",
+ *          "parentStage": "10kx8cvxs3t0w",
+ *          "sentries": [],
+ *          "stateDates": {
+ *            "enabled": "2017-05-15 17:29:18.0",
+ *            "terminated": null,
+ *            "active": null,
+ *            "available": "2017-05-15 17:29:17.0",
+ *            "completed": null
+ *          },
+ *          "taskParams": [],
+ *          "description": "Lace",
+ *          "name": "Lace",
+ *          "owner": null,
+ *          "state": "ENABLED",
+ *          "case": "1q7nud4e2v1dl",
+ *          "resourceType": "AutomatedTask"
+ *     }]
  *
  */
 router.get('/:id/tasks/all', (req, res, next)=>{
@@ -341,9 +418,26 @@ router.get('/:id/tasks/all', (req, res, next)=>{
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {
- *     TODO TASK_OBJ
- *   }
+ *     [{
+ *          "processDefinition": "bq1iuo0uuzo9",
+ *          "id": "p503h6ephfqv",
+ *          "parentStage": "10kx8cvxs3t0w",
+ *          "sentries": [],
+ *          "stateDates": {
+ *            "enabled": "2017-05-15 17:29:18.0",
+ *            "terminated": null,
+ *            "active": null,
+ *            "available": "2017-05-15 17:29:17.0",
+ *            "completed": null
+ *          },
+ *          "taskParams": [],
+ *          "description": "Lace",
+ *          "name": "Lace",
+ *          "owner": null,
+ *          "state": "ENABLED",
+ *          "case": "1q7nud4e2v1dl",
+ *          "resourceType": "AutomatedTask"
+ *     }]
  *
  */
 router.get('/:id/tasks/all', (req, res, next)=>{
@@ -370,9 +464,27 @@ router.get('/:id/tasks/all', (req, res, next)=>{
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {
- *     TODO HUMAN_TASK_OBJ
- *   }
+ *     [{
+ *          "scheduledDate": null,
+ *          "processDefinition": "bq1iuo0uuzo9",
+ *          "id": "p503h6ephfqv",
+ *          "parentStage": "10kx8cvxs3t0w",
+ *          "sentries": [],
+ *          "stateDates": {
+ *            "enabled": "2017-05-15 17:29:18.0",
+ *            "terminated": null,
+ *            "active": null,
+ *            "available": "2017-05-15 17:29:17.0",
+ *            "completed": null
+ *          },
+ *          "taskParams": [],
+ *          "description": "Lace",
+ *          "name": "Lace",
+ *          "owner": null,
+ *          "state": "ENABLED",
+ *          "case": "1q7nud4e2v1dl",
+ *          "resourceType": "HumanTask"
+ *     }]
  *
  */
 router.get('/:id/humantasks/all', (req, res, next)=>{
@@ -398,9 +510,27 @@ router.get('/:id/humantasks/all', (req, res, next)=>{
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {
- *     TODO HUMAN_TASK_OBJ
- *   }
+ *     [{
+ *          "scheduledDate": null,
+ *          "processDefinition": "bq1iuo0uuzo9",
+ *          "id": "p503h6ephfqv",
+ *          "parentStage": "10kx8cvxs3t0w",
+ *          "sentries": [],
+ *          "stateDates": {
+ *            "enabled": "2017-05-15 17:29:18.0",
+ *            "terminated": null,
+ *            "active": null,
+ *            "available": "2017-05-15 17:29:17.0",
+ *            "completed": null
+ *          },
+ *          "taskParams": [],
+ *          "description": "Lace",
+ *          "name": "Lace",
+ *          "owner": null,
+ *          "state": "ENABLED",
+ *          "case": "1q7nud4e2v1dl",
+ *          "resourceType": "HumanTask"
+ *     }]
  *
  */
 router.get('/:id/humantasks/all', (req, res, next)=>{
@@ -427,9 +557,26 @@ router.get('/:id/humantasks/all', (req, res, next)=>{
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {
- *     TODO AUTOMATED_TASK_OBJ
- *   }
+ *     [{
+ *          "processDefinition": "bq1iuo0uuzo9",
+ *          "id": "p503h6ephfqv",
+ *          "parentStage": "10kx8cvxs3t0w",
+ *          "sentries": [],
+ *          "stateDates": {
+ *            "enabled": "2017-05-15 17:29:18.0",
+ *            "terminated": null,
+ *            "active": null,
+ *            "available": "2017-05-15 17:29:17.0",
+ *            "completed": null
+ *          },
+ *          "taskParams": [],
+ *          "description": "Lace",
+ *          "name": "Lace",
+ *          "owner": null,
+ *          "state": "ENABLED",
+ *          "case": "1q7nud4e2v1dl",
+ *          "resourceType": "AutomatedTask"
+ *     }]
  *
  */
 router.get('/:id/automatedtasks', (req, res, next)=>{
@@ -455,9 +602,26 @@ router.get('/:id/automatedtasks', (req, res, next)=>{
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {
- *     TODO AUTOMATED_TASK_OBJ
- *   }
+ *     [{
+ *          "processDefinition": "bq1iuo0uuzo9",
+ *          "id": "p503h6ephfqv",
+ *          "parentStage": "10kx8cvxs3t0w",
+ *          "sentries": [],
+ *          "stateDates": {
+ *            "enabled": "2017-05-15 17:29:18.0",
+ *            "terminated": null,
+ *            "active": null,
+ *            "available": "2017-05-15 17:29:17.0",
+ *            "completed": null
+ *          },
+ *          "taskParams": [],
+ *          "description": "Lace",
+ *          "name": "Lace",
+ *          "owner": null,
+ *          "state": "ENABLED",
+ *          "case": "1q7nud4e2v1dl",
+ *          "resourceType": "AutomatedTask"
+ *     }]
  *
  */
 router.get('/:id/automatedtasks/all', (req, res, next)=>{

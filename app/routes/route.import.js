@@ -10,6 +10,7 @@ router.get('/', (req, res, next)=>{
       res.status(200).send(case1);
     })
     .catch(err=>{
+      console.log(err);
       res.status(500).send(err)
     });
 });
