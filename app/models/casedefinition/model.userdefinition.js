@@ -6,6 +6,6 @@ import Model from '../model';
 export default class UserDefinition extends Model{
 
   static find() {
-    return http.get('/user/userType');
+    return http.get('/user/userDefinition');
   }
 }
