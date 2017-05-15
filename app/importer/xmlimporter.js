@@ -244,7 +244,7 @@ module.exports = class XMLImporter {
             return Promise.each(attributeDefinitions, ad=>{                            
               let data = this.resolveAttributeType(ad.$.type, ad);
               data.name = ad.$.id;
-              data.description = ad.$.label;
+              data.description = ad.$.description;
               data.multiplicity = ad.$.multiplicity; 
               data.entityDefinition = persistedUserDefinition.id;        
               return AttributeDefinition.create(data)             
@@ -351,7 +351,7 @@ module.exports = class XMLImporter {
               .then(entityDefId => {       
                 let data = this.resolveAttributeType(ad.$.type, ad);
                 data.name = ad.$.id;
-                data.description = ad.$.label;
+                data.description = ad.$.description;
                 data.multiplicity = ad.$.multiplicity; 
                 data.entityDefinition = entityDefId;        
                 return AttributeDefinition.create(data);
@@ -431,7 +431,7 @@ module.exports = class XMLImporter {
             .then(entityDefId=>{          
               return DerivedAttributeDefinition.create({
                 name: ad.$.id,
-                description: ad.$.label,
+                description: ad.$.description,
                 expression: ad.$.expression,
                 entityDefinition: entityDefId
               });
@@ -451,7 +451,7 @@ module.exports = class XMLImporter {
           .then(entityDefinitionId=>{            
             const data = {
               name: cd.$.id,
-              label: cd.$.label,
+              description: cd.$.description,
               ownerPath: cd.$.ownerPath,
               entityDefinition: entityDefinitionId,
               summaryPaths: this.getSummaryDefinitionParam(cd)
@@ -499,7 +499,7 @@ module.exports = class XMLImporter {
           .then(entityDefinitionId=>{
             const data = {
               name: sd.$.id,
-              label: sd.$.id,
+              description: sd.$.id,
               isRepeatable: sd.$.isRepeatable,
               isMandatory: sd.$.isMandetory,
               caseDefinition: caseDefId,
@@ -570,7 +570,7 @@ module.exports = class XMLImporter {
             console.log('here2')
             const data = {
               name: td.$.id,
-              label: td.$.id,          
+              description: td.$.id,          
               ownerPath: td.$.ownerPath,
               isRepeatable: td.$.isRepeatable,
               isMandatory: td.$.isMandetory,
@@ -605,7 +605,7 @@ module.exports = class XMLImporter {
       return Promise.each(automatedTaskDefinitions, td=>{
         const data = {
           name: td.$.id,
-          label: td.$.id,
+          description: td.$.id,
           isRepeatable: td.$.isRepeatable,
           isMandatory: td.$.isMandetory,
           caseDefinition: caseDefId,
