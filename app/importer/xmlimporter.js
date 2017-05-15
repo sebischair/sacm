@@ -499,7 +499,7 @@ module.exports = class XMLImporter {
           .then(entityDefinitionId=>{
             const data = {
               name: sd.$.id,
-              description: sd.$.id,
+              description: sd.$.description,
               isRepeatable: sd.$.isRepeatable,
               isMandatory: sd.$.isMandetory,
               caseDefinition: caseDefId,
@@ -570,7 +570,7 @@ module.exports = class XMLImporter {
             console.log('here2')
             const data = {
               name: td.$.id,
-              description: td.$.id,          
+              description: td.$.description,          
               ownerPath: td.$.ownerPath,
               isRepeatable: td.$.isRepeatable,
               isMandatory: td.$.isMandetory,
@@ -605,7 +605,7 @@ module.exports = class XMLImporter {
       return Promise.each(automatedTaskDefinitions, td=>{
         const data = {
           name: td.$.id,
-          description: td.$.id,
+          description: td.$.description,
           isRepeatable: td.$.isRepeatable,
           isMandatory: td.$.isMandetory,
           caseDefinition: caseDefId,
