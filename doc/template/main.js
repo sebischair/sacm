@@ -196,7 +196,7 @@ require([
         }
         if (oldName !== entry.name) {
           subNav.push({
-            title: entry.title,
+            title: entry.url,
             group: group,
             name: entry.name,
             type: entry.type,
@@ -205,7 +205,7 @@ require([
           });
         } else {
           subNav.push({
-            title: entry.title,
+            title: entry.url,
             group: group,
             hidden: true,
             name: entry.name,
@@ -214,7 +214,7 @@ require([
             label:label
           });
         }
-        oldName = entry.name;
+        oldName = entry.url;
       }
     });
     // Mainmenu entry
