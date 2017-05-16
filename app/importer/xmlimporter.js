@@ -185,7 +185,7 @@ module.exports = class XMLImporter {
         })
         .then(()=>{
           return this.createUsers();
-        })/*
+        })
         .then(()=>{
           return this.createGroups();
         })
