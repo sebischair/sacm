@@ -26,7 +26,8 @@ module.exports = class XMLImporter {
 
     constructor() {
       this.workspaceName = 'connecare2017';
-      this.workspaceId = null;      
+      this.workspaceId = null;     
+      this.userAttributeDefinitionMap = new Map();
       this.userMap = new Map(); //<xmlId, sociocortexId>
       this.groupMap = new Map(); //<xmlId, sociocortexId>
       this.entityDefinitionMap = new Map(); //<xmlId, sociocortexId>
@@ -47,6 +48,15 @@ module.exports = class XMLImporter {
         else
           resolve(this.userMap.get(userXMLId));
       });     
+    }
+
+    getUserAttributeDefinitionIdByXMLId(userAttributeDefinitionXMLId){
+      if(userAttributeDefinitionXMLId == null)
+        console.error('User attribute definition Id can not be null!');
+      else if(!this.userAttributeDefinitionMap.has(userAttributeDefinitionXMLId))
+        console.error('ERROR: User attribute definition ID "'+userAttributeDefinitionXMLId+'" not found');
+      else
+        return this.userAttributeDefinitionMap.get(userAttributeDefinitionXMLId);  
     }
 
     getGroupIdByXMLId(groupXMLId){
@@ -175,7 +185,7 @@ module.exports = class XMLImporter {
         })
         .then(()=>{
           return this.createUsers();
-        })
+        })/*
         .then(()=>{
           return this.createGroups();
         })
@@ -252,6 +262,7 @@ module.exports = class XMLImporter {
               data.entityDefinition = persistedUserDefinition.id;        
               return AttributeDefinition.create(data)             
                 .then(persistedAttributeDefinition =>{
+                  this.userAttributeDefinitionMap.set(ad.$.id, persistedAttributeDefinition.id);
                   return Promise.resolve();
                 })
                 .catch(err=>{
@@ -266,14 +277,23 @@ module.exports = class XMLImporter {
     }
 
     createUsers(){
-      return Promise.each(this.json.User, u=>{
+      return Promise.each(this.json.User, u=>{      
         const data = {
           name: u.$.id,
           email: u.$.email,
+          attributes: []
         }
+        if(u.Attribute != null)
+          for(let a of u.Attribute){
+            data.attributes.push({
+              attributeDefinition: {id: this.getUserAttributeDefinitionIdByXMLId(a.$.attributeDefinitionId)},
+              name: a.$.attributeDefinitionId,
+              values: JSON.parse(a.$.values.replace(/'/g,'"'))
+            });
+          }          
         return User.createAndVerify(data)
           .then(persistedUser =>{
-            this.userMap.set(u.$.id, persistedUser.id);            
+            this.userMap.set(u.$.id, persistedUser.id);     
             return Promise.resolve();
           })
           .catch(err=>{
@@ -281,6 +301,7 @@ module.exports = class XMLImporter {
           })
       });
     }
+
 
     createGroups(){
       return Promise.each(this.json.Group, g=>{
