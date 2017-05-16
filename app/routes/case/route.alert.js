@@ -46,6 +46,7 @@ router.get('/:id', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *   {
+ *    id: "44hrafd34dsc",
  *    case: "7fhr63734sd",
  *    text: "Attention!"
  *   }
@@ -78,8 +79,7 @@ router.post('/:id', (req, res, next)=>{
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {
- *   }
+ *   {}
  *
  */
 router.post('/:id/seen', (req, res, next)=>{

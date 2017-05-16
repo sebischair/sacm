@@ -12,6 +12,7 @@ import message from './case/route.message';
 import process_ from './case/route.process';
 import case1 from './case/route.case';
 import stage from './case/route.stage';
+import task from './case/route.task';
 import humantask from './case/route.humantask';
 import automatedtask from './case/route.automatedtask';
 import importer from './route.import';
@@ -40,16 +41,17 @@ function routes(){
     router.use('/sentrydefinition', sentrydefinition);
     router.use('/sentrydefinitions', sentrydefinition);
 
-    /** Case routes *
+    /** Case routes */
     router.use('/case', case1);
     router.use('/cases', case1);
     router.use('/stage', stage);
     router.use('/stages', stage);
-    router.use('/humantask', stage);
-    router.use('/humantasks', stage);
-    router.use('/automatedtask', stage);
-    router.use('/automatedtasks', stage);
-    */
+    router.use('/task', task);
+    router.use('/tasks', task);
+    router.use('/humantask', humantask);
+    router.use('/humantasks', humantask);
+    router.use('/automatedtask', automatedtask);
+    router.use('/automatedtasks', automatedtask)
     router.use('/alert', alert);
     router.use('/alerts', alert);
     router.use('/message', message);

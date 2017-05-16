@@ -20,9 +20,14 @@ import Process from './../../models/case/model.process'
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {
- *     TODO SENTRY_OBJ
- *   }
+ *     [{
+ *       "completedProcessDefinitions": [
+ *         "t1rcejxgbgx8"
+ *       ],
+ *       "id": "1wsvcl29vax4p",
+ *       "enablesProcessDefinition": "1kudcltcejsy3",
+ *       "resourceType": "SentryDefinition"
+ *     }]
  *
  */
 router.get('/:id/sentrydefinitions', (req, res, next)=>{
@@ -84,9 +89,20 @@ router.get(':id/httphookdefinitions', (req, res, next)=>{
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {
- *     TODO PROCESS_OBJ
- *   }
+ *   [{
+ *     "isRepeatable": "true",
+ *     "newEntityDefinition": null,
+ *     "name": "stageDef_1",
+ *     "sentryDefinitions": [],
+ *     "hookDefinitions": [],
+ *     "id": "1c8579tlziu8t",
+ *     "label": "asdasdasd",
+ *     "resourceType": "StageDefinition",
+ *     "isMandatory": "true",
+ *     "newEntityAttachPath": null,
+ *     "caseDefinition": "1v77wsi7jdky8",
+ *     "parentStageDefinition": null
+ *   }, ... ]
  *
  */
 router.get('/:id/processes', (req, res, next)=>{

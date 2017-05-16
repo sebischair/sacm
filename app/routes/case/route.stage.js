@@ -23,8 +23,24 @@ import AutomatedTask from './../../models/case/model.automatedtask';
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *   {
- *     TODO STAGE_OBJ
- *   }
+ *     "processDefinition": "1kudcltcejsy3",
+ *     "id": "713lc56e3ggb",
+ *     "parentStage": null,
+ *     "sentries": [],
+ *     "stateDates": {
+ *       "enabled": "2017-05-16 12:44:02.0",
+ *       "terminated": null,
+ *       "active": null,
+ *       "available": "2017-05-16 12:44:01.0",
+ *       "completed": null
+ *     },
+ *     "description": "Workplan Definition",
+ *     "name": "WorkplanDefinition",
+ *     "state": "ENABLED",
+ *     "children": [],
+ *     "case": "zgc0k7ou8xuk",
+ *     "resourceType": "Stage"
+ *    }
  *
  */
 router.get('/:id', (req, res, next)=>{
@@ -49,9 +65,25 @@ router.get('/:id', (req, res, next)=>{
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {
- *     TODO STAGE_OBJ
- *   }
+ *   [{
+ *     "processDefinition": "1kudcltcejsy3",
+ *     "id": "713lc56e3ggb",
+ *     "parentStage": null,
+ *     "sentries": [],
+ *     "stateDates": {
+ *       "enabled": "2017-05-16 12:44:02.0",
+ *       "terminated": null,
+ *       "active": null,
+ *       "available": "2017-05-16 12:44:01.0",
+ *       "completed": null
+ *     },
+ *     "description": "Workplan Definition",
+ *     "name": "WorkplanDefinition",
+ *     "state": "ENABLED",
+ *     "children": [],
+ *     "case": "zgc0k7ou8xuk",
+ *     "resourceType": "Stage"
+ *    }]
  *
  */
 router.get('/:id/stages', (req, res, next)=>{
@@ -76,8 +108,7 @@ router.get('/:id/stages', (req, res, next)=>{
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {
- *   }
+ *   {}
  *
  */
 router.post('/:id/complete', (req, res, next)=>{
@@ -103,8 +134,7 @@ router.post('/:id/complete', (req, res, next)=>{
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {
- *   }
+ *   {}
  *
  */
 router.post('/:id/terminate', (req, res, next)=>{

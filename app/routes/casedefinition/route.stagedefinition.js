@@ -32,7 +32,7 @@ import Stage from './../../models/case/model.stage';
  *     "hookDefinitions": [],
  *     "id": "1c8579tlziu8t",
  *     "label": "asdasdasd",
- *     "type": "StageDefinition",
+ *     "resourceType": "StageDefinition",
  *     "isMandatory": "true",
  *     "newEntityAttachPath": null,
  *     "caseDefinition": "1v77wsi7jdky8",

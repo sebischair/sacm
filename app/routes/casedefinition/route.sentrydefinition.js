@@ -15,9 +15,14 @@ import SentryDefinition from './../../models/casedefinition/model.sentrydefiniti
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {
- *     TODO SENTRY_OBJ
- *   }
+ *    {
+ *       "completedProcessDefinitions": [
+ *         "t1rcejxgbgx8"
+ *       ],
+ *       "id": "1wsvcl29vax4p",
+ *       "enablesProcessDefinition": "1kudcltcejsy3",
+ *       "resourceType": "SentryDefinition"
+ *    }
  *
  */
 router.get('/:id', (req, res, next)=>{
@@ -42,18 +47,7 @@ router.get('/:id', (req, res, next)=>{
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {
- *     TODO
- *   }
- *
- * @apiErrorExample {json} Error-Response:
- *     HTTP/1.1 404 Not found
- *    {
- *       "handler": "SentryDefinitionHandler2",
- *       "cause":"EntityNotFoundException",
- *       "message":"Could not find entity '1swihwfirljjhx'"
- *       "statusCode": 404
- *    }
+ *   {}
  */
 router.delete('/:id', (req, res, next)=>{
   SentryDefinition.deleteById(req.params.id)
@@ -84,7 +78,14 @@ router.delete('/:id', (req, res, next)=>{
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {} TODO
+ *    {
+ *       "completedProcessDefinitions": [
+ *         "t1rcejxgbgx8"
+ *       ],
+ *       "id": "1wsvcl29vax4p",
+ *       "enablesProcessDefinition": "1kudcltcejsy3",
+ *       "resourceType": "SentryDefinition"
+ *    }
  *
  */
 router.post('/', (req, res, next)=>{
@@ -124,7 +125,14 @@ router.post('/', (req, res, next)=>{
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {} TODO
+ *    {
+ *       "completedProcessDefinitions": [
+ *         "t1rcejxgbgx8"
+ *       ],
+ *       "id": "1wsvcl29vax4p",
+ *       "enablesProcessDefinition": "1kudcltcejsy3",
+ *       "resourceType": "SentryDefinition"
+ *    }
  *
  */
 router.patch('/', (req, res, next)=>{

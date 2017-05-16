@@ -18,9 +18,12 @@ import Task from './../../models/case/model.task';
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {
- *     TODO TASK_DEF_OBJ
- *   }
+ *   [{
+ *    id: "b9a51pgpkgbi"
+ *    path: "Test.test",
+ *    isReadOnly: true,
+ *    taskDefinition: "qkx51pgpkgbi"
+ *   }]
  *
  */
 router.get('/:id', (req, res, next)=>{

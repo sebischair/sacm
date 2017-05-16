@@ -16,7 +16,10 @@ import TaskParamDefinition from './../../models/casedefinition/model.taskparamde
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *   {
- *     TODO TASK_PARAM_DEF_OBJ
+ *    id: "b9a51pgpkgbi"
+ *    path: "Test.test",
+ *    isReadOnly: true,
+ *    taskDefinition: "qkx51pgpkgbi"
  *   }
  *
  */
@@ -45,6 +48,7 @@ router.get('/:id', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *   {
+ *    id: "b9a51pgpkgbi"
  *    path: "Test.test",
  *    isReadOnly: true,
  *    taskDefinition: "qkx51pgpkgbi"
@@ -83,6 +87,7 @@ router.post('/', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *   {
+ *    id: "b9a51pgpkgbi"
  *    path: "Test.test",
  *    isReadOnly: true,
  *    taskDefinition: "qkx51pgpkgbi"
