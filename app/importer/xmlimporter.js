@@ -228,7 +228,6 @@ module.exports = class XMLImporter {
        return UserDefinition.find()
         .then(userDefinition=>{
           if(userDefinition.attributeDefinitions == null) {
-            console.log('hiererer');
             return Promise.reject();
           }
           return Promise.each(userDefinition.attributeDefinitions, ad=>{
@@ -272,9 +271,8 @@ module.exports = class XMLImporter {
           name: u.$.id,
           email: u.$.email,
         }
-        return User.create(data)
+        return User.createAndVerify(data)
           .then(persistedUser =>{
-            console.log(persistedUser)
             this.userMap.set(u.$.id, persistedUser.id);            
             return Promise.resolve();
           })
