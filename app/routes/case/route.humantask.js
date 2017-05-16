@@ -72,7 +72,7 @@ router.post('/:id/draft', (req, res, next)=>{
 
 
 /**
- * @api {post} humantask/:id/complete Complete HumanTask
+ * @api {post} /humantask/:id/complete Complete HumanTask
  * @apiName CompleteHumanTask
  * @apiGroup HumanTask
  *
@@ -99,7 +99,7 @@ router.post('/:id/complete', (req, res, next)=>{
 
 
 /**
- * @api {post} humantask/:id/terminate Terminate HumanTask
+ * @api {post} /humantask/:id/terminate Terminate HumanTask
  * @apiName TerminateHumanTask
  * @apiGroup HumanTask
  *

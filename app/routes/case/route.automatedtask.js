@@ -4,7 +4,7 @@ var router = express.Router();
 import AutomatedTask from './../../models/case/model.automatedtask';
 
 /**
- * @api {get} automatedtask/:id Get AutomatedTask
+ * @api {get} /automatedtask/:id Get AutomatedTask
  * @apiName GetAutomatedTask
  * @apiGroup AutomatedTask
  *
@@ -48,7 +48,7 @@ router.get('/:id', (req, res, next)=>{
 
 /**
  * TODO CHECK IF ROUTE EXISTS
- * @api {delete} automatedtask/:id Delete AutomatedTask
+ * @api {delete} /automatedtask/:id Delete AutomatedTask
  * @apiName DeleteAutomatedTask
  * @apiGroup AutomatedTask
  *
