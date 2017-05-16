@@ -586,11 +586,9 @@ module.exports = class XMLImporter {
       if(humanTaskDefinitions == null)
         return Promise.resolve();
       return Promise.each(humanTaskDefinitions, td=>{
-        console.log('here');
         let humanTaskDefinitionId = null;
         return this.getEntityDefinitionIdByXMLId(td.$.entityDefinitionId)
           .then(entityDefinitionId=>{
-            console.log('here2')
             const data = {
               name: td.$.id,
               description: td.$.description,          
@@ -625,17 +623,22 @@ module.exports = class XMLImporter {
     createAutomatedTaskDefinitons(caseDefId, parentStageDefId, automatedTaskDefinitions){
       if(automatedTaskDefinitions == null)
         return Promise.resolve();
-      return Promise.each(automatedTaskDefinitions, td=>{
-        const data = {
-          name: td.$.id,
-          description: td.$.description,
-          isRepeatable: td.$.isRepeatable,
-          isMandatory: td.$.isMandetory,
-          caseDefinition: caseDefId,
-          parentStageDefinition: parentStageDefId
-        }          
+      return Promise.each(automatedTaskDefinitions, td=>{        
         let automatedTaskDefinitionId = null;
-        return AutomatedTaskDefinition.create(data)
+        return this.getEntityDefinitionIdByXMLId(td.$.entityDefinitionId)
+          .then(entityDefinitionId=>{
+            const data = {
+              name: td.$.id,
+              description: td.$.description,
+              isRepeatable: td.$.isRepeatable,
+              isMandatory: td.$.isMandetory,
+              caseDefinition: caseDefId,
+              parentStageDefinition: parentStageDefId,           
+              newEntityDefinition: entityDefinitionId,
+              newEntityAttachPath: td.$.entityAttachPath
+            }     
+            return AutomatedTaskDefinition.create(data)
+          })
           .then(persistedAutomatedTaskDef=>{
             this.automatedTaskDefinitionMap.set(td.$.id, persistedAutomatedTaskDef.id);
             automatedTaskDefinitionId = persistedAutomatedTaskDef.id;
