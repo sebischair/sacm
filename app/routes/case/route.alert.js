@@ -18,7 +18,9 @@ import Alert from './../../models/case/model.alert';
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *   {
- *     TODO ALERT_OBJ
+ *    id: "44hrafd34dsc",
+ *    case: "7fhr63734sd",
+ *    text: "Attention!"
  *   }
  *
  */

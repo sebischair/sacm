@@ -6,11 +6,12 @@ import stagedefinition from './casedefinition/route.stagedefinition';
 import taskdefinition from './casedefinition/route.taskdefinition';
 import humantaskdefinition from './casedefinition/route.humantaskdefinition';
 import automatedtaskdefinition from './casedefinition/route.automatedtaskdefinition';
+import taskparamdefinition from './casedefinition/route.taskparamdefinition';
 import sentrydefinition from './casedefinition/route.sentrydefinition';
 import alert from './case/route.alert';
 import message from './case/route.message';
 import process_ from './case/route.process';
-import case1 from './case/route.case';
+import case_ from './case/route.case';
 import stage from './case/route.stage';
 import task from './case/route.task';
 import humantask from './case/route.humantask';
@@ -38,12 +39,14 @@ function routes(){
     router.use('/humantaskdefinitions', humantaskdefinition);
     router.use('/automatedtaskdefinition', automatedtaskdefinition);
     router.use('/automatedtaskdefinitions', automatedtaskdefinition);
+    router.use('/taskparamdefinition', taskparamdefinition);
+    router.use('/taskparamdefinitions', taskparamdefinition);
     router.use('/sentrydefinition', sentrydefinition);
     router.use('/sentrydefinitions', sentrydefinition);
 
     /** Case routes */
-    router.use('/case', case1);
-    router.use('/cases', case1);
+    router.use('/case', case_);
+    router.use('/cases', case_);
     router.use('/stage', stage);
     router.use('/stages', stage);
     router.use('/task', task);

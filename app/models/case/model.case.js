@@ -8,12 +8,12 @@ export default class Case extends Model{
   static create(data){
     return http.post('/cases/', data);
   }
- 
-  static findbyId(caseId){
+
+  static findById(caseId){
     return http.get('/case/'+caseId);
   }
 
-  static findbyWorkspaceId(workspaceId){
+  static findByWorkspaceId(workspaceId){
     return http.get('/workspace/'+workspaceId+'/cases');
   }
 
@@ -48,7 +48,7 @@ export default class Case extends Model{
   static removeReader(caseId, principalId) {
     return http.del('/case/'+caseId+'/reader/'+principalId);
   }
-   
+
   static addWriter(caseId, principalId) {
     return http.post('/case/'+caseId+'/writer/'+principalId);
   }
