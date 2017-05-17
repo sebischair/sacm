@@ -25,8 +25,7 @@ const fs = Promise.promisifyAll(require("fs"));
 module.exports = class XMLImporter {
 
     constructor() {
-      this.workspaceName = 'connecare2017';
-      this.workspaceId = null;     
+      this.workspaceMap = new Map();
       this.userAttributeDefinitionMap = new Map();
       this.userMap = new Map(); //<xmlId, sociocortexId>
       this.groupMap = new Map(); //<xmlId, sociocortexId>
@@ -37,6 +36,15 @@ module.exports = class XMLImporter {
       this.stageDefinitionMap = new Map(); //<xmlId, sociocortexId>
       this.humanTaskDefinitionMap = new Map(); //<xmlId, sociocortexId>
       this.automatedTaskDefinitionMap = new Map(); //<xmlId, sociocortexId>
+    }
+
+    getWorkspaceIdByXMLId(workspaceXMLId){
+      if(workspaceXMLId == null)
+        console.error('Workspace Id can not be null!');
+      else if(!this.workspaceMap.has(workspaceXMLId))
+        console.error('ERROR: Workspace ID "'+workspaceXMLId+'" not found');
+      else
+        return this.workspaceMap.get(workspaceXMLId);  
     }
 
     getUserIdByXMLId(userXMLId){
@@ -193,33 +201,10 @@ module.exports = class XMLImporter {
           return this.createMemberships();
         })
         .then(()=>{
-          return Workspace.create(this.workspaceName);
-        })
-        .then(workspace => {
-          this.workspaceId = workspace.id;          
-          return this.createEntityDefinitions();
-        })
-        .then(() => {
-          return this.createAttributeDefinitions();
-        })
-        .then(() => {
-          return this.createDerivedAttributeDefinitions();
-        })
-        .then(() => {
-          return this.createCaseDefinitions();
-        })
-        .then(() => {
-          return this.createStageDefinitions();
-        })
-        .then(() => {
-          return this.createTaskDefinitions();
-        })
-        .then(() => {
-          return this.createSentryDefinitions();
-        })
-        .then(() => {
-          return this.createCase();
-        })/*
+          return this.createWorkspaces();
+        });
+               
+      /*
         .then(() => {
           return this.completeTask();
         });*/
@@ -354,9 +339,46 @@ module.exports = class XMLImporter {
       });
     }
 
-    createEntityDefinitions() {
-      return Promise.each(this.json.EntityDefinition, ed=>{
-        return EntityDefinition.create(this.workspaceId, ed.$.id)
+    createWorkspaces(){
+      if(this.json.Workspace == null)
+        return Promise.resolve();
+      return Promise.each(this.json.Workspace, w=>{
+        return Workspace.create(w.$.id)
+          .then(persistedWorkspace=>{
+            this.workspaceMap.set(w.$.id, persistedWorkspace.id);
+            return this.createWorkspaceElements(w);
+          })
+      })
+    }
+
+    createWorkspaceElements(Workspace){        
+      return this.createEntityDefinitions(Workspace)
+        .then(() => {
+          return this.createAttributeDefinitions(Workspace);
+        })
+        .then(() => {
+          return this.createDerivedAttributeDefinitions(Workspace);
+        })
+        .then(() => {
+          return this.createCaseDefinitions(Workspace);
+        })
+        .then(() => {
+          return this.createStageDefinitions(Workspace);
+        })
+        .then(() => {
+          return this.createTaskDefinitions(Workspace);
+        })
+        .then(() => {
+          return this.createSentryDefinitions(Workspace);
+        })
+        .then(() => {
+          return this.createCase(Workspace);
+        });
+    }
+
+    createEntityDefinitions(Workspace) {
+      return Promise.each(Workspace.EntityDefinition, ed=>{
+        return EntityDefinition.create(this.getWorkspaceIdByXMLId(Workspace.$.id), ed.$.id)
           .then(persistedEntityDefinition =>{
             this.entityDefinitionMap.set(ed.$.id, persistedEntityDefinition.id);
             return Promise.resolve();
@@ -364,8 +386,8 @@ module.exports = class XMLImporter {
       });
     }
 
-    createAttributeDefinitions() {
-      return Promise.each(this.json.EntityDefinition, ed=>{
+    createAttributeDefinitions(Workspace) {
+      return Promise.each(Workspace.EntityDefinition, ed=>{
         if(ed.AttributeDefinition == null)  
             return Promise.resolve();
         return Promise.each(ed.AttributeDefinition, ad=>{
@@ -445,8 +467,8 @@ module.exports = class XMLImporter {
       return attrDef;    
     }
 
-    createDerivedAttributeDefinitions() {
-      return Promise.each(this.json.EntityDefinition, ed=>{  
+    createDerivedAttributeDefinitions(Workspace) {
+      return Promise.each(Workspace.EntityDefinition, ed=>{  
         if(ed.DerivedAttributeDefinition == null)  
             return Promise.resolve();
         return Promise.each(ed.DerivedAttributeDefinition, ad=>{                 
@@ -468,8 +490,8 @@ module.exports = class XMLImporter {
     }
     
 
-    createCaseDefinitions() {
-      return Promise.each(this.json.CaseDefinition, cd=>{
+    createCaseDefinitions(Workspace) {
+      return Promise.each(Workspace.CaseDefinition, cd=>{
         return this.getEntityDefinitionIdByXMLId(cd.$.entityDefinitionId)
           .then(entityDefinitionId=>{            
             const data = {
@@ -504,8 +526,8 @@ module.exports = class XMLImporter {
       return params;
     }
 
-    createStageDefinitions() {
-      return Promise.each(this.json.CaseDefinition, cd=>{
+    createStageDefinitions(Workspace) {
+      return Promise.each(Workspace.CaseDefinition, cd=>{
         return this.getCaseDefinitionIdByXMLId(cd.$.id)
           .then(caseDefId=>{
             return this.createStageDefinitionRecursive(caseDefId, null, cd.StageDefinition);
@@ -546,8 +568,8 @@ module.exports = class XMLImporter {
       });
     }
 
-    createTaskDefinitions(){
-      return Promise.each(this.json.CaseDefinition, cd=>{
+    createTaskDefinitions(Workspace){
+      return Promise.each(Workspace.CaseDefinition, cd=>{
         let caseDefId = null;
         return this.getCaseDefinitionIdByXMLId(cd.$.id)
           .then(caseDefeinitionId=>{
@@ -693,8 +715,8 @@ module.exports = class XMLImporter {
 
     }
 
-    createSentryDefinitions(){
-      return Promise.each(this.json.CaseDefinition, cd=>{
+    createSentryDefinitions(Workspace){
+      return Promise.each(Workspace.CaseDefinition, cd=>{
         return this.createSentryDefinitionsRecursive(cd.StageDefinition)
           .then(()=>{
             return this.createSentryDefinitionOfProcesses(cd.StageDefinition);
