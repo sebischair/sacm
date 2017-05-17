@@ -400,6 +400,8 @@ module.exports = class XMLImporter {
     }
 
     createAttributeDefinitions(Workspace) {
+      if(Workspace.EntityDefinition == null)
+        return Promise.resolve();
       return Promise.each(Workspace.EntityDefinition, ed=>{
         if(ed.AttributeDefinition == null)  
             return Promise.resolve();
@@ -504,6 +506,8 @@ module.exports = class XMLImporter {
     
 
     createCaseDefinitions(Workspace) {
+      if(Workspace.CaseDefinition == null)
+        return Promise.resolve();
       return Promise.each(Workspace.CaseDefinition, cd=>{
         return this.getEntityDefinitionIdByXMLId(cd.$.entityDefinitionId)
           .then(entityDefinitionId=>{            
@@ -540,6 +544,8 @@ module.exports = class XMLImporter {
     }
 
     createStageDefinitions(Workspace) {
+      if(Workspace.CaseDefinition == null)
+        return Promise.resolve();
       return Promise.each(Workspace.CaseDefinition, cd=>{
         return this.getCaseDefinitionIdByXMLId(cd.$.id)
           .then(caseDefId=>{
@@ -582,6 +588,8 @@ module.exports = class XMLImporter {
     }
 
     createTaskDefinitions(Workspace){
+      if(Workspace.CaseDefinition == null)
+        return Promise.resolve();
       return Promise.each(Workspace.CaseDefinition, cd=>{
         let caseDefId = null;
         return this.getCaseDefinitionIdByXMLId(cd.$.id)
@@ -729,6 +737,8 @@ module.exports = class XMLImporter {
     }
 
     createSentryDefinitions(Workspace){
+      if(Workspace.CaseDefinition == null)
+        return Promise.resolve();
       return Promise.each(Workspace.CaseDefinition, cd=>{
         return this.createSentryDefinitionsRecursive(cd.StageDefinition)
           .then(()=>{
