@@ -28,7 +28,7 @@ module.exports = class XMLImporter {
       this.workspaceMap = new Map();
       this.userAttributeDefinitionMap = new Map();
       this.userMap = new Map(); //<xmlId, sociocortexId>
-      this.groupMap = new Map(); //<xmlId, sociocortexId>
+      this.groupMap = new Map(); //<xmlId, sociocortexId>      
       this.entityDefinitionMap = new Map(); //<xmlId, sociocortexId>
       this.attributeDefinitionMap = new Map(); //<xmlEntityId+xmlAttrId, sociocortexId>
       this.derivedAttributeDefinitionMap = new Map(); //<entityName.derAttrName, sociocortexId>
@@ -177,6 +177,9 @@ module.exports = class XMLImporter {
         })
         .then(json=>{
           this.json = json.SACMDefinition;
+          return this.initializeMaps();
+        })
+        .then(()=>{
           return Workspace.deleteAll();
         })
         .then(()=>{
@@ -219,6 +222,16 @@ module.exports = class XMLImporter {
         else
           resolve(false)
       });
+    }
+
+    initializeMaps(){      
+      this.groupMap.set('Allusers', 'allusers'); //All registered users 
+      this.groupMap.set('Everybody', 'everybody'); //Everybody
+      return User.me()
+        .then(me=>{
+          this.userMap.set('Me', me.id);
+          return Promise.resolve();
+        })
     }
 
     deleteUserDefinitionAttributeDefinitions(){
@@ -351,7 +364,7 @@ module.exports = class XMLImporter {
           permissions:{
             readers: [],
             writers: [],
-            administrators: ["allusers"]
+            administrators: []
           }
         }
         if(w.Reader != null)
@@ -360,9 +373,9 @@ module.exports = class XMLImporter {
         if(w.Writer != null)
           for(let r of w.Writer)
             data.permissions.writers.push(this.getPrincipalIdByXMLId(r.$.principalId));
-        //if(w.Administrator != null)
-        //  for(let a of w.Administrator)
-        //    data.permissions.administrators.push(this.getPrincipalIdByXMLId(a.$.principalId));
+        if(w.Administrator != null)
+          for(let a of w.Administrator)
+            data.permissions.administrators.push(this.getPrincipalIdByXMLId(a.$.principalId));
         //if(w.$.staticId != null)
         //  data.id = w.$.staticId;
         return Workspace.create(data)

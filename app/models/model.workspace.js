@@ -6,24 +6,6 @@ import Model from './model';
 export default class Workspace extends Model{
 
   static create(data){
-    console.log('CREATE WORKSPACE');
-    const dataaa = {
-        name: 'workspaceName', 
-      
-        permissions: {
-            readers: [{
-                name: "Everybody",
-                id: "everybody"
-            }],
-            writers: [{
-                name: "All registered users",
-                id: "allusers"
-            }],
-            //contributors: [],
-            //administrators: []
-        }
-        
-    };
     return http.post('/workspaces', data);
   }
 
@@ -37,24 +19,6 @@ export default class Workspace extends Model{
     }else{
        return p;
     }
-  }
-
-  static deleteAndCreateByName(workspaceName){
-    return Workspace.findAll()
-      .then(workspaces=>{
-        let wId = null;
-        workspaces.forEach(w=>{
-          if(w.name == workspaceName)
-            wId = w.id;
-        });
-        if(wId == null)
-          return Promise.resolve();
-        else
-          return Workspace.deleteById(wId);
-      })
-      .then(()=>{
-        return Workspace.create(wokspaceName);
-      });
   }
 
   static deleteAll(){

@@ -54,5 +54,9 @@ export default class User extends Model{
       });    
   }
 
+  static me() {
+    return http.get('/users/me');
+  }
+
 
 }
