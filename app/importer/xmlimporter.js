@@ -313,16 +313,9 @@ module.exports = class XMLImporter {
           console.error('No administrator defined for group!');
           return Promise.reject('No administrator defined for group!');
         }
-        return Promise.each(g.Administrator, a=>{
-          return this.getUserIdByXMLId(a.$.principalId)
-            .then(userId=>{
-              data.administrators.push(userId);
-              return Promise.resolve();
-            })
-            .catch(err=>{
-              console.error(err);
-              return Promise.reject(err);
-            });        
+        return Promise.each(g.Administrator, a=>{  
+            data.administrators.push(this.getPrincipalIdByXMLId(a.$.principalId));
+            return Promise.resolve();      
         })
         .then(()=>{
           return Group.create(data)
