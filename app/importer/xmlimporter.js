@@ -346,8 +346,22 @@ module.exports = class XMLImporter {
         return Workspace.create(w.$.id)
           .then(persistedWorkspace=>{
             this.workspaceMap.set(w.$.id, persistedWorkspace.id);
+
+            /** clean all maps related to workspace elements */
+            this.entityDefinitionMap = new Map(); 
+            this.attributeDefinitionMap = new Map(); 
+            this.derivedAttributeDefinitionMap = new Map(); 
+            this.caseDefinitionMap = new Map(); 
+            this.stageDefinitionMap = new Map(); 
+            this.humanTaskDefinitionMap = new Map(); 
+            this.automatedTaskDefinitionMap = new Map(); 
+            
             return this.createWorkspaceElements(w);
-          })
+          });
+      })
+      .catch(err=>{
+        console.log(err);
+        return Promise.reject(err);
       })
     }
 
