@@ -202,8 +202,10 @@ module.exports = class XMLImporter {
         })
         .then(()=>{
           return this.createWorkspaces();
+        })     
+        .then(() => {
+          return this.createCase();
         });
-               
       /*
         .then(() => {
           return this.completeTask();
@@ -355,7 +357,7 @@ module.exports = class XMLImporter {
             this.stageDefinitionMap = new Map(); 
             this.humanTaskDefinitionMap = new Map(); 
             this.automatedTaskDefinitionMap = new Map(); 
-            
+
             return this.createWorkspaceElements(w);
           });
       })
@@ -384,9 +386,6 @@ module.exports = class XMLImporter {
         })
         .then(() => {
           return this.createSentryDefinitions(Workspace);
-        })
-        .then(() => {
-          return this.createCase(Workspace);
         });
     }
 
