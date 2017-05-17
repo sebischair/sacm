@@ -345,7 +345,25 @@ module.exports = class XMLImporter {
       if(this.json.Workspace == null)
         return Promise.resolve();
       return Promise.each(this.json.Workspace, w=>{
-        return Workspace.create(w.$.id)
+        const data = {
+          name: w.$.id,
+          description: w.$.description,
+          permissions:{
+            readers: [],
+            writers: [],
+            administrators: ["allusers"]
+          }
+        }
+        if(w.Reader != null)
+          for(let r of w.Reader)
+            data.permissions.readers.push(this.getPrincipalIdByXMLId(r.$.principalId));
+        if(w.Writer != null)
+          for(let r of w.Writer)
+            data.permissions.writers.push(this.getPrincipalIdByXMLId(r.$.principalId));
+        //if(w.Administrator != null)
+        //  for(let a of w.Administrator)
+        //    data.permissions.administrators.push(this.getPrincipalIdByXMLId(a.$.principalId));
+        return Workspace.create(data)
           .then(persistedWorkspace=>{
             this.workspaceMap.set(w.$.id, persistedWorkspace.id);
 

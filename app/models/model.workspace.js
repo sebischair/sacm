@@ -5,10 +5,10 @@ import Model from './model';
 
 export default class Workspace extends Model{
 
-  static create(workspaceName){
+  static create(data){
     console.log('CREATE WORKSPACE');
-    const data = {
-        name: workspaceName, 
+    const dataaa = {
+        name: 'workspaceName', 
       
         permissions: {
             readers: [{
