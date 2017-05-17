@@ -26,7 +26,8 @@ module.exports = class XMLImporter {
 
     constructor() {
       this.workspaceName = 'connecare2017';
-      this.workspaceId = null;      
+      this.workspaceId = null;     
+      this.userAttributeDefinitionMap = new Map();
       this.userMap = new Map(); //<xmlId, sociocortexId>
       this.groupMap = new Map(); //<xmlId, sociocortexId>
       this.entityDefinitionMap = new Map(); //<xmlId, sociocortexId>
@@ -47,6 +48,15 @@ module.exports = class XMLImporter {
         else
           resolve(this.userMap.get(userXMLId));
       });     
+    }
+
+    getUserAttributeDefinitionIdByXMLId(userAttributeDefinitionXMLId){
+      if(userAttributeDefinitionXMLId == null)
+        console.error('User attribute definition Id can not be null!');
+      else if(!this.userAttributeDefinitionMap.has(userAttributeDefinitionXMLId))
+        console.error('ERROR: User attribute definition ID "'+userAttributeDefinitionXMLId+'" not found');
+      else
+        return this.userAttributeDefinitionMap.get(userAttributeDefinitionXMLId);  
     }
 
     getGroupIdByXMLId(groupXMLId){
@@ -228,7 +238,6 @@ module.exports = class XMLImporter {
        return UserDefinition.find()
         .then(userDefinition=>{
           if(userDefinition.attributeDefinitions == null) {
-            console.log('hiererer');
             return Promise.reject();
           }
           return Promise.each(userDefinition.attributeDefinitions, ad=>{
@@ -253,6 +262,7 @@ module.exports = class XMLImporter {
               data.entityDefinition = persistedUserDefinition.id;        
               return AttributeDefinition.create(data)             
                 .then(persistedAttributeDefinition =>{
+                  this.userAttributeDefinitionMap.set(ad.$.id, persistedAttributeDefinition.id);
                   return Promise.resolve();
                 })
                 .catch(err=>{
@@ -267,15 +277,23 @@ module.exports = class XMLImporter {
     }
 
     createUsers(){
-      return Promise.each(this.json.User, u=>{
+      return Promise.each(this.json.User, u=>{      
         const data = {
           name: u.$.id,
           email: u.$.email,
+          attributes: []
         }
-        return User.create(data)
+        if(u.Attribute != null)
+          for(let a of u.Attribute){
+            data.attributes.push({
+              attributeDefinition: {id: this.getUserAttributeDefinitionIdByXMLId(a.$.attributeDefinitionId)},
+              name: a.$.attributeDefinitionId,
+              values: JSON.parse(a.$.values.replace(/'/g,'"'))
+            });
+          }          
+        return User.createAndVerify(data)
           .then(persistedUser =>{
-            console.log(persistedUser)
-            this.userMap.set(u.$.id, persistedUser.id);            
+            this.userMap.set(u.$.id, persistedUser.id);     
             return Promise.resolve();
           })
           .catch(err=>{
@@ -283,6 +301,7 @@ module.exports = class XMLImporter {
           })
       });
     }
+
 
     createGroups(){
       return Promise.each(this.json.Group, g=>{
@@ -567,11 +586,9 @@ module.exports = class XMLImporter {
       if(humanTaskDefinitions == null)
         return Promise.resolve();
       return Promise.each(humanTaskDefinitions, td=>{
-        console.log('here');
         let humanTaskDefinitionId = null;
         return this.getEntityDefinitionIdByXMLId(td.$.entityDefinitionId)
           .then(entityDefinitionId=>{
-            console.log('here2')
             const data = {
               name: td.$.id,
               description: td.$.description,          
@@ -606,17 +623,22 @@ module.exports = class XMLImporter {
     createAutomatedTaskDefinitons(caseDefId, parentStageDefId, automatedTaskDefinitions){
       if(automatedTaskDefinitions == null)
         return Promise.resolve();
-      return Promise.each(automatedTaskDefinitions, td=>{
-        const data = {
-          name: td.$.id,
-          description: td.$.description,
-          isRepeatable: td.$.isRepeatable,
-          isMandatory: td.$.isMandetory,
-          caseDefinition: caseDefId,
-          parentStageDefinition: parentStageDefId
-        }          
+      return Promise.each(automatedTaskDefinitions, td=>{        
         let automatedTaskDefinitionId = null;
-        return AutomatedTaskDefinition.create(data)
+        return this.getEntityDefinitionIdByXMLId(td.$.entityDefinitionId)
+          .then(entityDefinitionId=>{
+            const data = {
+              name: td.$.id,
+              description: td.$.description,
+              isRepeatable: td.$.isRepeatable,
+              isMandatory: td.$.isMandetory,
+              caseDefinition: caseDefId,
+              parentStageDefinition: parentStageDefId,           
+              newEntityDefinition: entityDefinitionId,
+              newEntityAttachPath: td.$.entityAttachPath
+            }     
+            return AutomatedTaskDefinition.create(data)
+          })
           .then(persistedAutomatedTaskDef=>{
             this.automatedTaskDefinitionMap.set(td.$.id, persistedAutomatedTaskDef.id);
             automatedTaskDefinitionId = persistedAutomatedTaskDef.id;

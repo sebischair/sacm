@@ -7,8 +7,13 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
 <SACMDefinition>
     
     <UserDefinition>
-        <AttributeDefinition id="peronalNr" type="string" description="Personal Nummer"/>
-        <AttributeDefinition id="bdate" type="date" description="Birthday"/>
+        <AttributeDefinition id="Firstname" type="string" description="Firstname"/>
+        <AttributeDefinition id="Lastname" type="string" description="Lastname"/>
+        <AttributeDefinition id="Language" type="string" description="Language"/>
+        <AttributeDefinition id="Birthdate" type="date" description="Birthdate"/>
+        <AttributeDefinition id="Phone" type="string" description="Phone"/>
+        <AttributeDefinition id="Mobile" type="string" description="Mobile"/>
+        <AttributeDefinition id="PatientNr" type="date" description="Patient Number"/>
     </UserDefinition>
     
     <Group id="Barcelona-Hospital" description="All users of the hospital in Barcelona">
@@ -45,22 +50,65 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
     <!--Usernames from https://uinames.com/
         https://uinames.com/api/?region=United%20States&amount=25&maxlen=25 -->
     <User id="JohnSmith" email="john.smith@connecare.eu">
-        <Attribute attributeDefinitionId="" value=""/> 
+        <Attribute attributeDefinitionId="Firstname" values="['John']"/> 
+        <Attribute attributeDefinitionId="Lastname" values="['Smith']"/> 
     </User>
-    <User id="RuthGibson" email="ruth.gibson@connecare.eu"/>
-    <User id="AngelaTran" email="angela.tran@connecare.eu"/>
-    <User id="CherylWillis" email="cheryl.willis@connecare.eu"/>
-    <User id="VincentAdams" email="vincent.adams@connecare.eu"/>
-    <User id="ChristinaBennett" email="christina.bennett@connecare.eu"/>
-    <User id="JaneWebb" email="jane.webb@connecare.eu"/>
-    <User id="KennethJones" email="kenneth.jones@connecare.eu"/>
-    <User id="BrandonWilson" email="brandon.wilson@connecare.eu"/>
-    <User id="PatriciaWalsh" email="patricia.walsh@connecare.eu"/>
-    <User id="PhilipRice" email="philip.rice@connecare.eu"/>
-    <User id="CraigEllis" email="craig.ellis@connecare.eu"/>
-    <User id="PhilipBarnes" email="philip.barnes@connecare.eu"/>
-    <User id="LarryCarter" email="larry.carter@connecare.eu"/>
-    <User id="KeithVasquez" email="keith.vasquez@connecare.eu"/>
+    <User id="RuthGibson" email="ruth.gibson@connecare.eu">
+        <Attribute attributeDefinitionId="Firstname" values="['Ruth']"/> 
+        <Attribute attributeDefinitionId="Lastname" values="['Gibson']"/> 
+    </User>
+    <User id="AngelaTran" email="angela.tran@connecare.eu">
+        <Attribute attributeDefinitionId="Firstname" values="['Angela']"/> 
+        <Attribute attributeDefinitionId="Lastname" values="['Tran']"/> 
+    </User>
+    <User id="CherylWillis" email="cheryl.willis@connecare.eu">
+        <Attribute attributeDefinitionId="Firstname" values="['Cheryl']"/> 
+        <Attribute attributeDefinitionId="Lastname" values="['Willis']"/> 
+    </User>
+    <User id="VincentAdams" email="vincent.adams@connecare.eu">
+        <Attribute attributeDefinitionId="Firstname" values="['Vincent']"/> 
+        <Attribute attributeDefinitionId="Lastname" values="['Adams']"/> 
+    </User>
+    <User id="ChristinaBennett" email="christina.bennett@connecare.eu">
+        <Attribute attributeDefinitionId="Firstname" values="['Christina']"/> 
+        <Attribute attributeDefinitionId="Lastname" values="['Bennett']"/> 
+    </User>                 
+    <User id="JaneWebb" email="jane.webb@connecare.eu">
+        <Attribute attributeDefinitionId="Firstname" values="['Jane']"/> 
+        <Attribute attributeDefinitionId="Lastname" values="['Webb']"/> 
+    </User>       
+    <User id="KennethJones" email="kenneth.jones@connecare.eu">
+        <Attribute attributeDefinitionId="Firstname" values="['Kenneth']"/> 
+        <Attribute attributeDefinitionId="Lastname" values="['Jones']"/> 
+    </User>       
+    <User id="BrandonWilson" email="brandon.wilson@connecare.eu">
+        <Attribute attributeDefinitionId="Firstname" values="['Brandon']"/> 
+        <Attribute attributeDefinitionId="Lastname" values="['Wilson']"/> 
+    </User>       
+    <User id="PatriciaWalsh" email="patricia.walsh@connecare.eu">
+        <Attribute attributeDefinitionId="Firstname" values="['Patricia']"/> 
+        <Attribute attributeDefinitionId="Lastname" values="['Walsh']"/> 
+    </User>       
+    <User id="PhilipRice" email="philip.rice@connecare.eu">
+        <Attribute attributeDefinitionId="Firstname" values="['Philip']"/> 
+        <Attribute attributeDefinitionId="Lastname" values="['Rice']"/> 
+    </User>       
+    <User id="CraigEllis" email="craig.ellis@connecare.eu">
+        <Attribute attributeDefinitionId="Firstname" values="['Craig']"/> 
+        <Attribute attributeDefinitionId="Lastname" values="['Ellis']"/> 
+    </User>       
+    <User id="PhilipBarnes" email="philip.barnes@connecare.eu">
+        <Attribute attributeDefinitionId="Firstname" values="['Philip']"/> 
+        <Attribute attributeDefinitionId="Lastname" values="['Barnes']"/> 
+    </User>       
+    <User id="LarryCarter" email="larry.carter@connecare.eu">
+        <Attribute attributeDefinitionId="Firstname" values="['Larry']"/> 
+        <Attribute attributeDefinitionId="Lastname" values="['Carter']"/> 
+    </User>       
+    <User id="KeithVasquez" email="keith.vasquez@connecare.eu">
+        <Attribute attributeDefinitionId="Firstname" values="['Keith']"/> 
+        <Attribute attributeDefinitionId="Lastname" values="['Vasquez']"/> 
+    </User>       
 
     <!-- Case Data Defintion -->   
     <EntityDefinition id="CaseData" description="">
@@ -139,7 +187,7 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
             <EnumerationOption value="0" description="No"/>
             <EnumerationOption value="6" description="Yes"/>
         </AttributeDefinition> 
-        <DerivedAttributeDefinition id="lace17" expression="number(lace3,0)+number(lace4,0)+number(lace5,0)+number(lace6,0)+number(lace7,0)+number(lace8,0)+number(lace9)+number(lace10,0)+number(lace11,0)+number(lace12,0)+number(lace13,0)+number(lace14,0)+number(lace15,0)+number(lace16,0)" description="Comorbidities"/>
+        <DerivedAttributeDefinition id="lace17" expression="number(lace3,0)+number(lace4,0)+number(lace5,0)+number(lace6,0)+number(lace7,0)+number(lace8,0)+number(lace9,0)+number(lace10,0)+number(lace11,0)+number(lace12,0)+number(lace13,0)+number(lace14,0)+number(lace15,0)+number(lace16,0)" description="Comorbidities"/>
         <AttributeDefinition id="lace18" type="enumeration" multiplicity="maximalOne" description="Emergency department visits (six months prior to admission)">
             <EnumerationOption value="0" description="0 visits"/>
             <EnumerationOption value="1" description="1 visit"/>
@@ -151,7 +199,7 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
     </EntityDefinition>
 
     <EntityDefinition id="Barthel" description="Barthel">
-       <AttributeDefinition id="barthel1" type="enumeration" multiplicity="maximalOne" description="FEEDING">
+    <AttributeDefinition id="barthel1" type="enumeration" multiplicity="maximalOne" description="FEEDING">
             <EnumerationOption value="0" description="unable"/>
             <EnumerationOption value="5" description="needs help cutting, spreading butter, etc., or requires modified diet"/>
             <EnumerationOption value="10" description="independent"/>
@@ -205,55 +253,59 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
     </EntityDefinition>
 
     <EntityDefinition id="PhysicalActivityPrescription" description="Physical Activity Prescription">
-       <AttributeDefinition id="phactp1" type="date" multiplicity="maximalOne" description="Start date"/>
-       <AttributeDefinition id="phactp2" type="date" multiplicity="maximalOne" description="End date"/>       
-       <AttributeDefinition id="phactp3" type="number" multiplicity="maximalOne" description="Number of steps daily"/>       
-       <AttributeDefinition id="phactp4" type="number" multiplicity="maximalOne" description="Minutes of low level activity daily"/>       
-       <AttributeDefinition id="phactp5" type="number" multiplicity="maximalOne" description="Minutes of medium level activity daily"/>       
-       <AttributeDefinition id="phactp6" type="number" multiplicity="maximalOne" description="Minutes of high level activity daily"/> 
-       <AttributeDefinition id="phactp7" type="number" multiplicity="maximalOne" description="Max minutes without activity allowed daily"/>                   
+        <AttributeDefinition id="phactp1" type="date" multiplicity="maximalOne" description="Start date"/>
+        <AttributeDefinition id="phactp2" type="date" multiplicity="maximalOne" description="End date"/>       
+        <AttributeDefinition id="phactp3" type="number" multiplicity="maximalOne" description="Number of steps daily"/>       
+        <AttributeDefinition id="phactp4" type="number" multiplicity="maximalOne" description="Minutes of low level activity daily"/>       
+        <AttributeDefinition id="phactp5" type="number" multiplicity="maximalOne" description="Minutes of medium level activity daily"/>       
+        <AttributeDefinition id="phactp6" type="number" multiplicity="maximalOne" description="Minutes of high level activity daily"/> 
+        <AttributeDefinition id="phactp7" type="number" multiplicity="maximalOne" description="Max minutes without activity allowed daily"/>                   
     </EntityDefinition>
 
 
     <!-- Case Definition -->
     <CaseDefinition id="Democase" description="Demo Case London" ownerPath="Owner" entityDefinitionId="CaseData">
-  
+
         <StageDefinition id="CaseIdentification" description="Case Identification" isMandetory="false" isRepeatable="true">        
             <HumanTaskDefinition id="Lace" description="Lace" ownerPath="Owner" isMandetory="false" isRepeatable="false" entityDefinitionId="Lace" entityAttachPath="Lace">                
-                <TaskParamDefinition path="Lace.lace1" isReadOnly="false"/>
-                <TaskParamDefinition path="Lace.lace2" isReadOnly="false"/>
-                <TaskParamDefinition path="Lace.lace3" isReadOnly="false"/>
-                <TaskParamDefinition path="Lace.lace4" isReadOnly="false"/>
-                <TaskParamDefinition path="Lace.lace5" isReadOnly="false"/>
-                <TaskParamDefinition path="Lace.lace6" isReadOnly="false"/>
-                <TaskParamDefinition path="Lace.lace7" isReadOnly="false"/>
-                <TaskParamDefinition path="Lace.lace8" isReadOnly="false"/>
-                <TaskParamDefinition path="Lace.lace9" isReadOnly="false"/>
-                <TaskParamDefinition path="Lace.lace10" isReadOnly="false"/>
-                <TaskParamDefinition path="Lace.lace11" isReadOnly="false"/>
-                <TaskParamDefinition path="Lace.lace12" isReadOnly="false"/>
-                <TaskParamDefinition path="Lace.lace13" isReadOnly="false"/>
-                <TaskParamDefinition path="Lace.lace14" isReadOnly="false"/>
-                <TaskParamDefinition path="Lace.lace15" isReadOnly="false"/>
-                <TaskParamDefinition path="Lace.lace16" isReadOnly="false"/>
-                <TaskParamDefinition path="Lace.lace17" isReadOnly="true"/>                
-                <TaskParamDefinition path="Lace.lace18" isReadOnly="false"/>                
-                <TaskParamDefinition path="Lace.lace19" isReadOnly="true"/>
+                <TaskParamDefinition path="Lace.lace1" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="Lace.lace2" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="Lace.lace3" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="Lace.lace4" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="Lace.lace5" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="Lace.lace6" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="Lace.lace7" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="Lace.lace8" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="Lace.lace9" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="Lace.lace10" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="Lace.lace11" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="Lace.lace12" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="Lace.lace13" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="Lace.lace14" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="Lace.lace15" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="Lace.lace16" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="Lace.lace17" isReadOnly="true" isMandetory="false"/>                
+                <TaskParamDefinition path="Lace.lace18" isReadOnly="false" isMandetory="true"/>                
+                <TaskParamDefinition path="Lace.lace19" isReadOnly="true" isMandetory="false"/>
             </HumanTaskDefinition>
         </StageDefinition>
-       
+    
         <StageDefinition id="CaseEvaluation" description="Case Evaluation" isMandetory="false" isRepeatable="true">  
             <SentryDefinition>
                 <precondition processDefinitionId="CaseIdentification"/>
             </SentryDefinition>
             <HumanTaskDefinition id="Barthel" description="Barthel" ownerPath="Owner" isMandetory="false" isRepeatable="false" entityDefinitionId="Barthel" entityAttachPath="Barthel">
-                <TaskParamDefinition path="Barthel.barthel1" isReadOnly="false"/>
-                <TaskParamDefinition path="Barthel.barthel2" isReadOnly="false"/>
-                <TaskParamDefinition path="Barthel.barthel3" isReadOnly="false"/>
-                <TaskParamDefinition path="Barthel.barthel4" isReadOnly="false"/>
-                <TaskParamDefinition path="Barthel.barthel5" isReadOnly="false"/>
-                <TaskParamDefinition path="Barthel.barthel6" isReadOnly="false"/>
-                <TaskParamDefinition path="Barthel.barthel7" isReadOnly="false"/>
+                <TaskParamDefinition path="Barthel.barthel1" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="Barthel.barthel2" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="Barthel.barthel3" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="Barthel.barthel4" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="Barthel.barthel5" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="Barthel.barthel6" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="Barthel.barthel7" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="Barthel.barthel8" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="Barthel.barthel9" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="Barthel.barthel10" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="Barthel.barthel11" isReadOnly="false" isMandetory="false"/>
             </HumanTaskDefinition>
         </StageDefinition>
 
@@ -261,16 +313,16 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
             <SentryDefinition>
                 <precondition processDefinitionId="CaseEvaluation"/>
             </SentryDefinition>
-            <HumanTaskDefinition id="PhysicalActivityPrescription" description="Physical Activity Prescription" ownerPath="Owner" isMandetory="false" isRepeatable="false" entityDefinitionId="PhysicalActivityPrescription" entityAttachPath="PhysicalActivityPrescription">
-                <TaskParamDefinition path="PhysicalActivityPrescription.phactp1" isReadOnly="false"/>
-                <TaskParamDefinition path="PhysicalActivityPrescription.phactp2" isReadOnly="false"/>
-                <TaskParamDefinition path="PhysicalActivityPrescription.phactp3" isReadOnly="false"/>
-                <TaskParamDefinition path="PhysicalActivityPrescription.phactp4" isReadOnly="false"/>
-                <TaskParamDefinition path="PhysicalActivityPrescription.phactp5" isReadOnly="false"/>
-                <TaskParamDefinition path="PhysicalActivityPrescription.phactp6" isReadOnly="false"/>
-                <TaskParamDefinition path="PhysicalActivityPrescription.phactp7" isReadOnly="false"/>
+            <AutomatedTaskDefinition id="PhysicalActivityPrescription" description="Physical Activity Prescription" ownerPath="Owner" isMandetory="false" isRepeatable="false" entityDefinitionId="PhysicalActivityPrescription" entityAttachPath="PhysicalActivityPrescription">
+                <TaskParamDefinition path="PhysicalActivityPrescription.phactp1" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="PhysicalActivityPrescription.phactp2" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="PhysicalActivityPrescription.phactp3" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="PhysicalActivityPrescription.phactp4" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="PhysicalActivityPrescription.phactp5" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="PhysicalActivityPrescription.phactp6" isReadOnly="false" isMandetory="true"/>
+                <TaskParamDefinition path="PhysicalActivityPrescription.phactp7" isReadOnly="false" isMandetory="true"/>
                 <HttpHookDefinition on="ENABLE" url="http://google.com" method="GET"></HttpHookDefinition>
-            </HumanTaskDefinition>
+            </AutomatedTaskDefinition>
         </StageDefinition>
         
     </CaseDefinition>

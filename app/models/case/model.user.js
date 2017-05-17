@@ -6,7 +6,23 @@ import Model from '../model';
 export default class User extends Model{
 
   static create(data) {
-    return http.post('/users', data);
+    return http.post('/users', data)
+  }
+
+  static verify(userId, email, magic){
+    return http.post('/users/'+userId+'/verify', {email: email, magic: magic});
+  }
+
+  static createAndVerify(data) {
+    let u = null;
+    return User.create(data)
+      .then(user=>{
+        u = user;
+        return User.verify(user.id, user.email, user.magic);
+      })
+      .then(verify=>{
+        return Promise.resolve(u);
+      });
   }
 
   static find() {
