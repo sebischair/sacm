@@ -363,6 +363,8 @@ module.exports = class XMLImporter {
         //if(w.Administrator != null)
         //  for(let a of w.Administrator)
         //    data.permissions.administrators.push(this.getPrincipalIdByXMLId(a.$.principalId));
+        //if(w.$.staticId != null)
+        //  data.id = w.$.staticId;
         return Workspace.create(data)
           .then(persistedWorkspace=>{
             this.workspaceMap.set(w.$.id, persistedWorkspace.id);
