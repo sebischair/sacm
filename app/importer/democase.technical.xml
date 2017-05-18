@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+AttributeDefintion types = richstring, text, notype, json, link, string, mxl, longtext, image, boolean, number, enumeration or date
+
+One entit defintion can only belong to one casedefintnion, meaning a entityDefinition can be used only once
+-->
+<SACMDefinition>
+    
+ 
+    <!--Barcelona Groups and Users-->
+    <Group id="Barcelona-Hospital" description="All users of the hospital in Barcelona">
+        <Administrator principalId="Me"/>
+    </Group>
+
+
+    <!--Usernames from https://uinames.com/
+        https://uinames.com/api/?region=United%20States&amount=25&maxlen=25 -->
+    <User id="JohnSmith" email="john.smith@connecare.eu">
+    </User>
+    <User id="RuthGibson" email="ruth.gibson@connecare.eu">
+    </User>
+    <User id="AngelaTran" email="angela.tran@connecare.eu">
+    </User>
+    <User id="CherylWillis" email="cheryl.willis@connecare.eu">
+    </User>
+    <User id="VincentAdams" email="vincent.adams@connecare.eu">
+    </User>
+    <User id="ChristinaBennett" email="christina.bennett@connecare.eu">
+    </User>                 
+    <User id="JaneWebb" email="jane.webb@connecare.eu">
+    </User>       
+
+    <!--Barcelona Worksapce-->
+    <Workspace id="Barcelona Hospital" description="All model elements and instances of the hospital in Barcelona">
+        <Reader principalId="Barcelona-Hospital"/>
+        <Writer principalId="Barcelona-Hospital"/>
+        <Administrator principalId="Me"/>
+
+        <!-- Case Data Defintion -->   
+        <EntityDefinition id="CaseData" description="">
+            <AttributeDefinition id="Owner" type="Link.Users.Barcelona-Hospital" description="Owner"/>
+            <AttributeDefinition id="Lace" type="Link.EntityDefinition.Lace" description="Lace"/>
+            <AttributeDefinition id="Barthel" type="Link.EntityDefinition.Barthel" description="Barthel"/>        
+            <AttributeDefinition id="PhysicalActivityPrescription" type="Link.EntityDefinition.PhysicalActivityPrescription" description="PhysicalActivityPrescription"/>            
+            <AttributeDefinition id="Discharge" type="Link.EntityDefinition.Discharge" description="Discharge"/>    
+        </EntityDefinition>
+
+        <EntityDefinition id="Lace" description="Lace">
+            <AttributeDefinition id="lace1" type="enumeration" multiplicity="maximalOne" description="Length of Stay (including day of admission and discharge)">
+                <EnumerationOption value="1" description="1 day"/>
+                <EnumerationOption value="2" description="2 days"/>
+            </AttributeDefinition>        
+            <AttributeDefinition id="lace2" type="enumeration" multiplicity="maximalOne" description="Was the patient admitted to hospital via the emergency department?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>             
+        </EntityDefinition>
+
+        <EntityDefinition id="Barthel" description="Barthel">
+            <AttributeDefinition id="barthel1" type="enumeration" multiplicity="maximalOne" description="FEEDING">
+                <EnumerationOption value="0" description="unable"/>
+                <EnumerationOption value="10" description="independent"/>
+            </AttributeDefinition>        
+            <AttributeDefinition id="barthel2" type="enumeration" multiplicity="maximalOne" description="BATHING">
+                <EnumerationOption value="0" description="dependent"/>
+                <EnumerationOption value="5" description="independent (or in shower)"/>
+            </AttributeDefinition>    
+        </EntityDefinition>
+
+        <EntityDefinition id="PhysicalActivityPrescription" description="Physical Activity Prescription">
+            <AttributeDefinition id="phactp1" type="date" multiplicity="maximalOne" description="Start date"/>
+            <AttributeDefinition id="phactp2" type="date" multiplicity="maximalOne" description="End date"/>                  
+        </EntityDefinition>
+
+        <EntityDefinition id="Discharge" description="Discharge">
+            <AttributeDefinition id="reason" type="string" multiplicity="maximalOne" description="Reason"/>
+            <AttributeDefinition id="date" type="date" multiplicity="maximalOne" description="Discharge Date"/>                  
+        </EntityDefinition>
+
+
+        <!-- Case Definition -->
+        <CaseDefinition id="Democase" description="Demo Case London" ownerPath="Owner" entityDefinitionId="CaseData">
+
+            <StageDefinition id="CaseIdentification" description="Case Identification" isMandetory="false" isRepeatable="true">        
+                <HumanTaskDefinition id="Lace" description="Lace" ownerPath="Owner" isMandetory="false" isRepeatable="false" entityDefinitionId="Lace" entityAttachPath="Lace">                
+                    <TaskParamDefinition path="Lace.lace1" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Lace.lace2" isReadOnly="false" isMandetory="true"/>
+                </HumanTaskDefinition>
+            </StageDefinition>
+        
+            <StageDefinition id="CaseEvaluation" description="Case Evaluation" isMandetory="false" isRepeatable="true">  
+                <SentryDefinition>
+                    <precondition processDefinitionId="CaseIdentification"/>
+                </SentryDefinition>
+                <HumanTaskDefinition id="Barthel" description="Barthel" ownerPath="Owner" isMandetory="false" isRepeatable="false" entityDefinitionId="Barthel" entityAttachPath="Barthel">
+                    <TaskParamDefinition path="Barthel.barthel1" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Barthel.barthel2" isReadOnly="false" isMandetory="true"/>
+                </HumanTaskDefinition>
+            </StageDefinition>
+
+            <StageDefinition id="WorkplanDefinition" description="Workplan Definition" isMandetory="false" isRepeatable="true">  
+                <SentryDefinition>
+                    <precondition processDefinitionId="CaseEvaluation"/>
+                </SentryDefinition>
+                <AutomatedTaskDefinition id="PhysicalActivityPrescription" description="Physical Activity Prescription" ownerPath="Owner" isMandetory="false" isRepeatable="false" entityDefinitionId="PhysicalActivityPrescription" entityAttachPath="PhysicalActivityPrescription">
+                    <TaskParamDefinition path="PhysicalActivityPrescription.phactp1" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="PhysicalActivityPrescription.phactp2" isReadOnly="false" isMandetory="true"/>
+                </AutomatedTaskDefinition>
+            </StageDefinition>
+
+            <StageDefinition id="Discharge" description="Discharge" isMandetory="true" isRepeatable="false">        
+                <HumanTaskDefinition id="DischageForm" description="Lace" ownerPath="Owner" isMandetory="false" isRepeatable="false" entityDefinitionId="Discharge" entityAttachPath="Discharge">                
+                    <TaskParamDefinition path="Discharge.reason" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Discharge.date" isReadOnly="false" isMandetory="true"/>
+                </HumanTaskDefinition>
+            </StageDefinition>
+            
+        </CaseDefinition>
+    
+    </Workspace>
+
+</SACMDefinition>
