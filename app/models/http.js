@@ -11,12 +11,14 @@ var headers = {
 };
 console.log(headers);
 
-function successRequest(method, url, reqBody, resBody, statusCode){
-    console.log('SC-'+method+': '+ url + " "+colors.green(statusCode));
+function successRequest(method, url, reqBody, resBody, statusCode, start){
+    const durationInMs = +(new Date().getTime()-start.getTime())+"ms";
+    console.log('SC-'+method+': '+ url + " "+colors.green(statusCode)+" "+durationInMs);
 }
 
-function errorRequest(method, url, reqBody, resBody, statusCode){
-    console.log(colors.red('SC-'+method+': '+ url + " "+colors.green(statusCode)));
+function errorRequest(method, url, reqBody, resBody, statusCode, start){
+    const durationInMs = +(new Date().getTime()-start.getTime())+"ms";
+    console.log(colors.red('SC-'+method+': '+ url + " "+colors.green(statusCode))+" "+durationInMs);
     console.log(reqBody);
     console.log(resBody);
 }
@@ -24,6 +26,7 @@ function errorRequest(method, url, reqBody, resBody, statusCode){
 module.exports = {
 
     get: function(path, params){
+        const start = new Date();
         return new Promise(function (resolve, reject){
             let p = ""; 
             if(params != null){
@@ -39,16 +42,17 @@ module.exports = {
                 resolveWithFullResponse: true 
             })
             .then(res=>{
-                successRequest('GET', config.sc.url+path+p, '', res.body, res.statusCode);
+                successRequest('GET', config.sc.url+path+p, '', res.body, res.statusCode, start);
                 resolve(res.body);
             })
             .catch(res=>{
-                errorRequest('GET', config.sc.url+path+p, '', res.error, res.statusCode);
+                errorRequest('GET', config.sc.url+path+p, '', res.error, res.statusCode, start);
                 reject(res.error);
             });          
         });
     },
     post: function(path, data){
+        const start = new Date();
         console.log('###### POST 2 #######');
         console.log(JSON.stringify(data));
         console.log('###### POST 2 END #######');
@@ -61,16 +65,17 @@ module.exports = {
                 resolveWithFullResponse: true 
             })
             .then(res=>{
-                successRequest('POST', config.sc.url+path, data, res.body, res.statusCode);
+                successRequest('POST', config.sc.url+path, data, res.body, res.statusCode, start);
                 resolve(res.body);
             })
             .catch(res=>{
-                errorRequest('POST', config.sc.url+path, data, res.error, res.statusCode);
+                errorRequest('POST', config.sc.url+path, data, res.error, res.statusCode, start);
                 reject(res.error);
             });          
         });
     },
     put: function(path, data){
+        const start = new Date();
         return new Promise(function (resolve, reject){
             rq.put({
                 uri: config.sc.url +path,
@@ -80,16 +85,17 @@ module.exports = {
                 resolveWithFullResponse: true 
             })
             .then(res=>{
-                successRequest('PUT', config.sc.url+path, data, res.body, res.statusCode);
+                successRequest('PUT', config.sc.url+path, data, res.body, res.statusCode, start);
                 resolve(res.body);
             })
             .catch(res=>{
-                errorRequest('PUT', config.sc.url+path, data, res.error, res.statusCode);
+                errorRequest('PUT', config.sc.url+path, data, res.error, res.statusCode, start);
                 reject(res.error);
             });          
         });
     },
     del: function(path){
+        const start = new Date();
         return new Promise(function (resolve, reject){
             rq.del({
                 uri: config.sc.url +path,
@@ -98,11 +104,11 @@ module.exports = {
                 resolveWithFullResponse: true 
             })
             .then(res=>{
-                successRequest('DEL', config.sc.url+path, '', res.body, res.statusCode);
+                successRequest('DEL', config.sc.url+path, '', res.body, res.statusCode, start);
                 resolve(res.body);
             })
             .catch(res=>{
-                errorRequest('DEL', config.sc.url+path, '', res.error, res.statusCode);
+                errorRequest('DEL', config.sc.url+path, '', res.error, res.statusCode, start);
                 reject(res.error);
             });          
         });
