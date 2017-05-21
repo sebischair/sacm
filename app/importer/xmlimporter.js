@@ -841,21 +841,22 @@ module.exports = class XMLImporter {
     }
 
     completeTask(){
-
       // comple case identification task
-      console.log(this.humanTaskDefinitionMap);
-      let taskId = this.humanTaskDefinitionMap.get('Lace');
       return HumanTask.findAllByCaseId(this.case1.id)
-        .then(humanTasks=>{
-          console.log(JSON.stringify(humanTasks, null, 2));
+        .then(humanTasks=>{          
+          humanTasks = humanTasks.filter(h=>h.name == 'Lace');
           const humanTask = humanTasks[0];
           humanTask.taskParams[0].values.push('1');
           humanTask.taskParams[1].values.push('0');
           return HumanTask.complete(humanTask);
         })
-        .then((humanTask)=>{
+        .then(humanTask=>{
           console.log(JSON.stringify(humanTask, null, 2));
-          return Promise.resolve(humanTask);
+          //return Promise.resolve(humanTask);
+          return Case.findTreebyId(this.case1.id);
+        })
+        .then(caseTree=>{
+          return Promise.resolve(caseTree);
         })
         .catch(err=>{
           console.log(err);
