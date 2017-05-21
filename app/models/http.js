@@ -23,20 +23,27 @@ function errorRequest(method, url, reqBody, resBody, statusCode){
 
 module.exports = {
 
-    get: function(path){
+    get: function(path, params){
         return new Promise(function (resolve, reject){
+            let p = ""; 
+            if(params != null){
+                p += "?";
+                Object.keys(params).forEach(key=>{
+                    p += key+'='+params[key]+'&';
+                });
+            }
             rq.get({
-                uri: config.sc.url +path,
+                uri: config.sc.url +path+p,
                 headers: headers,                
                 json: true,
                 resolveWithFullResponse: true 
             })
             .then(res=>{
-                successRequest('GET', config.sc.url+path, '', res.body, res.statusCode);
+                successRequest('GET', config.sc.url+path+p, '', res.body, res.statusCode);
                 resolve(res.body);
             })
             .catch(res=>{
-                errorRequest('GET', config.sc.url+path, '', res.error, res.statusCode);
+                errorRequest('GET', config.sc.url+path+p, '', res.error, res.statusCode);
                 reject(res.error);
             });          
         });

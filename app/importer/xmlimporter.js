@@ -860,7 +860,7 @@ module.exports = class XMLImporter {
           return HumanTask.complete(humanTask);
         })
         .then(humanTask=>{          
-          return Case.findTreebyId(this.case1.id);
+          return Case.findTreebyId(this.case1.id, {simple:true});
         })
         .then(caseTree=>{
           return Promise.resolve(caseTree);

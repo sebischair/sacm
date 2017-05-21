@@ -21,8 +21,8 @@ export default class Case extends Model{
     return http.get('/casedefinition/'+caseDefinitionId+'/cases');
   }
 
-  static findTreebyId(caseId){
-    return http.get('/case/'+caseId+'/tree');
+  static findTreebyId(caseId, params){
+    return http.get('/case/'+caseId+'/tree', params);
   }
 
   static deleteById(caseId) {
