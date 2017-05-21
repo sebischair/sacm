@@ -208,11 +208,10 @@ module.exports = class XMLImporter {
         })     
         .then(() => {
           return this.createCase();
-        });
-      /*
+        })      
         .then(() => {
           return this.completeTask();
-        });*/
+        });
     }
 
     fileExists(filePath) {
@@ -836,18 +835,22 @@ module.exports = class XMLImporter {
       const caseDefinitionId = this.caseDefinitionMap.values().next().value;
       return Case.create({caseDefinition: caseDefinitionId})
         .then(case1=>{
+          this.case1 = case1;
           return Case.findTreebyId(case1.id);
         });
     }
 
     completeTask(){
+
+      // comple case identification task
       console.log(this.humanTaskDefinitionMap);
-      let t5Id = this.humanTaskDefinitionMap.get('t5');
-      return HumanTask.findByHumanTaskDefinitionId(t5Id)
+      let taskId = this.humanTaskDefinitionMap.get('Lace');
+      return HumanTask.findAllByCaseId(this.case1.id)
         .then(humanTasks=>{
           console.log(JSON.stringify(humanTasks, null, 2));
           const humanTask = humanTasks[0];
-          humanTask.taskParams[0].values.push("Hello3");
+          humanTask.taskParams[0].values.push('1');
+          humanTask.taskParams[1].values.push('0');
           return HumanTask.complete(humanTask);
         })
         .then((humanTask)=>{
