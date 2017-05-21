@@ -844,15 +844,22 @@ module.exports = class XMLImporter {
       // comple case identification task
       return HumanTask.findAllByCaseId(this.case1.id)
         .then(humanTasks=>{          
-          humanTasks = humanTasks.filter(h=>h.name == 'Lace');
-          const humanTask = humanTasks[0];
+          const humanTask = humanTasks.filter(h=>h.name == 'Lace')[0];
           humanTask.taskParams[0].values.push('1');
           humanTask.taskParams[1].values.push('0');
           return HumanTask.complete(humanTask);
         })
         .then(humanTask=>{
-          console.log(JSON.stringify(humanTask, null, 2));
-          //return Promise.resolve(humanTask);
+          //console.log(JSON.stringify(humanTask, null, 2));
+          return HumanTask.findAllByCaseId(this.case1.id);
+        })
+        .then(humanTasks=>{         
+          const humanTask = humanTasks.filter(h=>h.name == 'Barthel')[0];
+          humanTask.taskParams[0].values.push('10');
+          humanTask.taskParams[1].values.push('5');
+          return HumanTask.complete(humanTask);
+        })
+        .then(humanTask=>{          
           return Case.findTreebyId(this.case1.id);
         })
         .then(caseTree=>{
