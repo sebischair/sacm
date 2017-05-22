@@ -21,13 +21,11 @@ import Case from './../../models/case/model.case'
  *     [
  *         {
  *          "id": "10dsnh0e84zx3",
- *          "name": "JohnSmith",
- *          "href": "http://server.sociocortex.com/api/v1/users/10dsnh0e84zx3"
+ *          "name": "JohnSmith"
  *        },
  *        {
  *          "id": "18424r0bvx0qq",
- *          "name": "PhilipBarnes",
- *          "href": "http://server.sociocortex.com/api/v1/users/18424r0bvx0qq"
+ *          "name": "PhilipBarnes"
  *         }, ...
  *     ]
  *
@@ -68,15 +66,13 @@ router.get('/', (req, res, next)=>{
  *          "type": "_new",
  *          "user": {
  *            "id": "oi6l6vdha6vs",
- *            "name": "Max Mustermann",
- *            "href": "http://server.sociocortex.com/api/v1/users/oi6l6vdha6vs"
+ *            "name": "Max Mustermann"
  *          }
  *        }
  *      ],
  *      "email": "john.smith@connecare.eu",
  *      "name": "JohnSmith",
  *      "attributes": [],
- *      "href": "http://server.sociocortex.com/api/v1/users/10dsnh0e84zx3",
  *      "mayEdit": false,
  *      "isAdministrator": false,
  *      "mayCreateUser": true,
@@ -132,7 +128,6 @@ router.get('/:id', (req, res, next)=>{
  *       "email": "mustermann@test.sc",
  *       "name": "Max Mustermann",
  *       "attributes": [],
- *       "href": "http://server.sociocortex.com/api/v1/users/oi6l6vdha6vs",
  *       "mayEdit": true,
  *       "isAdministrator": true,
  *       "mayCreateUser": true,
@@ -213,7 +208,6 @@ router.delete('/:id', (req, res, next)=>{
  *       "email": "mustermann@test.sc",
  *       "name": "Max Mustermann",
  *       "attributes": [],
- *       "href": "http://server.sociocortex.com/api/v1/users/oi6l6vdha6vs",
  *       "mayEdit": true,
  *       "isAdministrator": true,
  *       "mayCreateUser": true,
@@ -266,46 +260,38 @@ router.patch('/:id', (req, res, next)=>{
  *           "id": "10h8zpnf0715q",
  *           "values": [],
  *           "name": "PatientNr",
- *           "href": "http://server.sociocortex.com/api/v1/attributes/10h8zpnf0715q"
  *         },
  *         {
  *           "id": "19t5xsdeoeeur",
  *           "values": [],
  *           "name": "Phone",
- *           "href": "http://server.sociocortex.com/api/v1/attributes/19t5xsdeoeeur"
  *         },
  *         {
  *           "id": "1s8infgj0q8ru",
  *           "values": [],
  *           "name": "Mobile",
- *           "href": "http://server.sociocortex.com/api/v1/attributes/1s8infgj0q8ru"
  *         },
  *         {
  *           "id": "1xfihqihqwmqe",
  *           "values": [],
  *           "name": "Lastname",
- *           "href": "http://server.sociocortex.com/api/v1/attributes/1xfihqihqwmqe"
  *         },
  *         {
  *           "id": "3s9fn1lepslw",
  *           "values": [],
  *           "name": "Language",
- *           "href": "http://server.sociocortex.com/api/v1/attributes/3s9fn1lepslw"
  *         },
  *         {
  *           "id": "48qdjbzc64cf",
  *           "values": [],
  *           "name": "Birthdate",
- *           "href": "http://server.sociocortex.com/api/v1/attributes/48qdjbzc64cf"
  *         },
  *         {
  *           "id": "fkgl51objooa",
  *           "values": [],
  *           "name": "Firstname",
- *           "href": "http://server.sociocortex.com/api/v1/attributes/fkgl51objooa"
  *         }
  *       ],
- *       "href": "http://server.sociocortex.com/api/v1/users/oi6l6vdha6vs",
  *       "mayEdit": true,
  *       "isAdministrator": true,
  *       "mayCreateUser": true,
