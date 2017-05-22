@@ -167,7 +167,7 @@ module.exports = class XMLImporter {
       });
     }
 
-    import(filePath){      
+    import(filePath, isExecuteCase){      
       return this.fileExists(filePath)
         .then(exist =>{
           if(!exist)
@@ -209,8 +209,11 @@ module.exports = class XMLImporter {
         .then(() => {
           return this.createCase();
         })      
-        .then(() => {
-          return this.completeTask();
+        .then(caseInstance => {
+          if(!isExecuteCase)
+            return Promise.resolve(caseInstance);
+          else
+            return this.completeTask();
         });
     }
 
