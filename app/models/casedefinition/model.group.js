@@ -9,8 +9,12 @@ export default class Group extends Model{
     return http.post('/groups', data);
   }
 
-  static find() {
+  static findAll() {
     return http.get('/groups');
+  }
+
+  static findById(groupId) {
+    return http.get('/groups/'+groupId);
   }
 
   static updateById(data) {
@@ -39,7 +43,7 @@ export default class Group extends Model{
         .catch(err=>{
           console.log(err);
         })
-      });    
+      });
   }
 
 }

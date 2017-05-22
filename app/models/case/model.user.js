@@ -14,8 +14,13 @@ export default class User extends Model{
   }
 
   static createAndVerify(data) {
+    // TODO check here, data contains id key
+    let data_ = {
+      name: data.name,
+      email: data.login
+    }
     let u = null;
-    return User.create(data)
+    return User.create(data_)
       .then(user=>{
         u = user;
         return User.verify(user.id, user.email, user.magic);
@@ -41,7 +46,7 @@ export default class User extends Model{
     return http.del('/users/'+userId);
   }
 
-  static deleteAll() {    
+  static deleteAll() {
     return User.findAll()
       .then(users=>{
         users = users.filter(user=>user.name != 'Max Mustermann');
@@ -51,7 +56,7 @@ export default class User extends Model{
         .catch(err=>{
           console.log(err);
         })
-      });    
+      });
   }
 
   static me() {

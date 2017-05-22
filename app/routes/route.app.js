@@ -16,6 +16,10 @@ import stage from './case/route.stage';
 import task from './case/route.task';
 import humantask from './case/route.humantask';
 import automatedtask from './case/route.automatedtask';
+
+import user from './case/route.user';
+import group from './case/route.group';
+
 import importer from './route.import';
 import test from './route.test';
 
@@ -61,6 +65,11 @@ function routes(){
     router.use('/messages', message);
     router.use('/process', process_);
     router.use('/processes', process_);
+
+    router.use('/user', user);
+    router.use('/users', user);
+    router.use('/group', group);
+    router.use('/groups', group);
 
     /** Import route */
     router.use('/import', importer);

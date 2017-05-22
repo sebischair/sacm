@@ -3,43 +3,28 @@ import express from 'express';
 var router = express.Router();
 
 // Models
-import Group from './../../models/case/model.group'
+import Group from './../../models/casedefinition/model.group'
 
 
 
 /**
- * @api {get} /task/:id Get Task
+ * @api {get} /groups/:id Get Groups of Workspace
  *
- * @apiName GetTask
- * @apiGroup Task
+ * @apiName GetGroupsOfWorkspace
+ * @apiGroup Group
  *
- * @apiParam {String} id ID of the Task
  *
- * @apiSampleRequest /task/:id
+ * @apiSampleRequest /group
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *     //  Automated or HumanTasks
- *     {
- *          "processDefinition": "bq1iuo0uuzo9",
- *          "id": "p503h6ephfqv",
- *          "parentStage": "10kx8cvxs3t0w",
- *          "sentries": [],
- *          "stateDates": {
- *            "enabled": "2017-05-15 17:29:18.0",
- *            "terminated": null,
- *            "active": null,
- *            "available": "2017-05-15 17:29:17.0",
- *            "completed": null
- *          },
- *          "taskParams": [],
- *          "description": "Lace",
- *          "name": "Lace",
- *          "owner": null,
- *          "state": "ENABLED",
- *          "case": "1q7nud4e2v1dl",
- *          "resourceType": "AutomatedTask"
- *     }
+ *     [
+ *        {
+ *          "id": "1hl75qvuk4mt3",
+ *          "name": "Leida-Nurses",
+ *          "href": "http://server.sociocortex.com/api/v1/groups/1hl75qvuk4mt3"
+ *        },...
+ *      ]
  *
  */
 router.get('/', (req, res, next)=>{
@@ -52,6 +37,48 @@ router.get('/', (req, res, next)=>{
     })
 });
 
+/**
+ * @api {post} /groups Create Group
+ *
+ * @apiName CreateGroup
+ * @apiGroup Group
+ *
+ * @apiParam {String} name Name of the group
+ * @apiParam {Array} administrators List of user ids
+ *
+ * @apiSampleRequest /groups
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "id": "1991r88lk5x9v",
+ *       "versions": [
+ *         {
+ *           "action": "Added",
+ *           "date": "2017-05-22T11:15:57.687Z",
+ *           "type": "_new",
+ *           "user": {
+ *             "id": "oi6l6vdha6vs",
+ *             "name": "Max Mustermann",
+ *             "href": "http://server.sociocortex.com/api/v1/users/oi6l6vdha6vs"
+ *           }
+ *         }
+ *       ],
+ *       "activeMembersCount": 0,
+ *       "name": "Barcelona-Doctoras",
+ *       "administrators": [
+ *         {
+ *           "id": "oi6l6vdha6vs",
+ *           "name": "Max Mustermann",
+ *           "href": "http://server.sociocortex.com/api/v1/users/oi6l6vdha6vs"
+ *         }
+ *       ],
+ *       "mayEdit": true,
+ *       "href": "http://server.sociocortex.com/api/v1/groups/1991r88lk5x9v",
+ *       "members": []
+ *     }
+ *
+ */
 router.post('/', (req, res, next)=>{
   const data = req.body;
   data.id = req.params.id;
@@ -64,6 +91,48 @@ router.post('/', (req, res, next)=>{
     })
 });
 
+/**
+ * @api {get} /groups/:id Get Group by ID
+ *
+ * @apiName GetGroupByID
+ * @apiGroup Group
+ *
+ * @apiParam {String} id ID of the Group
+ *
+ *
+ * @apiSampleRequest /groups/:id
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "id": "1hl75qvuk4mt3",
+ *       "versions": [
+ *         {
+ *           "action": "Added",
+ *           "date": "2017-05-22T08:11:19.252Z",
+ *           "type": "_new",
+ *           "user": {
+ *             "id": "oi6l6vdha6vs",
+ *             "name": "Max Mustermann",
+ *             "href": "http://server.sociocortex.com/api/v1/users/oi6l6vdha6vs"
+ *           }
+ *         }
+ *       ],
+ *       "activeMembersCount": 0,
+ *       "name": "Leida-Nurses",
+ *       "administrators": [
+ *         {
+ *           "id": "oi6l6vdha6vs",
+ *           "name": "Max Mustermann",
+ *           "href": "http://server.sociocortex.com/api/v1/users/oi6l6vdha6vs"
+ *         }
+ *       ],
+ *       "mayEdit": true,
+ *       "href": "http://server.sociocortex.com/api/v1/groups/1hl75qvuk4mt3",
+ *       "members": []
+ *     }
+ *
+ */
 router.get('/:id', (req, res, next)=>{
   Group.findById(req.params.id)
     .then(group=>{
@@ -74,6 +143,33 @@ router.get('/:id', (req, res, next)=>{
     })
 });
 
+
+/**
+ * @api {post} /groups Update Group
+ *
+ * @apiName UpdateGroup
+ * @apiGroup Group
+ *
+ * @apiParam {String} id ID of the Group
+ * @apiParam {String} name (optional) Name of the group
+ * @apiParam {Array} administrators (optional) List of user ids
+ *
+ * @apiSampleRequest /groups
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "id": "1991r88lk5x9v",
+ *       "versions": [],
+ *       "activeMembersCount": 0,
+ *       "name": "Barcelona-Doctoras",
+ *       "administrators": [],
+ *       "mayEdit": true,
+ *       "href": "http://server.sociocortex.com/api/v1/groups/1991r88lk5x9v",
+ *       "members": []
+ *     }
+ *
+ */
 router.patch('/:id', (req, res, next)=>{
   const data = req.body;
   data.id = req.params.id;
@@ -86,8 +182,24 @@ router.patch('/:id', (req, res, next)=>{
     })
 });
 
-
-router.del('/:id', (req, res, next)=>{
+/**
+ * @api {delete} /groups/:id Delete Group by ID
+ *
+ * @apiName DeleteGroupByID
+ * @apiGroup Group
+ *
+ * @apiParam {String} id ID of the Group
+ *
+ * @apiSampleRequest /groups/:id
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "success": true
+ *     }
+ *
+ */
+router.delete('/:id', (req, res, next)=>{
   Group.deleteById(req.params.id)
     .then(group=>{
         res.status(200).send(group);
@@ -97,6 +209,24 @@ router.del('/:id', (req, res, next)=>{
     })
 });
 
+/**
+ * @api {post} /groups/:id/member/:principalId Add user to group
+ *
+ * @apiName AddUserToGroup
+ * @apiGroup Group
+ *
+ * @apiParam {String} id ID of the Group
+ * @apiParam {String} principalId ID of the User / Principal
+ *
+ * @apiSampleRequest /groups/:id/member/:principalId
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "success": true
+ *     }
+ *
+ */
 router.post('/:id/member/:principalId', (req, res, next)=>{
   Group.addMember(req.params.id, req.params.principalId)
     .then(group=>{
@@ -107,7 +237,26 @@ router.post('/:id/member/:principalId', (req, res, next)=>{
     })
 });
 
-router.del('/:id/member/:principalId', (req, res, next)=>{
+
+/**
+ * @api {post} /groups/:id/member/:principalId Remove User from Group
+ *
+ * @apiName RemoveUserFromGroup
+ * @apiGroup Group
+ *
+ * @apiParam {String} id ID of the Group
+ * @apiParam {String} principalId ID of the User / Principal
+ *
+ * @apiSampleRequest /groups/:id/member/:principalId
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "success": true
+ *     }
+ *
+ */
+router.delete('/:id/member/:principalId', (req, res, next)=>{
   Group.delMember(req.params.id, req.params.principalId)
     .then(group=>{
         res.status(200).send(group);

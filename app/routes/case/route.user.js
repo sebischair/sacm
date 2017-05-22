@@ -8,38 +8,28 @@ import User from './../../models/case/model.user'
 
 
 /**
- * @api {get} /task/:id Get Task
+ * @api {get} /users Get Users of Workspace
  *
- * @apiName GetTask
- * @apiGroup Task
+ * @apiName GetUsers
+ * @apiGroup User
  *
- * @apiParam {String} id ID of the Task
  *
- * @apiSampleRequest /task/:id
+ * @apiSampleRequest /users
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *     //  Automated or HumanTasks
- *     {
- *          "processDefinition": "bq1iuo0uuzo9",
- *          "id": "p503h6ephfqv",
- *          "parentStage": "10kx8cvxs3t0w",
- *          "sentries": [],
- *          "stateDates": {
- *            "enabled": "2017-05-15 17:29:18.0",
- *            "terminated": null,
- *            "active": null,
- *            "available": "2017-05-15 17:29:17.0",
- *            "completed": null
- *          },
- *          "taskParams": [],
- *          "description": "Lace",
- *          "name": "Lace",
- *          "owner": null,
- *          "state": "ENABLED",
- *          "case": "1q7nud4e2v1dl",
- *          "resourceType": "AutomatedTask"
- *     }
+ *     [
+ *         {
+ *          "id": "10dsnh0e84zx3",
+ *          "name": "JohnSmith",
+ *          "href": "http://server.sociocortex.com/api/v1/users/10dsnh0e84zx3"
+ *        },
+ *        {
+ *          "id": "18424r0bvx0qq",
+ *          "name": "PhilipBarnes",
+ *          "href": "http://server.sociocortex.com/api/v1/users/18424r0bvx0qq"
+ *         }, ...
+ *     ]
  *
  */
 router.get('/', (req, res, next)=>{
@@ -52,6 +42,53 @@ router.get('/', (req, res, next)=>{
     })
 });
 
+/**
+ * @api {get} /user/:id Get Users By ID
+ *
+ * @apiName GetUserByID
+ * @apiGroup User
+ *
+ * @apiParam {String} id ID of the User
+ *
+ * @apiSampleRequest /user/:id
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *    {
+ *      "isVerified": true,
+ *      "lastLoginDate": "2017-05-22 08:09:39.0",
+ *      "locale": "de-DE",
+ *      "mayCreateWorkspace": true,
+ *      "mayCreateGroup": true,
+ *      "id": "10dsnh0e84zx3",
+ *      "versions": [
+ *        {
+ *          "action": "Added",
+ *          "date": "2017-05-22T08:09:34.399Z",
+ *          "type": "_new",
+ *          "user": {
+ *            "id": "oi6l6vdha6vs",
+ *            "name": "Max Mustermann",
+ *            "href": "http://server.sociocortex.com/api/v1/users/oi6l6vdha6vs"
+ *          }
+ *        }
+ *      ],
+ *      "email": "john.smith@connecare.eu",
+ *      "name": "JohnSmith",
+ *      "attributes": [],
+ *      "href": "http://server.sociocortex.com/api/v1/users/10dsnh0e84zx3",
+ *      "mayEdit": false,
+ *      "isAdministrator": false,
+ *      "mayCreateUser": true,
+ *      "groups": [
+ *        {
+ *          "id": "qj7erd93norx",
+ *          "name": "Membership of JohnSmith in Barcelona-Nurses"
+ *        }
+ *      ]
+ *    }
+ *
+ */
 router.get('/:id', (req, res, next)=>{
   User.findById(req.params.id)
     .then(user=>{
@@ -63,6 +100,45 @@ router.get('/:id', (req, res, next)=>{
 });
 
 
+/**
+ * @api {post} /users Create User
+ *
+ * @apiName CreateUser
+ * @apiGroup User
+ *
+ * @apiParam {String} name Name of the user
+ * @apiParam {String} login Email of the user
+ * @apiParam {String} attributes (optional) Custom attributes for the user
+ *
+ * @apiSampleRequest /users
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "isVerified": true,
+ *       "lastLoginDate": "2017-05-22 08:32:16.0",
+ *       "locale": "de-DE",
+ *       "mayCreateWorkspace": true,
+ *       "mayCreateGroup": true,
+ *       "id": "oi6l6vdha6vs",
+ *       "versions": [
+ *         {
+ *           "action": "Added",
+ *           "date": "2017-05-22T08:01:36.687Z",
+ *           "type": "_new"
+ *         }
+ *       ],
+ *       "email": "mustermann@test.sc",
+ *       "name": "Max Mustermann",
+ *       "attributes": [],
+ *       "href": "http://server.sociocortex.com/api/v1/users/oi6l6vdha6vs",
+ *       "mayEdit": true,
+ *       "isAdministrator": true,
+ *       "mayCreateUser": true,
+ *       "groups": []
+ *     }
+ *
+ */
 router.post('/', (req, res, next)=>{
   const data = req.body;
   data.id = req.params.id;
@@ -75,7 +151,25 @@ router.post('/', (req, res, next)=>{
     })
 });
 
-router.del('/:id', (req, res, next)=>{
+
+/**
+ * @api {delete} /user/:id Delete User by ID
+ *
+ * @apiName DeleteUserByID
+ * @apiGroup User
+ *
+ * @apiParam {String} id ID of the User
+ *
+ * @apiSampleRequest /user/:id
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "success": true
+ *     }
+ *
+ */
+router.delete('/:id', (req, res, next)=>{
   User.deleteById(req.params.id)
     .then(user=>{
         res.status(200).send(user);
@@ -85,6 +179,47 @@ router.del('/:id', (req, res, next)=>{
     })
 });
 
+
+/**
+ * @api {patch} /user/:id Update User
+ *
+ * @apiName UpdateUser
+ * @apiGroup User
+ *
+ * @apiParam {String} id ID of the user
+ * @apiParam {String} name (optional) Name of the user
+ * @apiParam {String} login (optional) Email of the user
+ * @apiParam {String} attributes (optional) Custom attributes for the user
+ *
+ * @apiSampleRequest /user/:id
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "isVerified": true,
+ *       "lastLoginDate": "2017-05-22 08:32:16.0",
+ *       "locale": "de-DE",
+ *       "mayCreateWorkspace": true,
+ *       "mayCreateGroup": true,
+ *       "id": "oi6l6vdha6vs",
+ *       "versions": [
+ *         {
+ *           "action": "Added",
+ *           "date": "2017-05-22T08:01:36.687Z",
+ *           "type": "_new"
+ *         }
+ *       ],
+ *       "email": "mustermann@test.sc",
+ *       "name": "Max Mustermann",
+ *       "attributes": [],
+ *       "href": "http://server.sociocortex.com/api/v1/users/oi6l6vdha6vs",
+ *       "mayEdit": true,
+ *       "isAdministrator": true,
+ *       "mayCreateUser": true,
+ *       "groups": []
+ *     }
+ *
+ */
 router.patch('/:id', (req, res, next)=>{
   const data = req.body;
   data.id = req.params.id;
@@ -97,7 +232,92 @@ router.patch('/:id', (req, res, next)=>{
     })
 });
 
-router.get('/:id/me', (req, res, next)=>{
+
+/**
+ * @api {get} /user/me Get own user data
+ *
+ * @apiName GetOwnUser
+ * @apiGroup User
+ *
+ *
+ * @apiSampleRequest /user/me
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "isVerified": true,
+ *       "lastLoginDate": "2017-05-22 08:32:16.0",
+ *       "locale": "de-DE",
+ *       "mayCreateWorkspace": true,
+ *       "mayCreateGroup": true,
+ *       "id": "oi6l6vdha6vs",
+ *       "versions": [
+ *         {
+ *           "action": "Added",
+ *           "date": "2017-05-22T08:01:36.687Z",
+ *           "type": "_new"
+ *         }
+ *       ],
+ *       "email": "mustermann@test.sc",
+ *       "name": "Max Mustermann",
+ *       "attributes": [
+ *         {
+ *           "id": "10h8zpnf0715q",
+ *           "values": [],
+ *           "name": "PatientNr",
+ *           "href": "http://server.sociocortex.com/api/v1/attributes/10h8zpnf0715q"
+ *         },
+ *         {
+ *           "id": "19t5xsdeoeeur",
+ *           "values": [],
+ *           "name": "Phone",
+ *           "href": "http://server.sociocortex.com/api/v1/attributes/19t5xsdeoeeur"
+ *         },
+ *         {
+ *           "id": "1s8infgj0q8ru",
+ *           "values": [],
+ *           "name": "Mobile",
+ *           "href": "http://server.sociocortex.com/api/v1/attributes/1s8infgj0q8ru"
+ *         },
+ *         {
+ *           "id": "1xfihqihqwmqe",
+ *           "values": [],
+ *           "name": "Lastname",
+ *           "href": "http://server.sociocortex.com/api/v1/attributes/1xfihqihqwmqe"
+ *         },
+ *         {
+ *           "id": "3s9fn1lepslw",
+ *           "values": [],
+ *           "name": "Language",
+ *           "href": "http://server.sociocortex.com/api/v1/attributes/3s9fn1lepslw"
+ *         },
+ *         {
+ *           "id": "48qdjbzc64cf",
+ *           "values": [],
+ *           "name": "Birthdate",
+ *           "href": "http://server.sociocortex.com/api/v1/attributes/48qdjbzc64cf"
+ *         },
+ *         {
+ *           "id": "fkgl51objooa",
+ *           "values": [],
+ *           "name": "Firstname",
+ *           "href": "http://server.sociocortex.com/api/v1/attributes/fkgl51objooa"
+ *         }
+ *       ],
+ *       "href": "http://server.sociocortex.com/api/v1/users/oi6l6vdha6vs",
+ *       "mayEdit": true,
+ *       "isAdministrator": true,
+ *       "mayCreateUser": true,
+ *       "groups": [
+ *         {
+ *           "id": "1ium3wqkh94pw",
+ *           "name": "Membership of Max Mustermann in Administrators"
+ *         }
+ *       ]
+ *     }
+ *
+ */
+router.get('/me', (req, res, next)=>{
   User.me(req.params.id)
     .then(user=>{
         res.status(200).send(user);
