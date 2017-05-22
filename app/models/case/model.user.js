@@ -25,7 +25,7 @@ export default class User extends Model{
       });
   }
 
-  static find() {
+  static findAll() {
     return http.get('/users');
   }
 
@@ -33,8 +33,8 @@ export default class User extends Model{
     return http.get('/users/'+userId);
   }
 
-  static updateById(userId, data) {
-    return http.put('/users/'+userId, data);
+  static updateById(data) {
+    return http.put('/users/'+data.id, data);
   }
 
   static deleteById(userId) {
@@ -42,7 +42,7 @@ export default class User extends Model{
   }
 
   static deleteAll() {    
-    return User.find()
+    return User.findAll()
       .then(users=>{
         users = users.filter(user=>user.name != 'Max Mustermann');
         return Promise.each(users, user=>{
