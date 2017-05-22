@@ -56,4 +56,8 @@ export default class Case extends Model{
   static removeWriter(caseId, principalId) {
     return http.del('/case/'+caseId+'/writer/'+principalId);
   }
+
+  static findByUserId(userId) {
+    return http.get('/users/'+userId+'/cases');
+  }
 }
