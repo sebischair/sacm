@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+         <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lato">
+        <style>
+            body{
+                font-family: 'Lato', serif;
+                margin-left: 80px;
+                margin-right: 80px;
+                margin-bottom: 80px;
+           }           
+           .container{
+                margin-top: 20px;
+                padding:5px 10px;
+                border-left: 5px solid gray;
+                background-color: #eee;
+            }
+            .container:hover{
+                border-left: 5px solid red;
+                cursor: pointer;
+            }
+            .container h2{
+                margin-top:10px;
+            }
+        </style>
+    </head>
+<body>
+<h2> SACM API - How to start (Draft)</h2>
+<br/>
+
+<div class="container">
+    <h2>1. Initialize testcase</h2>
+    <code><b>GET</b>&lt;domain&gt;:&lt;port&gt;/api/import</code> 
+    <p>To simplify the testing, this route creates a case definition and instantiates the case. Be aware, the imported case is incrementally changed according to the current implementation. The imported case definition is defined based on an XML schema. To customize this import please consider a local installation and modify the XML file accordingly.</p>
+</div>
+
+<div class="container">
+    <h2>2. Get logged in user</h2>
+    <code><b>GET</b>&lt;domain&gt;:&lt;port&gt;/api/user/me</code>
+    <p>This route returns user details of the currently logged in user. Until the CONNECARE user management is completely integrated all routes on the SACM wrapper are without access control. The wrapper injects for all requests to the underlying SocioCortex system the default user <i>mustermann@test.sc</i>&nbsp;  with the password <i>ottto</i>.</p>
+</div>
+
+<div class="container">
+    <h2>3. Get all cases of user</h2>
+    <code><b>GET</b>&lt;domain&gt;:&lt;port&gt;/api/user/:userId/cases</code>
+    <p>A list of all cases of a certain user is returned.</p>
+</div>
+
+<div class="container">
+    <h2>4. Get case details hierarchically nested</h2>
+    <code><b>GET</b>&lt;domain&gt;:&lt;port&gt;/api/case/:caseId/tree</code>
+    <p>This route returns all information regarding a case instance hieratically nested (not for production usage). Only permissions are not returned.</p>
+</div>
+
+<div class="container">
+    <h2>5. Explore API Doc</h2>
+    <p>All available routes of the SACM system are documented <a href="/doc/api">here</a>.</p>
+</div>
+
+
+</body>
+</html>
