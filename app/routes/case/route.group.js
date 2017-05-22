@@ -8,13 +8,13 @@ import Group from './../../models/casedefinition/model.group'
 
 
 /**
- * @api {get} /groups/:id Get Groups of Workspace
+ * @api {get} /groups Get Groups of Workspace
  *
  * @apiName GetGroupsOfWorkspace
  * @apiGroup Group
  *
  *
- * @apiSampleRequest /group
+ * @apiSampleRequest /groups
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
@@ -92,7 +92,7 @@ router.post('/', (req, res, next)=>{
 });
 
 /**
- * @api {get} /groups/:id Get Group by ID
+ * @api {get} /group/:id Get Group by ID
  *
  * @apiName GetGroupByID
  * @apiGroup Group
@@ -100,7 +100,7 @@ router.post('/', (req, res, next)=>{
  * @apiParam {String} id ID of the Group
  *
  *
- * @apiSampleRequest /groups/:id
+ * @apiSampleRequest /group/:id
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
@@ -183,14 +183,14 @@ router.patch('/:id', (req, res, next)=>{
 });
 
 /**
- * @api {delete} /groups/:id Delete Group by ID
+ * @api {delete} /group/:id Delete Group by ID
  *
  * @apiName DeleteGroupByID
  * @apiGroup Group
  *
  * @apiParam {String} id ID of the Group
  *
- * @apiSampleRequest /groups/:id
+ * @apiSampleRequest /group/:id
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
@@ -210,7 +210,7 @@ router.delete('/:id', (req, res, next)=>{
 });
 
 /**
- * @api {post} /groups/:id/member/:principalId Add user to group
+ * @api {post} /group/:id/member/:principalId Add user to group
  *
  * @apiName AddUserToGroup
  * @apiGroup Group
@@ -218,7 +218,7 @@ router.delete('/:id', (req, res, next)=>{
  * @apiParam {String} id ID of the Group
  * @apiParam {String} principalId ID of the User / Principal
  *
- * @apiSampleRequest /groups/:id/member/:principalId
+ * @apiSampleRequest /group/:id/member/:principalId
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
@@ -239,7 +239,7 @@ router.post('/:id/member/:principalId', (req, res, next)=>{
 
 
 /**
- * @api {post} /groups/:id/member/:principalId Remove User from Group
+ * @api {post} /group/:id/member/:principalId Remove User from Group
  *
  * @apiName RemoveUserFromGroup
  * @apiGroup Group
@@ -247,7 +247,7 @@ router.post('/:id/member/:principalId', (req, res, next)=>{
  * @apiParam {String} id ID of the Group
  * @apiParam {String} principalId ID of the User / Principal
  *
- * @apiSampleRequest /groups/:id/member/:principalId
+ * @apiSampleRequest /group/:id/member/:principalId
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
