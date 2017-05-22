@@ -4,7 +4,7 @@ var router = express.Router();
 
 // Models
 import User from './../../models/case/model.user'
-
+import Case from './../../models/case/model.case'
 
 
 /**
@@ -101,6 +101,16 @@ router.get('/:id/me', (req, res, next)=>{
   User.me(req.params.id)
     .then(user=>{
         res.status(200).send(user);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+router.get('/:id/cases', (req, res, next)=>{
+  Case.findByUserId(req.params.id)
+    .then(cases=>{
+        res.status(200).send(cases);
     })
     .catch(err=>{
       res.status(500).send(err);
