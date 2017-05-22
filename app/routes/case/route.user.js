@@ -314,15 +314,5 @@ router.get('/me', (req, res, next)=>{
     })
 });
 
-router.get('/:id/cases', (req, res, next)=>{
-  Case.findByUserId(req.params.id)
-    .then(cases=>{
-        res.status(200).send(cases);
-    })
-    .catch(err=>{
-      res.status(500).send(err);
-    })
-});
-
 
 module.exports = router;

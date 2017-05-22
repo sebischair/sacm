@@ -11,6 +11,37 @@ import Message from './../../models/case/model.message';
 import Alert from './../../models/case/model.alert';
 import Summary from './../../models/case/model.summary';
 
+
+// my cases
+
+/**
+ * @api {get} /cases/me Get my cases
+ *
+ * @apiName GetMyCases
+ * @apiGroup Case
+ *
+ * @apiParam {String} id ID of the Case
+ *
+ * @apiSampleRequest /cases/me
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *   {
+ *     TODO SUMMARY_OBJ
+ *   }
+ *
+ */
+router.get('/me', (req, res, next)=>{
+  Case.findByMe()
+    .then(cases=>{
+        res.status(200).send(cases);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+
 /**
  * @api {get} /case/:id Get Case
  *
@@ -774,6 +805,8 @@ router.get('/:id/summary', (req, res, next)=>{
       res.status(500).send(err);
     })
 });
+
+
 
 
 
