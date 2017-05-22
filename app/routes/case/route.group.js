@@ -80,9 +80,7 @@ router.get('/', (req, res, next)=>{
  *
  */
 router.post('/', (req, res, next)=>{
-  const data = req.body;
-  data.id = req.params.id;
-  Group.create(data)
+  Group.create(req.body)
     .then(group=>{
         res.status(200).send(group);
     })

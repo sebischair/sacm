@@ -136,9 +136,7 @@ router.get('/:id', (req, res, next)=>{
  *
  */
 router.post('/', (req, res, next)=>{
-  const data = req.body;
-  data.id = req.params.id;
-  User.createAndVerify(data)
+  User.createAndVerify(req.body)
     .then(user=>{
         res.status(200).send(user);
     })
