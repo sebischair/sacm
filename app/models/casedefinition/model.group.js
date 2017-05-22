@@ -13,12 +13,20 @@ export default class Group extends Model{
     return http.get('/groups');
   }
 
+  static updateById(data) {
+    return http.put('/groups/'+data.id, data);
+  }
+
   static deleteById(groupId) {
     return http.del('/groups/'+groupId);
   }
 
   static addMember(groupId, principalId) {
     return http.post('/groups/'+groupId+'/member/'+principalId);
+  }
+
+  static delMember(groupId, principalId) {
+    return http.del('/groups/'+groupId+'/member/'+principalId);
   }
 
   static deleteAll() {
