@@ -15,21 +15,35 @@ import Summary from './../../models/case/model.summary';
 // my cases
 
 /**
- * @api {get} /cases/me Get my cases
+ * @api {get} /cases/me Get My Cases
  *
  * @apiName GetMyCases
  * @apiGroup Case
- *
- * @apiParam {String} id ID of the Case
  *
  * @apiSampleRequest /cases/me
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {
- *     TODO SUMMARY_OBJ
- *   }
- *
+ *   [
+ *    {
+ *      "id": "1kecs9ppqsvni",
+ *      "stateDates": {
+ *         "enabled": "2017-05-22 19:24:14.0",
+ *         "terminated": null,
+ *         "active": null,
+ *         "available": "2017-05-22 19:24:14.0",
+ *         "completed": null
+ *      },
+ *      "caseDefinition": "rcwk7ciueroj",
+ *      "workspace": "vcifkzlevijg",
+ *      "description": "Demo Case London",
+ *      "entity": "1d3l9i9pyxsz9",
+ *      "name": "Democase",
+ *      "state": "ENABLED",
+ *      "owner": null,
+ *      "resourceType": "Case"
+ *     }
+ *   ]
  */
 router.get('/me', (req, res, next)=>{
   Case.findByMe()
