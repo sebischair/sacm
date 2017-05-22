@@ -22,7 +22,6 @@ import Group from './../../models/casedefinition/model.group'
  *        {
  *          "id": "1hl75qvuk4mt3",
  *          "name": "Leida-Nurses",
- *          "href": "http://server.sociocortex.com/api/v1/groups/1hl75qvuk4mt3"
  *        },...
  *      ]
  *
@@ -60,7 +59,6 @@ router.get('/', (req, res, next)=>{
  *           "user": {
  *             "id": "oi6l6vdha6vs",
  *             "name": "Max Mustermann",
- *             "href": "http://server.sociocortex.com/api/v1/users/oi6l6vdha6vs"
  *           }
  *         }
  *       ],
@@ -70,11 +68,9 @@ router.get('/', (req, res, next)=>{
  *         {
  *           "id": "oi6l6vdha6vs",
  *           "name": "Max Mustermann",
- *           "href": "http://server.sociocortex.com/api/v1/users/oi6l6vdha6vs"
  *         }
  *       ],
  *       "mayEdit": true,
- *       "href": "http://server.sociocortex.com/api/v1/groups/1991r88lk5x9v",
  *       "members": []
  *     }
  *
@@ -112,7 +108,6 @@ router.post('/', (req, res, next)=>{
  *           "user": {
  *             "id": "oi6l6vdha6vs",
  *             "name": "Max Mustermann",
- *             "href": "http://server.sociocortex.com/api/v1/users/oi6l6vdha6vs"
  *           }
  *         }
  *       ],
@@ -122,11 +117,9 @@ router.post('/', (req, res, next)=>{
  *         {
  *           "id": "oi6l6vdha6vs",
  *           "name": "Max Mustermann",
- *           "href": "http://server.sociocortex.com/api/v1/users/oi6l6vdha6vs"
  *         }
  *       ],
  *       "mayEdit": true,
- *       "href": "http://server.sociocortex.com/api/v1/groups/1hl75qvuk4mt3",
  *       "members": []
  *     }
  *
@@ -163,7 +156,6 @@ router.get('/:id', (req, res, next)=>{
  *       "name": "Barcelona-Doctoras",
  *       "administrators": [],
  *       "mayEdit": true,
- *       "href": "http://server.sociocortex.com/api/v1/groups/1991r88lk5x9v",
  *       "members": []
  *     }
  *
