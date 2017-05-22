@@ -34,7 +34,7 @@ export default class Group extends Model{
   }
 
   static deleteAll() {
-    return Group.find()
+    return Group.findAll()
       .then(groups=>{
         groups = groups.filter(group=>group.id != 'administrators');
         return Promise.each(groups, group=>{

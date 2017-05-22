@@ -14,13 +14,8 @@ export default class User extends Model{
   }
 
   static createAndVerify(data) {
-    // TODO check here, data contains id key
-    let data_ = {
-      name: data.name,
-      email: data.login
-    }
     let u = null;
-    return User.create(data_)
+    return User.create(data)
       .then(user=>{
         u = user;
         return User.verify(user.id, user.email, user.magic);

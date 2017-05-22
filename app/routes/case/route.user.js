@@ -107,7 +107,8 @@ router.get('/:id', (req, res, next)=>{
  * @apiGroup User
  *
  * @apiParam {String} name Name of the user
- * @apiParam {String} login Email of the user
+ * @apiParam {String} email Email of the user
+ * @apiParam {String} id ID of the User (must be unique, max. 32 chars)
  * @apiParam {String} attributes (optional) Custom attributes for the user
  *
  * @apiSampleRequest /users
@@ -147,7 +148,7 @@ router.post('/', (req, res, next)=>{
         res.status(200).send(user);
     })
     .catch(err=>{
-      res.status(500).send(err);
+        res.status(500).send(err);
     })
 });
 
