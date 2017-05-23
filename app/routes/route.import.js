@@ -7,9 +7,9 @@ router.post('/', (req, res, next)=>{
   const xml = new XMLImporter();
   let file = 'democase.xml';
   let isExecuteCase = false;
-  if(req.params.file)
-    file = req.params.file;
-  if(req.params.execute)
+  if(req.body.file)
+    file = req.body.file;
+  if(req.body.execute)
     isExecuteCase = true;
   xml.import('app/importer/'+file, isExecuteCase)
     .then(case1=>{
