@@ -839,12 +839,14 @@ module.exports = class XMLImporter {
       return Case.create({caseDefinition: caseDefinitionId})
         .then(case1=>{
           this.case1 = case1;
-          return Case.findTreebyId(case1.id);
+          return Case.findTreebyId(case1.id, {simple:true});
         });
     }
 
     completeTask(){
+      
       // comple case identification task
+     
       return HumanTask.findAllByCaseId(this.case1.id)
         .then(humanTasks=>{          
           const humanTask = humanTasks.filter(h=>h.name == 'Lace')[0];
@@ -854,8 +856,10 @@ module.exports = class XMLImporter {
         })
         .then(humanTask=>{
           //console.log(JSON.stringify(humanTask, null, 2));
+          //return Case.findTreebyId(this.case1.id, {simple:true});
           return HumanTask.findAllByCaseId(this.case1.id);
         })
+         
         .then(humanTasks=>{         
           const humanTask = humanTasks.filter(h=>h.name == 'Barthel')[0];
           humanTask.taskParams[0].values.push('10');
@@ -871,6 +875,7 @@ module.exports = class XMLImporter {
         .catch(err=>{
           console.log(err);
         })
+        
     }
 
 }
