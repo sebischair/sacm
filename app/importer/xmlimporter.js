@@ -854,19 +854,34 @@ module.exports = class XMLImporter {
           humanTask.taskParams[1].values.push('0');
           return HumanTask.complete(humanTask);
         })
-        .then(humanTask=>{
-          //console.log(JSON.stringify(humanTask, null, 2));
-          //return Case.findTreebyId(this.case1.id, {simple:true});
+        .then(()=>{
           return HumanTask.findAllByCaseId(this.case1.id);
-        })
-         
+        })         
         .then(humanTasks=>{         
           const humanTask = humanTasks.filter(h=>h.name == 'Barthel')[0];
           humanTask.taskParams[0].values.push('10');
           humanTask.taskParams[1].values.push('5');
           return HumanTask.complete(humanTask);
         })
-        .then(humanTask=>{          
+        .then(()=>{
+          return HumanTask.findAllByCaseId(this.case1.id);
+        })         
+        .then(humanTasks=>{         
+          const humanTask = humanTasks.filter(h=>h.name == 'PhysicalActivityPrescription')[0];
+          humanTask.taskParams[0].values.push('v1');
+          humanTask.taskParams[1].values.push('v2');
+          return HumanTask.complete(humanTask);
+        })   
+        .then(()=>{
+          return HumanTask.findAllByCaseId(this.case1.id);
+        })         
+        .then(humanTasks=>{         
+          const humanTask = humanTasks.filter(h=>h.name == 'DischageForm')[0];
+          humanTask.taskParams[0].values.push('some reason');
+          humanTask.taskParams[1].values.push('some date');
+          return HumanTask.complete(humanTask);
+        })       
+        .then(()=>{          
           return Case.findTreebyId(this.case1.id, {simple:true});
         })
         .then(caseTree=>{

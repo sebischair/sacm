@@ -68,13 +68,13 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
         </EntityDefinition>
 
         <EntityDefinition id="PhysicalActivityPrescription" description="Physical Activity Prescription">
-            <AttributeDefinition id="phactp1" type="date" multiplicity="maximalOne" description="Start date"/>
-            <AttributeDefinition id="phactp2" type="date" multiplicity="maximalOne" description="End date"/>                  
+            <AttributeDefinition id="phactp1" type="string" multiplicity="maximalOne" description="Start date"/>
+            <AttributeDefinition id="phactp2" type="string" multiplicity="maximalOne" description="End date"/>                  
         </EntityDefinition>
 
         <EntityDefinition id="Discharge" description="Discharge">
             <AttributeDefinition id="reason" type="string" multiplicity="maximalOne" description="Reason"/>
-            <AttributeDefinition id="date" type="date" multiplicity="maximalOne" description="Discharge Date"/>                  
+            <AttributeDefinition id="date" type="string" multiplicity="maximalOne" description="Discharge Date"/>                  
         </EntityDefinition>
 
 
@@ -102,10 +102,10 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
                 <SentryDefinition>
                     <precondition processDefinitionId="CaseEvaluation"/>
                 </SentryDefinition>
-                <AutomatedTaskDefinition id="PhysicalActivityPrescription" description="Physical Activity Prescription" ownerPath="Owner" isMandetory="true" isRepeatable="false" entityDefinitionId="PhysicalActivityPrescription" entityAttachPath="PhysicalActivityPrescription">
+                <HumanTaskDefinition id="PhysicalActivityPrescription" description="Physical Activity Prescription" ownerPath="Owner" isMandetory="true" isRepeatable="false" entityDefinitionId="PhysicalActivityPrescription" entityAttachPath="PhysicalActivityPrescription">
                     <TaskParamDefinition path="PhysicalActivityPrescription.phactp1" isReadOnly="false" isMandetory="true"/>
                     <TaskParamDefinition path="PhysicalActivityPrescription.phactp2" isReadOnly="false" isMandetory="true"/>
-                </AutomatedTaskDefinition>
+                </HumanTaskDefinition>
             </StageDefinition>
 
             <StageDefinition id="Discharge" description="Discharge" isMandetory="true" isRepeatable="false">        
