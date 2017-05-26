@@ -10,6 +10,7 @@ import EntityDefinition from '../models/casedefinition/model.entitydefinition';
 import AttributeDefinition from '../models/casedefinition/model.attributedefinition';
 import DerivedAttributeDefinition from '../models/casedefinition/model.derivedattributedefinition';
 import CaseDefinition from '../models/casedefinition/model.casedefinition';
+import SummarySectionDefinition from '../models/casedefinition/model.summarysectiondefinition';
 import StageDefinition from '../models/casedefinition/model.stagedefinition';
 import HumanTaskDefinition from '../models/casedefinition/model.humantaskdefinition';
 import AutomatedTaskDefinition from '../models/casedefinition/model.automatedtaskdefinition';
@@ -543,14 +544,13 @@ module.exports = class XMLImporter {
               name: cd.$.id,
               description: cd.$.description,
               ownerPath: cd.$.ownerPath,
-              entityDefinition: entityDefinitionId,
-              summaryPaths: this.getSummaryDefinitionParam(cd)
+              entityDefinition: entityDefinitionId
             };
             return CaseDefinition.create(data)
           })
           .then(persistedCaseDefinition =>{
             this.caseDefinitionMap.set(cd.$.id, persistedCaseDefinition.id);
-            return Promise.resolve();
+            return this.createSummarySectionDefinitions(cd.SummarySectionDefinition);
           })
           .catch(err=>{
             console.log(err);
@@ -559,17 +559,27 @@ module.exports = class XMLImporter {
       });
     }
 
-    getSummaryDefinitionParam(CaseDefinition){
-      if(CaseDefinition.SummaryDefinitionParam == null)
-        return [];
-      let params = [];
-      for(let i=0; i<CaseDefinition.SummaryDefinitionParam.length; i++){
-        const param = CaseDefinition.SummaryDefinitionParam[i];
-        if(param.$.path != null)
-          params.push(param.$.path);
-      };
-      return params;
+    createSummarySectionDefinitions(SummarySectionDefinitions){
+      if(SummarySectionDefinitions == null)
+        return Promise.resolve();
+      return Promise.each(SummarySectionDefinitions, ssd=>{
+        if(ssd.SummaryParamDefinition == null)
+          return Promise.resolve();
+        let data = {
+          name: ssd.$.id,
+          description: ssd.$.description,
+          paths: []
+        }
+        for(let i=0; i<ssd.SummaryParamDefinition.length; i++){
+          const param = ssd.SummaryParamDefinition[i];
+          if(param.$.path != null)
+            data.paths.push(param.$.path);
+        };
+        return SummarySectionDefinition.create(data);
+      });
     }
+
+
 
     createStageDefinitions(Workspace) {
       if(Workspace.CaseDefinition == null)
