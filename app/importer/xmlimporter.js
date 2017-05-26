@@ -550,7 +550,7 @@ module.exports = class XMLImporter {
           })
           .then(persistedCaseDefinition =>{
             this.caseDefinitionMap.set(cd.$.id, persistedCaseDefinition.id);
-            return this.createSummarySectionDefinitions(cd.SummarySectionDefinition);
+            return this.createSummarySectionDefinitions(cd.SummarySectionDefinition, persistedCaseDefinition.id);
           })
           .catch(err=>{
             console.log(err);
@@ -559,7 +559,7 @@ module.exports = class XMLImporter {
       });
     }
 
-    createSummarySectionDefinitions(SummarySectionDefinitions){
+    createSummarySectionDefinitions(SummarySectionDefinitions, caseDefinitionId){
       if(SummarySectionDefinitions == null)
         return Promise.resolve();
       return Promise.each(SummarySectionDefinitions, ssd=>{
@@ -568,7 +568,8 @@ module.exports = class XMLImporter {
         let data = {
           name: ssd.$.id,
           description: ssd.$.description,
-          paths: []
+          paths: [],
+          caseDefinition: caseDefinitionId
         }
         for(let i=0; i<ssd.SummaryParamDefinition.length; i++){
           const param = ssd.SummaryParamDefinition[i];
@@ -578,8 +579,6 @@ module.exports = class XMLImporter {
         return SummarySectionDefinition.create(data);
       });
     }
-
-
 
     createStageDefinitions(Workspace) {
       if(Workspace.CaseDefinition == null)
