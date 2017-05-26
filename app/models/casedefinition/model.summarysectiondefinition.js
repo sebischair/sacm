@@ -13,6 +13,10 @@ export default class SummarySectionDefinition extends Model{
     return http.get('/summarysectiondefinition/'+summarySectionDefinitionId);
   }
 
+  static findByCaseDefinitionId(caseDefinitionId){
+    return http.get('/caseDefinitions/'+caseDefinitionId+'/summarysectiondefinitions');
+  }
+
   static updateById(data) {
     return http.put('/summarysectiondefinition/'+data.id, data);
   }

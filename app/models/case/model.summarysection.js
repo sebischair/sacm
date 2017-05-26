@@ -3,11 +3,11 @@ import http from '../http';
 import Model from '../model';
 
 
-export default class Sumamry extends Model{
+export default class SumamrySection extends Model{
 
 
   static findByCaseId(caseId) {
-    return http.get('/case/'+caseId+'/summary');
+    return http.get('/case/'+caseId+'/summarysections');
   }
 
 }

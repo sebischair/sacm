@@ -9,7 +9,7 @@ import HumanTask from './../../models/case/model.humantask';
 import AutomatedTask from './../../models/case/model.automatedtask';
 import Message from './../../models/case/model.message';
 import Alert from './../../models/case/model.alert';
-import Summary from './../../models/case/model.summary';
+import SummarySection from './../../models/case/model.summarysection';
 
 
 // my cases
@@ -791,17 +791,17 @@ router.get('/:id/alerts', (req, res, next)=>{
     })
 });
 
-// summary
+// SummarySection
 
 /**
- * @api {get} /case/:id/summary Get Summary
+ * @api {get} /case/:id/summarysections Get Summary
  *
  * @apiName GetSummary
  * @apiGroup Case
  *
  * @apiParam {String} id ID of the Case
  *
- * @apiSampleRequest /case/:id/summary
+ * @apiSampleRequest /case/:id/summarysections
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
@@ -810,8 +810,8 @@ router.get('/:id/alerts', (req, res, next)=>{
  *   }
  *
  */
-router.get('/:id/summary', (req, res, next)=>{
-  Summary.findByCaseId(req.params.id)
+router.get('/:id/summarysections', (req, res, next)=>{
+  SummarySection.findByCaseId(req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
