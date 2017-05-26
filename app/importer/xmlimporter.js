@@ -819,18 +819,24 @@ module.exports = class XMLImporter {
       return Promise.each(sentryDefinitions, sd=>{
         const data = {
           enablesProcessDefinition: enablesProcessDefinitionId,
-          completedProcessDefinitions: []
+          completedProcessDefinitions: [],
+          expression: null
         };
         return Promise.each(sd.precondition, p=>{
+          if(p.$.processDefinitionId != null){
             return this.getProcessDefinitionIdByXMLId(p.$.processDefinitionId)
               .then(processDefinitionId=>{
                 data.completedProcessDefinitions.push({id: processDefinitionId});
                 return Promise.resolve();
               });
-          })
-          .then(()=>{
-            return SentryDefinition.create(data);
-          });
+          }else{
+            data.expression = p.$.expression;
+            return Promise.resolve();
+          }
+        })
+        .then(()=>{
+          return SentryDefinition.create(data);
+        });
       });
     }
 

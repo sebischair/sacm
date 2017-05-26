@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+AttributeDefintion types = richstring, text, notype, json, link, string, mxl, longtext, image, boolean, number, enumeration or date
+
+One entit defintion can only belong to one casedefintnion, meaning a entityDefinition can be used only once
+-->
+<SACMDefinition>
+    
+    <UserDefinition>
+        <AttributeDefinition id="Firstname" type="string" description="Firstname"/>
+        <AttributeDefinition id="Lastname" type="string" description="Lastname"/>
+        <AttributeDefinition id="Language" type="string" description="Language"/>
+        <AttributeDefinition id="Birthdate" type="date" description="Birthdate"/>
+        <AttributeDefinition id="Phone" type="string" description="Phone"/>
+        <AttributeDefinition id="Mobile" type="string" description="Mobile"/>
+        <AttributeDefinition id="PatientNr" type="date" description="Patient Number"/>
+    </UserDefinition>
+    
+    <!--Barcelona Groups and Users-->
+    <Group id="Groningen-Hospital" description="All users of the hospital in Barcelona">
+        <Administrator principalId="Me"/>
+    </Group>
+
+     <!--Leida Worksapce-->
+    <Workspace id="Groningen-Hospital" description="All model elements and instances of the hospital in Groningen">
+        <Reader principalId="Groningen-Hospital"/>
+        <Writer principalId="Groningen-Hospital"/>
+        <Administrator principalId="Me"/>
+
+        <!-- Case Data Defintion -->   
+        <EntityDefinition id="CaseData" description="">
+            <AttributeDefinition id="Owner" type="string" description="Owner"/>
+            <AttributeDefinition id="TechnologicalTest" type="Link.EntityDefinition.TechnologicalTest" description="TechnologicalTest"/>
+            <AttributeDefinition id="pConsent1" type="enumeration" multiplicity="maximalOne" description="Agree to participate in the study as described in the document?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>   
+        </EntityDefinition>
+
+        <EntityDefinition id="TechnologicalTest" description="Technological Test">
+            <AttributeDefinition id="tech1" type="enumeration" multiplicity="maximalOne" description="Internet connection">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>        
+            <AttributeDefinition id="tech2" type="enumeration" multiplicity="maximalOne" description="Device">
+                <EnumerationOption value="0" description="Cap"/>
+                <EnumerationOption value="1" description="Telèfon mòvil no tan sols per trucar."/>
+                <EnumerationOption value="2" description="Tablet"/>
+                <EnumerationOption value="3" description="Ordinador personal."/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="tech3" type="enumeration" multiplicity="maximalOne" description="El seu cuidador principal fa anar:">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>            
+            <DerivedAttributeDefinition id="tech4" expression="(number(tech1,0)+number(tech2,0)+number(tech3,0))>0" description="Is Eligible"/>  
+        </EntityDefinition>
+
+        <EntityDefinition id="GeriatrICS" description="GeriatrICS">
+            <AttributeDefinition id="GERd510" type="enumeration" multiplicity="maximalOne" description="d510 Washing oneself">
+                <EnumerationOption value="0" description="no problem"/>
+                <EnumerationOption value="1" description="slight problem"/>
+            </AttributeDefinition>        
+            <AttributeDefinition id="tech2" type="enumeration" multiplicity="maximalOne" description="Device">
+                <EnumerationOption value="0" description="Cap"/>
+                <EnumerationOption value="1" description="Telèfon mòvil no tan sols per trucar."/>
+                <EnumerationOption value="2" description="Tablet"/>
+                <EnumerationOption value="3" description="Ordinador personal."/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="tech3" type="enumeration" multiplicity="maximalOne" description="El seu cuidador principal fa anar:">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>            
+            <DerivedAttributeDefinition id="tech4" expression="(number(tech1,0)+number(tech2,0)+number(tech3,0))>0" description="Is Eligible"/>  
+        </EntityDefinition>
+
+
+    </Workspace>
+
+    
+
+</SACMDefinition>
