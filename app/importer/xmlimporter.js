@@ -865,7 +865,7 @@ module.exports = class XMLImporter {
       return HumanTask.findAllByCaseId(this.case1.id)
         .then(humanTasks=>{          
           const humanTask = humanTasks.filter(h=>h.name == 'Lace')[0];
-          humanTask.taskParams[0].values.push('1');
+          humanTask.taskParams[0].values.push('2');
           humanTask.taskParams[1].values.push('0');
           return HumanTask.complete(humanTask);
         })
