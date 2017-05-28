@@ -838,8 +838,8 @@ module.exports = class XMLImporter {
                 data.completedProcessDefinitions.push({id: processDefinitionId});
                 return Promise.resolve();
               });
-          }else{
-            data.expression = p.$.expression;
+          }else if(p.$.expression != null){
+            data.expression = p.$.expression.replace(/'/g,'"');
             return Promise.resolve();
           }
         })
