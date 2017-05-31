@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html>
+    <head>
+         <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lato">
+        <style>
+            body{
+                font-family: 'Lato', serif;
+                margin-left: 80px;
+                margin-right: 80px;
+                margin-bottom: 80px;
+           }           
+           .container{
+                margin-top: 20px;
+                padding:5px 10px;
+                border-left: 5px solid gray;
+                background-color: #eee;
+            }
+            .container:hover{
+                border-left: 5px solid red;
+                cursor: pointer;
+            }
+            .container h2{
+                margin-top:10px;
+            }
+            a.link:link, a.link:visited, a.link:active {
+                color: #cc0000; 
+                background-color: transparent; 
+                text-decoration: none;
+            }         
+            a.link:hover {
+                color: #b30000;
+                background-color: transparent;
+                text-decoration: underline;
+            }
+        </style>
+    </head>
+<body>
+<h2> SACM Meta-Model XML Import (Draft)</h2>
+<br/>
+
+
+<div class="container">
+    <h2>Simple Sample</h2>
+    <p>All relevant model definitions can be imported based on an XML schema. This sample contains many different model elements with less attributes for testing purpose (see XML below).</p>
+    <xmp>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<SACMDefinition>
+     
+    <!--Barcelona Groups and Users-->
+    <Group id="Barcelona-Hospital" description="All users of the hospital in Barcelona">
+        <Administrator principalId="Me"/>
+    </Group>
+
+    <User id="JohnSmith" email="john.smith@connecare.eu">
+    </User>
+    <User id="RuthGibson" email="ruth.gibson@connecare.eu">
+    </User>
+    <User id="AngelaTran" email="angela.tran@connecare.eu">
+    </User>
+    <User id="CherylWillis" email="cheryl.willis@connecare.eu">
+    </User>
+    <User id="VincentAdams" email="vincent.adams@connecare.eu">
+    </User>
+    <User id="ChristinaBennett" email="christina.bennett@connecare.eu">
+    </User>                 
+    <User id="JaneWebb" email="jane.webb@connecare.eu">
+    </User>       
+
+    <!--Barcelona Worksapce-->
+    <Workspace id="Barcelona Hospital" description="All model elements and instances of the hospital in Barcelona">
+        <Reader principalId="Barcelona-Hospital"/>
+        <Writer principalId="Barcelona-Hospital"/>
+        <Administrator principalId="Me"/>
+
+        <!-- Case Data Defintion -->   
+        <EntityDefinition id="CaseData" description="">
+            <AttributeDefinition id="Owner" type="Link.Users.Barcelona-Hospital" description="Owner"/>
+            <AttributeDefinition id="Lace" type="Link.EntityDefinition.Lace" description="Lace"/>
+            <AttributeDefinition id="Barthel" type="Link.EntityDefinition.Barthel" description="Barthel"/>        
+            <AttributeDefinition id="PhysicalActivityPrescription" type="Link.EntityDefinition.PhysicalActivityPrescription" description="PhysicalActivityPrescription"/>            
+            <AttributeDefinition id="Discharge" type="Link.EntityDefinition.Discharge" description="Discharge"/>    
+        </EntityDefinition>
+
+        <EntityDefinition id="Lace" description="Lace">
+            <AttributeDefinition id="lace1" type="enumeration" multiplicity="maximalOne" description="Length of Stay (including day of admission and discharge)">
+                <EnumerationOption value="1" description="1 day"/>
+                <EnumerationOption value="2" description="2 days"/>
+            </AttributeDefinition>        
+            <AttributeDefinition id="lace2" type="enumeration" multiplicity="maximalOne" description="Was the patient admitted to hospital via the emergency department?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>             
+        </EntityDefinition>
+
+        <EntityDefinition id="Barthel" description="Barthel">
+            <AttributeDefinition id="barthel1" type="enumeration" multiplicity="maximalOne" description="FEEDING">
+                <EnumerationOption value="0" description="unable"/>
+                <EnumerationOption value="10" description="independent"/>
+            </AttributeDefinition>        
+            <AttributeDefinition id="barthel2" type="enumeration" multiplicity="maximalOne" description="BATHING">
+                <EnumerationOption value="0" description="dependent"/>
+                <EnumerationOption value="5" description="independent (or in shower)"/>
+            </AttributeDefinition>    
+        </EntityDefinition>
+
+        <EntityDefinition id="PhysicalActivityPrescription" description="Physical Activity Prescription">
+            <AttributeDefinition id="phactp1" type="string" multiplicity="maximalOne" description="Start date"/>
+            <AttributeDefinition id="phactp2" type="string" multiplicity="maximalOne" description="End date"/>                  
+        </EntityDefinition>
+
+        <EntityDefinition id="Discharge" description="Discharge">
+            <AttributeDefinition id="reason" type="string" multiplicity="maximalOne" description="Reason"/>
+            <AttributeDefinition id="date" type="string" multiplicity="maximalOne" description="Discharge Date"/>                  
+        </EntityDefinition>
+
+
+        <!-- Case Definition -->
+        <CaseDefinition id="Democase" description="Demo Case London" ownerPath="Owner" entityDefinitionId="CaseData">
+            <SummarySectionDefinition id="Section1" description="Section 1">
+                <SummaryParamDefinition path="Lace.lace1"/>
+            </SummarySectionDefinition>
+
+            <SummarySectionDefinition id="Section2" description="Section 2">
+                <SummaryParamDefinition path="Lace.lace1"/>
+                <SummaryParamDefinition path="Lace.lace2"/>
+            </SummarySectionDefinition>
+
+            <StageDefinition id="CaseIdentification" description="Case Identification" isMandetory="true" isRepeatable="false">        
+                <HumanTaskDefinition id="Lace" description="Lace" ownerPath="Owner" isMandetory="true" isRepeatable="false" entityDefinitionId="Lace" entityAttachPath="Lace">                
+                    <TaskParamDefinition path="Lace.lace1" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Lace.lace2" isReadOnly="false" isMandetory="true"/>
+                </HumanTaskDefinition>
+            </StageDefinition>
+        
+            <StageDefinition id="CaseEvaluation" description="Case Evaluation" isMandetory="false" isRepeatable="true">  
+                <SentryDefinition>
+                    <precondition processDefinitionId="CaseIdentification"/>
+                    <precondition expression="number(Lace.lace1)>1"/>
+                </SentryDefinition>
+                <SentryDefinition>
+                    <precondition processDefinitionId="WorkplanDefinition"/>
+                </SentryDefinition>
+                <HumanTaskDefinition id="Barthel" description="Barthel" ownerPath="Owner" isMandetory="true" isRepeatable="false" entityDefinitionId="Barthel" entityAttachPath="Barthel">
+                    <TaskParamDefinition path="Barthel.barthel1" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Barthel.barthel2" isReadOnly="false" isMandetory="true"/>
+                </HumanTaskDefinition>
+            </StageDefinition>
+
+            <StageDefinition id="WorkplanDefinition" description="Workplan Definition" isMandetory="false" isRepeatable="true">  
+                <SentryDefinition>
+                    <precondition processDefinitionId="CaseEvaluation"/>
+                </SentryDefinition>
+                <HumanTaskDefinition id="PhysicalActivityPrescription" description="Physical Activity Prescription" ownerPath="Owner" isMandetory="true" isRepeatable="false" entityDefinitionId="PhysicalActivityPrescription" entityAttachPath="PhysicalActivityPrescription">
+                    <TaskParamDefinition path="PhysicalActivityPrescription.phactp1" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="PhysicalActivityPrescription.phactp2" isReadOnly="false" isMandetory="true"/>
+                </HumanTaskDefinition>
+            </StageDefinition>
+
+            <StageDefinition id="Discharge" description="Discharge" isMandetory="true" isRepeatable="false">        
+                <HumanTaskDefinition id="DischageForm" description="Dischargefrom" ownerPath="Owner" isMandetory="true" isRepeatable="false" entityDefinitionId="Discharge" entityAttachPath="Discharge">                
+                    <TaskParamDefinition path="Discharge.reason" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Discharge.date" isReadOnly="false" isMandetory="true"/>
+                </HumanTaskDefinition>
+            </StageDefinition>
+            
+        </CaseDefinition>
+    
+    </Workspace>
+
+</SACMDefinition>
+    </xmp>
+</div>
+
+
+
+
+
+
+
+<div class="container">
+    <h2>London Demo Case Sample</h2>
+    <p>All relevant model definitions can be imported based on an XML schema. This sample represents the London demo case (see XML below).</p>
+    <xmp>
+    
+<?xml version="1.0" encoding="UTF-8"?>
+
+<SACMDefinition>
+    
+    <UserDefinition>
+        <AttributeDefinition id="Firstname" type="string" description="Firstname"/>
+        <AttributeDefinition id="Lastname" type="string" description="Lastname"/>
+        <AttributeDefinition id="Language" type="string" description="Language"/>
+        <AttributeDefinition id="Birthdate" type="date" description="Birthdate"/>
+        <AttributeDefinition id="Phone" type="string" description="Phone"/>
+        <AttributeDefinition id="Mobile" type="string" description="Mobile"/>
+        <AttributeDefinition id="PatientNr" type="date" description="Patient Number"/>
+    </UserDefinition>
+    
+    <!--Barcelona Groups and Users-->
+    <Group id="Barcelona-Hospital" description="All users of the hospital in Barcelona">
+        <Administrator principalId="Me"/>
+        <Membership principalId="Barcelona-Nurses"/>
+        <Membership principalId="Barcelona-Doctors"/>
+        <Membership principalId="Barcelona-Patients"/>
+    </Group>
+
+    <Group id="Barcelona-Nurses" description="All nurses of the hospital in Barcelona">
+        <Administrator principalId="Me"/>
+        <Membership principalId="JohnSmith"/>
+        <Membership principalId="RuthGibson"/>
+        <Membership principalId="AngelaTran"/>
+        <Membership principalId="CherylWillis"/>
+    </Group>
+
+    <Group id="Barcelona-Doctors" description="All doctors of the hospital in Barcelona">
+        <Administrator principalId="Me"/>
+        <Membership principalId="VincentAdams"/>
+        <Membership principalId="ChristinaBennett"/>
+        <Membership principalId="JaneWebb"/>
+        <Membership principalId="KennethJones"/>
+    </Group>
+
+    <Group id="Barcelona-Patients" description="All doctors of the hospital in Barcelona">
+        <Administrator principalId="Me"/>
+        <Membership principalId="BrandonWilson"/>
+        <Membership principalId="PatriciaWalsh"/>
+        <Membership principalId="PhilipRice"/>
+        <Membership principalId="CraigEllis"/>
+    </Group>
+
+    <User id="JohnSmith" email="john.smith@connecare.eu">
+        <Attribute attributeDefinitionId="Firstname" values="['John']"/> 
+        <Attribute attributeDefinitionId="Lastname" values="['Smith']"/> 
+    </User>
+    <User id="RuthGibson" email="ruth.gibson@connecare.eu">
+        <Attribute attributeDefinitionId="Firstname" values="['Ruth']"/> 
+        <Attribute attributeDefinitionId="Lastname" values="['Gibson']"/> 
+    </User>
+    <User id="AngelaTran" email="angela.tran@connecare.eu">
+        <Attribute attributeDefinitionId="Firstname" values="['Angela']"/> 
+        <Attribute attributeDefinitionId="Lastname" values="['Tran']"/> 
+    </User>
+    <User id="CherylWillis" email="cheryl.willis@connecare.eu">
+        <Attribute attributeDefinitionId="Firstname" values="['Cheryl']"/> 
+        <Attribute attributeDefinitionId="Lastname" values="['Willis']"/> 
+    </User>
+    <User id="VincentAdams" email="vincent.adams@connecare.eu">
+        <Attribute attributeDefinitionId="Firstname" values="['Vincent']"/> 
+        <Attribute attributeDefinitionId="Lastname" values="['Adams']"/> 
+    </User>
+    <User id="ChristinaBennett" email="christina.bennett@connecare.eu">
+        <Attribute attributeDefinitionId="Firstname" values="['Christina']"/> 
+        <Attribute attributeDefinitionId="Lastname" values="['Bennett']"/> 
+    </User>                 
+    <User id="JaneWebb" email="jane.webb@connecare.eu">
+        <Attribute attributeDefinitionId="Firstname" values="['Jane']"/> 
+        <Attribute attributeDefinitionId="Lastname" values="['Webb']"/> 
+    </User>       
+    <User id="KennethJones" email="kenneth.jones@connecare.eu">
+        <Attribute attributeDefinitionId="Firstname" values="['Kenneth']"/> 
+        <Attribute attributeDefinitionId="Lastname" values="['Jones']"/> 
+    </User>       
+    <User id="BrandonWilson" email="brandon.wilson@connecare.eu">
+        <Attribute attributeDefinitionId="Firstname" values="['Brandon']"/> 
+        <Attribute attributeDefinitionId="Lastname" values="['Wilson']"/> 
+    </User>       
+    <User id="PatriciaWalsh" email="patricia.walsh@connecare.eu">
+        <Attribute attributeDefinitionId="Firstname" values="['Patricia']"/> 
+        <Attribute attributeDefinitionId="Lastname" values="['Walsh']"/> 
+    </User>       
+    <User id="PhilipRice" email="philip.rice@connecare.eu">
+        <Attribute attributeDefinitionId="Firstname" values="['Philip']"/> 
+        <Attribute attributeDefinitionId="Lastname" values="['Rice']"/> 
+    </User>       
+    <User id="CraigEllis" email="craig.ellis@connecare.eu">
+        <Attribute attributeDefinitionId="Firstname" values="['Craig']"/> 
+        <Attribute attributeDefinitionId="Lastname" values="['Ellis']"/> 
+    </User>       
+    <User id="PhilipBarnes" email="philip.barnes@connecare.eu">
+        <Attribute attributeDefinitionId="Firstname" values="['Philip']"/> 
+        <Attribute attributeDefinitionId="Lastname" values="['Barnes']"/> 
+    </User>       
+    <User id="LarryCarter" email="larry.carter@connecare.eu">
+        <Attribute attributeDefinitionId="Firstname" values="['Larry']"/> 
+        <Attribute attributeDefinitionId="Lastname" values="['Carter']"/> 
+    </User>       
+    <User id="KeithVasquez" email="keith.vasquez@connecare.eu">
+        <Attribute attributeDefinitionId="Firstname" values="['Keith']"/> 
+        <Attribute attributeDefinitionId="Lastname" values="['Vasquez']"/> 
+    </User>    
+
+
+    <!--Leida Groups and Users-->
+    <Group id="Leida-Hospital" description="All users of the hospital in Leida">
+        <Administrator principalId="Me"/>
+        <Membership principalId="Leida-Nurses"/>
+        <Membership principalId="Leida-Doctors"/>
+        <Membership principalId="Leida-Patients"/>
+    </Group>
+
+    <Group id="Leida-Nurses" description="All nurses of the hospital in Leida">
+        <Administrator principalId="Me"/>
+    </Group>
+
+    <Group id="Leida-Doctors" description="All doctors of the hospital in Leida">
+        <Administrator principalId="Me"/>
+    </Group>
+
+    <Group id="Leida-Patients" description="All doctors of the hospital in Leida">
+        <Administrator principalId="Me"/>
+    </Group>
+
+
+    <!--Leida Worksapce-->
+    <Workspace id="LeidaHospital" staticId="wsleida" description="All model elements and instances of the hospital in Barcelona">
+        <Reader principalId="Leida-Hospital"/>
+        <Writer principalId="Leida-Hospital"/>
+        <Administrator principalId="Me"/>
+
+        <!-- Case Data Defintion -->   
+        <EntityDefinition id="CaseData" description="">
+            <AttributeDefinition id="Owner" type="string" description="Owner"/>
+            <AttributeDefinition id="Lace" type="string" description="Lace"/>
+            <AttributeDefinition id="Barthel" type="string" description="Barthel"/>        
+            <AttributeDefinition id="PhysicalActivityPrescription" type="string" description="PhysicalActivityPrescription"/>
+        </EntityDefinition>
+    </Workspace>
+
+    <!--Barcelona Worksapce-->
+    <Workspace id="Barcelona Hospital" description="All model elements and instances of the hospital in Barcelona">
+        <Reader principalId="Barcelona-Hospital"/>
+        <Writer principalId="Barcelona-Hospital"/>
+        <Administrator principalId="Me"/>
+
+        <!-- Case Data Defintion -->   
+        <EntityDefinition id="CaseData" description="">
+            <AttributeDefinition id="Owner" type="Link.Users.Barcelona-Doctors" description="Owner"/>
+            <AttributeDefinition id="Lace" type="Link.EntityDefinition.Lace" description="Lace"/>
+            <AttributeDefinition id="Barthel" type="Link.EntityDefinition.Barthel" description="Barthel"/>        
+            <AttributeDefinition id="PhysicalActivityPrescription" type="Link.EntityDefinition.PhysicalActivityPrescription" description="PhysicalActivityPrescription"/>
+        </EntityDefinition>
+
+        <EntityDefinition id="Lace" description="Lace">
+            <AttributeDefinition id="lace1" type="enumeration" multiplicity="maximalOne" description="Length of Stay (including day of admission and discharge)">
+                <EnumerationOption value="1" description="1 day"/>
+                <EnumerationOption value="2" description="2 days"/>
+                <EnumerationOption value="3" description="3 days"/>
+                <EnumerationOption value="4" description="4-6 days"/>
+                <EnumerationOption value="5" description="7-13 days"/>
+                <EnumerationOption value="7" description="14 or more days"/>
+            </AttributeDefinition>        
+            <AttributeDefinition id="lace2" type="enumeration" multiplicity="maximalOne" description="Was the patient admitted to hospital via the emergency department?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="lace3" type="enumeration" multiplicity="maximalOne" description="Conditions - Previous myocardial infarction">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="lace4" type="enumeration" multiplicity="maximalOne" description="Conditions - Cerebrovascular disease">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="lace5" type="enumeration" multiplicity="maximalOne" description="Conditions - Peripheral vascular disease">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="lace6" type="enumeration" multiplicity="maximalOne" description="Conditions - Diabetes without complications">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="lace7" type="enumeration" multiplicity="maximalOne" description="Conditions - Congestive heart failure">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="2" description="Yes"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="lace8" type="enumeration" multiplicity="maximalOne" description="Conditions - Diabetes with end organ damage">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="2" description="Yes"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="lace9" type="enumeration" multiplicity="maximalOne" description="Conditions – Chronic pulmonary disease">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="2" description="Yes"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="lace10" type="enumeration" multiplicity="maximalOne" description="Conditions – Mild liver or renal disease">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="2" description="Yes"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="lace11" type="enumeration" multiplicity="maximalOne" description="Conditions – Any tumor (including lymphoma or leukemia)">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="2" description="Yes"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="lace12" type="enumeration" multiplicity="maximalOne" description="Conditions - Dementia">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="3" description="Yes"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="lace13" type="enumeration" multiplicity="maximalOne" description="Conditions – Connective tissue disease">    
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="3" description="Yes"/>
+            </AttributeDefinition>     
+            <AttributeDefinition id="lace14" type="enumeration" multiplicity="maximalOne" description="Conditions – AIDS">  
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="4" description="Yes"/>
+            </AttributeDefinition>       
+            <AttributeDefinition id="lace15" type="enumeration" multiplicity="maximalOne" description="Conditions – Moderate or severe liver or renal disease">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="4" description="Yes"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="lace16" type="enumeration" multiplicity="maximalOne" description="Conditions – Metastatic solid tumor">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="6" description="Yes"/>
+            </AttributeDefinition> 
+            <DerivedAttributeDefinition id="lace17" expression="number(lace3,0)+number(lace4,0)+number(lace5,0)+number(lace6,0)+number(lace7,0)+number(lace8,0)+number(lace9,0)+number(lace10,0)+number(lace11,0)+number(lace12,0)+number(lace13,0)+number(lace14,0)+number(lace15,0)+number(lace16,0)" description="Comorbidities"/>
+            <AttributeDefinition id="lace18" type="enumeration" multiplicity="maximalOne" description="Emergency department visits (six months prior to admission)">
+                <EnumerationOption value="0" description="0 visits"/>
+                <EnumerationOption value="1" description="1 visit"/>
+                <EnumerationOption value="2" description="2 visits"/>            
+                <EnumerationOption value="3" description="3 visits"/>
+                <EnumerationOption value="4" description="4 or more visits"/>
+            </AttributeDefinition>  
+            <DerivedAttributeDefinition id="lace19" expression="number(lace1,0)+number(lace2,0)+lace17+number(lace18,0)" description="LACE Score Risk of Readmission"/>  
+        </EntityDefinition>
+
+        <EntityDefinition id="Barthel" description="Barthel">
+        <AttributeDefinition id="barthel1" type="enumeration" multiplicity="maximalOne" description="FEEDING">
+                <EnumerationOption value="0" description="unable"/>
+                <EnumerationOption value="5" description="needs help cutting, spreading butter, etc., or requires modified diet"/>
+                <EnumerationOption value="10" description="independent"/>
+            </AttributeDefinition>        
+            <AttributeDefinition id="barthel2" type="enumeration" multiplicity="maximalOne" description="BATHING">
+                <EnumerationOption value="0" description="dependent"/>
+                <EnumerationOption value="5" description="independent (or in shower)"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="barthel3" type="enumeration" multiplicity="maximalOne" description="GROOMING">
+                <EnumerationOption value="0" description="needs to help with personal care"/>
+                <EnumerationOption value="5" description="independent face/hair/teeth/shaving (implements provided)"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="barthel4" type="enumeration" multiplicity="maximalOne" description="DRESSING">
+                <EnumerationOption value="0" description="dependent"/>
+                <EnumerationOption value="5" description="needs help but can do about half unaided"/>
+                <EnumerationOption value="10" description="independent (including buttons, zips, laces, etc.)"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="barthel5" type="enumeration" multiplicity="maximalOne" description="BOWELS">
+                <EnumerationOption value="0" description="incontinent (or needs to be given enemas)"/>
+                <EnumerationOption value="5" description="occasional accident"/>
+                <EnumerationOption value="10" description="continent"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="barthel6" type="enumeration" multiplicity="maximalOne" description="BLADDER">
+                <EnumerationOption value="0" description="incontinent, or catheterized and unable to manage alone"/>
+                <EnumerationOption value="5" description="occasional accident"/>
+                <EnumerationOption value="10" description="continent"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="barthel7" type="enumeration" multiplicity="maximalOne" description="TOILET USE">
+                <EnumerationOption value="0" description="dependent"/>
+                <EnumerationOption value="5" description="needs some help, but can do something alone"/>            
+                <EnumerationOption value="10" description="independent (on and off, dressing, wiping)"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="barthel8" type="enumeration" multiplicity="maximalOne" description="TRANSFERS (BED TO CHAIR AND BACK)">
+                <EnumerationOption value="0" description="unable, no sitting balance"/>
+                <EnumerationOption value="5" description="major help (one or two people, physical), can sit"/>
+                <EnumerationOption value="10" description="minor help (verbal or physical)"/>
+                <EnumerationOption value="15" description="independent"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="barthel9" type="enumeration" multiplicity="maximalOne" description="MOBILITY (ON LEVEL SURFACES)">
+                <EnumerationOption value="0" description="immobile or < 50 yards"/>
+                <EnumerationOption value="5" description="wheelchair independent, including corners, > 50 yards"/>
+                <EnumerationOption value="10" description="walks with help of one person (verbal or physical) > 50 yards"/>
+                <EnumerationOption value="15" description="independent (but may use any aid; for example, stick) > 50 yards"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="barthel10" type="enumeration" multiplicity="maximalOne" description="STAIRS">
+                <EnumerationOption value="0" description="unable"/>
+                <EnumerationOption value="5" description="needs help (verbal, physical, carrying aid)"/>
+                <EnumerationOption value="10" description="independent"/>
+            </AttributeDefinition>   
+            <DerivedAttributeDefinition id="barthel11" expression="number(barthel1,0)+number(barthel2,0)+number(barthel3,0)+number(barthel4,0)+number(barthel5,0)+number(barthel6,0)+number(barthel7,0)+number(barthel8,0)+number(barthel9,0)+number(barthel10,0)" description="Barthel Index"/>  
+        </EntityDefinition>
+
+        <EntityDefinition id="PhysicalActivityPrescription" description="Physical Activity Prescription">
+            <AttributeDefinition id="phactp1" type="date" multiplicity="maximalOne" description="Start date"/>
+            <AttributeDefinition id="phactp2" type="date" multiplicity="maximalOne" description="End date"/>       
+            <AttributeDefinition id="phactp3" type="number" multiplicity="maximalOne" description="Number of steps daily"/>       
+            <AttributeDefinition id="phactp4" type="number" multiplicity="maximalOne" description="Minutes of low level activity daily"/>       
+            <AttributeDefinition id="phactp5" type="number" multiplicity="maximalOne" description="Minutes of medium level activity daily"/>       
+            <AttributeDefinition id="phactp6" type="number" multiplicity="maximalOne" description="Minutes of high level activity daily"/> 
+            <AttributeDefinition id="phactp7" type="number" multiplicity="maximalOne" description="Max minutes without activity allowed daily"/>                   
+        </EntityDefinition>
+
+
+        <!-- Case Definition -->
+        <CaseDefinition id="Democase" description="Demo Case London" ownerPath="Owner" entityDefinitionId="CaseData">
+
+            <StageDefinition id="CaseIdentification" description="Case Identification" isMandetory="true" isRepeatable="true">        
+                <HumanTaskDefinition id="Lace" description="Lace" ownerPath="Owner" isMandetory="true" isRepeatable="false" entityDefinitionId="Lace" entityAttachPath="Lace">                
+                    <TaskParamDefinition path="Lace.lace1" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Lace.lace2" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Lace.lace3" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Lace.lace4" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Lace.lace5" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Lace.lace6" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Lace.lace7" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Lace.lace8" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Lace.lace9" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Lace.lace10" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Lace.lace11" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Lace.lace12" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Lace.lace13" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Lace.lace14" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Lace.lace15" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Lace.lace16" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Lace.lace17" isReadOnly="true" isMandetory="false"/>                
+                    <TaskParamDefinition path="Lace.lace18" isReadOnly="false" isMandetory="true"/>                
+                    <TaskParamDefinition path="Lace.lace19" isReadOnly="true" isMandetory="false"/>
+                </HumanTaskDefinition>
+            </StageDefinition>
+        
+            <StageDefinition id="CaseEvaluation" description="Case Evaluation" isMandetory="true" isRepeatable="true">  
+                <SentryDefinition>
+                    <precondition processDefinitionId="CaseIdentification"/>
+                </SentryDefinition>
+                <HumanTaskDefinition id="Barthel" description="Barthel" ownerPath="Owner" isMandetory="true" isRepeatable="false" entityDefinitionId="Barthel" entityAttachPath="Barthel">
+                    <TaskParamDefinition path="Barthel.barthel1" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Barthel.barthel2" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Barthel.barthel3" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Barthel.barthel4" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Barthel.barthel5" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Barthel.barthel6" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Barthel.barthel7" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Barthel.barthel8" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Barthel.barthel9" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Barthel.barthel10" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="Barthel.barthel11" isReadOnly="false" isMandetory="false"/>
+                </HumanTaskDefinition>
+            </StageDefinition>
+
+            <StageDefinition id="WorkplanDefinition" description="Workplan Definition" isMandetory="true" isRepeatable="true">  
+                <SentryDefinition>
+                    <precondition processDefinitionId="CaseEvaluation"/>
+                </SentryDefinition>
+                <AutomatedTaskDefinition id="PhysicalActivityPrescription" description="Physical Activity Prescription" ownerPath="Owner" isMandetory="true" isRepeatable="false" entityDefinitionId="PhysicalActivityPrescription" entityAttachPath="PhysicalActivityPrescription">
+                    <TaskParamDefinition path="PhysicalActivityPrescription.phactp1" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="PhysicalActivityPrescription.phactp2" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="PhysicalActivityPrescription.phactp3" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="PhysicalActivityPrescription.phactp4" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="PhysicalActivityPrescription.phactp5" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="PhysicalActivityPrescription.phactp6" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="PhysicalActivityPrescription.phactp7" isReadOnly="false" isMandetory="true"/>
+                    <HttpHookDefinition on="ENABLE" url="http://google.com" method="GET"></HttpHookDefinition>
+                </AutomatedTaskDefinition>
+            </StageDefinition>
+            
+        </CaseDefinition>
+    
+    </Workspace>
+
+</SACMDefinition>
+    </xmp>
+</div>
+
+
+</body>
+</html>

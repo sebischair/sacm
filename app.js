@@ -19,6 +19,7 @@ app.use(cookieParser());
 app.use('/doc', express.static(__dirname + '/doc/index'));
 app.use('/doc/api', express.static(__dirname + '/doc/dist'));
 app.use('/doc/model', express.static(__dirname + '/doc/model'));
+app.use('/doc/modelimport', express.static(__dirname + '/doc/modelimport'));
 app.use('/doc/howtostart', express.static(__dirname + '/doc/howtostart'));
 app.use('/api', routes())
 
