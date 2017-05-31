@@ -886,7 +886,7 @@ module.exports = class XMLImporter {
           humanTask.taskParams[0].values.push('v1');
           humanTask.taskParams[1].values.push('v2');
           return HumanTask.complete(humanTask);
-        })   
+        })  
         .then(()=>{
           return HumanTask.findAllByCaseId(this.case1.id);
         })         
@@ -898,9 +898,6 @@ module.exports = class XMLImporter {
         })       
         .then(()=>{          
           return Case.findTreebyId(this.case1.id, {simple:true});
-        })
-        .then(caseTree=>{
-          return Promise.resolve(caseTree);
         })
         .catch(err=>{
           console.log(err);
