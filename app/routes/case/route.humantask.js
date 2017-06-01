@@ -61,7 +61,8 @@ router.get('/:id', (req, res, next)=>{
  */
 router.post('/:id/draft', (req, res, next)=>{
   var data = req.body.taskParams;
-  HumanTask.draft(req.params.id, data)
+  data.id = req.params.id;
+  HumanTask.draft(data)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -88,7 +89,8 @@ router.post('/:id/draft', (req, res, next)=>{
  */
 router.post('/:id/complete', (req, res, next)=>{
   var data = req.body.taskParams;
-  HumanTask.draft(req.params.id, data)
+  data.id = req.params.id;
+  HumanTask.draft(data)
     .then(c=>{
         res.status(200).send(c);
     })

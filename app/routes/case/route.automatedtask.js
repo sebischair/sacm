@@ -47,27 +47,82 @@ router.get('/:id', (req, res, next)=>{
 
 
 /**
- * TODO CHECK IF ROUTE EXISTS
- * @api {delete} /automatedtask/:id Delete AutomatedTask
- * @apiName DeleteAutomatedTask
+ * @api {post} automatedtask/:id/draft Draft AutomatedTask
+ * @apiName DraftAutomatedTask
  * @apiGroup AutomatedTask
  *
- * @apiParam {Number} id Unique ID of a CaseDefinition.
+ * @apiParam {Number} id Unique ID of a AutomatedTask
+ * @apiParam {Array} taskParams An array of task paramerts
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *     {}
+ *     {
+ *     }
  */
-router.delete('/:id', (req, res, next)=>{
-  AutomatedTask.deleteById(req.params.id)
-    .then(()=>{
-       res.status(200).send();
+router.post('/:id/draft', (req, res, next)=>{
+  var data = req.body.taskParams;
+  data.id = req.params.id;
+  AutomatedTask.draft(data)
+    .then(c=>{
+        res.status(200).send(c);
     })
     .catch(err=>{
-      res.status(500).send(err);
+        res.status(500).send(err);
     })
 });
 
+
+/**
+ * @api {post} /automatedtask/:id/complete Complete AutomatedTask
+ * @apiName CompleteAutomatedTask
+ * @apiGroup AutomatedTask
+ *
+ * @apiParam {Number} id Unique ID of a AutomatedTask
+ * @apiParam {Array} taskParams An array of task paramerts
+ *
+ * @apiSampleRequest /automatedtask/:id/complete
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *     }
+ */
+router.post('/:id/complete', (req, res, next)=>{
+  var data = req.body.taskParams;
+  data.id = req.params.id;
+  AutomatedTask.draft(data)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+        res.status(500).send(err);
+    })
+});
+
+
+/**
+ * @api {post} /automatedtask/:id/terminate Terminate AutoatedTask
+ * @apiName TerminateAutoatedTask
+ * @apiGroup AutoatedTask
+ *
+ * @apiParam {Number} id Unique ID of a AutoatedTask
+ *
+ * @apiSampleRequest /automatedtask/:id/terminate
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *     }
+ */
+router.post('/:id/terminate', (req, res, next)=>{
+  AutomatedTask.terminate(req.params.id)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+        res.status(500).send(err);
+    })
+});
 
 
 module.exports = router;

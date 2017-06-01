@@ -25,4 +25,16 @@ export default class AutomatedTask extends Model{
     return http.get('/automatedtaskdefinition/'+automatedTaskDefinitionId+'/automatedtasks');
   }
 
+  static draft(data) {
+    return http.post('/automatedtask/'+data.id+'/draft', data);
+  }
+
+  static complete(data) {
+    return http.post('/automatedtask/'+data.id+'/complete', data);
+  }
+
+  static terminate(automatedTaskId) {
+    return http.post('/automatedtask/'+automatedTaskId+'/terminate');
+  }
+
 }
