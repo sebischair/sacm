@@ -1,6 +1,6 @@
 module.exports = {
     sc : {
-        url: 'http://sociocortex_sociocortex_1:8083/api/v1',
+        url: 'http://localhost:8083/api/v1',
         pass : 'ottto',
         user : 'mustermann@test.sc'
     }
