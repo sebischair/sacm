@@ -858,13 +858,11 @@ module.exports = class XMLImporter {
         });
     }
 
-    completeTask(){
-      
-      // comple case identification task
-     
+    completeTask(){      
+      // comple case identification task     
       return HumanTask.findAllByCaseId(this.case1.id)
         .then(humanTasks=>{          
-          const humanTask = humanTasks.filter(h=>h.name == 'Lace')[0];
+          const humanTask = this.findProcessWithName(humanTasks, 'Lace');
           humanTask.taskParams[0].values.push('2');
           humanTask.taskParams[1].values.push('0');
           return HumanTask.complete(humanTask);
@@ -873,7 +871,7 @@ module.exports = class XMLImporter {
           return HumanTask.findAllByCaseId(this.case1.id);
         })         
         .then(humanTasks=>{         
-          const humanTask = humanTasks.filter(h=>h.name == 'Barthel')[0];
+          const humanTask = this.findProcessWithName(humanTasks, 'Barthel');
           humanTask.taskParams[0].values.push('10');
           humanTask.taskParams[1].values.push('5');
           return HumanTask.complete(humanTask);
@@ -882,7 +880,7 @@ module.exports = class XMLImporter {
           return HumanTask.findAllByCaseId(this.case1.id);
         })         
         .then(humanTasks=>{         
-          const humanTask = humanTasks.filter(h=>h.name == 'PhysicalActivityPrescription')[0];
+          const humanTask = this.findProcessWithName(humanTasks, 'PhysicalActivityPrescription'); 
           humanTask.taskParams[0].values.push('v1');
           humanTask.taskParams[1].values.push('v2');
           return HumanTask.complete(humanTask);
@@ -891,7 +889,7 @@ module.exports = class XMLImporter {
           return HumanTask.findAllByCaseId(this.case1.id);
         })         
         .then(humanTasks=>{         
-          const humanTask = humanTasks.filter(h=>h.name == 'DischageForm')[0];
+          const humanTask = this.findProcessWithName(humanTasks, 'DischageForm'); 
           humanTask.taskParams[0].values.push('some reason');
           humanTask.taskParams[1].values.push('some date');
           return HumanTask.complete(humanTask);
@@ -901,8 +899,15 @@ module.exports = class XMLImporter {
         })
         .catch(err=>{
           console.log(err);
-        })
-        
+        })        
+    }
+
+    findProcessWithName(nestedProcesses, searchedName){
+      for(let process of nestedProcesses)     
+        for(let instance of process)
+          if(instance.name == searchedName)
+            return instance;
+      return null;
     }
 
 }
