@@ -854,7 +854,7 @@ module.exports = class XMLImporter {
       return Case.create({caseDefinition: caseDefinitionId})
         .then(case1=>{
           this.case1 = case1;
-          return Case.findTreebyId(case1.id, {simple:true});
+          return Case.findTreeById(case1.id);
         });
     }
 
@@ -897,7 +897,7 @@ module.exports = class XMLImporter {
           return HumanTask.complete(humanTask);
         })       
         .then(()=>{          
-          return Case.findTreebyId(this.case1.id, {simple:true});
+          return Case.findTreeById(this.case1.id);
         })
         .catch(err=>{
           console.log(err);
