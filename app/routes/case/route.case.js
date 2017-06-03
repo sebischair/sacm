@@ -113,18 +113,18 @@ router.get('/:id', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  * {
- *   "id": "1q7nud4e2v1dl",
+ *   "id": "1jvknzqmjcb1a",
  *   "stateDates": {
- *     "enabled": "2017-05-15 17:29:14.0",
+ *     "enabled": "2017-06-03 08:06:49.0",
  *     "terminated": null,
- *     "active": null,
- *     "available": "2017-05-15 17:29:14.0",
+ *     "active": "2017-06-03 08:06:50.0",
+ *     "available": "2017-06-03 08:06:49.0",
  *     "completed": null
  *   },
- *   "caseDefinition": "1xzmymv4hf0tj",
- *   "workspace": "1mwgok4jx7397",
+ *   "caseDefinition": "14w7jmvu13oab",
+ *   "workspace": "1isews6ivs0fo",
  *   "description": "Demo Case London",
- *   "entity": "vcqm404srunk",
+ *   "entity": "wm5q4wwo8qi",
  *   "name": "Democase",
  *   "state": "ENABLED",
  *   "owner": null,
@@ -467,7 +467,7 @@ router.post('/:id/complete', (req, res, next)=>{
 
 
 /**
- * @api {post} /case/:id/complete Terminate Case
+ * @api {post} /case/:id/terminate Terminate Case
  *
  * @apiName TerminateCase
  * @apiGroup Case
