@@ -148,7 +148,7 @@ router.get('/:id', (req, res, next)=>{
 
 
 /**
- * @api {get} /case/:id Get Case Tree
+ * @api {get} /case/:id/tree Get Case Tree
  *
  * @apiName GetCaseTree
  * @apiGroup Case
@@ -160,25 +160,273 @@ router.get('/:id', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  * {
- *   "id": "1q7nud4e2v1dl",
+ *   "id": "gyinxwpstldx",
+ *   "caseDefinition": "1hruqqxi168fx",
  *   "stateDates": {
- *     "enabled": "2017-05-15 17:29:14.0",
+ *     "enabled": "2017-06-03 07:46:48.0",
  *     "terminated": null,
- *     "active": null,
- *     "available": "2017-05-15 17:29:14.0",
+ *     "active": "2017-06-03 07:46:49.0",
+ *     "available": "2017-06-03 07:46:48.0",
  *     "completed": null
  *   },
- *   "caseDefinition": "1xzmymv4hf0tj",
- *   "workspace": "1mwgok4jx7397",
+ *   "workspace": "1utek7hhrmn6m",
  *   "description": "Demo Case London",
- *   "entity": "vcqm404srunk",
+ *   "entity": "1xmjh6un4893x",
  *   "name": "Democase",
- *   "state": "ENABLED",
  *   "owner": null,
- *   "children": [], // Tasks and Stages
+ *   "state": "ENABLED",
+ *   "children": [
+ *     [
+ *       {
+ *         "parentStage": null,
+ *         "index": 0,
+ *         "stateDates": {
+ *           "enabled": "2017-06-03 07:46:48.0",
+ *           "terminated": null,
+ *           "active": "2017-06-03 07:46:48.0",
+ *           "available": "2017-06-03 07:46:48.0",
+ *           "completed": null
+ *         },
+ *         "isRepeatable": false,
+ *         "next": null,
+ *         "state": "ACTIVE",
+ *         "children": [
+ *           [
+ *             {
+ *               "parentStage": "e651dpvclqqe",
+ *               "index": 0,
+ *               "stateDates": {
+ *                 "enabled": "2017-06-03 07:46:48.0",
+ *                 "terminated": null,
+ *                 "active": "2017-06-03 07:46:48.0",
+ *                 "available": "2017-06-03 07:46:48.0",
+ *                 "completed": null
+ *               },
+ *               "isRepeatable": false,
+ *               "next": null,
+ *               "state": "ACTIVE",
+ *               "resourceType": "HumanTask",
+ *               "prev": null,
+ *               "scheduledDate": null,
+ *               "id": "eyosp2e9iy3p",
+ *               "processDefinition": "18p8wod13gl53",
+ *               "possibleActions": [
+ *                 "DRAFT",
+ *                 "COMPLETE",
+ *                 "TERMINATE"
+ *               ],
+ *               "isManualActivation": false,
+ *               "taskParams": [
+ *                 "xujpoezfyui7",
+ *                 "utvzdwmkcz9"
+ *               ],
+ *               "description": "Lace",
+ *               "name": "Lace",
+ *               "isMandatory": true,
+ *               "owner": null,
+ *               "case": "gyinxwpstldx"
+ *             }
+ *           ]
+ *         ],
+ *         "resourceType": "Stage",
+ *         "prev": null,
+ *         "id": "e651dpvclqqe",
+ *         "processDefinition": "1piaj7aobvjca",
+ *         "possibleActions": [],
+ *         "isManualActivation": false,
+ *         "description": "Case Identification",
+ *         "name": "CaseIdentification",
+ *         "isMandatory": true,
+ *         "case": "gyinxwpstldx"
+ *       }
+ *     ],
+ *     [
+ *       {
+ *         "parentStage": null,
+ *         "index": 0,
+ *         "stateDates": {
+ *           "enabled": null,
+ *           "terminated": null,
+ *           "active": null,
+ *           "available": "2017-06-03 07:46:48.0",
+ *           "completed": null
+ *         },
+ *         "isRepeatable": true,
+ *         "next": null,
+ *         "state": "AVAILABLE",
+ *         "children": [
+ *           [
+ *             {
+ *               "parentStage": "172l9hvvuax3i",
+ *               "index": 0,
+ *               "stateDates": {
+ *                 "enabled": null,
+ *                 "terminated": null,
+ *                 "active": null,
+ *                 "available": "2017-06-03 07:46:48.0",
+ *                 "completed": null
+ *               },
+ *               "isRepeatable": false,
+ *               "next": null,
+ *               "state": "AVAILABLE",
+ *               "resourceType": "HumanTask",
+ *               "prev": null,
+ *               "scheduledDate": null,
+ *               "id": "nwrfwpyvqsww",
+ *               "processDefinition": "pyo0qgrbjw9v",
+ *               "possibleActions": [],
+ *               "isManualActivation": false,
+ *               "taskParams": [
+ *                 "vfk5qlag24dp",
+ *                 "15nisfz3fesej"
+ *               ],
+ *               "description": "Barthel",
+ *               "name": "Barthel",
+ *               "isMandatory": true,
+ *               "owner": null,
+ *               "case": "gyinxwpstldx"
+ *             }
+ *           ]
+ *         ],
+ *         "resourceType": "Stage",
+ *         "prev": null,
+ *         "id": "172l9hvvuax3i",
+ *         "processDefinition": "jycsfe58lqh5",
+ *         "possibleActions": [],
+ *         "isManualActivation": false,
+ *         "description": "Case Evaluation",
+ *         "name": "CaseEvaluation",
+ *         "isMandatory": false,
+ *         "case": "gyinxwpstldx"
+ *       }
+ *     ],
+ *     [
+ *       {
+ *         "parentStage": null,
+ *         "index": 0,
+ *         "stateDates": {
+ *           "enabled": null,
+ *           "terminated": null,
+ *           "active": null,
+ *           "available": "2017-06-03 07:46:48.0",
+ *           "completed": null
+ *         },
+ *         "isRepeatable": true,
+ *         "next": null,
+ *         "state": "AVAILABLE",
+ *         "children": [
+ *           [
+ *             {
+ *               "parentStage": "hsf1x1ee6694",
+ *               "index": 0,
+ *               "stateDates": {
+ *                 "enabled": null,
+ *                 "terminated": null,
+ *                 "active": null,
+ *                 "available": "2017-06-03 07:46:48.0",
+ *                 "completed": null
+ *               },
+ *               "isRepeatable": false,
+ *               "next": null,
+ *               "state": "AVAILABLE",
+ *               "resourceType": "HumanTask",
+ *               "prev": null,
+ *               "scheduledDate": null,
+ *               "id": "19uh25szoh0em",
+ *               "processDefinition": "1dqsr8w6ja9aa",
+ *               "possibleActions": [],
+ *               "isManualActivation": false,
+ *               "taskParams": [
+ *                 "14mdj7mjqc8kw",
+ *                 "f23jzewf8sxk"
+ *               ],
+ *               "description": "Physical Activity Prescription",
+ *               "name": "PhysicalActivityPrescription",
+ *               "isMandatory": true,
+ *               "owner": null,
+ *               "case": "gyinxwpstldx"
+ *             }
+ *           ]
+ *         ],
+ *         "resourceType": "Stage",
+ *         "prev": null,
+ *         "id": "hsf1x1ee6694",
+ *         "processDefinition": "t1honuj1kynx",
+ *         "possibleActions": [],
+ *         "isManualActivation": false,
+ *         "description": "Workplan Definition",
+ *         "name": "WorkplanDefinition",
+ *         "isMandatory": false,
+ *         "case": "gyinxwpstldx"
+ *       }
+ *     ],
+ *     [
+ *       {
+ *         "parentStage": null,
+ *         "index": 0,
+ *         "stateDates": {
+ *           "enabled": "2017-06-03 07:46:48.0",
+ *           "terminated": null,
+ *           "active": "2017-06-03 07:46:48.0",
+ *           "available": "2017-06-03 07:46:48.0",
+ *           "completed": null
+ *         },
+ *         "isRepeatable": false,
+ *         "next": null,
+ *         "state": "ACTIVE",
+ *         "children": [
+ *           [
+ *             {
+ *               "parentStage": "14dp1cho8q3f8",
+ *               "index": 0,
+ *               "stateDates": {
+ *                 "enabled": "2017-06-03 07:46:48.0",
+ *                 "terminated": null,
+ *                 "active": "2017-06-03 07:46:48.0",
+ *                 "available": "2017-06-03 07:46:48.0",
+ *                 "completed": null
+ *               },
+ *               "isRepeatable": false,
+ *               "next": null,
+ *               "state": "ACTIVE",
+ *               "resourceType": "HumanTask",
+ *               "prev": null,
+ *               "scheduledDate": null,
+ *               "id": "sx4dh9g25zbg",
+ *               "processDefinition": "dstpzuyf03e8",
+ *               "possibleActions": [
+ *                 "DRAFT",
+ *                 "COMPLETE",
+ *                 "TERMINATE"
+ *               ],
+ *               "isManualActivation": false,
+ *               "taskParams": [
+ *                 "1ud5sca96la9f",
+ *                 "1tya4v3irojfk"
+ *               ],
+ *               "description": "Dischargefrom",
+ *               "name": "DischageForm",
+ *               "isMandatory": true,
+ *               "owner": null,
+ *               "case": "gyinxwpstldx"
+ *             }
+ *           ]
+ *         ],
+ *         "resourceType": "Stage",
+ *         "prev": null,
+ *         "id": "14dp1cho8q3f8",
+ *         "processDefinition": "1q16esle6fplj",
+ *         "possibleActions": [],
+ *         "isManualActivation": false,
+ *         "description": "Discharge",
+ *         "name": "Discharge",
+ *         "isMandatory": true,
+ *         "case": "gyinxwpstldx"
+ *       }
+ *     ]
+ *   ],
  *   "resourceType": "Case"
  * }
- *
  */
 router.get('/:id/tree', (req, res, next)=>{
   Case.findTreebyId(req.params.id)
