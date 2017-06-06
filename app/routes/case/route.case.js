@@ -1053,9 +1053,98 @@ router.get('/:id/alerts', (req, res, next)=>{
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
+ * [
  *   {
- *     TODO SUMMARY_OBJ
+ *     "description": "Section 1",
+ *     "summarysectiondefinition": "wharh67xkeki",
+ *     "name": "Section1",
+ *     "params": [
+ *       {
+ *         "attributeTypeConstraints": {
+ *           "enumerationOptions": [
+ *             {
+ *               "description": "1 day",
+ *               "value": "1"
+ *             },
+ *             {
+ *               "description": "2 days",
+ *               "value": "2"
+ *             }
+ *           ]
+ *         },
+ *         "values": [
+ *           "2"
+ *         ],
+ *         "isDerived": false,
+ *         "defaultValues": [],
+ *         "description": "Length of Stay (including day of admission and discharge)",
+ *         "name": "lace1",
+ *         "attributeType": "enumeration",
+ *         "multiplicity": "maximalOne",
+ *         "isResolved": true
+ *       }
+ *     ],
+ *     "case": "1xte2pe0m1b9m",
+ *     "resourceType": "SummarySection"
+ *   },
+ *   {
+ *     "description": "Section 2",
+ *     "summarysectiondefinition": "1kjigrxkwummk",
+ *     "name": "Section2",
+ *     "params": [
+ *       {
+ *         "attributeTypeConstraints": {
+ *           "enumerationOptions": [
+ *             {
+ *               "description": "1 day",
+ *               "value": "1"
+ *             },
+ *             {
+ *               "description": "2 days",
+ *               "value": "2"
+ *             }
+ *           ]
+ *         },
+ *         "values": [
+ *           "2"
+ *         ],
+ *         "isDerived": false,
+ *         "defaultValues": [],
+ *         "description": "Length of Stay (including day of admission and discharge)",
+ *         "name": "lace1",
+ *         "attributeType": "enumeration",
+ *         "multiplicity": "maximalOne",
+ *         "isResolved": true
+ *       },
+ *       {
+ *         "attributeTypeConstraints": {
+ *           "enumerationOptions": [
+ *             {
+ *               "description": "No",
+ *               "value": "0"
+ *             },
+ *             {
+ *               "description": "Yes",
+ *               "value": "1"
+ *             }
+ *           ]
+ *         },
+ *         "values": [
+ *           "0"
+ *         ],
+ *         "isDerived": false,
+ *         "defaultValues": [],
+ *         "description": "Was the patient admitted to hospital via the emergency department?",
+ *         "name": "lace2",
+ *         "attributeType": "enumeration",
+ *         "multiplicity": "maximalOne",
+ *         "isResolved": true
+ *       }
+ *     ],
+ *     "case": "1xte2pe0m1b9m",
+ *     "resourceType": "SummarySection"
  *   }
+ * ]
  *
  */
 router.get('/:id/summarysections', (req, res, next)=>{
