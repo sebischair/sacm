@@ -214,7 +214,7 @@ module.exports = class XMLImporter {
           if(!isExecuteCase)
             return Promise.resolve(caseInstance);
           else
-            return this.completeTask();
+            return this.completeCase();
         });
     }
 
@@ -858,48 +858,58 @@ module.exports = class XMLImporter {
         });
     }
 
-    completeTask(){      
-      // comple case identification task     
-      return HumanTask.findAllByCaseId(this.case1.id)
+    completeCase(){      
+      const caseId = this.case1.id;
+      return this.completeHumanTaskWithName(caseId, 'Lace', {
+        lace1: ['2'],
+        lace2: ['0']
+      })
+      .then(()=>{
+        return this.completeHumanTaskWithName(caseId, 'Barthel', {
+          barthel1: ['10'],
+          barthel2: ['5']
+        });
+      })
+      .then(()=>{
+        return this.completeHumanTaskWithName(caseId, 'PhysicalActivityPrescription', {
+          phactp1: ['v1'],
+          phactp2: ['v2']
+        });
+      })
+      .then(()=>{
+        return this.completeHumanTaskWithName(caseId, 'DischageForm', {
+          reason: ['some reason'],
+          date: ['some date']
+        });
+      })      
+      .then(()=>{
+        return Case.findTreeById(caseId);
+      })
+      .catch(err=>{
+        console.log(err);
+      })        
+    }
+
+   
+    /**
+     * @param caseId 
+     * @param taskName 
+     * @param paramsMap {attrName1:[value1, value2], attrName2: [value1, value2]}
+     */
+    completeHumanTaskWithName(caseId, taskName, paramsMap){     
+       return HumanTask.findAllByCaseId(caseId)
         .then(humanTasks=>{          
-          const humanTask = this.findProcessWithName(humanTasks, 'Lace');
-          humanTask.taskParams[0].values.push('2');
-          humanTask.taskParams[1].values.push('0');
-          return HumanTask.complete(humanTask);
-        })
-        .then(()=>{
-          return HumanTask.findAllByCaseId(this.case1.id);
-        })         
-        .then(humanTasks=>{         
-          const humanTask = this.findProcessWithName(humanTasks, 'Barthel');
-          humanTask.taskParams[0].values.push('10');
-          humanTask.taskParams[1].values.push('5');
-          return HumanTask.complete(humanTask);
-        })
-        .then(()=>{
-          return HumanTask.findAllByCaseId(this.case1.id);
-        })         
-        .then(humanTasks=>{         
-          const humanTask = this.findProcessWithName(humanTasks, 'PhysicalActivityPrescription'); 
-          humanTask.taskParams[0].values.push('v1');
-          humanTask.taskParams[1].values.push('v2');
-          return HumanTask.complete(humanTask);
-        })  
-        .then(()=>{
-          return HumanTask.findAllByCaseId(this.case1.id);
-        })         
-        .then(humanTasks=>{         
-          const humanTask = this.findProcessWithName(humanTasks, 'DischageForm'); 
-          humanTask.taskParams[0].values.push('some reason');
-          humanTask.taskParams[1].values.push('some date');
-          return HumanTask.complete(humanTask);
-        })       
-        .then(()=>{          
-          return Case.findTreeById(this.case1.id);
-        })
-        .catch(err=>{
-          console.log(err);
+          const ht = this.findProcessWithName(humanTasks, taskName);
+          return HumanTask.findById(ht.id);
         })        
+        .then(humanTask=>{
+          for(let i=0; i<humanTask.taskParams.length; i++){
+            let tp = humanTask.taskParams[i];
+            if(paramsMap.hasOwnProperty(tp.name))
+              humanTask.taskParams[i].values = paramsMap[tp.name];            
+          }
+          return HumanTask.complete(humanTask);
+        });        
     }
 
     findProcessWithName(nestedProcesses, searchedName){
