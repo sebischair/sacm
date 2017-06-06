@@ -13,27 +13,90 @@ import HumanTask from './../../models/case/model.humantask';
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
+ * {
+ *   "parentStage": "1x26mpxg3dabq",
+ *   "index": 0,
+ *   "stateDates": {
+ *     "enabled": "2017-06-07 00:22:16.0",
+ *     "terminated": null,
+ *     "active": "2017-06-07 00:22:16.0",
+ *     "available": "2017-06-07 00:22:16.0",
+ *     "completed": "2017-06-07 00:22:18.0"
+ *   },
+ *   "isRepeatable": false,
+ *   "next": null,
+ *   "state": "COMPLETED",
+ *   "resourceType": "HumanTask",
+ *   "prev": null,
+ *   "scheduledDate": null,
+ *   "id": "9411d2nyotg3",
+ *   "processDefinition": "6pg40n08k5yc",
+ *   "possibleActions": [],
+ *   "isManualActivation": false,
+ *   "taskParams": [
  *     {
- *          "scheduledDate": null,
- *          "processDefinition": "bq1iuo0uuzo9",
- *          "id": "p503h6ephfqv",
- *          "parentStage": "10kx8cvxs3t0w",
- *          "sentries": [],
- *          "stateDates": {
- *            "enabled": "2017-05-15 17:29:18.0",
- *            "terminated": null,
- *            "active": null,
- *            "available": "2017-05-15 17:29:17.0",
- *            "completed": null
- *          },
- *          "taskParams": [],
- *          "description": "Lace",
- *          "name": "Lace",
- *          "owner": null,
- *          "state": "ENABLED",
- *          "case": "1q7nud4e2v1dl",
- *          "resourceType": "HumanTask"
+ *       "id": "w8xkoqye52ln",
+ *       "attributeTypeConstraints": {
+ *         "enumerationOptions": [
+ *           {
+ *             "description": "1 day",
+ *             "value": "1"
+ *           },
+ *           {
+ *             "description": "2 days",
+ *             "value": "2"
+ *           }
+ *         ]
+ *       },
+ *       "values": [
+ *         "2"
+ *       ],
+ *       "isDerived": false,
+ *       "defaultValues": [],
+ *       "task": "9411d2nyotg3",
+ *       "description": "Length of Stay (including day of admission and discharge)",
+ *       "isMandatory": false,
+ *       "name": "lace1",
+ *       "isReadOnly": false,
+ *       "attributeType": "enumeration",
+ *       "multiplicity": "maximalOne",
+ *       "resourceType": "TaskParam"
+ *     },
+ *     {
+ *       "id": "8p599v61r2em",
+ *       "attributeTypeConstraints": {
+ *         "enumerationOptions": [
+ *           {
+ *             "description": "No",
+ *             "value": "0"
+ *           },
+ *           {
+ *             "description": "Yes",
+ *             "value": "1"
+ *           }
+ *         ]
+ *       },
+ *       "values": [
+ *         "0"
+ *       ],
+ *       "isDerived": false,
+ *       "defaultValues": [],
+ *       "task": "9411d2nyotg3",
+ *       "description": "Was the patient admitted to hospital via the emergency department?",
+ *       "isMandatory": false,
+ *       "name": "lace2",
+ *       "isReadOnly": false,
+ *       "attributeType": "enumeration",
+ *       "multiplicity": "maximalOne",
+ *       "resourceType": "TaskParam"
  *     }
+ *   ],
+ *   "description": "Lace",
+ *   "name": "Lace",
+ *   "isMandatory": true,
+ *   "owner": null,
+ *   "case": "1rx44jafa5psr"
+ * }
  */
 router.get('/:id', (req, res, next)=>{
   HumanTask.findById(req.params.id)
