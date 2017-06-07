@@ -429,13 +429,13 @@ router.get('/:id', (req, res, next)=>{
  * }
  */
 router.get('/:id/tree', (req, res, next)=>{
-  Case.findTreebyId(req.params.id)
+  Case.findTreeById(req.params.id, {})
     .then(c=>{
-        res.status(200).send(c);
+      res.status(200).send(c);
     })
     .catch(err=>{
       res.status(500).send(err);
-    })
+    });
 });
 
 
