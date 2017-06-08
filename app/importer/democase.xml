@@ -7,13 +7,49 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
 <SACMDefinition>
     
     <UserDefinition>
-        <AttributeDefinition id="Firstname" type="string" description="Firstname"/>
-        <AttributeDefinition id="Lastname" type="string" description="Lastname"/>
-        <AttributeDefinition id="Language" type="string" description="Language"/>
-        <AttributeDefinition id="Birthdate" type="date" description="Birthdate"/>
-        <AttributeDefinition id="Phone" type="string" description="Phone"/>
-        <AttributeDefinition id="Mobile" type="string" description="Mobile"/>
-        <AttributeDefinition id="PatientNr" type="date" description="Patient Number"/>
+        <AttributeDefinition id="patientnr" type="string" multiplicity="maximalOne" description="Patient number"/>
+        <AttributeDefinition id="firstname" type="string" multiplicity="maximalOne" description="Firstname"/>
+        <AttributeDefinition id="lastname" type="string" multiplicity="maximalOne" description="Lastname"/>       
+        <AttributeDefinition id="birthdate" type="date" multiplicity="maximalOne" description="Birthdate"/>
+        <DerivedAttributeDefinition id="age" expression="(Today - birthdate)/365" description="Age"/>  
+        <AttributeDefinition id="gender" type="enumeration" multiplicity="maximalOne" description="Gender">
+            <EnumerationOption value="MALE" description="Male"/>
+            <EnumerationOption value="FEMALE" description="Female"/>
+            <EnumerationOption value="IW" description="Hebrew"/>
+        </AttributeDefinition>
+        <AttributeDefinition id="maritalstatus" type="enumeration" multiplicity="maximalOne" description="Marital status">
+            <EnumerationOption value="SINGLE" description="Single"/>
+            <EnumerationOption value="MARRIED" description="Married"/>
+            <EnumerationOption value="WIDOWED" description="Widowed"/>
+            <EnumerationOption value="SEPARATED" description="Separated"/>
+            <EnumerationOption value="DIVORCED" description="Divorced"/>
+        </AttributeDefinition>
+        <AttributeDefinition id="educationallevel" type="enumeration" multiplicity="maximalOne" description="Educational level">
+            <EnumerationOption value="1" description="Early childhood"/>
+            <EnumerationOption value="2" description="Primary education"/>
+            <EnumerationOption value="3" description="Lower secondary education"/>
+            <EnumerationOption value="4" description="Upper secondary education"/>
+            <EnumerationOption value="5" description="Post-secondary non-tertiary education"/>
+            <EnumerationOption value="6" description="Short-cycle tertiary education"/>
+            <EnumerationOption value="7" description="Bachelor"/>
+            <EnumerationOption value="8" description="Master"/>
+            <EnumerationOption value="9" description="Doctoral"/>
+        </AttributeDefinition>
+        <AttributeDefinition id="culturallevel" type="enumeration" multiplicity="maximalOne" description="Socio-cultural level">
+            <EnumerationOption value="LOW" description="Low"/>
+            <EnumerationOption value="MEDIUM" description="Medium"/>
+            <EnumerationOption value="HIGH" description="High"/>
+        </AttributeDefinition>
+        <AttributeDefinition id="phone" type="string" multiplicity="maximalOne" description="Phone"/>
+        <AttributeDefinition id="mobile" type="string" multiplicity="maximalOne" description="Mobile"/>
+        <AttributeDefinition id="language" type="enumeration" multiplicity="maximalOne" description="Language">
+            <!-- ISO 2 Letter Language Codes -->
+            <EnumerationOption value="EN" description="English"/>
+            <EnumerationOption value="NL" description="Dutch"/>
+            <EnumerationOption value="IW" description="Hebrew"/>
+            <EnumerationOption value="ES" description="Spanish"/>
+            <EnumerationOption value="CA" description="Catalan"/>
+        </AttributeDefinition>
     </UserDefinition>
     
     <!--Barcelona Groups and Users-->
@@ -51,64 +87,64 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
     <!--Usernames from https://uinames.com/
         https://uinames.com/api/?region=United%20States&amount=25&maxlen=25 -->
     <User id="JohnSmith" email="john.smith@connecare.eu">
-        <Attribute attributeDefinitionId="Firstname" values="['John']"/> 
-        <Attribute attributeDefinitionId="Lastname" values="['Smith']"/> 
+        <Attribute attributeDefinitionId="firstname" values="['John']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Smith']"/> 
     </User>
     <User id="RuthGibson" email="ruth.gibson@connecare.eu">
-        <Attribute attributeDefinitionId="Firstname" values="['Ruth']"/> 
-        <Attribute attributeDefinitionId="Lastname" values="['Gibson']"/> 
+        <Attribute attributeDefinitionId="firstname" values="['Ruth']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Gibson']"/> 
     </User>
     <User id="AngelaTran" email="angela.tran@connecare.eu">
-        <Attribute attributeDefinitionId="Firstname" values="['Angela']"/> 
-        <Attribute attributeDefinitionId="Lastname" values="['Tran']"/> 
+        <Attribute attributeDefinitionId="firstname" values="['Angela']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Tran']"/> 
     </User>
     <User id="CherylWillis" email="cheryl.willis@connecare.eu">
-        <Attribute attributeDefinitionId="Firstname" values="['Cheryl']"/> 
-        <Attribute attributeDefinitionId="Lastname" values="['Willis']"/> 
+        <Attribute attributeDefinitionId="firstname" values="['Cheryl']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Willis']"/> 
     </User>
     <User id="VincentAdams" email="vincent.adams@connecare.eu">
-        <Attribute attributeDefinitionId="Firstname" values="['Vincent']"/> 
-        <Attribute attributeDefinitionId="Lastname" values="['Adams']"/> 
+        <Attribute attributeDefinitionId="firstname" values="['Vincent']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Adams']"/> 
     </User>
     <User id="ChristinaBennett" email="christina.bennett@connecare.eu">
-        <Attribute attributeDefinitionId="Firstname" values="['Christina']"/> 
-        <Attribute attributeDefinitionId="Lastname" values="['Bennett']"/> 
+        <Attribute attributeDefinitionId="firstname" values="['Christina']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Bennett']"/> 
     </User>                 
     <User id="JaneWebb" email="jane.webb@connecare.eu">
-        <Attribute attributeDefinitionId="Firstname" values="['Jane']"/> 
-        <Attribute attributeDefinitionId="Lastname" values="['Webb']"/> 
+        <Attribute attributeDefinitionId="firstname" values="['Jane']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Webb']"/> 
     </User>       
     <User id="KennethJones" email="kenneth.jones@connecare.eu">
-        <Attribute attributeDefinitionId="Firstname" values="['Kenneth']"/> 
-        <Attribute attributeDefinitionId="Lastname" values="['Jones']"/> 
+        <Attribute attributeDefinitionId="firstname" values="['Kenneth']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Jones']"/> 
     </User>       
     <User id="BrandonWilson" email="brandon.wilson@connecare.eu">
-        <Attribute attributeDefinitionId="Firstname" values="['Brandon']"/> 
-        <Attribute attributeDefinitionId="Lastname" values="['Wilson']"/> 
+        <Attribute attributeDefinitionId="firstname" values="['Brandon']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Wilson']"/> 
     </User>       
     <User id="PatriciaWalsh" email="patricia.walsh@connecare.eu">
-        <Attribute attributeDefinitionId="Firstname" values="['Patricia']"/> 
-        <Attribute attributeDefinitionId="Lastname" values="['Walsh']"/> 
+        <Attribute attributeDefinitionId="firstname" values="['Patricia']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Walsh']"/> 
     </User>       
     <User id="PhilipRice" email="philip.rice@connecare.eu">
-        <Attribute attributeDefinitionId="Firstname" values="['Philip']"/> 
-        <Attribute attributeDefinitionId="Lastname" values="['Rice']"/> 
+        <Attribute attributeDefinitionId="firstname" values="['Philip']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Rice']"/> 
     </User>       
     <User id="CraigEllis" email="craig.ellis@connecare.eu">
         <Attribute attributeDefinitionId="Firstname" values="['Craig']"/> 
-        <Attribute attributeDefinitionId="Lastname" values="['Ellis']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Ellis']"/> 
     </User>       
     <User id="PhilipBarnes" email="philip.barnes@connecare.eu">
-        <Attribute attributeDefinitionId="Firstname" values="['Philip']"/> 
-        <Attribute attributeDefinitionId="Lastname" values="['Barnes']"/> 
+        <Attribute attributeDefinitionId="firstname" values="['Philip']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Barnes']"/> 
     </User>       
     <User id="LarryCarter" email="larry.carter@connecare.eu">
-        <Attribute attributeDefinitionId="Firstname" values="['Larry']"/> 
-        <Attribute attributeDefinitionId="Lastname" values="['Carter']"/> 
+        <Attribute attributeDefinitionId="firstname" values="['Larry']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Carter']"/> 
     </User>       
     <User id="KeithVasquez" email="keith.vasquez@connecare.eu">
-        <Attribute attributeDefinitionId="Firstname" values="['Keith']"/> 
-        <Attribute attributeDefinitionId="Lastname" values="['Vasquez']"/> 
+        <Attribute attributeDefinitionId="firstname" values="['Keith']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Vasquez']"/> 
     </User>    
 
 
