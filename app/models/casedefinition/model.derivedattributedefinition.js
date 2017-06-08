@@ -9,5 +9,9 @@ export default class DerivedAttributeDefinition extends Model{
     return http.post('/derivedAttributeDefinitions', definition);
   }
 
+  static deletById(id) {
+    return http.del('/derivedAttributeDefinition/'+id);
+  }
+
   
 }

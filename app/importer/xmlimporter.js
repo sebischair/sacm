@@ -238,15 +238,25 @@ module.exports = class XMLImporter {
     }
 
     deleteUserDefinitionAttributeDefinitions(){
-       return UserDefinition.find()
-        .then(userDefinition=>{
+      let userDefinition = null;
+      return UserDefinition.find()
+        .then(userDef=>{
+          userDefinition = userDef.id;
+          if(userDefinition.derivedAttributeDefinitions == null) {
+            return Promise.resolve();
+          }
+          return Promise.each(userDefinition.derivedAttributeDefinitions, ad=>{
+            return DerivedAttributeDefinition.deleteById(ad.id);
+          });
+        })
+        .then(()=>{
           if(userDefinition.attributeDefinitions == null) {
-            return Promise.reject();
+            return Promise.resolve();
           }
           return Promise.each(userDefinition.attributeDefinitions, ad=>{
             return AttributeDefinition.deleteById(ad.id);
           });
-        });
+        })
     }
 
     createUserDefinition(){
