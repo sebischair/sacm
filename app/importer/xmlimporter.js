@@ -258,10 +258,10 @@ module.exports = class XMLImporter {
         .then(persistedUserDef =>{
           persistedUserDefinitionId = persistedUserDef.id;
           return this.createUserDefinitionAttributeDefinitions(userDefintion, persistedUserDefinitionId);
-        })/*
+        })
         .then(()=>{
           return this.createUserDefinitionDerivedAttributeDefinitions(userDefintion, persistedUserDefinitionId);
-        });*/
+        });
     }
 
     createUserDefinitionAttributeDefinitions(UserDefinition, persistedUserDefinitionId){
