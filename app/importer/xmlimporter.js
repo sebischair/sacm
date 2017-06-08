@@ -253,30 +253,49 @@ module.exports = class XMLImporter {
       if(this.json.UserDefinition == null)
         return Promise.resolve();
       const userDefintion = this.json.UserDefinition[0];
+      let persistedUserDefinitionId = null;
       return UserDefinition.find()
-        .then(persistedUserDefinition =>{
-          if(userDefintion != null && userDefintion.AttributeDefinition != null){
-            const attributeDefinitions = userDefintion.AttributeDefinition;
-            return Promise.each(attributeDefinitions, ad=>{                            
-              let data = this.resolveAttributeType(ad.$.type, ad);
-              data.name = ad.$.id;
-              data.description = ad.$.description;
-              data.multiplicity = ad.$.multiplicity; 
-              data.entityDefinition = persistedUserDefinition.id;        
-              return AttributeDefinition.create(data)             
-                .then(persistedAttributeDefinition =>{
-                  this.userAttributeDefinitionMap.set(ad.$.id, persistedAttributeDefinition.id);
-                  return Promise.resolve();
-                })
-                .catch(err=>{
-                  console.error(err);
-                  return Promise.reject(err);
-                });
-            });
-          }else{
+        .then(persistedUserDef =>{
+          persistedUserDefinitionId = persistedUserDef.id;
+          return this.createUserDefinitionAttributeDefinitions(userDefintion, persistedUserDefinitionId);
+        })/*
+        .then(()=>{
+          return this.createUserDefinitionDerivedAttributeDefinitions(userDefintion, persistedUserDefinitionId);
+        });*/
+    }
+
+    createUserDefinitionAttributeDefinitions(UserDefinition, persistedUserDefinitionId){
+      if(UserDefinition == null || UserDefinition.AttributeDefinition == null)
+        return Promise.resolve();
+      return Promise.each(UserDefinition.AttributeDefinition, ad=>{                            
+        let data = this.resolveAttributeType(ad.$.type, ad);
+        data.name = ad.$.id;
+        data.description = ad.$.description;
+        data.multiplicity = ad.$.multiplicity; 
+        data.entityDefinition = persistedUserDefinitionId;        
+        return AttributeDefinition.create(data)             
+          .then(persistedAttributeDefinition =>{
+            this.userAttributeDefinitionMap.set(ad.$.id, persistedAttributeDefinition.id);
             return Promise.resolve();
-          }
-        });
+          })
+          .catch(err=>{
+            console.error(err);
+            return Promise.reject(err);
+          });
+      });
+    }
+
+    createUserDefinitionDerivedAttributeDefinitions(UserDefinition, persistedUserDefinitionId) {
+      if(UserDefinition == null || UserDefinition.DerivedAttributeDefinition == null)  
+          return Promise.resolve();
+      return Promise.each(UserDefinition.DerivedAttributeDefinition, ad=>{   
+          return DerivedAttributeDefinition.create({
+            name: ad.$.id,
+            description: ad.$.description,
+            expression: ad.$.expression,
+            entityDefinition: persistedUserDefinitionId
+          });   
+      }); 
     }
 
     createUsers(){
@@ -883,6 +902,7 @@ module.exports = class XMLImporter {
         });
       })      
       .then(()=>{
+        console.log(this.userMap);
         return Case.findTreeById(caseId);
       })
       .catch(err=>{
