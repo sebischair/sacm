@@ -241,7 +241,7 @@ module.exports = class XMLImporter {
       let userDefinition = null;
       return UserDefinition.find()
         .then(userDef=>{
-          userDefinition = userDef.id;
+          userDefinition = userDef;
           if(userDefinition.derivedAttributeDefinitions == null) {
             return Promise.resolve();
           }
