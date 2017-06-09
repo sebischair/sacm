@@ -282,7 +282,8 @@ module.exports = class XMLImporter {
         data.name = ad.$.id;
         data.description = ad.$.description;
         data.multiplicity = ad.$.multiplicity; 
-        data.entityDefinition = persistedUserDefinitionId;        
+        data.entityDefinition = persistedUserDefinitionId;  
+        data.uiReference = ad.$.uiReference;       
         return AttributeDefinition.create(data)             
           .then(persistedAttributeDefinition =>{
             this.userAttributeDefinitionMap.set(ad.$.id, persistedAttributeDefinition.id);
@@ -471,7 +472,8 @@ module.exports = class XMLImporter {
                 data.name = ad.$.id;
                 data.description = ad.$.description;
                 data.multiplicity = ad.$.multiplicity; 
-                data.entityDefinition = entityDefId;        
+                data.entityDefinition = entityDefId;   
+                data.uiReference = ad.$.uiReference;     
                 return AttributeDefinition.create(data);
               })
               .then(persistedAttributeDefinition =>{
