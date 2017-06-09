@@ -105,7 +105,7 @@ router.get('/:id', (req, res, next)=>{
  * @apiParam {String} name Name of the user
  * @apiParam {String} email Email of the user
  * @apiParam {String} id ID of the User (must be unique, max. 32 chars)
- * @apiParam {String} attributes (optional) Custom attributes for the user
+ * @apiParam {String} attributes (optional) Custom attributes array for the user (e.g. ["name": "attributeName", "values":['value1', 'value2']])
  *
  * @apiSampleRequest /users
  *
@@ -183,7 +183,7 @@ router.delete('/:id', (req, res, next)=>{
  * @apiParam {String} id ID of the user
  * @apiParam {String} name (optional) Name of the user
  * @apiParam {String} login (optional) Email of the user
- * @apiParam {String} attributes (optional) Custom attributes for the user
+ * @apiParam {String} attributes (optional) Custom attributes array for the user (e.g. ["name": "attributeName", "values":['value1', 'value2']])
  *
  * @apiSampleRequest /user/:id
  *
