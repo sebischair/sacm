@@ -197,7 +197,7 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
             <AttributeDefinition id="Owner" type="Link.Users.Barcelona-Doctors" description="Owner"/>
             <AttributeDefinition id="Lace" type="Link.EntityDefinition.Lace" description="Lace"/>
             <AttributeDefinition id="Barthel" type="Link.EntityDefinition.Barthel" description="Barthel"/>        
-            <AttributeDefinition id="PhysicalActivityPrescription" type="Link.EntityDefinition.PhysicalActivityPrescription" description="PhysicalActivityPrescription"/>
+            <AttributeDefinition id="PhysicalActivity" type="Link.EntityDefinition.PhysicalActivity" description="PhysicalActivity"/>
         </EntityDefinition>
 
         <EntityDefinition id="Lace" description="Lace">
@@ -281,7 +281,7 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
         </EntityDefinition>
 
         <EntityDefinition id="Barthel" description="Barthel">
-        <AttributeDefinition id="barthel1" type="enumeration" multiplicity="maximalOne" description="FEEDING">
+            <AttributeDefinition id="barthel1" type="enumeration" multiplicity="maximalOne" description="FEEDING">
                 <EnumerationOption value="0" description="unable"/>
                 <EnumerationOption value="5" description="needs help cutting, spreading butter, etc., or requires modified diet"/>
                 <EnumerationOption value="10" description="independent"/>
@@ -334,15 +334,19 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
             <DerivedAttributeDefinition id="barthel11" expression="number(barthel1,0)+number(barthel2,0)+number(barthel3,0)+number(barthel4,0)+number(barthel5,0)+number(barthel6,0)+number(barthel7,0)+number(barthel8,0)+number(barthel9,0)+number(barthel10,0)" description="Barthel Index"/>  
         </EntityDefinition>
 
-        <EntityDefinition id="PhysicalActivityPrescription" description="Physical Activity Prescription">
+        <EntityDefinition id="PhysicalActivity" description="Physical Activity">
             <AttributeDefinition id="phactp1" type="date" multiplicity="maximalOne" description="Start date"/>
             <AttributeDefinition id="phactp2" type="date" multiplicity="maximalOne" description="End date"/>       
             <AttributeDefinition id="phactp3" type="number" multiplicity="maximalOne" description="Number of steps daily"/>       
             <AttributeDefinition id="phactp4" type="number" multiplicity="maximalOne" description="Minutes of low level activity daily"/>       
             <AttributeDefinition id="phactp5" type="number" multiplicity="maximalOne" description="Minutes of medium level activity daily"/>       
             <AttributeDefinition id="phactp6" type="number" multiplicity="maximalOne" description="Minutes of high level activity daily"/> 
-            <AttributeDefinition id="phactp7" type="number" multiplicity="maximalOne" description="Max minutes without activity allowed daily"/>                   
+            <AttributeDefinition id="phactp7" type="number" multiplicity="maximalOne" description="Max minutes without activity allowed daily"/>   
+            <!--{steepFollowing: [{date: '2017-06-09 14:54:53.0', value: 12}], lowFollowing:[], mediumFollowing:[], highFollowing:[], noActivityFollowing:[]}-->
+            <AttributeDefinition id="phactpx" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Collected Data e.g. {steepFollowing: [{date: '2017-06-09 14:54:53.0', value: 12}], lowFollowing:[], mediumFollowing:[], highFollowing:[], noActivityFollowing:[]}"/>                 
         </EntityDefinition>
+
+
 
 
         <!-- Case Definition -->
@@ -395,16 +399,29 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
                 <SentryDefinition>
                     <precondition processDefinitionId="CaseEvaluation"/>
                 </SentryDefinition>
-                <AutomatedTaskDefinition id="PhysicalActivityPrescription" description="Physical Activity Prescription" ownerPath="Owner" isMandetory="true" isRepeatable="false" entityDefinitionId="PhysicalActivityPrescription" entityAttachPath="PhysicalActivityPrescription">
-                    <TaskParamDefinition path="PhysicalActivityPrescription.phactp1" isReadOnly="false" isMandetory="true"/>
-                    <TaskParamDefinition path="PhysicalActivityPrescription.phactp2" isReadOnly="false" isMandetory="true"/>
-                    <TaskParamDefinition path="PhysicalActivityPrescription.phactp3" isReadOnly="false" isMandetory="true"/>
-                    <TaskParamDefinition path="PhysicalActivityPrescription.phactp4" isReadOnly="false" isMandetory="true"/>
-                    <TaskParamDefinition path="PhysicalActivityPrescription.phactp5" isReadOnly="false" isMandetory="true"/>
-                    <TaskParamDefinition path="PhysicalActivityPrescription.phactp6" isReadOnly="false" isMandetory="true"/>
-                    <TaskParamDefinition path="PhysicalActivityPrescription.phactp7" isReadOnly="false" isMandetory="true"/>
+                <HumanTaskDefinition id="PhysicalActivityPrescription" description="Physical Activity Prescription" ownerPath="Owner" isMandetory="true" isRepeatable="false" entityDefinitionId="PhysicalActivity" entityAttachPath="PhysicalActivity">
+                    <TaskParamDefinition path="PhysicalActivity.phactp1" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="PhysicalActivity.phactp2" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="PhysicalActivity.phactp3" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="PhysicalActivity.phactp4" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="PhysicalActivity.phactp5" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="PhysicalActivity.phactp6" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="PhysicalActivity.phactp7" isReadOnly="false" isMandetory="true"/>                    
+                </HumanTaskDefinition>
+                <!--<AutomatedTaskDefinition id="PhysicalActivityExecution" description="Physical Activity Execution" isMandetory="true" isRepeatable="false">
+                    <SentryDefinition>
+                        <precondition processDefinitionId="PhysicalActivityPrescription"/>
+                    </SentryDefinition>
                     <HttpHookDefinition on="ENABLE" url="http://google.com" method="GET"></HttpHookDefinition>
-                </AutomatedTaskDefinition>
+                    <TaskParamDefinition path="PhysicalActivity.phactp1" isReadOnly="true" isMandetory="false"/>
+                    <TaskParamDefinition path="PhysicalActivity.phactp2" isReadOnly="true" isMandetory="false"/>
+                    <TaskParamDefinition path="PhysicalActivity.phactp3" isReadOnly="true" isMandetory="false"/>
+                    <TaskParamDefinition path="PhysicalActivity.phactp4" isReadOnly="true" isMandetory="false"/>
+                    <TaskParamDefinition path="PhysicalActivity.phactp5" isReadOnly="true" isMandetory="false"/>
+                    <TaskParamDefinition path="PhysicalActivity.phactp6" isReadOnly="true" isMandetory="false"/>
+                    <TaskParamDefinition path="PhysicalActivity.phactp7" isReadOnly="true" isMandetory="false"/>
+                    <TaskParamDefinition path="PhysicalActivity.phactpx" isReadOnly="false" isMandetory="true"/>
+                </AutomatedTaskDefinition>-->
             </StageDefinition>
             
         </CaseDefinition>

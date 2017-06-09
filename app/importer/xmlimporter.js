@@ -282,7 +282,8 @@ module.exports = class XMLImporter {
         data.name = ad.$.id;
         data.description = ad.$.description;
         data.multiplicity = ad.$.multiplicity; 
-        data.entityDefinition = persistedUserDefinitionId;        
+        data.entityDefinition = persistedUserDefinitionId;  
+        data.uiReference = ad.$.uiReference;       
         return AttributeDefinition.create(data)             
           .then(persistedAttributeDefinition =>{
             this.userAttributeDefinitionMap.set(ad.$.id, persistedAttributeDefinition.id);
@@ -471,7 +472,8 @@ module.exports = class XMLImporter {
                 data.name = ad.$.id;
                 data.description = ad.$.description;
                 data.multiplicity = ad.$.multiplicity; 
-                data.entityDefinition = entityDefId;        
+                data.entityDefinition = entityDefId;   
+                data.uiReference = ad.$.uiReference;     
                 return AttributeDefinition.create(data);
               })
               .then(persistedAttributeDefinition =>{
@@ -495,9 +497,9 @@ module.exports = class XMLImporter {
       if(type == null)
         return attrDef;
       const ref = type.split('.');   
-      const validTypes = ['link', 'notype', 'string', 'longtext', 'boolean', 'number', 'enumeration', 'date'];
+      const validTypes = ['link', 'notype', 'string', 'longtext', 'boolean', 'number', 'enumeration', 'date', 'json'];
       if(validTypes.indexOf(ref[0].toLowerCase()) == -1){        
-        console.log('Could not resolve attibute type!');
+        console.log('Could not resolve attibute "'+type+'" type!');
         throw new Error('Could not resolve attibute type!');
       }else{
         attrDef.attributeType = ref[0].toLowerCase();

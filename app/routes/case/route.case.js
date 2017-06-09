@@ -24,26 +24,51 @@ import SummarySection from './../../models/case/model.summarysection';
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   [
- *    {
- *      "id": "1kecs9ppqsvni",
- *      "stateDates": {
- *         "enabled": "2017-05-22 19:24:14.0",
- *         "terminated": null,
- *         "active": null,
- *         "available": "2017-05-22 19:24:14.0",
- *         "completed": null
- *      },
- *      "caseDefinition": "rcwk7ciueroj",
- *      "workspace": "vcifkzlevijg",
- *      "description": "Demo Case London",
- *      "entity": "1d3l9i9pyxsz9",
- *      "name": "Democase",
- *      "state": "ENABLED",
- *      "owner": null,
- *      "resourceType": "Case"
- *     }
- *   ]
+ * [
+ *   {
+ *     "id": "1rjfflxbki5ly",
+ *     "patient": {
+ *       "id": "13lvm4qq0uuj9",
+ *       "age": 2,
+ *       "lastname": "Adams",
+ *       "firstname": "Vincent"
+ *     },
+ *     "stateDates": {
+ *       "enabled": "2017-06-09 00:15:42.0",
+ *       "terminated": null,
+ *       "active": "2017-06-09 00:15:43.0",
+ *       "available": "2017-06-09 00:15:42.0",
+ *       "completed": null
+ *     },
+ *     "caseDefinition": "cld9o8hq7prj",
+ *     "workspace": "1x79mt8fuzql2",
+ *     "description": "Demo Case London",
+ *     "entity": "kubc2ty84256",
+ *     "name": "Democase",
+ *     "state": "ENABLED",
+ *     "owner": {
+ *       "id": "13lvm4qq0uuj9",
+ *       "name": "VincentAdams"
+ *     },
+ *     "activeProcesses": [
+ *       {
+ *         "id": "1iaoews1hiey5",
+ *         "index": 0,
+ *         "description": "Lace",
+ *         "name": "Lace",
+ *         "resourceType": "HumanTask"
+ *       },
+ *       {
+ *         "id": "avuj6il28ww9",
+ *         "index": 0,
+ *         "description": "Case Identification",
+ *         "name": "CaseIdentification",
+ *         "resourceType": "Stage"
+ *       }
+ *     ],
+ *     "resourceType": "Case"
+ *   }
+ * ]
  */
 router.get('/me', (req, res, next)=>{
   Case.findByMe()
