@@ -495,9 +495,9 @@ module.exports = class XMLImporter {
       if(type == null)
         return attrDef;
       const ref = type.split('.');   
-      const validTypes = ['link', 'notype', 'string', 'longtext', 'boolean', 'number', 'enumeration', 'date'];
+      const validTypes = ['link', 'notype', 'string', 'longtext', 'boolean', 'number', 'enumeration', 'date', 'json'];
       if(validTypes.indexOf(ref[0].toLowerCase()) == -1){        
-        console.log('Could not resolve attibute type!');
+        console.log('Could not resolve attibute "'+type+'" type!');
         throw new Error('Could not resolve attibute type!');
       }else{
         attrDef.attributeType = ref[0].toLowerCase();
