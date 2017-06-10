@@ -10,6 +10,7 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
     <!--Barcelona Groups and Users-->
     <Group id="Barcelona-Hospital" description="All users of the hospital in Barcelona">
         <Administrator principalId="Me"/>
+        <Membership principalId="Me"/>
     </Group>
 
 
@@ -39,6 +40,7 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
         <!-- Case Data Defintion -->   
         <EntityDefinition id="CaseData" description="">
             <AttributeDefinition id="Owner" type="Link.Users.Barcelona-Hospital" description="Owner"/>
+            <AttributeDefinition id="patient" type="Link.Users.Barcelona-Hospital" description="Patient"/>
             <AttributeDefinition id="Lace" type="Link.EntityDefinition.Lace" description="Lace"/>
             <AttributeDefinition id="Barthel" type="Link.EntityDefinition.Barthel" description="Barthel"/>        
             <AttributeDefinition id="PhysicalActivityPrescription" type="Link.EntityDefinition.PhysicalActivityPrescription" description="PhysicalActivityPrescription"/>            
@@ -101,9 +103,9 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
                     <precondition processDefinitionId="CaseIdentification"/>
                     <precondition expression="number(Lace.lace1)>1"/>
                 </SentryDefinition>
-                <SentryDefinition>
+                <!--<SentryDefinition>
                     <precondition processDefinitionId="WorkplanDefinition"/>
-                </SentryDefinition>
+                </SentryDefinition>-->
                 <HumanTaskDefinition id="Barthel" description="Barthel" ownerPath="Owner" isMandetory="true" isRepeatable="false" entityDefinitionId="Barthel" entityAttachPath="Barthel">
                     <TaskParamDefinition path="Barthel.barthel1" isReadOnly="false" isMandetory="true"/>
                     <TaskParamDefinition path="Barthel.barthel2" isReadOnly="false" isMandetory="true"/>
@@ -116,7 +118,8 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
                 </SentryDefinition>
                 <HumanTaskDefinition id="PhysicalActivityPrescription" description="Physical Activity Prescription" ownerPath="Owner" isMandetory="true" isRepeatable="false" entityDefinitionId="PhysicalActivityPrescription" entityAttachPath="PhysicalActivityPrescription">
                     <TaskParamDefinition path="PhysicalActivityPrescription.phactp1" isReadOnly="false" isMandetory="true"/>
-                    <TaskParamDefinition path="PhysicalActivityPrescription.phactp2" isReadOnly="false" isMandetory="true"/>
+                    <TaskParamDefinition path="PhysicalActivityPrescription.phactp2" isReadOnly="false" isMandetory="true"/> 
+                    <HttpHookDefinition on="ENABLE" url="http://google.com" method="GET"></HttpHookDefinition>
                 </HumanTaskDefinition>
             </StageDefinition>
 
