@@ -147,6 +147,54 @@ describe('Test Definitions', () => {
         });
     });
 
+/***
+* GROUPS
+*/
+
+    /*
+    * Test the /POST route
+    */
+    describe('/POST Create group', () => {
+
+        // Delete user (if exists)
+        before(function(done) {
+          this.timeout(15000);
+          //console.log('before');
+          chai.request(base_api)
+              .delete('/groups/'+encodeURIComponent(test_obj.created_user.id))
+              .end((err, res) => {
+                //console.log(res.body);
+                done();
+              });
+        });
+
+
+        it('Creating a new user with custom ID', function(done) {
+          this.timeout(15000);
+          chai.request(base_api)
+              .post('/users')
+              .send(test_obj.created_user)
+              //.field('name', 'Peter Parker')
+              //.field('email', '723h4jnasdkad@asdasd.de')
+              //.field('id', 'ThisIsACustomId775')
+              .end((err, res) => {
+
+                //console.log(res.body);
+
+                // check if payload is included
+                expect(res).to.include.all.keys('body');
+
+                // check if http status is 200
+                res.should.have.status(200);
+
+                // check user id
+                expect(res.body).to.include({id: test_obj.created_user.id});
+
+                done();
+              });
+        });
+    });
+
 
 
 });
