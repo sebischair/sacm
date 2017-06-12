@@ -17,11 +17,24 @@ import Alert from './../../models/case/model.alert';
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {
- *    id: "44hrafd34dsc",
- *    case: "7fhr63734sd",
- *    text: "Attention!"
- *   }
+ *  {
+ *  	"id": "jdddqzyu6ser7",
+ *    "process": "1rjdqzyu6ser9",
+ *  	"creationDate": "2017-06-12 13:58:56.0",
+ *  	"expireDate": "2017-06-14 13:52:12.0",
+ *  	"text": "Alert Message",
+ *  	"data": {
+ *  		"alertType": "some type",
+ *  		"application": "Run App",
+ *  		"priorityLevel": "LOW",
+ *  		"status": "ACT",
+ *  		"paramName": "steps per day",
+ *  		"paramValue": "12",
+ *  		"minThreshold": "5",
+ *  		"maxThreshold": "8"
+ *  	}
+ *    "seenDate": null
+ *  }
  *
  */
 router.get('/:id', (req, res, next)=>{
