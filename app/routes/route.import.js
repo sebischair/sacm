@@ -11,7 +11,7 @@ router.post('/', (req, res, next)=>{
     file = req.body.file;
   if(req.body.execute)
     isExecuteCase = true;
-  xml.import('app/importer/'+file, isExecuteCase)
+  xml.import(req.jwt, 'app/importer/'+file, isExecuteCase)
     .then(case1=>{
       res.status(200).send(case1);
     })

@@ -26,7 +26,7 @@ const fs = Promise.promisifyAll(require("fs"));
 module.exports = class XMLImporter {
 
     constructor() {
-      this.jwt = "Basic bXVzdGVybWFubkB0ZXN0LnNjOm90dHRv"; // Max Mustermann
+      this.jwt = null; //"Basic bXVzdGVybWFubkB0ZXN0LnNjOm90dHRv"; // Max Mustermann
       this.workspaceMap = new Map();
       this.userAttributeDefinitionMap = new Map();
       this.userMap = new Map(); //<xmlId, sociocortexId>
@@ -169,7 +169,8 @@ module.exports = class XMLImporter {
       });
     }
 
-    import(filePath, isExecuteCase){      
+    import(jwt, filePath, isExecuteCase){ 
+      this.jwt = jwt;     
       return this.fileExists(filePath)
         .then(exist =>{
           if(!exist)

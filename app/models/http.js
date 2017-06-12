@@ -11,6 +11,13 @@ var headers = {
 };
 console.log(headers);
 
+function header(jwt){
+    return {
+        'Authorization': jwt,
+        'Content-Type': 'application/json'
+    }
+}
+
 function successRequest(method, url, reqBody, resBody, statusCode, start){
     const durationInMs = +(new Date().getTime()-start.getTime())+"ms";
     console.log('SC-'+method+': '+ url + " "+colors.green(statusCode)+" "+durationInMs);
@@ -37,7 +44,7 @@ module.exports = {
             }
             rq.get({
                 uri: config.sc.url +path+p,
-                headers: headers,                
+                headers: header(jwt),                
                 json: true,
                 resolveWithFullResponse: true 
             })
@@ -59,7 +66,7 @@ module.exports = {
         return new Promise(function (resolve, reject){
             rq.post({
                 uri: config.sc.url +path,
-                headers: headers,
+                headers: header(jwt),
                 body: data,
                 json: true,
                 resolveWithFullResponse: true 
@@ -79,7 +86,7 @@ module.exports = {
         return new Promise(function (resolve, reject){
             rq.put({
                 uri: config.sc.url +path,
-                headers: headers,
+                headers: header(jwt),
                 body: data,
                 json: true,
                 resolveWithFullResponse: true 
@@ -99,7 +106,7 @@ module.exports = {
         return new Promise(function (resolve, reject){
             rq.del({
                 uri: config.sc.url +path,
-                headers: headers,                
+                headers: header(jwt),                
                 json: true,
                 resolveWithFullResponse: true 
             })
