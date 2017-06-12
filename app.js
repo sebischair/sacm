@@ -25,13 +25,15 @@ app.use('/doc/howtostart', express.static(__dirname + '/doc/howtostart'));
 
 app.use('/api', (req, res, next)=>{
 
-  req.jwt = req.headers.authorization;
-  
+  req.jwt = req.headers.authorization;  
   /** this simulates the user Max Mustermann */
   if(req.jwt == null)
     req.jwt = 'Basic bXVzdGVybWFubkB0ZXN0LnNjOm90dHRv';
-
-  next();
+  if(req.jwt != null){
+    next();
+  }else{
+    res.status(403).send();
+  }
 });
 app.use('/api', routes())
 
