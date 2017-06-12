@@ -26,6 +26,7 @@ const fs = Promise.promisifyAll(require("fs"));
 module.exports = class XMLImporter {
 
     constructor() {
+      this.jwt = "Basic bXVzdGVybWFubkB0ZXN0LnNjOm90dHRv"; // Max Mustermann
       this.workspaceMap = new Map();
       this.userAttributeDefinitionMap = new Map();
       this.userMap = new Map(); //<xmlId, sociocortexId>
@@ -181,7 +182,7 @@ module.exports = class XMLImporter {
           return this.initializeMaps();
         })
         .then(()=>{
-          return Workspace.deleteAll();
+          return Workspace.deleteAll(this.jwt);
         })
         .then(()=>{
           return this.deleteUserDefinitionAttributeDefinitions();
@@ -190,10 +191,10 @@ module.exports = class XMLImporter {
           return this.createUserDefinition();
         })
         .then(()=>{
-          return Group.deleteAll();                  
+          return Group.deleteAll(this.jwt);                  
         })
         .then(()=>{
-          return User.deleteAll();  
+          return User.deleteAll(this.jwt);  
         })
         .then(()=>{
           return this.createUsers();
@@ -230,7 +231,7 @@ module.exports = class XMLImporter {
     initializeMaps(){      
       this.groupMap.set('Allusers', 'allusers'); //All registered users 
       this.groupMap.set('Everybody', 'everybody'); //Everybody
-      return User.me()
+      return User.me(this.jwt)
         .then(me=>{
           this.userMap.set('Me', me.id);
           return Promise.resolve();
@@ -239,14 +240,14 @@ module.exports = class XMLImporter {
 
     deleteUserDefinitionAttributeDefinitions(){
       let userDefinition = null;
-      return UserDefinition.find()
+      return UserDefinition.find(this.jwt)
         .then(userDef=>{
           userDefinition = userDef;
           if(userDefinition.derivedAttributeDefinitions == null) {
             return Promise.resolve();
           }
           return Promise.each(userDefinition.derivedAttributeDefinitions, ad=>{
-            return DerivedAttributeDefinition.deleteById(ad.id);
+            return DerivedAttributeDefinition.deleteById(this.jwt, ad.id);
           });
         })
         .then(()=>{
@@ -254,7 +255,7 @@ module.exports = class XMLImporter {
             return Promise.resolve();
           }
           return Promise.each(userDefinition.attributeDefinitions, ad=>{
-            return AttributeDefinition.deleteById(ad.id);
+            return AttributeDefinition.deleteById(this.jwt, ad.id);
           });
         })
     }
@@ -264,7 +265,7 @@ module.exports = class XMLImporter {
         return Promise.resolve();
       const userDefintion = this.json.UserDefinition[0];
       let persistedUserDefinitionId = null;
-      return UserDefinition.find()
+      return UserDefinition.find(this.jwt)
         .then(persistedUserDef =>{
           persistedUserDefinitionId = persistedUserDef.id;
           return this.createUserDefinitionAttributeDefinitions(userDefintion, persistedUserDefinitionId);
@@ -284,7 +285,7 @@ module.exports = class XMLImporter {
         data.multiplicity = ad.$.multiplicity; 
         data.entityDefinition = persistedUserDefinitionId;  
         data.uiReference = ad.$.uiReference;       
-        return AttributeDefinition.create(data)             
+        return AttributeDefinition.create(this.jwt, data)             
           .then(persistedAttributeDefinition =>{
             this.userAttributeDefinitionMap.set(ad.$.id, persistedAttributeDefinition.id);
             return Promise.resolve();
@@ -300,7 +301,7 @@ module.exports = class XMLImporter {
       if(UserDefinition == null || UserDefinition.DerivedAttributeDefinition == null)  
           return Promise.resolve();
       return Promise.each(UserDefinition.DerivedAttributeDefinition, ad=>{   
-          return DerivedAttributeDefinition.create({
+          return DerivedAttributeDefinition.create(this.jwt, {
             name: ad.$.id,
             description: ad.$.description,
             expression: ad.$.expression,
@@ -325,7 +326,7 @@ module.exports = class XMLImporter {
               values: JSON.parse(a.$.values.replace(/'/g,'"'))
             });
           }          
-        return User.createAndVerify(data)
+        return User.createAndVerify(this.jwt, data)
           .then(persistedUser =>{
             this.userMap.set(u.$.id, persistedUser.id);     
             return Promise.resolve();
@@ -352,7 +353,7 @@ module.exports = class XMLImporter {
             return Promise.resolve();      
         })
         .then(()=>{
-          return Group.create(data)
+          return Group.create(this.jwt, data)
         })        
         .then(persistedGroup =>{
           this.groupMap.set(g.$.id, persistedGroup.id);
@@ -376,7 +377,7 @@ module.exports = class XMLImporter {
         return Promise.each(g.Membership, m=>{
           const groupId = this.getGroupIdByXMLId(g.$.id);
           const principalId = this.getPrincipalIdByXMLId(m.$.principalId);
-          return Group.addMember(groupId, principalId);
+          return Group.addMember(this.jwt, groupId, principalId);
         });     
       });
     }
@@ -405,7 +406,7 @@ module.exports = class XMLImporter {
             data.permissions.administrators.push(this.getPrincipalIdByXMLId(a.$.principalId));
         //if(w.$.staticId != null)
         //  data.id = w.$.staticId;
-        return Workspace.create(data)
+        return Workspace.create(this.jwt, data)
           .then(persistedWorkspace=>{
             this.workspaceMap.set(w.$.id, persistedWorkspace.id);
 
@@ -451,7 +452,7 @@ module.exports = class XMLImporter {
 
     createEntityDefinitions(Workspace) {
       return Promise.each(Workspace.EntityDefinition, ed=>{
-        return EntityDefinition.create(this.getWorkspaceIdByXMLId(Workspace.$.id), ed.$.id)
+        return EntityDefinition.create(this.jwt, this.getWorkspaceIdByXMLId(Workspace.$.id), ed.$.id)
           .then(persistedEntityDefinition =>{
             this.entityDefinitionMap.set(ed.$.id, persistedEntityDefinition.id);
             return Promise.resolve();
@@ -475,7 +476,7 @@ module.exports = class XMLImporter {
                 data.multiplicity = ad.$.multiplicity; 
                 data.entityDefinition = entityDefId;   
                 data.uiReference = ad.$.uiReference;     
-                return AttributeDefinition.create(data);
+                return AttributeDefinition.create(this.jwt, data);
               })
               .then(persistedAttributeDefinition =>{
                 this.attributeDefinitionMap.set(ed.$.id+ad.$.id, persistedAttributeDefinition.id);
@@ -550,7 +551,7 @@ module.exports = class XMLImporter {
         return Promise.each(ed.DerivedAttributeDefinition, ad=>{                 
           return this.getEntityDefinitionIdByXMLId(ed.$.id)
             .then(entityDefId=>{          
-              return DerivedAttributeDefinition.create({
+              return DerivedAttributeDefinition.create(this.jwt, {
                 name: ad.$.id,
                 description: ad.$.description,
                 expression: ad.$.expression,
@@ -579,7 +580,7 @@ module.exports = class XMLImporter {
               ownerPath: cd.$.ownerPath,
               entityDefinition: entityDefinitionId
             };
-            return CaseDefinition.create(data)
+            return CaseDefinition.create(this.jwt, data)
           })
           .then(persistedCaseDefinition =>{
             this.caseDefinitionMap.set(cd.$.id, persistedCaseDefinition.id);
@@ -609,7 +610,7 @@ module.exports = class XMLImporter {
           if(param.$.path != null)
             data.paths.push(param.$.path);
         };
-        return SummarySectionDefinition.create(data);
+        return SummarySectionDefinition.create(this.jwt, data);
       });
     }
 
@@ -641,7 +642,7 @@ module.exports = class XMLImporter {
               newEntityDefinition: entityDefinitionId,
               newEntityAttachPath: sd.$.entityAttachPath
             }
-            return StageDefinition.create(data);
+            return StageDefinition.create(this.jwt, data);
           })
           .then(persistedStageDef=>{
             this.stageDefinitionMap.set(sd.$.id, persistedStageDef.id);
@@ -713,7 +714,7 @@ module.exports = class XMLImporter {
               newEntityDefinition: entityDefinitionId,
               newEntityAttachPath: td.$.entityAttachPath
             }            
-            return HumanTaskDefinition.create(data)
+            return HumanTaskDefinition.create(this.jwt, data)
           })
           .then(persistedHumanTaskDef=>{
             this.humanTaskDefinitionMap.set(td.$.id, persistedHumanTaskDef.id);
@@ -750,7 +751,7 @@ module.exports = class XMLImporter {
               newEntityDefinition: entityDefinitionId,
               newEntityAttachPath: td.$.entityAttachPath
             }     
-            return AutomatedTaskDefinition.create(data)
+            return AutomatedTaskDefinition.create(this.jwt, data)
           })
           .then(persistedAutomatedTaskDef=>{
             this.automatedTaskDefinitionMap.set(td.$.id, persistedAutomatedTaskDef.id);
@@ -778,7 +779,7 @@ module.exports = class XMLImporter {
           isReadOnly: tp.$.isReadOnly,
           taskDefinition: taskDefinitionId
         }
-        return TaskParamDefinition.create(data);
+        return TaskParamDefinition.create(this.jwt, data);
       });
     }
 
@@ -793,7 +794,7 @@ module.exports = class XMLImporter {
             method: hhd.$.method,
             processDefinition: processDefinitionId
           }
-          return HttpHookDefinition.create(data);
+          return HttpHookDefinition.create(this.jwt, data);
         })
         .then(()=>{
           resolve()
@@ -877,17 +878,17 @@ module.exports = class XMLImporter {
           }
         })
         .then(()=>{
-          return SentryDefinition.create(data);
+          return SentryDefinition.create(this.jwt, data);
         });
       });
     }
 
     createCase(){
       const caseDefinitionId = this.caseDefinitionMap.values().next().value;
-      return Case.create({caseDefinition: caseDefinitionId})
+      return Case.create(this.jwt, {caseDefinition: caseDefinitionId})
         .then(case1=>{
           this.case1 = case1;
-          return Case.findTreeById(case1.id);
+          return Case.findTreeById(this.jwt, case1.id);
         });
     }
 
@@ -917,7 +918,7 @@ module.exports = class XMLImporter {
       })      
       .then(()=>{
         console.log(this.userMap);
-        return Case.findTreeById(caseId);
+        return Case.findTreeById(this.jwt, caseId);
       })
       .catch(err=>{
         console.log(err);
@@ -931,10 +932,10 @@ module.exports = class XMLImporter {
      * @param paramsMap {attrName1:[value1, value2], attrName2: [value1, value2]}
      */
     completeHumanTaskWithName(caseId, taskName, paramsMap){     
-       return HumanTask.findAllByCaseId(caseId)
+       return HumanTask.findAllByCaseId(this.jwt, caseId)
         .then(humanTasks=>{          
           const ht = this.findProcessWithName(humanTasks, taskName);
-          return HumanTask.findById(ht.id);
+          return HumanTask.findById(this.jwt, ht.id);
         })        
         .then(humanTask=>{
           for(let i=0; i<humanTask.taskParams.length; i++){
@@ -942,7 +943,7 @@ module.exports = class XMLImporter {
             if(paramsMap.hasOwnProperty(tp.name))
               humanTask.taskParams[i].values = paramsMap[tp.name];            
           }
-          return HumanTask.complete(humanTask);
+          return HumanTask.complete(this.jwt, humanTask);
         });        
     }
 
