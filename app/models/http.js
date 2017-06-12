@@ -9,7 +9,6 @@ var headers = {
     'Authorization': 'Basic ' + new Buffer(config.sc.user + ':' + config.sc.pass).toString('base64'),
     'Content-Type': 'application/json'
 };
-console.log(headers);
 
 function header(jwt){
     return {
