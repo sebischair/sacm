@@ -25,7 +25,7 @@ function errorRequest(method, url, reqBody, resBody, statusCode, start){
 
 module.exports = {
 
-    get: function(path, params){
+    get: function(jwt, path, params){
         const start = new Date();
         return new Promise(function (resolve, reject){
             let p = ""; 
@@ -51,7 +51,7 @@ module.exports = {
             });          
         });
     },
-    post: function(path, data){
+    post: function(jwt, path, data){
         const start = new Date();
         console.log('###### POST 2 #######');
         console.log(JSON.stringify(data));
@@ -74,7 +74,7 @@ module.exports = {
             });          
         });
     },
-    put: function(path, data){
+    put: function(jwt, path, data){
         const start = new Date();
         return new Promise(function (resolve, reject){
             rq.put({
@@ -94,7 +94,7 @@ module.exports = {
             });          
         });
     },
-    del: function(path){
+    del: function(jwt, path){
         const start = new Date();
         return new Promise(function (resolve, reject){
             rq.del({
