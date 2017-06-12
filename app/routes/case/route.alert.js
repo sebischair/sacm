@@ -108,7 +108,7 @@ router.post('/', (req, res, next)=>{
 
 
 /**
- * @api {post} /alert Update Alert
+ * @api {patch} /alert Update Alert
  *
  * @apiName UpdateAlert
  * @apiGroup Alert

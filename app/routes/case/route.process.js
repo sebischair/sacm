@@ -54,7 +54,7 @@ router.get('/:id', (req, res, next)=>{
  * @api {get} /process/:id/alerts Get Alerts
  *
  * @apiName GetProcessAlerts
- * @apiGroup Process
+ * @apiGroup Alert
  *
  * @apiParam {String} id ID of the Process
  *
