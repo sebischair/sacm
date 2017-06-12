@@ -38,7 +38,7 @@ import Alert from './../../models/case/model.alert';
  *
  */
 router.get('/:id', (req, res, next)=>{
-  Alert.findById(req.params.id)
+  Alert.findById(req.jwt, req.params.id)
     .then(c=>{
       res.status(200).send(c);
     })

@@ -44,7 +44,7 @@ import AutomatedTask from './../../models/case/model.automatedtask';
  *
  */
 router.get('/:id', (req, res, next)=>{
-  Stage.findById(req.params.id)
+  Stage.findById(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -87,7 +87,7 @@ router.get('/:id', (req, res, next)=>{
  *
  */
 router.get('/:id/stages', (req, res, next)=>{
-  Stage.findbyStageId(req.params.id)
+  Stage.findbyStageId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -112,7 +112,7 @@ router.get('/:id/stages', (req, res, next)=>{
  *
  */
 router.post('/:id/complete', (req, res, next)=>{
-  Stage.complete(req.params.id)
+  Stage.complete(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -138,7 +138,7 @@ router.post('/:id/complete', (req, res, next)=>{
  *
  */
 router.post('/:id/terminate', (req, res, next)=>{
-  Stage.terminate(req.params.id)
+  Stage.terminate(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -169,7 +169,7 @@ router.post('/:id/terminate', (req, res, next)=>{
  *
  */
 router.get('/:id/processes', (req, res, next)=>{
-  Process.findbyCaseId(req.params.id)
+  Process.findbyCaseId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -216,7 +216,7 @@ router.get('/:id/processes', (req, res, next)=>{
  *
  */
 router.get('/:id/tasks', (req, res, next)=>{
-  Task.findbyCaseId(req.params.id)
+  Task.findbyCaseId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -261,7 +261,7 @@ router.get('/:id/tasks', (req, res, next)=>{
  *
  */
 router.get('/:id/automatedtasks', (req, res, next)=>{
-  AutomatedTask.findbyStageId(req.params.id)
+  AutomatedTask.findbyStageId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -307,7 +307,7 @@ router.get('/:id/automatedtasks', (req, res, next)=>{
  *
  */
 router.get('/:id/humantasks', (req, res, next)=>{
-   HumanTask.findbyStageId(req.params.id)
+   HumanTask.findbyStageId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })

@@ -31,7 +31,7 @@ import Case from './../../models/case/model.case'
  *
  */
 router.get('/', (req, res, next)=>{
-  User.findAll()
+  User.findAll(req.jwt)
     .then(users=>{
         res.status(200).send(users);
     })
@@ -86,7 +86,7 @@ router.get('/', (req, res, next)=>{
  *
  */
 router.get('/:id', (req, res, next)=>{
-  User.findById(req.params.id)
+  User.findById(req.jwt, req.params.id)
     .then(user=>{
         res.status(200).send(user);
     })
@@ -136,7 +136,7 @@ router.get('/:id', (req, res, next)=>{
  *
  */
 router.post('/', (req, res, next)=>{
-  User.createAndVerify(req.body)
+  User.createAndVerify(req.jwt, req.body)
     .then(user=>{
         res.status(200).send(user);
     })
@@ -164,7 +164,7 @@ router.post('/', (req, res, next)=>{
  *
  */
 router.delete('/:id', (req, res, next)=>{
-  User.deleteById(req.params.id)
+  User.deleteById(req.jwt, req.params.id)
     .then(user=>{
         res.status(200).send(user);
     })
@@ -216,7 +216,7 @@ router.delete('/:id', (req, res, next)=>{
 router.patch('/:id', (req, res, next)=>{
   const data = req.body;
   data.id = req.params.id;
-  User.updateById(data)
+  User.updateById(req.jwt, data)
     .then(user=>{
         res.status(200).send(user);
     })
@@ -303,7 +303,7 @@ router.patch('/:id', (req, res, next)=>{
  *
  */
 router.get('/me', (req, res, next)=>{
-  User.me(req.params.id)
+  User.me(req.jwt, req.params.id)
     .then(user=>{
         res.status(200).send(user);
     })

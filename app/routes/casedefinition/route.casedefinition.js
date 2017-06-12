@@ -38,7 +38,7 @@ import Authorizer from './../../middlewares/middleware.authorize';
  *
  */
 router.get('/caninstantiate', (req, res, next)=>{
-  CaseDefinition.canInstantiate()
+  CaseDefinition.canInstantiate(req.jwt)
     .then(cd=>{
         res.status(200).send(cd);
     })
@@ -78,7 +78,7 @@ router.post('/', (req, res, next)=>{
     entityDefinition: req.body.entityDefinition,
     ownerPath: req.body.ownerPath
   }
-  CaseDefinition.create(data)
+  CaseDefinition.create(req.jwt, data)
     .then(cds=>{
         res.status(200).send(cds);
     })
@@ -110,7 +110,7 @@ router.post('/', (req, res, next)=>{
  *
  */
 router.get('/:id', (req, res, next)=>{
-  CaseDefinition.findById(req.params.id)
+  CaseDefinition.findById(req.jwt, req.params.id)
     .then(cd=>{
         res.status(200).send(cd);
     })
@@ -143,7 +143,7 @@ router.get('/:id', (req, res, next)=>{
  *
  */
 router.get('/:id/tree', (req, res, next)=>{
-  CaseDefinition.findTreeById(req.params.id)
+  CaseDefinition.findTreeById(req.jwt, req.params.id)
     .then(cd=>{
         res.status(200).send(cd);
     })
@@ -169,7 +169,7 @@ router.get('/:id/tree', (req, res, next)=>{
  *
  */
 router.delete('/:id', (req, res, next)=>{
-  CaseDefinition.findById(req.params.id)
+  CaseDefinition.findById(req.jwt, req.params.id)
     .then(cd=>{
         console.log(cd);
         return cd.remove();
@@ -216,7 +216,7 @@ router.patch('/:id', (req, res, next)=>{
     entityDefinition: {id: req.body.entityDefinition},
     ownerPath: req.body.ownerPath
   }
-  CaseDefinition.updateById(req.params.id, data)
+  CaseDefinition.updateById(req.jwt, req.params.id, data)
     .then(cd=>{
         res.status(200).send(cd);
     })
@@ -255,7 +255,7 @@ router.patch('/:id', (req, res, next)=>{
  *
  */
 router.get('/:id/stagedefinitions', (req, res, next)=>{
-  StageDefinition.findByCaseDefinitionId(req.params.id)
+  StageDefinition.findByCaseDefinitionId(req.jwt, req.params.id)
     .then(cd=>{
         res.status(200).send(cd);
     })
@@ -293,7 +293,7 @@ router.get('/:id/stagedefinitions', (req, res, next)=>{
  *
  */
 router.get('/:id/stagedefinitions/all', (req, res, next)=>{
-  StageDefinition.findALLByCaseDefinitionId(req.params.id)
+  StageDefinition.findALLByCaseDefinitionId(req.jwt, req.params.id)
     .then(cd=>{
         res.status(200).send(cd);
     })
@@ -333,7 +333,7 @@ router.get('/:id/stagedefinitions/all', (req, res, next)=>{
  *
  */
 router.get('/:id/automatedtaskdefinitions', (req, res, next)=>{
-  AutomatedTaskDefinition.findByCaseDefinitionId(req.params.id)
+  AutomatedTaskDefinition.findByCaseDefinitionId(req.jwt, req.params.id)
     .then(cd=>{
         res.status(200).send(cd);
     })
@@ -372,7 +372,7 @@ router.get('/:id/automatedtaskdefinitions', (req, res, next)=>{
  *
  */
 router.get('/:id/automatedtaskdefinitions/all', (req, res, next)=>{
-  AutomatedTaskDefinition.findALLByCaseDefinitionId(req.params.id)
+  AutomatedTaskDefinition.findALLByCaseDefinitionId(req.jwt, req.params.id)
     .then(cd=>{
         res.status(200).send(cd);
     })
@@ -411,7 +411,7 @@ router.get('/:id/automatedtaskdefinitions/all', (req, res, next)=>{
  *
  */
 router.get('/:id/humantaskdefinitions', (req, res, next)=>{
-  HumanTaskDefinition.findALLByCaseDefinitionId(req.params.id)
+  HumanTaskDefinition.findALLByCaseDefinitionId(req.jwt, req.params.id)
     .then(cd=>{
         res.status(200).send(cd);
     })
@@ -452,7 +452,7 @@ router.get('/:id/humantaskdefinitions', (req, res, next)=>{
  *
  */
 router.get('/:id/humantaskdefinitions/all', (req, res, next)=>{
-  HumanTaskDefinition.findALLByCaseDefinitionId(req.params.id)
+  HumanTaskDefinition.findALLByCaseDefinitionId(req.jwt, req.params.id)
     .then(cd=>{
         res.status(200).send(cd);
     })
@@ -497,7 +497,7 @@ router.get('/:id/humantaskdefinitions/all', (req, res, next)=>{
  *
  */
 router.get('/:id/cases', (req, res, next)=>{
-  Case.findbyCaseDefinitionId(req.params.id)
+  Case.findbyCaseDefinitionId(req.jwt, req.params.id)
     .then(cd=>{
         res.status(200).send(cd);
     })

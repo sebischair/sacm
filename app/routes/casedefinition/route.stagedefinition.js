@@ -50,12 +50,13 @@ router.post('/', (req, res, next)=>{
     parent: req.body.parent,
     preconditions: req.body.preconditions
   }
-  StageDefinition.create(data).then(sd=>{
-    res.status(200).send(sd);
-  })
-  .catch(err=>{
-    res.status(500).send(err);
-  });
+  StageDefinition.create(req.jwt, data)
+    .then(sd=>{
+      res.status(200).send(sd);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    });
 });
 
 
@@ -104,12 +105,13 @@ router.patch('/:id', (req, res, next)=>{
     parent: req.body.parent,
     preconditions: req.body.preconditions
   }
-  StageDefinition.updateById(req.params.id, data).then(sd=>{
-    res.status(200).send(sd);
-  })
-  .catch(err=>{
-    res.status(500).send(err);
-  });
+  StageDefinition.updateById(req.jwt, req.params.id, data)
+    .then(sd=>{
+      res.status(200).send(sd);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    });
 });
 
 
@@ -143,9 +145,9 @@ router.patch('/:id', (req, res, next)=>{
  *
  */
 router.get('/:id', (req, res, next)=>{
-  StageDefinition.findById(req.params.id)
+  StageDefinition.findById(req.jwt, req.params.id)
     .then(sd=>{
-        res.status(200).send(sd);
+      res.status(200).send(sd);
     })
     .catch(err=>{
       res.status(500).send(err);
@@ -169,7 +171,7 @@ router.get('/:id', (req, res, next)=>{
  *
  */
 router.delete('/:id', (req, res, next)=>{
-  StageDefinition.deleteById(req.params.id)
+  StageDefinition.deleteById(req.jwt, req.params.id)
     .then(()=>{
        res.status(200).send();
     })
@@ -209,9 +211,9 @@ router.delete('/:id', (req, res, next)=>{
  *
  */
 router.get('/:id/automatedtaskdefinitions', (req, res, next)=>{
-  AutomatedTaskDefinition.findByCaseDefinitionId(req.params.id)
+  AutomatedTaskDefinition.findByCaseDefinitionId(req.jwt, req.params.id)
     .then(cd=>{
-        res.status(200).send(cd);
+      res.status(200).send(cd);
     })
     .catch(err=>{
       res.status(500).send(err);
@@ -249,9 +251,9 @@ router.get('/:id/automatedtaskdefinitions', (req, res, next)=>{
  *
  */
 router.get('/:id/humantaskdefinitions', (req, res, next)=>{
-  HumanTaskDefinition.findALLByCaseDefinitionId(req.params.id)
+  HumanTaskDefinition.findALLByCaseDefinitionId(req.jwt, req.params.id)
     .then(cd=>{
-        res.status(200).send(cd);
+      res.status(200).send(cd);
     })
     .catch(err=>{
       res.status(500).send(err);
@@ -295,9 +297,9 @@ router.get('/:id/humantaskdefinitions', (req, res, next)=>{
  *
  */
  router.get('/:id/stages', (req, res, next)=>{
-   Stage.findbyStageDefinitionId(req.params.id)
+   Stage.findbyStageDefinitionId(req.jwt, req.params.id)
      .then(cd=>{
-         res.status(200).send(cd);
+       res.status(200).send(cd);
      })
      .catch(err=>{
        res.status(500).send(err);

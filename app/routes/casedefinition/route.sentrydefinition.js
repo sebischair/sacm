@@ -26,7 +26,7 @@ import SentryDefinition from './../../models/casedefinition/model.sentrydefiniti
  *
  */
 router.get('/:id', (req, res, next)=>{
-  SentryDefinition.findById(req.params.id)
+  SentryDefinition.findById(req.jwt, req.params.id)
     .then(sd=>{
         res.status(200).send(sd);
     })
@@ -50,7 +50,7 @@ router.get('/:id', (req, res, next)=>{
  *   {}
  */
 router.delete('/:id', (req, res, next)=>{
-  SentryDefinition.deleteById(req.params.id)
+  SentryDefinition.deleteById(req.jwt, req.params.id)
     .then(()=>{
        res.status(200).send();
     })
@@ -98,12 +98,13 @@ router.post('/', (req, res, next)=>{
     parent: req.body.parent,
     preconditions: req.body.preconditions
   }
-  SentryDefinition.create(data).then(sd=>{
-    res.status(200).send(sd);
-  })
-  .catch(err=>{
-    res.status(500).send(err);
-  });
+  SentryDefinition.create(req.jwt, data)
+    .then(sd=>{
+      res.status(200).send(sd);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    });
 });
 
 /**
@@ -145,12 +146,13 @@ router.patch('/', (req, res, next)=>{
     parent: req.body.parent,
     preconditions: req.body.preconditions
   }
-  SentryDefinition.updateById(req.params.id, data).then(sd=>{
-    res.status(200).send(sd);
-  })
-  .catch(err=>{
-    res.status(500).send(err);
-  });
+  SentryDefinition.updateById(req.jwt, req.params.id, data)
+    .then(sd=>{
+      res.status(200).send(sd);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    });
 });
 
 

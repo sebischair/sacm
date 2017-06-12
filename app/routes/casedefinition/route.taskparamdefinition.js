@@ -24,9 +24,9 @@ import TaskParamDefinition from './../../models/casedefinition/model.taskparamde
  *
  */
 router.get('/:id', (req, res, next)=>{
-  TaskParamDefinition.findById(req.params.id)
+  TaskParamDefinition.findById(req.jwt, req.params.id)
     .then(sd=>{
-        res.status(200).send(sd);
+      res.status(200).send(sd);
     })
     .catch(err=>{
       res.status(500).send(err);
@@ -61,9 +61,9 @@ router.post('/', (req, res, next)=>{
     isReadOnly: req.body.isReadOnly,
     taskDefinition: req.body.taskDefinition,
   }
-  TaskParamDefinition.create(data)
+  TaskParamDefinition.create(req.jwt, data)
     .then(sd=>{
-        res.status(200).send(sd);
+      res.status(200).send(sd);
     })
     .catch(err=>{
       res.status(500).send(err);
@@ -100,9 +100,9 @@ router.patch('/:id', (req, res, next)=>{
     isReadOnly: req.body.isReadOnly,
     taskDefinition: req.body.taskDefinition,
   }
-  TaskParamDefinition.updateById(data)
+  TaskParamDefinition.updateById(req.jwt, data)
     .then(sd=>{
-        res.status(200).send(sd);
+      res.status(200).send(sd);
     })
     .catch(err=>{
       res.status(500).send(err);
@@ -126,9 +126,9 @@ router.patch('/:id', (req, res, next)=>{
  *
  */
 router.delete('/:id', (req, res, next)=>{
-  TaskParamDefinition.deleteById(req.params.id)
+  TaskParamDefinition.deleteById(req.jwt, req.params.id)
     .then(()=>{
-       res.status(200).send();
+      res.status(200).send();
     })
     .catch(err=>{
       res.status(500).send(err);

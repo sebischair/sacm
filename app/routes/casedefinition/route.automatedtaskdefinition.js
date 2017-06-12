@@ -32,7 +32,7 @@ import AutomatedTask from './../../models/case/model.automatedtask';
  *
  */
 router.get('/:id', (req, res, next)=>{
-  AutomatedTaskDefinition.findById(req.params.id)
+  AutomatedTaskDefinition.findById(req.jwt, req.params.id)
     .then(sd=>{
         res.status(200).send(sd);
     })
@@ -58,7 +58,7 @@ router.get('/:id', (req, res, next)=>{
  *
  */
 router.delete('/:id', (req, res, next)=>{
-  AutomatedTaskDefinition.deleteById(req.params.id)
+  AutomatedTaskDefinition.deleteById(req.jwt, req.params.id)
     .then(()=>{
        res.status(200).send();
     })
@@ -112,7 +112,8 @@ router.post('/', (req, res, next)=>{
     parent: req.body.parent,
     preconditions: req.body.preconditions
   }
- AutomatedTaskDefinition.create(data).then(sd=>{
+ AutomatedTaskDefinition.create(req.jwt, data)
+  .then(sd=>{
     res.status(200).send(sd);
   })
   .catch(err=>{
@@ -166,7 +167,7 @@ router.patch('/:id', (req, res, next)=>{
     parent: req.body.parent,
     preconditions: req.body.preconditions
   }
-  AutomatedTaskDefinition.updateById(data)
+  AutomatedTaskDefinition.updateById(req.jwt, data)
     .then(cd=>{
         res.status(200).send(cd);
     })
@@ -210,7 +211,7 @@ router.patch('/:id', (req, res, next)=>{
  *
  */
 router.get('/:id/automatedtasks', (req, res, next)=>{
-  AutomatedTask.findbyTaskDefinitionId(req.params.id)
+  AutomatedTask.findbyTaskDefinitionId(req.jwt, req.params.id)
     .then(sd=>{
         res.status(200).send(sd);
     })

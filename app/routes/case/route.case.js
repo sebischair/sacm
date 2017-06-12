@@ -71,7 +71,7 @@ import SummarySection from './../../models/case/model.summarysection';
  * ]
  */
 router.get('/me', (req, res, next)=>{
-  Case.findByMe()
+  Case.findByMe(req.jwt)
     .then(cases=>{
         res.status(200).send(cases);
     })
@@ -114,7 +114,7 @@ router.get('/me', (req, res, next)=>{
  *
  */
 router.get('/:id', (req, res, next)=>{
-  Case.findById(req.params.id)
+  Case.findById(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -161,7 +161,7 @@ router.get('/:id', (req, res, next)=>{
    var data = {
      caseDefinitionId: req.body.caseDefinitionId
    }
-   Case.create(data)
+   Case.create(req.jwt, data)
      .then(c=>{
          res.status(200).send(c);
      })
@@ -454,7 +454,7 @@ router.get('/:id', (req, res, next)=>{
  * }
  */
 router.get('/:id/tree', (req, res, next)=>{
-  Case.findTreeById(req.params.id, {})
+  Case.findTreeById(req.jwt, req.params.id, {})
     .then(c=>{
       res.status(200).send(c);
     })
@@ -481,7 +481,7 @@ router.get('/:id/tree', (req, res, next)=>{
  *
  */
 router.post('/:id/complete', (req, res, next)=>{
-  Case.complete(req.params.id)
+  Case.complete(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -507,7 +507,7 @@ router.post('/:id/complete', (req, res, next)=>{
  *
  */
 router.post('/:id/terminate', (req, res, next)=>{
-  Case.terminate(req.params.id)
+  Case.terminate(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -534,7 +534,7 @@ router.post('/:id/terminate', (req, res, next)=>{
  *
  */
 router.delete('/:id', (req, res, next)=>{
-  Case.deleteById(req.params.id)
+  Case.deleteById(req.jwt, req.params.id)
     .then(()=>{
        res.status(200).send();
     })
@@ -582,7 +582,7 @@ router.delete('/:id', (req, res, next)=>{
  *
  */
 router.get('/:id/processes', (req, res, next)=>{
-  Process.findbyCaseId(req.params.id)
+  Process.findbyCaseId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -628,7 +628,7 @@ router.get('/:id/processes', (req, res, next)=>{
  *
  */
 router.get('/:id/processes/all', (req, res, next)=>{
-  Process.findbyCaseId(req.params.id)
+  Process.findbyCaseId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -673,7 +673,7 @@ router.get('/:id/processes/all', (req, res, next)=>{
  *
  */
 router.get('/:id/stages', (req, res, next)=>{
-  Stage.findbyCaseId(req.params.id)
+  Stage.findbyCaseId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -718,7 +718,7 @@ router.get('/:id/stages', (req, res, next)=>{
  *
  */
 router.get('/:id/stages/all', (req, res, next)=>{
-  Stage.findALLbyCaseId(req.params.id)
+  Stage.findALLbyCaseId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -765,7 +765,7 @@ router.get('/:id/stages/all', (req, res, next)=>{
  *
  */
 router.get('/:id/tasks/all', (req, res, next)=>{
-  Task.findbyCaseId(req.params.id)
+  Task.findbyCaseId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -810,7 +810,7 @@ router.get('/:id/tasks/all', (req, res, next)=>{
  *
  */
 router.get('/:id/tasks/all', (req, res, next)=>{
-  Task.findALLbyCaseId(req.params.id)
+  Task.findALLbyCaseId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -857,7 +857,7 @@ router.get('/:id/tasks/all', (req, res, next)=>{
  *
  */
 router.get('/:id/humantasks/all', (req, res, next)=>{
-  HumanTask.findbyCaseId(req.params.id)
+  HumanTask.findbyCaseId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -903,7 +903,7 @@ router.get('/:id/humantasks/all', (req, res, next)=>{
  *
  */
 router.get('/:id/humantasks/all', (req, res, next)=>{
-  HumanTask.findALLbyCaseId(req.params.id)
+  HumanTask.findALLbyCaseId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -949,7 +949,7 @@ router.get('/:id/humantasks/all', (req, res, next)=>{
  *
  */
 router.get('/:id/automatedtasks', (req, res, next)=>{
-  AutomatedTask.findbyCaseId(req.params.id)
+  AutomatedTask.findbyCaseId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -994,7 +994,7 @@ router.get('/:id/automatedtasks', (req, res, next)=>{
  *
  */
 router.get('/:id/automatedtasks/all', (req, res, next)=>{
-  AutomatedTask.findALLbyCaseId(req.params.id)
+  AutomatedTask.findALLbyCaseId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -1024,7 +1024,7 @@ router.get('/:id/automatedtasks/all', (req, res, next)=>{
  *
  */
 router.get('/:id/messages', (req, res, next)=>{
-  Message.findByCaseId(req.params.id)
+  Message.findByCaseId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -1070,7 +1070,7 @@ router.get('/:id/messages', (req, res, next)=>{
  *
  */
 router.get('/:id/alerts', (req, res, next)=>{
-  Alert.findByCaseId(req.params.id)
+  Alert.findByCaseId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -1188,7 +1188,7 @@ router.get('/:id/alerts', (req, res, next)=>{
  *
  */
 router.get('/:id/summarysections', (req, res, next)=>{
-  SummarySection.findByCaseId(req.params.id)
+  SummarySection.findByCaseId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })

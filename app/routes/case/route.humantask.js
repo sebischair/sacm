@@ -99,7 +99,7 @@ import HumanTask from './../../models/case/model.humantask';
  * }
  */
 router.get('/:id', (req, res, next)=>{
-  HumanTask.findById(req.params.id)
+  HumanTask.findById(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -214,7 +214,7 @@ router.get('/:id', (req, res, next)=>{
 router.post('/:id/draft', (req, res, next)=>{
   var data = req.body.taskParams;
   data.id = req.params.id;
-  HumanTask.draft(data)
+  HumanTask.draft(req.jwt, data)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -337,7 +337,7 @@ router.post('/:id/draft', (req, res, next)=>{
 router.post('/:id/complete', (req, res, next)=>{
   var data = req.body.taskParams;
   data.id = req.params.id;
-  HumanTask.draft(data)
+  HumanTask.draft(req.jwt, data)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -362,7 +362,7 @@ router.post('/:id/complete', (req, res, next)=>{
  *     }
  */
 router.post('/:id/terminate', (req, res, next)=>{
-  HumanTask.terminate(req.params.id)
+  HumanTask.terminate(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })

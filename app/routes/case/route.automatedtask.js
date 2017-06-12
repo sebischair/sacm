@@ -34,7 +34,7 @@ import AutomatedTask from './../../models/case/model.automatedtask';
  *     }
  */
 router.get('/:id', (req, res, next)=>{
-  AutomatedTask.findById(req.params.id)
+  AutomatedTask.findById(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -62,7 +62,7 @@ router.get('/:id', (req, res, next)=>{
 router.post('/:id/draft', (req, res, next)=>{
   var data = req.body.taskParams;
   data.id = req.params.id;
-  AutomatedTask.draft(data)
+  AutomatedTask.draft(req.jwt, data)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -90,7 +90,7 @@ router.post('/:id/draft', (req, res, next)=>{
 router.post('/:id/complete', (req, res, next)=>{
   var data = req.body.taskParams;
   data.id = req.params.id;
-  AutomatedTask.draft(data)
+  AutomatedTask.draft(req.jwt, data)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -115,7 +115,7 @@ router.post('/:id/complete', (req, res, next)=>{
  *     }
  */
 router.post('/:id/terminate', (req, res, next)=>{
-  AutomatedTask.terminate(req.params.id)
+  AutomatedTask.terminate(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })

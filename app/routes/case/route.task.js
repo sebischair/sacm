@@ -43,7 +43,7 @@ import Task from './../../models/case/model.task'
  *
  */
 router.get('/:id', (req, res, next)=>{
-  Task.findById(req.params.id)
+  Task.findById(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })

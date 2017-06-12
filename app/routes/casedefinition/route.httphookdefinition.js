@@ -26,7 +26,7 @@ import HttpHookDefinition from './../../models/casedefinition/model.httphookdefi
  *
  */
 router.get('/:id', (req, res, next)=>{
-  HttpHookDefinition.findById(req.params.id)
+  HttpHookDefinition.findById(req.jwt, req.params.id)
     .then(sd=>{
         res.status(200).send(sd);
     })
@@ -67,7 +67,7 @@ router.post('/', (req, res, next)=>{
     method: req.body.method,
     processDefinition: req.body.processDefinition
   }
-  HttpHookDefinition.create(data)
+  HttpHookDefinition.create(req.jwt, data)
     .then(sd=>{
         res.status(200).send(sd);
     })
@@ -105,7 +105,7 @@ router.patch('/:id', (req, res, next)=>{
     method: req.body.method,
     processDefinition: req.body.processDefinition
   }
-  HttpHookDefinition.updateById(data)
+  HttpHookDefinition.updateById(req.jwt, data)
     .then(sd=>{
         res.status(200).send(sd);
     })
@@ -130,7 +130,7 @@ router.patch('/:id', (req, res, next)=>{
  *   {}
  */
 router.delete('/:id', (req, res, next)=>{
-  HttpHookDefinition.deleteById(req.params.id)
+  HttpHookDefinition.deleteById(req.jwt, req.params.id)
     .then(()=>{
        res.status(200).send();
     })

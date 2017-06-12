@@ -40,7 +40,7 @@ import Alert from './../../models/case/model.alert';
  *
  */
 router.get('/:id', (req, res, next)=>{
-  Process.findById(req.params.id)
+  Process.findById(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -83,7 +83,7 @@ router.get('/:id', (req, res, next)=>{
  *
  */
 router.get('/:id/alerts', (req, res, next)=>{
-  Alert.findByProcessId(req.params.id)
+  Alert.findByProcessId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })

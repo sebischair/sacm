@@ -31,7 +31,7 @@ import Process from './../../models/case/model.process'
  *
  */
 router.get('/:id/sentrydefinitions', (req, res, next)=>{
-  SentryDefinition.findByProcessDefinitionId(req.params.id)
+  SentryDefinition.findByProcessDefinitionId(req.jwt, req.params.id)
     .then(sd=>{
         res.status(200).send(sd);
     })
@@ -65,7 +65,7 @@ router.get('/:id/sentrydefinitions', (req, res, next)=>{
  *
  */
 router.get(':id/httphookdefinitions', (req, res, next)=>{
-  HttpHookDefinition.findByProcessDefinitionId(req.params.id)
+  HttpHookDefinition.findByProcessDefinitionId(req.jwt, req.params.id)
     .then(sd=>{
         res.status(200).send(sd);
     })
@@ -106,7 +106,7 @@ router.get(':id/httphookdefinitions', (req, res, next)=>{
  *
  */
 router.get('/:id/processes', (req, res, next)=>{
-  Process.findByProcessDefinitionId(req.params.id)
+  Process.findByProcessDefinitionId(req.jwt, req.params.id)
     .then(sd=>{
         res.status(200).send(sd);
     })

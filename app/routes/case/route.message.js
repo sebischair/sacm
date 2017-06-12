@@ -23,7 +23,7 @@ import Message from './../../models/case/model.message';
  *
  */
 router.get('/:id', (req, res, next)=>{
-  Message.findById(req.params.id)
+  Message.findById(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -58,7 +58,7 @@ router.post('/', (req, res, next)=>{
     case: req.body.case,
     text: req.body.text
   }
-  Message.create(data)
+  Message.create(req.jwt, data)
     .then(c=>{
         res.status(200).send(c);
     })

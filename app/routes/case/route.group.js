@@ -27,7 +27,7 @@ import Group from './../../models/casedefinition/model.group'
  *
  */
 router.get('/', (req, res, next)=>{
-  Group.findAll()
+  Group.findAll(req.jwt)
     .then(groups=>{
         res.status(200).send(groups);
     })
@@ -76,7 +76,7 @@ router.get('/', (req, res, next)=>{
  *
  */
 router.post('/', (req, res, next)=>{
-  Group.create(req.body)
+  Group.create(req.jwt, req.body)
     .then(group=>{
         res.status(200).send(group);
     })
@@ -125,7 +125,7 @@ router.post('/', (req, res, next)=>{
  *
  */
 router.get('/:id', (req, res, next)=>{
-  Group.findById(req.params.id)
+  Group.findById(req.jwt, req.params.id)
     .then(group=>{
         res.status(200).send(group);
     })
@@ -163,7 +163,7 @@ router.get('/:id', (req, res, next)=>{
 router.patch('/:id', (req, res, next)=>{
   const data = req.body;
   data.id = req.params.id;
-  Group.updateById(data)
+  Group.updateById(req.jwt, data)
     .then(group=>{
         res.status(200).send(group);
     })
@@ -190,7 +190,7 @@ router.patch('/:id', (req, res, next)=>{
  *
  */
 router.delete('/:id', (req, res, next)=>{
-  Group.deleteById(req.params.id)
+  Group.deleteById(req.jwt, req.params.id)
     .then(group=>{
         res.status(200).send(group);
     })
@@ -218,7 +218,7 @@ router.delete('/:id', (req, res, next)=>{
  *
  */
 router.post('/:id/member/:principalId', (req, res, next)=>{
-  Group.addMember(req.params.id, req.params.principalId)
+  Group.addMember(req.jwt, req.params.id, req.params.principalId)
     .then(group=>{
         res.status(200).send(group);
     })
@@ -247,7 +247,7 @@ router.post('/:id/member/:principalId', (req, res, next)=>{
  *
  */
 router.delete('/:id/member/:principalId', (req, res, next)=>{
-  Group.delMember(req.params.id, req.params.principalId)
+  Group.delMember(req.jwt, req.params.id, req.params.principalId)
     .then(group=>{
         res.status(200).send(group);
     })

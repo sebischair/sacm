@@ -27,9 +27,9 @@ import Task from './../../models/case/model.task';
  *
  */
 router.get('/:id', (req, res, next)=>{
-  TaskDefinition.findById(req.params.id)
+  TaskDefinition.findById(req.jwt, req.params.id)
     .then(sd=>{
-        res.status(200).send(sd);
+      res.status(200).send(sd);
     })
     .catch(err=>{
       res.status(500).send(err);
@@ -73,9 +73,9 @@ router.get('/:id', (req, res, next)=>{
  *
  */
 router.get('/:id/tasks', (req, res, next)=>{
-  Task.findByTaskDefinitionId(req.params.id)
+  Task.findByTaskDefinitionId(req.jwt, req.params.id)
     .then(sd=>{
-        res.status(200).send(sd);
+      res.status(200).send(sd);
     })
     .catch(err=>{
       res.status(500).send(err);

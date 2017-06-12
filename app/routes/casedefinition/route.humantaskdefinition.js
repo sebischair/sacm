@@ -33,7 +33,7 @@ import HumanTask from './../../models/case/model.humantask';
  *
  */
 router.get('/:id', (req, res, next)=>{
-  HumanTaskDefinition.findById(req.params.id)
+  HumanTaskDefinition.findById(req.jwt, req.params.id)
     .then(sd=>{
         res.status(200).send(sd);
     })
@@ -59,7 +59,7 @@ router.get('/:id', (req, res, next)=>{
  *
  */
 router.delete('/:id', (req, res, next)=>{
-  HumanTaskDefinition.deleteById(req.params.id)
+  HumanTaskDefinition.deleteById(req.jwt, req.params.id)
     .then(()=>{
        res.status(200).send();
     })
@@ -113,7 +113,8 @@ router.post('/', (req, res, next)=>{
     parent: req.body.parent,
     preconditions: req.body.preconditions
   }
- HumanTaskDefinition.create(data).then(sd=>{
+ HumanTaskDefinition.create(req.jwt, data)
+  .then(sd=>{
     res.status(200).send(sd);
   })
   .catch(err=>{
@@ -167,12 +168,13 @@ router.patch('/:id', (req, res, next)=>{
     parent: req.body.parent,
     preconditions: req.body.preconditions
   }
-  HumanTaskDefinition.updateById(req.params.id, data).then(sd=>{
-    res.status(200).send(sd);
-  })
-  .catch(err=>{
-    res.status(500).send(err);
-  });
+  HumanTaskDefinition.updateById(req.jwt, req.params.id, data)
+   .then(sd=>{
+     res.status(200).send(sd);
+   })
+   .catch(err=>{
+     res.status(500).send(err);
+   });
 });
 
 
@@ -212,7 +214,7 @@ router.patch('/:id', (req, res, next)=>{
  *
  */
 router.get('/:id/humantasks', (req, res, next)=>{
-  HumanTask.findbyTaskDefinitionId(req.params.id)
+  HumanTask.findbyTaskDefinitionId(req.jwt, req.params.id)
     .then(sd=>{
         res.status(200).send(sd);
     })
