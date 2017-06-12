@@ -5,48 +5,48 @@ import Model from '../model';
 
 export default class User extends Model{
 
-  static create(data) {
-    return http.post('/users', data)
+  static create(jwt, data) {
+    return http.post(jwt, '/users', data)
   }
 
-  static verify(userId, email, magic){
-    return http.post('/users/'+userId+'/verify', {email: email, magic: magic});
+  static verify(jwt, userId, email, magic){
+    return http.post(jwt, '/users/'+userId+'/verify', {email: email, magic: magic});
   }
 
-  static createAndVerify(data) {
+  static createAndVerify(jwt, data) {
     let u = null;
-    return User.create(data)
+    return User.create(jwt, data)
       .then(user=>{
         u = user;
-        return User.verify(user.id, user.email, user.magic);
+        return User.verify(jwt, user.id, user.email, user.magic);
       })
       .then(verify=>{
         return Promise.resolve(u);
       });
   }
 
-  static findAll() {
-    return http.get('/users');
+  static findAll(jwt) {
+    return http.get(jwt, '/users');
   }
 
-  static findById(userId) {
-    return http.get('/users/'+userId);
+  static findById(jwt, userId) {
+    return http.get(jwt, '/users/'+userId);
   }
 
-  static updateById(data) {
-    return http.put('/users/'+data.id, data);
+  static updateById(jwt, data) {
+    return http.put(jwt, '/users/'+data.id, data);
   }
 
-  static deleteById(userId) {
-    return http.del('/users/'+userId);
+  static deleteById(jwt, userId) {
+    return http.del(jwt, '/users/'+userId);
   }
 
-  static deleteAll() {
-    return User.findAll()
+  static deleteAll(jwt) {
+    return User.findAll(jwt)
       .then(users=>{
         users = users.filter(user=>user.name != 'Max Mustermann');
         return Promise.each(users, user=>{
-          return User.deleteById(user.id);
+          return User.deleteById(jwt, user.id);
         })
         .catch(err=>{
           console.log(err);
@@ -54,8 +54,8 @@ export default class User extends Model{
       });
   }
 
-  static me() {
-    return http.get('/users/me');
+  static me(jwt) {
+    return http.get(jwt, '/users/me');
   }
 
 

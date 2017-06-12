@@ -5,36 +5,36 @@ import Model from '../model';
 
 export default class AutomatedTask extends Model{
 
-  static findById(automatedTaskId) {
-    return http.get('/automatedtask/'+automatedTaskId);
+  static findById(jwt, automatedTaskId) {
+    return http.get(jwt, '/automatedtask/'+automatedTaskId);
   }
 
-  static findByCaseId(caseId) {
-    return http.get('/case/'+caseId+'/automatedtasks');
+  static findByCaseId(jwt, caseId) {
+    return http.get(jwt, '/case/'+caseId+'/automatedtasks');
   }
 
-  static findAllByCaseId(caseId) {
-    return http.get('/case/'+caseId+'/automatedtasks/all');
+  static findAllByCaseId(jwt, caseId) {
+    return http.get(jwt, '/case/'+caseId+'/automatedtasks/all');
   }
 
-  static findByStageId(stageId) {
-    return http.get('/stage/'+stageId+'/automatedtasks');
+  static findByStageId(jwt, stageId) {
+    return http.get(jwt, '/stage/'+stageId+'/automatedtasks');
   }
 
-  static findByAutomatedTaskDefinitionId(automatedTaskDefinitionId) {
-    return http.get('/automatedtaskdefinition/'+automatedTaskDefinitionId+'/automatedtasks');
+  static findByAutomatedTaskDefinitionId(jwt, automatedTaskDefinitionId) {
+    return http.get(jwt, '/automatedtaskdefinition/'+automatedTaskDefinitionId+'/automatedtasks');
   }
 
-  static draft(data) {
-    return http.post('/automatedtask/'+data.id+'/draft', data);
+  static draft(jwt, data) {
+    return http.post(jwt, '/automatedtask/'+data.id+'/draft', data);
   }
 
-  static complete(data) {
-    return http.post('/automatedtask/'+data.id+'/complete', data);
+  static complete(jwt, data) {
+    return http.post(jwt, '/automatedtask/'+data.id+'/complete', data);
   }
 
-  static terminate(automatedTaskId) {
-    return http.post('/automatedtask/'+automatedTaskId+'/terminate');
+  static terminate(jwt, automatedTaskId) {
+    return http.post(jwt, '/automatedtask/'+automatedTaskId+'/terminate');
   }
 
 }

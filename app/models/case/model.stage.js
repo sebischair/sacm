@@ -5,32 +5,32 @@ import Model from '../model';
 
 export default class Stage extends Model{
 
-  static findbyId(stageId){
-    return http.get('/stage/'+stageId);
+  static findbyId(jwt, stageId){
+    return http.get(jwt, '/stage/'+stageId);
   }
   
-  static findbyCaseId(caseId){
-    return http.get('/case/'+caseId+'/stages');
+  static findbyCaseId(jwt, caseId){
+    return http.get(jwt, '/case/'+caseId+'/stages');
   }
 
-  static findAllbyCaseId(caseId){
-    return http.get('/case/'+caseId+'/stages/all');
+  static findAllbyCaseId(jwt, caseId){
+    return http.get(jwt, '/case/'+caseId+'/stages/all');
   }
 
-  static findbyStageDefinitionId(stageDefinitionId){
-    return http.get('/stagedefinition/'+stageDefinitionId+'/stages');
+  static findbyStageDefinitionId(jwt, stageDefinitionId){
+    return http.get(jwt, '/stagedefinition/'+stageDefinitionId+'/stages');
   }
 
-  static findbyStageId(stageId){
-    return http.get('/stage/'+stageId+'/stages');
+  static findbyStageId(jwt, stageId){
+    return http.get(jwt, '/stage/'+stageId+'/stages');
   }
   
-  static complete(stageId){
-    return http.post('/stage/'+stageId+'/complete');
+  static complete(jwt, stageId){
+    return http.post(jwt, '/stage/'+stageId+'/complete');
   }
 
-  static terminate(stageId){
-    return http.post('/stage/'+stageId+'/terminate');
+  static terminate(jwt, stageId){
+    return http.post(jwt, '/stage/'+stageId+'/terminate');
   }
 
 }

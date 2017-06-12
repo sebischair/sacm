@@ -5,28 +5,28 @@ import Model from '../model';
 
 export default class Alert extends Model{
 
-  static create(data) {
-    return http.post('/alerts', data);
+  static create(jwt, data) {
+    return http.post(jwt, '/alerts', data);
   }
 
-  static findByCaseId(caseId) {
-    return http.get('/case/'+caseId+'/alerts');
+  static findByCaseId(jwt, caseId) {
+    return http.get(jwt, '/case/'+caseId+'/alerts');
   }
 
-  static findByProcessId(processId) {
-    return http.get('/process/'+processId+'/alerts');
+  static findByProcessId(jwt, processId) {
+    return http.get(jwt, '/process/'+processId+'/alerts');
   }
 
-  static findById(alertId) {
-    return http.get('/alert/'+alertId);
+  static findById(jwt, alertId) {
+    return http.get(jwt, '/alert/'+alertId);
   }
 
-  static updateById(data) {
-    return http.put('/alert/'+data.id, data);
+  static updateById(jwt, data) {
+    return http.put(jwt, '/alert/'+data.id, data);
   }
 
-  static seen(alertId) {
-    return http.post('/alert/'+alertId+'/seen');
+  static seen(jwt, alertId) {
+    return http.post(jwt, '/alert/'+alertId+'/seen');
   }
 
 }

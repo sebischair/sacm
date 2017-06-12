@@ -6,8 +6,8 @@ import Model from '../model';
 export default class SumamrySection extends Model{
 
 
-  static findByCaseId(caseId) {
-    return http.get('/case/'+caseId+'/summarysections');
+  static findByCaseId(jwt, caseId) {
+    return http.get(jwt, '/case/'+caseId+'/summarysections');
   }
 
 }

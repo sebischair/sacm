@@ -5,40 +5,40 @@ import Model from '../model';
 
 export default class Group extends Model{
 
-  static create(data) {
-    return http.post('/groups', data);
+  static create(jwt, data) {
+    return http.post(jwt, '/groups', data);
   }
 
-  static findAll() {
-    return http.get('/groups');
+  static findAll(jwt) {
+    return http.get(jwt, '/groups');
   }
 
-  static findById(groupId) {
-    return http.get('/groups/'+groupId);
+  static findById(jwt, groupId) {
+    return http.get(jwt, '/groups/'+groupId);
   }
 
-  static updateById(data) {
-    return http.put('/groups/'+data.id, data);
+  static updateById(jwt, data) {
+    return http.put(jwt, '/groups/'+data.id, data);
   }
 
-  static deleteById(groupId) {
-    return http.del('/groups/'+groupId);
+  static deleteById(jwt, groupId) {
+    return http.del(jwt, '/groups/'+groupId);
   }
 
-  static addMember(groupId, principalId) {
-    return http.post('/groups/'+groupId+'/member/'+principalId);
+  static addMember(jwt, groupId, principalId) {
+    return http.post(jwt, '/groups/'+groupId+'/member/'+principalId);
   }
 
-  static delMember(groupId, principalId) {
-    return http.del('/groups/'+groupId+'/member/'+principalId);
+  static delMember(jwt, groupId, principalId) {
+    return http.del(jwt, '/groups/'+groupId+'/member/'+principalId);
   }
 
-  static deleteAll() {
-    return Group.findAll()
+  static deleteAll(jwt) {
+    return Group.findAll(jwt)
       .then(groups=>{
         groups = groups.filter(group=>group.id != 'administrators');
         return Promise.each(groups, group=>{
-          return Group.deleteById(group.id);
+          return Group.deleteById(jwt, group.id);
         })
         .catch(err=>{
           console.log(err);

@@ -5,24 +5,24 @@ import Model from '../model';
 
 export default class TaskParamDefinition extends Model{
 
-  static create(data) {
-    return http.post('/taskparamdefinitions/', data);
+  static create(jwt, data) {
+    return http.post(jwt, '/taskparamdefinitions/', data);
   }
 
-  static findById(taskParamDefinitionId) {
-    return http.get('/taskparamdefinition/'+taskParamDefinitionId);
+  static findById(jwt, taskParamDefinitionId) {
+    return http.get(jwt, '/taskparamdefinition/'+taskParamDefinitionId);
   }
 
-  static findByTaskDefinitionId(taskDefinitionId) {
-    return http.get('/taskdefinition/'+taskDefinitionId+'/taskparamdefinitions');
+  static findByTaskDefinitionId(jwt, taskDefinitionId) {
+    return http.get(jwt, '/taskdefinition/'+taskDefinitionId+'/taskparamdefinitions');
   }
 
-  static updateById(taskParamDefinitionId, data) {
-    return http.put('/taskparamdefinition/'+taskParamDefinitionId, data);
+  static updateById(jwt, taskParamDefinitionId, data) {
+    return http.put(jwt, '/taskparamdefinition/'+taskParamDefinitionId, data);
   }
 
-  static deleteById(taskParamDefinitionId) {
-    return http.del('/taskparamdefinition/'+taskParamDefinitionId);
+  static deleteById(jwt, taskParamDefinitionId) {
+    return http.del(jwt, '/taskparamdefinition/'+taskParamDefinitionId);
   }
 
 }

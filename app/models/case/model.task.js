@@ -5,23 +5,23 @@ import Model from '../model';
 
 export default class Task extends Model{
 
-  static findbyId(taskId){
-    return http.get('/task/'+taskId);
+  static findbyId(jwt, taskId){
+    return http.get(jwt, '/task/'+taskId);
   }
   
-  static findbyCaseId(caseId){
-    return http.get('/case/'+caseId+'/tasks');
+  static findbyCaseId(jwt, caseId){
+    return http.get(jwt, '/case/'+caseId+'/tasks');
   }
 
-  static findAllbyCaseId(caseId){
-    return http.get('/case/'+caseId+'/tasks/all');
+  static findAllbyCaseId(jwt, caseId){
+    return http.get(jwt, '/case/'+caseId+'/tasks/all');
   }
 
-  static findbyTaskDefinitionId(taskDefinitionId){
-    return http.get('/taskdefinition/'+taskDefinitionId+'/tasks');
+  static findbyTaskDefinitionId(jwt, taskDefinitionId){
+    return http.get(jwt, '/taskdefinition/'+taskDefinitionId+'/tasks');
   }
 
-  static findbyStageId(stageId){
-    return http.get('/stage/'+stageId+'/tasks');
+  static findbyStageId(jwt, stageId){
+    return http.get(jwt, '/stage/'+stageId+'/tasks');
   }
 }

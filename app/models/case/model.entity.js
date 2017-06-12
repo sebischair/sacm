@@ -5,8 +5,8 @@ import Model from '../model';
 
 export default class Attribute extends Model{
 
-  static create(data) {
-    return http.post('/entities', data);
+  static create(jwt, data) {
+    return http.post(jwt, '/entities', data);
   }
 
 }

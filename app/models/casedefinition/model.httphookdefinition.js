@@ -5,24 +5,24 @@ import Model from '../model';
 
 export default class HttpHookDefinition extends Model{
 
-  static create(data) {
-    return http.post('/httphookdefinitions/', data);
+  static create(jwt, data) {
+    return http.post(jwt, '/httphookdefinitions/', data);
   }
 
-  static findById(httpHookDefinitionId) {
-    return http.get('/httphookdefinition/'+httpHookDefinitionId);
+  static findById(jwt, httpHookDefinitionId) {
+    return http.get(jwt, '/httphookdefinition/'+httpHookDefinitionId);
   }
 
-  static findByProcessDefinitionId(processDefinitionId) {
-    return http.get('/processdefinition/'+processDefinitionId+'/httphookdefinitions');
+  static findByProcessDefinitionId(jwt, processDefinitionId) {
+    return http.get(jwt, '/processdefinition/'+processDefinitionId+'/httphookdefinitions');
   }
 
-  static updateById(httpHookDefinitionId, data) {
-    return http.put('/httphookdefinition/'+httpHookDefinitionId, data);
+  static updateById(jwt, httpHookDefinitionId, data) {
+    return http.put(jwt, '/httphookdefinition/'+httpHookDefinitionId, data);
   }
 
-  static deleteById(httpHookDefinitionId) {
-    return http.del('/httphookdefinition/'+httpHookDefinitionId);
+  static deleteById(jwt, httpHookDefinitionId) {
+    return http.del(jwt, '/httphookdefinition/'+httpHookDefinitionId);
   }
   
 }

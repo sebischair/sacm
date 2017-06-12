@@ -5,32 +5,32 @@ import Model from '../model';
 
 export default class AutomatedTaskDefinition extends Model{
 
-  static create(data) {
-    return http.post('/automatedtaskdefinitions/', data);
+  static create(jwt, data) {
+    return http.post(jwt, '/automatedtaskdefinitions/', data);
   }
 
-  static findById(automatedTaskDefinitionId) {
-    return http.get('/automatedtaskdefinition/'+automatedTaskDefinitionId);
+  static findById(jwt, automatedTaskDefinitionId) {
+    return http.get(jwt, '/automatedtaskdefinition/'+automatedTaskDefinitionId);
   }
 
-  static findByCaseDefinitionId(caseDefinitionId) {
-    return http.get('/casedefinition/'+caseDefinitionId+'/automatedtaskdefinitions');
+  static findByCaseDefinitionId(jwt, caseDefinitionId) {
+    return http.get(jwt, '/casedefinition/'+caseDefinitionId+'/automatedtaskdefinitions');
   }
 
-  static findAllByCaseDefinitionId(caseDefinitionId) {
-    return http.get('/casedefinition/'+caseDefinitionId+'/automatedtaskdefinitions/all');
+  static findAllByCaseDefinitionId(jwt, caseDefinitionId) {
+    return http.get(jwt, '/casedefinition/'+caseDefinitionId+'/automatedtaskdefinitions/all');
   }
 
-  static findByStageDefinitionId(stageDefinitionId) {
-    return http.get('/stagedefinition/'+stageDefinitionId+'/automatedtaskdefinitions');
+  static findByStageDefinitionId(jwt, stageDefinitionId) {
+    return http.get(jwt, '/stagedefinition/'+stageDefinitionId+'/automatedtaskdefinitions');
   }
 
-  static updateById(automatedTaskDefinitionId, data) {
-    return http.put('/automatedtaskdefinition/'+automatedTaskDefinitionId, data);
+  static updateById(jwt, automatedTaskDefinitionId, data) {
+    return http.put(jwt, '/automatedtaskdefinition/'+automatedTaskDefinitionId, data);
   }
 
-  static deleteById(automatedTaskDefinitionId) {
-    return http.del('/automatedtaskdefinition/'+automatedTaskDefinitionId);
+  static deleteById(jwt, automatedTaskDefinitionId) {
+    return http.del(jwt, '/automatedtaskdefinition/'+automatedTaskDefinitionId);
   }
   
 }

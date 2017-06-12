@@ -5,32 +5,32 @@ import Model from '../model';
 
 export default class HumanTaskDefinition extends Model{
 
-  static create(data) {
-    return http.post('/humantaskdefinitions/', data);
+  static create(jwt, data) {
+    return http.post(jwt, '/humantaskdefinitions/', data);
   }
 
-  static findById(humanTaskDefinitionId) {
-    return http.get('/humantaskdefinition/'+humanTaskDefinitionId);
+  static findById(jwt, humanTaskDefinitionId) {
+    return http.get(jwt, '/humantaskdefinition/'+humanTaskDefinitionId);
   }
 
-  static findByCaseDefinitionId(caseDefinitionId) {
-    return http.get('/casedefinition/'+caseDefinitionId+'/humantaskdefinitions');
+  static findByCaseDefinitionId(jwt, caseDefinitionId) {
+    return http.get(jwt, '/casedefinition/'+caseDefinitionId+'/humantaskdefinitions');
   }
 
-  static findAllByCaseDefinitionId(caseDefinitionId) {
-    return http.get('/casedefinition/'+caseDefinitionId+'/humantaskdefinitions/all');
+  static findAllByCaseDefinitionId(jwt, caseDefinitionId) {
+    return http.get(jwt, '/casedefinition/'+caseDefinitionId+'/humantaskdefinitions/all');
   }
 
-  static findByStageDefinitionId(stageDefinitionId) {
-    return http.get('/stagedefinition/'+stageDefinitionId+'/humantaskdefinitions');
+  static findByStageDefinitionId(jwt, stageDefinitionId) {
+    return http.get(jwt, '/stagedefinition/'+stageDefinitionId+'/humantaskdefinitions');
   }
 
-  static updateById(humanTaskDefinitionId, data) {
-    return http.put('/humantaskdefinition/'+humanTaskDefinitionId, data);
+  static updateById(jwt, humanTaskDefinitionId, data) {
+    return http.put(jwt, '/humantaskdefinition/'+humanTaskDefinitionId, data);
   }
 
-  static deleteById(humanTaskDefinitionId) {
-    return http.del('/humantaskdefinition/'+humanTaskDefinitionId);
+  static deleteById(jwt, humanTaskDefinitionId) {
+    return http.del(jwt, '/humantaskdefinition/'+humanTaskDefinitionId);
   }
   
 }

@@ -5,12 +5,12 @@ import Model from '../model';
 
 export default class DerivedAttributeDefinition extends Model{
 
-  static create(definition) {
-    return http.post('/derivedAttributeDefinitions', definition);
+  static create(jwt, definition) {
+    return http.post(jwt, '/derivedAttributeDefinitions', definition);
   }
 
-  static deleteById(id) {
-    return http.del('/derivedAttributeDefinitions/'+id);
+  static deleteById(jwt, id) {
+    return http.del(jwt, '/derivedAttributeDefinitions/'+id);
   }
 
   

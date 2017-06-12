@@ -5,23 +5,23 @@ import Model from '../model';
 
 export default class Process extends Model{
 
-  static findbyId(processId){
-    return http.get('/process/'+processId);
+  static findbyId(jwt, processId){
+    return http.get(jwt, '/process/'+processId);
   }
   
-  static findbyCaseId(caseId){
-    return http.get('/case/'+caseId+'/processes');
+  static findbyCaseId(jwt, caseId){
+    return http.get(jwt, '/case/'+caseId+'/processes');
   }
 
-  static findAllbyCaseId(caseId){
-    return http.get('/case/'+caseId+'/processes/all');
+  static findAllbyCaseId(jwt, caseId){
+    return http.get(jwt, '/case/'+caseId+'/processes/all');
   }
 
-  static findbyProcessDefinitionId(processDefinitionId){
-    return http.get('/processdefinition/'+processDefinitionId+'/processes');
+  static findbyProcessDefinitionId(jwt, processDefinitionId){
+    return http.get(jwt, '/processdefinition/'+processDefinitionId+'/processes');
   }
 
-  static findbyStageId(stageId){
-    return http.get('/stage/'+stageId+'/processes');
+  static findbyStageId(jwt, stageId){
+    return http.get(jwt, '/stage/'+stageId+'/processes');
   }
 }

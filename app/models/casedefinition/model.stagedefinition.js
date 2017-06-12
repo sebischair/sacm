@@ -5,28 +5,28 @@ import Model from '../model';
 
 export default class StageDefinition extends Model{
 
-  static create(data) {
-    return http.post('/stagedefinitions/', data);
+  static create(jwt, data) {
+    return http.post(jwt, '/stagedefinitions/', data);
   }
 
-  static findById(stageDefinitionId) {
-    return http.get('/stagedefinition/'+stageDefinitionId);
+  static findById(jwt, stageDefinitionId) {
+    return http.get(jwt, '/stagedefinition/'+stageDefinitionId);
   }
 
-  static findByCaseDefinitionId(caseDefinitionId) {
-    return http.get('/casedefinition/'+caseDefinitionId+'/stagedefinitions');
+  static findByCaseDefinitionId(jwt, caseDefinitionId) {
+    return http.get(jwt, '/casedefinition/'+caseDefinitionId+'/stagedefinitions');
   }
 
-  static findALLByCaseDefinitionId(caseDefinitionId) {
-    return http.get('/casedefinition/'+caseDefinitionId+'/stagedefinitions/all');
+  static findALLByCaseDefinitionId(jwt, caseDefinitionId) {
+    return http.get(jwt, '/casedefinition/'+caseDefinitionId+'/stagedefinitions/all');
   }
 
-  static updateById(stageDefinitionId, data) {
-    return http.del('/stagedefinition/'+stageDefinitionId, data);
+  static updateById(jwt, stageDefinitionId, data) {
+    return http.del(jwt, '/stagedefinition/'+stageDefinitionId, data);
   }
 
-  static deleteById(stageDefinitionId) {
-    return http.del('/stagedefinition/'+stageDefinitionId);
+  static deleteById(jwt, stageDefinitionId) {
+    return http.del(jwt, '/stagedefinition/'+stageDefinitionId);
   }
   
 }

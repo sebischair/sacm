@@ -5,24 +5,24 @@ import Model from '../model';
 
 export default class SummarySectionDefinition extends Model{
 
-  static create(data){
-    return http.post('/summarysectiondefinitions/', data);
+  static create(jwt, data){
+    return http.post(jwt, '/summarysectiondefinitions/', data);
   }
 
-  static findById(summarySectionDefinitionId){
-    return http.get('/summarysectiondefinition/'+summarySectionDefinitionId);
+  static findById(jwt, summarySectionDefinitionId){
+    return http.get(jwt, '/summarysectiondefinition/'+summarySectionDefinitionId);
   }
 
-  static findByCaseDefinitionId(caseDefinitionId){
-    return http.get('/caseDefinitions/'+caseDefinitionId+'/summarysectiondefinitions');
+  static findByCaseDefinitionId(jwt, caseDefinitionId){
+    return http.get(jwt, '/caseDefinitions/'+caseDefinitionId+'/summarysectiondefinitions');
   }
 
-  static updateById(data) {
-    return http.put('/summarysectiondefinition/'+data.id, data);
+  static updateById(jwt, data) {
+    return http.put(jwt, '/summarysectiondefinition/'+data.id, data);
   }
 
-  static deleteById(summarySectionDefinitionId) {
-    return http.del('/summarysectiondefinition/'+summarySectionDefinitionId);
+  static deleteById(jwt, summarySectionDefinitionId) {
+    return http.del(jwt, '/summarysectiondefinition/'+summarySectionDefinitionId);
   }
 
 }

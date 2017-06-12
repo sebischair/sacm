@@ -5,36 +5,36 @@ import Model from '../model';
 
 export default class HumanTask extends Model{
   
-  static findById(humanTaskId) {
-    return http.get('/humantask/'+humanTaskId);
+  static findById(jwt, humanTaskId) {
+    return http.get(jwt, '/humantask/'+humanTaskId);
   }
 
-  static findByCaseId(caseId) {
-    return http.get('/case/'+caseId+'/humantasks');
+  static findByCaseId(jwt, caseId) {
+    return http.get(jwt, '/case/'+caseId+'/humantasks');
   }
 
-  static findAllByCaseId(caseId) {
-    return http.get('/case/'+caseId+'/humantasks/all');
+  static findAllByCaseId(jwt, caseId) {
+    return http.get(jwt, '/case/'+caseId+'/humantasks/all');
   }
 
-  static findByStageId(stageId) {
-    return http.get('/stage/'+stageId+'/humantasks');
+  static findByStageId(jwt, stageId) {
+    return http.get(jwt, '/stage/'+stageId+'/humantasks');
   }
 
-  static findByHumanTaskDefinitionId(humanTaskDefinitionId) {
-    return http.get('/humantaskdefinition/'+humanTaskDefinitionId+'/humantasks');
+  static findByHumanTaskDefinitionId(jwt, humanTaskDefinitionId) {
+    return http.get(jwt, '/humantaskdefinition/'+humanTaskDefinitionId+'/humantasks');
   }
 
-  static draft(data) {
-    return http.post('/humantask/'+data.id+'/draft', data);
+  static draft(jwt, data) {
+    return http.post(jwt, '/humantask/'+data.id+'/draft', data);
   }
 
-  static complete(data) {
-    return http.post('/humantask/'+data.id+'/complete', data);
+  static complete(jwt, data) {
+    return http.post(jwt, '/humantask/'+data.id+'/complete', data);
   }
 
-  static terminate(humanTaskId) {
-    return http.post('/humantask/'+humanTaskId+'/terminate');
+  static terminate(jwt, humanTaskId) {
+    return http.post(jwt, '/humantask/'+humanTaskId+'/terminate');
   }
 
 

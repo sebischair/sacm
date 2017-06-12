@@ -5,32 +5,32 @@ import Model from '../model';
 
 export default class CaseDefinition extends Model{
 
-  static canInstantiate(){
-    return http.get('/casedefinitions/caninstantiate');
+  static canInstantiate(jwt){
+    return http.get(jwt, '/casedefinitions/caninstantiate');
   }
 
-  static create(data){
-    return http.post('/casedefinitions/', data);
+  static create(jwt, data){
+    return http.post(jwt, '/casedefinitions/', data);
   }
 
-  static findById(caseDefinitionId){
-    return http.get('/casedefinition/'+caseDefinitionId);
+  static findById(jwt, caseDefinitionId){
+    return http.get(jwt, '/casedefinition/'+caseDefinitionId);
   }
 
-  static findByWorkspaceId(workspaceId){
-    return http.get('/workspace/'+workspaceId+'/casedefinitions');
+  static findByWorkspaceId(jwt, workspaceId){
+    return http.get(jwt, '/workspace/'+workspaceId+'/casedefinitions');
   }
 
-  static findTreeById(caseDefinitionId){
-    return http.get('/casedefinition/'+caseDefinitionId+'/tree');
+  static findTreeById(jwt, caseDefinitionId){
+    return http.get(jwt, '/casedefinition/'+caseDefinitionId+'/tree');
   }
 
-  static updateById(caseDefinitionId, data) {
-    return http.put('/casedefinition/'+caseDefinitionId, data);
+  static updateById(jwt, caseDefinitionId, data) {
+    return http.put(jwt, '/casedefinition/'+caseDefinitionId, data);
   }
 
-  static deleteById(caseDefinitionId) {
-    return http.del('/casedefinition/'+caseDefinitionId);
+  static deleteById(jwt, caseDefinitionId) {
+    return http.del(jwt, '/casedefinition/'+caseDefinitionId);
   }
 
 }

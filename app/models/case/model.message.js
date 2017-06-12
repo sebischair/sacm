@@ -5,16 +5,16 @@ import Model from '../model';
 
 export default class Message extends Model{
 
-  static create(data) {
-    return http.post('/messages', data);
+  static create(jwt, data) {
+    return http.post(jwt, '/messages', data);
   }
 
-  static findByCaseId(caseId) {
-    return http.get('/case/'+caseId+'/messages');
+  static findByCaseId(jwt, caseId) {
+    return http.get(jwt, '/case/'+caseId+'/messages');
   }
 
-  static findById(messageId) {
-    return http.get('/message/'+messageId);
+  static findById(jwt, messageId) {
+    return http.get(jwt, '/message/'+messageId);
   }
 
 }

@@ -5,7 +5,7 @@ import Model from '../model';
 
 export default class UserDefinition extends Model{
 
-  static find() {
-    return http.get('/user/userDefinition');
+  static find(jwt) {
+    return http.get(jwt, '/user/userDefinition');
   }
 }
