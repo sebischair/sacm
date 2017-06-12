@@ -304,7 +304,8 @@ module.exports = class XMLImporter {
             name: ad.$.id,
             description: ad.$.description,
             expression: ad.$.expression,
-            entityDefinition: persistedUserDefinitionId
+            entityDefinition: persistedUserDefinitionId,
+            uiReference: ad.$.uiReference  
           });   
       }); 
     }
@@ -553,7 +554,8 @@ module.exports = class XMLImporter {
                 name: ad.$.id,
                 description: ad.$.description,
                 expression: ad.$.expression,
-                entityDefinition: entityDefId
+                entityDefinition: entityDefId,
+                uiReference: ad.$.uiReference  
               });
             })
             .then(persistedAttributeDefinition =>{
