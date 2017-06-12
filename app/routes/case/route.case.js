@@ -1041,7 +1041,7 @@ router.get('/:id/messages', (req, res, next)=>{
  * @api {get} /case/:id/alerts Get Alerts
  *
  * @apiName GetAlerts
- * @apiGroup Case
+ * @apiGroup Alert
  *
  * @apiParam {String} id ID of the Case
  *

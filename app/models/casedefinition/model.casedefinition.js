@@ -5,6 +5,10 @@ import Model from '../model';
 
 export default class CaseDefinition extends Model{
 
+  static canInstantiate(){
+    return http.get('/casedefinitions/caninstantiate');
+  }
+
   static create(data){
     return http.post('/casedefinitions/', data);
   }

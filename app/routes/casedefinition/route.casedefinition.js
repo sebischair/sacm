@@ -15,6 +15,39 @@ import Authorizer from './../../middlewares/middleware.authorize';
 
 
 /**
+ * @api {get} /casedefinition/caninstantiate Get CaseDefinition that can be instantiated
+ *
+ * @apiName CanInstantiateCaseDefinition
+ * @apiGroup CaseDefinition
+ * @apiSampleRequest /casedefinition/caninstantiate
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ * [
+ *     {
+ *         "id": "bkglo0oqesag",
+ *         "workspace": {
+ *             "id": "1mql67cprqj71",
+ *             "description": null,
+ *             "name": "Barcelona Hospital"
+ *         },
+ *         "description": "Demo Case London",
+ *         "name": "Democase"
+ *     }
+ * ]
+ *
+ */
+router.get('/caninstantiate', (req, res, next)=>{
+  CaseDefinition.canInstantiate()
+    .then(cd=>{
+        res.status(200).send(cd);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
  * @api {post} /casedefinitions Create CaseDefinition
  * @apiName CreateCaseDefinition
  * @apiGroup CaseDefinition
