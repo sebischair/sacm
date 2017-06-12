@@ -44,21 +44,46 @@ router.get('/:id', (req, res, next)=>{
  * @apiParam {String} text Text content of the message
  *
  * @apiSampleRequest /alert
- *
+ *  {
+ *  	"process": "1rjdqzyu6ser9",
+ *  	"creationDate": "2017-06-12 13:58:56.0",
+ *  	"expireDate": "2017-06-14 13:52:12.0",
+ *  	"text": "Alert Message",
+ *  	"data": {
+ *  		"alertType": "some type",
+ *  		"application": "Run App",
+ *  		"priorityLevel": "LOW",
+ *  		"status": "ACT",
+ *  		"paramName": "steps per day",
+ *  		"paramValue": "12",
+ *  		"minThreshold": "5",
+ *  		"maxThreshold": "8"
+ *  	}
+ *  }
+ * 
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *   {
- *    id: "44hrafd34dsc",
- *    case: "7fhr63734sd",
- *    text: "Attention!"
- *   }
- *
+ *  {
+ *  	"id": "jdddqzyu6ser7",
+ *    "process": "1rjdqzyu6ser9",
+ *  	"creationDate": "2017-06-12 13:58:56.0",
+ *  	"expireDate": "2017-06-14 13:52:12.0",
+ *  	"text": "Alert Message",
+ *  	"data": {
+ *  		"alertType": "some type",
+ *  		"application": "Run App",
+ *  		"priorityLevel": "LOW",
+ *  		"status": "ACT",
+ *  		"paramName": "steps per day",
+ *  		"paramValue": "12",
+ *  		"minThreshold": "5",
+ *  		"maxThreshold": "8"
+ *  	}
+ *    "seenDate": null
+ *  }
  */
-router.post('/:id', (req, res, next)=>{
-  var data = {
-    case: req.body.case,
-    text: req.body.text
-  }
+router.post('/', (req, res, next)=>{
+  var data =  req.body;
   Alert.create(data)
     .then(c=>{
       res.status(200).send(c);
@@ -68,6 +93,66 @@ router.post('/:id', (req, res, next)=>{
     })
 });
 
+
+/**
+ * @api {post} /alert Update Alert
+ *
+ * @apiName UpdateAlert
+ * @apiGroup Alert
+ *
+ * @apiParam {String} process ID of the process
+ * @apiParam {String} text Text content of the message
+ *
+ * @apiSampleRequest /alert
+ *  {
+ *  	"process": "1rjdqzyu6ser9",
+ *  	"creationDate": "2017-06-12 13:58:56.0",
+ *  	"expireDate": "2017-06-14 13:52:12.0",
+ *  	"text": "Alert Message",
+ *  	"data": {
+ *  		"alertType": "some type",
+ *  		"application": "Run App",
+ *  		"priorityLevel": "LOW",
+ *  		"status": "ACT",
+ *  		"paramName": "steps per day",
+ *  		"paramValue": "12",
+ *  		"minThreshold": "5",
+ *  		"maxThreshold": "8"
+ *  	}
+ *  }
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *  {
+ *  	"id": "jdddqzyu6ser7",
+ *    "process": "1rjdqzyu6ser9",
+ *  	"creationDate": "2017-06-12 13:58:56.0",
+ *  	"expireDate": "2017-06-14 13:52:12.0",
+ *  	"text": "Alert Message",
+ *  	"data": {
+ *  		"alertType": "some type",
+ *  		"application": "Run App",
+ *  		"priorityLevel": "LOW",
+ *  		"status": "ACT",
+ *  		"paramName": "steps per day",
+ *  		"paramValue": "12",
+ *  		"minThreshold": "5",
+ *  		"maxThreshold": "8"
+ *  	}
+ *    "seenDate": null
+ *  }
+ */
+router.patch('/:id', (req, res, next)=>{
+  var data =  req.body;
+  data.id = req.params.id;
+  Alert.updateById(data)
+    .then(a=>{
+      res.status(200).send(a);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
 
 /**
  * @api {post} /alert/:id/seen Set Status

@@ -21,6 +21,10 @@ export default class Alert extends Model{
     return http.get('/alert/'+alertId);
   }
 
+  static updateById(data) {
+    return http.put('/alert/'+data.id, data);
+  }
+
   static seen(alertId) {
     return http.post('/alert/'+alertId+'/seen');
   }
