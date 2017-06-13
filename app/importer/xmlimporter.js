@@ -917,7 +917,10 @@ module.exports = class XMLImporter {
         }else{
           return Promise.resolve('Action "'+action.$.id+'" not defined!');
         }
-      });
+      })
+      .then(()=>{
+        return Case.findTreeById(this.jwt, caseId);
+      })
     }
 
 
