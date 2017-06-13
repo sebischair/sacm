@@ -14,6 +14,7 @@ import process_ from './case/route.process';
 import case_ from './case/route.case';
 import stage from './case/route.stage';
 import task from './case/route.task';
+import taskparam from './case/route.taskparam';
 import humantask from './case/route.humantask';
 import automatedtask from './case/route.automatedtask';
 
@@ -67,6 +68,8 @@ function routes(){
     router.use('/stages', stage);
     router.use('/task', task);
     router.use('/tasks', task);
+    router.use('/taskparam', taskparam);
+    router.use('/taskparams', taskparam);
     router.use('/humantask', humantask);
     router.use('/humantasks', humantask);
     router.use('/automatedtask', automatedtask);
