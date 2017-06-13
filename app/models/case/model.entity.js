@@ -10,7 +10,8 @@ export default class Attribute extends Model{
   }
 
   static findById(jwt, entityId){
-    return http.get(jwt, '/entity/'+entityId);
+    console.log('here')
+    return http.get(jwt, '/caseentity/'+entityId);
   }
 
 }
