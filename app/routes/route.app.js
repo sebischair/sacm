@@ -18,6 +18,7 @@ import humantask from './case/route.humantask';
 import automatedtask from './case/route.automatedtask';
 
 import entity from './case/route.entity';
+import attribute from './case/route.attribute';
 import user from './case/route.user';
 import group from './case/route.group';
 
@@ -33,11 +34,13 @@ function routes(){
     router.use('/group', group);
     router.use('/groups', group);
 
-    /** Workspace and Entities routes **/
+    /** Workspace, Entities and Attributes routes **/
     router.use('/workspace', workspace);
     router.use('/workspaces', workspace);
     router.use('/entity', entity);
     router.use('/entities', entity);
+    router.use('/attribute', attribute);
+    router.use('/attributes', attribute);
 
     /** CaseDefinition routes */
     router.use('/casedefinition', casedefinition);

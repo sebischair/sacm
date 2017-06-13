@@ -9,4 +9,8 @@ export default class Attribute extends Model{
     return http.post(jwt, '/attributes', data);
   }
 
+  static autocompleteById(jwt, attributeId) {
+    return http.get(jwt, '/attributes/'+attributeId+'/autocomplete');
+  }
+
 }
