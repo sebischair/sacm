@@ -12,6 +12,10 @@ RUN npm install apidoc -g
 # Bundle app source
 COPY . /usr/src/app
 
+RM /usr/src/app/config.js
+CP /usr/src/app/config.docker.js /usr/src/app/config.js
+RM /usr/src/app/config.docker.js
+
 EXPOSE 3000
 
 RUN apidoc -i app/routes -o doc/dist -t doc/template
