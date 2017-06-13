@@ -895,31 +895,27 @@ module.exports = class XMLImporter {
     }
 
     executeCase(){
-      console.log('execute case')
       const caseId = this.case1.id;
       const execution = this.json.Execution;
       if(execution == null)
         return Promise.resolve('No Execution Element Defined!');
-      console.log('heereddd')
-      console.log(execution)
       const actions = execution[0].Action;
-      console.log(actions);
-      if(actions == null);
+      if(actions == null)
         return Promise.resolve('No Action Element Defined!');
-      console.log('here')
       return Promise.each(actions, action=>{
-        if(action == "CompleteHumanTask"){
+        if(action.$.id == "CompleteHumanTask"){
           const params = {};
-          if(action.TaskParam != null)
-            for(taskParam of action.TaskParam){
+          if(action.TaskParam != null){
+            for(let taskParam of action.TaskParam){
               let parts = taskParam.$.path.split('.');
               let name = parts[parts.length-1];
-              params[name] = taskParam.$.values;
+              let values = taskParam.$.values;
+              params[name] = JSON.parse(values.replace(/'/g,'"'));
             }
-          console.log(params)
+          }
           return this.completeHumanTaskWithName(caseId, action.$.processId, params)
         }else{
-          return Promise.resolve();
+          return Promise.resolve('Action "'+action.$.id+'" not defined!');
         }
       });
     }

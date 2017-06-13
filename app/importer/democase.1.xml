@@ -137,8 +137,56 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
     <User id="CraigEllis" email="craig.ellis@connecare.eu">
         <Attribute attributeDefinitionId="Firstname" values="['Craig']"/> 
         <Attribute attributeDefinitionId="lastname" values="['Ellis']"/> 
-    </User>         
+    </User>       
+    <User id="PhilipBarnes" email="philip.barnes@connecare.eu">
+        <Attribute attributeDefinitionId="firstname" values="['Philip']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Barnes']"/> 
+    </User>       
+    <User id="LarryCarter" email="larry.carter@connecare.eu">
+        <Attribute attributeDefinitionId="firstname" values="['Larry']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Carter']"/> 
+    </User>       
+    <User id="KeithVasquez" email="keith.vasquez@connecare.eu">
+        <Attribute attributeDefinitionId="firstname" values="['Keith']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Vasquez']"/> 
+    </User>    
 
+
+    <!--Leida Groups and Users-->
+    <Group id="Leida-Hospital" description="All users of the hospital in Leida">
+        <Administrator principalId="Me"/>
+        <Membership principalId="Leida-Nurses"/>
+        <Membership principalId="Leida-Doctors"/>
+        <Membership principalId="Leida-Patients"/>
+    </Group>
+
+    <Group id="Leida-Nurses" description="All nurses of the hospital in Leida">
+        <Administrator principalId="Me"/>
+    </Group>
+
+    <Group id="Leida-Doctors" description="All doctors of the hospital in Leida">
+        <Administrator principalId="Me"/>
+    </Group>
+
+    <Group id="Leida-Patients" description="All doctors of the hospital in Leida">
+        <Administrator principalId="Me"/>
+    </Group>
+
+
+    <!--Leida Worksapce-->
+    <Workspace id="LeidaHospital" staticId="wsleida" description="All model elements and instances of the hospital in Barcelona">
+        <Reader principalId="Leida-Hospital"/>
+        <Writer principalId="Leida-Hospital"/>
+        <Administrator principalId="Me"/>
+
+        <!-- Case Data Defintion -->   
+        <EntityDefinition id="CaseData" description="Case Data">            
+            <AttributeDefinition id="Owner" type="string" description="Owner"/>
+            <AttributeDefinition id="Lace" type="string" description="Lace"/>
+            <AttributeDefinition id="Barthel" type="string" description="Barthel"/>        
+            <AttributeDefinition id="PhysicalActivityPrescription" type="string" description="PhysicalActivityPrescription"/>
+        </EntityDefinition>
+    </Workspace>
 
     <!--Barcelona Worksapce-->
     <Workspace id="Barcelona Hospital" description="All model elements and instances of the hospital in Barcelona">
@@ -385,7 +433,7 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
 
     <!--This executes the case for testing-->
     <Execution>
-        <Action id="CompleteHumanTask" processId="Lace">
+        <Action action="CompleteHumanTask" processId="Lace">
             <TaskParam path="Lace.lace1"  values="['2']"/>
             <TaskParam path="Lace.lace2"  values="['1']"/>
             <TaskParam path="Lace.lace3"  values="['1']"/>
