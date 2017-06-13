@@ -19,6 +19,7 @@ import HttpHookDefinition from '../models/casedefinition/model.httphookdefinitio
 import SentryDefinition from '../models/casedefinition/model.sentrydefinition';
 import Case from '../models/case/model.case';
 import HumanTask from '../models/case/model.humantask';
+import AutomatedTask from '../models/case/model.automatedtask';
 const xml = Promise.promisifyAll(xml2js);
 const fs = Promise.promisifyAll(require("fs"));
 
@@ -914,6 +915,17 @@ module.exports = class XMLImporter {
             }
           }
           return this.completeHumanTaskWithName(caseId, action.$.processId, params)
+        }else if(action.$.id == "CompleteAutomatedTask"){
+          const params = {};
+          if(action.TaskParam != null){
+            for(let taskParam of action.TaskParam){
+              let parts = taskParam.$.path.split('.');
+              let name = parts[parts.length-1];
+              let values = taskParam.$.values;
+              params[name] = JSON.parse(values.replace(/'/g,'"'));
+            }
+          }
+          return this.completeAutomatedTaskWithName(caseId, action.$.processId, params)
         }else{
           return Promise.resolve('Action "'+action.$.id+'" not defined!');
         }
@@ -963,6 +975,22 @@ module.exports = class XMLImporter {
     }
 
    
+    completeAutomatedTaskWithName(caseId, taskName, paramsMap){     
+       return AutomatedTask.findAllByCaseId(this.jwt, caseId)
+        .then(tasks=>{          
+          const t = this.findProcessWithName(tasks, taskName);
+          return AutomatedTask.findById(this.jwt, t.id);
+        })        
+        .then(task=>{
+          for(let i=0; i<task.taskParams.length; i++){
+            let tp = task.taskParams[i];
+            if(paramsMap.hasOwnProperty(tp.name))
+              task.taskParams[i].values = paramsMap[tp.name];            
+          }
+          return AutomatedTask.complete(this.jwt, task);
+        });        
+    }
+
     /**
      * @param caseId 
      * @param taskName 
