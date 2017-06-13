@@ -9,4 +9,8 @@ export default class Attribute extends Model{
     return http.post(jwt, '/entities', data);
   }
 
+  static findById(jwt, entityId){
+    return http.get(jwt, '/entity/'+entityId);
+  }
+
 }

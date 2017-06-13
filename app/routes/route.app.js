@@ -17,6 +17,7 @@ import task from './case/route.task';
 import humantask from './case/route.humantask';
 import automatedtask from './case/route.automatedtask';
 
+import entity from './case/route.entity';
 import user from './case/route.user';
 import group from './case/route.group';
 
@@ -26,9 +27,17 @@ import test from './route.test';
 function routes(){
     const router = express.Router();
 
-    /** Workspace routes **/
+    /** Users and Groups */
+    router.use('/user', user);
+    router.use('/users', user);
+    router.use('/group', group);
+    router.use('/groups', group);
+
+    /** Workspace and Entities routes **/
     router.use('/workspace', workspace);
     router.use('/workspaces', workspace);
+    router.use('/entity', entity);
+    router.use('/entities', entity);
 
     /** CaseDefinition routes */
     router.use('/casedefinition', casedefinition);
@@ -66,10 +75,6 @@ function routes(){
     router.use('/process', process_);
     router.use('/processes', process_);
 
-    router.use('/user', user);
-    router.use('/users', user);
-    router.use('/group', group);
-    router.use('/groups', group);
 
     /** Import route */
     router.use('/import', importer);
