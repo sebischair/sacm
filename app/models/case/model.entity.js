@@ -14,4 +14,10 @@ export default class Attribute extends Model{
     return http.get(jwt, '/caseentity/'+entityId);
   }
 
+  static findDeepLinksById(jwt, entityId){
+    console.log('here')
+    return http.get(jwt, '/caseentity/'+entityId+'/deeplinks');
+  }
+  
+
 }
