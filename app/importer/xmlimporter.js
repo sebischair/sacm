@@ -216,7 +216,8 @@ module.exports = class XMLImporter {
           if(!isExecuteCase)
             return Promise.resolve(caseInstance);
           else
-            return this.completeCase();
+            return this.executeCase();
+            //return this.completeCase();
         });
     }
 
@@ -892,6 +893,42 @@ module.exports = class XMLImporter {
           return Case.findTreeById(this.jwt, case1.id);
         });
     }
+
+    executeCase(){
+      console.log('execute case')
+      const caseId = this.case1.id;
+      const execution = this.json.Execution;
+      if(execution == null)
+        return Promise.resolve('No Execution Element Defined!');
+      console.log('heereddd')
+      console.log(execution)
+      const actions = execution[0].Action;
+      console.log(actions);
+      if(actions == null);
+        return Promise.resolve('No Action Element Defined!');
+      console.log('here')
+      return Promise.each(actions, action=>{
+        if(action == "CompleteHumanTask"){
+          const params = {};
+          if(action.TaskParam != null)
+            for(taskParam of action.TaskParam){
+              let parts = taskParam.$.path.split('.');
+              let name = parts[parts.length-1];
+              params[name] = taskParam.$.values;
+            }
+          console.log(params)
+          return this.completeHumanTaskWithName(caseId, action.$.processId, params)
+        }else{
+          return Promise.resolve();
+        }
+      });
+    }
+
+
+
+
+
+
 
     completeCase(){      
       const caseId = this.case1.id;
