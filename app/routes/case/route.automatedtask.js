@@ -90,7 +90,7 @@ router.post('/:id/draft', (req, res, next)=>{
 router.post('/:id/complete', (req, res, next)=>{
   var data = req.body.taskParams;
   data.id = req.params.id;
-  AutomatedTask.draft(req.jwt, data)
+  AutomatedTask.complete(req.jwt, data)
     .then(c=>{
         res.status(200).send(c);
     })

@@ -337,7 +337,7 @@ router.post('/:id/draft', (req, res, next)=>{
 router.post('/:id/complete', (req, res, next)=>{
   var data = req.body.taskParams;
   data.id = req.params.id;
-  HumanTask.draft(req.jwt, data)
+  HumanTask.complete(req.jwt, data)
     .then(c=>{
         res.status(200).send(c);
     })
