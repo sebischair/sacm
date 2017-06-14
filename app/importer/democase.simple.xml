@@ -57,7 +57,7 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
 
             <StageDefinition id="CaseIdentification" description="Case Identification" isMandatory="true" isRepeatable="false">        
                 <HumanTaskDefinition id="SelectPatient" description="Select Patient" ownerPath="Owner" isMandatory="true" isRepeatable="false"> 
-                    <TaskParamDefinition path="Text" isReadOnly="false" isMandatory="true"/>               
+                    <TaskParamDefinition path="Owner" isReadOnly="false" isMandatory="true"/>               
                     <!--<TaskParamDefinition path="Patient" isReadOnly="false" isMandatory="true"/>-->
                 </HumanTaskDefinition>
                 <AutomatedTaskDefinition id="Print" description="Print something" ownerPath="Owner" isMandatory="true" isRepeatable="false"> 
@@ -76,7 +76,7 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
     <!--This executes the case for testing-->
     <Execution>        
         <Action id="CompleteHumanTask" processId="SelectPatient">
-            <TaskParam path="Patient"  userValue="VincentAdams"/>
+            <TaskParam path="Owner"  userValue="VincentAdams"/>
         </Action>
     </Execution>
 

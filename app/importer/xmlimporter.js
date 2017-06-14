@@ -943,13 +943,12 @@ module.exports = class XMLImporter {
           if(taskParam.$.values != null){
             pValues = JSON.parse(taskParam.$.values.replace(/'/g,'"'));
           }else if(taskParam.$.userValue != null){
-            pValues = JSON.parse(JSON.stringify([this.getUserIdByXMLIdSync(taskParam.$.userValue).replace(/'/g,'"')]));            
+            pValues = [this.getUserIdByXMLIdSync(taskParam.$.userValue)];            
           }
-          console.log(pValues)
-          console.log(JSON.stringify(pValues))
           params[name] = pValues;
         }
       }
+      console.log(params)
       return params;
     }
 
