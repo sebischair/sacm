@@ -228,7 +228,6 @@ module.exports = class XMLImporter {
             return Promise.resolve(caseInstance);
           else
             return this.executeCase();
-            //return this.completeCase();
         });
     }
 
@@ -950,47 +949,8 @@ module.exports = class XMLImporter {
           params[name] = pValues;
         }
       }
-      console.log(params)
       return params;
     }
-
-
-
-
-
-    completeCase(){      
-      const caseId = this.case1.id;
-      return this.completeHumanTaskWithName(caseId, 'Lace', {
-        lace1: ['2'],
-        lace2: ['0']
-      })
-      .then(()=>{
-        return this.completeHumanTaskWithName(caseId, 'Barthel', {
-          barthel1: ['10'],
-          barthel2: ['5']
-        });
-      })
-      .then(()=>{
-        return this.completeHumanTaskWithName(caseId, 'PhysicalActivityPrescription', {
-          phactp1: ['v1'],
-          phactp2: ['v2']
-        });
-      })
-      .then(()=>{
-        return this.completeHumanTaskWithName(caseId, 'DischageForm', {
-          reason: ['some reason'],
-          date: ['some date']
-        });
-      })      
-      .then(()=>{
-        console.log(this.userMap);
-        return Case.findTreeById(this.jwt, caseId);
-      })
-      .catch(err=>{
-        console.log(err);
-      })        
-    }
-
    
     completeAutomatedTaskWithName(caseId, taskName, paramsMap){     
        return AutomatedTask.findAllByCaseId(this.jwt, caseId)
