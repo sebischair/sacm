@@ -648,6 +648,7 @@ module.exports = class XMLImporter {
             const data = {
               name: sd.$.id,
               description: sd.$.description,
+              ownerPath: sd.$.ownerPath,
               isRepeatable: sd.$.isRepeatable,
               isMandatory: sd.$.isMandetory,
               caseDefinition: caseDefId,
@@ -757,6 +758,7 @@ module.exports = class XMLImporter {
             const data = {
               name: td.$.id,
               description: td.$.description,
+              ownerPath: td.$.ownerPath,
               isRepeatable: td.$.isRepeatable,
               isMandatory: td.$.isMandetory,
               caseDefinition: caseDefId,
