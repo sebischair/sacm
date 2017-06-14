@@ -108,7 +108,7 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
     <User id="VincentAdams" email="vincent.adams@connecare.eu">
         <Attribute attributeDefinitionId="firstname" values="['Vincent']"/> 
         <Attribute attributeDefinitionId="lastname" values="['Adams']"/> 
-        <Attribute attributeDefinitionId="birthdate" values="['2005-06-08 00:22:16.0']"/> 
+        <Attribute attributeDefinitionId="birthdate" values="['2005-06-08']"/> 
     </User>
     <User id="ChristinaBennett" email="christina.bennett@connecare.eu">
         <Attribute attributeDefinitionId="firstname" values="['Christina']"/> 
@@ -148,7 +148,7 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
 
         <!-- Case Data Defintion -->   
         <EntityDefinition id="CaseData" description="">
-            <AttributeDefinition id="Patient" type="Link.Users.Barcelona-Doctors" description="Patient"/>
+            <AttributeDefinition id="Patient" type="Link.Users.Barcelona-Patients" description="Patient"/>
             <AttributeDefinition id="Owner" type="Link.Users.Barcelona-Doctors" description="Owner"/>
             <AttributeDefinition id="Lace" type="Link.EntityDefinition.Lace" description="Lace"/>
             <AttributeDefinition id="Barthel" type="Link.EntityDefinition.Barthel" description="Barthel"/>        
@@ -392,7 +392,8 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
     <!--This executes the case for testing-->
     <Execution>        
         <Action id="CompleteHumanTask" processId="SelectPatient">
-            <TaskParam path="Patient"  userValue="VincentAdams"/>
+            <TaskParam path="Patient"  userValue="PhilipRice"/>
+            <TaskParam path="Owner"  userValue="VincentAdams"/>
         </Action>
         <Action id="CompleteHumanTask" processId="Lace">
             <TaskParam path="Lace.lace1"  values="['2']"/>
