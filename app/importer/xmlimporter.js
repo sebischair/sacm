@@ -790,6 +790,7 @@ module.exports = class XMLImporter {
         const data = {
           path: tp.$.path,
           isReadOnly: tp.$.isReadOnly,
+          isMandatory: tp.$.isMandatory,
           taskDefinition: taskDefinitionId
         }
         return TaskParamDefinition.create(this.jwt, data);
