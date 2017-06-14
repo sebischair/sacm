@@ -30,6 +30,7 @@ export default class HumanTask extends Model{
   }
 
   static complete(jwt, data) {
+    console.log(JSON.stringify(data));
     return http.post(jwt, '/humantask/'+data.id+'/complete', data);
   }
 

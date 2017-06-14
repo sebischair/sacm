@@ -61,6 +61,16 @@ module.exports = class XMLImporter {
       });     
     }
 
+    getUserIdByXMLIdSync(userXMLId){
+        if(userXMLId == null)
+          return null
+        else if(!this.userMap.has(userXMLId)){
+          console.log('ERROR: User ID "'+userXMLId+'" not found');
+          return new Error('ERROR: User ID "'+userXMLId+'" not found');
+        }else
+          return this.userMap.get(userXMLId);  
+    }
+
     getUserAttributeDefinitionIdByXMLId(userAttributeDefinitionXMLId){
       if(userAttributeDefinitionXMLId == null)
         console.error('User attribute definition Id can not be null!');
@@ -904,28 +914,15 @@ module.exports = class XMLImporter {
       if(actions == null)
         return Promise.resolve('No Action Element Defined!');
       return Promise.each(actions, action=>{
+        
         if(action.$.id == "CompleteHumanTask"){
-          const params = {};
-          if(action.TaskParam != null){
-            for(let taskParam of action.TaskParam){
-              let parts = taskParam.$.path.split('.');
-              let name = parts[parts.length-1];
-              let values = taskParam.$.values;
-              params[name] = JSON.parse(values.replace(/'/g,'"'));
-            }
-          }
+          const params = this.getParms(action);
           return this.completeHumanTaskWithName(caseId, action.$.processId, params)
+        
         }else if(action.$.id == "CompleteAutomatedTask"){
-          const params = {};
-          if(action.TaskParam != null){
-            for(let taskParam of action.TaskParam){
-              let parts = taskParam.$.path.split('.');
-              let name = parts[parts.length-1];
-              let values = taskParam.$.values;
-              params[name] = JSON.parse(values.replace(/'/g,'"'));
-            }
-          }
+          const params = this.getParms(action);
           return this.completeAutomatedTaskWithName(caseId, action.$.processId, params)
+        
         }else{
           return Promise.resolve('Action "'+action.$.id+'" not defined!');
         }
@@ -935,7 +932,25 @@ module.exports = class XMLImporter {
       })
     }
 
-
+    getParms(action){
+      const params = {};
+      if(action.TaskParam != null){
+        for(let taskParam of action.TaskParam){
+          let parts = taskParam.$.path.split('.');
+          let name = parts[parts.length-1];
+          let pValues = null;
+          if(taskParam.$.values != null){
+            pValues = JSON.parse(taskParam.$.values.replace(/'/g,'"'));
+          }else if(taskParam.$.userValue != null){
+            pValues = JSON.parse(JSON.stringify([this.getUserIdByXMLIdSync(taskParam.$.userValue).replace(/'/g,'"')]));            
+          }
+          console.log(pValues)
+          console.log(JSON.stringify(pValues))
+          params[name] = pValues;
+        }
+      }
+      return params;
+    }
 
 
 
