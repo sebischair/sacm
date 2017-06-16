@@ -81,3 +81,33 @@ block content
     p
       b HttpHookDefinition
       | A http hook definition defines an HTTP request (GET, PUT, POST, DEL) that is triggered on a certain event. For every process definition element events such as <i>AVAILABLE, ENABLE, ACTIVATE, COMPLETE, TERMINATE</i> can be used to define actions.
+
+  a(name="case")
+  div(class="container case")
+    h2 Case
+    p
+      b Case 
+      | A case is instantiated based on the related case definition. Every case has a name and an owner represented by a person. The current state is expressed with a state variable and the according dates of state changes tracked.
+    p
+      b Process 
+      | A process is instantiated based on the related process definition. Every process has a name, state and an index that express the current execution iteration. The process is an abstract class, meaning this just helps for the technical implementation to reuse the concepts. Most likely the process definition is only used as abstraction on the API level.
+    p 
+      b Stage 
+      | A stage is instantiated based on the related stage definition. Every stage can contain several sub stages or tasks. 
+    p 
+      b HumanTask 
+      | A human task has an owner that is represented by a user, that means a linked attribute value. Additional, a scheduled date expresses when the task should be executed. 
+    p
+      b AutomatedTask 
+      | A automated task represents an instanciated automated task definition. The characteristic different to the human task is that an automated task needs no input from a user and is executed after the sentry is fulfilled. 
+    p 
+      b State 
+      | Every process element has a state that is expressed with the following enumeration values:
+      ul
+        li <i>Available</i> the model is instantiated
+        li <i>Enabled</i> at least on sentry is fulfilled, the process could be executed.
+        li <i>Active</i> the process is currently executed 
+        li <i>Completed</i> the process was successfully completed 
+        li <i>Terminated</i> the process was abort, not successfully completed 
+
+
