@@ -5,7 +5,7 @@ import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import routes from './app/routes/route.app';
-
+import docRoutes from './pug/route';
 
 var app = express();
 
@@ -22,6 +22,7 @@ app.use('/doc/model', express.static(__dirname + '/doc/model'));
 app.use('/doc/modelimport', express.static(__dirname + '/doc/modelimport'));
 app.use('/doc/howtostart', express.static(__dirname + '/doc/howtostart'));
 
+app.use('/doc2', docRoutes())
 
 app.use('/api', (req, res, next)=>{
 
