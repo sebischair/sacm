@@ -12,15 +12,72 @@ block content
     h2 Role Management 
     | The Role Management is considered on a system level, meaning roles work across workspace boundaries. 
     p 
-        b Principal
+        b Principal 
         | A principal is an abstraction of a group and a person. This helps to use the concept in a flexible way.
     p
-        b Group
+        b Group 
         | A group consist of subgroups and persons who have a membership.
     p
-        b User
+        b User 
         | A user represents a single person in the system. A user can contain multiple attributes.
     p 
-        b Membership
+        b Membership 
         | A membership represents the relationship between user and a group. E.g. the data of creating the membership.
  
+  a(name="workspace")
+  div(class="container workspace")
+    h2 Workspace
+    p
+      b Workspace 
+      | A workspace is a container to store model definitions and the related instances. Each Workspace has read and write Principals. By default, the rights for all contained model element and instances is inherited from their workspace.</p>
+
+  a(name="datadefinition")
+  div(class="container datadefinition")
+    h2 Data Definition
+    p 
+      b EntityDefinition 
+      | A entity definition is a container with read and write principals that contains attribute definitions.
+    p 
+      b AttributeDefinition 
+      | A attribute definition defines basically a name and the expected type of the value. Attribute types can be primitive types such as <i>notype, string, longtext, boolean, number, enumeration</i> and <i>date</i>. Additionally, it is possible to reference complex types (<i>groups</i> and <i>users</i>) or custom <i>entity definitions</i>.
+    p
+      b DerivedAttributeDefinition 
+      | A derived attribute is calculated automatically based on other attributes of an entity definition. Derived attribute definitions cannot be nested.
+
+  a(name="data")
+  div(class="container data")
+    h2 Data 
+    p 
+      b Entity 
+      | A entity has inherited read and write principals and can contain multiple attribute values.
+    p 
+      b AttributeValue 
+      | A attribute value contains a value type that is defined in the attribute definition.
+
+  a(name="casedefinition")
+  div(class="container casedefinition")
+    h2 Case Definition
+    p
+      b CaseDefinition 
+      | A case definition is a wrapper container for all process related elements, the data is excluded. Every case definition has a name and provides an owner who is responsible the instantiated cases. An owner is a user that is devined via a linked attribute definition. 
+    p
+      b ProcessDefinition 
+      | A process definition is an abstraction of a stage definition and task definition. Every process definition has a name and contains the information if the process is mandatory and if the process is repeatable. The process definition is an abstract class, meaning this just helps for the technical implementation to reuse the concepts. Most likely the process definition is only used as abstraction on the API level.
+    p
+      b SentryDefinition 
+      | A sentry definition expresses the preconditions of a process definition. One process definition can have multiple sentry definitions that are linked with a logical or. Every sentry definition can consist of several process definitions that are linked with a logical and. A stage or task can only be executed when at least one sentry is fulfilled or no sentry definition is defined.
+    p
+      b StageDefinition 
+      | A stage definition contain other stage definitions or task definitions. 
+    p
+      b HumanTaskDefinition
+      | A human task definition has multiple task parameters that need to be accomplished to finish the task. Every human task definition has an assigned group that represents the potential task own during instantiation.
+    p
+      b AutomatedTaskDefinition
+      | A automated task definition can be used to execute task by a 3rd party system. 
+    p 
+      b TaskParmDefinition
+      | A task parameter definition represent an attribute definition or derived attribute that belongs to a task and is either in write or read-only state.
+    p
+      b HttpHookDefinition
+      | A http hook definition defines an HTTP request (GET, PUT, POST, DEL) that is triggered on a certain event. For every process definition element events such as <i>AVAILABLE, ENABLE, ACTIVATE, COMPLETE, TERMINATE</i> can be used to define actions.
