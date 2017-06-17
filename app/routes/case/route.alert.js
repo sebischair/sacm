@@ -16,10 +16,9 @@ import Alert from './../../models/case/model.alert';
  * @apiSampleRequest /alert/:id
  *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *  {
  *  	"id": "jdddqzyu6ser7",
- *    "process": "1rjdqzyu6ser9",
+ *  	"process": "1rjdqzyu6ser9",
  *  	"creationDate": "2017-06-12 13:58:56.0",
  *  	"expireDate": "2017-06-14 13:52:12.0",
  *  	"text": "Alert Message",
@@ -33,7 +32,7 @@ import Alert from './../../models/case/model.alert';
  *  		"minThreshold": "5",
  *  		"maxThreshold": "8"
  *  	}
- *    "seenDate": null
+ *  	"seenDate": null
  *  }
  *
  */

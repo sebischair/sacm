@@ -519,7 +519,7 @@ router.post('/:id/terminate', (req, res, next)=>{
 
 
 /**
- * @api {get} /case/:id Delete Case
+ * @api {delete} /case/:id Delete Case
  *
  * @apiName DeleteCase
  * @apiGroup Case
