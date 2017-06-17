@@ -1,5 +1,6 @@
 import express from 'express';
 import pug from 'pug';
+import fs from 'fs';
 
 
 function renderSection(section){
@@ -17,12 +18,17 @@ function routes(){
         res.send(renderSection('model'))
     });
 
-    router.use('/doc2/howtostart', (req, res)=>{
-        res.send(renderSection('howtostart'))
+    router.use('/doc2/gettingstarted', (req, res)=>{
+        res.send(renderSection('gettingstarted'))
     });
 
     router.use('/doc2/api', (req, res)=>{
         res.send(renderSection('api'))
+    });
+
+    router.use('/doc2/apicontent', (req, res)=>{
+        res.set('X-Frame-Options', false);        
+        res.send(fs.readFileSync('/doc/dist/index.html'))
     });
 
     router.use('/', (req, res)=>{
