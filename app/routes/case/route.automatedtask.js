@@ -1,17 +1,15 @@
 import express from 'express';
-
-var router = express.Router();
 import AutomatedTask from './../../models/case/model.automatedtask';
+const router = express.Router();
+
+
 
 /**
  * @api {get} /automatedtask/:id Get AutomatedTask
  * @apiName GetAutomatedTask
  * @apiGroup AutomatedTask
- *
- * @apiParam {Number} id Unique ID of a AutomatedTask
- *
+ * @apiParam {Number} id ID of a AutomatedTask
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     {
  *          "processDefinition": "bq1iuo0uuzo9",
  *          "id": "p503h6ephfqv",
@@ -50,12 +48,9 @@ router.get('/:id', (req, res, next)=>{
  * @api {post} automatedtask/:id/draft Draft AutomatedTask
  * @apiName DraftAutomatedTask
  * @apiGroup AutomatedTask
- *
  * @apiParam {Number} id Unique ID of a AutomatedTask
  * @apiParam {Array} taskParams An array of task paramerts
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     {
  *     }
  */
@@ -76,14 +71,10 @@ router.post('/:id/draft', (req, res, next)=>{
  * @api {post} /automatedtask/:id/complete Complete AutomatedTask
  * @apiName CompleteAutomatedTask
  * @apiGroup AutomatedTask
- *
  * @apiParam {Number} id Unique ID of a AutomatedTask
  * @apiParam {Array} taskParams An array of task paramerts
- *
  * @apiSampleRequest /automatedtask/:id/complete
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     {
  *     }
  */
@@ -104,13 +95,9 @@ router.post('/:id/complete', (req, res, next)=>{
  * @api {post} /automatedtask/:id/terminate Terminate AutoatedTask
  * @apiName TerminateAutoatedTask
  * @apiGroup AutoatedTask
- *
  * @apiParam {Number} id Unique ID of a AutoatedTask
- *
  * @apiSampleRequest /automatedtask/:id/terminate
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     {
  *     }
  */

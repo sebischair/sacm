@@ -1,24 +1,15 @@
 import express from 'express';
-
-var router = express.Router();
-
-// Models
 import TaskParam from './../../models/case/model.taskparam';
-
+const router = express.Router();
 
 
 /**
  * @api {get} /taskparam/:id/autocomplete Get TaskParam Autocomplete
- *
  * @apiName TaskParamAutocomplete
  * @apiGroup TaskParam
- *
  * @apiParam {String} id ID of the TaskParam
- *
  * @apiSampleRequest /taskparam/:id/autocomplete
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *
  */
 router.get('/:id/autocomplete', (req, res, next)=>{

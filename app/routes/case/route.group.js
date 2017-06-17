@@ -1,30 +1,21 @@
 import express from 'express';
-
+import Group from './../../models/casedefinition/model.group';
 var router = express.Router();
-
-// Models
-import Group from './../../models/casedefinition/model.group'
 
 
 
 /**
  * @api {get} /groups Get Groups of Workspace
- *
  * @apiName GetGroupsOfWorkspace
  * @apiGroup Group
- *
- *
  * @apiSampleRequest /groups
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     [
  *        {
  *          "id": "1hl75qvuk4mt3",
  *          "name": "Leida-Nurses",
  *        },...
  *      ]
- *
  */
 router.get('/', (req, res, next)=>{
   Group.findAll(req.jwt)
@@ -38,17 +29,12 @@ router.get('/', (req, res, next)=>{
 
 /**
  * @api {post} /groups Create Group
- *
  * @apiName CreateGroup
  * @apiGroup Group
- *
  * @apiParam {String} name Name of the group
  * @apiParam {Array} administrators List of user ids
- *
  * @apiSampleRequest /groups
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     {
  *       "id": "1991r88lk5x9v",
  *       "versions": [
@@ -73,7 +59,6 @@ router.get('/', (req, res, next)=>{
  *       "mayEdit": true,
  *       "members": []
  *     }
- *
  */
 router.post('/', (req, res, next)=>{
   Group.create(req.jwt, req.body)
@@ -87,17 +72,11 @@ router.post('/', (req, res, next)=>{
 
 /**
  * @api {get} /group/:id Get Group by ID
- *
  * @apiName GetGroupByID
  * @apiGroup Group
- *
  * @apiParam {String} id ID of the Group
- *
- *
  * @apiSampleRequest /group/:id
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     {
  *       "id": "1hl75qvuk4mt3",
  *       "versions": [
@@ -122,7 +101,6 @@ router.post('/', (req, res, next)=>{
  *       "mayEdit": true,
  *       "members": []
  *     }
- *
  */
 router.get('/:id', (req, res, next)=>{
   Group.findById(req.jwt, req.params.id)
@@ -137,18 +115,13 @@ router.get('/:id', (req, res, next)=>{
 
 /**
  * @api {post} /groups Update Group
- *
  * @apiName UpdateGroup
  * @apiGroup Group
- *
  * @apiParam {String} id ID of the Group
  * @apiParam {String} name (optional) Name of the group
  * @apiParam {Array} administrators (optional) List of user ids
- *
  * @apiSampleRequest /groups
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     {
  *       "id": "1991r88lk5x9v",
  *       "versions": [],
@@ -158,7 +131,6 @@ router.get('/:id', (req, res, next)=>{
  *       "mayEdit": true,
  *       "members": []
  *     }
- *
  */
 router.patch('/:id', (req, res, next)=>{
   const data = req.body;
@@ -174,20 +146,14 @@ router.patch('/:id', (req, res, next)=>{
 
 /**
  * @api {delete} /group/:id Delete Group by ID
- *
  * @apiName DeleteGroupByID
  * @apiGroup Group
- *
  * @apiParam {String} id ID of the Group
- *
  * @apiSampleRequest /group/:id
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     {
  *       "success": true
  *     }
- *
  */
 router.delete('/:id', (req, res, next)=>{
   Group.deleteById(req.jwt, req.params.id)
@@ -201,21 +167,15 @@ router.delete('/:id', (req, res, next)=>{
 
 /**
  * @api {post} /group/:id/member/:principalId Add user to group
- *
  * @apiName AddUserToGroup
  * @apiGroup Group
- *
  * @apiParam {String} id ID of the Group
  * @apiParam {String} principalId ID of the User / Principal
- *
  * @apiSampleRequest /group/:id/member/:principalId
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     {
  *       "success": true
  *     }
- *
  */
 router.post('/:id/member/:principalId', (req, res, next)=>{
   Group.addMember(req.jwt, req.params.id, req.params.principalId)
@@ -230,21 +190,16 @@ router.post('/:id/member/:principalId', (req, res, next)=>{
 
 /**
  * @api {post} /group/:id/member/:principalId Remove User from Group
- *
  * @apiName RemoveUserFromGroup
  * @apiGroup Group
- *
  * @apiParam {String} id ID of the Group
  * @apiParam {String} principalId ID of the User / Principal
- *
  * @apiSampleRequest /group/:id/member/:principalId
- *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *     {
  *       "success": true
  *     }
- *
  */
 router.delete('/:id/member/:principalId', (req, res, next)=>{
   Group.delMember(req.jwt, req.params.id, req.params.principalId)

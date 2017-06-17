@@ -1,24 +1,16 @@
 import express from 'express';
-
-var router = express.Router();
-
-// Models
 import Entity from './../../models/case/model.entity';
+const router = express.Router();
 
 
 
 /**
- * @api {get} /entity/:id Get Entity
- *
+ * @api {get} /entity/:id/deeplinks Get Entity with Deeplinks
  * @apiName GetEntity
  * @apiGroup Entity
- *
  * @apiParam {String} id ID of the Entity
- *
- * @apiSampleRequest /entity/:id
- *
+ * @apiSampleRequest /entity/:id/deeplinks
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  * {
  *     "id": "1m6iwf4o772x7",
  *     "workspace": "11lc2lth49deu",
@@ -336,7 +328,6 @@ import Entity from './../../models/case/model.entity';
  *     ],
  *     "resourceType": "entities"
  * }
- *
  */
 router.get('/:id/deeplinks', (req, res, next)=>{
   Entity.findDeepLinksById(req.jwt, req.params.id)
@@ -351,14 +342,10 @@ router.get('/:id/deeplinks', (req, res, next)=>{
 
 /**
  * @api {get} /entity/:id Get Entity
- *
  * @apiName GetEntity
  * @apiGroup Entity
- *
  * @apiParam {String} id ID of the Entity
- *
  * @apiSampleRequest /entity/:id
- *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  * {
@@ -486,7 +473,6 @@ router.get('/:id/deeplinks', (req, res, next)=>{
  *     ],
  *     "resourceType": "entities"
  * }
- *
  */
 router.get('/:id', (req, res, next)=>{
   Entity.findById(req.jwt, req.params.id)

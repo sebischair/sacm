@@ -1,18 +1,15 @@
 import express from 'express';
-
-var router = express.Router();
 import HumanTask from './../../models/case/model.humantask';
+const router = express.Router();
+
 
 
 /**
  * @api {get} humantask/:id Get HumanTask
  * @apiName GetHumanDefinition
  * @apiGroup HumanTask
- *
- * @apiParam {Number} id Unique ID of a HumanTask
- *
+ * @apiParam {String} id ID of a HumanTask
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  * {
  *   "parentStage": "1x26mpxg3dabq",
  *   "index": 0,
@@ -113,8 +110,7 @@ router.get('/:id', (req, res, next)=>{
  * @api {post} humantask/:id/draft Draft HumanTask
  * @apiName DraftHumanTask
  * @apiGroup HumanTask
- *
- * @apiParam {Number} id Unique ID of a HumanTask
+ * @apiParam {String} id ID of a HumanTask
  * @apiParam {Array} taskParams An array of task paramerts
  * {
  * 	"id": "9411d2nyotg3",
@@ -127,7 +123,6 @@ router.get('/:id', (req, res, next)=>{
  * }
  * 
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  * {
  *   "parentStage": "1x26mpxg3dabq",
  *   "index": 0,
@@ -228,10 +223,8 @@ router.post('/:id/draft', (req, res, next)=>{
  * @api {post} /humantask/:id/complete Complete HumanTask
  * @apiName CompleteHumanTask
  * @apiGroup HumanTask
- *
- * @apiParam {Number} id Unique ID of a HumanTask
+ * @apiParam {String} id ID of a HumanTask
  * @apiParam {Array} taskParams An array of task paramerts
- *
  * @apiSampleRequest /humantask/:id/complete
  * {
  * 	"id": "9411d2nyotg3",
@@ -351,13 +344,9 @@ router.post('/:id/complete', (req, res, next)=>{
  * @api {post} /humantask/:id/terminate Terminate HumanTask
  * @apiName TerminateHumanTask
  * @apiGroup HumanTask
- *
- * @apiParam {Number} id Unique ID of a HumanTask
- *
+ * @apiParam {String} id ID of a HumanTask
  * @apiSampleRequest /humantask/:id/terminate
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     {
  *     }
  */

@@ -1,8 +1,8 @@
 import express from 'express';
-
-var router = express.Router();
 import Process from './../../models/case/model.process';
 import Alert from './../../models/case/model.alert';
+const router = express.Router();
+
 
 /**
  * @api {get} /process/:id Get Process

@@ -1,6 +1,4 @@
 import express from 'express';
-
-var router = express.Router();
 import Case from './../../models/case/model.case';
 import Process from './../../models/case/model.process';
 import Stage from './../../models/case/model.stage';
@@ -10,7 +8,7 @@ import AutomatedTask from './../../models/case/model.automatedtask';
 import Message from './../../models/case/model.message';
 import Alert from './../../models/case/model.alert';
 import SummarySection from './../../models/case/model.summarysection';
-
+const router = express.Router();
 
 // my cases
 
