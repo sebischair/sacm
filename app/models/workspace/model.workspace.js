@@ -1,6 +1,6 @@
 import Promise from 'bluebird';
-import http from './http';
-import Model from './model';
+import http from './../http';
+import Model from './../model';
 
 
 export default class Workspace extends Model{

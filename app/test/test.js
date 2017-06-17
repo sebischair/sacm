@@ -1,7 +1,7 @@
 import assert from "assert"; // node.js core module
 import chai from "chai";
 import chaiHttp from "chai-http";
-import Workspace from '../models/model.workspace';
+import Workspace from '../models/workspace/model.workspace';
 import server from "../../app";
 
 

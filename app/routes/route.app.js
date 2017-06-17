@@ -20,8 +20,8 @@ import automatedtask from './case/route.automatedtask';
 
 import entity from './data/route.entity';
 import attribute from './data/route.attribute';
-import user from './case/route.user';
-import group from './case/route.group';
+import user from './group/route.user';
+import group from './group/route.group';
 
 import importer from './route.import';
 import test from './route.test';
