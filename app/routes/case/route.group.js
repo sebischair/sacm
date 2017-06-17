@@ -1,5 +1,5 @@
 import express from 'express';
-import Group from './../../models/casedefinition/model.group';
+import Group from './../../models/group/model.group';
 var router = express.Router();
 
 

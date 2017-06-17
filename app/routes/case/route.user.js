@@ -1,5 +1,5 @@
 import express from 'express';
-import User from './../../models/case/model.user'
+import User from './../../models/group/model.user'
 import Case from './../../models/case/model.case'
 const router = express.Router();
 
