@@ -17,27 +17,27 @@ import task from './case/route.task';
 import taskparam from './case/route.taskparam';
 import humantask from './case/route.humantask';
 import automatedtask from './case/route.automatedtask';
-
 import entity from './data/route.entity';
 import attribute from './data/route.attribute';
 import user from './group/route.user';
 import group from './group/route.group';
-
 import importer from './route.import';
 import test from './route.test';
 
 function routes(){
     const router = express.Router();
 
-    /** Users and Groups */
+    /** Users and Groups routes*/
     router.use('/user', user);
     router.use('/users', user);
     router.use('/group', group);
     router.use('/groups', group);
 
-    /** Workspace, Entities and Attributes routes **/
+    /** Workspace routes*/    
     router.use('/workspace', workspace);
     router.use('/workspaces', workspace);
+
+    /** Entities and Attributes routes **/
     router.use('/entity', entity);
     router.use('/entities', entity);
     router.use('/attribute', attribute);
