@@ -36,7 +36,7 @@ router.get('/', (req, res, next)=>{
     })
     .then(persistedWorkspace=>{
       workspace = persistedWorkspace;
-      return EntityDefinition.create2({
+      return EntityDefinition.create({
         workspace: workspace.id,
         name: 'RootEntityDefinition',
         namePlural: 'Root Entity Definition'
