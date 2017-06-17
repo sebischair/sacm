@@ -18,8 +18,8 @@ import taskparam from './case/route.taskparam';
 import humantask from './case/route.humantask';
 import automatedtask from './case/route.automatedtask';
 
-import entity from './case/route.entity';
-import attribute from './case/route.attribute';
+import entity from './data/route.entity';
+import attribute from './data/route.attribute';
 import user from './case/route.user';
 import group from './case/route.group';
 
