@@ -26,8 +26,7 @@ function routes(){
         res.send(renderSection('api'))
     });
 
-    router.use('/doc2/apicontent', (req, res)=>{
-        res.set('X-Frame-Options', false);        
+    router.use('/doc2/apicontent', (req, res)=>{    
         res.send(fs.readFileSync('/doc/dist/index.html'))
     });
 
