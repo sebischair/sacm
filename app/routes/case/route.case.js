@@ -1036,22 +1036,16 @@ router.get('/:id/messages', (req, res, next)=>{
 
 // alerts
 
-
 /**
- * @api {get} /case/:id/alerts Get Alerts
- *
+ * @api {get} /case/:id/alerts Get Alerts by Case
  * @apiName GetAlerts
  * @apiGroup Alert
- *
- * @apiParam {String} id ID of the Case
- *
+ * @apiParam {String} id ID of the Case 
  * @apiSampleRequest /case/:id/alerts
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *  [{
  *  	"id": "jdddqzyu6ser7",
- *    "process": "1rjdqzyu6ser9",
+ *  	"process": "1rjdqzyu6ser9",
  *  	"creationDate": "2017-06-12 13:58:56.0",
  *  	"expireDate": "2017-06-14 13:52:12.0",
  *  	"text": "Alert Message",
@@ -1065,9 +1059,8 @@ router.get('/:id/messages', (req, res, next)=>{
  *  		"minThreshold": "5",
  *  		"maxThreshold": "8"
  *  	}
- *    "seenDate": null
+ *  	"seenDate": null
  *  }]
- *
  */
 router.get('/:id/alerts', (req, res, next)=>{
   Alert.findByCaseId(req.jwt, req.params.id)
@@ -1082,17 +1075,12 @@ router.get('/:id/alerts', (req, res, next)=>{
 // SummarySection
 
 /**
- * @api {get} /case/:id/summarysections Get Summary
- *
+ * @api {get} /case/:id/summarysections Get Summary 
  * @apiName GetSummary
  * @apiGroup Case
- *
  * @apiParam {String} id ID of the Case
- *
  * @apiSampleRequest /case/:id/summarysections
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  * [
  *   {
  *     "description": "Section 1",
@@ -1185,7 +1173,6 @@ router.get('/:id/alerts', (req, res, next)=>{
  *     "resourceType": "SummarySection"
  *   }
  * ]
- *
  */
 router.get('/:id/summarysections', (req, res, next)=>{
   SummarySection.findByCaseId(req.jwt, req.params.id)

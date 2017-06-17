@@ -6,16 +6,11 @@ import Alert from './../../models/case/model.alert';
 
 /**
  * @api {get} /process/:id Get Process
- *
  * @apiName GetProcess
- * @apiGroup Process
- *
+ * @apiGroup Process 
  * @apiParam {String} id ID of the Process
- *
  * @apiSampleRequest /process/:id
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *      // Could be any process object, see model
  *      {
  *          "processDefinition": "bq1iuo0uuzo9",
@@ -51,20 +46,15 @@ router.get('/:id', (req, res, next)=>{
 
 
 /**
- * @api {get} /process/:id/alerts Get Alerts
- *
+ * @api {get} /process/:id/alerts Get Alerts by Process
  * @apiName GetProcessAlerts
- * @apiGroup Alert
- *
- * @apiParam {String} id ID of the Process
- *
+ * @apiGroup Alert 
+ * @apiParam {String} id ID of the Process 
  * @apiSampleRequest /process/:id/alerts
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *  [{
  *  	"id": "jdddqzyu6ser7",
- *    "process": "1rjdqzyu6ser9",
+ *  	"process": "1rjdqzyu6ser9",
  *  	"creationDate": "2017-06-12 13:58:56.0",
  *  	"expireDate": "2017-06-14 13:52:12.0",
  *  	"text": "Alert Message",
@@ -78,9 +68,8 @@ router.get('/:id', (req, res, next)=>{
  *  		"minThreshold": "5",
  *  		"maxThreshold": "8"
  *  	}
- *    "seenDate": null
+ *  	"seenDate": null
  *  }]
- *
  */
 router.get('/:id/alerts', (req, res, next)=>{
   Alert.findByProcessId(req.jwt, req.params.id)
