@@ -465,8 +465,8 @@ module.exports = class XMLImporter {
     createEntityDefinitions(Workspace) {
       return Promise.each(Workspace.EntityDefinition, ed=>{
         return EntityDefinition.create(this.jwt, {
-            name: this.getWorkspaceIdByXMLId(Workspace.$.id), 
-            workspace: ed.$.id
+            workspace: this.getWorkspaceIdByXMLId(Workspace.$.id), 
+            name: ed.$.id
           })
           .then(persistedEntityDefinition =>{
             this.entityDefinitionMap.set(ed.$.id, persistedEntityDefinition.id);

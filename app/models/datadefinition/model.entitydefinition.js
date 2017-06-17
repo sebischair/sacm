@@ -9,7 +9,6 @@ export default class EntityDefinition extends Model{
     return http.post(jwt, '/workspaces/'+data.workspace+'/entityDefinitions', data);
   }
 
-
   static findByWorkspaceId(jwt, workspaceId){
     return http.get(jwt, '/workspaces/'+workspaceId+'/entityDefinitions/');
   }
