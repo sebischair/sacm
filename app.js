@@ -5,7 +5,7 @@ import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import routes from './app/routes/route.app';
-import docRoutes from './doc2/route';
+import docRoutes from './doc/route';
 
 var app = express();
 
@@ -15,9 +15,6 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-
-app.use('/doc/api', express.static(__dirname + '/doc/dist'));
-
 
 
 
@@ -35,7 +32,7 @@ app.use('/api', (req, res, next)=>{
 });
 app.use('/api', routes())
 
-app.use('/doc2/assets', express.static(__dirname + '/doc2/assets'));
+app.use('/doc/assets', express.static(__dirname + '/doc/assets'));
 app.use('/', docRoutes())
 
 // catch 404 and forward to error handler
