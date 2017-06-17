@@ -1,24 +1,15 @@
 import express from 'express';
-
-var router = express.Router();
-
-// Models
 import Task from './../../models/case/model.task'
-
+const router = express.Router();
 
 
 /**
  * @api {get} /task/:id Get Task
- *
  * @apiName GetTask
  * @apiGroup Task
- *
  * @apiParam {String} id ID of the Task
- *
  * @apiSampleRequest /task/:id
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     //  Automated or HumanTasks
  *     {
  *          "processDefinition": "bq1iuo0uuzo9",
@@ -40,7 +31,6 @@ import Task from './../../models/case/model.task'
  *          "case": "1q7nud4e2v1dl",
  *          "resourceType": "AutomatedTask"
  *     }
- *
  */
 router.get('/:id', (req, res, next)=>{
   Task.findById(req.jwt, req.params.id)

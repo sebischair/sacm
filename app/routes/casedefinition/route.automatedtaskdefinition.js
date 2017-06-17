@@ -1,20 +1,15 @@
 import express from 'express';
-var router = express.Router();
 import AutomatedTaskDefinition from './../../models/casedefinition/model.automatedtaskdefinition';
 import AutomatedTask from './../../models/case/model.automatedtask';
+const router = express.Router();
 
 /**
  * @api {get} /automatedtaskdefinition/:id Get AutomatedTaskDefinition
- *
  * @apiName GetAutomatedTaskDefinition
  * @apiGroup AutomatedTaskDefinition
- *
  * @apiParam {String} id ID of the AutomatedTaskDefinition
- *
- * @apiSampleRequest test
- *
+ * @apiSampleRequest /automatedtaskdefinition/:id
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *   {
  *     "isRepeatable": "true",
  *     "newEntityDefinition": null,
@@ -29,7 +24,6 @@ import AutomatedTask from './../../models/case/model.automatedtask';
  *     "caseDefinition": "1v77wsi7jdky8",
  *     "parentStageDefinition": null
  *   }
- *
  */
 router.get('/:id', (req, res, next)=>{
   AutomatedTaskDefinition.findById(req.jwt, req.params.id)
@@ -44,18 +38,12 @@ router.get('/:id', (req, res, next)=>{
 
 /**
  * @api {delete} /automatedtaskdefinition/:id Delete AutomatedTaskDefinition
- *
  * @apiName DeleteAutomatedTaskDefinition
  * @apiGroup AutomatedTaskDefinition
- *
  * @apiParam {String} id ID of the AutomatedTaskDefinition
- *
  * @apiSampleRequest /automatedtaskdefinition/:id
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *   {}
- *
  */
 router.delete('/:id', (req, res, next)=>{
   AutomatedTaskDefinition.deleteById(req.jwt, req.params.id)
@@ -70,10 +58,8 @@ router.delete('/:id', (req, res, next)=>{
 
 /**
  * @api {post} /automatedtaskdefinitions Create AutomatedTaskDefinition
- *
  * @apiName CreateAutomatedTaskDefinition
  * @apiGroup AutomatedTaskDefinition
- *
  * @apiParam {String} caseDefinition ID of the parent CaseDefinition
  * @apiParam {String} name Name of the StageDefinition (internal usage)
  * @apiParam {String} label Label of the StageDefinition
@@ -81,11 +67,8 @@ router.delete('/:id', (req, res, next)=>{
  * @apiParam {Boolean} isMandatory Indicator if the stage should be mandatory
  * @apiParam {String} parent ID of the parent stage (if there is one)
  * @apiParam {Array} preconditions Array of preconditions for the stage
- *
  * @apiSampleRequest /automatedtaskdefinitions
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *   {
  *     "isRepeatable": "true",
  *     "newEntityDefinition": null,
@@ -125,10 +108,8 @@ router.post('/', (req, res, next)=>{
 
 /**
  * @api {patch} /automatedtaskdefinition/:id Update AutomatedTaskDefinition
- *
  * @apiName UpdateAutomatedTaskDefinition
  * @apiGroup AutomatedTaskDefinition
- *
  * @apiParam {String} caseDefinition ID of the parent CaseDefinition
  * @apiParam {String} name Name of the StageDefinition (internal usage)
  * @apiParam {String} label Label of the StageDefinition
@@ -136,11 +117,8 @@ router.post('/', (req, res, next)=>{
  * @apiParam {Boolean} isMandatory Indicator if the stage should be mandatory
  * @apiParam {String} parent ID of the parent stage (if there is one)
  * @apiParam {Array} preconditions Array of preconditions for the stage
- *
  * @apiSampleRequest /automatedtaskdefinition/:id
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *   {
  *     "isRepeatable": "true",
  *     "newEntityDefinition": null,
@@ -155,7 +133,6 @@ router.post('/', (req, res, next)=>{
  *     "caseDefinition": "1v77wsi7jdky8",
  *     "parentStageDefinition": null
  *   }
- *
  */
 router.patch('/:id', (req, res, next)=>{
   var data = {
@@ -178,16 +155,11 @@ router.patch('/:id', (req, res, next)=>{
 
 /**
  * @api {get} /automatedtaskdefinition/:id/automatedtasks Get AutomatedTasks
- *
  * @apiName GetAutomatedTasks
  * @apiGroup AutomatedTaskDefinition
- *
  * @apiParam {String} id ID of the AutomatedTaskDefinition
- *
  * @apiSampleRequest /automatedtaskdefinition/:id/automatedtasks
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     [{
  *          "processDefinition": "bq1iuo0uuzo9",
  *          "id": "p503h6ephfqv",
@@ -208,7 +180,6 @@ router.patch('/:id', (req, res, next)=>{
  *          "case": "1q7nud4e2v1dl",
  *          "resourceType": "AutomatedTask"
  *     }]
- *
  */
 router.get('/:id/automatedtasks', (req, res, next)=>{
   AutomatedTask.findbyTaskDefinitionId(req.jwt, req.params.id)

@@ -1,23 +1,15 @@
 import express from 'express';
-
-var router = express.Router();
-
-// Models
 import User from './../../models/case/model.user'
 import Case from './../../models/case/model.case'
+const router = express.Router();
 
 
 /**
- * @api {get} /users Get Users of Workspace
- *
+ * @api {get} /users Get Users 
  * @apiName GetUsers
  * @apiGroup User
- *
- *
  * @apiSampleRequest /users
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     [
  *         {
  *          "id": "10dsnh0e84zx3",
@@ -28,7 +20,6 @@ import Case from './../../models/case/model.case'
  *          "name": "PhilipBarnes"
  *         }, ...
  *     ]
- *
  */
 router.get('/', (req, res, next)=>{
   User.findAll(req.jwt)
@@ -41,17 +32,12 @@ router.get('/', (req, res, next)=>{
 });
 
 /**
- * @api {get} /user/:id Get Users By ID
- *
+ * @api {get} /user/:id Get User
  * @apiName GetUserByID
  * @apiGroup User
- *
  * @apiParam {String} id ID of the User
- *
  * @apiSampleRequest /user/:id
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *    {
  *      "isVerified": true,
  *      "lastLoginDate": "2017-05-22 08:09:39.0",
@@ -83,7 +69,6 @@ router.get('/', (req, res, next)=>{
  *        }
  *      ]
  *    }
- *
  */
 router.get('/:id', (req, res, next)=>{
   User.findById(req.jwt, req.params.id)
@@ -98,19 +83,14 @@ router.get('/:id', (req, res, next)=>{
 
 /**
  * @api {post} /users Create User
- *
  * @apiName CreateUser
  * @apiGroup User
- *
- * @apiParam {String} name Name of the user
- * @apiParam {String} email Email of the user
- * @apiParam {String} id ID of the User (must be unique, max. 32 chars)
+ * @apiParam {String} name (mandatory) Name of the user
+ * @apiParam {String} email (mandatory) Email of the user
+ * @apiParam {String} id (optional) ID of the User (must be unique, max. 32 chars)
  * @apiParam {String} attributes (optional) Custom attributes array for the user (e.g. ["name": "attributeName", "values":['value1', 'value2']])
- *
  * @apiSampleRequest /users
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     {
  *       "isVerified": true,
  *       "lastLoginDate": "2017-05-22 08:32:16.0",
@@ -133,7 +113,6 @@ router.get('/:id', (req, res, next)=>{
  *       "mayCreateUser": true,
  *       "groups": []
  *     }
- *
  */
 router.post('/', (req, res, next)=>{
   User.createAndVerify(req.jwt, req.body)
@@ -147,21 +126,15 @@ router.post('/', (req, res, next)=>{
 
 
 /**
- * @api {delete} /user/:id Delete User by ID
- *
+ * @api {delete} /user/:id Delete User
  * @apiName DeleteUserByID
  * @apiGroup User
- *
  * @apiParam {String} id ID of the User
- *
  * @apiSampleRequest /user/:id
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     {
  *       "success": true
  *     }
- *
  */
 router.delete('/:id', (req, res, next)=>{
   User.deleteById(req.jwt, req.params.id)
@@ -176,19 +149,14 @@ router.delete('/:id', (req, res, next)=>{
 
 /**
  * @api {patch} /user/:id Update User
- *
  * @apiName UpdateUser
  * @apiGroup User
- *
  * @apiParam {String} id ID of the user
  * @apiParam {String} name (optional) Name of the user
  * @apiParam {String} login (optional) Email of the user
  * @apiParam {String} attributes (optional) Custom attributes array for the user (e.g. ["name": "attributeName", "values":['value1', 'value2']])
- *
  * @apiSampleRequest /user/:id
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     {
  *       "isVerified": true,
  *       "lastLoginDate": "2017-05-22 08:32:16.0",
@@ -211,7 +179,6 @@ router.delete('/:id', (req, res, next)=>{
  *       "mayCreateUser": true,
  *       "groups": []
  *     }
- *
  */
 router.patch('/:id', (req, res, next)=>{
   const data = req.body;
@@ -228,15 +195,10 @@ router.patch('/:id', (req, res, next)=>{
 
 /**
  * @api {get} /user/me Get own user data
- *
  * @apiName GetOwnUser
  * @apiGroup User
- *
- *
  * @apiSampleRequest /user/me
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     {
  *       "isVerified": true,
  *       "lastLoginDate": "2017-05-22 08:32:16.0",
@@ -300,7 +262,6 @@ router.patch('/:id', (req, res, next)=>{
  *         }
  *       ]
  *     }
- *
  */
 router.get('/me', (req, res, next)=>{
   User.me(req.jwt, req.params.id)
