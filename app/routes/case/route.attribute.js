@@ -1,5 +1,5 @@
 import express from 'express';
-import Attribute from './../../models/case/model.attribute';
+import Attribute from './../../models/data/model.attribute';
 const router = express.Router();
 
 

@@ -1,5 +1,5 @@
 import express from 'express';
-import Entity from './../../models/case/model.entity';
+import Entity from './../../models/data/model.entity';
 const router = express.Router();
 
 
