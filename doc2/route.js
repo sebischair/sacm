@@ -8,7 +8,7 @@ function renderSection(section){
 
 function routes(){
     const router = express.Router();
-
+    
     router.use('/architecture', (req, res)=>{
         res.send(renderSection('architecture'))
     });

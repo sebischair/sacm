@@ -22,7 +22,9 @@ app.use('/doc/model', express.static(__dirname + '/doc/model'));
 app.use('/doc/modelimport', express.static(__dirname + '/doc/modelimport'));
 app.use('/doc/howtostart', express.static(__dirname + '/doc/howtostart'));
 
+app.use('/doc2/assets', express.static(__dirname + '/doc2/assets'));
 app.use('/doc2', docRoutes())
+
 
 app.use('/api', (req, res, next)=>{
 
