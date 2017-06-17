@@ -1,0 +1,47 @@
+extends ../layout.pug
+
+block title  
+  title Home
+block content  
+  h2 How to start Development
+
+  div(class="container")
+    h2 1. Initialize testcase
+    code 
+      b POST
+      | &lt;domain&gt;:&lt;port&gt;/api/import
+    p To simplify the testing, this route creates a case definition and instantiates the case (this request may take long). Be aware, the imported case is incrementally changed according to the current implementation. The imported case definition is defined based on an XML schema. To customize this import please consider a local installation and modify the XML file accordingly.
+
+  div(class="container")
+    h2 2. Explore Data with the SocioCortex UI
+    code </b>&lt;domain&gt;:8083
+    p The imported data structure can be accessed the generic SocioCortex UI. This UI supports data modelling and instance creation, no case editing etc. is supported. You can login with <i>mustermann@test.sc</i>&nbsp; and the password <i>ottto</i>. Click <a class="link" href="http://35.157.110.245:8083">here</a> to login.
+  
+  
+  div(class="container")
+     h2 3. Get logged in user
+     code 
+       b GET</b>&lt;domain&gt;:&lt;port&gt;/api/user/me
+     p This route returns user details of the currently logged in user. Until the CONNECARE user management is completely integrated all routes on the SACM wrapper are without access control. The wrapper injects for all requests to the underlying SocioCortex system the default user <i>mustermann@test.sc</i>&nbsp;  with the password <i>ottto</i>.
+  
+  
+  div(class="container")
+     h2 4. Get all cases of user
+     code 
+       b GET
+       | &lt;domain&gt;:&lt;port&gt;/api/cases/me
+     p A list of all cases of a certain user is returned.
+  
+  
+  div(class="container")
+    h2 5. Get case details hierarchically nested
+    code 
+      b GET 
+      | &lt;domain&gt;:&lt;port&gt;/api/case/:caseId/tree
+    p This route returns all information regarding a case instance hieratically nested (not for production usage). Only permissions are not returned.
+  
+  
+  div(class="container")
+    h2 6. Explore API Doc
+    p All available routes of the SACM system are documented <a class="link" href="/doc/api">here</a>.
+  

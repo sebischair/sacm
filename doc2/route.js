@@ -17,6 +17,10 @@ function routes(){
         res.send(renderSection('model'))
     });
 
+    router.use('/howtostart', (req, res)=>{
+        res.send(renderSection('howtostart'))
+    });
+
     router.use('/', (req, res)=>{
         res.send(renderSection('xml'))
     });
