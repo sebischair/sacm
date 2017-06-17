@@ -9,20 +9,20 @@ function renderSection(section){
 function routes(){
     const router = express.Router();
     
-    router.use('/architecture', (req, res)=>{
+    router.use('/doc2/architecture', (req, res)=>{
         res.send(renderSection('architecture'))
     });
 
-    router.use('/model', (req, res)=>{
+    router.use('/doc2/model', (req, res)=>{
         res.send(renderSection('model'))
     });
 
-    router.use('/howtostart', (req, res)=>{
+    router.use('/doc2/howtostart', (req, res)=>{
         res.send(renderSection('howtostart'))
     });
 
     router.use('/', (req, res)=>{
-        res.send(renderSection('xml'))
+        res.send(renderSection('index'))
     });
 
 

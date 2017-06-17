@@ -22,8 +22,7 @@ app.use('/doc/model', express.static(__dirname + '/doc/model'));
 app.use('/doc/modelimport', express.static(__dirname + '/doc/modelimport'));
 app.use('/doc/howtostart', express.static(__dirname + '/doc/howtostart'));
 
-app.use('/doc2/assets', express.static(__dirname + '/doc2/assets'));
-app.use('/doc2', docRoutes())
+
 
 
 app.use('/api', (req, res, next)=>{
@@ -40,6 +39,8 @@ app.use('/api', (req, res, next)=>{
 });
 app.use('/api', routes())
 
+app.use('/doc2/assets', express.static(__dirname + '/doc2/assets'));
+app.use('/', docRoutes())
 
 // catch 404 and forward to error handler
 app.use((req, res, next)=>{
