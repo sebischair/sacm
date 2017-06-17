@@ -10,16 +10,12 @@ import Alert from './../../models/case/model.alert';
 import SummarySection from './../../models/case/model.summarysection';
 const router = express.Router();
 
-// my cases
 
 /**
  * @api {get} /cases/me Get My Cases
- *
  * @apiName GetMyCases
  * @apiGroup Case
- *
  * @apiSampleRequest /cases/me
- *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  * [

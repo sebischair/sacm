@@ -10,7 +10,7 @@ const router = express.Router();
  * @apiParam {String} id ID of the TaskParam
  * @apiSampleRequest /taskparam/:id/autocomplete
  * @apiSuccessExample {json} Success-Response:
- *
+ * {}
  */
 router.get('/:id/autocomplete', (req, res, next)=>{
   TaskParam.autocompleteById(req.jwt, req.params.id)

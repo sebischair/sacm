@@ -92,10 +92,10 @@ router.post('/:id/complete', (req, res, next)=>{
 
 
 /**
- * @api {post} /automatedtask/:id/terminate Terminate AutoatedTask
- * @apiName TerminateAutoatedTask
- * @apiGroup AutoatedTask
- * @apiParam {Number} id Unique ID of a AutoatedTask
+ * @api {post} /automatedtask/:id/terminate Terminate AutomatedTask
+ * @apiName TerminateAutomatedTask
+ * @apiGroup AutomatedTask
+ * @apiParam {Number} id Unique ID of a AutomatedTask
  * @apiSampleRequest /automatedtask/:id/terminate
  * @apiSuccessExample {json} Success-Response:
  *     {
