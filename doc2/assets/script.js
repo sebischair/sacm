@@ -1,7 +1,5 @@
 
 function resizeIframe(obj) {
-  var wHeight = window.innerHeight;
-  console.log(wHeight)
-  obj.style.height = wHeight-60+'px';
+  obj.style.height = window.innerHeight-55+'px';
 }
 
