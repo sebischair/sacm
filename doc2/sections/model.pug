@@ -2,113 +2,115 @@ extends ../layout.pug
 
 block title  
   title SACM Meta-Model
-block content  
-  h2 SACM Meta-Model Elements (Draft)
-  | Figure below illustrates the SACM meta model notated in UML. In general, the UML diagram illustrates 6 core concepts in different colors. Centered the <a class="link" href="#datadefinition">data definition</a> and <a class="link" href="#data">data instances</a> are represented in dark gray and light grey. The <a class="link" href="#casedefinition">case definition</a> and <a class="link" href="#case">case instances</a> are indicated in dark yellow and light yellow. Other concepts such as the <a class="link" href="#roles">role management</a> is represented on the left and the <a class="link" href="#workspace">workspace</a> on the top. In the following sections the main concepts explained more detailed.
-  object(data="/doc2/assets/metamodel.svg",type="image/svg+xml",width="100%")
-
-
-  a(name="roles")
-  div(class="container roles")
-    h2 Role Management 
-    | The Role Management is considered on a system level, meaning roles work across workspace boundaries. 
-    p 
-        b Principal 
-        | A principal is an abstraction of a group and a person. This helps to use the concept in a flexible way.
-    p
-        b Group 
-        | A group consist of subgroups and persons who have a membership.
-    p
-        b User 
-        | A user represents a single person in the system. A user can contain multiple attributes.
-    p 
-        b Membership 
-        | A membership represents the relationship between user and a group. E.g. the data of creating the membership.
- 
-  a(name="workspace")
-  div(class="container workspace")
-    h2 Workspace
-    p
-      b Workspace 
-      | A workspace is a container to store model definitions and the related instances. Each Workspace has read and write Principals. By default, the rights for all contained model element and instances is inherited from their workspace.</p>
-
-  a(name="datadefinition")
-  div(class="container datadefinition")
-    h2 Data Definition
-    p 
-      b EntityDefinition 
-      | A entity definition is a container with read and write principals that contains attribute definitions.
-    p 
-      b AttributeDefinition 
-      | A attribute definition defines basically a name and the expected type of the value. Attribute types can be primitive types such as <i>notype, string, longtext, boolean, number, enumeration</i> and <i>date</i>. Additionally, it is possible to reference complex types (<i>groups</i> and <i>users</i>) or custom <i>entity definitions</i>.
-    p
-      b DerivedAttributeDefinition 
-      | A derived attribute is calculated automatically based on other attributes of an entity definition. Derived attribute definitions cannot be nested.
-
-  a(name="data")
-  div(class="container data")
-    h2 Data 
-    p 
-      b Entity 
-      | A entity has inherited read and write principals and can contain multiple attribute values.
-    p 
-      b AttributeValue 
-      | A attribute value contains a value type that is defined in the attribute definition.
-
-  a(name="casedefinition")
-  div(class="container casedefinition")
-    h2 Case Definition
-    p
-      b CaseDefinition 
-      | A case definition is a wrapper container for all process related elements, the data is excluded. Every case definition has a name and provides an owner who is responsible the instantiated cases. An owner is a user that is devined via a linked attribute definition. 
-    p
-      b ProcessDefinition 
-      | A process definition is an abstraction of a stage definition and task definition. Every process definition has a name and contains the information if the process is mandatory and if the process is repeatable. The process definition is an abstract class, meaning this just helps for the technical implementation to reuse the concepts. Most likely the process definition is only used as abstraction on the API level.
-    p
-      b SentryDefinition 
-      | A sentry definition expresses the preconditions of a process definition. One process definition can have multiple sentry definitions that are linked with a logical or. Every sentry definition can consist of several process definitions that are linked with a logical and. A stage or task can only be executed when at least one sentry is fulfilled or no sentry definition is defined.
-    p
-      b StageDefinition 
-      | A stage definition contain other stage definitions or task definitions. 
-    p
-      b HumanTaskDefinition
-      | A human task definition has multiple task parameters that need to be accomplished to finish the task. Every human task definition has an assigned group that represents the potential task own during instantiation.
-    p
-      b AutomatedTaskDefinition
-      | A automated task definition can be used to execute task by a 3rd party system. 
-    p 
-      b TaskParmDefinition
-      | A task parameter definition represent an attribute definition or derived attribute that belongs to a task and is either in write or read-only state.
-    p
-      b HttpHookDefinition
-      | A http hook definition defines an HTTP request (GET, PUT, POST, DEL) that is triggered on a certain event. For every process definition element events such as <i>AVAILABLE, ENABLE, ACTIVATE, COMPLETE, TERMINATE</i> can be used to define actions.
-
-  a(name="case")
-  div(class="container case")
-    h2 Case
-    p
-      b Case 
-      | A case is instantiated based on the related case definition. Every case has a name and an owner represented by a person. The current state is expressed with a state variable and the according dates of state changes tracked.
-    p
-      b Process 
-      | A process is instantiated based on the related process definition. Every process has a name, state and an index that express the current execution iteration. The process is an abstract class, meaning this just helps for the technical implementation to reuse the concepts. Most likely the process definition is only used as abstraction on the API level.
-    p 
-      b Stage 
-      | A stage is instantiated based on the related stage definition. Every stage can contain several sub stages or tasks. 
-    p 
-      b HumanTask 
-      | A human task has an owner that is represented by a user, that means a linked attribute value. Additional, a scheduled date expresses when the task should be executed. 
-    p
-      b AutomatedTask 
-      | A automated task represents an instanciated automated task definition. The characteristic different to the human task is that an automated task needs no input from a user and is executed after the sentry is fulfilled. 
-    p 
-      b State 
-      | Every process element has a state that is expressed with the following enumeration values:
-      ul
-        li <i>Available</i> the model is instantiated
-        li <i>Enabled</i> at least on sentry is fulfilled, the process could be executed.
-        li <i>Active</i> the process is currently executed 
-        li <i>Completed</i> the process was successfully completed 
-        li <i>Terminated</i> the process was abort, not successfully completed 
-
-
+block content
+  div(class="section")  
+    h2 SACM Meta-Model Elements (Draft)
+    | Figure below illustrates the SACM meta model notated in UML. In general, the UML diagram illustrates 6 core concepts in different colors. Centered the <a class="link" href="#datadefinition">data definition</a> and <a class="link" href="#data">data instances</a> are represented in dark gray and light grey. The <a class="link" href="#casedefinition">case definition</a> and <a class="link" href="#case">case instances</a> are indicated in dark yellow and light yellow. Other concepts such as the <a class="link" href="#roles">role management</a> is represented on the left and the <a class="link" href="#workspace">workspace</a> on the top. In the following sections the main concepts explained more detailed.
+    object(data="/doc2/assets/metamodel.svg",type="image/svg+xml",width="100%")
+  
+  
+    a(name="roles")
+    div(class="container roles")
+      h2 Role Management 
+      | The Role Management is considered on a system level, meaning roles work across workspace boundaries. 
+      p 
+          b Principal 
+          | A principal is an abstraction of a group and a person. This helps to use the concept in a flexible way.
+      p
+          b Group 
+          | A group consist of subgroups and persons who have a membership.
+      p
+          b User 
+          | A user represents a single person in the system. A user can contain multiple attributes.
+      p 
+          b Membership 
+          | A membership represents the relationship between user and a group. E.g. the data of creating the membership.
+   
+    a(name="workspace")
+    div(class="container workspace")
+      h2 Workspace
+      p
+        b Workspace 
+        | A workspace is a container to store model definitions and the related instances. Each Workspace has read and write Principals. By default, the rights for all contained model element and instances is inherited from their workspace.</p>
+  
+    a(name="datadefinition")
+    div(class="container datadefinition")
+      h2 Data Definition
+      p 
+        b EntityDefinition 
+        | A entity definition is a container with read and write principals that contains attribute definitions.
+      p 
+        b AttributeDefinition 
+        | A attribute definition defines basically a name and the expected type of the value. Attribute types can be primitive types such as <i>notype, string, longtext, boolean, number, enumeration</i> and <i>date</i>. Additionally, it is possible to reference complex types (<i>groups</i> and <i>users</i>) or custom <i>entity definitions</i>.
+      p
+        b DerivedAttributeDefinition 
+        | A derived attribute is calculated automatically based on other attributes of an entity definition. Derived attribute definitions cannot be nested.
+  
+    a(name="data")
+    div(class="container data")
+      h2 Data 
+      p 
+        b Entity 
+        | A entity has inherited read and write principals and can contain multiple attribute values.
+      p 
+        b AttributeValue 
+        | A attribute value contains a value type that is defined in the attribute definition.
+  
+    a(name="casedefinition")
+    div(class="container casedefinition")
+      h2 Case Definition
+      p
+        b CaseDefinition 
+        | A case definition is a wrapper container for all process related elements, the data is excluded. Every case definition has a name and provides an owner who is responsible the instantiated cases. An owner is a user that is devined via a linked attribute definition. 
+      p
+        b ProcessDefinition 
+        | A process definition is an abstraction of a stage definition and task definition. Every process definition has a name and contains the information if the process is mandatory and if the process is repeatable. The process definition is an abstract class, meaning this just helps for the technical implementation to reuse the concepts. Most likely the process definition is only used as abstraction on the API level.
+      p
+        b SentryDefinition 
+        | A sentry definition expresses the preconditions of a process definition. One process definition can have multiple sentry definitions that are linked with a logical or. Every sentry definition can consist of several process definitions that are linked with a logical and. A stage or task can only be executed when at least one sentry is fulfilled or no sentry definition is defined.
+      p
+        b StageDefinition 
+        | A stage definition contain other stage definitions or task definitions. 
+      p
+        b HumanTaskDefinition
+        | A human task definition has multiple task parameters that need to be accomplished to finish the task. Every human task definition has an assigned group that represents the potential task own during instantiation.
+      p
+        b AutomatedTaskDefinition
+        | A automated task definition can be used to execute task by a 3rd party system. 
+      p 
+        b TaskParmDefinition
+        | A task parameter definition represent an attribute definition or derived attribute that belongs to a task and is either in write or read-only state.
+      p
+        b HttpHookDefinition
+        | A http hook definition defines an HTTP request (GET, PUT, POST, DEL) that is triggered on a certain event. For every process definition element events such as <i>AVAILABLE, ENABLE, ACTIVATE, COMPLETE, TERMINATE</i> can be used to define actions.
+  
+    a(name="case")
+    div(class="container case")
+      h2 Case
+      p
+        b Case 
+        | A case is instantiated based on the related case definition. Every case has a name and an owner represented by a person. The current state is expressed with a state variable and the according dates of state changes tracked.
+      p
+        b Process 
+        | A process is instantiated based on the related process definition. Every process has a name, state and an index that express the current execution iteration. The process is an abstract class, meaning this just helps for the technical implementation to reuse the concepts. Most likely the process definition is only used as abstraction on the API level.
+      p 
+        b Stage 
+        | A stage is instantiated based on the related stage definition. Every stage can contain several sub stages or tasks. 
+      p 
+        b HumanTask 
+        | A human task has an owner that is represented by a user, that means a linked attribute value. Additional, a scheduled date expresses when the task should be executed. 
+      p
+        b AutomatedTask 
+        | A automated task represents an instanciated automated task definition. The characteristic different to the human task is that an automated task needs no input from a user and is executed after the sentry is fulfilled. 
+      p 
+        b State 
+        | Every process element has a state that is expressed with the following enumeration values:
+        ul
+          li <i>Available</i> the model is instantiated
+          li <i>Enabled</i> at least on sentry is fulfilled, the process could be executed.
+          li <i>Active</i> the process is currently executed 
+          li <i>Completed</i> the process was successfully completed 
+          li <i>Terminated</i> the process was abort, not successfully completed 
+  
+  
+  
