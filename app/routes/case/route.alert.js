@@ -7,7 +7,7 @@ const router = express.Router();
  * @api {get} /alert/:id Get Alert
  * @apiName GetAlert
  * @apiGroup Alert
- * @apiParam {String} id ID of the Alert
+ * @apiParam {String} id (mandatory) ID of the Alert
  * @apiSampleRequest /alert/:id
  * @apiSuccessExample {json} Success-Response:
  *  {
@@ -163,7 +163,7 @@ router.patch('/:id', (req, res, next)=>{
  * @api {post} /alert/:id/seen Mark Alert as Seen
  * @apiName SetAlertSeenStatus
  * @apiGroup Alert
- * @apiParam {String} id ID of the Alert
+ * @apiParam {String} id (mandatory) ID of the Alert
  * @apiSampleRequest /alert/:id/seen
  * @apiSuccessExample {json} Success-Response:
  *  {

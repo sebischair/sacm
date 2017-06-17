@@ -182,7 +182,7 @@ router.patch('/:id', (req, res, next)=>{
  *     }]
  */
 router.get('/:id/automatedtasks', (req, res, next)=>{
-  AutomatedTask.findbyTaskDefinitionId(req.jwt, req.params.id)
+  AutomatedTask.findByTaskDefinitionId(req.jwt, req.params.id)
     .then(sd=>{
         res.status(200).send(sd);
     })

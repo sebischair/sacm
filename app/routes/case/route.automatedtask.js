@@ -8,7 +8,7 @@ const router = express.Router();
  * @api {get} /automatedtask/:id Get AutomatedTask
  * @apiName GetAutomatedTask
  * @apiGroup AutomatedTask
- * @apiParam {Number} id ID of a AutomatedTask
+ * @apiParam {Number} id (mandatory) ID of a AutomatedTask
  * @apiSuccessExample {json} Success-Response:
  *     {
  *          "processDefinition": "bq1iuo0uuzo9",
@@ -48,8 +48,8 @@ router.get('/:id', (req, res, next)=>{
  * @api {post} automatedtask/:id/draft Draft AutomatedTask
  * @apiName DraftAutomatedTask
  * @apiGroup AutomatedTask
- * @apiParam {Number} id Unique ID of a AutomatedTask
- * @apiParam {Array} taskParams An array of task paramerts
+ * @apiParam {Number} id (mandatory)  ID of a AutomatedTask
+ * @apiParam {Array} taskParams (mandatory) An array of task paramerts
  * @apiSuccessExample {json} Success-Response:
  *     {
  *     }
@@ -71,8 +71,8 @@ router.post('/:id/draft', (req, res, next)=>{
  * @api {post} /automatedtask/:id/complete Complete AutomatedTask
  * @apiName CompleteAutomatedTask
  * @apiGroup AutomatedTask
- * @apiParam {Number} id Unique ID of a AutomatedTask
- * @apiParam {Array} taskParams An array of task paramerts
+ * @apiParam {Number} id (mandatory) ID of a AutomatedTask
+ * @apiParam {Array} taskParams (mandatory) An array of task paramerts
  * @apiSampleRequest /automatedtask/:id/complete
  * @apiSuccessExample {json} Success-Response:
  *     {
@@ -95,7 +95,7 @@ router.post('/:id/complete', (req, res, next)=>{
  * @api {post} /automatedtask/:id/terminate Terminate AutomatedTask
  * @apiName TerminateAutomatedTask
  * @apiGroup AutomatedTask
- * @apiParam {Number} id Unique ID of a AutomatedTask
+ * @apiParam {Number} id (mandatory) ID of a AutomatedTask
  * @apiSampleRequest /automatedtask/:id/terminate
  * @apiSuccessExample {json} Success-Response:
  *     {

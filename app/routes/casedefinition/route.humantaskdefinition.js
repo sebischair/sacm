@@ -214,7 +214,7 @@ router.patch('/:id', (req, res, next)=>{
  *
  */
 router.get('/:id/humantasks', (req, res, next)=>{
-  HumanTask.findbyTaskDefinitionId(req.jwt, req.params.id)
+  HumanTask.findByTaskDefinitionId(req.jwt, req.params.id)
     .then(sd=>{
         res.status(200).send(sd);
     })

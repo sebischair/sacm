@@ -17,7 +17,6 @@ const router = express.Router();
  * @apiGroup Case
  * @apiSampleRequest /cases/me
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  * [
  *   {
  *     "id": "1rjfflxbki5ly",
@@ -77,16 +76,11 @@ router.get('/me', (req, res, next)=>{
 
 /**
  * @api {get} /case/:id Get Case
- *
  * @apiName GetCase
  * @apiGroup Case
- *
- * @apiParam {String} id ID of the Case
- *
+ * @apiParam {String} id (mandatory) ID of the Case
  * @apiSampleRequest /case/:id
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  * {
  *   "id": "1q7nud4e2v1dl",
  *   "stateDates": {
@@ -105,7 +99,6 @@ router.get('/me', (req, res, next)=>{
  *   "owner": null,
  *   "resourceType": "Case"
  * }
- *
  */
 router.get('/:id', (req, res, next)=>{
   Case.findById(req.jwt, req.params.id)
@@ -121,16 +114,11 @@ router.get('/:id', (req, res, next)=>{
 
 /**
  * @api {post} /cases Create Case
- *
  * @apiName CreateCase
  * @apiGroup Case
- *
- * @apiParam {String} caseDefinition ID of the CaseDefinition
- *
+ * @apiParam {String} caseDefinition (mandatory) ID of the CaseDefinition
  * @apiSampleRequest /cases
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  * {
  *   "id": "1jvknzqmjcb1a",
  *   "stateDates": {
@@ -149,7 +137,6 @@ router.get('/:id', (req, res, next)=>{
  *   "owner": null,
  *   "resourceType": "Case"
  * }
- *
  */
  router.post('/', (req, res, next)=>{
    var data = {
@@ -168,16 +155,11 @@ router.get('/:id', (req, res, next)=>{
 
 /**
  * @api {get} /case/:id/tree Get Case Tree
- *
  * @apiName GetCaseTree
  * @apiGroup Case
- *
- * @apiParam {String} id ID of the Case
- *
+ * @apiParam {String} id (mandatory) ID of the Case
  * @apiSampleRequest /case/:id
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  * {
  *   "id": "gyinxwpstldx",
  *   "caseDefinition": "1hruqqxi168fx",
@@ -461,18 +443,12 @@ router.get('/:id/tree', (req, res, next)=>{
 
 /**
  * @api {post} /case/:id/complete Complete Case
- *
  * @apiName CompleteCase
  * @apiGroup Case
- *
- * @apiParam {String} id ID of the Case
- *
+ * @apiParam {String} id (mandatory) ID of the Case
  * @apiSampleRequest /case/:id/complete
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *   {}
- *
  */
 router.post('/:id/complete', (req, res, next)=>{
   Case.complete(req.jwt, req.params.id)
@@ -487,18 +463,12 @@ router.post('/:id/complete', (req, res, next)=>{
 
 /**
  * @api {post} /case/:id/terminate Terminate Case
- *
  * @apiName TerminateCase
  * @apiGroup Case
- *
- * @apiParam {String} id ID of the Case
- *
+ * @apiParam {String} id (mandatory) ID of the Case
  * @apiSampleRequest /case/:id/terminate
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *   {}
- *
  */
 router.post('/:id/terminate', (req, res, next)=>{
   Case.terminate(req.jwt, req.params.id)
@@ -514,16 +484,11 @@ router.post('/:id/terminate', (req, res, next)=>{
 
 /**
  * @api {delete} /case/:id Delete Case
- *
  * @apiName DeleteCase
  * @apiGroup Case
- *
- * @apiParam {String} id ID of the Case
- *
+ * @apiParam {String} id (mandatory) ID of the Case
  * @apiSampleRequest /case/:id
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *   {}
  *
  */
@@ -542,16 +507,11 @@ router.delete('/:id', (req, res, next)=>{
 
 /**
  * @api {get} /case/:id/processes Get Child Processes
- *
  * @apiName GetDirectChildProcesses
  * @apiGroup Case
- *
- * @apiParam {String} id ID of the Case
- *
+ * @apiParam {String} id (mandatory) ID of the Case
  * @apiSampleRequest /case/:id/processes
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *      // An array of process objects, see model
  *      [{
  *          "processDefinition": "bq1iuo0uuzo9",
@@ -573,10 +533,9 @@ router.delete('/:id', (req, res, next)=>{
  *          "case": "1q7nud4e2v1dl",
  *          "resourceType": "AutomatedTask"
  *     }]
- *
  */
 router.get('/:id/processes', (req, res, next)=>{
-  Process.findbyCaseId(req.jwt, req.params.id)
+  Process.findByCaseId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -588,16 +547,11 @@ router.get('/:id/processes', (req, res, next)=>{
 
 /**
  * @api {get} /case/:id/processes/all Get All Processes
- *
  * @apiName GetAllProcesses
  * @apiGroup Case
- *
- * @apiParam {String} id ID of the Case
- *
+ * @apiParam {String} id (mandatory) ID of the Case
  * @apiSampleRequest /case/:id/processes/all
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *      // An array of process objects, see model
  *      [{
  *          "processDefinition": "bq1iuo0uuzo9",
@@ -619,10 +573,9 @@ router.get('/:id/processes', (req, res, next)=>{
  *          "case": "1q7nud4e2v1dl",
  *          "resourceType": "AutomatedTask"
  *     }]
- *
  */
 router.get('/:id/processes/all', (req, res, next)=>{
-  Process.findbyCaseId(req.jwt, req.params.id)
+  Process.findByCaseId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -635,16 +588,11 @@ router.get('/:id/processes/all', (req, res, next)=>{
 
 /**
  * @api {get} /case/:id/stages Get Child Stages
- *
  * @apiName GetDirectChildStages
  * @apiGroup Case
- *
- * @apiParam {String} id ID of the Case
- *
+ * @apiParam {String} id (mandatory) ID of the Case
  * @apiSampleRequest /case/:id/stages
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     [{
  *       "processDefinition": "1104j66pit6iz",
  *       "id": "opifq3c2u1vn",
@@ -664,10 +612,9 @@ router.get('/:id/processes/all', (req, res, next)=>{
  *       "case": "1q7nud4e2v1dl",
  *       "resourceType": "Stage"
  *     }]
- *
  */
 router.get('/:id/stages', (req, res, next)=>{
-  Stage.findbyCaseId(req.jwt, req.params.id)
+  Stage.findByCaseId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -680,16 +627,11 @@ router.get('/:id/stages', (req, res, next)=>{
 
 /**
  * @api {get} /case/:id/stages/all Get All Stages
- *
  * @apiName GetStages
  * @apiGroup Case
- *
- * @apiParam {String} id ID of the Case
- *
+ * @apiParam {String} id (mandatory) ID of the Case
  * @apiSampleRequest /case/:id/stages/all
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     [{
  *       "processDefinition": "1104j66pit6iz",
  *       "id": "opifq3c2u1vn",
@@ -709,7 +651,6 @@ router.get('/:id/stages', (req, res, next)=>{
  *       "case": "1q7nud4e2v1dl",
  *       "resourceType": "Stage"
  *     }]
- *
  */
 router.get('/:id/stages/all', (req, res, next)=>{
   Stage.findALLbyCaseId(req.jwt, req.params.id)
@@ -725,17 +666,12 @@ router.get('/:id/stages/all', (req, res, next)=>{
 // tasks
 
 /**
- * @api {get} /case/:id/tasks Get Child Tasks
- *
+ * @api {get} /case/:id/tasks Get Direkt Child Tasks
  * @apiName GetTasks
  * @apiGroup Case
- *
- * @apiParam {String} id ID of the Case
- *
+ * @apiParam {String} id (mandatory) ID of the Case
  * @apiSampleRequest /case/:id/tasks
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     [{
  *          "processDefinition": "bq1iuo0uuzo9",
  *          "id": "p503h6ephfqv",
@@ -756,10 +692,9 @@ router.get('/:id/stages/all', (req, res, next)=>{
  *          "case": "1q7nud4e2v1dl",
  *          "resourceType": "AutomatedTask"
  *     }]
- *
  */
-router.get('/:id/tasks/all', (req, res, next)=>{
-  Task.findbyCaseId(req.jwt, req.params.id)
+router.get('/:id/tasks', (req, res, next)=>{
+  Task.findByCaseId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -771,16 +706,11 @@ router.get('/:id/tasks/all', (req, res, next)=>{
 
 /**
  * @api {get} /case/:id/tasks/all Get All Tasks
- *
  * @apiName GetAllTasks
  * @apiGroup Case
- *
- * @apiParam {String} id ID of the Case
- *
+ * @apiParam {String} id (mandatory) ID of the Case
  * @apiSampleRequest /case/:id/tasks/all
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     [{
  *          "processDefinition": "bq1iuo0uuzo9",
  *          "id": "p503h6ephfqv",
@@ -801,7 +731,6 @@ router.get('/:id/tasks/all', (req, res, next)=>{
  *          "case": "1q7nud4e2v1dl",
  *          "resourceType": "AutomatedTask"
  *     }]
- *
  */
 router.get('/:id/tasks/all', (req, res, next)=>{
   Task.findALLbyCaseId(req.jwt, req.params.id)
@@ -851,7 +780,7 @@ router.get('/:id/tasks/all', (req, res, next)=>{
  *
  */
 router.get('/:id/humantasks/all', (req, res, next)=>{
-  HumanTask.findbyCaseId(req.jwt, req.params.id)
+  HumanTask.findByCaseId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -943,7 +872,7 @@ router.get('/:id/humantasks/all', (req, res, next)=>{
  *
  */
 router.get('/:id/automatedtasks', (req, res, next)=>{
-  AutomatedTask.findbyCaseId(req.jwt, req.params.id)
+  AutomatedTask.findByCaseId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })

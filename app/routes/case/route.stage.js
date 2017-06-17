@@ -74,7 +74,7 @@ router.get('/:id', (req, res, next)=>{
  *    }]
  */
 router.get('/:id/stages', (req, res, next)=>{
-  Stage.findbyStageId(req.jwt, req.params.id)
+  Stage.findByStageId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -139,7 +139,7 @@ router.post('/:id/terminate', (req, res, next)=>{
  *
  */
 router.get('/:id/processes', (req, res, next)=>{
-  Process.findbyCaseId(req.jwt, req.params.id)
+  Process.findByCaseId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -180,7 +180,7 @@ router.get('/:id/processes', (req, res, next)=>{
  *     }]
  */
 router.get('/:id/tasks', (req, res, next)=>{
-  Task.findbyCaseId(req.jwt, req.params.id)
+  Task.findByCaseId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -219,7 +219,7 @@ router.get('/:id/tasks', (req, res, next)=>{
  *     }]
  */
 router.get('/:id/automatedtasks', (req, res, next)=>{
-  AutomatedTask.findbyStageId(req.jwt, req.params.id)
+  AutomatedTask.findByStageId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -260,7 +260,7 @@ router.get('/:id/automatedtasks', (req, res, next)=>{
  *
  */
 router.get('/:id/humantasks', (req, res, next)=>{
-   HumanTask.findbyStageId(req.jwt, req.params.id)
+   HumanTask.findByStageId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })

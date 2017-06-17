@@ -5,11 +5,11 @@ import Model from '../model';
 
 export default class Process extends Model{
 
-  static findbyId(jwt, processId){
+  static findById(jwt, processId){
     return http.get(jwt, '/process/'+processId);
   }
   
-  static findbyCaseId(jwt, caseId){
+  static findByCaseId(jwt, caseId){
     return http.get(jwt, '/case/'+caseId+'/processes');
   }
 
@@ -17,11 +17,11 @@ export default class Process extends Model{
     return http.get(jwt, '/case/'+caseId+'/processes/all');
   }
 
-  static findbyProcessDefinitionId(jwt, processDefinitionId){
+  static findByProcessDefinitionId(jwt, processDefinitionId){
     return http.get(jwt, '/processdefinition/'+processDefinitionId+'/processes');
   }
 
-  static findbyStageId(jwt, stageId){
+  static findByStageId(jwt, stageId){
     return http.get(jwt, '/stage/'+stageId+'/processes');
   }
 }

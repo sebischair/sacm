@@ -5,11 +5,11 @@ import Model from '../model';
 
 export default class Stage extends Model{
 
-  static findbyId(jwt, stageId){
+  static findById(jwt, stageId){
     return http.get(jwt, '/stage/'+stageId);
   }
   
-  static findbyCaseId(jwt, caseId){
+  static findByCaseId(jwt, caseId){
     return http.get(jwt, '/case/'+caseId+'/stages');
   }
 
@@ -21,7 +21,7 @@ export default class Stage extends Model{
     return http.get(jwt, '/stagedefinition/'+stageDefinitionId+'/stages');
   }
 
-  static findbyStageId(jwt, stageId){
+  static findByStageId(jwt, stageId){
     return http.get(jwt, '/stage/'+stageId+'/stages');
   }
   
