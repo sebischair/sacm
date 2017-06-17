@@ -21,6 +21,10 @@ function routes(){
         res.send(renderSection('howtostart'))
     });
 
+    router.use('/doc2/api', (req, res)=>{
+        res.send(renderSection('api'))
+    });
+
     router.use('/', (req, res)=>{
         res.send(renderSection('index'))
     });
