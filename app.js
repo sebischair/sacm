@@ -5,7 +5,7 @@ import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import routes from './app/routes/route.app';
-import docRoutes from './pug/route';
+import docRoutes from './doc2/route';
 
 var app = express();
 
