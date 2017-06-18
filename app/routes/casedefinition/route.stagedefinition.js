@@ -279,7 +279,6 @@ router.get('/:id/humantaskdefinitions', (req, res, next)=>{
  *       "processDefinition": "raxxde6yecyz",
  *       "id": "10kx8cvxs3t0w",
  *       "parentStage": null,
- *       "sentries": [],
  *       "stateDates": {
  *         "enabled": null,
  *         "terminated": null,

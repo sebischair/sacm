@@ -517,7 +517,6 @@ router.delete('/:id', (req, res, next)=>{
  *          "processDefinition": "bq1iuo0uuzo9",
  *          "id": "p503h6ephfqv",
  *          "parentStage": "10kx8cvxs3t0w",
- *          "sentries": [],
  *          "stateDates": {
  *            "enabled": "2017-05-15 17:29:18.0",
  *            "terminated": null,
@@ -557,7 +556,6 @@ router.get('/:id/processes', (req, res, next)=>{
  *          "processDefinition": "bq1iuo0uuzo9",
  *          "id": "p503h6ephfqv",
  *          "parentStage": "10kx8cvxs3t0w",
- *          "sentries": [],
  *          "stateDates": {
  *            "enabled": "2017-05-15 17:29:18.0",
  *            "terminated": null,
@@ -565,7 +563,6 @@ router.get('/:id/processes', (req, res, next)=>{
  *            "available": "2017-05-15 17:29:17.0",
  *            "completed": null
  *          },
- *          "taskParams": [],
  *          "description": "Lace",
  *          "name": "Lace",
  *          "owner": null,
@@ -597,7 +594,6 @@ router.get('/:id/processes/all', (req, res, next)=>{
  *       "processDefinition": "1104j66pit6iz",
  *       "id": "opifq3c2u1vn",
  *       "parentStage": null,
- *       "sentries": [],
  *       "stateDates": {
  *         "enabled": "2017-05-15 17:29:18.0",
  *         "terminated": null,
@@ -636,7 +632,6 @@ router.get('/:id/stages', (req, res, next)=>{
  *       "processDefinition": "1104j66pit6iz",
  *       "id": "opifq3c2u1vn",
  *       "parentStage": null,
- *       "sentries": [],
  *       "stateDates": {
  *         "enabled": "2017-05-15 17:29:18.0",
  *         "terminated": null,
@@ -676,7 +671,6 @@ router.get('/:id/stages/all', (req, res, next)=>{
  *          "processDefinition": "bq1iuo0uuzo9",
  *          "id": "p503h6ephfqv",
  *          "parentStage": "10kx8cvxs3t0w",
- *          "sentries": [],
  *          "stateDates": {
  *            "enabled": "2017-05-15 17:29:18.0",
  *            "terminated": null,
@@ -684,7 +678,6 @@ router.get('/:id/stages/all', (req, res, next)=>{
  *            "available": "2017-05-15 17:29:17.0",
  *            "completed": null
  *          },
- *          "taskParams": [],
  *          "description": "Lace",
  *          "name": "Lace",
  *          "owner": null,
@@ -715,7 +708,6 @@ router.get('/:id/tasks', (req, res, next)=>{
  *          "processDefinition": "bq1iuo0uuzo9",
  *          "id": "p503h6ephfqv",
  *          "parentStage": "10kx8cvxs3t0w",
- *          "sentries": [],
  *          "stateDates": {
  *            "enabled": "2017-05-15 17:29:18.0",
  *            "terminated": null,
@@ -761,7 +753,6 @@ router.get('/:id/tasks/all', (req, res, next)=>{
  *          "processDefinition": "bq1iuo0uuzo9",
  *          "id": "p503h6ephfqv",
  *          "parentStage": "10kx8cvxs3t0w",
- *          "sentries": [],
  *          "stateDates": {
  *            "enabled": "2017-05-15 17:29:18.0",
  *            "terminated": null,
@@ -769,7 +760,6 @@ router.get('/:id/tasks/all', (req, res, next)=>{
  *            "available": "2017-05-15 17:29:17.0",
  *            "completed": null
  *          },
- *          "taskParams": [],
  *          "description": "Lace",
  *          "name": "Lace",
  *          "owner": null,
@@ -807,7 +797,6 @@ router.get('/:id/humantasks/all', (req, res, next)=>{
  *          "processDefinition": "bq1iuo0uuzo9",
  *          "id": "p503h6ephfqv",
  *          "parentStage": "10kx8cvxs3t0w",
- *          "sentries": [],
  *          "stateDates": {
  *            "enabled": "2017-05-15 17:29:18.0",
  *            "terminated": null,
@@ -815,7 +804,6 @@ router.get('/:id/humantasks/all', (req, res, next)=>{
  *            "available": "2017-05-15 17:29:17.0",
  *            "completed": null
  *          },
- *          "taskParams": [],
  *          "description": "Lace",
  *          "name": "Lace",
  *          "owner": null,
@@ -853,7 +841,6 @@ router.get('/:id/humantasks/all', (req, res, next)=>{
  *          "processDefinition": "bq1iuo0uuzo9",
  *          "id": "p503h6ephfqv",
  *          "parentStage": "10kx8cvxs3t0w",
- *          "sentries": [],
  *          "stateDates": {
  *            "enabled": "2017-05-15 17:29:18.0",
  *            "terminated": null,
@@ -861,7 +848,6 @@ router.get('/:id/humantasks/all', (req, res, next)=>{
  *            "available": "2017-05-15 17:29:17.0",
  *            "completed": null
  *          },
- *          "taskParams": [],
  *          "description": "Lace",
  *          "name": "Lace",
  *          "owner": null,
@@ -898,7 +884,6 @@ router.get('/:id/automatedtasks', (req, res, next)=>{
  *          "processDefinition": "bq1iuo0uuzo9",
  *          "id": "p503h6ephfqv",
  *          "parentStage": "10kx8cvxs3t0w",
- *          "sentries": [],
  *          "stateDates": {
  *            "enabled": "2017-05-15 17:29:18.0",
  *            "terminated": null,
@@ -906,7 +891,6 @@ router.get('/:id/automatedtasks', (req, res, next)=>{
  *            "available": "2017-05-15 17:29:17.0",
  *            "completed": null
  *          },
- *          "taskParams": [],
  *          "description": "Lace",
  *          "name": "Lace",
  *          "owner": null,

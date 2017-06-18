@@ -19,7 +19,6 @@ const router = express.Router();
  *     "processDefinition": "1kudcltcejsy3",
  *     "id": "713lc56e3ggb",
  *     "parentStage": null,
- *     "sentries": [],
  *     "stateDates": {
  *       "enabled": "2017-05-16 12:44:02.0",
  *       "terminated": null,
@@ -57,7 +56,6 @@ router.get('/:id', (req, res, next)=>{
  *     "processDefinition": "1kudcltcejsy3",
  *     "id": "713lc56e3ggb",
  *     "parentStage": null,
- *     "sentries": [],
  *     "stateDates": {
  *       "enabled": "2017-05-16 12:44:02.0",
  *       "terminated": null,
@@ -162,7 +160,6 @@ router.get('/:id/processes', (req, res, next)=>{
  *          "processDefinition": "bq1iuo0uuzo9",
  *          "id": "p503h6ephfqv",
  *          "parentStage": "10kx8cvxs3t0w",
- *          "sentries": [],
  *          "stateDates": {
  *            "enabled": "2017-05-15 17:29:18.0",
  *            "terminated": null,
@@ -201,7 +198,6 @@ router.get('/:id/tasks', (req, res, next)=>{
  *          "processDefinition": "bq1iuo0uuzo9",
  *          "id": "p503h6ephfqv",
  *          "parentStage": "10kx8cvxs3t0w",
- *          "sentries": [],
  *          "stateDates": {
  *            "enabled": "2017-05-15 17:29:18.0",
  *            "terminated": null,
@@ -241,7 +237,6 @@ router.get('/:id/automatedtasks', (req, res, next)=>{
  *          "processDefinition": "bq1iuo0uuzo9",
  *          "id": "p503h6ephfqv",
  *          "parentStage": "10kx8cvxs3t0w",
- *          "sentries": [],
  *          "stateDates": {
  *            "enabled": "2017-05-15 17:29:18.0",
  *            "terminated": null,

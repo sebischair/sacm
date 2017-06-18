@@ -14,7 +14,6 @@ const router = express.Router();
  *          "processDefinition": "bq1iuo0uuzo9",
  *          "id": "p503h6ephfqv",
  *          "parentStage": "10kx8cvxs3t0w",
- *          "sentries": [],
  *          "stateDates": {
  *            "enabled": "2017-05-15 17:29:18.0",
  *            "terminated": null,
@@ -22,7 +21,6 @@ const router = express.Router();
  *            "available": "2017-05-15 17:29:17.0",
  *            "completed": null
  *          },
- *          "taskParams": [],
  *          "description": "Lace",
  *          "name": "Lace",
  *          "owner": null,
