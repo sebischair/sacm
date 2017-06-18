@@ -1,8 +1,9 @@
-
 function resizeIframe(obj) {
   obj.style.height = window.innerHeight-55+'px';
   addClickEventListener();
 }
+
+
 
 function addClickEventListener(){
   var iframe= document.getElementById("apidociframe").contentDocument;
@@ -13,10 +14,14 @@ function addClickEventListener(){
     },50)
   else
     for(var i=0; i<anchors.length; i++)
-      if(getHrefHashValue(anchors[i].href) != null)
+      if(getHrefHashValue(anchors[i].href) != null){
         anchors[i].addEventListener("click", function(e){
           window.location.hash = e.target.hash;
-        });         
+        });       
+        if(window.location.hash == '#'+getHrefHashValue(anchors[i].href)){
+          anchors[i].click();
+        }
+      }  
 }
 
 function getHrefHashValue(href){
