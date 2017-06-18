@@ -1,30 +1,23 @@
 import express from 'express';
-
+import Task from './../../models/case/model.task';
+//import TaskDefinition from './../../models/casedefinition/model.taskdefinition';
 var router = express.Router();
 
-// Models
-// import TaskDefinition from './../../models/casedefinition/model.taskdefinition';
-import Task from './../../models/case/model.task';
 
-/**
- * @api {get} /taskdefinition/:id/taskparamdefinitions Get TaskParamDefinitions
- *
+//TODO this is not implements in SC
+/*
+ * @api {get} /taskdefinition/:id Get Task Definition
  * @apiName GetTaskParamDefinitionByTaskDefinitionID
  * @apiGroup TaskDefinition
- *
  * @apiParam {String} id ID of the TaskDefinition
- *
  * @apiSampleRequest /taskdefinition/:id/taskparamdefinitions
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *   [{
  *    id: "b9a51pgpkgbi"
  *    path: "Test.test",
  *    isReadOnly: true,
  *    taskDefinition: "qkx51pgpkgbi"
  *   }]
- *
  */
 router.get('/:id', (req, res, next)=>{
   TaskDefinition.findById(req.jwt, req.params.id)
@@ -39,16 +32,11 @@ router.get('/:id', (req, res, next)=>{
 
 /**
  * @api {get} /taskdefinition/:id/tasks Get Tasks
- *
  * @apiName GetTasksByTaskDefinitionID
  * @apiGroup TaskDefinition
- *
  * @apiParam {String} id ID of the TaskDefinition
- *
  * @apiSampleRequest /taskdefinition/:id/tasks
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     // List of Automated and/or HumanTasks
  *     [{
  *          "processDefinition": "bq1iuo0uuzo9",
@@ -68,7 +56,6 @@ router.get('/:id', (req, res, next)=>{
  *          "case": "1q7nud4e2v1dl",
  *          "resourceType": "AutomatedTask"
  *     }]
- *
  */
 router.get('/:id/tasks', (req, res, next)=>{
   Task.findByTaskDefinitionId(req.jwt, req.params.id)

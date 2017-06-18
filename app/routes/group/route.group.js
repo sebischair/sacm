@@ -196,7 +196,6 @@ router.post('/:id/member/:principalId', (req, res, next)=>{
  * @apiParam {String} principalId ID of the User / Principal
  * @apiSampleRequest /group/:id/member/:principalId
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     {
  *       "success": true
  *     }

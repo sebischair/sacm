@@ -10,16 +10,11 @@ import Process from './../../models/case/model.process'
 
 /**
  * @api {get} /processdefinition/:id/sentrydefinitions Get SentryDefinitions
- *
  * @apiName GetSentryDefinitionByProcessDefinitionID
  * @apiGroup SentryDefinition
- *
  * @apiParam {String} id ID of the ProcessDefinitionID
- *
  * @apiSampleRequest /processdefinition/:id/sentrydefinitions
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     [{
  *       "completedProcessDefinitions": [
  *         "t1rcejxgbgx8"
@@ -28,7 +23,6 @@ import Process from './../../models/case/model.process'
  *       "enablesProcessDefinition": "1kudcltcejsy3",
  *       "resourceType": "SentryDefinition"
  *     }]
- *
  */
 router.get('/:id/sentrydefinitions', (req, res, next)=>{
   SentryDefinition.findByProcessDefinitionId(req.jwt, req.params.id)
@@ -45,16 +39,11 @@ router.get('/:id/sentrydefinitions', (req, res, next)=>{
 
 /**
  * @api {get} /processdefinition/:id/httphookdefinitions Get HttpHookDefinitions
- *
  * @apiName GetHttpHookDefinitionByProcessDefinitionID
  * @apiGroup HttpHookDefinition
- *
  * @apiParam {String} id ID of the ProcessDefinition
- *
  * @apiSampleRequest /processdefinition/:id/httphookdefinitions
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *   [{
  *     id: "i938uejh378",
  *     on: "AVAILABLE",
@@ -62,7 +51,6 @@ router.get('/:id/sentrydefinitions', (req, res, next)=>{
  *     method: "GET",
  *     processDefinition: "hka51pgpkgbi"
  *   }]
- *
  */
 router.get(':id/httphookdefinitions', (req, res, next)=>{
   HttpHookDefinition.findByProcessDefinitionId(req.jwt, req.params.id)
@@ -78,17 +66,12 @@ router.get(':id/httphookdefinitions', (req, res, next)=>{
 
 
 /**
- * @api {get} /processdefinition/:id/process Get Processes
- *
+ * @api {get} /processdefinition/:id/process Get Processes by Process Definition
  * @apiName GetProcessesByProcessDefinitionID
  * @apiGroup Process
- *
- * @apiParam {String} id ID of the ProcessDefinitionID
- *
+ * @apiParam {String} id ID of the Process Definition 
  * @apiSampleRequest /processdefinition/:id/process
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *   [{
  *     "isRepeatable": "true",
  *     "newEntityDefinition": null,
@@ -102,8 +85,7 @@ router.get(':id/httphookdefinitions', (req, res, next)=>{
  *     "newEntityAttachPath": null,
  *     "caseDefinition": "1v77wsi7jdky8",
  *     "parentStageDefinition": null
- *   }, ... ]
- *
+ *   }]
  */
 router.get('/:id/processes', (req, res, next)=>{
   Process.findByProcessDefinitionId(req.jwt, req.params.id)

@@ -5,16 +5,11 @@ import HttpHookDefinition from './../../models/casedefinition/model.httphookdefi
 
 /**
  * @api {get} /httphookdefinition/:id Get HttpHookDefinition
- *
  * @apiName GetHttpHookDefinition
  * @apiGroup HttpHookDefinition
- *
  * @apiParam {String} id ID of the HttpHookDefinition
- *
  * @apiSampleRequest test
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *   {
  *     id: "hdze783ncv"
  *     on: "AVAILABLE",
@@ -23,7 +18,6 @@ import HttpHookDefinition from './../../models/casedefinition/model.httphookdefi
  *     processDefinition: "hka51pgpkgbi",
  *     resourceType: "HttpHookDefinition"
  *   }
- *
  */
 router.get('/:id', (req, res, next)=>{
   HttpHookDefinition.findById(req.jwt, req.params.id)
@@ -38,19 +32,14 @@ router.get('/:id', (req, res, next)=>{
 
 /**
  * @api {patch} /httphookdefinition Create HttpHookDefinition
- *
  * @apiName CreateHttpHookDefinition
  * @apiGroup HttpHookDefinition
- *
  * @apiParam {String} on State on which the Hook is invoked
  * @apiParam {String} url URL of the Hook endpoint
  * @apiParam {String} method Request method of the Hook
  * @apiParam {String} processDefinition ID of the ProcessDefinition
- *
  * @apiSampleRequest /httphookdefinition
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *   {
  *     id: "i938uejh378",
  *     on: "AVAILABLE",
@@ -58,7 +47,6 @@ router.get('/:id', (req, res, next)=>{
  *     method: "GET",
  *     processDefinition: "hka51pgpkgbi"
  *   }
- *
  */
 router.post('/', (req, res, next)=>{
   var data = {
@@ -79,16 +67,11 @@ router.post('/', (req, res, next)=>{
 
 /**
  * @api {post} /httphookdefinition/:id Update HttpHookDefinition
- *
  * @apiName UpdateHttpHookDefinition
  * @apiGroup HttpHookDefinition
- *
  * @apiParam {String} id ID of the HttpHookDefinition
- *
  * @apiSampleRequest /httphookdefinition/:id
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *   {
  *     id: "i938uejh378",
  *     on: "AVAILABLE",
@@ -96,16 +79,9 @@ router.post('/', (req, res, next)=>{
  *     method: "GET",
  *     processDefinition: "hka51pgpkgbi"
  *   }
- *
  */
 router.patch('/:id', (req, res, next)=>{
-  var data = {
-    on: req.body.on,
-    url: req.body.url,
-    method: req.body.method,
-    processDefinition: req.body.processDefinition
-  }
-  HttpHookDefinition.updateById(req.jwt, data)
+  HttpHookDefinition.updateById(req.jwt, req.body)
     .then(sd=>{
         res.status(200).send(sd);
     })
@@ -117,16 +93,11 @@ router.patch('/:id', (req, res, next)=>{
 
 /**
  * @api {delete} /httphookdefinition/:id Delete HttpHookDefinition
- *
  * @apiName DeleteHttpHookDefinition
  * @apiGroup HttpHookDefinition
- *
  * @apiParam {String} id ID of the HttpHookDefinition
- *
  * @apiSampleRequest test
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *   {}
  */
 router.delete('/:id', (req, res, next)=>{

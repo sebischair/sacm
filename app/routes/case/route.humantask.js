@@ -241,7 +241,6 @@ router.post('/:id/draft', (req, res, next)=>{
  * }
 
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  * {
  *   "parentStage": "1x26mpxg3dabq",
  *   "index": 0,

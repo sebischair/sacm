@@ -6,16 +6,11 @@ import HumanTask from './../../models/case/model.humantask';
 
 /**
  * @api {get} /humantaskdefinition/:id Get HumanTaskDefinition
- *
  * @apiName GetHumanTaskDefinition
  * @apiGroup HumanTaskDefinition
- *
  * @apiParam {String} id ID of the HumanTaskDefinition
- *
  * @apiSampleRequest test
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *   {
  *     "isRepeatable": "true",
  *     "newEntityDefinition": null,
@@ -30,7 +25,6 @@ import HumanTask from './../../models/case/model.humantask';
  *     "caseDefinition": "1v77wsi7jdky8",
  *     "parentStageDefinition": null
  *   }
- *
  */
 router.get('/:id', (req, res, next)=>{
   HumanTaskDefinition.findById(req.jwt, req.params.id)
@@ -45,18 +39,12 @@ router.get('/:id', (req, res, next)=>{
 
 /**
  * @api {delete} /humantaskdefinition/:id Delete HumanTaskDefinition
- *
  * @apiName Delete HumanTaskDefinition
  * @apiGroup HumanTaskDefinition
- *
  * @apiParam {String} id ID of the HumanTaskDefinition
- *
  * @apiSampleRequest test
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *   {}
- *
  */
 router.delete('/:id', (req, res, next)=>{
   HumanTaskDefinition.deleteById(req.jwt, req.params.id)
@@ -71,10 +59,8 @@ router.delete('/:id', (req, res, next)=>{
 
 /**
  * @api {post} /humantaskdefinitions Create HumanTaskDefinition
- *
  * @apiName CreateHumanTaskDefinition
  * @apiGroup HumanTaskDefinition
- *
  * @apiParam {String} caseDefinition ID of the parent CaseDefinition
  * @apiParam {String} name Name of the StageDefinition (internal usage)
  * @apiParam {String} label Label of the StageDefinition
@@ -82,11 +68,8 @@ router.delete('/:id', (req, res, next)=>{
  * @apiParam {Boolean} isMandatory Indicator if the stage should be mandatory
  * @apiParam {String} parent ID of the parent stage (if there is one)
  * @apiParam {Array} preconditions Array of preconditions for the stage
- *
  * @apiSampleRequest /humantaskdefinitions
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *   {
  *     "isRepeatable": "true",
  *     "newEntityDefinition": null,
@@ -101,7 +84,6 @@ router.delete('/:id', (req, res, next)=>{
  *     "caseDefinition": "1v77wsi7jdky8",
  *     "parentStageDefinition": null
  *   }
- *
  */
 router.post('/', (req, res, next)=>{
   var data = {
@@ -125,10 +107,8 @@ router.post('/', (req, res, next)=>{
 
 /**
  * @api {patch} /humantaskdefinition/:id Update HumanTaskDefinition
- *
  * @apiName UpdateHumanTaskDefinition
  * @apiGroup HumanTaskDefinition
- *
  * @apiParam {String} id The ID of the HumanTaskDefinition
  * @apiParam {String} caseDefinition (optional) ID of the parent CaseDefinition
  * @apiParam {String} name (optional) Name of the StageDefinition (internal usage)
@@ -137,11 +117,8 @@ router.post('/', (req, res, next)=>{
  * @apiParam {Boolean} isMandatory (optional) Indicator if the stage should be mandatory
  * @apiParam {String} parent (optional) ID of the parent stage (if there is one)
  * @apiParam {Array} preconditions (optional) Array of preconditions for the stage
- *
- * @apiSampleRequest /test
- *
+ * @apiSampleRequest /humantaskdefinition/:id
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *   {
  *     "isRepeatable": "true",
  *     "newEntityDefinition": null,
@@ -156,7 +133,6 @@ router.post('/', (req, res, next)=>{
  *     "caseDefinition": "1v77wsi7jdky8",
  *     "parentStageDefinition": null
  *   }
- *
  */
 router.patch('/:id', (req, res, next)=>{
   var data = {
@@ -180,16 +156,11 @@ router.patch('/:id', (req, res, next)=>{
 
 /**
  * @api {get} /humantaskdefinition/:id/humantasks Get HumanTasks
- *
  * @apiName GetHumanTasks
  * @apiGroup HumanTaskDefinition
- *
  * @apiParam {String} id ID of the HumanTaskDefinition
- *
  * @apiSampleRequest /humantaskdefinition/:id/humantasks
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     [{
  *          "scheduledDate": null,
  *          "processDefinition": "bq1iuo0uuzo9",
@@ -210,7 +181,6 @@ router.patch('/:id', (req, res, next)=>{
  *          "case": "1q7nud4e2v1dl",
  *          "resourceType": "HumanTask"
  *     }]
- *
  */
 router.get('/:id/humantasks', (req, res, next)=>{
   HumanTask.findByTaskDefinitionId(req.jwt, req.params.id)

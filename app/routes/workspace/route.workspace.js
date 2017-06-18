@@ -1,23 +1,18 @@
 import express from 'express';
-
-var router = express.Router();
-
-// Models
 import CaseDefinition from './../../models/casedefinition/model.casedefinition';
 import Case from './../../models/case/model.case';
+const router = express.Router();
+
+
+
 
 /**
  * @api {get} /workspace/:id/casedefinitions Get CaseDefinition by Workspace
- *
  * @apiName GetCaseDefinitionsByWorkspaceID
  * @apiGroup CaseDefinition
- *
  * @apiParam {String} ID The ID of the requested Workspace
- *
  * @apiSampleRequest /workspace/:id/casedefinitions
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     [{
  *       "workspace": "l304i3u2y91u",
  *       "entityDefinition": "1hvr3q9rvtys3",
@@ -26,7 +21,6 @@ import Case from './../../models/case/model.case';
  *       "description":"Test Case Definition",
  *       "resourceType""CaseDefinition"
  *     }]
- *
  */
 router.get('/:id', (req, res, next)=>{
   CaseDefinition.findById(req.jwt, req.params.id)
@@ -45,16 +39,11 @@ router.get('/:id', (req, res, next)=>{
 
 /**
  * @api {get} /workspace/:id/cases Get Case by Workspace
- *
  * @apiName GetCasesByWorkspaceID
  * @apiGroup Case
- *
  * @apiParam {String} ID The ID of the the Workspace
- *
  * @apiSampleRequest /workspace/:id/cases
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  * [{
  *   "id": "1q7nud4e2v1dl",
  *   "stateDates": {
@@ -73,7 +62,6 @@ router.get('/:id', (req, res, next)=>{
  *   "owner": null,
  *   "resourceType": "Case"
  * }]
- *
  */
 router.get('/:id/cases', (req, res, next)=>{
   Case.findbyWorkspaceId(req.params.id)

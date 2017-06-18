@@ -11,7 +11,6 @@ const router = express.Router();
  * @apiParam {String} id ID of the Attribute
  * @apiSampleRequest /attribute/:id/autocomplete
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  * {}
  */
 router.get('/:id/autocomplete', (req, res, next)=>{
@@ -23,8 +22,6 @@ router.get('/:id/autocomplete', (req, res, next)=>{
       res.status(500).send(err);
     })
 });
-
-
 
 
 module.exports = router;

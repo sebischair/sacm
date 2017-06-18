@@ -1,28 +1,19 @@
 import express from 'express';
-
-var router = express.Router();
-
-// Models
 import CaseDefinition from './../../models/casedefinition/model.casedefinition';
 import HumanTaskDefinition from './../../models/casedefinition/model.humantaskdefinition';
 import AutomatedTaskDefinition from './../../models/casedefinition/model.automatedtaskdefinition';
 import Case from './../../models/case/model.case';
 import StageDefinition from './../../models/casedefinition/model.stagedefinition';
+const router = express.Router();
 
-// Middlewares
-import Auth from './../../middlewares/middleware.auth';
-import Authorizer from './../../middlewares/middleware.authorize';
 
 
 /**
- * @api {get} /casedefinition/caninstantiate Get CaseDefinition that can be instantiated
- *
+ * @api {get} /casedefinition/caninstantiate Get CaseDefinition that can be instantiated by the current user
  * @apiName CanInstantiateCaseDefinition
  * @apiGroup CaseDefinition
  * @apiSampleRequest /casedefinition/caninstantiate
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  * [
  *     {
  *         "id": "bkglo0oqesag",
@@ -35,7 +26,6 @@ import Authorizer from './../../middlewares/middleware.authorize';
  *         "name": "Democase"
  *     }
  * ]
- *
  */
 router.get('/caninstantiate', (req, res, next)=>{
   CaseDefinition.canInstantiate(req.jwt)
@@ -51,16 +41,12 @@ router.get('/caninstantiate', (req, res, next)=>{
  * @api {post} /casedefinitions Create CaseDefinition
  * @apiName CreateCaseDefinition
  * @apiGroup CaseDefinition
- *
  * @apiParam {String} name A name for CaseDefinition (internal usage)
  * @apiParam {String} label A label for the CaseDefinition
  * @apiParam {String} entityDefinition The ID the EntityDefinition that belongs to the CaseDefinition
  * @apiParam {String} ownerPath A string notation-based path to the owner of the CaseDefinition
- *
  * @apiSampleRequest /casedefinitions
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     {
  *       "workspace": "l304i3u2y91u",
  *       "entityDefinition": "1hvr3q9rvtys3",
@@ -69,7 +55,6 @@ router.get('/caninstantiate', (req, res, next)=>{
  *       "description":"Test Case Definition",
  *       "resourceType""CaseDefinition"
  *     }
- *
  */
 router.post('/', (req, res, next)=>{
   var data = {
@@ -89,16 +74,11 @@ router.post('/', (req, res, next)=>{
 
 /**
  * @api {get} /casedefinition/:id Get CaseDefinition
- *
  * @apiName GetCaseDefinition
  * @apiGroup CaseDefinition
- *
  * @apiParam {String} ID The ID of the requested CaseDefinition
- *
  * @apiSampleRequest /casedefinition/:id
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     {
  *       "workspace": "l304i3u2y91u",
  *       "entityDefinition": "1hvr3q9rvtys3",
@@ -107,7 +87,6 @@ router.post('/', (req, res, next)=>{
  *       "description":"Test Case Definition",
  *       "resourceType""CaseDefinition"
  *     }
- *
  */
 router.get('/:id', (req, res, next)=>{
   CaseDefinition.findById(req.jwt, req.params.id)
@@ -121,16 +100,11 @@ router.get('/:id', (req, res, next)=>{
 
 /**
  * @api {get} /casedefinition/:id/tree Get CaseDefinition Tree
- *
  * @apiName GetCaseDefinitionTree
  * @apiGroup CaseDefinition
- *
  * @apiParam {String} ID The ID of the requested CaseDefinition
- *
  * @apiSampleRequest /casedefinition/:id
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     {
  *       "workspace": "l304i3u2y91u",
  *       "entityDefinition": "1hvr3q9rvtys3",
@@ -140,7 +114,6 @@ router.get('/:id', (req, res, next)=>{
  *       "description":"Test Case Definition",
  *       "resourceType""CaseDefinition"
  *     }
- *
  */
 router.get('/:id/tree', (req, res, next)=>{
   CaseDefinition.findTreeById(req.jwt, req.params.id)
@@ -155,18 +128,12 @@ router.get('/:id/tree', (req, res, next)=>{
 
 /**
  * @api {delete} /casedefinition/:id Delete CaseDefinition
- *
  * @apiName DeleteCaseDefinition
  * @apiGroup CaseDefinition
- *
- * @apiParam {String} ID The ID of the CaseDefinition that should be deleted
- *
+ * @apiParam {String} ID The ID of the CaseDefinition
  * @apiSampleRequest /casedefinition/:id
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     {}
- *
  */
 router.delete('/:id', (req, res, next)=>{
   CaseDefinition.findById(req.jwt, req.params.id)
@@ -185,20 +152,15 @@ router.delete('/:id', (req, res, next)=>{
 
 /**
  * @api {patch} /casedefinition/:id Update CaseDefinition
- *
  * @apiName UpdateCaseDefinition
  * @apiGroup CaseDefinition
- *
  * @apiParam {String} ID The ID of the CaseDefinition
  * @apiParam {String} name (optional) Sets a name for the CaseDefinition
  * @apiParam {String} label (optional) Sets a label for the CaseDefinition
  * @apiParam {String} entityDefinition (optional) Assigns a new EntityDefinition
  * @apiParam {String} name (optional) Sets a owner path for the CaseDefinition
- *
  * @apiSampleRequest /casedefinition/:id
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     {
  *       "workspace": "l304i3u2y91u",
  *       "entityDefinition": "1hvr3q9rvtys3",
@@ -207,7 +169,6 @@ router.delete('/:id', (req, res, next)=>{
  *       "description":"Test Case Definition",
  *       "resourceType""CaseDefinition"
  *     }
- *
  */
 router.patch('/:id', (req, res, next)=>{
   var data = {

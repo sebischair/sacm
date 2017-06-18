@@ -5,16 +5,11 @@ import SentryDefinition from './../../models/casedefinition/model.sentrydefiniti
 
 /**
  * @api {get} /sentrydefinition/:id Get SentryDefinition
- *
  * @apiName GetSentryDefinition
  * @apiGroup SentryDefinition
- *
  * @apiParam {String} id ID of the SentryDefinition
- *
  * @apiSampleRequest test
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *    {
  *       "completedProcessDefinitions": [
  *         "t1rcejxgbgx8"
@@ -23,7 +18,6 @@ import SentryDefinition from './../../models/casedefinition/model.sentrydefiniti
  *       "enablesProcessDefinition": "1kudcltcejsy3",
  *       "resourceType": "SentryDefinition"
  *    }
- *
  */
 router.get('/:id', (req, res, next)=>{
   SentryDefinition.findById(req.jwt, req.params.id)
@@ -36,17 +30,12 @@ router.get('/:id', (req, res, next)=>{
 });
 
 /**
- * @api {delete} /sentrydefinition/:id Delete SentryDefinition
- *
+ * @api {delete} /sentrydefinition/:id Delete Sentry Definition
  * @apiName DeleteSentryDefinition
  * @apiGroup SentryDefinition
- *
- * @apiParam {String} id ID of the SentryDefinition
- *
- * @apiSampleRequest test
- *
+ * @apiParam {String} id ID of the Sentry Definition
+ * @apiSampleRequest /sentrydefinition/:id
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *   {}
  */
 router.delete('/:id', (req, res, next)=>{
@@ -65,19 +54,15 @@ router.delete('/:id', (req, res, next)=>{
  *
  * @apiName CreateSentryDefinition
  * @apiGroup SentryDefinition
- *
- * @apiParam {String} caseDefinition ID of the parent CaseDefinition
- * @apiParam {String} name Name of the StageDefinition (internal usage)
- * @apiParam {String} label Label of the StageDefinition
- * @apiParam {Boolean} isRepeatable Indicator if the stage should be repeatable
- * @apiParam {Boolean} isMandatory Indicator if the stage should be mandatory
+ * @apiParam {String} caseDefinition ID of the Case Definition
+ * @apiParam {String} name Name of the Stage Definition (internal usage)
+ * @apiParam {String} label Label of the Stage Definition
+ * @apiParam {Boolean} isRepeatable Indicator if the stage is repeatable
+ * @apiParam {Boolean} isMandatory Indicator if the stage is mandatory
  * @apiParam {String} parent ID of the parent stage (if there is one)
  * @apiParam {Array} preconditions Array of preconditions for the stage
- *
- * @apiSampleRequest /test
- *
+ * @apiSampleRequest /sentrydefinitions
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *    {
  *       "completedProcessDefinitions": [
  *         "t1rcejxgbgx8"
@@ -86,7 +71,6 @@ router.delete('/:id', (req, res, next)=>{
  *       "enablesProcessDefinition": "1kudcltcejsy3",
  *       "resourceType": "SentryDefinition"
  *    }
- *
  */
 router.post('/', (req, res, next)=>{
   var data = {
@@ -108,24 +92,19 @@ router.post('/', (req, res, next)=>{
 });
 
 /**
- * @api {patch} /sentrydefinition/:id Update SentryDefinition
- *
+ * @api {patch} /sentrydefinition/:id Update Sentry Definition
  * @apiName UpdateSentryDefinition
  * @apiGroup SentryDefinition
- *
- * @apiParam {String} id The ID of the SentryDefinition
- * @apiParam {String} caseDefinition (optional) ID of the parent CaseDefinition
+ * @apiParam {String} id The ID of the Sentry Definition
+ * @apiParam {String} caseDefinition (optional) ID of the parent Case Definition
  * @apiParam {String} name (optional) Name of the StageDefinition (internal usage)
- * @apiParam {String} label (optional) Label of the StageDefinition
- * @apiParam {Boolean} isRepeatable (optional) Indicator if the stage should be repeatable
- * @apiParam {Boolean} isMandatory (optional) Indicator if the stage should be mandatory
+ * @apiParam {String} label (optional) Label of the Stage Definition
+ * @apiParam {Boolean} isRepeatable (optional) Indicator if the stage is repeatable
+ * @apiParam {Boolean} isMandatory (optional) Indicator if the stage is mandatory
  * @apiParam {String} parent (optional) ID of the parent stage (if there is one)
  * @apiParam {Array} preconditions (optional) Array of preconditions for the stage
- *
- * @apiSampleRequest /test
- *
+ * @apiSampleRequest /sentrydefinition/:id
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *    {
  *       "completedProcessDefinitions": [
  *         "t1rcejxgbgx8"
@@ -134,7 +113,6 @@ router.post('/', (req, res, next)=>{
  *       "enablesProcessDefinition": "1kudcltcejsy3",
  *       "resourceType": "SentryDefinition"
  *    }
- *
  */
 router.patch('/', (req, res, next)=>{
   var data = {

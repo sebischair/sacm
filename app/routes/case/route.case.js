@@ -738,16 +738,11 @@ router.get('/:id/tasks/all', (req, res, next)=>{
 
 /**
  * @api {get} /case/:id/humantasks Get Child HumanTasks
- *
  * @apiName GetHumanTasks
  * @apiGroup Case
- *
  * @apiParam {String} id ID of the Case
- *
  * @apiSampleRequest /case/:id/humantasks
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     [{
  *          "scheduledDate": null,
  *          "processDefinition": "bq1iuo0uuzo9",
@@ -767,7 +762,6 @@ router.get('/:id/tasks/all', (req, res, next)=>{
  *          "case": "1q7nud4e2v1dl",
  *          "resourceType": "HumanTask"
  *     }]
- *
  */
 router.get('/:id/humantasks/all', (req, res, next)=>{
   HumanTask.findByCaseId(req.jwt, req.params.id)
@@ -782,16 +776,11 @@ router.get('/:id/humantasks/all', (req, res, next)=>{
 
 /**
  * @api {get} /case/:id/humantasks/all Get All HumanTasks
- *
  * @apiName GetAllHumanTasks
  * @apiGroup Case
- *
  * @apiParam {String} id ID of the Case
- *
  * @apiSampleRequest /case/:id/humantasks/all
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     [{
  *          "scheduledDate": null,
  *          "processDefinition": "bq1iuo0uuzo9",
@@ -811,7 +800,6 @@ router.get('/:id/humantasks/all', (req, res, next)=>{
  *          "case": "1q7nud4e2v1dl",
  *          "resourceType": "HumanTask"
  *     }]
- *
  */
 router.get('/:id/humantasks/all', (req, res, next)=>{
   HumanTask.findALLbyCaseId(req.jwt, req.params.id)
@@ -827,16 +815,11 @@ router.get('/:id/humantasks/all', (req, res, next)=>{
 
 /**
  * @api {get} /case/:id/automatedtasks Get ChildAutomatedTasks
- *
  * @apiName GetAutomatedTasks
  * @apiGroup Case
- *
  * @apiParam {String} id ID of the Case
- *
  * @apiSampleRequest /case/:id/automatedtasks
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     [{
  *          "processDefinition": "bq1iuo0uuzo9",
  *          "id": "p503h6ephfqv",
@@ -855,7 +838,6 @@ router.get('/:id/humantasks/all', (req, res, next)=>{
  *          "case": "1q7nud4e2v1dl",
  *          "resourceType": "AutomatedTask"
  *     }]
- *
  */
 router.get('/:id/automatedtasks', (req, res, next)=>{
   AutomatedTask.findByCaseId(req.jwt, req.params.id)
@@ -870,16 +852,11 @@ router.get('/:id/automatedtasks', (req, res, next)=>{
 
 /**
  * @api {get} /case/:id/automatedtasks/all Get All AutomatedTasks
- *
  * @apiName GetAllAutomatedTasks
  * @apiGroup Case
- *
  * @apiParam {String} id ID of the Case
- *
  * @apiSampleRequest /case/:id/tasks/all
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     [{
  *          "processDefinition": "bq1iuo0uuzo9",
  *          "id": "p503h6ephfqv",
@@ -898,7 +875,6 @@ router.get('/:id/automatedtasks', (req, res, next)=>{
  *          "case": "1q7nud4e2v1dl",
  *          "resourceType": "AutomatedTask"
  *     }]
- *
  */
 router.get('/:id/automatedtasks/all', (req, res, next)=>{
   AutomatedTask.findALLbyCaseId(req.jwt, req.params.id)
@@ -915,20 +891,14 @@ router.get('/:id/automatedtasks/all', (req, res, next)=>{
 
 /**
  * @api {get} /case/:id/messages Get Messages
- *
  * @apiName GetMessages
  * @apiGroup Case
- *
  * @apiParam {String} id ID of the Case
- *
  * @apiSampleRequest /case/:id/messages
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *   {
  *     TODO MESSAGE_OBJ
  *   }
- *
  */
 router.get('/:id/messages', (req, res, next)=>{
   Message.findByCaseId(req.jwt, req.params.id)

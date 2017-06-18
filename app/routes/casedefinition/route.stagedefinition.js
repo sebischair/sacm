@@ -8,22 +8,17 @@ import Stage from './../../models/case/model.stage';
 
 /**
  * @api {post} /stagedefinitions Create StageDefinition
- *
  * @apiName CreateStageDefinition
  * @apiGroup StageDefinition
- *
- * @apiParam {String} caseDefinition ID of the parent CaseDefinition
- * @apiParam {String} name Name of the StageDefinition (internal usage)
- * @apiParam {String} label Label of the StageDefinition
- * @apiParam {Boolean} isRepeatable Indicator if the stage should be repeatable
- * @apiParam {Boolean} isMandatory Indicator if the stage should be mandatory
+ * @apiParam {String} caseDefinition ID of the parent Case Definition
+ * @apiParam {String} name Name of the Stage Definition (internal usage)
+ * @apiParam {String} label Label of the Stage Definition
+ * @apiParam {Boolean} isRepeatable Indicator if the stage is repeatable
+ * @apiParam {Boolean} isMandatory Indicator if the stage is mandatory
  * @apiParam {String} parent ID of the parent stage (if there is one)
  * @apiParam {Array} preconditions Array of preconditions for the stage
- *
  * @apiSampleRequest /stagedefinitions
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *   {
  *     "isRepeatable": "true",
  *     "newEntityDefinition": null,
@@ -38,7 +33,6 @@ import Stage from './../../models/case/model.stage';
  *     "caseDefinition": "1v77wsi7jdky8",
  *     "parentStageDefinition": null
  *   }
- *
  */
 router.post('/', (req, res, next)=>{
   var data = {
@@ -62,23 +56,18 @@ router.post('/', (req, res, next)=>{
 
 /**
  * @api {patch} /stagedefinition/:id Update StageDefinition
- *
  * @apiName UpdateStageDefinition
  * @apiGroup StageDefinition
- *
- * @apiParam {String} id The ID of the StageDefinition
- * @apiParam {String} caseDefinition (opional) ID of the parent CaseDefinition
- * @apiParam {String} name (opional) Name of the StageDefinition (internal usage)
- * @apiParam {String} label (opional) Label of the StageDefinition
- * @apiParam {Boolean} isRepeatable (opional) Indicator if the stage should be repeatable
- * @apiParam {Boolean} isMandatory (opional) Indicator if the stage should be mandatory
+ * @apiParam {String} id The ID of the Stage Definition
+ * @apiParam {String} caseDefinition (opional) ID of the parent Case Definition
+ * @apiParam {String} name (opional) Name of the Stage Definition (internal usage)
+ * @apiParam {String} label (opional) Label of the Stage Definition
+ * @apiParam {Boolean} isRepeatable (opional) Indicator if the stage is repeatable
+ * @apiParam {Boolean} isMandatory (opional) Indicator if the stage is mandatory
  * @apiParam {String} parent (opional) ID of the parent stage (if there is one)
  * @apiParam {Array} preconditions (opional) Array of preconditions for the stage
- *
- * @apiSampleRequest /stagedefinitions
- *
+ * @apiSampleRequest /stagedefinition/:id
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *   {
  *     "isRepeatable": "true",
  *     "newEntityDefinition": null,
@@ -93,7 +82,6 @@ router.post('/', (req, res, next)=>{
  *     "caseDefinition": "1v77wsi7jdky8",
  *     "parentStageDefinition": null
  *   }
- *
  */
 router.patch('/:id', (req, res, next)=>{
   var data = {
@@ -118,16 +106,11 @@ router.patch('/:id', (req, res, next)=>{
 
 /**
  * @api {get} /stagedefinition/:id Get StageDefinition
- *
  * @apiName GetStageDefinition
  * @apiGroup StageDefinition
- *
- * @apiParam {String} id ID of the StageDefinition
- *
- * @apiSampleRequest test
- *
+ * @apiParam {String} id ID of the Stage Definition
+ * @apiSampleRequest /stagedefinition/:id 
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *   {
  *     "isRepeatable": "true",
  *     "newEntityDefinition": null,
@@ -142,7 +125,6 @@ router.patch('/:id', (req, res, next)=>{
  *     "caseDefinition": "1v77wsi7jdky8",
  *     "parentStageDefinition": null
  *   }
- *
  */
 router.get('/:id', (req, res, next)=>{
   StageDefinition.findById(req.jwt, req.params.id)
@@ -156,19 +138,13 @@ router.get('/:id', (req, res, next)=>{
 
 
 /**
- * @api {delete} /stagedefinition/:id Delete StageDefinition
- *
+ * @api {delete} /stagedefinition/:id Delete Stage Definition
  * @apiName DeleteStageDefinition
  * @apiGroup StageDefinition
- *
- * @apiParam {String} id ID of the StageDefinition
- *
- * @apiSampleRequest test
- *
+ * @apiParam {String} id ID of the Stage Definition
+ * @apiSampleRequest /stagedefinition/:id
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *   {}
- *
  */
 router.delete('/:id', (req, res, next)=>{
   StageDefinition.deleteById(req.jwt, req.params.id)
@@ -183,17 +159,12 @@ router.delete('/:id', (req, res, next)=>{
 
 
 /**
- * @api {get} /stagedefinition/:id/automatedtaskdefinitions Get Child AutomatedTaskDefinitions
- *
+ * @api {get} /stagedefinition/:id/automatedtaskdefinitions Get Direct Child AutomatedTaskDefinitions
  * @apiName GetAutomatedTaskDefinitionByStageDefinitionID
  * @apiGroup AutomatedTaskDefinition
- *
- * @apiParam {String} ID The ID of the StageDefinition
- *
+ * @apiParam {String} ID The ID of the Stage Definition
  * @apiSampleRequest /stagedefinition/:id/automatedtaskdefinitions
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *   [{
  *     "isRepeatable": "true",
  *     "newEntityDefinition": null,
@@ -208,7 +179,6 @@ router.delete('/:id', (req, res, next)=>{
  *     "caseDefinition": "1v77wsi7jdky8",
  *     "parentStageDefinition": null
  *   }]
- *
  */
 router.get('/:id/automatedtaskdefinitions', (req, res, next)=>{
   AutomatedTaskDefinition.findByCaseDefinitionId(req.jwt, req.params.id)
@@ -224,16 +194,11 @@ router.get('/:id/automatedtaskdefinitions', (req, res, next)=>{
 
 /**
  * @api {get} /stagedefinition/:id/humantaskdefinitions Get All HumanTaskDefinitions
- *
  * @apiName GetHumanTaskDefinitionByStageDefinitionID
  * @apiGroup HumanTaskDefinition
- *
- * @apiParam {String} ID The ID of the StageDefinition
- *
- * @apiSampleRequest /StageDefinition/:id/humantaskdefinitions
- *
+ * @apiParam {String} ID The ID of the Stage Definition
+ * @apiSampleRequest /stagedefinition/:id/humantaskdefinitions
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *   [{
  *     "isRepeatable": "true",
  *     "newEntityDefinition": null,
@@ -248,7 +213,6 @@ router.get('/:id/automatedtaskdefinitions', (req, res, next)=>{
  *     "caseDefinition": "1v77wsi7jdky8",
  *     "parentStageDefinition": null
  *   }]
- *
  */
 router.get('/:id/humantaskdefinitions', (req, res, next)=>{
   HumanTaskDefinition.findALLByCaseDefinitionId(req.jwt, req.params.id)
@@ -264,17 +228,12 @@ router.get('/:id/humantaskdefinitions', (req, res, next)=>{
 // stages
 
 /**
- * @api {get} /stagedefinition/:id/stages Get StageDefinitions
- *
+ * @api {get} /stagedefinition/:id/stages Get Stages by Stage Definitions
  * @apiName GetStagesByStageDefinitionId
  * @apiGroup StageDefinition
- *
  * @apiParam {String} id ID of the StageDefinition
- *
  * @apiSampleRequest /stagedefinition/:id/stages
- *
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  *     [{
  *       "processDefinition": "raxxde6yecyz",
  *       "id": "10kx8cvxs3t0w",
@@ -293,7 +252,6 @@ router.get('/:id/humantaskdefinitions', (req, res, next)=>{
  *       "case": "1q7nud4e2v1dl",
  *       "resourceType": "Stage"
  *     }]
- *
  */
  router.get('/:id/stages', (req, res, next)=>{
    Stage.findbyStageDefinitionId(req.jwt, req.params.id)

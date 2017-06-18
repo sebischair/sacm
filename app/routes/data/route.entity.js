@@ -347,7 +347,6 @@ router.get('/:id/deeplinks', (req, res, next)=>{
  * @apiParam {String} id ID of the Entity
  * @apiSampleRequest /entity/:id
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
  * {
  *     "id": "1m6iwf4o772x7",
  *     "workspace": "11lc2lth49deu",
