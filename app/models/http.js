@@ -1,11 +1,10 @@
-var express = require('express');
-var config = require('../../config');
-var request = require('request');
+import express from 'express';
+import config from '../../config';
 import rq from 'request-promise';
-var Promise = require('bluebird');
-var colors = require('colors');
+import Promise from 'bluebird';
+import colors from 'colors';
 
-var headers = {
+const headers = {
     'Authorization': 'Basic ' + new Buffer(config.sc.user + ':' + config.sc.pass).toString('base64'),
     'Content-Type': 'application/json'
 };
