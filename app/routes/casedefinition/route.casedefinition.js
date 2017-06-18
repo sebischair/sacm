@@ -150,7 +150,7 @@ router.delete('/:id', (req, res, next)=>{
  * @apiGroup CaseDefinition
  * @apiParam {String} ID The ID of the CaseDefinition
  * @apiParam {String} name (optional) Sets a name for the CaseDefinition
- * @apiParam {String} label (optional) Sets a label for the CaseDefinition
+ * @apiParam {String} description (optional) Sets a description for the CaseDefinition
  * @apiParam {String} entityDefinition (optional) Assigns a new EntityDefinition
  * @apiParam {String} name (optional) Sets a owner path for the CaseDefinition
  * @apiSampleRequest /casedefinition/:id

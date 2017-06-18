@@ -51,7 +51,7 @@ router.post('/', (req, res, next)=>{
  * @apiParam {String} id The ID of the Stage Definition
  * @apiParam {String} caseDefinition (opional) ID of the parent Case Definition
  * @apiParam {String} name (opional) Name of the Stage Definition (internal usage)
- * @apiParam {String} label (opional) Label of the Stage Definition
+ * @apiParam {String} description (opional) Label of the Stage Definition
  * @apiParam {Boolean} isRepeatable (opional) Indicator if the stage is repeatable
  * @apiParam {Boolean} isMandatory (opional) Indicator if the stage is mandatory
  * @apiParam {String} parent (opional) ID of the parent stage (if there is one)

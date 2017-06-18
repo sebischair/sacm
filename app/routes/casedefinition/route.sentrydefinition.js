@@ -88,7 +88,7 @@ router.post('/', (req, res, next)=>{
  * @apiParam {String} id The ID of the Sentry Definition
  * @apiParam {String} caseDefinition (optional) ID of the parent Case Definition
  * @apiParam {String} name (optional) Name of the StageDefinition (internal usage)
- * @apiParam {String} label (optional) Label of the Stage Definition
+ * @apiParam {String} description (optional) Label of the Stage Definition
  * @apiParam {Boolean} isRepeatable (optional) Indicator if the stage is repeatable
  * @apiParam {Boolean} isMandatory (optional) Indicator if the stage is mandatory
  * @apiParam {String} parent (optional) ID of the parent stage (if there is one)

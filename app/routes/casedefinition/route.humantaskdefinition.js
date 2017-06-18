@@ -102,7 +102,7 @@ router.post('/', (req, res, next)=>{
  * @apiParam {String} id The ID of the HumanTaskDefinition
  * @apiParam {String} caseDefinition (optional) ID of the parent CaseDefinition
  * @apiParam {String} name (optional) Name of the StageDefinition (internal usage)
- * @apiParam {String} label (optional) Label of the StageDefinition
+ * @apiParam {String} description (optional) Label of the StageDefinition
  * @apiParam {Boolean} isRepeatable (optional) Indicator if the stage should be repeatable
  * @apiParam {Boolean} isMandatory (optional) Indicator if the stage should be mandatory
  * @apiParam {String} parent (optional) ID of the parent stage (if there is one)
