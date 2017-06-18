@@ -1,7 +1,6 @@
 import express from 'express';
-var router = express.Router();
 import HttpHookDefinition from './../../models/casedefinition/model.httphookdefinition'
-
+const router = express.Router();
 
 /**
  * @api {get} /httphookdefinition/:id Get HttpHookDefinition

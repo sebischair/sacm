@@ -1,10 +1,9 @@
 import express from 'express';
-var router = express.Router();
 import StageDefinition from './../../models/casedefinition/model.stagedefinition';
 import HumanTaskDefinition from './../../models/casedefinition/model.humantaskdefinition';
 import AutomatedTaskDefinition from './../../models/casedefinition/model.automatedtaskdefinition';
 import Stage from './../../models/case/model.stage';
-
+const router = express.Router();
 
 /**
  * @api {post} /stagedefinitions Create StageDefinition

@@ -1,8 +1,7 @@
 import express from 'express';
-var router = express.Router();
 import HumanTaskDefinition from './../../models/casedefinition/model.humantaskdefinition';
 import HumanTask from './../../models/case/model.humantask';
-
+const router = express.Router();
 
 /**
  * @api {get} /humantaskdefinition/:id Get HumanTaskDefinition

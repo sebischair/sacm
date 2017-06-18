@@ -1,7 +1,7 @@
 import express from 'express';
 import Task from './../../models/case/model.task';
 //import TaskDefinition from './../../models/casedefinition/model.taskdefinition';
-var router = express.Router();
+const router = express.Router();
 
 
 //TODO this is not implements in SC

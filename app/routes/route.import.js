@@ -1,7 +1,6 @@
 import express from 'express';
-var router = express.Router();
 import XMLImporter from './../importer/xmlimporter';
-
+const router = express.Router();
 
 /**
  * @api {post} /import Import

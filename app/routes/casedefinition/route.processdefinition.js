@@ -1,12 +1,8 @@
 import express from 'express';
-
-var router = express.Router();
-
-// Models
 import SentryDefinition from './../../models/casedefinition/model.sentrydefinition';
 import HttpHookDefinition from './../../models/casedefinition/model.httphookdefinition'
 import Process from './../../models/case/model.process'
-
+const router = express.Router();
 
 /**
  * @api {get} /processdefinition/:id/sentrydefinitions Get SentryDefinitions

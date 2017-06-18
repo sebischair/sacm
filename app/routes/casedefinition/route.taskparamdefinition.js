@@ -1,7 +1,6 @@
 import express from 'express';
-var router = express.Router();
 import TaskParamDefinition from './../../models/casedefinition/model.taskparamdefinition'
-
+const router = express.Router();
 
 /**
  * @api {get} /taskparamdefinition/:id Get TaskParamDefinition

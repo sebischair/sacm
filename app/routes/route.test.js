@@ -1,5 +1,4 @@
 import express from 'express';
-var router = express.Router();
 import Promise from 'bluebird';
 import Workspace from '../models/workspace/model.workspace';
 import UserDefinition from '../models/group/model.userdefinition';
@@ -17,6 +16,9 @@ import HttpHookDefinition from '../models/casedefinition/model.httphookdefinitio
 import SentryDefinition from '../models/casedefinition/model.sentrydefinition';
 import Case from '../models/case/model.case';
 import HumanTask from '../models/case/model.humantask';
+const router = express.Router();
+
+
 
 router.get('/', (req, res, next)=>{
 

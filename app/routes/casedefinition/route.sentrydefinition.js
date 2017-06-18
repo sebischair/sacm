@@ -1,7 +1,6 @@
 import express from 'express';
-var router = express.Router();
 import SentryDefinition from './../../models/casedefinition/model.sentrydefinition';
-
+const router = express.Router();
 
 /**
  * @api {get} /sentrydefinition/:id Get SentryDefinition
