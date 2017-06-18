@@ -41,7 +41,7 @@ router.get('/', (req, res, next)=>{
  *         {
  *           "action": "Added",
  *           "date": "2017-05-22T11:15:57.687Z",
- *           "type": "_new",
+ *           "resourceType""_new",
  *           "user": {
  *             "id": "oi6l6vdha6vs",
  *             "name": "Max Mustermann",
@@ -83,7 +83,7 @@ router.post('/', (req, res, next)=>{
  *         {
  *           "action": "Added",
  *           "date": "2017-05-22T08:11:19.252Z",
- *           "type": "_new",
+ *           "resourceType""_new",
  *           "user": {
  *             "id": "oi6l6vdha6vs",
  *             "name": "Max Mustermann",

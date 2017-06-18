@@ -45,7 +45,7 @@ router.get('/:id', (req, res, next)=>{
 
 
 /**
- * @api {post} automatedtask/:id/draft Draft AutomatedTask
+ * @api {post} /automatedtask/:id/draft Draft AutomatedTask
  * @apiName DraftAutomatedTask
  * @apiGroup AutomatedTask
  * @apiParam {Number} id (mandatory)  ID of a AutomatedTask

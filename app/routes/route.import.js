@@ -3,6 +3,15 @@ var router = express.Router();
 import XMLImporter from './../importer/xmlimporter';
 
 
+/**
+ * @api {post} /import Import
+ * @apiName Import
+ * @apiGroup Import
+ * @apiParam {boolean} execute (optional) Executes the imported case if an executed is specified within the xml file, false by default
+ * @apiParam {string} file (optional) Importes the defined file, by default imports the democase.xml
+ * @apiSuccessExample {json} Success-Response:
+ * see case/:id/tree route 
+ */
 router.post('/', (req, res, next)=>{
   const xml = new XMLImporter();
   let file = 'democase.xml';

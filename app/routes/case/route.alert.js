@@ -26,7 +26,8 @@ const router = express.Router();
  *  		"minThreshold": "5",
  *  		"maxThreshold": "8"
  *  	}
- *  	"seenDate": null
+ *  	"seenDate": null,
+ *  	"resourceType": "Alert"
  *  }
  */
 router.get('/:id', (req, res, next)=>{
@@ -83,7 +84,8 @@ router.get('/:id', (req, res, next)=>{
  *  		"minThreshold": "5",
  *  		"maxThreshold": "8"
  *  	}
- *  	"seenDate": null
+ *  	"seenDate": null,
+ *  	"resourceType": "Alert"
  *  }
  */
 router.post('/', (req, res, next)=>{
@@ -144,7 +146,8 @@ router.post('/', (req, res, next)=>{
  *  		"minThreshold": "5",
  *  		"maxThreshold": "8"
  *  	}
- *  	"seenDate": null
+ *  	"seenDate": null,
+ *  	"resourceType": "Alert"
  *  }
  */
 router.patch('/:id', (req, res, next)=>{
@@ -182,7 +185,8 @@ router.patch('/:id', (req, res, next)=>{
  *  		"minThreshold": "5",
  *  		"maxThreshold": "8"
  *  	}
- *  	"seenDate": "2017-06-13 13:52:12.0"
+ *  	"seenDate": "2017-06-13 13:52:12.0",
+ *  	"resourceType": "Alert"
  *  }
  */
 router.post('/:id/seen', (req, res, next)=>{

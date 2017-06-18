@@ -49,7 +49,7 @@ router.get('/', (req, res, next)=>{
  *        {
  *          "action": "Added",
  *          "date": "2017-05-22T08:09:34.399Z",
- *          "type": "_new",
+ *          "resourceType""_new",
  *          "user": {
  *            "id": "oi6l6vdha6vs",
  *            "name": "Max Mustermann"
@@ -102,7 +102,7 @@ router.get('/:id', (req, res, next)=>{
  *         {
  *           "action": "Added",
  *           "date": "2017-05-22T08:01:36.687Z",
- *           "type": "_new"
+ *           "resourceType""_new"
  *         }
  *       ],
  *       "email": "mustermann@test.sc",
@@ -168,7 +168,7 @@ router.delete('/:id', (req, res, next)=>{
  *         {
  *           "action": "Added",
  *           "date": "2017-05-22T08:01:36.687Z",
- *           "type": "_new"
+ *           "resourceType""_new"
  *         }
  *       ],
  *       "email": "mustermann@test.sc",
@@ -210,7 +210,7 @@ router.patch('/:id', (req, res, next)=>{
  *         {
  *           "action": "Added",
  *           "date": "2017-05-22T08:01:36.687Z",
- *           "type": "_new"
+ *           "resourceType""_new"
  *         }
  *       ],
  *       "email": "mustermann@test.sc",

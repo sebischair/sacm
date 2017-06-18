@@ -24,7 +24,7 @@ import Case from './../../models/case/model.case';
  *       "name": "CaseDefinition1",
  *       "id": "qkx51pgpkgbi",
  *       "label": "Test Case Definition",
- *       "type": "CaseDefinition"
+ *       "resourceType""CaseDefinition"
  *     }]
  *
  */

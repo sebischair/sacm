@@ -67,7 +67,7 @@ router.get('/caninstantiate', (req, res, next)=>{
  *       "name": "CaseDefinition1",
  *       "id": "qkx51pgpkgbi",
  *       "label": "Test Case Definition",
- *       "type": "CaseDefinition"
+ *       "resourceType""CaseDefinition"
  *     }
  *
  */
@@ -105,7 +105,7 @@ router.post('/', (req, res, next)=>{
  *       "name": "CaseDefinition1",
  *       "id": "qkx51pgpkgbi",
  *       "label": "Test Case Definition",
- *       "type": "CaseDefinition"
+ *       "resourceType""CaseDefinition"
  *     }
  *
  */
@@ -138,7 +138,7 @@ router.get('/:id', (req, res, next)=>{
  *       "name": "CaseDefinition1",
  *       "id": "qkx51pgpkgbi",
  *       "label": "Test Case Definition",
- *       "type": "CaseDefinition"
+ *       "resourceType""CaseDefinition"
  *     }
  *
  */
@@ -205,7 +205,7 @@ router.delete('/:id', (req, res, next)=>{
  *       "name": "CaseDefinition1",
  *       "id": "qkx51pgpkgbi",
  *       "label": "Test Case Definition",
- *       "type": "CaseDefinition"
+ *       "resourceType""CaseDefinition"
  *     }
  *
  */
@@ -246,7 +246,7 @@ router.patch('/:id', (req, res, next)=>{
  *     "hookDefinitions": [],
  *     "id": "1c8579tlziu8t",
  *     "label": "asdasdasd",
- *     "type": "StageDefinition",
+ *     "resourceType""StageDefinition",
  *     "isMandatory": "true",
  *     "newEntityAttachPath": null,
  *     "caseDefinition": "1v77wsi7jdky8",
@@ -284,7 +284,7 @@ router.get('/:id/stagedefinitions', (req, res, next)=>{
  *     "hookDefinitions": [],
  *     "id": "1c8579tlziu8t",
  *     "label": "asdasdasd",
- *     "type": "StageDefinition",
+ *     "resourceType""StageDefinition",
  *     "isMandatory": "true",
  *     "newEntityAttachPath": null,
  *     "caseDefinition": "1v77wsi7jdky8",
@@ -324,7 +324,7 @@ router.get('/:id/stagedefinitions/all', (req, res, next)=>{
  *     "hookDefinitions": [],
  *     "id": "1c8579tlziu8t",
  *     "label": "asdasdasd",
- *     "type": "StageDefinition",
+ *     "resourceType""StageDefinition",
  *     "isMandatory": "true",
  *     "newEntityAttachPath": null,
  *     "caseDefinition": "1v77wsi7jdky8",
@@ -363,7 +363,7 @@ router.get('/:id/automatedtaskdefinitions', (req, res, next)=>{
  *     "hookDefinitions": [],
  *     "id": "1c8579tlziu8t",
  *     "label": "asdasdasd",
- *     "type": "StageDefinition",
+ *     "resourceType""StageDefinition",
  *     "isMandatory": "true",
  *     "newEntityAttachPath": null,
  *     "caseDefinition": "1v77wsi7jdky8",
@@ -402,7 +402,7 @@ router.get('/:id/automatedtaskdefinitions/all', (req, res, next)=>{
  *     "hookDefinitions": [],
  *     "id": "1c8579tlziu8t",
  *     "label": "asdasdasd",
- *     "type": "StageDefinition",
+ *     "resourceType""StageDefinition",
  *     "isMandatory": "true",
  *     "newEntityAttachPath": null,
  *     "caseDefinition": "1v77wsi7jdky8",
@@ -443,7 +443,7 @@ router.get('/:id/humantaskdefinitions', (req, res, next)=>{
  *     "hookDefinitions": [],
  *     "id": "1c8579tlziu8t",
  *     "label": "asdasdasd",
- *     "type": "StageDefinition",
+ *     "resourceType""StageDefinition",
  *     "isMandatory": "true",
  *     "newEntityAttachPath": null,
  *     "caseDefinition": "1v77wsi7jdky8",
