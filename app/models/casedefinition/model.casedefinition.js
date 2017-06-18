@@ -25,8 +25,8 @@ export default class CaseDefinition extends Model{
     return http.get(jwt, '/casedefinition/'+caseDefinitionId+'/tree');
   }
 
-  static updateById(jwt, caseDefinitionId, data) {
-    return http.put(jwt, '/casedefinition/'+caseDefinitionId, data);
+  static updateById(jwt, data) {
+    return http.put(jwt, '/casedefinition/'+data.id, data);
   }
 
   static deleteById(jwt, caseDefinitionId) {
