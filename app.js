@@ -4,7 +4,7 @@ import favicon from 'serve-favicon';
 import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
-import routes from './app/routes/route.app';
+import apiRoutes from './app/routes/route.app';
 import docRoutes from './doc/route';
 
 var app = express();
@@ -30,10 +30,10 @@ app.use('/api', (req, res, next)=>{
     res.status(403).send();
   }
 });
-app.use('/api', routes())
+app.use('/api', apiRoutes())
 
 app.use('/doc/assets', express.static(__dirname + '/doc/assets'));
-app.use('/', docRoutes())
+app.use('/doc', docRoutes())
 
 // catch 404 and forward to error handler
 app.use((req, res, next)=>{
