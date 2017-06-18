@@ -23,7 +23,7 @@ import Case from './../../models/case/model.case';
  *       "entityDefinition": "1hvr3q9rvtys3",
  *       "name": "CaseDefinition1",
  *       "id": "qkx51pgpkgbi",
- *       "label": "Test Case Definition",
+ *       "description":"Test Case Definition",
  *       "resourceType""CaseDefinition"
  *     }]
  *

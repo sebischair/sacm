@@ -66,7 +66,7 @@ router.get('/caninstantiate', (req, res, next)=>{
  *       "entityDefinition": "1hvr3q9rvtys3",
  *       "name": "CaseDefinition1",
  *       "id": "qkx51pgpkgbi",
- *       "label": "Test Case Definition",
+ *       "description":"Test Case Definition",
  *       "resourceType""CaseDefinition"
  *     }
  *
@@ -104,7 +104,7 @@ router.post('/', (req, res, next)=>{
  *       "entityDefinition": "1hvr3q9rvtys3",
  *       "name": "CaseDefinition1",
  *       "id": "qkx51pgpkgbi",
- *       "label": "Test Case Definition",
+ *       "description":"Test Case Definition",
  *       "resourceType""CaseDefinition"
  *     }
  *
@@ -137,7 +137,7 @@ router.get('/:id', (req, res, next)=>{
  *       "children": [],
  *       "name": "CaseDefinition1",
  *       "id": "qkx51pgpkgbi",
- *       "label": "Test Case Definition",
+ *       "description":"Test Case Definition",
  *       "resourceType""CaseDefinition"
  *     }
  *
@@ -204,7 +204,7 @@ router.delete('/:id', (req, res, next)=>{
  *       "entityDefinition": "1hvr3q9rvtys3",
  *       "name": "CaseDefinition1",
  *       "id": "qkx51pgpkgbi",
- *       "label": "Test Case Definition",
+ *       "description":"Test Case Definition",
  *       "resourceType""CaseDefinition"
  *     }
  *
@@ -245,7 +245,7 @@ router.patch('/:id', (req, res, next)=>{
  *     "sentryDefinitions": [],
  *     "hookDefinitions": [],
  *     "id": "1c8579tlziu8t",
- *     "label": "asdasdasd",
+ *     "description":"asdasdasd",
  *     "resourceType""StageDefinition",
  *     "isMandatory": "true",
  *     "newEntityAttachPath": null,
@@ -283,7 +283,7 @@ router.get('/:id/stagedefinitions', (req, res, next)=>{
  *     "sentryDefinitions": [],
  *     "hookDefinitions": [],
  *     "id": "1c8579tlziu8t",
- *     "label": "asdasdasd",
+ *     "description":"asdasdasd",
  *     "resourceType""StageDefinition",
  *     "isMandatory": "true",
  *     "newEntityAttachPath": null,
@@ -323,7 +323,7 @@ router.get('/:id/stagedefinitions/all', (req, res, next)=>{
  *     "sentryDefinitions": [],
  *     "hookDefinitions": [],
  *     "id": "1c8579tlziu8t",
- *     "label": "asdasdasd",
+ *     "description":"asdasdasd",
  *     "resourceType""StageDefinition",
  *     "isMandatory": "true",
  *     "newEntityAttachPath": null,
@@ -362,7 +362,7 @@ router.get('/:id/automatedtaskdefinitions', (req, res, next)=>{
  *     "sentryDefinitions": [],
  *     "hookDefinitions": [],
  *     "id": "1c8579tlziu8t",
- *     "label": "asdasdasd",
+ *     "description":"asdasdasd",
  *     "resourceType""StageDefinition",
  *     "isMandatory": "true",
  *     "newEntityAttachPath": null,
@@ -401,7 +401,7 @@ router.get('/:id/automatedtaskdefinitions/all', (req, res, next)=>{
  *     "sentryDefinitions": [],
  *     "hookDefinitions": [],
  *     "id": "1c8579tlziu8t",
- *     "label": "asdasdasd",
+ *     "description":"asdasdasd",
  *     "resourceType""StageDefinition",
  *     "isMandatory": "true",
  *     "newEntityAttachPath": null,
@@ -442,7 +442,7 @@ router.get('/:id/humantaskdefinitions', (req, res, next)=>{
  *     "sentryDefinitions": [],
  *     "hookDefinitions": [],
  *     "id": "1c8579tlziu8t",
- *     "label": "asdasdasd",
+ *     "description":"asdasdasd",
  *     "resourceType""StageDefinition",
  *     "isMandatory": "true",
  *     "newEntityAttachPath": null,

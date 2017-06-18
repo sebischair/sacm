@@ -96,7 +96,7 @@ router.get(':id/httphookdefinitions', (req, res, next)=>{
  *     "sentryDefinitions": [],
  *     "hookDefinitions": [],
  *     "id": "1c8579tlziu8t",
- *     "label": "asdasdasd",
+ *     "description":"asdasdasd",
  *     "resourceType": "StageDefinition",
  *     "isMandatory": "true",
  *     "newEntityAttachPath": null,
