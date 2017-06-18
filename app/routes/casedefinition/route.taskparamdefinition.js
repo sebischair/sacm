@@ -43,12 +43,7 @@ router.get('/:id', (req, res, next)=>{
  *   }
  */
 router.post('/', (req, res, next)=>{
-  var data = {
-    on: req.body.on,
-    isReadOnly: req.body.isReadOnly,
-    taskDefinition: req.body.taskDefinition,
-  }
-  TaskParamDefinition.create(req.jwt, data)
+  TaskParamDefinition.create(req.jwt, req.body)
     .then(sd=>{
       res.status(200).send(sd);
     })
@@ -76,11 +71,8 @@ router.post('/', (req, res, next)=>{
  *   }
  */
 router.patch('/:id', (req, res, next)=>{
-  var data = {
-    on: req.body.on,
-    isReadOnly: req.body.isReadOnly,
-    taskDefinition: req.body.taskDefinition,
-  }
+  let data = req.body;
+  data.id = req.params.id;
   TaskParamDefinition.updateById(req.jwt, data)
     .then(sd=>{
       res.status(200).send(sd);

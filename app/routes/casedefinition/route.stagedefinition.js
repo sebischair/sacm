@@ -11,7 +11,7 @@ const router = express.Router();
  * @apiGroup StageDefinition
  * @apiParam {String} caseDefinition ID of the parent Case Definition
  * @apiParam {String} name Name of the Stage Definition (internal usage)
- * @apiParam {String} label Label of the Stage Definition
+ * @apiParam {String} description Description of the Stage Definition
  * @apiParam {Boolean} isRepeatable Indicator if the stage is repeatable
  * @apiParam {Boolean} isMandatory Indicator if the stage is mandatory
  * @apiParam {String} parent ID of the parent stage (if there is one)
@@ -34,16 +34,7 @@ const router = express.Router();
  *   }
  */
 router.post('/', (req, res, next)=>{
-  var data = {
-    caseDefinition: req.body.caseDefinition,
-    name: req.body.name,
-    label: req.body.label,
-    isRepeatable: req.body.isRepeatable,
-    isMandatory: req.body.isMandatory,
-    parent: req.body.parent,
-    preconditions: req.body.preconditions
-  }
-  StageDefinition.create(req.jwt, data)
+  StageDefinition.create(req.jwt, req.body)
     .then(sd=>{
       res.status(200).send(sd);
     })
@@ -83,15 +74,8 @@ router.post('/', (req, res, next)=>{
  *   }
  */
 router.patch('/:id', (req, res, next)=>{
-  var data = {
-    caseDefinition: req.body.caseDefinition,
-    name: req.body.name,
-    label: 'asdasdasd',
-    isRepeatable: req.body.isRepeatable,
-    isMandatory: req.body.isMandatory,
-    parent: req.body.parent,
-    preconditions: req.body.preconditions
-  }
+  let data = req.body;
+  data.id = req.params.id;
   StageDefinition.updateById(req.jwt, req.params.id, data)
     .then(sd=>{
       res.status(200).send(sd);

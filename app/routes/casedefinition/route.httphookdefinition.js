@@ -38,6 +38,12 @@ router.get('/:id', (req, res, next)=>{
  * @apiParam {String} method Request method of the Hook
  * @apiParam {String} processDefinition ID of the ProcessDefinition
  * @apiSampleRequest /httphookdefinition
+ *   {
+ *     on: "AVAILABLE",
+ *     url: "http://example.com",
+ *     method: "GET",
+ *     processDefinition: "hka51pgpkgbi"
+ *   }
  * @apiSuccessExample {json} Success-Response:
  *   {
  *     id: "i938uejh378",
@@ -48,13 +54,7 @@ router.get('/:id', (req, res, next)=>{
  *   }
  */
 router.post('/', (req, res, next)=>{
-  var data = {
-    on: req.body.on,
-    url: req.body.url,
-    method: req.body.method,
-    processDefinition: req.body.processDefinition
-  }
-  HttpHookDefinition.create(req.jwt, data)
+  HttpHookDefinition.create(req.jwt, req.body)
     .then(sd=>{
         res.status(200).send(sd);
     })

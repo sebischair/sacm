@@ -53,7 +53,7 @@ router.get('/:id', (req, res, next)=>{
  *     }
  */
 router.post('/:id/draft', (req, res, next)=>{
-  var data = req.body;
+  let data = req.body;
   data.id = req.params.id;
   AutomatedTask.draft(req.jwt, data)
     .then(c=>{
@@ -77,7 +77,7 @@ router.post('/:id/draft', (req, res, next)=>{
  *     }
  */
 router.post('/:id/complete', (req, res, next)=>{
-  var data = req.body;
+  let data = req.body;
   data.id = req.params.id;
   AutomatedTask.complete(req.jwt, data)
     .then(c=>{

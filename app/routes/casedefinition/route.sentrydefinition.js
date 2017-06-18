@@ -55,7 +55,7 @@ router.delete('/:id', (req, res, next)=>{
  * @apiGroup SentryDefinition
  * @apiParam {String} caseDefinition ID of the Case Definition
  * @apiParam {String} name Name of the Stage Definition (internal usage)
- * @apiParam {String} label Label of the Stage Definition
+ * @apiParam {String} description Description of the Stage Definition
  * @apiParam {Boolean} isRepeatable Indicator if the stage is repeatable
  * @apiParam {Boolean} isMandatory Indicator if the stage is mandatory
  * @apiParam {String} parent ID of the parent stage (if there is one)
@@ -72,16 +72,7 @@ router.delete('/:id', (req, res, next)=>{
  *    }
  */
 router.post('/', (req, res, next)=>{
-  var data = {
-    caseDefinition: req.body.caseDefinition,
-    name: req.body.name,
-    label: req.body.label,
-    isRepeatable: req.body.isRepeatable,
-    isMandatory: req.body.isMandatory,
-    parent: req.body.parent,
-    preconditions: req.body.preconditions
-  }
-  SentryDefinition.create(req.jwt, data)
+  SentryDefinition.create(req.jwt, req.body)
     .then(sd=>{
       res.status(200).send(sd);
     })
@@ -113,17 +104,10 @@ router.post('/', (req, res, next)=>{
  *       "resourceType": "SentryDefinition"
  *    }
  */
-router.patch('/', (req, res, next)=>{
-  var data = {
-    caseDefinition: req.body.caseDefinition,
-    name: req.body.name,
-    label: req.body.label,
-    isRepeatable: req.body.isRepeatable,
-    isMandatory: req.body.isMandatory,
-    parent: req.body.parent,
-    preconditions: req.body.preconditions
-  }
-  SentryDefinition.updateById(req.jwt, req.params.id, data)
+router.patch('/:id', (req, res, next)=>{
+  let data = req.body;
+  data.id = req.params.id;
+  SentryDefinition.updateById(req.jwt, data)
     .then(sd=>{
       res.status(200).send(sd);
     })

@@ -10,7 +10,7 @@ export default class Workspace extends Model{
   }
 
   static deleteById(jwt, workspaceId, ifexist){
-    var p = http.del(jwt, '/workspaces/' + workspaceId, {});
+    let p = http.del(jwt, '/workspaces/' + workspaceId, {});
     if(ifexist){
         return new Promise(function (resolve, reject) {
             p.then(()=>{ resolve(); });

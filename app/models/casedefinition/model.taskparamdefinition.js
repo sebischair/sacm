@@ -17,8 +17,8 @@ export default class TaskParamDefinition extends Model{
     return http.get(jwt, '/taskdefinition/'+taskDefinitionId+'/taskparamdefinitions');
   }
 
-  static updateById(jwt, taskParamDefinitionId, data) {
-    return http.put(jwt, '/taskparamdefinition/'+taskParamDefinitionId, data);
+  static updateById(jwt, data) {
+    return http.put(jwt, '/taskparamdefinition/'+data.id, data);
   }
 
   static deleteById(jwt, taskParamDefinitionId) {

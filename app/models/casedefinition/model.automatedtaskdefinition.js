@@ -25,8 +25,8 @@ export default class AutomatedTaskDefinition extends Model{
     return http.get(jwt, '/stagedefinition/'+stageDefinitionId+'/automatedtaskdefinitions');
   }
 
-  static updateById(jwt, automatedTaskDefinitionId, data) {
-    return http.put(jwt, '/automatedtaskdefinition/'+automatedTaskDefinitionId, data);
+  static updateById(jwt, data) {
+    return http.put(jwt, '/automatedtaskdefinition/'+data.id, data);
   }
 
   static deleteById(jwt, automatedTaskDefinitionId) {

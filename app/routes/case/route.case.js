@@ -139,10 +139,7 @@ router.get('/:id', (req, res, next)=>{
  * }
  */
  router.post('/', (req, res, next)=>{
-   var data = {
-     caseDefinitionId: req.body.caseDefinitionId
-   }
-   Case.create(req.jwt, data)
+   Case.create(req.jwt, req.body)
      .then(c=>{
          res.status(200).send(c);
      })

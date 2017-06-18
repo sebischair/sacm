@@ -17,8 +17,8 @@ export default class SentryDefinition extends Model{
     return http.get(jwt, '/processdefinition/'+processDefinitionId+'/sentrydefinitions');
   }
 
-  static updateById(jwt, sentryDefinitionId, data) {
-    return http.put(jwt, '/sentrydefinition/'+sentryDefinitionId, data);
+  static updateById(jwt, data) {
+    return http.put(jwt, '/sentrydefinition/'+data.id, data);
   }
 
   static deleteById(jwt, sentryDefinitionId) {

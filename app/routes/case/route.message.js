@@ -41,11 +41,7 @@ router.get('/:id', (req, res, next)=>{
  *   }
  */
 router.post('/', (req, res, next)=>{
-  var data = {
-    case: req.body.case,
-    text: req.body.text
-  }
-  Message.create(req.jwt, data)
+  Message.create(req.jwt, req.body)
     .then(c=>{
         res.status(200).send(c);
     })

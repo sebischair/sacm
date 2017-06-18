@@ -8,7 +8,7 @@ import server from "../../app";
 let should = chai.should();
 let expect = chai.expect;
 
-var base_api = 'http://localhost:8084/api';
+let base_api = 'http://localhost:8084/api';
 chai.use(chaiHttp);
 
 let test_obj = {

@@ -62,7 +62,7 @@ router.delete('/:id', (req, res, next)=>{
  * @apiGroup HumanTaskDefinition
  * @apiParam {String} caseDefinition ID of the parent CaseDefinition
  * @apiParam {String} name Name of the StageDefinition (internal usage)
- * @apiParam {String} label Label of the StageDefinition
+ * @apiParam {String} description Description of the StageDefinition
  * @apiParam {Boolean} isRepeatable Indicator if the stage should be repeatable
  * @apiParam {Boolean} isMandatory Indicator if the stage should be mandatory
  * @apiParam {String} parent ID of the parent stage (if there is one)
@@ -85,16 +85,7 @@ router.delete('/:id', (req, res, next)=>{
  *   }
  */
 router.post('/', (req, res, next)=>{
-  var data = {
-    caseDefinition: req.body.caseDefinition,
-    name: req.body.name,
-    label: req.body.label,
-    isRepeatable: req.body.isRepeatable,
-    isMandatory: req.body.isMandatory,
-    parent: req.body.parent,
-    preconditions: req.body.preconditions
-  }
- HumanTaskDefinition.create(req.jwt, data)
+ HumanTaskDefinition.create(req.jwt, req.body)
   .then(sd=>{
     res.status(200).send(sd);
   })
@@ -134,16 +125,9 @@ router.post('/', (req, res, next)=>{
  *   }
  */
 router.patch('/:id', (req, res, next)=>{
-  var data = {
-    caseDefinition: req.body.caseDefinition,
-    name: req.body.name,
-    label: req.body.label,
-    isRepeatable: req.body.isRepeatable,
-    isMandatory: req.body.isMandatory,
-    parent: req.body.parent,
-    preconditions: req.body.preconditions
-  }
-  HumanTaskDefinition.updateById(req.jwt, req.params.id, data)
+  let data = req.body;
+  data.id = req.params.id;
+  HumanTaskDefinition.updateById(req.jwt, data)
    .then(sd=>{
      res.status(200).send(sd);
    })

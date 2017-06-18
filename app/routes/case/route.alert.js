@@ -89,8 +89,7 @@ router.get('/:id', (req, res, next)=>{
  *  }
  */
 router.post('/', (req, res, next)=>{
-  var data =  req.body;
-  Alert.create(data)
+  Alert.create(req.body)
     .then(c=>{
       res.status(200).send(c);
     })
@@ -151,7 +150,7 @@ router.post('/', (req, res, next)=>{
  *  }
  */
 router.patch('/:id', (req, res, next)=>{
-  var data =  req.body;
+  let data =  req.body;
   data.id = req.params.id;
   Alert.updateById(data)
     .then(a=>{

@@ -42,7 +42,7 @@ router.get('/caninstantiate', (req, res, next)=>{
  * @apiName CreateCaseDefinition
  * @apiGroup CaseDefinition
  * @apiParam {String} name A name for CaseDefinition (internal usage)
- * @apiParam {String} label A label for the CaseDefinition
+ * @apiParam {String} description A description for the CaseDefinition
  * @apiParam {String} entityDefinition The ID the EntityDefinition that belongs to the CaseDefinition
  * @apiParam {String} ownerPath A string notation-based path to the owner of the CaseDefinition
  * @apiSampleRequest /casedefinitions
@@ -57,13 +57,7 @@ router.get('/caninstantiate', (req, res, next)=>{
  *     }
  */
 router.post('/', (req, res, next)=>{
-  var data = {
-    name: req.body.name,
-    label: req.body.label,
-    entityDefinition: req.body.entityDefinition,
-    ownerPath: req.body.ownerPath
-  }
-  CaseDefinition.create(req.jwt, data)
+  CaseDefinition.create(req.jwt, req.body)
     .then(cds=>{
         res.status(200).send(cds);
     })
@@ -171,7 +165,7 @@ router.delete('/:id', (req, res, next)=>{
  *     }
  */
 router.patch('/:id', (req, res, next)=>{
-  var data = req.body;
+  let data = req.body;
   data.id = req.params.id;
   CaseDefinition.updateById(req.jwt, data)
     .then(cd=>{
