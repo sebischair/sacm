@@ -3,22 +3,20 @@ function resizeIframe(obj) {
   addClickEventListener();
 }
 
-
-
 function addClickEventListener(){
   var iframe= document.getElementById("apidociframe").contentDocument;
   var anchors = iframe.getElementsByTagName("a");
   if(anchors == null || anchors.length==0)
     setTimeout(function(){    
       addClickEventListener();
-    },50)
+    },10)
   else
     for(var i=0; i<anchors.length; i++)
       if(getHrefHashValue(anchors[i].href) != null){
         anchors[i].addEventListener("click", function(e){
           window.location.hash = e.target.hash;
         });       
-        if(window.location.hash == '#'+getHrefHashValue(anchors[i].href)){
+        if(window.location.hash != null && window.location.hash == '#'+getHrefHashValue(anchors[i].href)){
           anchors[i].click();
         }
       }  
