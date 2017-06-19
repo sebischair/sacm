@@ -18,6 +18,6 @@ RUN rm /usr/src/app/config.docker.js
 
 EXPOSE 3000
 
-RUN apidoc -i app/routes -o doc/dist -t doc/template
+RUN apidoc -i app/routes -o doc/assets/api -t doc/sections/api
 CMD [ "npm", "start" ]
 
