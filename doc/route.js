@@ -4,7 +4,7 @@ import fs from 'fs';
 
 
 function renderSection(section){
-    return pug.renderFile('doc\\sections\\'+section+'.pug', {active: section})
+    return pug.renderFile('doc/sections/'+section+'.pug', {active: section})
 }
 
 function routes(){
