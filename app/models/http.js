@@ -17,6 +17,10 @@ function header(jwt){
     }
 }
 
+function generateJWT(email, pw){
+    return 'Basic ' + new Buffer(email + ':' + pw).toString('base64');
+};
+
 function successRequest(method, url, reqBody, resBody, statusCode, start){
     const durationInMs = +(new Date().getTime()-start.getTime())+"ms";
     console.log('SC-'+method+': '+ url + " "+colors.green(statusCode)+" "+durationInMs);
@@ -118,5 +122,6 @@ module.exports = {
                 reject(res.error);
             });          
         });
-    }
+    },
+    generateJWT: generateJWT
 };
