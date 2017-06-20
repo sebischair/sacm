@@ -330,6 +330,8 @@ module.exports = class XMLImporter {
           email: u.$.email,
           attributes: []
         }
+        if(u.$.staticId != null)
+          data.id = u.$.staticId;
         if(u.Attribute != null)
           for(let a of u.Attribute){
             data.attributes.push({
@@ -356,6 +358,8 @@ module.exports = class XMLImporter {
           name: g.$.id,
           administrators: []
         }
+        if(g.$.staticId != null)
+          data.id = g.$.staticId;
         if(g.Administrator == null){
           console.error('No administrator defined for group!');
           return Promise.reject('No administrator defined for group!');
