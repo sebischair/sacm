@@ -4,6 +4,43 @@ const router = express.Router();
 
 
 /**
+ * @api {get} /alerts/me Get My Alerts
+ * @apiName GetMyAlerts
+ * @apiGroup Alert
+ * @apiSampleRequest /alerts/me
+ * @apiSuccessExample {json} Success-Response:
+ *  [{
+ *  	"id": "jdddqzyu6ser7",
+ *  	"case": "2rddqzyu6der9",
+ *  	"process": "1rjdqzyu6ser9",
+ *  	"creationDate": "2017-06-12 13:58:56.0",
+ *  	"expireDate": "2017-06-14 13:52:12.0",
+ *  	"text": "Alert Message",
+ *  	"data": {
+ *  		"alertType": "some type",
+ *  		"application": "Run App",
+ *  		"priorityLevel": "LOW",
+ *  		"status": "ACT",
+ *  		"paramName": "steps per day",
+ *  		"paramValue": "12",
+ *  		"minThreshold": "5",
+ *  		"maxThreshold": "8"
+ *  	}
+ *  	"seenDate": null,
+ *  	"resourceType": "Alert"
+ *  }]
+ */
+router.get('/me', (req, res, next)=>{
+  Alert.findByMe(req.jwt)
+    .then(c=>{
+      res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
  * @api {get} /alert/:id Get Alert
  * @apiName GetAlert
  * @apiGroup Alert
@@ -13,6 +50,7 @@ const router = express.Router();
  *  {
  *  	"id": "jdddqzyu6ser7",
  *  	"process": "1rjdqzyu6ser9",
+ *  	"case": "2rddqzyu6der9",
  *  	"creationDate": "2017-06-12 13:58:56.0",
  *  	"expireDate": "2017-06-14 13:52:12.0",
  *  	"text": "Alert Message",
@@ -71,6 +109,7 @@ router.get('/:id', (req, res, next)=>{
  *  {
  *  	"id": "jdddqzyu6ser7",
  *  	"process": "1rjdqzyu6ser9",
+ *  	"case": "2rddqzyu6der9",
  *  	"creationDate": "2017-06-12 13:58:56.0",
  *  	"expireDate": "2017-06-14 13:52:12.0",
  *  	"text": "Alert Message",
@@ -89,7 +128,7 @@ router.get('/:id', (req, res, next)=>{
  *  }
  */
 router.post('/', (req, res, next)=>{
-  Alert.create(req.body)
+  Alert.create(req.jwt, req.body)
     .then(c=>{
       res.status(200).send(c);
     })
@@ -113,6 +152,7 @@ router.post('/', (req, res, next)=>{
  * @apiSampleRequest /alert
  *  {
  *  	"process": "1rjdqzyu6ser9",
+ *  	"case": "2rddqzyu6der9",
  *  	"creationDate": "2017-06-12 13:58:56.0",
  *  	"expireDate": "2017-06-14 13:52:12.0",
  *  	"text": "Alert Message",
@@ -132,6 +172,7 @@ router.post('/', (req, res, next)=>{
  *  {
  *  	"id": "jdddqzyu6ser7",
  *  	"process": "1rjdqzyu6ser9",
+ *  	"case": "2rddqzyu6der9",
  *  	"creationDate": "2017-06-12 13:58:56.0",
  *  	"expireDate": "2017-06-14 13:52:12.0",
  *  	"text": "Alert Message",
@@ -152,7 +193,7 @@ router.post('/', (req, res, next)=>{
 router.patch('/:id', (req, res, next)=>{
   let data =  req.body;
   data.id = req.params.id;
-  Alert.updateById(data)
+  Alert.updateById(req.jwt, data)
     .then(a=>{
       res.status(200).send(a);
     })
@@ -171,6 +212,7 @@ router.patch('/:id', (req, res, next)=>{
  *  {
  *  	"id": "jdddqzyu6ser7",
  *  	"process": "1rjdqzyu6ser9",
+ *  	"case": "2rddqzyu6der9",
  *  	"creationDate": "2017-06-12 13:58:56.0",
  *  	"expireDate": "2017-06-14 13:52:12.0",
  *  	"text": "Alert Message",
@@ -189,7 +231,7 @@ router.patch('/:id', (req, res, next)=>{
  *  }
  */
 router.post('/:id/seen', (req, res, next)=>{
-  Alert.seen(req.params.id)
+  Alert.seen(req.jwt, req.params.id)
     .then(c=>{
       res.status(200).send(c);
     })
