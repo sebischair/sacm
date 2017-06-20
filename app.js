@@ -22,10 +22,13 @@ app.use(cookieParser());
 app.use('/api', (req, res, next)=>{
 
   /** this simulates the a custom user */
+  /*
   if(req.headers.simulateuser != null){
     req.jwt = http.generateJWT(req.headers.simulateuser, 'ottto');
     console.log('simulate user '+req.headers.simulateuser);
+    console.log(req.jwt);
   }
+*/ 
 
   /** this simulates the user Max Mustermann */
   if(req.jwt == null){

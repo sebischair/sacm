@@ -264,7 +264,7 @@ router.patch('/:id', (req, res, next)=>{
  *     }
  */
 router.get('/me', (req, res, next)=>{
-  User.me(req.jwt, req.params.id)
+  User.me(req.jwt)
     .then(user=>{
         res.status(200).send(user);
     })
