@@ -284,7 +284,8 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
             <AttributeDefinition id="phactp6" type="number" multiplicity="maximalOne" description="Minutes of high level activity daily"/> 
             <AttributeDefinition id="phactp7" type="number" multiplicity="maximalOne" description="Max minutes without activity allowed daily"/>   
             <!--{steepFollowing: [{date: '2017-06-09 14:54:53.0', value: 12}], lowFollowing:[], mediumFollowing:[], highFollowing:[], noActivityFollowing:[]}-->
-            <AttributeDefinition id="phactpx" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Collected Data e.g. {steepFollowing: [{date: '2017-06-09 14:54:53.0', value: 12}], lowFollowing:[], mediumFollowing:[], highFollowing:[], noActivityFollowing:[]}"/>                 
+            <!--Collected Data e.g. {steepFollowing: [{date: '2017-06-09 14:54:53.0', value: 12}], lowFollowing:[], mediumFollowing:[], highFollowing:[], noActivityFollowing:[]}"-->
+            <AttributeDefinition id="phactpx" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Execution Timeseries"/>                 
         </EntityDefinition>
 
 
@@ -292,6 +293,17 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
 
         <!-- Case Definition -->
         <CaseDefinition id="MajorSurgery" description="Major Surgery" ownerPath="Owner" entityDefinitionId="CaseData">
+
+            <SummarySectionDefinition id="Lace" description="Lace">            
+                <SummaryParamDefinition path="Lace.lace17"/>
+                <SummaryParamDefinition path="Lace.lace19"/>
+            </SummarySectionDefinition>
+
+            <SummarySectionDefinition id="PhysicalActivity" description="Physical Activity">
+                <SummaryParamDefinition path="PhysicalActivity.phactp1"/>
+                <SummaryParamDefinition path="PhysicalActivity.phactp2"/>
+                <SummaryParamDefinition path="PhysicalActivity.phactpx"/>
+            </SummarySectionDefinition>
 
             <StageDefinition id="CaseIdentification" description="Case Identification" isMandatory="true" isRepeatable="false">        
                 <HumanTaskDefinition id="SelectPatient" description="Select Patient" ownerPath="Owner" isMandatory="true" isRepeatable="false">                
