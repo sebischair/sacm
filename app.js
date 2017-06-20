@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import apiRoutes from './app/routes/route.app';
 import docRoutes from './doc/route';
+import http from './app/models/http';
 
 var app = express();
 
@@ -20,10 +21,17 @@ app.use(cookieParser());
 
 app.use('/api', (req, res, next)=>{
 
-  req.jwt = req.headers.authorization;  
+  /** this simulates the a custom user */
+  if(req.headers.simulateuser != null){
+    req.jwt = http.generateJWT(req.headers.simulateuser, 'ottto');
+    console.log('simulate user '+req.headers.simulateuser);
+  }
+
   /** this simulates the user Max Mustermann */
-  if(req.jwt == null)
+  if(req.jwt == null){
     req.jwt = 'Basic bXVzdGVybWFubkB0ZXN0LnNjOm90dHRv';
+    console.log('simulate user max mustermann');
+  }
   if(req.jwt != null){
     next();
   }else{
