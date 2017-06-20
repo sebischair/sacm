@@ -408,6 +408,7 @@ module.exports = class XMLImporter {
           permissions:{
             readers: [],
             writers: [],
+            contributors: [],
             administrators: []
           }
         }
@@ -417,11 +418,14 @@ module.exports = class XMLImporter {
         if(w.Writer != null)
           for(let r of w.Writer)
             data.permissions.writers.push(this.getPrincipalIdByXMLId(r.$.principalId));
+        if(w.Contributor != null)
+          for(let r of w.Contributor)
+            data.permissions.contributors.push(this.getPrincipalIdByXMLId(r.$.principalId));
         if(w.Administrator != null)
           for(let a of w.Administrator)
             data.permissions.administrators.push(this.getPrincipalIdByXMLId(a.$.principalId));
-        //if(w.$.staticId != null)
-        //  data.id = w.$.staticId;
+        if(w.$.staticId != null)
+          data.id = w.$.staticId;
         return Workspace.create(this.jwt, data)
           .then(persistedWorkspace=>{
             this.workspaceMap.set(w.$.id, persistedWorkspace.id);
