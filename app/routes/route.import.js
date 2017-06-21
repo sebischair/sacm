@@ -13,6 +13,7 @@ const router = express.Router();
  * see case/:id/tree route 
  */
 router.post('/', (req, res, next)=>{
+  res.connection.setTimeout(100*60*1000);
   const xml = new XMLImporter();
   let file = 'democase.xml';
   let isExecuteCase = false;
