@@ -8,6 +8,10 @@ export default class Case extends Model{
   static create(jwt, data){
     return http.post(jwt, '/cases/', data);
   }
+  
+  static findAll(jwt){
+    return http.get(jwt, '/cases');
+  }
 
   static findById(jwt, caseId){
     return http.get(jwt, '/case/'+caseId);

@@ -1059,6 +1059,41 @@ router.get('/:id/summarysections', (req, res, next)=>{
 });
 
 
+/**
+ * @api {get} /cases Get All Case tha can be access with the current user
+ * @apiName GetCases
+ * @apiGroup Case
+ * @apiSampleRequest /cases
+ * @apiSuccessExample {json} Success-Response:
+ * {
+ *   "id": "1q7nud4e2v1dl",
+ *   "stateDates": {
+ *     "enabled": "2017-05-15 17:29:14.0",
+ *     "terminated": null,
+ *     "active": null,
+ *     "available": "2017-05-15 17:29:14.0",
+ *     "completed": null
+ *   },
+ *   "caseDefinition": "1xzmymv4hf0tj",
+ *   "workspace": "1mwgok4jx7397",
+ *   "description": "Demo Case London",
+ *   "entity": "vcqm404srunk",
+ *   "name": "Democase",
+ *   "state": "ENABLED",
+ *   "owner": null,
+ *   "resourceType": "Case"
+ * }
+ */
+router.get('/', (req, res, next)=>{
+  Case.findAll(req.jwt)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
 
 
 
