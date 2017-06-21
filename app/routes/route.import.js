@@ -21,8 +21,9 @@ router.post('/', (req, res, next)=>{
     file = req.body.file;
   if(req.body.execute)
     isExecuteCase = true;
-  if(req.body.executionuser)
-    executionJwt = http.generateJWT(req.body.executionuser, 'ottto');
+  if(req.body.executionUser){
+    executionJwt = http.generateJWT(req.body.executionUser, 'ottto');
+  }
 
   xml.import(req.jwt, 'app/importer/'+file, isExecuteCase, executionJwt)
     .then(case1=>{

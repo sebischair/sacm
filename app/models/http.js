@@ -43,6 +43,7 @@ function successRequest(method, url, reqBody, resBody, statusCode, start, jwt){
 
 function errorRequest(method, url, reqBody, resBody, statusCode, start, jwt){
     const durationInMs = +(new Date().getTime()-start.getTime())+"ms";
+    const email = getEmailFromJWT(jwt);
     console.log(colors.red('SC-'+method+': '+ url + " "+colors.green(statusCode))+" "+durationInMs+" "+email);
     console.log(reqBody);
     console.log(resBody);
