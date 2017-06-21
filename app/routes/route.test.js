@@ -18,7 +18,11 @@ import Case from '../models/case/model.case';
 import HumanTask from '../models/case/model.humantask';
 const router = express.Router();
 
-
+router.post('/hook', (req, res, next)=>{
+  console.log('Hook arrived');
+  console.log(req.body);
+  res.send({some: "json"});
+})
 
 router.get('/', (req, res, next)=>{
 
