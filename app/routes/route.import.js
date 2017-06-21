@@ -1,5 +1,6 @@
 import express from 'express';
 import XMLImporter from './../importer/xmlimporter';
+import http from './../models/http';
 const router = express.Router();
 
 /**
@@ -15,11 +16,15 @@ router.post('/', (req, res, next)=>{
   const xml = new XMLImporter();
   let file = 'democase.xml';
   let isExecuteCase = false;
+  let executionJwt = req.jwt;
   if(req.body.file)
     file = req.body.file;
   if(req.body.execute)
     isExecuteCase = true;
-  xml.import(req.jwt, 'app/importer/'+file, isExecuteCase)
+  if(req.body.executionuser)
+    executionJwt = http.generateJWT(req.body.executionuser, 'ottto');
+
+  xml.import(req.jwt, 'app/importer/'+file, isExecuteCase, executionJwt)
     .then(case1=>{
       res.status(200).send(case1);
     })

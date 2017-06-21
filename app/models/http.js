@@ -3,6 +3,7 @@ import config from '../../config';
 import rq from 'request-promise';
 import Promise from 'bluebird';
 import colors from 'colors';
+import atob from 'atob';
 
 const headers = {
     'Authorization': 'Basic ' + new Buffer(config.sc.user + ':' + config.sc.pass).toString('base64'),
@@ -21,14 +22,28 @@ function generateJWT(email, pw){
     return 'Basic ' + new Buffer(email + ':' + pw).toString('base64');
 };
 
-function successRequest(method, url, reqBody, resBody, statusCode, start){
+function getEmailFromJWT(jwt){
+    if(jwt != null){
+        jwt = jwt.replace('Basic ', '');
+        jwt = atob(jwt.trim());
+        jwt = jwt.split(':');
+        if(jwt.length>0)
+            return jwt[0];
+    }
+    console.log('Could not decode JWT token')
+    return null;   
+};
+    
+
+function successRequest(method, url, reqBody, resBody, statusCode, start, jwt){
     const durationInMs = +(new Date().getTime()-start.getTime())+"ms";
-    console.log('SC-'+method+': '+ url + " "+colors.green(statusCode)+" "+durationInMs);
+    const email = getEmailFromJWT(jwt);
+    console.log('SC-'+method+': '+ url + " "+colors.green(statusCode)+" "+durationInMs +" "+email);
 }
 
-function errorRequest(method, url, reqBody, resBody, statusCode, start){
+function errorRequest(method, url, reqBody, resBody, statusCode, start, jwt){
     const durationInMs = +(new Date().getTime()-start.getTime())+"ms";
-    console.log(colors.red('SC-'+method+': '+ url + " "+colors.green(statusCode))+" "+durationInMs);
+    console.log(colors.red('SC-'+method+': '+ url + " "+colors.green(statusCode))+" "+durationInMs+" "+email);
     console.log(reqBody);
     console.log(resBody);
 }
@@ -52,11 +67,11 @@ module.exports = {
                 resolveWithFullResponse: true 
             })
             .then(res=>{
-                successRequest('GET', config.sc.url+path+p, '', res.body, res.statusCode, start);
+                successRequest('GET', config.sc.url+path+p, '', res.body, res.statusCode, start, jwt);
                 resolve(res.body);
             })
             .catch(res=>{
-                errorRequest('GET', config.sc.url+path+p, '', res.error, res.statusCode, start);
+                errorRequest('GET', config.sc.url+path+p, '', res.error, res.statusCode, start, jwt);
                 reject(res.error);
             });          
         });
@@ -75,11 +90,11 @@ module.exports = {
                 resolveWithFullResponse: true 
             })
             .then(res=>{
-                successRequest('POST', config.sc.url+path, data, res.body, res.statusCode, start);
+                successRequest('POST', config.sc.url+path, data, res.body, res.statusCode, start, jwt);
                 resolve(res.body);
             })
             .catch(res=>{
-                errorRequest('POST', config.sc.url+path, data, res.error, res.statusCode, start);
+                errorRequest('POST', config.sc.url+path, data, res.error, res.statusCode, start, jwt);
                 reject(res.error);
             });          
         });
@@ -95,11 +110,11 @@ module.exports = {
                 resolveWithFullResponse: true 
             })
             .then(res=>{
-                successRequest('PUT', config.sc.url+path, data, res.body, res.statusCode, start);
+                successRequest('PUT', config.sc.url+path, data, res.body, res.statusCode, start, jwt);
                 resolve(res.body);
             })
             .catch(res=>{
-                errorRequest('PUT', config.sc.url+path, data, res.error, res.statusCode, start);
+                errorRequest('PUT', config.sc.url+path, data, res.error, res.statusCode, start, jwt);
                 reject(res.error);
             });          
         });
@@ -114,11 +129,11 @@ module.exports = {
                 resolveWithFullResponse: true 
             })
             .then(res=>{
-                successRequest('DEL', config.sc.url+path, '', res.body, res.statusCode, start);
+                successRequest('DEL', config.sc.url+path, '', res.body, res.statusCode, start, jwt);
                 resolve(res.body);
             })
             .catch(res=>{
-                errorRequest('DEL', config.sc.url+path, '', res.error, res.statusCode, start);
+                errorRequest('DEL', config.sc.url+path, '', res.error, res.statusCode, start, jwt);
                 reject(res.error);
             });          
         });

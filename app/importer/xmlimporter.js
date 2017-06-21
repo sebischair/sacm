@@ -28,6 +28,7 @@ module.exports = class XMLImporter {
 
     constructor() {
       this.jwt = null; //"Basic bXVzdGVybWFubkB0ZXN0LnNjOm90dHRv"; // Max Mustermann
+      this.executionJwt = null; // used to create a case and execute it.
       this.workspaceMap = new Map();
       this.userAttributeDefinitionMap = new Map();
       this.userMap = new Map(); //<xmlId, sociocortexId>
@@ -180,8 +181,9 @@ module.exports = class XMLImporter {
       });
     }
 
-    import(jwt, filePath, isExecuteCase){ 
+    import(jwt, filePath, isExecuteCase, executionJwt){ 
       this.jwt = jwt;     
+      this.executionJwt = executionJwt;
       return this.fileExists(filePath)
         .then(exist =>{
           if(!exist)
@@ -911,10 +913,10 @@ module.exports = class XMLImporter {
 
     createCase(){
       const caseDefinitionId = this.caseDefinitionMap.values().next().value;
-      return Case.create(this.jwt, {caseDefinition: caseDefinitionId})
+      return Case.create(this.executionJwt, {caseDefinition: caseDefinitionId})
         .then(case1=>{
           this.case1 = case1;
-          return Case.findTreeById(this.jwt, case1.id);
+          return Case.findTreeById(this.executionJwt, case1.id);
         });
     }
 
@@ -941,7 +943,7 @@ module.exports = class XMLImporter {
         }
       })
       .then(()=>{
-        return Case.findTreeById(this.jwt, caseId);
+        return Case.findTreeById(this.executionJwt, caseId);
       })
     }
 
@@ -964,10 +966,10 @@ module.exports = class XMLImporter {
     }
    
     completeAutomatedTaskWithName(caseId, taskName, paramsMap){     
-       return AutomatedTask.findAllByCaseId(this.jwt, caseId)
+       return AutomatedTask.findAllByCaseId(this.executionJwt, caseId)
         .then(tasks=>{          
           const t = this.findProcessWithName(tasks, taskName);
-          return AutomatedTask.findById(this.jwt, t.id);
+          return AutomatedTask.findById(this.executionJwt, t.id);
         })        
         .then(task=>{
           for(let i=0; i<task.taskParams.length; i++){
@@ -975,7 +977,7 @@ module.exports = class XMLImporter {
             if(paramsMap.hasOwnProperty(tp.name))
               task.taskParams[i].values = paramsMap[tp.name];            
           }
-          return AutomatedTask.complete(this.jwt, task);
+          return AutomatedTask.complete(this.executionJwt, task);
         });        
     }
 
@@ -985,10 +987,10 @@ module.exports = class XMLImporter {
      * @param paramsMap {attrName1:[value1, value2], attrName2: [value1, value2]}
      */
     completeHumanTaskWithName(caseId, taskName, paramsMap){     
-       return HumanTask.findAllByCaseId(this.jwt, caseId)
+       return HumanTask.findAllByCaseId(this.executionJwt, caseId)
         .then(humanTasks=>{          
           const ht = this.findProcessWithName(humanTasks, taskName);
-          return HumanTask.findById(this.jwt, ht.id);
+          return HumanTask.findById(this.executionJwt, ht.id);
         })        
         .then(humanTask=>{
           for(let i=0; i<humanTask.taskParams.length; i++){
@@ -996,7 +998,7 @@ module.exports = class XMLImporter {
             if(paramsMap.hasOwnProperty(tp.name))
               humanTask.taskParams[i].values = paramsMap[tp.name];            
           }
-          return HumanTask.complete(this.jwt, humanTask);
+          return HumanTask.complete(this.executionJwt, humanTask);
         });        
     }
 
