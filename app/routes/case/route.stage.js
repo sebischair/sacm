@@ -264,6 +264,27 @@ router.get('/:id/humantasks', (req, res, next)=>{
     })
 });
 
+/**
+ * @api {post} /stage/:id/owner/:userid Set Stage Owner
+ * @apiName SetOwnerStage
+ * @apiGroup Stage
+ * @apiParam {String} id ID of a Stage
+ * @apiParam {String} userId of the Owner
+ * @apiSampleRequest /stage/:id/owner/userid
+ * @apiSuccessExample {json} Success-Response:
+ *     {
+ *     }
+ */
+router.post('/:id/owner/:userid', (req, res, next)=>{
+  Stage.setOwner(req.jwt, req.params.id, req.params.userid)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+        res.status(500).send(err);
+    })
+});
+
 
 
 module.exports = router;

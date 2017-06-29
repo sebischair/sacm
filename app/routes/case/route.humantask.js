@@ -359,4 +359,25 @@ router.post('/:id/terminate', (req, res, next)=>{
     })
 });
 
+/**
+ * @api {post} /humantask/:id/owner/:userid Set HumanTask Owner
+ * @apiName SetOwnerHumanTask
+ * @apiGroup HumanTask
+ * @apiParam {String} id ID of a HumanTask
+ * @apiParam {String} userId of the Owner
+ * @apiSampleRequest /humantask/:id/owner/userid
+ * @apiSuccessExample {json} Success-Response:
+ *     {
+ *     }
+ */
+router.post('/:id/owner/:userid', (req, res, next)=>{
+  HumanTask.setOwner(req.jwt, req.params.id, req.params.userid)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+        res.status(500).send(err);
+    })
+});
+
 module.exports = router;

@@ -33,4 +33,8 @@ export default class Stage extends Model{
     return http.post(jwt, '/stage/'+stageId+'/terminate');
   }
 
+  static setOwner(jwt, stageId, userId){
+    return http.post(jwt, '/stage/'+stageId+'/owner/'+userId);
+  }
+
 }

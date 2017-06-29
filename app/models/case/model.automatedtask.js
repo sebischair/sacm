@@ -37,4 +37,8 @@ export default class AutomatedTask extends Model{
     return http.post(jwt, '/automatedtask/'+automatedTaskId+'/terminate');
   }
 
+  static setOwner(jwt, automatedtaskId, userId){
+    return http.post(jwt, '/automatedtask/'+automatedtaskId+'/owner/'+userId);
+  }
+
 }

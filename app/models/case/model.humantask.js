@@ -37,5 +37,9 @@ export default class HumanTask extends Model{
     return http.post(jwt, '/humantask/'+humanTaskId+'/terminate');
   }
 
+  static setOwner(jwt, humanTaskId, userId){
+    return http.post(jwt, '/humantask/'+humanTaskId+'/owner/'+userId);
+  }
+
 
 }

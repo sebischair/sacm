@@ -110,4 +110,25 @@ router.post('/:id/terminate', (req, res, next)=>{
 });
 
 
+/**
+ * @api {post} /automatedtask/:id/owner/:userid Set AutomatedTask Owner
+ * @apiName SetOwnerAutomatedTask
+ * @apiGroup AutomatedTask
+ * @apiParam {String} id ID of a AutomatedTask
+ * @apiParam {String} userId of the Owner
+ * @apiSampleRequest /automatedtask/:id/owner/userid
+ * @apiSuccessExample {json} Success-Response:
+ *     {
+ *     }
+ */
+router.post('/:id/owner/:userid', (req, res, next)=>{
+  AutomatedTask.setOwner(req.jwt, req.params.id, req.params.userid)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+        res.status(500).send(err);
+    })
+});
+
 module.exports = router;
