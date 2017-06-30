@@ -24,4 +24,8 @@ export default class Process extends Model{
   static findByStageId(jwt, stageId){
     return http.get(jwt, '/stage/'+stageId+'/processes');
   }
+
+  static autocompleteOwner(jwt, processId){
+    return http.get(jwt, '/process/'+processId+'/owner/autocomplete');
+  }
 }

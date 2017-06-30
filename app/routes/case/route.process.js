@@ -80,4 +80,25 @@ router.get('/:id/alerts', (req, res, next)=>{
     })
 });
 
+
+/**
+ * @api {get} /process/:id/owner/autocomplete Get Owner Autocomplte Options for Process
+ * @apiName GetProcessOwnerAutocomplete
+ * @apiGroup Process 
+ * @apiParam {String} id ID of the Process 
+ * @apiSampleRequest /process/:id/owner/autocomplete
+ * @apiSuccessExample {json} Success-Response:
+ * //TODO
+ */
+router.get('/:id/owner/autocomplete', (req, res, next)=>{
+  console.log(req.params.id)
+  Process.autocompleteOwner(req.jwt, req.params.id)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
 module.exports = router;
