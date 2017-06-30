@@ -41,5 +41,9 @@ export default class HumanTask extends Model{
     return http.post(jwt, '/humantask/'+humanTaskId+'/owner/'+userId);
   }
 
+  static setScheduledDate(jwt, humanTaskId, scheduledDate){
+    return http.post(jwt, '/humantask/'+humanTaskId+'/scheduleddate', {scheduledDate: scheduledDate});
+  }
+
 
 }

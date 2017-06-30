@@ -380,4 +380,27 @@ router.post('/:id/owner/:userid', (req, res, next)=>{
     })
 });
 
+
+/**
+ * @api {post} /humantask/:id/scheduledate Set HumanTask Schedule Date
+ * @apiName SetHumanTaskScheduleDate
+ * @apiGroup HumanTask
+ * @apiParam {String} id ID of a HumanTask
+ * @apiParam {String} scheduleDate 
+ * @apiSampleRequest /humantask/:id/scheduledate
+ * {scheduleDate: 'some date'}
+ * @apiSuccessExample {json} Success-Response:
+ *     {
+ *      
+ *     }
+ */
+router.post('/:id/scheduleddate', (req, res, next)=>{
+  HumanTask.setScheduledDate(req.jwt, req.params.id, req.body.scheduledDate)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+        res.status(500).send(err);
+    })
+});
 module.exports = router;
