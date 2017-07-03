@@ -1060,6 +1060,79 @@ router.get('/:id/summarysections', (req, res, next)=>{
 
 
 /**
+ * @api {get} /case/:id/permissions Case Permissions
+ * @apiName CasePermission
+ * @apiGroup Case
+ * @apiParam {String} id ID of the Case
+ * @apiSampleRequest /case/:id/permissions
+ * @apiSuccessExample {json} Success-Response:
+ * {
+ *     "inheritedReaders": [],
+ *     "writers": [],
+ *     "readers": [
+ *         {
+ *             "id": "2c9480845bee03e7015bfcad28990010",
+ *             "name": "connecare-clinician"
+ *         }
+ *     ],
+ *     "inheritedWriters": [
+ *         {
+ *             "id": "wb9ikuclqmx6",
+ *             "name": "Max Mustermann"
+ *         }
+ *     ]
+ * }
+ */
+router.get('/:id/permissions', (req, res, next)=>{
+  Case.permissions(req.jwt, req.params.id)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+
+/**
+ * @api {post} /case/:id/reader Add a reader to the case
+ * @apiName CaseReader
+ * @apiGroup Case
+ * @apiParam {String} id ID of the Case
+ * @apiParam {String} id ID of the Principal
+ * @apiSampleRequest /case/:id/reader
+ * @apiSuccessExample {json} Success-Response:
+ */
+router.post('/:id/reader/:principalId', (req, res, next)=>{
+  Case.addReader(req.jwt, req.params.id, req.params.principalId)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
+ * @api {delete} /case/:id/reader Add a reader to the case
+ * @apiName CaseReader
+ * @apiGroup Case
+ * @apiParam {String} id ID of the Case
+ * @apiParam {String} id ID of the Principal
+ * @apiSampleRequest /case/:id/reader
+ * @apiSuccessExample {json} Success-Response:
+ */
+router.delete('/:id/reader/:principalId', (req, res, next)=>{
+  Case.removeReader(req.jwt, req.params.id, req.params.principalId)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
  * @api {get} /cases Get All Case tha can be access with the current user
  * @apiName GetCases
  * @apiGroup Case
