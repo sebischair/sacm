@@ -1133,6 +1133,44 @@ router.delete('/:id/reader/:principalId', (req, res, next)=>{
 });
 
 /**
+ * @api {post} /case/:id/writer Add a writer to the case
+ * @apiName CaseWriter
+ * @apiGroup Case
+ * @apiParam {String} id ID of the Case
+ * @apiParam {String} id ID of the Principal
+ * @apiSampleRequest /case/:id/writer
+ * @apiSuccessExample {json} Success-Response:
+ */
+router.post('/:id/writer/:principalId', (req, res, next)=>{
+  Case.addWriter(req.jwt, req.params.id, req.params.principalId)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
+ * @api {delete} /case/:id/writer Add a writer to the case
+ * @apiName CaseWriter
+ * @apiGroup Case
+ * @apiParam {String} id ID of the Case
+ * @apiParam {String} id ID of the Principal
+ * @apiSampleRequest /case/:id/writer
+ * @apiSuccessExample {json} Success-Response:
+ */
+router.delete('/:id/writer/:principalId', (req, res, next)=>{
+  Case.removeWriter(req.jwt, req.params.id, req.params.principalId)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
  * @api {get} /cases Get All Case tha can be access with the current user
  * @apiName GetCases
  * @apiGroup Case
