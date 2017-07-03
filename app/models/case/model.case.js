@@ -45,12 +45,20 @@ export default class Case extends Model{
     return http.get(jwt, '/case/'+caseId+'/permissions');
   }
 
+  static readerAutocomplete(jwt, caseId) {
+    return http.get(jwt, '/case/'+caseId+'/reader/autocomplete');
+  }
+
   static addReader(jwt, caseId, principalId) {
     return http.post(jwt, '/case/'+caseId+'/reader/'+principalId);
   }
 
   static removeReader(jwt, caseId, principalId) {
     return http.del(jwt, '/case/'+caseId+'/reader/'+principalId);
+  }
+
+  static writerAutocomplete(jwt, caseId) {
+    return http.get(jwt, '/case/'+caseId+'/writer/autocomplete');
   }
 
   static addWriter(jwt, caseId, principalId) {

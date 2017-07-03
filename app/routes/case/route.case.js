@@ -1095,6 +1095,24 @@ router.get('/:id/permissions', (req, res, next)=>{
 
 
 /**
+ * @api {get} /case/:id/reader Autocomplete options for case readers
+ * @apiName CaseReaderAutocomplte
+ * @apiGroup Case
+ * @apiParam {String} id ID of the Case
+ * @apiSampleRequest /case/:id/reader/autocomplete
+ * @apiSuccessExample {json} Success-Response:
+ */
+router.get('/:id/reader/autocomplete', (req, res, next)=>{
+  Case.readerAutocomplete(req.jwt, req.params.id)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
  * @api {post} /case/:id/reader Add a reader to the case
  * @apiName CaseReader
  * @apiGroup Case
@@ -1124,6 +1142,25 @@ router.post('/:id/reader/:principalId', (req, res, next)=>{
  */
 router.delete('/:id/reader/:principalId', (req, res, next)=>{
   Case.removeReader(req.jwt, req.params.id, req.params.principalId)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+
+/**
+ * @api {get} /case/:id/writer Autocomplete options for case writers
+ * @apiName CaseWriterAutocomplte
+ * @apiGroup Case
+ * @apiParam {String} id ID of the Case
+ * @apiSampleRequest /case/:id/writer/autocomplete
+ * @apiSuccessExample {json} Success-Response:
+ */
+router.get('/:id/writer/autocomplete', (req, res, next)=>{
+  Case.writerAutocomplete(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
