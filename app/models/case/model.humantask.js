@@ -6,47 +6,47 @@ import Model from '../model';
 export default class HumanTask extends Model{
   
   static findById(jwt, humanTaskId) {
-    return http.get(jwt, '/humantask/'+humanTaskId);
+    return http.get(jwt, '/humantasks/'+humanTaskId);
   }
 
   static findByCaseId(jwt, caseId) {
-    return http.get(jwt, '/case/'+caseId+'/humantasks');
+    return http.get(jwt, '/cases/'+caseId+'/humantasks');
   }
 
   static findAllByCaseId(jwt, caseId) {
-    return http.get(jwt, '/case/'+caseId+'/humantasks/all');
+    return http.get(jwt, '/cases/'+caseId+'/humantasks/all');
   }
 
   static findByStageId(jwt, stageId) {
-    return http.get(jwt, '/stage/'+stageId+'/humantasks');
+    return http.get(jwt, '/stages/'+stageId+'/humantasks');
   }
 
   static findByHumanTaskDefinitionId(jwt, humanTaskDefinitionId) {
-    return http.get(jwt, '/humantaskdefinition/'+humanTaskDefinitionId+'/humantasks');
+    return http.get(jwt, '/humantaskdefinitions/'+humanTaskDefinitionId+'/humantasks');
   }
 
   static activate(jwt, humanTaskId) {
-    return http.post(jwt, '/humantask/'+humanTaskId+'/activate');
+    return http.post(jwt, '/humantasks/'+humanTaskId+'/activate');
   }
 
   static draft(jwt, data) {
-    return http.post(jwt, '/humantask/'+data.id+'/draft', data);
+    return http.post(jwt, '/humantasks/'+data.id+'/draft', data);
   }
 
   static complete(jwt, data) {
-    return http.post(jwt, '/humantask/'+data.id+'/complete', data);
+    return http.post(jwt, '/humantasks/'+data.id+'/complete', data);
   }
 
   static terminate(jwt, humanTaskId) {
-    return http.post(jwt, '/humantask/'+humanTaskId+'/terminate');
+    return http.post(jwt, '/humantasks/'+humanTaskId+'/terminate');
   }
 
   static setOwner(jwt, humanTaskId, userId){
-    return http.post(jwt, '/humantask/'+humanTaskId+'/owner/'+userId);
+    return http.post(jwt, '/humantasks/'+humanTaskId+'/owner/'+userId);
   }
 
   static setScheduledDate(jwt, humanTaskId, scheduledDate){
-    return http.post(jwt, '/humantask/'+humanTaskId+'/scheduleddate', {scheduledDate: scheduledDate});
+    return http.post(jwt, '/humantasks/'+humanTaskId+'/scheduleddate', {scheduledDate: scheduledDate});
   }
 
 

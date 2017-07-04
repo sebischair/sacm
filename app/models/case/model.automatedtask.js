@@ -6,43 +6,43 @@ import Model from '../model';
 export default class AutomatedTask extends Model{
 
   static findById(jwt, automatedTaskId) {
-    return http.get(jwt, '/automatedtask/'+automatedTaskId);
+    return http.get(jwt, '/automatedtasks/'+automatedTaskId);
   }
 
   static findByCaseId(jwt, caseId) {
-    return http.get(jwt, '/case/'+caseId+'/automatedtasks');
+    return http.get(jwt, '/cases/'+caseId+'/automatedtasks');
   }
 
   static findAllByCaseId(jwt, caseId) {
-    return http.get(jwt, '/case/'+caseId+'/automatedtasks/all');
+    return http.get(jwt, '/cases/'+caseId+'/automatedtasks/all');
   }
 
   static findByStageId(jwt, stageId) {
-    return http.get(jwt, '/stage/'+stageId+'/automatedtasks');
+    return http.get(jwt, '/stages/'+stageId+'/automatedtasks');
   }
 
   static findByAutomatedTaskDefinitionId(jwt, automatedTaskDefinitionId) {
-    return http.get(jwt, '/automatedtaskdefinition/'+automatedTaskDefinitionId+'/automatedtasks');
+    return http.get(jwt, '/automatedtaskdefinitions/'+automatedTaskDefinitionId+'/automatedtasks');
   }
 
   static activate(jwt, automatedTaskId) {
-    return http.post(jwt, '/automatedtask/'+dautomatedTaskId+'/activate');
+    return http.post(jwt, '/automatedtasks/'+dautomatedTaskId+'/activate');
   }
 
   static draft(jwt, data) {
-    return http.post(jwt, '/automatedtask/'+data.id+'/draft', data);
+    return http.post(jwt, '/automatedtasks/'+data.id+'/draft', data);
   }
 
   static complete(jwt, data) {
-    return http.post(jwt, '/automatedtask/'+data.id+'/complete', data);
+    return http.post(jwt, '/automatedtasks/'+data.id+'/complete', data);
   }
 
   static terminate(jwt, automatedTaskId) {
-    return http.post(jwt, '/automatedtask/'+automatedTaskId+'/terminate');
+    return http.post(jwt, '/automatedtasks/'+automatedTaskId+'/terminate');
   }
 
   static setOwner(jwt, automatedtaskId, userId){
-    return http.post(jwt, '/automatedtask/'+automatedtaskId+'/owner/'+userId);
+    return http.post(jwt, '/automatedtasks/'+automatedtaskId+'/owner/'+userId);
   }
 
 }

@@ -10,23 +10,23 @@ export default class Alert extends Model{
   }
 
   static findByCaseId(jwt, caseId) {
-    return http.get(jwt, '/case/'+caseId+'/alerts');
+    return http.get(jwt, '/cases/'+caseId+'/alerts');
   }
 
   static findByProcessId(jwt, processId) {
-    return http.get(jwt, '/process/'+processId+'/alerts');
+    return http.get(jwt, '/processes/'+processId+'/alerts');
   }
 
   static findById(jwt, alertId) {
-    return http.get(jwt, '/alert/'+alertId);
+    return http.get(jwt, '/alerts/'+alertId);
   }
 
   static updateById(jwt, data) {
-    return http.put(jwt, '/alert/'+data.id, data);
+    return http.put(jwt, '/alerts/'+data.id, data);
   }
 
   static seen(jwt, alertId) {
-    return http.post(jwt, '/alert/'+alertId+'/seen');
+    return http.post(jwt, '/alerts/'+alertId+'/seen');
   }
 
   static findByMe(jwt) {

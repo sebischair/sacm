@@ -7,7 +7,7 @@ export default class SumamrySection extends Model{
 
 
   static findByCaseId(jwt, caseId) {
-    return http.get(jwt, '/case/'+caseId+'/summarysections');
+    return http.get(jwt, '/cases/'+caseId+'/summarysections');
   }
 
 }

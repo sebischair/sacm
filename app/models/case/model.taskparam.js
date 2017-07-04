@@ -6,7 +6,7 @@ import Model from '../model';
 export default class TaskParam extends Model{
 
   static autocompleteById(jwt, taskParamId) {
-    return http.get(jwt, '/taskparam/'+taskParamId+'/autocomplete');
+    return http.get(jwt, '/taskparams/'+taskParamId+'/autocomplete');
   }
 
 }

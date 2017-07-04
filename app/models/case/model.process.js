@@ -6,26 +6,26 @@ import Model from '../model';
 export default class Process extends Model{
 
   static findById(jwt, processId){
-    return http.get(jwt, '/process/'+processId);
+    return http.get(jwt, '/processes/'+processId);
   }
   
   static findByCaseId(jwt, caseId){
-    return http.get(jwt, '/case/'+caseId+'/processes');
+    return http.get(jwt, '/cases/'+caseId+'/processes');
   }
 
   static findAllbyCaseId(jwt, caseId){
-    return http.get(jwt, '/case/'+caseId+'/processes/all');
+    return http.get(jwt, '/cases/'+caseId+'/processes/all');
   }
 
   static findByProcessDefinitionId(jwt, processDefinitionId){
-    return http.get(jwt, '/processdefinition/'+processDefinitionId+'/processes');
+    return http.get(jwt, '/processdefinitions/'+processDefinitionId+'/processes');
   }
 
   static findByStageId(jwt, stageId){
-    return http.get(jwt, '/stage/'+stageId+'/processes');
+    return http.get(jwt, '/stages/'+stageId+'/processes');
   }
 
   static autocompleteOwner(jwt, processId){
-    return http.get(jwt, '/process/'+processId+'/owner/autocomplete');
+    return http.get(jwt, '/processes/'+processId+'/owner/autocomplete');
   }
 }

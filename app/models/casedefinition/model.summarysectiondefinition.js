@@ -10,7 +10,7 @@ export default class SummarySectionDefinition extends Model{
   }
 
   static findById(jwt, summarySectionDefinitionId){
-    return http.get(jwt, '/summarysectiondefinition/'+summarySectionDefinitionId);
+    return http.get(jwt, '/summarysectiondefinitions/'+summarySectionDefinitionId);
   }
 
   static findByCaseDefinitionId(jwt, caseDefinitionId){
@@ -18,11 +18,11 @@ export default class SummarySectionDefinition extends Model{
   }
 
   static updateById(jwt, data) {
-    return http.put(jwt, '/summarysectiondefinition/'+data.id, data);
+    return http.put(jwt, '/summarysectiondefinitions/'+data.id, data);
   }
 
   static deleteById(jwt, summarySectionDefinitionId) {
-    return http.del(jwt, '/summarysectiondefinition/'+summarySectionDefinitionId);
+    return http.del(jwt, '/summarysectiondefinitions/'+summarySectionDefinitionId);
   }
 
 }
