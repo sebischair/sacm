@@ -57,7 +57,7 @@ const router = express.Router();
  *       "isReadOnly": false,
  *       "attributeType": "enumeration",
  *       "multiplicity": "maximalOne",
- *       "resourceType": "TaskParam"
+ *       "resourceType": "taskparams"
  *     },
  *     {
  *       "id": "8p599v61r2em",
@@ -85,7 +85,7 @@ const router = express.Router();
  *       "isReadOnly": false,
  *       "attributeType": "enumeration",
  *       "multiplicity": "maximalOne",
- *       "resourceType": "TaskParam"
+ *       "resourceType": "taskparams"
  *     }
  *   ],
  *   "description": "Lace",
@@ -185,7 +185,7 @@ router.post('/:id/activate', (req, res, next)=>{
  *       "isReadOnly": false,
  *       "attributeType": "enumeration",
  *       "multiplicity": "maximalOne",
- *       "resourceType": "TaskParam"
+ *       "resourceType": "taskparams"
  *     },
  *     {
  *       "id": "8p599v61r2em",
@@ -211,7 +211,7 @@ router.post('/:id/activate', (req, res, next)=>{
  *       "isReadOnly": false,
  *       "attributeType": "enumeration",
  *       "multiplicity": "maximalOne",
- *       "resourceType": "TaskParam"
+ *       "resourceType": "taskparams"
  *     }
  *   ],
  *   "description": "Lace",
@@ -303,7 +303,7 @@ router.post('/:id/draft', (req, res, next)=>{
  *       "isReadOnly": false,
  *       "attributeType": "enumeration",
  *       "multiplicity": "maximalOne",
- *       "resourceType": "TaskParam"
+ *       "resourceType": "taskparams"
  *     },
  *     {
  *       "id": "8p599v61r2em",
@@ -331,7 +331,7 @@ router.post('/:id/draft', (req, res, next)=>{
  *       "isReadOnly": false,
  *       "attributeType": "enumeration",
  *       "multiplicity": "maximalOne",
- *       "resourceType": "TaskParam"
+ *       "resourceType": "taskparams"
  *     }
  *   ],
  *   "description": "Lace",

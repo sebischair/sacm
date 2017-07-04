@@ -233,7 +233,7 @@ router.get('/:id/humantaskdefinitions', (req, res, next)=>{
  *       "state": "AVAILABLE",
  *       "children": [],
  *       "case": "1q7nud4e2v1dl",
- *       "resourceType": "Stage"
+ *       "resourceType": "stages"
  *     }]
  */
  router.get('/:id/stages', (req, res, next)=>{

@@ -56,7 +56,7 @@ const router = express.Router();
  *         "index": 0,
  *         "description": "Case Identification",
  *         "name": "CaseIdentification",
- *         "resourceType": "Stage"
+ *         "resourceType": "stages"
  *       }
  *     ],
  *     "resourceType": "cases"
@@ -226,7 +226,7 @@ router.get('/:id', (req, res, next)=>{
  *             }
  *           ]
  *         ],
- *         "resourceType": "Stage",
+ *         "resourceType": "stages",
  *         "prev": null,
  *         "id": "e651dpvclqqe",
  *         "processDefinition": "1piaj7aobvjca",
@@ -286,7 +286,7 @@ router.get('/:id', (req, res, next)=>{
  *             }
  *           ]
  *         ],
- *         "resourceType": "Stage",
+ *         "resourceType": "stages",
  *         "prev": null,
  *         "id": "172l9hvvuax3i",
  *         "processDefinition": "jycsfe58lqh5",
@@ -346,7 +346,7 @@ router.get('/:id', (req, res, next)=>{
  *             }
  *           ]
  *         ],
- *         "resourceType": "Stage",
+ *         "resourceType": "stages",
  *         "prev": null,
  *         "id": "hsf1x1ee6694",
  *         "processDefinition": "t1honuj1kynx",
@@ -410,7 +410,7 @@ router.get('/:id', (req, res, next)=>{
  *             }
  *           ]
  *         ],
- *         "resourceType": "Stage",
+ *         "resourceType": "stages",
  *         "prev": null,
  *         "id": "14dp1cho8q3f8",
  *         "processDefinition": "1q16esle6fplj",
@@ -603,7 +603,7 @@ router.get('/:id/processes/all', (req, res, next)=>{
  *       "state": "ENABLED",
  *       "children": [],
  *       "case": "1q7nud4e2v1dl",
- *       "resourceType": "Stage"
+ *       "resourceType": "stages"
  *     }]
  */
 router.get('/:id/stages', (req, res, next)=>{
@@ -641,7 +641,7 @@ router.get('/:id/stages', (req, res, next)=>{
  *       "state": "ENABLED",
  *       "children": [],
  *       "case": "1q7nud4e2v1dl",
- *       "resourceType": "Stage"
+ *       "resourceType": "stages"
  *     }]
  */
 router.get('/:id/stages/all', (req, res, next)=>{

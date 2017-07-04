@@ -31,7 +31,7 @@ const router = express.Router();
  *     "state": "ENABLED",
  *     "children": [],
  *     "case": "zgc0k7ou8xuk",
- *     "resourceType": "Stage"
+ *     "resourceType": "stages"
  *    }
  *
  */
@@ -68,7 +68,7 @@ router.get('/:id', (req, res, next)=>{
  *     "state": "ENABLED",
  *     "children": [],
  *     "case": "zgc0k7ou8xuk",
- *     "resourceType": "Stage"
+ *     "resourceType": "stages"
  *    }]
  */
 router.get('/:id/stages', (req, res, next)=>{
