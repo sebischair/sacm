@@ -14,51 +14,59 @@ export default class Case extends Model{
   }
 
   static findById(jwt, caseId){
-    return http.get(jwt, '/case/'+caseId);
+    return http.get(jwt, '/cases/'+caseId);
   }
 
   static findByWorkspaceId(jwt, workspaceId){
-    return http.get(jwt, '/workspace/'+workspaceId+'/cases');
+    return http.get(jwt, '/workspaces/'+workspaceId+'/cases');
   }
 
   static findbyCaseDefinitionId(jwt, caseDefinitionId){
-    return http.get(jwt, '/casedefinition/'+caseDefinitionId+'/cases');
+    return http.get(jwt, '/casedefinitions/'+caseDefinitionId+'/cases');
   }
 
   static findTreeById(jwt, caseId, params){
-    return http.get(jwt, '/case/'+caseId+'/tree', params);
+    return http.get(jwt, '/cases/'+caseId+'/tree', params);
   }
 
   static deleteById(jwt, caseId) {
-    return http.del(jwt, '/case/'+caseId);
+    return http.del(jwt, '/cases/'+caseId);
   }
 
   static complete(jwt, caseId) {
-    return http.post(jwt, '/case/'+caseId+'/complete');
+    return http.post(jwt, '/cases/'+caseId+'/complete');
   }
 
   static terminate(jwt, caseId) {
-    return http.post(jwt, '/case/'+caseId+'/terminate');
+    return http.post(jwt, '/cases/'+caseId+'/terminate');
   }
 
   static permissions(jwt, caseId) {
-    return http.get(jwt, '/case/'+caseId+'/permissions');
+    return http.get(jwt, '/cases/'+caseId+'/permissions');
+  }
+
+  static readerAutocomplete(jwt, caseId) {
+    return http.get(jwt, '/cases/'+caseId+'/reader/autocomplete');
   }
 
   static addReader(jwt, caseId, principalId) {
-    return http.post(jwt, '/case/'+caseId+'/reader/'+principalId);
+    return http.post(jwt, '/cases/'+caseId+'/reader/'+principalId);
   }
 
   static removeReader(jwt, caseId, principalId) {
-    return http.del(jwt, '/case/'+caseId+'/reader/'+principalId);
+    return http.del(jwt, '/cases/'+caseId+'/reader/'+principalId);
+  }
+
+  static writerAutocomplete(jwt, caseId) {
+    return http.get(jwt, '/cases/'+caseId+'/writer/autocomplete');
   }
 
   static addWriter(jwt, caseId, principalId) {
-    return http.post(jwt, '/case/'+caseId+'/writer/'+principalId);
+    return http.post(jwt, '/cases/'+caseId+'/writer/'+principalId);
   }
 
   static removeWriter(jwt, caseId, principalId) {
-    return http.del(jwt, '/case/'+caseId+'/writer/'+principalId);
+    return http.del(jwt, '/cases/'+caseId+'/writer/'+principalId);
   }
 
   static findByMe(jwt) {

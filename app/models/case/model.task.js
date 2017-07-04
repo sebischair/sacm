@@ -6,22 +6,22 @@ import Model from '../model';
 export default class Task extends Model{
 
   static findById(jwt, taskId){
-    return http.get(jwt, '/task/'+taskId);
+    return http.get(jwt, '/tasks/'+taskId);
   }
   
   static findByCaseId(jwt, caseId){
-    return http.get(jwt, '/case/'+caseId+'/tasks');
+    return http.get(jwt, '/cases/'+caseId+'/tasks');
   }
 
   static findAllbyCaseId(jwt, caseId){
-    return http.get(jwt, '/case/'+caseId+'/tasks/all');
+    return http.get(jwt, '/cases/'+caseId+'/tasks/all');
   }
 
   static findByTaskDefinitionId(jwt, taskDefinitionId){
-    return http.get(jwt, '/taskdefinition/'+taskDefinitionId+'/tasks');
+    return http.get(jwt, '/taskdefinitions/'+taskDefinitionId+'/tasks');
   }
 
   static findByStageId(jwt, stageId){
-    return http.get(jwt, '/stage/'+stageId+'/tasks');
+    return http.get(jwt, '/stages/'+stageId+'/tasks');
   }
 }

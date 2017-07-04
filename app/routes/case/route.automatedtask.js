@@ -40,6 +40,24 @@ router.get('/:id', (req, res, next)=>{
 });
 
 
+/**
+ * @api {post} /automatedtask/:id/activate Activate AutomatedTask
+ * @apiName ActivateAutomatedTask
+ * @apiGroup AutomatedTask
+ * @apiParam {String} id (mandatory)  ID of a AutomatedTask
+ * @apiSuccessExample {json} Success-Response:
+ *     {
+ *     }
+ */
+router.post('/:id/activate', (req, res, next)=>{
+  AutomatedTask.activate(req.jwt, req.params.id)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+        res.status(500).send(err);
+    })
+});
 
 
 /**

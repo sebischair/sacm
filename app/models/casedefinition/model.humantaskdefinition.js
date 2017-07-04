@@ -10,27 +10,27 @@ export default class HumanTaskDefinition extends Model{
   }
 
   static findById(jwt, humanTaskDefinitionId) {
-    return http.get(jwt, '/humantaskdefinition/'+humanTaskDefinitionId);
+    return http.get(jwt, '/humantaskdefinitions/'+humanTaskDefinitionId);
   }
 
   static findByCaseDefinitionId(jwt, caseDefinitionId) {
-    return http.get(jwt, '/casedefinition/'+caseDefinitionId+'/humantaskdefinitions');
+    return http.get(jwt, '/casedefinitions/'+caseDefinitionId+'/humantaskdefinitions');
   }
 
   static findAllByCaseDefinitionId(jwt, caseDefinitionId) {
-    return http.get(jwt, '/casedefinition/'+caseDefinitionId+'/humantaskdefinitions/all');
+    return http.get(jwt, '/casedefinitions/'+caseDefinitionId+'/humantaskdefinitions/all');
   }
 
   static findByStageDefinitionId(jwt, stageDefinitionId) {
-    return http.get(jwt, '/stagedefinition/'+stageDefinitionId+'/humantaskdefinitions');
+    return http.get(jwt, '/stagedefinitions/'+stageDefinitionId+'/humantaskdefinitions');
   }
 
   static updateById(jwt, data) {
-    return http.put(jwt, '/humantaskdefinition/'+data.id, data);
+    return http.put(jwt, '/humantaskdefinitions/'+data.id, data);
   }
 
   static deleteById(jwt, humanTaskDefinitionId) {
-    return http.del(jwt, '/humantaskdefinition/'+humanTaskDefinitionId);
+    return http.del(jwt, '/humantaskdefinitions/'+humanTaskDefinitionId);
   }
   
 }

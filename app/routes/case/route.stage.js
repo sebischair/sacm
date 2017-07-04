@@ -81,6 +81,27 @@ router.get('/:id/stages', (req, res, next)=>{
     })
 });
 
+
+/**
+ * @api {post} /stage/:id/activate Activate Stage
+ * @apiName ActivateStage
+ * @apiGroup Stage
+ * @apiParam {String} id ID of the Stage
+ * @apiSampleRequest /stage/:id/activate
+ * @apiSuccessExample {json} Success-Response:
+ *   {}
+ */
+router.post('/:id/activate', (req, res, next)=>{
+  Stage.activate(req.jwt, req.params.id)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+
 /**
  * @api {post} /stage/:id/complete Complete Stage
  * @apiName CompleteStage

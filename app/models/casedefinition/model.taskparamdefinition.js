@@ -10,19 +10,19 @@ export default class TaskParamDefinition extends Model{
   }
 
   static findById(jwt, taskParamDefinitionId) {
-    return http.get(jwt, '/taskparamdefinition/'+taskParamDefinitionId);
+    return http.get(jwt, '/taskparamdefinitions/'+taskParamDefinitionId);
   }
 
   static findByTaskDefinitionId(jwt, taskDefinitionId) {
-    return http.get(jwt, '/taskdefinition/'+taskDefinitionId+'/taskparamdefinitions');
+    return http.get(jwt, '/taskdefinitions/'+taskDefinitionId+'/taskparamdefinitions');
   }
 
   static updateById(jwt, data) {
-    return http.put(jwt, '/taskparamdefinition/'+data.id, data);
+    return http.put(jwt, '/taskparamdefinitions/'+data.id, data);
   }
 
   static deleteById(jwt, taskParamDefinitionId) {
-    return http.del(jwt, '/taskparamdefinition/'+taskParamDefinitionId);
+    return http.del(jwt, '/taskparamdefinitions/'+taskParamDefinitionId);
   }
 
 }

@@ -10,23 +10,23 @@ export default class StageDefinition extends Model{
   }
 
   static findById(jwt, stageDefinitionId) {
-    return http.get(jwt, '/stagedefinition/'+stageDefinitionId);
+    return http.get(jwt, '/stagedefinitions/'+stageDefinitionId);
   }
 
   static findByCaseDefinitionId(jwt, caseDefinitionId) {
-    return http.get(jwt, '/casedefinition/'+caseDefinitionId+'/stagedefinitions');
+    return http.get(jwt, '/casedefinitions/'+caseDefinitionId+'/stagedefinitions');
   }
 
   static findALLByCaseDefinitionId(jwt, caseDefinitionId) {
-    return http.get(jwt, '/casedefinition/'+caseDefinitionId+'/stagedefinitions/all');
+    return http.get(jwt, '/casedefinitions/'+caseDefinitionId+'/stagedefinitions/all');
   }
 
   static updateById(jwt, stageDefinitionId, data) {
-    return http.del(jwt, '/stagedefinition/'+stageDefinitionId, data);
+    return http.del(jwt, '/stagedefinitions/'+stageDefinitionId, data);
   }
 
   static deleteById(jwt, stageDefinitionId) {
-    return http.del(jwt, '/stagedefinition/'+stageDefinitionId);
+    return http.del(jwt, '/stagedefinitions/'+stageDefinitionId);
   }
   
 }
