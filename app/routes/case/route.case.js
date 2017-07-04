@@ -74,6 +74,7 @@ router.get('/me', (req, res, next)=>{
 });
 
 
+
 /**
  * @api {get} /cases/:id Get Case
  * @apiName GetCase
@@ -1101,6 +1102,7 @@ router.get('/:id/permissions', (req, res, next)=>{
  * @apiParam {String} id ID of the Case
  * @apiSampleRequest /cases/:id/reader/autocomplete
  * @apiSuccessExample {json} Success-Response:
+ * {}
  */
 router.get('/:id/reader/autocomplete', (req, res, next)=>{
   Case.readerAutocomplete(req.jwt, req.params.id)
@@ -1120,6 +1122,7 @@ router.get('/:id/reader/autocomplete', (req, res, next)=>{
  * @apiParam {String} id ID of the Principal
  * @apiSampleRequest /cases/:id/reader
  * @apiSuccessExample {json} Success-Response:
+ * {}
  */
 router.post('/:id/reader/:principalId', (req, res, next)=>{
   Case.addReader(req.jwt, req.params.id, req.params.principalId)
@@ -1139,6 +1142,7 @@ router.post('/:id/reader/:principalId', (req, res, next)=>{
  * @apiParam {String} id ID of the Principal
  * @apiSampleRequest /cases/:id/reader
  * @apiSuccessExample {json} Success-Response:
+ * {}
  */
 router.delete('/:id/reader/:principalId', (req, res, next)=>{
   Case.removeReader(req.jwt, req.params.id, req.params.principalId)
@@ -1158,6 +1162,7 @@ router.delete('/:id/reader/:principalId', (req, res, next)=>{
  * @apiParam {String} id ID of the Case
  * @apiSampleRequest /cases/:id/writer/autocomplete
  * @apiSuccessExample {json} Success-Response:
+ * {}
  */
 router.get('/:id/writer/autocomplete', (req, res, next)=>{
   Case.writerAutocomplete(req.jwt, req.params.id)
@@ -1177,6 +1182,7 @@ router.get('/:id/writer/autocomplete', (req, res, next)=>{
  * @apiParam {String} id ID of the Principal
  * @apiSampleRequest /cases/:id/writer
  * @apiSuccessExample {json} Success-Response:
+ * {}
  */
 router.post('/:id/writer/:principalId', (req, res, next)=>{
   Case.addWriter(req.jwt, req.params.id, req.params.principalId)
@@ -1196,6 +1202,7 @@ router.post('/:id/writer/:principalId', (req, res, next)=>{
  * @apiParam {String} id ID of the Principal
  * @apiSampleRequest /cases/:id/writer
  * @apiSuccessExample {json} Success-Response:
+ * {}
  */
 router.delete('/:id/writer/:principalId', (req, res, next)=>{
   Case.removeWriter(req.jwt, req.params.id, req.params.principalId)
