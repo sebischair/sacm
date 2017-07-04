@@ -49,7 +49,7 @@ app.use('/api', (req, res, next)=>{
     res.status(403).send();
   }
 });
-app.use('/api', apiRoutes())
+app.use('/api/v1', apiRoutes())
 
 app.use('/doc/assets', express.static(__dirname + '/doc/assets'));
 app.use('/doc', docRoutes())
