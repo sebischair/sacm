@@ -194,7 +194,7 @@ router.get('/:id/processes', (req, res, next)=>{
  *          "owner": null,
  *          "state": "ENABLED",
  *          "case": "1q7nud4e2v1dl",
- *          "resourceType": "AutomatedTask"
+ *          "resourceType": "automatedtasks"
  *     }]
  */
 router.get('/:id/tasks', (req, res, next)=>{
@@ -232,7 +232,7 @@ router.get('/:id/tasks', (req, res, next)=>{
  *          "owner": null,
  *          "state": "ENABLED",
  *          "case": "1q7nud4e2v1dl",
- *          "resourceType": "AutomatedTask"
+ *          "resourceType": "automatedtasks"
  *     }]
  */
 router.get('/:id/automatedtasks', (req, res, next)=>{
@@ -271,7 +271,7 @@ router.get('/:id/automatedtasks', (req, res, next)=>{
  *          "owner": null,
  *          "state": "ENABLED",
  *          "case": "1q7nud4e2v1dl",
- *          "resourceType": "HumanTask"
+ *          "resourceType": "humantasks"
  *     }]
  *
  */

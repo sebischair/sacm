@@ -162,7 +162,7 @@ router.patch('/:id', (req, res, next)=>{
  *          "owner": null,
  *          "state": "ENABLED",
  *          "case": "1q7nud4e2v1dl",
- *          "resourceType": "HumanTask"
+ *          "resourceType": "humantasks"
  *     }]
  */
 router.get('/:id/humantasks', (req, res, next)=>{

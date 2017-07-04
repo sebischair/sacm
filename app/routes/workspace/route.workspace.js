@@ -60,7 +60,7 @@ router.get('/:id', (req, res, next)=>{
  *   "name": "Democase",
  *   "state": "ENABLED",
  *   "owner": null,
- *   "resourceType": "Case"
+ *   "resourceType": "cases"
  * }]
  */
 router.get('/:id/cases', (req, res, next)=>{
