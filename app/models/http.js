@@ -81,6 +81,8 @@ module.exports = {
         const start = new Date();
         console.log('###### POST 2 #######');
         console.log(JSON.stringify(data));
+        console.log(config.sc.url +path);
+        console.log('xxxx');
         console.log('###### POST 2 END #######');
         return new Promise(function (resolve, reject){
             rq.post({
@@ -91,10 +93,17 @@ module.exports = {
                 resolveWithFullResponse: true 
             })
             .then(res=>{
+                console.log('RES');
+                console.log(res);
+
                 successRequest('POST', config.sc.url+path, data, res.body, res.statusCode, start, jwt);
                 resolve(res.body);
             })
             .catch(res=>{
+
+                console.log('ERR');
+                console.log(res);
+
                 errorRequest('POST', config.sc.url+path, data, res.error, res.statusCode, start, jwt);
                 reject(res.error);
             });          

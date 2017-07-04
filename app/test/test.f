@@ -2,6 +2,7 @@ import assert from "assert"; // node.js core module
 import chai from "chai";
 import chaiHttp from "chai-http";
 import Workspace from '../models/workspace/model.workspace';
+import EntityDefinition from '../models/datadefinition/model.entitydefinition';
 import server from "../../app";
 
 
@@ -12,68 +13,69 @@ let base_api = 'http://localhost:8084/api';
 chai.use(chaiHttp);
 
 var uid = Math.random().toString(36).substring(7);
-
+var jwt = "Basic bXVzdGVybWFubkB0ZXN0LnNjOm90dHRv";
 let test_obj = {
   test_uid : uid,
-  created_user: {
-    name: 'Peter Bambo',
-    id: uid,
-    email: uid + '@jasdud.de'
+  created_casedefinition: {
+    name: 'CaseDev1',
+    label: 'CaseDev1--Label',
+    entityDefinition: ''
   },
-  updated_user_obj: {
-    name: 'Peter Bambo',
-    id: uid,
-    email: uid + 'xx@xjasdud.de'    
+  updated_casedefinition: {
+    name: 'CaseDev1',
+    label: 'CaseDev1--Label',
+    entityDefinition: ''  
   }
 };
 
 //Our parent block
-describe('Test Definitions', () => {
-
-/*
-    beforeEach(function(done) { //Before each test delete all workspaces
-        this.timeout(5000);
-        Workspace.deleteAll().then((res)=>{
-            console.log('');
-            console.log('');
-            console.log('');
-            done();
-        });
-        done();
-    });
-
-  */
-
+describe('Test CasesDefinitions', () => {
 
     /*
     * Test the /POST route
     */
-    describe('/POST Create User', () => {
+    describe('/POST CasesDefinition', () => {
 
         // Delete user (if exists)
         before(function(done) {
-          this.timeout(15000);
-          //console.log('before');
-          chai.request(base_api)
-              .delete('/users/'+encodeURIComponent(test_obj.created_user.id))
-              .end((err, res) => {
-                //console.log(res.body);
-                done();
-              });
+          this.timeout(25000);
+
+          var data = { name: 'Camuute',
+          description: 'blalblalba',
+          id: 'alsdkalsdklasd',
+          permissions:{
+            readers: [],
+            writers: [],
+            contributors: [],
+            administrators: []
+          }
+        }
+
+          // Create Workspace
+          Workspace.create(jwt, data).then(() => {});
+
+          // Create EntityDefinition
+          /*
+          EntityDefinition.create(jwt, {
+            workspace: this.getWorkspaceIdByXMLId(Workspace.$.id), 
+            name: ed.$.id
+          })
+          .then(persistedEntityDefinition =>{
+            this.entityDefinitionMap.set(ed.$.id, persistedEntityDefinition.id);
+            return Promise.resolve();
+          });
+          */
+
+
         });
 
 
-        it('Creating a new user with custom ID', function(done) {
-          this.timeout(15000);
+        it('Creates a new CasesDefinition', function(done) {
+          this.timeout(25000);
           chai.request(base_api)
-              .post('/users')
-              .send(test_obj.created_user)
-              //.field('name', 'Peter Parker')
-              //.field('email', '723h4jnasdkad@asdasd.de')
-              //.field('id', 'ThisIsACustomId775')
+              .post('/casedefinitions')
+              .send(test_obj.created_casedefinition)
               .end((err, res) => {
-
-                //console.log(res.body);
 
                 // check if payload is included
                 expect(res).to.include.all.keys('body');
@@ -82,7 +84,7 @@ describe('Test Definitions', () => {
                 res.should.have.status(200);
 
                 // check user id
-                expect(res.body).to.include({id: test_obj.created_user.id});
+                expect(res.body).to.include({name: test_obj.created_casedefinition.name});
 
                 done();
               });
