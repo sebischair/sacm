@@ -3,11 +3,11 @@ import TaskParamDefinition from './../../models/casedefinition/model.taskparamde
 const router = express.Router();
 
 /**
- * @api {get} /taskparamdefinition/:id Get TaskParamDefinition
+ * @api {get} /taskparamdefinitions/:id Get TaskParamDefinition
  * @apiName GetTaskParamDefinition
  * @apiGroup TaskParamDefinition
  * @apiParam {String} id ID of the TaskParamDefinition
- * @apiSampleRequest /taskparamdefinition/:id
+ * @apiSampleRequest /taskparamdefinitions/:id
  * @apiSuccessExample {json} Success-Response:
  *   {
  *    id: "b9a51pgpkgbi"
@@ -54,14 +54,14 @@ router.post('/', (req, res, next)=>{
 
 
 /**
- * @api {patch} /taskparamdefinition/:id Update TaskParamDefinition
+ * @api {patch} /taskparamdefinitions/:id Update TaskParamDefinition
  * @apiName UpdateTaskParamDefinition
  * @apiGroup TaskParamDefinition
  * @apiParam {String} id ID of the TaskParamDefinition
  * @apiParam {String} path Path of the TaskParamDefinition
  * @apiParam {String} isReadOnly Flag if TaskParam is read only
  * @apiParam {String} taskDefinition ID of the TaskDefinition
- * @apiSampleRequest /taskparamdefinition/:id
+ * @apiSampleRequest /taskparamdefinitions/:id
  * @apiSuccessExample {json} Success-Response:
  *   {
  *    id: "b9a51pgpkgbi"
@@ -84,11 +84,11 @@ router.patch('/:id', (req, res, next)=>{
 
 
 /**
- * @api {delete} /sentrydefinition/:id Delete TaskParamDefinition
+ * @api {delete} /sentrydefinitions/:id Delete TaskParamDefinition
  * @apiName DeleteTaskParamDefinition
  * @apiGroup TaskParamDefinition
  * @apiParam {String} id ID of the TaskParamDefinition
- * @apiSampleRequest /sentrydefinition/:id
+ * @apiSampleRequest /sentrydefinitions/:id
  * @apiSuccessExample {json} Success-Response:
  *   {}
  */

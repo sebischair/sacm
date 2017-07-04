@@ -5,11 +5,11 @@ import Process from './../../models/case/model.process'
 const router = express.Router();
 
 /**
- * @api {get} /processdefinition/:id/sentrydefinitions Get SentryDefinitions
+ * @api {get} /processdefinitions/:id/sentrydefinitions Get SentryDefinitions
  * @apiName GetSentryDefinitionByProcessDefinitionID
  * @apiGroup SentryDefinition
  * @apiParam {String} id ID of the ProcessDefinitionID
- * @apiSampleRequest /processdefinition/:id/sentrydefinitions
+ * @apiSampleRequest /processdefinitions/:id/sentrydefinitions
  * @apiSuccessExample {json} Success-Response:
  *     [{
  *       "completedProcessDefinitions": [
@@ -34,11 +34,11 @@ router.get('/:id/sentrydefinitions', (req, res, next)=>{
 
 
 /**
- * @api {get} /processdefinition/:id/httphookdefinitions Get HttpHookDefinitions
+ * @api {get} /processdefinitions/:id/httphookdefinitions Get HttpHookDefinitions
  * @apiName GetHttpHookDefinitionByProcessDefinitionID
  * @apiGroup HttpHookDefinition
  * @apiParam {String} id ID of the ProcessDefinition
- * @apiSampleRequest /processdefinition/:id/httphookdefinitions
+ * @apiSampleRequest /processdefinitions/:id/httphookdefinitions
  * @apiSuccessExample {json} Success-Response:
  *   [{
  *     id: "i938uejh378",
@@ -62,11 +62,11 @@ router.get(':id/httphookdefinitions', (req, res, next)=>{
 
 
 /**
- * @api {get} /processdefinition/:id/process Get Processes by Process Definition
+ * @api {get} /processdefinitions/:id/process Get Processes by Process Definition
  * @apiName GetProcessesByProcessDefinitionID
  * @apiGroup Process
  * @apiParam {String} id ID of the Process Definition 
- * @apiSampleRequest /processdefinition/:id/process
+ * @apiSampleRequest /processdefinitions/:id/process
  * @apiSuccessExample {json} Success-Response:
  *   [{
  *     "isRepeatable": "true",
@@ -76,7 +76,7 @@ router.get(':id/httphookdefinitions', (req, res, next)=>{
  *     "hookDefinitions": [],
  *     "id": "1c8579tlziu8t",
  *     "description":"asdasdasd",
- *     "resourceType": "StageDefinition",
+ *     "resourceType": "stagedefinitions",
  *     "isMandatory": "true",
  *     "newEntityAttachPath": null,
  *     "caseDefinition": "1v77wsi7jdky8",

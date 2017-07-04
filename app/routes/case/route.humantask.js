@@ -5,7 +5,7 @@ const router = express.Router();
 
 
 /**
- * @api {get} humantask/:id Get HumanTask
+ * @api {get} humantasks/:id Get HumanTask
  * @apiName GetHumanDefinition
  * @apiGroup HumanTask
  * @apiParam {String} id ID of a HumanTask
@@ -106,7 +106,7 @@ router.get('/:id', (req, res, next)=>{
 });
 
 /**
- * @api {post} humantask/:id/activate Activate HumanTask
+ * @api {post} humantasks/:id/activate Activate HumanTask
  * @apiName ActivateHumanTask
  * @apiGroup HumanTask
  * @apiParam {String} id ID of a HumanTask
@@ -122,7 +122,7 @@ router.post('/:id/activate', (req, res, next)=>{
 });
 
 /**
- * @api {post} humantask/:id/draft Draft HumanTask
+ * @api {post} humantasks/:id/draft Draft HumanTask
  * @apiName DraftHumanTask
  * @apiGroup HumanTask
  * @apiParam {String} id ID of a HumanTask
@@ -235,7 +235,7 @@ router.post('/:id/draft', (req, res, next)=>{
 
 
 /**
- * @api {post} /humantask/:id/complete Complete HumanTask
+ * @api {post} /humantasks/:id/complete Complete HumanTask
  * @apiName CompleteHumanTask
  * @apiGroup HumanTask
  * @apiParam {String} id ID of a HumanTask
@@ -355,7 +355,7 @@ router.post('/:id/complete', (req, res, next)=>{
 
 
 /**
- * @api {post} /humantask/:id/terminate Terminate HumanTask
+ * @api {post} /humantasks/:id/terminate Terminate HumanTask
  * @apiName TerminateHumanTask
  * @apiGroup HumanTask
  * @apiParam {String} id ID of a HumanTask
@@ -375,7 +375,7 @@ router.post('/:id/terminate', (req, res, next)=>{
 });
 
 /**
- * @api {post} /humantask/:id/owner/:userid Set HumanTask Owner
+ * @api {post} /humantasks/:id/owner/:userid Set HumanTask Owner
  * @apiName SetOwnerHumanTask
  * @apiGroup HumanTask
  * @apiParam {String} id ID of a HumanTask
@@ -397,7 +397,7 @@ router.post('/:id/owner/:userid', (req, res, next)=>{
 
 
 /**
- * @api {post} /humantask/:id/scheduledate Set HumanTask Schedule Date
+ * @api {post} /humantasks/:id/scheduledate Set HumanTask Schedule Date
  * @apiName SetHumanTaskScheduleDate
  * @apiGroup HumanTask
  * @apiParam {String} id ID of a HumanTask

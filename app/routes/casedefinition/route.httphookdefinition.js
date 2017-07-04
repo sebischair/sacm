@@ -3,11 +3,11 @@ import HttpHookDefinition from './../../models/casedefinition/model.httphookdefi
 const router = express.Router();
 
 /**
- * @api {get} /httphookdefinition/:id Get HttpHookDefinition
+ * @api {get} /httphookdefinitions/:id Get HttpHookDefinition
  * @apiName GetHttpHookDefinition
  * @apiGroup HttpHookDefinition
  * @apiParam {String} id ID of the HttpHookDefinition
- * @apiSampleRequest test
+ * @apiSampleRequest /httphookdefinitions/:id
  * @apiSuccessExample {json} Success-Response:
  *   {
  *     id: "hdze783ncv"
@@ -30,14 +30,14 @@ router.get('/:id', (req, res, next)=>{
 
 
 /**
- * @api {patch} /httphookdefinition Create HttpHookDefinition
+ * @api {patch} /httphookdefinitions Create HttpHookDefinition
  * @apiName CreateHttpHookDefinition
  * @apiGroup HttpHookDefinition
  * @apiParam {String} on State on which the Hook is invoked
  * @apiParam {String} url URL of the Hook endpoint
  * @apiParam {String} method Request method of the Hook
  * @apiParam {String} processDefinition ID of the ProcessDefinition
- * @apiSampleRequest /httphookdefinition
+ * @apiSampleRequest /httphookdefinitions
  *   {
  *     on: "AVAILABLE",
  *     url: "http://example.com",
@@ -65,11 +65,11 @@ router.post('/', (req, res, next)=>{
 
 
 /**
- * @api {post} /httphookdefinition/:id Update HttpHookDefinition
+ * @api {post} /httphookdefinitions/:id Update HttpHookDefinition
  * @apiName UpdateHttpHookDefinition
  * @apiGroup HttpHookDefinition
  * @apiParam {String} id ID of the HttpHookDefinition
- * @apiSampleRequest /httphookdefinition/:id
+ * @apiSampleRequest /httphookdefinitions/:id
  * @apiSuccessExample {json} Success-Response:
  *   {
  *     id: "i938uejh378",
@@ -91,11 +91,11 @@ router.patch('/:id', (req, res, next)=>{
 
 
 /**
- * @api {delete} /httphookdefinition/:id Delete HttpHookDefinition
+ * @api {delete} /httphookdefinitions/:id Delete HttpHookDefinition
  * @apiName DeleteHttpHookDefinition
  * @apiGroup HttpHookDefinition
  * @apiParam {String} id ID of the HttpHookDefinition
- * @apiSampleRequest test
+ * @apiSampleRequest /httphookdefinitions/:id
  * @apiSuccessExample {json} Success-Response:
  *   {}
  */

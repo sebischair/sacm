@@ -7,11 +7,11 @@ const router = express.Router();
 
 
 /**
- * @api {get} /workspace/:id/casedefinitions Get CaseDefinition by Workspace
+ * @api {get} /workspaces/:id/casedefinitions Get CaseDefinition by Workspace
  * @apiName GetCaseDefinitionsByWorkspaceID
  * @apiGroup CaseDefinition
  * @apiParam {String} ID The ID of the requested Workspace
- * @apiSampleRequest /workspace/:id/casedefinitions
+ * @apiSampleRequest /workspaces/:id/casedefinitions
  * @apiSuccessExample {json} Success-Response:
  *     [{
  *       "workspace": "l304i3u2y91u",
@@ -38,11 +38,11 @@ router.get('/:id', (req, res, next)=>{
 // INSTANCE LEVEL
 
 /**
- * @api {get} /workspace/:id/cases Get Case by Workspace
+ * @api {get} /workspaces/:id/cases Get Case by Workspace
  * @apiName GetCasesByWorkspaceID
  * @apiGroup Case
  * @apiParam {String} ID The ID of the the Workspace
- * @apiSampleRequest /workspace/:id/cases
+ * @apiSampleRequest /workspaces/:id/cases
  * @apiSuccessExample {json} Success-Response:
  * [{
  *   "id": "1q7nud4e2v1dl",

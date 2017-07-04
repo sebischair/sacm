@@ -5,11 +5,11 @@ const router = express.Router();
 
 
 /**
- * @api {get} /attribute/:id/autocomplete Get Attribute Autocomplete
+ * @api {get} /attributes/:id/autocomplete Get Attribute Autocomplete
  * @apiName AttributeAutocomplete
  * @apiGroup Attribute
  * @apiParam {String} id ID of the Attribute
- * @apiSampleRequest /attribute/:id/autocomplete
+ * @apiSampleRequest /attributes/:id/autocomplete
  * @apiSuccessExample {json} Success-Response:
  * {}
  */

@@ -4,11 +4,11 @@ const router = express.Router();
 
 
 /**
- * @api {get} /task/:id Get Task
+ * @api {get} /tasks/:id Get Task
  * @apiName GetTask
  * @apiGroup Task
  * @apiParam {String} id ID of the Task
- * @apiSampleRequest /task/:id
+ * @apiSampleRequest /tasks/:id
  * @apiSuccessExample {json} Success-Response:
  *     //  Automated or HumanTasks
  *     {

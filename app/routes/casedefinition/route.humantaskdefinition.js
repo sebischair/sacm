@@ -18,7 +18,7 @@ const router = express.Router();
  *     "hookDefinitions": [],
  *     "id": "1c8579tlziu8t",
  *     "description":"asdasdasd",
- *     "resourceType""StageDefinition",
+ *     "resourceType": "stagedefinitions",
  *     "isMandatory": "true",
  *     "newEntityAttachPath": null,
  *     "caseDefinition": "1v77wsi7jdky8",
@@ -77,7 +77,7 @@ router.delete('/:id', (req, res, next)=>{
  *     "hookDefinitions": [],
  *     "id": "1c8579tlziu8t",
  *     "description":"asdasdasd",
- *     "resourceType""StageDefinition",
+ *     "resourceType": "stagedefinitions",
  *     "isMandatory": "true",
  *     "newEntityAttachPath": null,
  *     "caseDefinition": "1v77wsi7jdky8",
@@ -96,7 +96,7 @@ router.post('/', (req, res, next)=>{
 
 
 /**
- * @api {patch} /humantaskdefinition/:id Update HumanTaskDefinition
+ * @api {patch} /humantaskdefinitions/:id Update HumanTaskDefinition
  * @apiName UpdateHumanTaskDefinition
  * @apiGroup HumanTaskDefinition
  * @apiParam {String} id The ID of the HumanTaskDefinition
@@ -107,7 +107,7 @@ router.post('/', (req, res, next)=>{
  * @apiParam {Boolean} isMandatory (optional) Indicator if the stage should be mandatory
  * @apiParam {String} parent (optional) ID of the parent stage (if there is one)
  * @apiParam {Array} preconditions (optional) Array of preconditions for the stage
- * @apiSampleRequest /humantaskdefinition/:id
+ * @apiSampleRequest /humantaskdefinitions/:id
  * @apiSuccessExample {json} Success-Response:
  *   {
  *     "isRepeatable": "true",
@@ -117,7 +117,7 @@ router.post('/', (req, res, next)=>{
  *     "hookDefinitions": [],
  *     "id": "1c8579tlziu8t",
  *     "description":"asdasdasd",
- *     "resourceType""StageDefinition",
+ *     "resourceType": "stagedefinitions",
  *     "isMandatory": "true",
  *     "newEntityAttachPath": null,
  *     "caseDefinition": "1v77wsi7jdky8",
@@ -138,11 +138,11 @@ router.patch('/:id', (req, res, next)=>{
 
 
 /**
- * @api {get} /humantaskdefinition/:id/humantasks Get HumanTasks
+ * @api {get} /humantaskdefinitions/:id/humantasks Get HumanTasks
  * @apiName GetHumanTasks
  * @apiGroup HumanTaskDefinition
  * @apiParam {String} id ID of the HumanTaskDefinition
- * @apiSampleRequest /humantaskdefinition/:id/humantasks
+ * @apiSampleRequest /humantaskdefinitions/:id/humantasks
  * @apiSuccessExample {json} Success-Response:
  *     [{
  *          "scheduledDate": null,

@@ -32,11 +32,11 @@ router.get('/', (req, res, next)=>{
 });
 
 /**
- * @api {get} /user/:id Get User
+ * @api {get} /users/:id Get User
  * @apiName GetUserByID
  * @apiGroup User
  * @apiParam {String} id ID of the User
- * @apiSampleRequest /user/:id
+ * @apiSampleRequest /users/:id
  * @apiSuccessExample {json} Success-Response:
  *    {
  *      "isVerified": true,
@@ -126,11 +126,11 @@ router.post('/', (req, res, next)=>{
 
 
 /**
- * @api {delete} /user/:id Delete User
+ * @api {delete} /users/:id Delete User
  * @apiName DeleteUserByID
  * @apiGroup User
  * @apiParam {String} id ID of the User
- * @apiSampleRequest /user/:id
+ * @apiSampleRequest /users/:id
  * @apiSuccessExample {json} Success-Response:
  *     {
  *       "success": true
@@ -148,14 +148,14 @@ router.delete('/:id', (req, res, next)=>{
 
 
 /**
- * @api {patch} /user/:id Update User
+ * @api {patch} /users/:id Update User
  * @apiName UpdateUser
  * @apiGroup User
  * @apiParam {String} id ID of the user
  * @apiParam {String} name (optional) Name of the user
  * @apiParam {String} login (optional) Email of the user
  * @apiParam {String} attributes (optional) Custom attributes array for the user (e.g. ["name": "attributeName", "values":['value1', 'value2']])
- * @apiSampleRequest /user/:id
+ * @apiSampleRequest /users/:id
  * @apiSuccessExample {json} Success-Response:
  *     {
  *       "isVerified": true,
@@ -194,10 +194,10 @@ router.patch('/:id', (req, res, next)=>{
 
 
 /**
- * @api {get} /user/me Get own user data
+ * @api {get} /users/me Get own user data
  * @apiName GetOwnUser
  * @apiGroup User
- * @apiSampleRequest /user/me
+ * @apiSampleRequest /users/me
  * @apiSuccessExample {json} Success-Response:
  *     {
  *       "isVerified": true,
