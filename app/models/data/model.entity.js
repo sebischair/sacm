@@ -3,7 +3,7 @@ import http from '../http';
 import Model from '../model';
 
 
-export default class Attribute extends Model{
+export default class Entity extends Model{
 
   static create(jwt, data) {
     return http.post(jwt, '/entities', data);
