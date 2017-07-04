@@ -105,6 +105,21 @@ router.get('/:id', (req, res, next)=>{
     })
 });
 
+/**
+ * @api {post} humantask/:id/activate Activate HumanTask
+ * @apiName ActivateHumanTask
+ * @apiGroup HumanTask
+ * @apiParam {String} id ID of a HumanTask
+ */
+router.post('/:id/activate', (req, res, next)=>{
+  HumanTask.activate(req.jwt, req.params.id)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+        res.status(500).send(err);
+    })
+});
 
 /**
  * @api {post} humantask/:id/draft Draft HumanTask

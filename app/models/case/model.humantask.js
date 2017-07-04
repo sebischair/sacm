@@ -25,6 +25,10 @@ export default class HumanTask extends Model{
     return http.get(jwt, '/humantaskdefinition/'+humanTaskDefinitionId+'/humantasks');
   }
 
+  static activate(jwt, humanTaskId) {
+    return http.post(jwt, '/humantask/'+humanTaskId+'/activate');
+  }
+
   static draft(jwt, data) {
     return http.post(jwt, '/humantask/'+data.id+'/draft', data);
   }

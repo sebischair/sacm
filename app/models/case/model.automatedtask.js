@@ -25,6 +25,10 @@ export default class AutomatedTask extends Model{
     return http.get(jwt, '/automatedtaskdefinition/'+automatedTaskDefinitionId+'/automatedtasks');
   }
 
+  static activate(jwt, automatedTaskId) {
+    return http.post(jwt, '/automatedtask/'+dautomatedTaskId+'/activate');
+  }
+
   static draft(jwt, data) {
     return http.post(jwt, '/automatedtask/'+data.id+'/draft', data);
   }

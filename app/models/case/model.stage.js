@@ -24,6 +24,10 @@ export default class Stage extends Model{
   static findByStageId(jwt, stageId){
     return http.get(jwt, '/stage/'+stageId+'/stages');
   }
+
+  static activate(jwt, stageId) {
+    return http.post(jwt, '/stage/'+stageId+'/activate');
+  }
   
   static complete(jwt, stageId){
     return http.post(jwt, '/stage/'+stageId+'/complete');
