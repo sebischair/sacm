@@ -140,6 +140,7 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
             <AttributeDefinition id="Lace" type="Link.EntityDefinition.Lace" description="Lace"/>
             <AttributeDefinition id="Barthel" type="Link.EntityDefinition.Barthel" description="Barthel"/>        
             <AttributeDefinition id="PhysicalActivity" type="Link.EntityDefinition.PhysicalActivity" description="PhysicalActivity"/>
+            <AttributeDefinition id="PatientMonitory" type="Link.EntityDefinition.PatientMonitory" description="PatientMonitory"/>            
         </EntityDefinition>
 
         <EntityDefinition id="Lace" description="Lace">
@@ -289,6 +290,58 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
             <AttributeDefinition id="phactpx" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Execution Timeseries"/>                 
         </EntityDefinition>
 
+        <EntityDefinition id="PatientMonitory" description="Patient Monitory">
+            <!--Mesurement-->
+            <AttributeDefinition id="pmp1" type="enumeration" multiplicity="maximalOne" description="Measure name, the posible values are">
+                <EnumerationOption value="WEIGHT" description="Weight"/>
+                <EnumerationOption value="HEIGHT" description="Height"/>
+                <EnumerationOption value="FATRATIO" description="FatRatio"/>
+                <EnumerationOption value="FATMASSWEIGHT" description="FatMassWeight"/>
+                <EnumerationOption value="DIASTOLICBLOODPRESSURE" description="DiastolicBloodPressure"/>
+                <EnumerationOption value="SYSTOLICBLOODPRESSURE" description="SystolicBloodPressure"/>
+                <EnumerationOption value="TEMPERATURE" description="Temperature"/>
+                <EnumerationOption value="SP02" description="SP02"/>
+                <EnumerationOption value="BODYTEMPERATURE" description="BodyTemperature"/>
+                <EnumerationOption value="SKINTEMPERATURE" description="SkinTemperature"/>
+                <EnumerationOption value="MUSCLEMASS" description="MuscleMass"/>
+                <EnumerationOption value="HYDRATION" description="Hydration"/>
+                <EnumerationOption value="BONEMASS" description="BoneMass"/>
+                <EnumerationOption value="PULSEWAVEVEOCITY" description="PulseWaveVelocity"/>
+                <EnumerationOption value="SLEEP" description="Sleep"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="pmp2" type="number" multiplicity="maximalOne" description="Min value for this measure"/>       
+            <AttributeDefinition id="pmp3" type="number" multiplicity="maximalOne" description="Max value for this measure"/>       
+            <AttributeDefinition id="pmp4" type="number" multiplicity="maximalOne" description="Minimum value"/>       
+            <AttributeDefinition id="pmp5" type="enumeration" multiplicity="maximalOne" description="Frecuency Unit, the posiible values are">     
+                <EnumerationOption value="HOURS" description="Hours"/>
+                <EnumerationOption value="DAYS" description="Days"/>
+                <EnumerationOption value="WEEKS" description="Weeks"/>
+                <EnumerationOption value="MONTHS" description="Months"/>
+            </AttributeDefinition>
+            <!--Prescription Details-->
+            <AttributeDefinition id="pmp6" type="string" multiplicity="maximalOne" description="Comments"/>   
+            <AttributeDefinition id="pmp7" type="number" multiplicity="maximalOne" description="Frecuency"/> 
+            <AttributeDefinition id="pmp8" type="enumeration" multiplicity="maximalOne" description="Frecuency Unit, the posiible values are">     
+                <EnumerationOption value="HOURS" description="Hours"/>
+                <EnumerationOption value="DAYS" description="Days"/>
+                <EnumerationOption value="WEEKS" description="Weeks"/>
+                <EnumerationOption value="MONTHS" description="Months"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="pmp9" type="number" multiplicity="maximalOne" description="Max delay in minutes"/> 
+            <AttributeDefinition id="pmp10" type="date" multiplicity="maximalOne" description="Start date"/> 
+            <AttributeDefinition id="pmp11" type="date" multiplicity="maximalOne" description="End date"/> 
+            <!--Time Slot-->
+            <AttributeDefinition id="pmp12" type="enumeration" multiplicity="maximalOne" description="Slot to take the measurements, the possible values are">     
+                <EnumerationOption value="BREAKFAST" description="BreakFast"/>
+                <EnumerationOption value="LUNCH" description="Lunch"/>
+                <EnumerationOption value="AFTERNOONSNACK" description="AfternoonSnack"/>
+                <EnumerationOption value="DINNER" description="Dinner"/>
+                <EnumerationOption value="BEFORESLEEP" description="BeforeSleep"/>
+                <EnumerationOption value="SPECIFICHOUR" description="SpecificHour"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="pmp13" type="number" multiplicity="maximalOne" description="Min value for this measure"/>  
+            <AttributeDefinition id="pmpx" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Mesurement"/>                      
+        </EntityDefinition>
 
 
 
@@ -391,6 +444,44 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
                     <TaskParamDefinition path="Patient" isReadOnly="false" isMandatory="false"/>
                     <TaskParamDefinition path="PhysicalActivity.phactpx" isReadOnly="false" isMandatory="true"/>
                 </AutomatedTaskDefinition>
+                
+                <HumanTaskDefinition id="PatientMonitoryPrescription" description="Patient Monitory Prescription" ownerPath="Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="PatientMonitory" entityAttachPath="PatientMonitory">
+                    <TaskParamDefinition path="PatientMonitory.pmp1" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp2" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp3" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp4" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp5" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp6" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp7" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp8" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp9" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp10" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp11" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp12" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp13" isReadOnly="false" isMandatory="false"/>
+                </HumanTaskDefinition>
+                <AutomatedTaskDefinition id="PatientMonitoryExecution" description="Patient Monitory Execution" ownerPath="Owner" isMandatory="true" isRepeatable="false">
+                    <SentryDefinition>
+                        <precondition processDefinitionId="PatientMonitoryPrescription"/>
+                    </SentryDefinition>
+                    <HttpHookDefinition on="ENABLE" url="http://35.157.110.245:8081/v1/producer/point-to-point/sacm/prescription" method="POST"></HttpHookDefinition>
+                    <TaskParamDefinition path="PatientMonitory.pmp1" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp2" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp3" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp4" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp5" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp6" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp7" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp8" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp9" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp10" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp11" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp12" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp13" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="Patient" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmpx" isReadOnly="false" isMandatory="true"/>
+                </AutomatedTaskDefinition>
+
             </StageDefinition>
             
         </CaseDefinition>
@@ -443,11 +534,9 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
             <TaskParam path="PhysicalActivity.phactp6"  values="[10]"/>
             <TaskParam path="PhysicalActivity.phactp7"  values="[5]"/>
         </Action>
-        <!--
         <Action id="CompleteAutomatedTask" processId="PhysicalActivityExecution">
-            <TaskParam path="PhysicalActivity.phactpx"  values="[{'steepFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}]}]"/>
+            <TaskParam path="PhysicalActivity.phactpx"  values="[{'steepFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
         </Action>
-        -->
     </Execution>
 
 </SACMDefinition>

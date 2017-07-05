@@ -93,17 +93,10 @@ module.exports = {
                 resolveWithFullResponse: true 
             })
             .then(res=>{
-                console.log('RES');
-                console.log(res);
-
                 successRequest('POST', config.sc.url+path, data, res.body, res.statusCode, start, jwt);
                 resolve(res.body);
             })
             .catch(res=>{
-
-                console.log('ERR');
-                console.log(res);
-
                 errorRequest('POST', config.sc.url+path, data, res.error, res.statusCode, start, jwt);
                 reject(res.error);
             });          

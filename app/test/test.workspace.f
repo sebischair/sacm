@@ -2,6 +2,7 @@ import assert from "assert"; // node.js core module
 import chai from "chai";
 import chaiHttp from "chai-http";
 import Workspace from '../models/workspace/model.workspace';
+import User from '../models/group/model.user';
 import EntityDefinition from '../models/datadefinition/model.entitydefinition';
 import server from "../../app";
 
@@ -9,12 +10,13 @@ import server from "../../app";
 let should = chai.should();
 let expect = chai.expect;
 
-let base_api = 'http://localhost:8084/api';
+let base_api = 'http://localhost:8084/api/v1';
 let base_api_sc = 'http://localhost:8083/api/v1';
 chai.use(chaiHttp);
 
-var uid = Math.random().toString(36).substring(7);
-var jwt = "Basic bXVzdGVybWFubkB0ZXN0LnNjOm90dHRv";
+let uid = Math.random().toString(36).substring(7);
+let jwt = "Basic bXVzdGVybWFubkB0ZXN0LnNjOm90dHRv";
+let current_user = null; 
 let test_obj = {
   test_uid : uid,
   created_casedefinition: {
@@ -35,13 +37,16 @@ describe('Test Workspace', () => {
   //Before each test delete all workspaces
     beforeEach(function(done) { 
         this.timeout(5000);
-        Workspace.deleteAll('bXVzdGVybWFubkB0ZXN0LnNjOm90dHRv').then((res)=>{
-            console.log('');
-            console.log('');
-            console.log('');
-            done();
+
+        // Get current user
+        User.me(jwt).then((res) => {   
+          current_user = res;       
+          Workspace.deleteAll(jwt).then((res)=>{
+              console.log('');
+              done();
+          });
         });
-        done();
+
     });
 
 
@@ -51,17 +56,20 @@ describe('Test Workspace', () => {
     describe('Direct Workspace creation', () => {
 
 
-        it('Creates a new workspace with random id', function(done) {
+
+
+        it('Creates a new workspace with a random id', function(done) {
           this.timeout(30000);
-          
+
+         
           var data = { 
-            name: 'NAME',
+            name: 'NAMExx',
             description: 'DESC',
             permissions:{
               readers: [],
               writers: [],
               contributors: [],
-              administrators: ['qdsq66ukt6ls']
+              administrators: [current_user.id]
               }
           }
 
@@ -75,7 +83,7 @@ describe('Test Workspace', () => {
               //.field('id', 'ThisIsACustomId775')
               .end((err, res) => {
 
-                console.log(res.body);
+                //console.log(res.body);
 
                 // check if payload is included
                 expect(res).to.include.all.keys('body');
@@ -92,18 +100,18 @@ describe('Test Workspace', () => {
         });
 
 
-        it('Creates a new workspace with custom id', function(done) {
+        it('Creates a new workspace with a custom id', function(done) {
           this.timeout(30000);
           
           var data = { 
-            name: 'NAMEXX',
+            name: 'NAMEXXxx',
             description: 'DESCXX',
-            id: 'uhhhz',
+            id: 'uhhhzxxuu',
             permissions:{
               readers: [],
               writers: [],
               contributors: [],
-              administrators: ['qdsq66ukt6ls']
+              administrators: [current_user.id]
               }
           }
 
@@ -117,7 +125,7 @@ describe('Test Workspace', () => {
               //.field('id', 'ThisIsACustomId775')
               .end((err, res) => {
 
-                console.log(res.body);
+                //console.log(res.body);
 
                 // check if payload is included
                 expect(res).to.include.all.keys('body');
@@ -132,6 +140,8 @@ describe('Test Workspace', () => {
               });
 
         });
+
+
 
 
       });  

@@ -8,7 +8,7 @@ import server from "../../app";
 let should = chai.should();
 let expect = chai.expect;
 
-let base_api = 'http://localhost:8084/api';
+let base_api = 'http://localhost:8084/api/v1';
 chai.use(chaiHttp);
 
 var uid = Math.random().toString(36).substring(7);

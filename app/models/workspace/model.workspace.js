@@ -23,12 +23,14 @@ export default class Workspace extends Model{
 
   static deleteAll(jwt){
     return Workspace.findAll(jwt)
+
       .then(workspaces=>{
         return Promise.map(workspaces, w=>{
           if(w.id != "root" && w.id != "northwind")
             return Workspace.deleteById(jwt, w.id);
         });
       });
+
   } 
 
   static findAll(jwt){

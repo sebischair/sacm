@@ -18,6 +18,7 @@ router.post('/', (req, res, next)=>{
   let file = 'democase.xml';
   let isExecuteCase = false;
   let executionJwt = req.jwt;
+
   if(req.body.file)
     file = req.body.file;
   if(req.body.execute)
