@@ -140,7 +140,7 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
             <AttributeDefinition id="Lace" type="Link.EntityDefinition.Lace" description="Lace"/>
             <AttributeDefinition id="Barthel" type="Link.EntityDefinition.Barthel" description="Barthel"/>        
             <AttributeDefinition id="PhysicalActivity" type="Link.EntityDefinition.PhysicalActivity" description="PhysicalActivity"/>
-            <AttributeDefinition id="PatientMonitoryPrescription" type="Link.EntityDefinition.PatientMonitoryPrescription" description="PatientMonitoryPrescription"/>            
+            <AttributeDefinition id="PatientMonitory" type="Link.EntityDefinition.PatientMonitory" description="PatientMonitory"/>            
         </EntityDefinition>
 
         <EntityDefinition id="Lace" description="Lace">
@@ -290,7 +290,7 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
             <AttributeDefinition id="phactpx" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Execution Timeseries"/>                 
         </EntityDefinition>
 
-        <EntityDefinition id="PatientMonitoryPrescription" description="Patient Monitory Prescription">
+        <EntityDefinition id="PatientMonitory" description="Patient Monitory">
             <!--Mesurement-->
             <AttributeDefinition id="pmp1" type="enumeration" multiplicity="maximalOne" description="Measure name, the posible values are">
                 <EnumerationOption value="WEIGHT" description="Weight"/>
@@ -339,7 +339,8 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
                 <EnumerationOption value="BEFORESLEEP" description="BeforeSleep"/>
                 <EnumerationOption value="SPECIFICHOUR" description="SpecificHour"/>
             </AttributeDefinition>
-            <AttributeDefinition id="pmp13" type="number" multiplicity="maximalOne" description="Min value for this measure"/>                     
+            <AttributeDefinition id="pmp13" type="number" multiplicity="maximalOne" description="Min value for this measure"/>  
+            <AttributeDefinition id="pmpx" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Mesurement"/>                      
         </EntityDefinition>
 
 
@@ -444,21 +445,43 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
                     <TaskParamDefinition path="PhysicalActivity.phactpx" isReadOnly="false" isMandatory="true"/>
                 </AutomatedTaskDefinition>
                 
-                <HumanTaskDefinition id="PatientMonitoryPrescription" description="Patient Monitory Prescription" ownerPath="Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="PatientMonitoryPrescription" entityAttachPath="PatientMonitoryPrescription">
-                    <TaskParamDefinition path="PatientMonitoryPrescription.pmp1" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitoryPrescription.pmp2" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitoryPrescription.pmp3" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitoryPrescription.pmp4" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitoryPrescription.pmp5" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitoryPrescription.pmp6" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitoryPrescription.pmp7" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitoryPrescription.pmp8" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitoryPrescription.pmp9" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitoryPrescription.pmp10" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitoryPrescription.pmp11" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitoryPrescription.pmp12" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitoryPrescription.pmp13" isReadOnly="false" isMandatory="false"/>
+                <HumanTaskDefinition id="PatientMonitoryPrescription" description="Patient Monitory Prescription" ownerPath="Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="PatientMonitory" entityAttachPath="PatientMonitory">
+                    <TaskParamDefinition path="PatientMonitory.pmp1" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp2" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp3" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp4" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp5" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp6" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp7" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp8" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp9" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp10" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp11" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp12" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp13" isReadOnly="false" isMandatory="false"/>
                 </HumanTaskDefinition>
+                <AutomatedTaskDefinition id="PatientMonitoryExecution" description="Patient Monitory Execution" ownerPath="Owner" isMandatory="true" isRepeatable="false">
+                    <SentryDefinition>
+                        <precondition processDefinitionId="PatientMonitoryPrescription"/>
+                    </SentryDefinition>
+                    <HttpHookDefinition on="ENABLE" url="http://35.157.110.245:8081/v1/producer/point-to-point/sacm/prescription" method="POST"></HttpHookDefinition>
+                    <TaskParamDefinition path="PatientMonitory.pmp1" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp2" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp3" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp4" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp5" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp6" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp7" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp8" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp9" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp10" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp11" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp12" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp13" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="Patient" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmpx" isReadOnly="false" isMandatory="true"/>
+                </AutomatedTaskDefinition>
+
             </StageDefinition>
             
         </CaseDefinition>
