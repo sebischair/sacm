@@ -27,7 +27,7 @@ const router = express.Router();
  *  		"maxThreshold": "8"
  *  	}
  *  	"seenDate": null,
- *  	"resourceType": "Alert"
+ *  	"resourceType": "alerts"
  *  }]
  */
 router.get('/me', (req, res, next)=>{
@@ -41,11 +41,11 @@ router.get('/me', (req, res, next)=>{
 });
 
 /**
- * @api {get} /alert/:id Get Alert
+ * @api {get} /alerts/:id Get Alert
  * @apiName GetAlert
  * @apiGroup Alert
  * @apiParam {String} id (mandatory) ID of the Alert
- * @apiSampleRequest /alert/:id
+ * @apiSampleRequest /alerts/:id
  * @apiSuccessExample {json} Success-Response:
  *  {
  *  	"id": "jdddqzyu6ser7",
@@ -65,7 +65,7 @@ router.get('/me', (req, res, next)=>{
  *  		"maxThreshold": "8"
  *  	}
  *  	"seenDate": null,
- *  	"resourceType": "Alert"
+ *  	"resourceType": "alerts"
  *  }
  */
 router.get('/:id', (req, res, next)=>{
@@ -79,7 +79,7 @@ router.get('/:id', (req, res, next)=>{
 });
 
 /**
- * @api {post} /alert Create Alert 
+ * @api {post} /alerts Create Alert 
  * @apiName CreateAlert
  * @apiGroup Alert
  * @apiParam {String} process (mandatory) ID of the process
@@ -88,7 +88,7 @@ router.get('/:id', (req, res, next)=>{
  * @apiParam {Date} expireDate (optional) Date when alert is expired
  * @apiParam {String} text (optional) Text content of the message
  * @apiParam {JSON} data (optional) Text content of the message 
- * @apiSampleRequest /alert
+ * @apiSampleRequest /alerts
  *  {
  *  	"process": "1rjdqzyu6ser9",
  *  	"creationDate": "2017-06-12 13:58:56.0",
@@ -124,7 +124,7 @@ router.get('/:id', (req, res, next)=>{
  *  		"maxThreshold": "8"
  *  	}
  *  	"seenDate": null,
- *  	"resourceType": "Alert"
+ *  	"resourceType": "alerts"
  *  }
  */
 router.post('/', (req, res, next)=>{
@@ -139,7 +139,7 @@ router.post('/', (req, res, next)=>{
 
 
 /**
- * @api {patch} /alert/:id Update Alert
+ * @api {patch} /alerts/:id Update Alert
  * @apiName UpdateAlert
  * @apiGroup Alert
  * @apiParam {String} process (mandatory) ID of the Alert
@@ -149,7 +149,7 @@ router.post('/', (req, res, next)=>{
  * @apiParam {Date} expireDate (optional) Date when alert is expired
  * @apiParam {String} text (optional) Text content of the message
  * @apiParam {JSON} data (optional) Text content of the message 
- * @apiSampleRequest /alert
+ * @apiSampleRequest /alerts/:id
  *  {
  *  	"process": "1rjdqzyu6ser9",
  *  	"case": "2rddqzyu6der9",
@@ -187,7 +187,7 @@ router.post('/', (req, res, next)=>{
  *  		"maxThreshold": "8"
  *  	}
  *  	"seenDate": null,
- *  	"resourceType": "Alert"
+ *  	"resourceType": "alerts"
  *  }
  */
 router.patch('/:id', (req, res, next)=>{
@@ -203,11 +203,11 @@ router.patch('/:id', (req, res, next)=>{
 });
 
 /**
- * @api {post} /alert/:id/seen Mark Alert as Seen
+ * @api {post} /alerts/:id/seen Mark Alert as Seen
  * @apiName SetAlertSeenStatus
  * @apiGroup Alert
  * @apiParam {String} id (mandatory) ID of the Alert
- * @apiSampleRequest /alert/:id/seen
+ * @apiSampleRequest /alerts/:id/seen
  * @apiSuccessExample {json} Success-Response:
  *  {
  *  	"id": "jdddqzyu6ser7",
@@ -227,7 +227,7 @@ router.patch('/:id', (req, res, next)=>{
  *  		"maxThreshold": "8"
  *  	}
  *  	"seenDate": "2017-06-13 13:52:12.0",
- *  	"resourceType": "Alert"
+ *  	"resourceType": "alerts"
  *  }
  */
 router.post('/:id/seen', (req, res, next)=>{

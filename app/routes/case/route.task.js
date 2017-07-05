@@ -4,11 +4,11 @@ const router = express.Router();
 
 
 /**
- * @api {get} /task/:id Get Task
+ * @api {get} /tasks/:id Get Task
  * @apiName GetTask
  * @apiGroup Task
  * @apiParam {String} id ID of the Task
- * @apiSampleRequest /task/:id
+ * @apiSampleRequest /tasks/:id
  * @apiSuccessExample {json} Success-Response:
  *     //  Automated or HumanTasks
  *     {
@@ -27,7 +27,7 @@ const router = express.Router();
  *          "owner": null,
  *          "state": "ENABLED",
  *          "case": "1q7nud4e2v1dl",
- *          "resourceType": "AutomatedTask"
+ *          "resourceType": "automatedtasks"
  *     }
  */
 router.get('/:id', (req, res, next)=>{

@@ -6,11 +6,11 @@ const router = express.Router();
 
 //TODO this is not implements in SC
 /*
- * @api {get} /taskdefinition/:id Get Task Definition
+ * @api {get} /taskdefinitions/:id Get Task Definition
  * @apiName GetTaskParamDefinitionByTaskDefinitionID
  * @apiGroup TaskDefinition
  * @apiParam {String} id ID of the TaskDefinition
- * @apiSampleRequest /taskdefinition/:id/taskparamdefinitions
+ * @apiSampleRequest /taskdefinitions/:id/taskparamdefinitions
  * @apiSuccessExample {json} Success-Response:
  *   [{
  *    id: "b9a51pgpkgbi"
@@ -31,11 +31,11 @@ router.get('/:id', (req, res, next)=>{
 
 
 /**
- * @api {get} /taskdefinition/:id/tasks Get Tasks
+ * @api {get} /taskdefinitions/:id/tasks Get Tasks
  * @apiName GetTasksByTaskDefinitionID
  * @apiGroup TaskDefinition
  * @apiParam {String} id ID of the TaskDefinition
- * @apiSampleRequest /taskdefinition/:id/tasks
+ * @apiSampleRequest /taskdefinitions/:id/tasks
  * @apiSuccessExample {json} Success-Response:
  *     // List of Automated and/or HumanTasks
  *     [{
@@ -54,7 +54,7 @@ router.get('/:id', (req, res, next)=>{
  *          "owner": null,
  *          "state": "ENABLED",
  *          "case": "1q7nud4e2v1dl",
- *          "resourceType": "AutomatedTask"
+ *          "resourceType": "automatedtasks"
  *     }]
  */
 router.get('/:id/tasks', (req, res, next)=>{

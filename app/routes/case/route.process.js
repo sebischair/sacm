@@ -5,11 +5,11 @@ const router = express.Router();
 
 
 /**
- * @api {get} /process/:id Get Process
+ * @api {get} /processes/:id Get Process
  * @apiName GetProcess
  * @apiGroup Process 
  * @apiParam {String} id ID of the Process
- * @apiSampleRequest /process/:id
+ * @apiSampleRequest /processes/:id
  * @apiSuccessExample {json} Success-Response:
  *      // Could be any process object, see model
  *      {
@@ -29,7 +29,7 @@ const router = express.Router();
  *          "owner": null,
  *          "state": "ENABLED",
  *          "case": "1q7nud4e2v1dl",
- *          "resourceType": "AutomatedTask"
+ *          "resourceType": "automatedtasks"
  *      }
  *
  */
@@ -45,11 +45,11 @@ router.get('/:id', (req, res, next)=>{
 
 
 /**
- * @api {get} /process/:id/alerts Get Alerts by Process
+ * @api {get} /processes/:id/alerts Get Alerts by Process
  * @apiName GetProcessAlerts
  * @apiGroup Alert 
  * @apiParam {String} id ID of the Process 
- * @apiSampleRequest /process/:id/alerts
+ * @apiSampleRequest /processes/:id/alerts
  * @apiSuccessExample {json} Success-Response:
  *  [{
  *  	"id": "jdddqzyu6ser7",
@@ -82,11 +82,11 @@ router.get('/:id/alerts', (req, res, next)=>{
 
 
 /**
- * @api {get} /process/:id/owner/autocomplete Get Owner Autocomplte Options for Process
+ * @api {get} /processes/:id/owner/autocomplete Get Owner Autocomplte Options for Process
  * @apiName GetProcessOwnerAutocomplete
  * @apiGroup Process 
  * @apiParam {String} id ID of the Process 
- * @apiSampleRequest /process/:id/owner/autocomplete
+ * @apiSampleRequest /processes/:id/owner/autocomplete
  * @apiSuccessExample {json} Success-Response:
  * //TODO
  */

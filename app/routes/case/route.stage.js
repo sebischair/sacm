@@ -31,7 +31,7 @@ const router = express.Router();
  *     "state": "ENABLED",
  *     "children": [],
  *     "case": "zgc0k7ou8xuk",
- *     "resourceType": "Stage"
+ *     "resourceType": "stages"
  *    }
  *
  */
@@ -68,7 +68,7 @@ router.get('/:id', (req, res, next)=>{
  *     "state": "ENABLED",
  *     "children": [],
  *     "case": "zgc0k7ou8xuk",
- *     "resourceType": "Stage"
+ *     "resourceType": "stages"
  *    }]
  */
 router.get('/:id/stages', (req, res, next)=>{
@@ -83,11 +83,11 @@ router.get('/:id/stages', (req, res, next)=>{
 
 
 /**
- * @api {post} /stage/:id/activate Activate Stage
+ * @api {post} /stages/:id/activate Activate Stage
  * @apiName ActivateStage
  * @apiGroup Stage
  * @apiParam {String} id ID of the Stage
- * @apiSampleRequest /stage/:id/activate
+ * @apiSampleRequest /stages/:id/activate
  * @apiSuccessExample {json} Success-Response:
  *   {}
  */
@@ -103,11 +103,11 @@ router.post('/:id/activate', (req, res, next)=>{
 
 
 /**
- * @api {post} /stage/:id/complete Complete Stage
+ * @api {post} /stages/:id/complete Complete Stage
  * @apiName CompleteStage
  * @apiGroup Stage
  * @apiParam {String} id ID of the Stage
- * @apiSampleRequest /stage/:id/complete
+ * @apiSampleRequest /stages/:id/complete
  * @apiSuccessExample {json} Success-Response:
  *   {}
  */
@@ -123,11 +123,11 @@ router.post('/:id/complete', (req, res, next)=>{
 
 
 /**
- * @api {post} /stage/:id/terminate Terminate Stage
+ * @api {post} /stages/:id/terminate Terminate Stage
  * @apiName TerminateStage
  * @apiGroup Stage
  * @apiParam {String} id ID of the Stage
- * @apiSampleRequest /stage/:id/terminate
+ * @apiSampleRequest /stages/:id/terminate
  * @apiSuccessExample {json} Success-Response:
  *   {}
  */
@@ -146,11 +146,11 @@ router.post('/:id/terminate', (req, res, next)=>{
 // processes
 
 /**
- * @api {get} /stage/:id/processes Get Processes by Stage
+ * @api {get} /stages/:id/processes Get Processes by Stage
  * @apiName GetDirectChildProcesses
  * @apiGroup Stage
  * @apiParam {String} id ID of the Stage
- * @apiSampleRequest /stage/:id/processes
+ * @apiSampleRequest /stages/:id/processes
  * @apiSuccessExample {json} Success-Response:
  *   {
  *     TODO PROCESS_OBJ
@@ -170,11 +170,11 @@ router.get('/:id/processes', (req, res, next)=>{
 // tasks
 
 /**
- * @api {get} /stage/:id/tasks Get Tasks by Stage
+ * @api {get} /stages/:id/tasks Get Tasks by Stage
  * @apiName GetTasks
  * @apiGroup Stage
  * @apiParam {String} id ID of the Stage
- * @apiSampleRequest /stage/:id/tasks
+ * @apiSampleRequest /stages/:id/tasks
  * @apiSuccessExample {json} Success-Response:
  *     // List of Automated and/or HumanTasks
  *     [{
@@ -194,7 +194,7 @@ router.get('/:id/processes', (req, res, next)=>{
  *          "owner": null,
  *          "state": "ENABLED",
  *          "case": "1q7nud4e2v1dl",
- *          "resourceType": "AutomatedTask"
+ *          "resourceType": "automatedtasks"
  *     }]
  */
 router.get('/:id/tasks', (req, res, next)=>{
@@ -209,11 +209,11 @@ router.get('/:id/tasks', (req, res, next)=>{
 
 
 /**
- * @api {get} /stage/:id/automatedtasks Get AutomatedTasks by Stage
+ * @api {get} /stages/:id/automatedtasks Get AutomatedTasks by Stage
  * @apiName GetAutomatedTasks
  * @apiGroup Stage
  * @apiParam {String} id ID of the Stage
- * @apiSampleRequest /stage/:id/automatedtasks
+ * @apiSampleRequest /stages/:id/automatedtasks
  * @apiSuccessExample {json} Success-Response:
  *     [{
  *          "processDefinition": "bq1iuo0uuzo9",
@@ -232,7 +232,7 @@ router.get('/:id/tasks', (req, res, next)=>{
  *          "owner": null,
  *          "state": "ENABLED",
  *          "case": "1q7nud4e2v1dl",
- *          "resourceType": "AutomatedTask"
+ *          "resourceType": "automatedtasks"
  *     }]
  */
 router.get('/:id/automatedtasks', (req, res, next)=>{
@@ -247,11 +247,11 @@ router.get('/:id/automatedtasks', (req, res, next)=>{
 
 
 /**
- * @api {get} /stage/:id/humantasks Get HumanTasks by Stage
+ * @api {get} /stages/:id/humantasks Get HumanTasks by Stage
  * @apiName GetHumanTasks
  * @apiGroup Stage
  * @apiParam {String} id ID of the Stage
- * @apiSampleRequest /stage/:id/humantasks
+ * @apiSampleRequest /stages/:id/humantasks
  * @apiSuccessExample {json} Success-Response:
  *     [{
  *          "scheduledDate": null,
@@ -271,7 +271,7 @@ router.get('/:id/automatedtasks', (req, res, next)=>{
  *          "owner": null,
  *          "state": "ENABLED",
  *          "case": "1q7nud4e2v1dl",
- *          "resourceType": "HumanTask"
+ *          "resourceType": "humantasks"
  *     }]
  *
  */
@@ -286,12 +286,12 @@ router.get('/:id/humantasks', (req, res, next)=>{
 });
 
 /**
- * @api {post} /stage/:id/owner/:userid Set Stage Owner
+ * @api {post} /stages/:id/owner/:userid Set Stage Owner
  * @apiName SetOwnerStage
  * @apiGroup Stage
  * @apiParam {String} id ID of a Stage
  * @apiParam {String} userId of the Owner
- * @apiSampleRequest /stage/:id/owner/userid
+ * @apiSampleRequest /stages/:id/owner/userid
  * @apiSuccessExample {json} Success-Response:
  *     {
  *     }

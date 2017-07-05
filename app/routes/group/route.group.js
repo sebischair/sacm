@@ -71,11 +71,11 @@ router.post('/', (req, res, next)=>{
 });
 
 /**
- * @api {get} /group/:id Get Group by ID
+ * @api {get} /groups/:id Get Group by ID
  * @apiName GetGroupByID
  * @apiGroup Group
  * @apiParam {String} id ID of the Group
- * @apiSampleRequest /group/:id
+ * @apiSampleRequest /groups/:id
  * @apiSuccessExample {json} Success-Response:
  *     {
  *       "id": "1hl75qvuk4mt3",
@@ -145,11 +145,11 @@ router.patch('/:id', (req, res, next)=>{
 });
 
 /**
- * @api {delete} /group/:id Delete Group by ID
+ * @api {delete} /groups/:id Delete Group by ID
  * @apiName DeleteGroupByID
  * @apiGroup Group
  * @apiParam {String} id ID of the Group
- * @apiSampleRequest /group/:id
+ * @apiSampleRequest /groups/:id
  * @apiSuccessExample {json} Success-Response:
  *     {
  *       "success": true
@@ -166,12 +166,12 @@ router.delete('/:id', (req, res, next)=>{
 });
 
 /**
- * @api {post} /group/:id/member/:principalId Add user to group
+ * @api {post} /groups/:id/member/:principalId Add user to group
  * @apiName AddUserToGroup
  * @apiGroup Group
  * @apiParam {String} id ID of the Group
  * @apiParam {String} principalId ID of the User / Principal
- * @apiSampleRequest /group/:id/member/:principalId
+ * @apiSampleRequest /groups/:id/member/:principalId
  * @apiSuccessExample {json} Success-Response:
  *     {
  *       "success": true
@@ -189,12 +189,12 @@ router.post('/:id/member/:principalId', (req, res, next)=>{
 
 
 /**
- * @api {post} /group/:id/member/:principalId Remove User from Group
+ * @api {post} /groups/:id/member/:principalId Remove User from Group
  * @apiName RemoveUserFromGroup
  * @apiGroup Group
  * @apiParam {String} id ID of the Group
  * @apiParam {String} principalId ID of the User / Principal
- * @apiSampleRequest /group/:id/member/:principalId
+ * @apiSampleRequest /groups/:id/member/:principalId
  * @apiSuccessExample {json} Success-Response:
  *     {
  *       "success": true

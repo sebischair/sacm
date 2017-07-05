@@ -5,7 +5,7 @@ const router = express.Router();
 
 
 /**
- * @api {get} /automatedtask/:id Get AutomatedTask
+ * @api {get} /automatedtasks/:id Get AutomatedTask
  * @apiName GetAutomatedTask
  * @apiGroup AutomatedTask
  * @apiParam {Number} id (mandatory) ID of a AutomatedTask
@@ -26,7 +26,7 @@ const router = express.Router();
  *          "owner": null,
  *          "state": "ENABLED",
  *          "case": "1q7nud4e2v1dl",
- *          "resourceType": "AutomatedTask"
+ *          "resourceType": "automatedtasks"
  *     }
  */
 router.get('/:id', (req, res, next)=>{
@@ -41,7 +41,7 @@ router.get('/:id', (req, res, next)=>{
 
 
 /**
- * @api {post} /automatedtask/:id/activate Activate AutomatedTask
+ * @api {post} /automatedtasks/:id/activate Activate AutomatedTask
  * @apiName ActivateAutomatedTask
  * @apiGroup AutomatedTask
  * @apiParam {String} id (mandatory)  ID of a AutomatedTask
@@ -61,7 +61,7 @@ router.post('/:id/activate', (req, res, next)=>{
 
 
 /**
- * @api {post} /automatedtask/:id/draft Draft AutomatedTask
+ * @api {post} /automatedtasks/:id/draft Draft AutomatedTask
  * @apiName DraftAutomatedTask
  * @apiGroup AutomatedTask
  * @apiParam {Number} id (mandatory)  ID of a AutomatedTask
@@ -84,7 +84,7 @@ router.post('/:id/draft', (req, res, next)=>{
 
 
 /**
- * @api {post} /automatedtask/:id/complete Complete AutomatedTask
+ * @api {post} /automatedtasks/:id/complete Complete AutomatedTask
  * @apiName CompleteAutomatedTask
  * @apiGroup AutomatedTask
  * @apiParam {Number} id (mandatory) ID of a AutomatedTask
@@ -108,7 +108,7 @@ router.post('/:id/complete', (req, res, next)=>{
 
 
 /**
- * @api {post} /automatedtask/:id/terminate Terminate AutomatedTask
+ * @api {post} /automatedtasks/:id/terminate Terminate AutomatedTask
  * @apiName TerminateAutomatedTask
  * @apiGroup AutomatedTask
  * @apiParam {Number} id (mandatory) ID of a AutomatedTask
@@ -129,7 +129,7 @@ router.post('/:id/terminate', (req, res, next)=>{
 
 
 /**
- * @api {post} /automatedtask/:id/owner/:userid Set AutomatedTask Owner
+ * @api {post} /automatedtasks/:id/owner/:userid Set AutomatedTask Owner
  * @apiName SetOwnerAutomatedTask
  * @apiGroup AutomatedTask
  * @apiParam {String} id ID of a AutomatedTask

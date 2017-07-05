@@ -9,10 +9,10 @@ const router = express.Router();
 
 
 /**
- * @api {get} /casedefinition/caninstantiate Get CaseDefinition that can be instantiated by the current user
+ * @api {get} /casedefinitions/caninstantiate Get CaseDefinition that can be instantiated by the current user
  * @apiName CanInstantiateCaseDefinition
  * @apiGroup CaseDefinition
- * @apiSampleRequest /casedefinition/caninstantiate
+ * @apiSampleRequest /casedefinitions/caninstantiate
  * @apiSuccessExample {json} Success-Response:
  * [
  *     {
@@ -67,11 +67,11 @@ router.post('/', (req, res, next)=>{
 });
 
 /**
- * @api {get} /casedefinition/:id Get CaseDefinition
+ * @api {get} /casedefinitions/:id Get CaseDefinition
  * @apiName GetCaseDefinition
  * @apiGroup CaseDefinition
  * @apiParam {String} ID The ID of the requested CaseDefinition
- * @apiSampleRequest /casedefinition/:id
+ * @apiSampleRequest /casedefinitions/:id
  * @apiSuccessExample {json} Success-Response:
  *     {
  *       "workspace": "l304i3u2y91u",
@@ -93,11 +93,11 @@ router.get('/:id', (req, res, next)=>{
 });
 
 /**
- * @api {get} /casedefinition/:id/tree Get CaseDefinition Tree
+ * @api {get} /casedefinitions/:id/tree Get CaseDefinition Tree
  * @apiName GetCaseDefinitionTree
  * @apiGroup CaseDefinition
  * @apiParam {String} ID The ID of the requested CaseDefinition
- * @apiSampleRequest /casedefinition/:id
+ * @apiSampleRequest /casedefinitions/:id
  * @apiSuccessExample {json} Success-Response:
  *     {
  *       "workspace": "l304i3u2y91u",
@@ -121,11 +121,11 @@ router.get('/:id/tree', (req, res, next)=>{
 
 
 /**
- * @api {delete} /casedefinition/:id Delete CaseDefinition
+ * @api {delete} /casedefinitions/:id Delete CaseDefinition
  * @apiName DeleteCaseDefinition
  * @apiGroup CaseDefinition
  * @apiParam {String} ID The ID of the CaseDefinition
- * @apiSampleRequest /casedefinition/:id
+ * @apiSampleRequest /casedefinitions/:id
  * @apiSuccessExample {json} Success-Response:
  *     {}
  */
@@ -145,7 +145,7 @@ router.delete('/:id', (req, res, next)=>{
 
 
 /**
- * @api {patch} /casedefinition/:id Update CaseDefinition
+ * @api {patch} /casedefinitions/:id Update CaseDefinition
  * @apiName UpdateCaseDefinition
  * @apiGroup CaseDefinition
  * @apiParam {String} ID The ID of the CaseDefinition
@@ -153,7 +153,7 @@ router.delete('/:id', (req, res, next)=>{
  * @apiParam {String} description (optional) Sets a description for the CaseDefinition
  * @apiParam {String} entityDefinition (optional) Assigns a new EntityDefinition
  * @apiParam {String} name (optional) Sets a owner path for the CaseDefinition
- * @apiSampleRequest /casedefinition/:id
+ * @apiSampleRequest /casedefinitions/:id
  * @apiSuccessExample {json} Success-Response:
  *     {
  *       "workspace": "l304i3u2y91u",
@@ -178,11 +178,11 @@ router.patch('/:id', (req, res, next)=>{
 
 
 /**
- * @api {get} /casedefinition/:id/stagedefinitions Get Direct Child StageDefinitions
+ * @api {get} /casedefinitions/:id/stagedefinitions Get Direct Child StageDefinitions
  * @apiName GetStageDefinitionByCaseDefinitionID
  * @apiGroup StageDefinition
  * @apiParam {String} ID The ID of the CaseDefinition
- * @apiSampleRequest /casedefinition/:id/stagedefinitions
+ * @apiSampleRequest /casedefinitions/:id/stagedefinitions
  * @apiSuccessExample {json} Success-Response:
  *   [{
  *     "isRepeatable": "true",
@@ -192,7 +192,7 @@ router.patch('/:id', (req, res, next)=>{
  *     "hookDefinitions": [],
  *     "id": "1c8579tlziu8t",
  *     "description":"asdasdasd",
- *     "resourceType""StageDefinition",
+ *     "resourceType": "stagedefinitions",
  *     "isMandatory": "true",
  *     "newEntityAttachPath": null,
  *     "caseDefinition": "1v77wsi7jdky8",
@@ -210,11 +210,11 @@ router.get('/:id/stagedefinitions', (req, res, next)=>{
 });
 
 /**
- * @api {get} /casedefinition/:id/stagedefinitions/all Get All StageDefinitions
+ * @api {get} /casedefinitions/:id/stagedefinitions/all Get All StageDefinitions
  * @apiName GetAllStageDefinitionByCaseDefinitionID
  * @apiGroup StageDefinition
  * @apiParam {String} ID The ID of the CaseDefinition
- * @apiSampleRequest /casedefinition/:id/stagedefinitions/all
+ * @apiSampleRequest /casedefinitions/:id/stagedefinitions/all
  * @apiSuccessExample {json} Success-Response:
  *   [{
  *     "isRepeatable": "true",
@@ -224,7 +224,7 @@ router.get('/:id/stagedefinitions', (req, res, next)=>{
  *     "hookDefinitions": [],
  *     "id": "1c8579tlziu8t",
  *     "description":"asdasdasd",
- *     "resourceType""StageDefinition",
+ *     "resourceType": "stagedefinitions",
  *     "isMandatory": "true",
  *     "newEntityAttachPath": null,
  *     "caseDefinition": "1v77wsi7jdky8",
@@ -244,11 +244,11 @@ router.get('/:id/stagedefinitions/all', (req, res, next)=>{
 
 
 /**
- * @api {get} /casedefinition/:id/automatedtaskdefinitions Get Direct Child AutomatedTaskDefinitions
+ * @api {get} /casedefinitions/:id/automatedtaskdefinitions Get Direct Child AutomatedTaskDefinitions
  * @apiName GetAutomatedTaskDefinitionByCaseDefinitionID
  * @apiGroup AutomatedTaskDefinition
  * @apiParam {String} ID The ID of the CaseDefinition
- * @apiSampleRequest /casedefinition/:id/automatedtaskdefinitions
+ * @apiSampleRequest /casedefinitions/:id/automatedtaskdefinitions
  * @apiSuccessExample {json} Success-Response:
  *   [{
  *     "isRepeatable": "true",
@@ -258,7 +258,7 @@ router.get('/:id/stagedefinitions/all', (req, res, next)=>{
  *     "hookDefinitions": [],
  *     "id": "1c8579tlziu8t",
  *     "description":"asdasdasd",
- *     "resourceType""StageDefinition",
+ *     "resourceType": "stagedefinitions",
  *     "isMandatory": "true",
  *     "newEntityAttachPath": null,
  *     "caseDefinition": "1v77wsi7jdky8",
@@ -277,11 +277,11 @@ router.get('/:id/automatedtaskdefinitions', (req, res, next)=>{
 
 
 /**
- * @api {get} /casedefinition/:id/automatedtaskdefinitions/all Get All AutomatedTaskDefinitions
+ * @api {get} /casedefinitions/:id/automatedtaskdefinitions/all Get All AutomatedTaskDefinitions
  * @apiName GetAutomatedTaskDefinitionByCaseDefinitionID
  * @apiGroup AutomatedTaskDefinition
  * @apiParam {String} ID The ID of the CaseDefinition
- * @apiSampleRequest /casedefinition/:id/automatedtaskdefinitions/all
+ * @apiSampleRequest /casedefinitions/:id/automatedtaskdefinitions/all
  * @apiSuccessExample {json} Success-Response:
  *   [{
  *     "isRepeatable": "true",
@@ -291,7 +291,7 @@ router.get('/:id/automatedtaskdefinitions', (req, res, next)=>{
  *     "hookDefinitions": [],
  *     "id": "1c8579tlziu8t",
  *     "description":"asdasdasd",
- *     "resourceType""StageDefinition",
+ *     "resourceType": "stagedefinitions",
  *     "isMandatory": "true",
  *     "newEntityAttachPath": null,
  *     "caseDefinition": "1v77wsi7jdky8",
@@ -310,11 +310,11 @@ router.get('/:id/automatedtaskdefinitions/all', (req, res, next)=>{
 
 
 /**
- * @api {get} /casedefinition/:id/humantaskdefinitions Get Child HumanTaskDefinitions
+ * @api {get} /casedefinitions/:id/humantaskdefinitions Get Child HumanTaskDefinitions
  * @apiName GetHumanTaskDefinitionByCaseDefinitionID
  * @apiGroup HumanTaskDefinition
  * @apiParam {String} ID The ID of the CaseDefinition
- * @apiSampleRequest /casedefinition/:id/humantaskdefinitions
+ * @apiSampleRequest /casedefinitions/:id/humantaskdefinitions
  * @apiSuccessExample {json} Success-Response:
  *   [{
  *     "isRepeatable": "true",
@@ -324,7 +324,7 @@ router.get('/:id/automatedtaskdefinitions/all', (req, res, next)=>{
  *     "hookDefinitions": [],
  *     "id": "1c8579tlziu8t",
  *     "description":"asdasdasd",
- *     "resourceType""StageDefinition",
+ *     "resourceType": "stagedefinitions",
  *     "isMandatory": "true",
  *     "newEntityAttachPath": null,
  *     "caseDefinition": "1v77wsi7jdky8",
@@ -345,11 +345,11 @@ router.get('/:id/humantaskdefinitions', (req, res, next)=>{
 
 
 /**
- * @api {get} /casedefinition/:id/humantaskdefinitions/all Get All HumanTaskDefinitions
+ * @api {get} /casedefinitions/:id/humantaskdefinitions/all Get All HumanTaskDefinitions
  * @apiName GetHumanTaskDefinitionByCaseDefinitionID
  * @apiGroup HumanTaskDefinition
  * @apiParam {String} ID The ID of the CaseDefinition
- * @apiSampleRequest /casedefinition/:id/humantaskdefinitions/all
+ * @apiSampleRequest /casedefinitions/:id/humantaskdefinitions/all
  * @apiSuccessExample {json} Success-Response:
  *   [{
  *     "isRepeatable": "true",
@@ -359,7 +359,7 @@ router.get('/:id/humantaskdefinitions', (req, res, next)=>{
  *     "hookDefinitions": [],
  *     "id": "1c8579tlziu8t",
  *     "description":"asdasdasd",
- *     "resourceType""StageDefinition",
+ *     "resourceType": "stagedefinitions",
  *     "isMandatory": "true",
  *     "newEntityAttachPath": null,
  *     "caseDefinition": "1v77wsi7jdky8",
@@ -380,11 +380,11 @@ router.get('/:id/humantaskdefinitions/all', (req, res, next)=>{
 // INSTANCE LEVEL
 
 /**
- * @api {get} /casedefinition/:id/cases Get CaseDefinitions
+ * @api {get} /casedefinitions/:id/cases Get CaseDefinitions
  * @apiName GetCasesByCaseDefinition
  * @apiGroup Case
  * @apiParam {String} ID The ID of the the CaseDefinition
- * @apiSampleRequest /casedefinition/:id/cases
+ * @apiSampleRequest /casedefinitions/:id/cases
  * @apiSuccessExample {json} Success-Response:
  *    [{
  *      "id": "1q7nud4e2v1dl",
@@ -402,7 +402,7 @@ router.get('/:id/humantaskdefinitions/all', (req, res, next)=>{
  *      "name": "Democase",
  *      "state": "ENABLED",
  *      "owner": null,
- *      "resourceType": "Case"
+ *      "resourceType": "cases"
  *    }]
  */
 router.get('/:id/cases', (req, res, next)=>{

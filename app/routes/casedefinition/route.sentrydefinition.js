@@ -3,7 +3,7 @@ import SentryDefinition from './../../models/casedefinition/model.sentrydefiniti
 const router = express.Router();
 
 /**
- * @api {get} /sentrydefinition/:id Get SentryDefinition
+ * @api {get} /sentrydefinitions/:id Get SentryDefinition
  * @apiName GetSentryDefinition
  * @apiGroup SentryDefinition
  * @apiParam {String} id ID of the SentryDefinition
@@ -29,11 +29,11 @@ router.get('/:id', (req, res, next)=>{
 });
 
 /**
- * @api {delete} /sentrydefinition/:id Delete Sentry Definition
+ * @api {delete} /sentrydefinitions/:id Delete Sentry Definition
  * @apiName DeleteSentryDefinition
  * @apiGroup SentryDefinition
  * @apiParam {String} id ID of the Sentry Definition
- * @apiSampleRequest /sentrydefinition/:id
+ * @apiSampleRequest /sentrydefinitions/:id
  * @apiSuccessExample {json} Success-Response:
  *   {}
  */
@@ -82,7 +82,7 @@ router.post('/', (req, res, next)=>{
 });
 
 /**
- * @api {patch} /sentrydefinition/:id Update Sentry Definition
+ * @api {patch} /sentrydefinitions/:id Update Sentry Definition
  * @apiName UpdateSentryDefinition
  * @apiGroup SentryDefinition
  * @apiParam {String} id The ID of the Sentry Definition
@@ -93,7 +93,7 @@ router.post('/', (req, res, next)=>{
  * @apiParam {Boolean} isMandatory (optional) Indicator if the stage is mandatory
  * @apiParam {String} parent (optional) ID of the parent stage (if there is one)
  * @apiParam {Array} preconditions (optional) Array of preconditions for the stage
- * @apiSampleRequest /sentrydefinition/:id
+ * @apiSampleRequest /sentrydefinitions/:id
  * @apiSuccessExample {json} Success-Response:
  *    {
  *       "completedProcessDefinitions": [
