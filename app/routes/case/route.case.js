@@ -7,6 +7,7 @@ import HumanTask from './../../models/case/model.humantask';
 import AutomatedTask from './../../models/case/model.automatedtask';
 import Message from './../../models/case/model.message';
 import Alert from './../../models/case/model.alert';
+import Log from './../../models/case/model.log';
 import SummarySection from './../../models/case/model.summarysection';
 const router = express.Router();
 
@@ -946,6 +947,27 @@ router.get('/:id/alerts', (req, res, next)=>{
       res.status(500).send(err);
     })
 });
+
+
+/**
+ * @api {get} /cases/:id/logs Get Logs by Case
+ * @apiName GetLogs
+ * @apiGroup Log
+ * @apiParam {String} id ID of the Case 
+ * @apiSampleRequest /cases/:id/logs
+ * @apiSuccessExample {json} Success-Response:
+ * {}
+ */
+router.get('/:id/logs', (req, res, next)=>{
+  Log.findByCaseId(req.jwt, req.params.id)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
 
 // SummarySection
 

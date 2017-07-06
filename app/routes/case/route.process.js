@@ -1,6 +1,7 @@
 import express from 'express';
 import Process from './../../models/case/model.process';
 import Alert from './../../models/case/model.alert';
+import Log from './../../models/case/model.log';
 const router = express.Router();
 
 
@@ -79,6 +80,26 @@ router.get('/:id/alerts', (req, res, next)=>{
       res.status(500).send(err);
     })
 });
+
+/**
+ * @api {get} /processes/:id/logs Get Logs by Process
+ * @apiName GetProcessLogs
+ * @apiGroup Log 
+ * @apiParam {String} id ID of the Process 
+ * @apiSampleRequest /processes/:id/logs
+ * @apiSuccessExample {json} Success-Response:
+ * {}
+ */
+router.get('/:id/logs', (req, res, next)=>{
+  Log.findByProcessId(req.jwt, req.params.id)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
 
 
 /**
