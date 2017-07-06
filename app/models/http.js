@@ -81,8 +81,6 @@ module.exports = {
         const start = new Date();
         console.log('###### POST 2 #######');
         console.log(JSON.stringify(data));
-        console.log(config.sc.url +path);
-        console.log('xxxx');
         console.log('###### POST 2 END #######');
         return new Promise(function (resolve, reject){
             rq.post({
