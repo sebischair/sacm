@@ -358,7 +358,8 @@ module.exports = class XMLImporter {
       return Promise.each(this.json.Group, g=>{
         const data = {
           name: g.$.id,
-          administrators: []
+          administrators: [],
+          isTenant: g.$.isTenant
         }
         if(g.$.staticId != null)
           data.id = g.$.staticId;
