@@ -359,8 +359,7 @@ module.exports = class XMLImporter {
         const data = {
           name: g.$.id,
           description: g.$.description,
-          administrators: [],
-          isTenant: g.$.isTenant
+          administrators: []
         }
         if(g.$.staticId != null)
           data.id = g.$.staticId;
