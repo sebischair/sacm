@@ -3,9 +3,45 @@ import Tenant from './../../models/group/model.tenant';
 const router = express.Router();
 
 
+/**
+ * @api {get} /tenants/:id/users Get Groups of Tenants
+ * @apiName GetGroupsOfWorkspace
+ * @apiGroup Tenant
+ * @apiSampleRequest /groups
+ * @apiSuccessExample {json} Success-Response:
+ * {}
+ */
+router.get('/:id/users', (req, res, next)=>{
+  Tenant.findUsersById(req.jwt, req.params.id)
+    .then(groups=>{
+        res.status(200).send(groups);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
 
 /**
- * @api {get} /tenants/groups Get Groups of Tenants
+ * @api {get} /tenants/:id/users Get Groups of Tenants
+ * @apiName GetGroupsOfWorkspace
+ * @apiGroup Tenant
+ * @apiSampleRequest /groups
+ * @apiSuccessExample {json} Success-Response:
+ * {}
+ */
+router.get('/:id/groups', (req, res, next)=>{
+  Tenant.findGroupsById(req.jwt, req.params.id)
+    .then(groups=>{
+        res.status(200).send(groups);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
+ * @api {get} /tenants Get Groups of Tenants
  * @apiName GetGroupsOfWorkspace
  * @apiGroup Tenant
  * @apiSampleRequest /groups
@@ -21,6 +57,9 @@ router.get('/', (req, res, next)=>{
       res.status(500).send(err);
     })
 });
+
+
+
 
 
 

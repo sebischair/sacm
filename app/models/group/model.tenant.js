@@ -10,6 +10,14 @@ export default class Tenant extends Model{
     return http.get(jwt, '/tenants');
   }
 
+  static findUsersById(jwt, tenantId) {
+    return http.get(jwt, '/tenants/'+tenantId+'/users');
+  }
+
+  static findGroupsById(jwt, tenantId) {
+    return http.get(jwt, '/tenants/'+tenantId+'/groups');
+  }
+
 
 
 
