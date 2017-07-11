@@ -474,6 +474,8 @@ module.exports = class XMLImporter {
     }
 
     createEntityDefinitions(Workspace) {
+      if(Workspace.EntityDefinition == null)
+        return Promise.resolve();
       return Promise.each(Workspace.EntityDefinition, ed=>{
         return EntityDefinition.create(this.jwt, {
             workspace: this.getWorkspaceIdByXMLId(Workspace.$.id), 
@@ -572,6 +574,8 @@ module.exports = class XMLImporter {
     }
 
     createDerivedAttributeDefinitions(Workspace) {
+      if(Workspace.EntityDefinition == null)
+        return Promise.resolve();
       return Promise.each(Workspace.EntityDefinition, ed=>{  
         if(ed.DerivedAttributeDefinition == null)  
             return Promise.resolve();
