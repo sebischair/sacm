@@ -37,7 +37,7 @@ export default class Workspace extends Model{
     return http.get(jwt, '/workspaces');
   }
 
-  static findById(jwt, wokspaceId){
+  static findById(jwt, workspaceId){
     return http.get(jwt, '/workspaces/'+workspaceId);
   }
 

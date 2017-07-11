@@ -1,31 +1,42 @@
 import express from 'express';
-import CaseDefinition from './../../models/casedefinition/model.casedefinition';
-import Case from './../../models/case/model.case';
+import Workspace from './../../models/workspace/model.workspace';
 const router = express.Router();
 
 
 
 
 /**
- * @api {get} /workspaces/:id/casedefinitions Get CaseDefinition by Workspace
- * @apiName GetCaseDefinitionsByWorkspaceID
- * @apiGroup CaseDefinition
+ * @api {get} /workspaces/:id Get Workspace
+ * @apiName GetByWorkspaceID
+ * @apiGroup Workspace
  * @apiParam {String} ID The ID of the requested Workspace
- * @apiSampleRequest /workspaces/:id/casedefinitions
+ * @apiSampleRequest /workspaces/:id
  * @apiSuccessExample {json} Success-Response:
- *     [{
- *       "workspace": "l304i3u2y91u",
- *       "entityDefinition": "1hvr3q9rvtys3",
- *       "name": "CaseDefinition1",
- *       "id": "qkx51pgpkgbi",
- *       "description":"Test Case Definition",
- *       "resourceType""CaseDefinition"
- *     }]
+ * {}
  */
 router.get('/:id', (req, res, next)=>{
-  CaseDefinition.findById(req.jwt, req.params.id)
-    .then(cd=>{
-      res.status(200).send(cd);
+  Workspace.findById(req.jwt, req.params.id)
+    .then(w=>{
+      res.status(200).send(w);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+
+/**
+ * @api {get} /workspaces Get Workspaces
+ * @apiName Get Workspaces
+ * @apiGroup Workspace
+ * @apiSampleRequest /workspaces
+ * @apiSuccessExample {json} Success-Response:
+ * {}
+ */
+router.get('/', (req, res, next)=>{
+  Workspace.findAll(req.jwt)
+    .then(w=>{
+      res.status(200).send(w);
     })
     .catch(err=>{
       res.status(500).send(err);

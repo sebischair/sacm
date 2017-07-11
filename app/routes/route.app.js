@@ -36,7 +36,6 @@ function routes(){
     router.use('/tenants', tenant);
 
     /** Workspace routes*/    
-    router.use('/workspace', workspace);
     router.use('/workspaces', workspace);
 
     /** Entities and Attributes routes **/

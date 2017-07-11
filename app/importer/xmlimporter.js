@@ -412,7 +412,8 @@ module.exports = class XMLImporter {
             readers: [],
             writers: [],
             contributors: [],
-            administrators: []
+            administrators: [],
+            clients: []
           }
         }
         if(w.Reader != null)
@@ -427,6 +428,9 @@ module.exports = class XMLImporter {
         if(w.Administrator != null)
           for(let a of w.Administrator)
             data.permissions.administrators.push(this.getPrincipalIdByXMLId(a.$.principalId));
+        if(w.Client != null)
+          for(let a of w.Client)
+            data.permissions.clients.push(this.getPrincipalIdByXMLId(a.$.principalId));
         if(w.$.staticId != null)
           data.id = w.$.staticId;
         return Workspace.create(this.jwt, data)
