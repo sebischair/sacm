@@ -34,7 +34,7 @@ export default class Workspace extends Model{
   } 
 
   static findAll(jwt){
-    return http.get(jwt, '/workspaces');
+    return http.get(jwt, '/workspaces', {meta: "permissions,description"});
   }
 
   static findById(jwt, workspaceId){

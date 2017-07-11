@@ -31,7 +31,36 @@ router.get('/:id', (req, res, next)=>{
  * @apiGroup Workspace
  * @apiSampleRequest /workspaces
  * @apiSuccessExample {json} Success-Response:
- * {}
+ * [{
+ *     "id": "2c9480845bee03e7015bfc03da610001",
+ *     "name": "Assuta",
+ *     "permissions": {
+ *         "contributors": [
+ *             {
+ *                 "id": "2c9480845bee03e7015bfc03da610001",
+ *                 "name": "Assuta",
+ *                 "resourceType": "groups"
+ *             }
+ *         ],
+ *         "administrators": [
+ *             {
+ *                 "id": "it25pjmg7hhf",
+ *                 "name": "Max Mustermann",
+ *                 "resourceType": "users"
+ *             }
+ *         ],
+ *         "writers": [],
+ *         "readers": [],
+ *         "clients": [
+ *             {
+ *                 "id": "2c9480845bee03e7015bfc056b070002",
+ *                 "name": "AssutaPatients",
+ *                 "resourceType": "groups"
+ *             }
+ *         ]
+ *     },
+ *     "resourceType": "workspaces"
+ * }]
  */
 router.get('/', (req, res, next)=>{
   Workspace.findAll(req.jwt)
