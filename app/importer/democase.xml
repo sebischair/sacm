@@ -56,28 +56,21 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
     </UserDefinition>
     
     <!--Assuta Groups and Users-->
-    <Group id="Assuta" staticId="2c9480845bee03e7015bfc03da610001" description="All users of the hospital in Assuta">
+    <Group id="Assuta" staticId="2c9480845bee03e7015bfc03da610001" description="All users of Assuta">
         <Administrator principalId="Me"/>
-        <Membership principalId="Assuta-Doctors"/>
-        <Membership principalId="Assuta-Patients"/>
+        <Membership principalId="AssutaCaseManagers"/>
+        <Membership principalId="AssutaPatients"/>
     </Group>
 
-    <Group id="Assuta-Doctors" staticId="2c9480845bee03e7015bfc05a3fc0003" description="All doctors of the hospital in Assuta">
+    <Group id="AssutaCaseManagers" staticId="2c9480845bee03e7015bfc05a3fc0003" description="Case Managers">
         <Administrator principalId="Me"/>
         <Membership principalId="connecare-clinician"/>
         <Membership principalId="user5"/>
         <Membership principalId="user6"/>
         <Membership principalId="user7"/>
-        <Membership principalId="Assuta-Specialists"/>
     </Group>
 
-    <Group id="Assuta-Specialists" staticId="2c9480845bee03e7015bfc05a3fc0009" description="ddd">
-        <Administrator principalId="Me"/>
-        <Membership principalId="connecare-clinician"/>
-        <Membership principalId="user5"/>
-    </Group>
-
-    <Group id="Assuta-Patients" staticId="2c9480845bee03e7015bfc056b070002" description="All doctors of the hospital in Assuta">
+    <Group id="AssutaPatients" staticId="2c9480845bee03e7015bfc056b070002" description="Patients">
         <Administrator principalId="Me"/>
         <Membership principalId="connecare-patient"/>
         <Membership principalId="user1"/>
@@ -142,8 +135,8 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
 
         <!-- Case Data Defintion -->   
         <EntityDefinition id="CaseData" description="Case Data">
-            <AttributeDefinition id="Patient" type="Link.Users.Assuta-Patients" description="Patient"/>
-            <AttributeDefinition id="Owner" type="Link.Users.Assuta-Doctors" description="Owner"/>
+            <AttributeDefinition id="Patient" type="Link.Users.AssutaPatients" description="Patient"/>
+            <AttributeDefinition id="Owner" type="Link.Users.AssutaCaseManagers" description="Owner"/>
             <AttributeDefinition id="Lace" type="Link.EntityDefinition.Lace" description="Lace"/>
             <AttributeDefinition id="Barthel" type="Link.EntityDefinition.Barthel" description="Barthel"/>        
             <AttributeDefinition id="PhysicalActivity" type="Link.EntityDefinition.PhysicalActivity" description="PhysicalActivity"/>
