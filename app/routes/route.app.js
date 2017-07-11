@@ -29,9 +29,7 @@ function routes(){
     const router = express.Router();
 
     /** Users and Groups routes*/
-    router.use('/user', user);
     router.use('/users', user);
-    router.use('/group', group);
     router.use('/groups', group);
     router.use('/tenants', tenant);
 
@@ -39,47 +37,29 @@ function routes(){
     router.use('/workspaces', workspace);
 
     /** Entities and Attributes routes **/
-    router.use('/entity', entity);
     router.use('/entities', entity);
-    router.use('/attribute', attribute);
     router.use('/attributes', attribute);
 
     /** CaseDefinition routes */
-    router.use('/casedefinition', casedefinition);
     router.use('/casedefinitions', casedefinition);
-    router.use('/processdefinition', processdefinition);
     router.use('/processdefinitions', processdefinition);
-    router.use('/stagedefinition', stagedefinition);
     router.use('/stagedefinitions', stagedefinition);
-    router.use('/taskdefinition', taskdefinition);
     router.use('/taskdefinitions', taskdefinition);
     router.use('/humantaskdefinition', humantaskdefinition);
     router.use('/humantaskdefinitions', humantaskdefinition);
-    router.use('/automatedtaskdefinition', automatedtaskdefinition);
     router.use('/automatedtaskdefinitions', automatedtaskdefinition);
-    router.use('/taskparamdefinition', taskparamdefinition);
     router.use('/taskparamdefinitions', taskparamdefinition);
-    router.use('/sentrydefinition', sentrydefinition);
     router.use('/sentrydefinitions', sentrydefinition);
 
     /** Case routes */
-    router.use('/case', case_);
     router.use('/cases', case_);
-    router.use('/stage', stage);
     router.use('/stages', stage);
-    router.use('/task', task);
     router.use('/tasks', task);
-    router.use('/taskparam', taskparam);
     router.use('/taskparams', taskparam);
-    router.use('/humantask', humantask);
     router.use('/humantasks', humantask);
-    router.use('/automatedtask', automatedtask);
-    router.use('/automatedtasks', automatedtask)
-    router.use('/alert', alert);
+    router.use('/automatedtasks', automatedtask);
     router.use('/alerts', alert);
-    router.use('/message', message);
     router.use('/messages', message);
-    router.use('/process', process_);
     router.use('/processes', process_);
 
 
