@@ -432,7 +432,7 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
 
         <EntityDefinition id="PatientMonitory" description="Patient Monitory">
             <!--Mesurement-->
-            <AttributeDefinition id="pmp1" type="enumeration" multiplicity="maximalOne" description="Measure name, the posible values are">
+            <AttributeDefinition id="pmp1_name" type="enumeration" multiplicity="maximalOne" description="Measure name, the posible values are">
                 <EnumerationOption value="WEIGHT" description="Weight"/>
                 <EnumerationOption value="HEIGHT" description="Height"/>
                 <EnumerationOption value="FATRATIO" description="FatRatio"/>
@@ -449,29 +449,29 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
                 <EnumerationOption value="PULSEWAVEVEOCITY" description="PulseWaveVelocity"/>
                 <EnumerationOption value="SLEEP" description="Sleep"/>
             </AttributeDefinition>   
-            <AttributeDefinition id="pmp2" type="number" multiplicity="maximalOne" description="Min value for this measure"/>       
-            <AttributeDefinition id="pmp3" type="number" multiplicity="maximalOne" description="Max value for this measure"/>       
-            <AttributeDefinition id="pmp4" type="number" multiplicity="maximalOne" description="Minimum value"/>       
-            <AttributeDefinition id="pmp5" type="enumeration" multiplicity="maximalOne" description="Frecuency Unit, the posiible values are">     
+            <AttributeDefinition id="pmp2_alertmin" type="number" multiplicity="maximalOne" description="Min value for this measure"/>       
+            <AttributeDefinition id="pmp3_alertmax" type="number" multiplicity="maximalOne" description="Max value for this measure"/>       
+            <AttributeDefinition id="pmp4_alertfreq" type="number" multiplicity="maximalOne" description="Alert Frecuency Value"/>       
+            <AttributeDefinition id="pmp5_alertfrequnit" type="enumeration" multiplicity="maximalOne" description="Frecuency Unit, the posiible values are">     
                 <EnumerationOption value="HOURS" description="Hours"/>
                 <EnumerationOption value="DAYS" description="Days"/>
                 <EnumerationOption value="WEEKS" description="Weeks"/>
                 <EnumerationOption value="MONTHS" description="Months"/>
             </AttributeDefinition>
             <!--Prescription Details-->
-            <AttributeDefinition id="pmp6" type="string" multiplicity="maximalOne" description="Comments"/>   
-            <AttributeDefinition id="pmp7" type="number" multiplicity="maximalOne" description="Frecuency"/> 
-            <AttributeDefinition id="pmp8" type="enumeration" multiplicity="maximalOne" description="Frecuency Unit, the posiible values are">     
+            <AttributeDefinition id="pmp6_comments" type="string" multiplicity="maximalOne" description="Comments"/>   
+            <AttributeDefinition id="pmp7_freq" type="number" multiplicity="maximalOne" description="Frecuency"/> 
+            <AttributeDefinition id="pmp8_freqqunit" type="enumeration" multiplicity="maximalOne" description="Frecuency Unit, the posiible values are">     
                 <EnumerationOption value="HOURS" description="Hours"/>
                 <EnumerationOption value="DAYS" description="Days"/>
                 <EnumerationOption value="WEEKS" description="Weeks"/>
                 <EnumerationOption value="MONTHS" description="Months"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="pmp9" type="number" multiplicity="maximalOne" description="Max delay in minutes"/> 
-            <AttributeDefinition id="pmp10" type="date" multiplicity="maximalOne" description="Start date"/> 
-            <AttributeDefinition id="pmp11" type="date" multiplicity="maximalOne" description="End date"/> 
+            <AttributeDefinition id="pmp9_maxdelay" type="number" multiplicity="maximalOne" description="Max delay in minutes"/> 
+            <AttributeDefinition id="pmp10_startdate" type="date" multiplicity="maximalOne" description="Start date"/> 
+            <AttributeDefinition id="pmp11_enddate" type="date" multiplicity="maximalOne" description="End date"/> 
             <!--Time Slot-->
-            <AttributeDefinition id="pmp12" type="enumeration" multiplicity="maximalOne" description="Slot to take the measurements, the possible values are">     
+            <AttributeDefinition id="pmp12_timeslot" type="enumeration" multiplicity="atLeastOne" description="Slot to take the measurements, the possible values are">     
                 <EnumerationOption value="BREAKFAST" description="BreakFast"/>
                 <EnumerationOption value="LUNCH" description="Lunch"/>
                 <EnumerationOption value="AFTERNOONSNACK" description="AfternoonSnack"/>
@@ -479,7 +479,7 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
                 <EnumerationOption value="BEFORESLEEP" description="BeforeSleep"/>
                 <EnumerationOption value="SPECIFICHOUR" description="SpecificHour"/>
             </AttributeDefinition>
-            <AttributeDefinition id="pmp13" type="number" multiplicity="maximalOne" description="Min value for this measure"/>  
+            <AttributeDefinition id="pmp13_timehour" type="number" multiplicity="atLeastOne" description="Hour"/>  
             <AttributeDefinition id="pmpx" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Mesurement"/>                      
         </EntityDefinition>
 
@@ -586,39 +586,39 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
                 </AutomatedTaskDefinition>
                 
                 <HumanTaskDefinition id="PatientMonitoryPrescription" description="Patient Monitory Prescription" ownerPath="Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="PatientMonitory" entityAttachPath="PatientMonitory">
-                    <TaskParamDefinition path="PatientMonitory.pmp1" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitory.pmp2" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitory.pmp3" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitory.pmp4" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitory.pmp5" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitory.pmp6" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitory.pmp7" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitory.pmp8" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitory.pmp9" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitory.pmp10" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitory.pmp11" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitory.pmp12" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitory.pmp13" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp1_name" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp2_alertmin" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp3_alertmax" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp4_alertfreq" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp5_alertFrecuencyUnitValue" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp6_comments" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp7_freq" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp8_freqqunit" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp9_maxdelay" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp10_startdate" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp11_enddate" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp12_timeslot" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp13_timehour" isReadOnly="false" isMandatory="false"/>
                 </HumanTaskDefinition>
                 <AutomatedTaskDefinition id="PatientMonitoryExecution" description="Patient Monitory Execution" ownerPath="Owner" isMandatory="true" isRepeatable="false">
                     <SentryDefinition>
                         <precondition processDefinitionId="PatientMonitoryPrescription"/>
                     </SentryDefinition>
                     <HttpHookDefinition on="ENABLE" url="http://35.157.110.245:8081/v1/producer/point-to-point/sacm/prescription" method="POST"></HttpHookDefinition>
-                    <TaskParamDefinition path="PatientMonitory.pmp1" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitory.pmp2" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitory.pmp3" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitory.pmp4" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitory.pmp5" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitory.pmp6" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitory.pmp7" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitory.pmp8" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitory.pmp9" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitory.pmp10" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitory.pmp11" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitory.pmp12" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitory.pmp13" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="Patient" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp1_name" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp2_alertmin" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp3_alertmax" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp4_alertfreq" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp5_alertFrecuencyUnitValue" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp6_comments" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp7_freq" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp8_freqqunit" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp9_maxdelay" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp10_startdate" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp11_enddate" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp12_timeslot" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp13_timehour" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="Patient" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="PatientMonitory.pmpx" isReadOnly="false" isMandatory="true"/>
                 </AutomatedTaskDefinition>
 
