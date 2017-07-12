@@ -49,5 +49,9 @@ export default class HumanTask extends Model{
     return http.post(jwt, '/humantasks/'+humanTaskId+'/scheduleddate', {scheduledDate: scheduledDate});
   }
 
+  static findByMeActive(jwt) {
+    return http.get(jwt, '/humantasks/me/active');
+  }
+
 
 }

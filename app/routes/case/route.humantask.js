@@ -3,6 +3,47 @@ import HumanTask from './../../models/case/model.humantask';
 const router = express.Router();
 
 
+/**
+ * @api {get} humantasks/me/active Get My HumanTask that are active 
+ * @apiName GetHumanTask
+ * @apiGroup HumanTask
+ * @apiSuccessExample {json} Success-Response:
+ * {
+ *   "parentStage": "1x26mpxg3dabq",
+ *   "index": 0,
+ *   "stateDates": {
+ *     "enabled": "2017-06-07 00:22:16.0",
+ *     "terminated": null,
+ *     "active": "2017-06-07 00:22:16.0",
+ *     "available": "2017-06-07 00:22:16.0",
+ *     "completed": null
+ *   },
+ *   "isRepeatable": false,
+ *   "next": null,
+ *   "state": "ACTIVE",
+ *   "resourceType": "humantasks",
+ *   "prev": null,
+ *   "scheduledDate": null,
+ *   "id": "9411d2nyotg3",
+ *   "processDefinition": "6pg40n08k5yc",
+ *   "possibleActions": [],
+ *   "isManualActivation": false,
+ *   "description": "Lace",
+ *   "name": "Lace",
+ *   "isMandatory": true,
+ *   "owner": null,
+ *   "case": "1rx44jafa5psr"
+ * }
+ */
+router.get('/me/active', (req, res, next)=>{
+  HumanTask.findByMeActive(req.jwt)
+    .then(hts=>{
+        res.status(200).send(hts);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
 
 /**
  * @api {get} humantasks/:id Get HumanTask
