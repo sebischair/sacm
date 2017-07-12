@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+AttributeDefintion types = richstring, text, notype, json, link, string, mxl, longtext, image, boolean, number, enumeration or date
+
+One entit defintion can only belong to one casedefintnion, meaning a entityDefinition can be used only once
+-->
+<SACMDefinition>
+    
+    <UserDefinition>
+        <AttributeDefinition id="patientnr" type="string" multiplicity="maximalOne" description="Patient number"/>
+    </UserDefinition>
+    
+    <!--Barcelona Groups and Users-->
+    <Group id="Barcelona-Hospital" description="All users of the hospital in Barcelona">
+        <Administrator principalId="Me"/>
+        <Membership principalId="Barcelona-Doctors"/>
+    </Group>
+
+    <Group id="Barcelona-Doctors" description="All doctors of the hospital in Barcelona">
+        <Administrator principalId="Me"/>
+        <Membership principalId="VincentAdams"/>
+        <Membership principalId="connecare-clinician"/>
+    </Group>
+
+    <User id="JohnSmith" email="john.smith@connecare.eu">
+    </User>
+    <User id="CherylWillis" email="cheryl.willis@connecare.eu">
+    </User>
+    <User id="VincentAdams" email="vincent.adams@connecare.eu">
+    </User>
+       
+    <User id="connecare-clinician" staticId="2c9480845bee03e7015bfcad28990010" email="juanmanuel.fernandez@eurecat.org">
+        <Attribute attributeDefinitionId="firstname" values="['Juan']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Fernandez']"/>         
+        <Attribute attributeDefinitionId="birthdate" values="['1980-03-08T15:36:21.000-0000']"/> 
+    </User>
+
+    <Workspace id="BarcelonaHospital" description="All model elements and instances of the hospital in Barcelona">
+        <Contributor principalId="Barcelona-Hospital"/>
+        <Administrator principalId="Me"/>
+
+        <EntityDefinition id="CaseData" description="">   
+            <AttributeDefinition id="Owner" type="Link.Users.Barcelona-Doctors" description="Owner"/>
+            <AttributeDefinition id="Text" type="string" description="Text"/> 
+        </EntityDefinition>
+
+        <CaseDefinition id="Manual Activation" description="Manual Activation Demo" ownerPath="Owner" entityDefinitionId="CaseData">
+            <StageDefinition id="CaseIdentification" description="Case Identification" isMandatory="true" isRepeatable="false">        
+                <HumanTaskDefinition id="SomeTask" description="Some Task" ownerPath="Owner" isMandatory="true" isRepeatable="false" isManualActivation="true"> 
+                    <TaskParamDefinition path="Text" isReadOnly="false" isMandatory="true"/>             
+                </HumanTaskDefinition>
+            </StageDefinition>            
+        </CaseDefinition>
+    
+    </Workspace>
+
+</SACMDefinition>
+
+
