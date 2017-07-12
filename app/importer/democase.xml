@@ -590,7 +590,7 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
                     <TaskParamDefinition path="PatientMonitory.pmp2_alertmin" isReadOnly="false" isMandatory="false"/>
                     <TaskParamDefinition path="PatientMonitory.pmp3_alertmax" isReadOnly="false" isMandatory="false"/>
                     <TaskParamDefinition path="PatientMonitory.pmp4_alertfreq" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitory.pmp5_alertFrecuencyUnitValue" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp5_alertfrequnit" isReadOnly="false" isMandatory="false"/>
                     <TaskParamDefinition path="PatientMonitory.pmp6_comments" isReadOnly="false" isMandatory="false"/>
                     <TaskParamDefinition path="PatientMonitory.pmp7_freq" isReadOnly="false" isMandatory="false"/>
                     <TaskParamDefinition path="PatientMonitory.pmp8_freqqunit" isReadOnly="false" isMandatory="false"/>
@@ -604,12 +604,12 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
                     <SentryDefinition>
                         <precondition processDefinitionId="PatientMonitoryPrescription"/>
                     </SentryDefinition>
-                    <HttpHookDefinition on="ENABLE" url="http://35.157.110.245:8081/v1/producer/point-to-point/sacm/prescription" method="POST"></HttpHookDefinition>
+                    <HttpHookDefinition on="ENABLE" url="http://35.157.110.245:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST"></HttpHookDefinition>
                     <TaskParamDefinition path="PatientMonitory.pmp1_name" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="PatientMonitory.pmp2_alertmin" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="PatientMonitory.pmp3_alertmax" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="PatientMonitory.pmp4_alertfreq" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="PatientMonitory.pmp5_alertFrecuencyUnitValue" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="PatientMonitory.pmp5_alertfrequnit" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="PatientMonitory.pmp6_comments" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="PatientMonitory.pmp7_freq" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="PatientMonitory.pmp8_freqqunit" isReadOnly="true" isMandatory="false"/>
@@ -684,6 +684,24 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
         </Action>
         <Action id="CompleteAutomatedTask" processId="PhysicalActivityExecution">
             <TaskParam path="PhysicalActivity.phactpx"  values="[{'steepFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
+        </Action>
+        <Action id="CompleteHumanTask" processId="PatientMonitoryPrescription">
+            <TaskParam path="PatientMonitory.pmp1_name"  values="['WEIGHT']"/>
+            <TaskParam path="PatientMonitory.pmp2_alertmin"  values="[50]"/>
+            <TaskParam path="PatientMonitory.pmp3_alertmax"  values="[150]"/>
+            <TaskParam path="PatientMonitory.pmp4_alertfreq"  values="[2]"/>
+            <TaskParam path="PatientMonitory.pmp5_alertfrequnit"  values="['DAYS']"/>
+            <TaskParam path="PatientMonitory.pmp6_comments"  values="['Some random comment']"/>
+            <TaskParam path="PatientMonitory.pmp7_freq"  values="[5]"/>
+            <TaskParam path="PatientMonitory.pmp8_freqqunit"  values="['WEEKS']"/>
+            <TaskParam path="PatientMonitory.pmp9_maxdelay"  values="[100]"/>
+            <TaskParam path="PatientMonitory.pmp10_startdate"  values="['2017-06-09 14:54:53.0']"/>
+            <TaskParam path="PatientMonitory.pmp11_enddate"  values="['2019-06-09 14:54:53.0']"/>
+            <TaskParam path="PatientMonitory.pmp12_timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
+            <TaskParam path="PatientMonitory.pmp13_timehour"  values="[]"/>
+        </Action>
+        <Action id="CompleteAutomatedTask" processId="PatientMonitoryExecution">
+            <TaskParam path="PatientMonitory.pmpx"  values="[{'steepFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
         </Action>
     </Execution>
 
