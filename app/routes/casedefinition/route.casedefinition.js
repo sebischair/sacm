@@ -382,7 +382,7 @@ router.get('/:id/humantaskdefinitions/all', (req, res, next)=>{
 /**
  * @api {get} /casedefinitions/:id/cases Get CaseDefinitions
  * @apiName GetCasesByCaseDefinition
- * @apiGroup Case
+ * @apiGroup Cases
  * @apiParam {String} ID The ID of the the CaseDefinition
  * @apiSampleRequest /casedefinitions/:id/cases
  * @apiSuccessExample {json} Success-Response:

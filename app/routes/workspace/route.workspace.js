@@ -80,7 +80,7 @@ router.get('/', (req, res, next)=>{
 /**
  * @api {get} /workspaces/:id/cases Get Case by Workspace
  * @apiName GetCasesByWorkspaceID
- * @apiGroup Case
+ * @apiGroup Cases
  * @apiParam {String} ID The ID of the the Workspace
  * @apiSampleRequest /workspaces/:id/cases
  * @apiSuccessExample {json} Success-Response:
