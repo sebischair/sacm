@@ -140,7 +140,7 @@ router.patch('/:id', (req, res, next)=>{
 /**
  * @api {get} /humantaskdefinitions/:id/humantasks Get HumanTasks
  * @apiName GetHumanTaskDefinitions
- * @apiGroup HumanTaskDefinitions
+ * @apiGroup HumanTasks
  * @apiParam {String} id ID of the HumanTaskDefinition
  * @apiSampleRequest /humantaskdefinitions/:id/humantasks
  * @apiSuccessExample {json} Success-Response:

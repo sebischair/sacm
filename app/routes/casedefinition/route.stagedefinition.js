@@ -213,7 +213,7 @@ router.get('/:id/humantaskdefinitions', (req, res, next)=>{
 /**
  * @api {get} /stagedefinitions/:id/stages Get Stages by Stage Definitions
  * @apiName GetStagesByStageDefinitionId
- * @apiGroup StageDefinitions
+ * @apiGroup Stages
  * @apiParam {String} id ID of the StageDefinition
  * @apiSampleRequest /stagedefinitions/:id/stages
  * @apiSuccessExample {json} Success-Response:

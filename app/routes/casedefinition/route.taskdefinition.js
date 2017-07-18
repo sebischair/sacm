@@ -33,7 +33,7 @@ router.get('/:id', (req, res, next)=>{
 /**
  * @api {get} /taskdefinitions/:id/tasks Get Tasks
  * @apiName GetTasksByTaskDefinitionID
- * @apiGroup TaskDefinitions
+ * @apiGroup Tasks
  * @apiParam {String} id ID of the TaskDefinition
  * @apiSampleRequest /taskdefinitions/:id/tasks
  * @apiSuccessExample {json} Success-Response:

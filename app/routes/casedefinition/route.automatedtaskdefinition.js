@@ -140,7 +140,7 @@ router.patch('/:id', (req, res, next)=>{
 /**
  * @api {get} /automatedtaskdefinitions/:id/automatedtasks Get AutomatedTasks
  * @apiName GetAutomatedTasks
- * @apiGroup AutomatedTaskDefinitions
+ * @apiGroup AutomatedTasks
  * @apiParam {String} id ID of the AutomatedTaskDefinition
  * @apiSampleRequest /automatedtaskdefinitions/:id/automatedtasks
  * @apiSuccessExample {json} Success-Response:

@@ -84,7 +84,7 @@ router.patch('/:id', (req, res, next)=>{
 
 
 /**
- * @api {delete} /sentrydefinitions/:id Delete TaskParamDefinition
+ * @api {delete} /taskparamdefinitions/:id Delete TaskParamDefinition
  * @apiName DeleteTaskParamDefinition
  * @apiGroup TaskParamDefinitions
  * @apiParam {String} id ID of the TaskParamDefinition
