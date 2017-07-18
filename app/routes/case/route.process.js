@@ -84,7 +84,7 @@ router.get('/:id/alerts', (req, res, next)=>{
 /**
  * @api {get} /processes/:id/logs Get Logs by Process
  * @apiName GetProcessLogs
- * @apiGroup Log 
+ * @apiGroup Logs 
  * @apiParam {String} id ID of the Process 
  * @apiSampleRequest /processes/:id/logs
  * @apiSuccessExample {json} Success-Response:
