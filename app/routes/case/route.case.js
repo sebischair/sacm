@@ -880,7 +880,7 @@ router.get('/:id/messages', (req, res, next)=>{
 /**
  * @api {get} /cases/:id/alerts Get Alerts by Case
  * @apiName GetAlerts
- * @apiGroup Alert
+ * @apiGroup Alerts
  * @apiParam {String} id ID of the Case 
  * @apiSampleRequest /cases/:id/alerts
  * @apiSuccessExample {json} Success-Response:
