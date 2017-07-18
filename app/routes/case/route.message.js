@@ -7,7 +7,7 @@ const router = express.Router();
 /**
  * @api {get} /messages/:id Get Message
  * @apiName GetMessage
- * @apiGroup Message
+ * @apiGroup Messages
  * @apiParam {String} id ID of the Message
  * @apiSampleRequest /messages/:id
  * @apiSuccessExample {json} Success-Response:
@@ -30,7 +30,7 @@ router.get('/:id', (req, res, next)=>{
 /**
  * @api {post} /messages Create Message
  * @apiName CreateMessage
- * @apiGroup Message
+ * @apiGroup Messages
  * @apiParam {String} case ID of the case
  * @apiParam {String} text Content of the message
  * @apiSampleRequest /messages

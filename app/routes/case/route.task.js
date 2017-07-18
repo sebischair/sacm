@@ -6,7 +6,7 @@ const router = express.Router();
 /**
  * @api {get} /tasks/:id Get Task
  * @apiName GetTask
- * @apiGroup Task
+ * @apiGroup Tasks
  * @apiParam {String} id ID of the Task
  * @apiSampleRequest /tasks/:id
  * @apiSuccessExample {json} Success-Response:

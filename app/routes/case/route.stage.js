@@ -11,7 +11,7 @@ const router = express.Router();
 /**
  * @api {get} /stage/:id Get Stage
  * @apiName GetStage
- * @apiGroup Stage
+ * @apiGroup Stages
  * @apiParam {String} id ID of the Stage
  * @apiSampleRequest /stage/:id
  * @apiSuccessExample {json} Success-Response:
@@ -48,7 +48,7 @@ router.get('/:id', (req, res, next)=>{
 /**
  * @api {get} /stage/:id/stages Get Sub Stages
  * @apiName GetSubStages
- * @apiGroup Stage
+ * @apiGroup Stages
  * @apiParam {String} id ID of the Stage
  * @apiSampleRequest /stage/:id/stages
  * @apiSuccessExample {json} Success-Response:
@@ -85,7 +85,7 @@ router.get('/:id/stages', (req, res, next)=>{
 /**
  * @api {post} /stages/:id/activate Activate Stage
  * @apiName ActivateStage
- * @apiGroup Stage
+ * @apiGroup Stages
  * @apiParam {String} id ID of the Stage
  * @apiSampleRequest /stages/:id/activate
  * @apiSuccessExample {json} Success-Response:
@@ -105,7 +105,7 @@ router.post('/:id/activate', (req, res, next)=>{
 /**
  * @api {post} /stages/:id/complete Complete Stage
  * @apiName CompleteStage
- * @apiGroup Stage
+ * @apiGroup Stages
  * @apiParam {String} id ID of the Stage
  * @apiSampleRequest /stages/:id/complete
  * @apiSuccessExample {json} Success-Response:
@@ -125,7 +125,7 @@ router.post('/:id/complete', (req, res, next)=>{
 /**
  * @api {post} /stages/:id/terminate Terminate Stage
  * @apiName TerminateStage
- * @apiGroup Stage
+ * @apiGroup Stages
  * @apiParam {String} id ID of the Stage
  * @apiSampleRequest /stages/:id/terminate
  * @apiSuccessExample {json} Success-Response:
@@ -148,7 +148,7 @@ router.post('/:id/terminate', (req, res, next)=>{
 /**
  * @api {get} /stages/:id/processes Get Processes by Stage
  * @apiName GetDirectChildProcesses
- * @apiGroup Stage
+ * @apiGroup Stages
  * @apiParam {String} id ID of the Stage
  * @apiSampleRequest /stages/:id/processes
  * @apiSuccessExample {json} Success-Response:
@@ -172,7 +172,7 @@ router.get('/:id/processes', (req, res, next)=>{
 /**
  * @api {get} /stages/:id/tasks Get Tasks by Stage
  * @apiName GetTasks
- * @apiGroup Stage
+ * @apiGroup Stages
  * @apiParam {String} id ID of the Stage
  * @apiSampleRequest /stages/:id/tasks
  * @apiSuccessExample {json} Success-Response:
@@ -211,7 +211,7 @@ router.get('/:id/tasks', (req, res, next)=>{
 /**
  * @api {get} /stages/:id/automatedtasks Get AutomatedTasks by Stage
  * @apiName GetAutomatedTasks
- * @apiGroup Stage
+ * @apiGroup Stages
  * @apiParam {String} id ID of the Stage
  * @apiSampleRequest /stages/:id/automatedtasks
  * @apiSuccessExample {json} Success-Response:
@@ -249,7 +249,7 @@ router.get('/:id/automatedtasks', (req, res, next)=>{
 /**
  * @api {get} /stages/:id/humantasks Get HumanTasks by Stage
  * @apiName GetHumanTasks
- * @apiGroup Stage
+ * @apiGroup Stages
  * @apiParam {String} id ID of the Stage
  * @apiSampleRequest /stages/:id/humantasks
  * @apiSuccessExample {json} Success-Response:
@@ -288,7 +288,7 @@ router.get('/:id/humantasks', (req, res, next)=>{
 /**
  * @api {post} /stages/:id/owner/:userid Set Stage Owner
  * @apiName SetOwnerStage
- * @apiGroup Stage
+ * @apiGroup Stages
  * @apiParam {String} id ID of a Stage
  * @apiParam {String} userId of the Owner
  * @apiSampleRequest /stages/:id/owner/userid

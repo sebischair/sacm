@@ -64,7 +64,7 @@ router.get(':id/httphookdefinitions', (req, res, next)=>{
 /**
  * @api {get} /processdefinitions/:id/process Get Processes by Process Definition
  * @apiName GetProcessesByProcessDefinitionID
- * @apiGroup Process
+ * @apiGroup Processes
  * @apiParam {String} id ID of the Process Definition 
  * @apiSampleRequest /processdefinitions/:id/process
  * @apiSuccessExample {json} Success-Response:
