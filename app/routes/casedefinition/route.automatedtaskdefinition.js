@@ -6,7 +6,7 @@ const router = express.Router();
 /**
  * @api {get} /automatedtaskdefinitions/:id Get AutomatedTaskDefinition
  * @apiName GetAutomatedTaskDefinition
- * @apiGroup AutomatedTaskDefinition
+ * @apiGroup AutomatedTaskDefinitions
  * @apiParam {String} id ID of the AutomatedTaskDefinition
  * @apiSampleRequest /automatedtaskdefinitions/:id
  * @apiSuccessExample {json} Success-Response:
@@ -39,7 +39,7 @@ router.get('/:id', (req, res, next)=>{
 /**
  * @api {delete} /automatedtaskdefinitions/:id Delete AutomatedTaskDefinition
  * @apiName DeleteAutomatedTaskDefinition
- * @apiGroup AutomatedTaskDefinition
+ * @apiGroup AutomatedTaskDefinitions
  * @apiParam {String} id ID of the AutomatedTaskDefinition
  * @apiSampleRequest /automatedtaskdefinitions/:id
  * @apiSuccessExample {json} Success-Response:
@@ -59,7 +59,7 @@ router.delete('/:id', (req, res, next)=>{
 /**
  * @api {post} /automatedtaskdefinitions Create AutomatedTaskDefinition
  * @apiName CreateAutomatedTaskDefinition
- * @apiGroup AutomatedTaskDefinition
+ * @apiGroup AutomatedTaskDefinitions
  * @apiParam {String} caseDefinition ID of the parent CaseDefinition
  * @apiParam {String} name Name of the StageDefinition (internal usage)
  * @apiParam {String} description Description of the StageDefinition
@@ -100,7 +100,7 @@ router.post('/', (req, res, next)=>{
 /**
  * @api {patch} /automatedtaskdefinitions/:id Update AutomatedTaskDefinition
  * @apiName UpdateAutomatedTaskDefinition
- * @apiGroup AutomatedTaskDefinition
+ * @apiGroup AutomatedTaskDefinitions
  * @apiParam {String} caseDefinition ID of the parent CaseDefinition
  * @apiParam {String} name Name of the StageDefinition (internal usage)
  * @apiParam {String} description Description of the StageDefinition
@@ -140,7 +140,7 @@ router.patch('/:id', (req, res, next)=>{
 /**
  * @api {get} /automatedtaskdefinitions/:id/automatedtasks Get AutomatedTasks
  * @apiName GetAutomatedTasks
- * @apiGroup AutomatedTaskDefinition
+ * @apiGroup AutomatedTaskDefinitions
  * @apiParam {String} id ID of the AutomatedTaskDefinition
  * @apiSampleRequest /automatedtaskdefinitions/:id/automatedtasks
  * @apiSuccessExample {json} Success-Response:

@@ -6,7 +6,7 @@ const router = express.Router();
 /**
  * @api {get} /humantaskdefinition/:id Get HumanTaskDefinition
  * @apiName GetHumanTaskDefinition
- * @apiGroup HumanTaskDefinition
+ * @apiGroup HumanTaskDefinitions
  * @apiParam {String} id ID of the HumanTaskDefinition
  * @apiSampleRequest test
  * @apiSuccessExample {json} Success-Response:
@@ -39,7 +39,7 @@ router.get('/:id', (req, res, next)=>{
 /**
  * @api {delete} /humantaskdefinition/:id Delete HumanTaskDefinition
  * @apiName Delete HumanTaskDefinition
- * @apiGroup HumanTaskDefinition
+ * @apiGroup HumanTaskDefinitions
  * @apiParam {String} id ID of the HumanTaskDefinition
  * @apiSampleRequest test
  * @apiSuccessExample {json} Success-Response:
@@ -59,7 +59,7 @@ router.delete('/:id', (req, res, next)=>{
 /**
  * @api {post} /humantaskdefinitions Create HumanTaskDefinition
  * @apiName CreateHumanTaskDefinition
- * @apiGroup HumanTaskDefinition
+ * @apiGroup HumanTaskDefinitions
  * @apiParam {String} caseDefinition ID of the parent CaseDefinition
  * @apiParam {String} name Name of the StageDefinition (internal usage)
  * @apiParam {String} description Description of the StageDefinition
@@ -98,7 +98,7 @@ router.post('/', (req, res, next)=>{
 /**
  * @api {patch} /humantaskdefinitions/:id Update HumanTaskDefinition
  * @apiName UpdateHumanTaskDefinition
- * @apiGroup HumanTaskDefinition
+ * @apiGroup HumanTaskDefinitions
  * @apiParam {String} id The ID of the HumanTaskDefinition
  * @apiParam {String} caseDefinition (optional) ID of the parent CaseDefinition
  * @apiParam {String} name (optional) Name of the StageDefinition (internal usage)
@@ -139,8 +139,8 @@ router.patch('/:id', (req, res, next)=>{
 
 /**
  * @api {get} /humantaskdefinitions/:id/humantasks Get HumanTasks
- * @apiName GetHumanTasks
- * @apiGroup HumanTaskDefinition
+ * @apiName GetHumanTaskDefinitions
+ * @apiGroup HumanTaskDefinitions
  * @apiParam {String} id ID of the HumanTaskDefinition
  * @apiSampleRequest /humantaskdefinitions/:id/humantasks
  * @apiSuccessExample {json} Success-Response:

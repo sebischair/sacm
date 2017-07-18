@@ -6,7 +6,7 @@ const router = express.Router();
 /**
  * @api {get} /taskparams/:id/autocomplete Get TaskParam Autocomplete
  * @apiName TaskParamAutocomplete
- * @apiGroup TaskParam
+ * @apiGroup TaskParams
  * @apiParam {String} id ID of the TaskParam
  * @apiSampleRequest /taskparams/:id/autocomplete
  * @apiSuccessExample {json} Success-Response:

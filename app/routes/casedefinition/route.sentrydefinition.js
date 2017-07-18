@@ -5,7 +5,7 @@ const router = express.Router();
 /**
  * @api {get} /sentrydefinitions/:id Get SentryDefinition
  * @apiName GetSentryDefinition
- * @apiGroup SentryDefinition
+ * @apiGroup SentryDefinitions
  * @apiParam {String} id ID of the SentryDefinition
  * @apiSampleRequest test
  * @apiSuccessExample {json} Success-Response:
@@ -31,7 +31,7 @@ router.get('/:id', (req, res, next)=>{
 /**
  * @api {delete} /sentrydefinitions/:id Delete Sentry Definition
  * @apiName DeleteSentryDefinition
- * @apiGroup SentryDefinition
+ * @apiGroup SentryDefinitions
  * @apiParam {String} id ID of the Sentry Definition
  * @apiSampleRequest /sentrydefinitions/:id
  * @apiSuccessExample {json} Success-Response:
@@ -52,7 +52,7 @@ router.delete('/:id', (req, res, next)=>{
  * @api {post} /sentrydefinitions Create SentryDefinition
  *
  * @apiName CreateSentryDefinition
- * @apiGroup SentryDefinition
+ * @apiGroup SentryDefinitions
  * @apiParam {String} caseDefinition ID of the Case Definition
  * @apiParam {String} name Name of the Stage Definition (internal usage)
  * @apiParam {String} description Description of the Stage Definition
@@ -84,7 +84,7 @@ router.post('/', (req, res, next)=>{
 /**
  * @api {patch} /sentrydefinitions/:id Update Sentry Definition
  * @apiName UpdateSentryDefinition
- * @apiGroup SentryDefinition
+ * @apiGroup SentryDefinitions
  * @apiParam {String} id The ID of the Sentry Definition
  * @apiParam {String} caseDefinition (optional) ID of the parent Case Definition
  * @apiParam {String} name (optional) Name of the StageDefinition (internal usage)

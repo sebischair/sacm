@@ -5,7 +5,7 @@ const router = express.Router();
 /**
  * @api {get} /httphookdefinitions/:id Get HttpHookDefinition
  * @apiName GetHttpHookDefinition
- * @apiGroup HttpHookDefinition
+ * @apiGroup HttpHookDefinitions
  * @apiParam {String} id ID of the HttpHookDefinition
  * @apiSampleRequest /httphookdefinitions/:id
  * @apiSuccessExample {json} Success-Response:
@@ -32,7 +32,7 @@ router.get('/:id', (req, res, next)=>{
 /**
  * @api {patch} /httphookdefinitions Create HttpHookDefinition
  * @apiName CreateHttpHookDefinition
- * @apiGroup HttpHookDefinition
+ * @apiGroup HttpHookDefinitions
  * @apiParam {String} on State on which the Hook is invoked
  * @apiParam {String} url URL of the Hook endpoint
  * @apiParam {String} method Request method of the Hook
@@ -67,7 +67,7 @@ router.post('/', (req, res, next)=>{
 /**
  * @api {post} /httphookdefinitions/:id Update HttpHookDefinition
  * @apiName UpdateHttpHookDefinition
- * @apiGroup HttpHookDefinition
+ * @apiGroup HttpHookDefinitions
  * @apiParam {String} id ID of the HttpHookDefinition
  * @apiSampleRequest /httphookdefinitions/:id
  * @apiSuccessExample {json} Success-Response:
@@ -93,7 +93,7 @@ router.patch('/:id', (req, res, next)=>{
 /**
  * @api {delete} /httphookdefinitions/:id Delete HttpHookDefinition
  * @apiName DeleteHttpHookDefinition
- * @apiGroup HttpHookDefinition
+ * @apiGroup HttpHookDefinitions
  * @apiParam {String} id ID of the HttpHookDefinition
  * @apiSampleRequest /httphookdefinitions/:id
  * @apiSuccessExample {json} Success-Response:

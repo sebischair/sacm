@@ -8,7 +8,7 @@ const router = express.Router();
 /**
  * @api {post} /stagedefinitions Create StageDefinition
  * @apiName CreateStageDefinition
- * @apiGroup StageDefinition
+ * @apiGroup StageDefinitions
  * @apiParam {String} caseDefinition ID of the parent Case Definition
  * @apiParam {String} name Name of the Stage Definition (internal usage)
  * @apiParam {String} description Description of the Stage Definition
@@ -47,7 +47,7 @@ router.post('/', (req, res, next)=>{
 /**
  * @api {patch} /stagedefinitions/:id Update StageDefinition
  * @apiName UpdateStageDefinition
- * @apiGroup StageDefinition
+ * @apiGroup StageDefinitions
  * @apiParam {String} id The ID of the Stage Definition
  * @apiParam {String} caseDefinition (opional) ID of the parent Case Definition
  * @apiParam {String} name (opional) Name of the Stage Definition (internal usage)
@@ -90,7 +90,7 @@ router.patch('/:id', (req, res, next)=>{
 /**
  * @api {get} /stagedefinitions/:id Get StageDefinition
  * @apiName GetStageDefinition
- * @apiGroup StageDefinition
+ * @apiGroup StageDefinitions
  * @apiParam {String} id ID of the Stage Definition
  * @apiSampleRequest /stagedefinitions/:id 
  * @apiSuccessExample {json} Success-Response:
@@ -123,7 +123,7 @@ router.get('/:id', (req, res, next)=>{
 /**
  * @api {delete} /stagedefinitions/:id Delete Stage Definition
  * @apiName DeleteStageDefinition
- * @apiGroup StageDefinition
+ * @apiGroup StageDefinitions
  * @apiParam {String} id ID of the Stage Definition
  * @apiSampleRequest /stagedefinitions/:id
  * @apiSuccessExample {json} Success-Response:
@@ -144,7 +144,7 @@ router.delete('/:id', (req, res, next)=>{
 /**
  * @api {get} /stagedefinitions/:id/automatedtaskdefinitions Get Direct Child AutomatedTaskDefinitions
  * @apiName GetAutomatedTaskDefinitionByStageDefinitionID
- * @apiGroup AutomatedTaskDefinition
+ * @apiGroup AutomatedTaskDefinitions
  * @apiParam {String} ID The ID of the Stage Definition
  * @apiSampleRequest /stagedefinitions/:id/automatedtaskdefinitions
  * @apiSuccessExample {json} Success-Response:
@@ -178,7 +178,7 @@ router.get('/:id/automatedtaskdefinitions', (req, res, next)=>{
 /**
  * @api {get} /stagedefinitions/:id/humantaskdefinitions Get All HumanTaskDefinitions
  * @apiName GetHumanTaskDefinitionByStageDefinitionID
- * @apiGroup HumanTaskDefinition
+ * @apiGroup HumanTaskDefinitions
  * @apiParam {String} ID The ID of the Stage Definition
  * @apiSampleRequest /stagedefinitions/:id/humantaskdefinitions
  * @apiSuccessExample {json} Success-Response:
@@ -213,7 +213,7 @@ router.get('/:id/humantaskdefinitions', (req, res, next)=>{
 /**
  * @api {get} /stagedefinitions/:id/stages Get Stages by Stage Definitions
  * @apiName GetStagesByStageDefinitionId
- * @apiGroup StageDefinition
+ * @apiGroup StageDefinitions
  * @apiParam {String} id ID of the StageDefinition
  * @apiSampleRequest /stagedefinitions/:id/stages
  * @apiSuccessExample {json} Success-Response:

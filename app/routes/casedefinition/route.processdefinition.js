@@ -7,7 +7,7 @@ const router = express.Router();
 /**
  * @api {get} /processdefinitions/:id/sentrydefinitions Get SentryDefinitions
  * @apiName GetSentryDefinitionByProcessDefinitionID
- * @apiGroup SentryDefinition
+ * @apiGroup SentryDefinitions
  * @apiParam {String} id ID of the ProcessDefinitionID
  * @apiSampleRequest /processdefinitions/:id/sentrydefinitions
  * @apiSuccessExample {json} Success-Response:
@@ -36,7 +36,7 @@ router.get('/:id/sentrydefinitions', (req, res, next)=>{
 /**
  * @api {get} /processdefinitions/:id/httphookdefinitions Get HttpHookDefinitions
  * @apiName GetHttpHookDefinitionByProcessDefinitionID
- * @apiGroup HttpHookDefinition
+ * @apiGroup HttpHookDefinitions
  * @apiParam {String} id ID of the ProcessDefinition
  * @apiSampleRequest /processdefinitions/:id/httphookdefinitions
  * @apiSuccessExample {json} Success-Response:

@@ -11,7 +11,7 @@ const router = express.Router();
 /**
  * @api {get} /casedefinitions/caninstantiate Get CaseDefinition that can be instantiated by the current user
  * @apiName CanInstantiateCaseDefinition
- * @apiGroup CaseDefinition
+ * @apiGroup CaseDefinitions
  * @apiSampleRequest /casedefinitions/caninstantiate
  * @apiSuccessExample {json} Success-Response:
  * [
@@ -40,7 +40,7 @@ router.get('/caninstantiate', (req, res, next)=>{
 /**
  * @api {post} /casedefinitions Create CaseDefinition
  * @apiName CreateCaseDefinition
- * @apiGroup CaseDefinition
+ * @apiGroup CaseDefinitions
  * @apiParam {String} name A name for CaseDefinition (internal usage)
  * @apiParam {String} description A description for the CaseDefinition
  * @apiParam {String} entityDefinition The ID the EntityDefinition that belongs to the CaseDefinition
@@ -69,7 +69,7 @@ router.post('/', (req, res, next)=>{
 /**
  * @api {get} /casedefinitions/:id Get CaseDefinition
  * @apiName GetCaseDefinition
- * @apiGroup CaseDefinition
+ * @apiGroup CaseDefinitions
  * @apiParam {String} ID The ID of the requested CaseDefinition
  * @apiSampleRequest /casedefinitions/:id
  * @apiSuccessExample {json} Success-Response:
@@ -95,7 +95,7 @@ router.get('/:id', (req, res, next)=>{
 /**
  * @api {get} /casedefinitions/:id/tree Get CaseDefinition Tree
  * @apiName GetCaseDefinitionTree
- * @apiGroup CaseDefinition
+ * @apiGroup CaseDefinitions
  * @apiParam {String} ID The ID of the requested CaseDefinition
  * @apiSampleRequest /casedefinitions/:id
  * @apiSuccessExample {json} Success-Response:
@@ -123,7 +123,7 @@ router.get('/:id/tree', (req, res, next)=>{
 /**
  * @api {delete} /casedefinitions/:id Delete CaseDefinition
  * @apiName DeleteCaseDefinition
- * @apiGroup CaseDefinition
+ * @apiGroup CaseDefinitions
  * @apiParam {String} ID The ID of the CaseDefinition
  * @apiSampleRequest /casedefinitions/:id
  * @apiSuccessExample {json} Success-Response:
@@ -147,7 +147,7 @@ router.delete('/:id', (req, res, next)=>{
 /**
  * @api {patch} /casedefinitions/:id Update CaseDefinition
  * @apiName UpdateCaseDefinition
- * @apiGroup CaseDefinition
+ * @apiGroup CaseDefinitions
  * @apiParam {String} ID The ID of the CaseDefinition
  * @apiParam {String} name (optional) Sets a name for the CaseDefinition
  * @apiParam {String} description (optional) Sets a description for the CaseDefinition
@@ -180,7 +180,7 @@ router.patch('/:id', (req, res, next)=>{
 /**
  * @api {get} /casedefinitions/:id/stagedefinitions Get Direct Child StageDefinitions
  * @apiName GetStageDefinitionByCaseDefinitionID
- * @apiGroup StageDefinition
+ * @apiGroup StageDefinitions
  * @apiParam {String} ID The ID of the CaseDefinition
  * @apiSampleRequest /casedefinitions/:id/stagedefinitions
  * @apiSuccessExample {json} Success-Response:
@@ -212,7 +212,7 @@ router.get('/:id/stagedefinitions', (req, res, next)=>{
 /**
  * @api {get} /casedefinitions/:id/stagedefinitions/all Get All StageDefinitions
  * @apiName GetAllStageDefinitionByCaseDefinitionID
- * @apiGroup StageDefinition
+ * @apiGroup StageDefinitions
  * @apiParam {String} ID The ID of the CaseDefinition
  * @apiSampleRequest /casedefinitions/:id/stagedefinitions/all
  * @apiSuccessExample {json} Success-Response:
@@ -246,7 +246,7 @@ router.get('/:id/stagedefinitions/all', (req, res, next)=>{
 /**
  * @api {get} /casedefinitions/:id/automatedtaskdefinitions Get Direct Child AutomatedTaskDefinitions
  * @apiName GetAutomatedTaskDefinitionByCaseDefinitionID
- * @apiGroup AutomatedTaskDefinition
+ * @apiGroup AutomatedTaskDefinitions
  * @apiParam {String} ID The ID of the CaseDefinition
  * @apiSampleRequest /casedefinitions/:id/automatedtaskdefinitions
  * @apiSuccessExample {json} Success-Response:
@@ -279,7 +279,7 @@ router.get('/:id/automatedtaskdefinitions', (req, res, next)=>{
 /**
  * @api {get} /casedefinitions/:id/automatedtaskdefinitions/all Get All AutomatedTaskDefinitions
  * @apiName GetAutomatedTaskDefinitionByCaseDefinitionID
- * @apiGroup AutomatedTaskDefinition
+ * @apiGroup AutomatedTaskDefinitions
  * @apiParam {String} ID The ID of the CaseDefinition
  * @apiSampleRequest /casedefinitions/:id/automatedtaskdefinitions/all
  * @apiSuccessExample {json} Success-Response:
@@ -312,7 +312,7 @@ router.get('/:id/automatedtaskdefinitions/all', (req, res, next)=>{
 /**
  * @api {get} /casedefinitions/:id/humantaskdefinitions Get Child HumanTaskDefinitions
  * @apiName GetHumanTaskDefinitionByCaseDefinitionID
- * @apiGroup HumanTaskDefinition
+ * @apiGroup HumanTaskDefinitions
  * @apiParam {String} ID The ID of the CaseDefinition
  * @apiSampleRequest /casedefinitions/:id/humantaskdefinitions
  * @apiSuccessExample {json} Success-Response:
@@ -347,7 +347,7 @@ router.get('/:id/humantaskdefinitions', (req, res, next)=>{
 /**
  * @api {get} /casedefinitions/:id/humantaskdefinitions/all Get All HumanTaskDefinitions
  * @apiName GetHumanTaskDefinitionByCaseDefinitionID
- * @apiGroup HumanTaskDefinition
+ * @apiGroup HumanTaskDefinitions
  * @apiParam {String} ID The ID of the CaseDefinition
  * @apiSampleRequest /casedefinitions/:id/humantaskdefinitions/all
  * @apiSuccessExample {json} Success-Response:
