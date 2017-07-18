@@ -7,7 +7,7 @@ const router = express.Router();
 /**
  * @api {get} /automatedtasks/:id Get AutomatedTask
  * @apiName GetAutomatedTask
- * @apiGroup AutomatedTask
+ * @apiGroup AutomatedTasks
  * @apiParam {Number} id (mandatory) ID of a AutomatedTask
  * @apiSuccessExample {json} Success-Response:
  *     {
@@ -43,7 +43,7 @@ router.get('/:id', (req, res, next)=>{
 /**
  * @api {post} /automatedtasks/:id/activate Activate AutomatedTask
  * @apiName ActivateAutomatedTask
- * @apiGroup AutomatedTask
+ * @apiGroup AutomatedTasks
  * @apiParam {String} id (mandatory)  ID of a AutomatedTask
  * @apiSuccessExample {json} Success-Response:
  *     {
@@ -63,7 +63,7 @@ router.post('/:id/activate', (req, res, next)=>{
 /**
  * @api {post} /automatedtasks/:id/draft Draft AutomatedTask
  * @apiName DraftAutomatedTask
- * @apiGroup AutomatedTask
+ * @apiGroup AutomatedTasks
  * @apiParam {Number} id (mandatory)  ID of a AutomatedTask
  * @apiParam {Array} taskParams (mandatory) An array of task paramerts
  * @apiSuccessExample {json} Success-Response:
@@ -86,7 +86,7 @@ router.post('/:id/draft', (req, res, next)=>{
 /**
  * @api {post} /automatedtasks/:id/complete Complete AutomatedTask
  * @apiName CompleteAutomatedTask
- * @apiGroup AutomatedTask
+ * @apiGroup AutomatedTasks
  * @apiParam {Number} id (mandatory) ID of a AutomatedTask
  * @apiParam {Array} taskParams (mandatory) An array of task paramerts
  * @apiSampleRequest /automatedtask/:id/complete
@@ -110,7 +110,7 @@ router.post('/:id/complete', (req, res, next)=>{
 /**
  * @api {post} /automatedtasks/:id/terminate Terminate AutomatedTask
  * @apiName TerminateAutomatedTask
- * @apiGroup AutomatedTask
+ * @apiGroup AutomatedTasks
  * @apiParam {Number} id (mandatory) ID of a AutomatedTask
  * @apiSampleRequest /automatedtask/:id/terminate
  * @apiSuccessExample {json} Success-Response:
@@ -131,7 +131,7 @@ router.post('/:id/terminate', (req, res, next)=>{
 /**
  * @api {post} /automatedtasks/:id/owner/:userid Set AutomatedTask Owner
  * @apiName SetOwnerAutomatedTask
- * @apiGroup AutomatedTask
+ * @apiGroup AutomatedTasks
  * @apiParam {String} id ID of a AutomatedTask
  * @apiParam {String} userId of the Owner
  * @apiSampleRequest /automatedtask/:id/owner/userid

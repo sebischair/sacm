@@ -15,7 +15,7 @@ const router = express.Router();
 /**
  * @api {get} /cases/me Get My Cases
  * @apiName GetMyCases
- * @apiGroup Case
+ * @apiGroup Cases
  * @apiSampleRequest /cases/me
  * @apiSuccessExample {json} Success-Response:
  * [
@@ -82,7 +82,7 @@ router.get('/me', (req, res, next)=>{
 /**
  * @api {post} /cases Create Case
  * @apiName CreateCase
- * @apiGroup Case
+ * @apiGroup Cases
  * @apiParam {String} caseDefinition (mandatory) ID of the CaseDefinition
  * @apiSampleRequest /cases
  * @apiSuccessExample {json} Success-Response:
@@ -120,7 +120,7 @@ router.get('/me', (req, res, next)=>{
 /**
  * @api {get} /cases/:id/tree Get Case Tree
  * @apiName GetCaseTree
- * @apiGroup Case
+ * @apiGroup Cases
  * @apiParam {String} id (mandatory) ID of the Case
  * @apiSampleRequest /cases/:id
  * @apiSuccessExample {json} Success-Response:
@@ -408,7 +408,7 @@ router.get('/:id/tree', (req, res, next)=>{
 /**
  * @api {post} /cases/:id/complete Complete Case
  * @apiName CompleteCase
- * @apiGroup Case
+ * @apiGroup Cases
  * @apiParam {String} id (mandatory) ID of the Case
  * @apiSampleRequest /cases/:id/complete
  * @apiSuccessExample {json} Success-Response:
@@ -428,7 +428,7 @@ router.post('/:id/complete', (req, res, next)=>{
 /**
  * @api {post} /cases/:id/terminate Terminate Case
  * @apiName TerminateCase
- * @apiGroup Case
+ * @apiGroup Cases
  * @apiParam {String} id (mandatory) ID of the Case
  * @apiSampleRequest /cases/:id/terminate
  * @apiSuccessExample {json} Success-Response:
@@ -449,7 +449,7 @@ router.post('/:id/terminate', (req, res, next)=>{
 /**
  * @api {delete} /cases/:id Delete Case
  * @apiName DeleteCase
- * @apiGroup Case
+ * @apiGroup Cases
  * @apiParam {String} id (mandatory) ID of the Case
  * @apiSampleRequest /cases/:id
  * @apiSuccessExample {json} Success-Response:
@@ -472,7 +472,7 @@ router.delete('/:id', (req, res, next)=>{
 /**
  * @api {get} /cases/:id/processes Get Child Processes
  * @apiName GetDirectChildProcesses
- * @apiGroup Case
+ * @apiGroup Cases
  * @apiParam {String} id (mandatory) ID of the Case
  * @apiSampleRequest /cases/:id/processes
  * @apiSuccessExample {json} Success-Response:
@@ -511,7 +511,7 @@ router.get('/:id/processes', (req, res, next)=>{
 /**
  * @api {get} /cases/:id/processes/all Get All Processes
  * @apiName GetAllProcesses
- * @apiGroup Case
+ * @apiGroup Cases
  * @apiParam {String} id (mandatory) ID of the Case
  * @apiSampleRequest /cases/:id/processes/all
  * @apiSuccessExample {json} Success-Response:
@@ -550,7 +550,7 @@ router.get('/:id/processes/all', (req, res, next)=>{
 /**
  * @api {get} /cases/:id/stages Get Child Stages
  * @apiName GetDirectChildStages
- * @apiGroup Case
+ * @apiGroup Cases
  * @apiParam {String} id (mandatory) ID of the Case
  * @apiSampleRequest /cases/:id/stages
  * @apiSuccessExample {json} Success-Response:
@@ -588,7 +588,7 @@ router.get('/:id/stages', (req, res, next)=>{
 /**
  * @api {get} /cases/:id/stages/all Get All Stages
  * @apiName GetStages
- * @apiGroup Case
+ * @apiGroup Cases
  * @apiParam {String} id (mandatory) ID of the Case
  * @apiSampleRequest /cases/:id/stages/all
  * @apiSuccessExample {json} Success-Response:
@@ -627,7 +627,7 @@ router.get('/:id/stages/all', (req, res, next)=>{
 /**
  * @api {get} /cases/:id/tasks Get Direkt Child Tasks
  * @apiName GetTasks
- * @apiGroup Case
+ * @apiGroup Cases
  * @apiParam {String} id (mandatory) ID of the Case
  * @apiSampleRequest /cases/:id/tasks
  * @apiSuccessExample {json} Success-Response:
@@ -664,7 +664,7 @@ router.get('/:id/tasks', (req, res, next)=>{
 /**
  * @api {get} /cases/:id/tasks/all Get All Tasks
  * @apiName GetAllTasks
- * @apiGroup Case
+ * @apiGroup Cases
  * @apiParam {String} id (mandatory) ID of the Case
  * @apiSampleRequest /cases/:id/tasks/all
  * @apiSuccessExample {json} Success-Response:
@@ -703,7 +703,7 @@ router.get('/:id/tasks/all', (req, res, next)=>{
 /**
  * @api {get} /cases/:id/humantasks Get Child HumanTasks
  * @apiName GetHumanTasks
- * @apiGroup Case
+ * @apiGroup Cases
  * @apiParam {String} id ID of the Case
  * @apiSampleRequest /cases/:id/humantasks
  * @apiSuccessExample {json} Success-Response:
@@ -741,7 +741,7 @@ router.get('/:id/humantasks/all', (req, res, next)=>{
 /**
  * @api {get} /cases/:id/humantasks/all Get All HumanTasks
  * @apiName GetAllHumanTasks
- * @apiGroup Case
+ * @apiGroup Cases
  * @apiParam {String} id ID of the Case
  * @apiSampleRequest /cases/:id/humantasks/all
  * @apiSuccessExample {json} Success-Response:
@@ -780,7 +780,7 @@ router.get('/:id/humantasks/all', (req, res, next)=>{
 /**
  * @api {get} /cases/:id/automatedtasks Get ChildAutomatedTasks
  * @apiName GetAutomatedTasks
- * @apiGroup Case
+ * @apiGroup Cases
  * @apiParam {String} id ID of the Case
  * @apiSampleRequest /cases/:id/automatedtasks
  * @apiSuccessExample {json} Success-Response:
@@ -817,7 +817,7 @@ router.get('/:id/automatedtasks', (req, res, next)=>{
 /**
  * @api {get} /cases/:id/automatedtasks/all Get All AutomatedTasks
  * @apiName GetAllAutomatedTasks
- * @apiGroup Case
+ * @apiGroup Cases
  * @apiParam {String} id ID of the Case
  * @apiSampleRequest /cases/:id/tasks/all
  * @apiSuccessExample {json} Success-Response:
@@ -856,7 +856,7 @@ router.get('/:id/automatedtasks/all', (req, res, next)=>{
 /**
  * @api {get} /cases/:id/messages Get Messages
  * @apiName GetMessages
- * @apiGroup Case
+ * @apiGroup Cases
  * @apiParam {String} id ID of the Case
  * @apiSampleRequest /cases/:id/messages
  * @apiSuccessExample {json} Success-Response:
@@ -939,7 +939,7 @@ router.get('/:id/logs', (req, res, next)=>{
 /**
  * @api {get} /cases/:id/summarysections Get Summary 
  * @apiName GetSummary
- * @apiGroup Case
+ * @apiGroup Cases
  * @apiParam {String} id ID of the Case
  * @apiSampleRequest /cases/:id/summarysections
  * @apiSuccessExample {json} Success-Response:
@@ -1050,7 +1050,7 @@ router.get('/:id/summarysections', (req, res, next)=>{
 /**
  * @api {get} /cases/:id/permissions Case Permissions
  * @apiName CasePermission
- * @apiGroup Case
+ * @apiGroup Cases
  * @apiParam {String} id ID of the Case
  * @apiSampleRequest /cases/:id/permissions
  * @apiSuccessExample {json} Success-Response:
@@ -1085,7 +1085,7 @@ router.get('/:id/permissions', (req, res, next)=>{
 /**
  * @api {get} /cases/:id/reader Autocomplete options for case readers
  * @apiName CaseReaderAutocomplte
- * @apiGroup Case
+ * @apiGroup Cases
  * @apiParam {String} id ID of the Case
  * @apiSampleRequest /cases/:id/reader/autocomplete
  * @apiSuccessExample {json} Success-Response:
@@ -1104,7 +1104,7 @@ router.get('/:id/reader/autocomplete', (req, res, next)=>{
 /**
  * @api {post} /cases/:id/reader Add a reader to the case
  * @apiName CaseReader
- * @apiGroup Case
+ * @apiGroup Cases
  * @apiParam {String} id ID of the Case
  * @apiParam {String} id ID of the Principal
  * @apiSampleRequest /cases/:id/reader
@@ -1124,7 +1124,7 @@ router.post('/:id/reader/:principalId', (req, res, next)=>{
 /**
  * @api {delete} /cases/:id/reader Add a reader to the case
  * @apiName CaseReader
- * @apiGroup Case
+ * @apiGroup Cases
  * @apiParam {String} id ID of the Case
  * @apiParam {String} id ID of the Principal
  * @apiSampleRequest /cases/:id/reader
@@ -1145,7 +1145,7 @@ router.delete('/:id/reader/:principalId', (req, res, next)=>{
 /**
  * @api {get} /cases/:id/writer Autocomplete options for case writers
  * @apiName CaseWriterAutocomplte
- * @apiGroup Case
+ * @apiGroup Cases
  * @apiParam {String} id ID of the Case
  * @apiSampleRequest /cases/:id/writer/autocomplete
  * @apiSuccessExample {json} Success-Response:
@@ -1164,7 +1164,7 @@ router.get('/:id/writer/autocomplete', (req, res, next)=>{
 /**
  * @api {post} /cases/:id/writer Add a writer to the case
  * @apiName CaseWriter
- * @apiGroup Case
+ * @apiGroup Cases
  * @apiParam {String} id ID of the Case
  * @apiParam {String} id ID of the Principal
  * @apiSampleRequest /cases/:id/writer
@@ -1184,7 +1184,7 @@ router.post('/:id/writer/:principalId', (req, res, next)=>{
 /**
  * @api {delete} /cases/:id/writer Add a writer to the case
  * @apiName CaseWriter
- * @apiGroup Case
+ * @apiGroup Cases
  * @apiParam {String} id ID of the Case
  * @apiParam {String} id ID of the Principal
  * @apiSampleRequest /cases/:id/writer
@@ -1204,7 +1204,7 @@ router.delete('/:id/writer/:principalId', (req, res, next)=>{
 /**
  * @api {get} /cases/:id Get Case
  * @apiName GetCase
- * @apiGroup Case
+ * @apiGroup Cases
  * @apiParam {String} id (mandatory) ID of the Case
  * @apiSampleRequest /cases/:id
  * @apiSuccessExample {json} Success-Response:
@@ -1241,7 +1241,7 @@ router.get('/:id', (req, res, next)=>{
 /**
  * @api {get} /cases Get All Case tha can be access with the current user
  * @apiName GetCases
- * @apiGroup Case
+ * @apiGroup Cases
  * @apiSampleRequest /cases
  * @apiSuccessExample {json} Success-Response:
  * {

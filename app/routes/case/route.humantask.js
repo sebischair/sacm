@@ -6,7 +6,7 @@ const router = express.Router();
 /**
  * @api {get} humantasks/me/active Get My HumanTask that are active 
  * @apiName GetHumanTask
- * @apiGroup HumanTask
+ * @apiGroup HumanTasks
  * @apiSuccessExample {json} Success-Response:
  * {
  *   "parentStage": "1x26mpxg3dabq",
@@ -48,7 +48,7 @@ router.get('/me/active', (req, res, next)=>{
 /**
  * @api {get} humantasks/:id Get HumanTask
  * @apiName GetHumanDefinition
- * @apiGroup HumanTask
+ * @apiGroup HumanTasks
  * @apiParam {String} id ID of a HumanTask
  * @apiSuccessExample {json} Success-Response:
  * {
@@ -149,7 +149,7 @@ router.get('/:id', (req, res, next)=>{
 /**
  * @api {post} humantasks/:id/activate Activate HumanTask
  * @apiName ActivateHumanTask
- * @apiGroup HumanTask
+ * @apiGroup HumanTasks
  * @apiParam {String} id ID of a HumanTask
  */
 router.post('/:id/activate', (req, res, next)=>{
@@ -165,7 +165,7 @@ router.post('/:id/activate', (req, res, next)=>{
 /**
  * @api {post} humantasks/:id/draft Draft HumanTask
  * @apiName DraftHumanTask
- * @apiGroup HumanTask
+ * @apiGroup HumanTasks
  * @apiParam {String} id ID of a HumanTask
  * @apiParam {Array} taskParams An array of task paramerts
  * {
@@ -278,7 +278,7 @@ router.post('/:id/draft', (req, res, next)=>{
 /**
  * @api {post} /humantasks/:id/complete Complete HumanTask
  * @apiName CompleteHumanTask
- * @apiGroup HumanTask
+ * @apiGroup HumanTasks
  * @apiParam {String} id ID of a HumanTask
  * @apiParam {Array} taskParams An array of task paramerts
  * @apiSampleRequest /humantask/:id/complete
@@ -398,7 +398,7 @@ router.post('/:id/complete', (req, res, next)=>{
 /**
  * @api {post} /humantasks/:id/terminate Terminate HumanTask
  * @apiName TerminateHumanTask
- * @apiGroup HumanTask
+ * @apiGroup HumanTasks
  * @apiParam {String} id ID of a HumanTask
  * @apiSampleRequest /humantask/:id/terminate
  * @apiSuccessExample {json} Success-Response:
@@ -418,7 +418,7 @@ router.post('/:id/terminate', (req, res, next)=>{
 /**
  * @api {post} /humantasks/:id/owner/:userid Set HumanTask Owner
  * @apiName SetOwnerHumanTask
- * @apiGroup HumanTask
+ * @apiGroup HumanTasks
  * @apiParam {String} id ID of a HumanTask
  * @apiParam {String} userId of the Owner
  * @apiSampleRequest /humantask/:id/owner/userid
@@ -440,7 +440,7 @@ router.post('/:id/owner/:userid', (req, res, next)=>{
 /**
  * @api {post} /humantasks/:id/scheduledate Set HumanTask Schedule Date
  * @apiName SetHumanTaskScheduleDate
- * @apiGroup HumanTask
+ * @apiGroup HumanTasks
  * @apiParam {String} id ID of a HumanTask
  * @apiParam {String} scheduleDate 
  * @apiSampleRequest /humantask/:id/scheduledate
