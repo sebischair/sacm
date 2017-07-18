@@ -8,7 +8,7 @@ const router = express.Router();
 /**
  * @api {get} /processes/:id Get Process
  * @apiName GetProcess
- * @apiGroup Process 
+ * @apiGroup Processes 
  * @apiParam {String} id ID of the Process
  * @apiSampleRequest /processes/:id
  * @apiSuccessExample {json} Success-Response:
@@ -48,7 +48,7 @@ router.get('/:id', (req, res, next)=>{
 /**
  * @api {get} /processes/:id/alerts Get Alerts by Process
  * @apiName GetProcessAlerts
- * @apiGroup Alert 
+ * @apiGroup Alerts 
  * @apiParam {String} id ID of the Process 
  * @apiSampleRequest /processes/:id/alerts
  * @apiSuccessExample {json} Success-Response:
@@ -105,7 +105,7 @@ router.get('/:id/logs', (req, res, next)=>{
 /**
  * @api {get} /processes/:id/owner/autocomplete Get Owner Autocomplte Options for Process
  * @apiName GetProcessOwnerAutocomplete
- * @apiGroup Process 
+ * @apiGroup Processes 
  * @apiParam {String} id ID of the Process 
  * @apiSampleRequest /processes/:id/owner/autocomplete
  * @apiSuccessExample {json} Success-Response:

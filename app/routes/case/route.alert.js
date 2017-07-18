@@ -6,7 +6,7 @@ const router = express.Router();
 /**
  * @api {get} /alerts/me Get My Alerts
  * @apiName GetMyAlerts
- * @apiGroup Alert
+ * @apiGroup Alerts
  * @apiSampleRequest /alerts/me
  * @apiSuccessExample {json} Success-Response:
  *  [{
@@ -43,7 +43,7 @@ router.get('/me', (req, res, next)=>{
 /**
  * @api {get} /alerts/:id Get Alert
  * @apiName GetAlert
- * @apiGroup Alert
+ * @apiGroup Alerts
  * @apiParam {String} id (mandatory) ID of the Alert
  * @apiSampleRequest /alerts/:id
  * @apiSuccessExample {json} Success-Response:
@@ -81,7 +81,7 @@ router.get('/:id', (req, res, next)=>{
 /**
  * @api {post} /alerts Create Alert 
  * @apiName CreateAlert
- * @apiGroup Alert
+ * @apiGroup Alerts
  * @apiParam {String} process (mandatory) ID of the process
  * @apiParam {Date} creationDate (optional) Date when alert occured
  * @apiParam {Date} seenDate (optional) Date when alert was marked as seen
@@ -141,7 +141,7 @@ router.post('/', (req, res, next)=>{
 /**
  * @api {patch} /alerts/:id Update Alert
  * @apiName UpdateAlert
- * @apiGroup Alert
+ * @apiGroup Alerts
  * @apiParam {String} process (mandatory) ID of the Alert
  * @apiParam {String} process (optional) ID of the process
  * @apiParam {Date} creationDate (optional) Date when alert occured
@@ -205,7 +205,7 @@ router.patch('/:id', (req, res, next)=>{
 /**
  * @api {post} /alerts/:id/seen Mark Alert as Seen
  * @apiName SetAlertSeenStatus
- * @apiGroup Alert
+ * @apiGroup Alerts
  * @apiParam {String} id (mandatory) ID of the Alert
  * @apiSampleRequest /alerts/:id/seen
  * @apiSuccessExample {json} Success-Response:
