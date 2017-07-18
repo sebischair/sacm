@@ -76,41 +76,6 @@ router.get('/me', (req, res, next)=>{
 
 
 
-/**
- * @api {get} /cases/:id Get Case
- * @apiName GetCase
- * @apiGroup Case
- * @apiParam {String} id (mandatory) ID of the Case
- * @apiSampleRequest /cases/:id
- * @apiSuccessExample {json} Success-Response:
- * {
- *   "id": "1q7nud4e2v1dl",
- *   "stateDates": {
- *     "enabled": "2017-05-15 17:29:14.0",
- *     "terminated": null,
- *     "active": null,
- *     "available": "2017-05-15 17:29:14.0",
- *     "completed": null
- *   },
- *   "caseDefinition": "1xzmymv4hf0tj",
- *   "workspace": "1mwgok4jx7397",
- *   "description": "Demo Case London",
- *   "entity": "vcqm404srunk",
- *   "name": "Democase",
- *   "state": "ENABLED",
- *   "owner": null,
- *   "resourceType": "cases"
- * }
- */
-router.get('/:id', (req, res, next)=>{
-  Case.findById(req.jwt, req.params.id)
-    .then(c=>{
-        res.status(200).send(c);
-    })
-    .catch(err=>{
-      res.status(500).send(err);
-    })
-});
 
 
 
@@ -1235,6 +1200,43 @@ router.delete('/:id/writer/:principalId', (req, res, next)=>{
       res.status(500).send(err);
     })
 });
+
+/**
+ * @api {get} /cases/:id Get Case
+ * @apiName GetCase
+ * @apiGroup Case
+ * @apiParam {String} id (mandatory) ID of the Case
+ * @apiSampleRequest /cases/:id
+ * @apiSuccessExample {json} Success-Response:
+ * {
+ *   "id": "1q7nud4e2v1dl",
+ *   "stateDates": {
+ *     "enabled": "2017-05-15 17:29:14.0",
+ *     "terminated": null,
+ *     "active": null,
+ *     "available": "2017-05-15 17:29:14.0",
+ *     "completed": null
+ *   },
+ *   "caseDefinition": "1xzmymv4hf0tj",
+ *   "workspace": "1mwgok4jx7397",
+ *   "description": "Demo Case London",
+ *   "entity": "vcqm404srunk",
+ *   "name": "Democase",
+ *   "state": "ENABLED",
+ *   "owner": null,
+ *   "resourceType": "cases"
+ * }
+ */
+router.get('/:id', (req, res, next)=>{
+  Case.findById(req.jwt, req.params.id)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
 
 /**
  * @api {get} /cases Get All Case tha can be access with the current user

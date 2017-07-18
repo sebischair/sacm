@@ -14,7 +14,7 @@ export default class Group extends Model{
   }
 
   static findById(jwt, groupId) {
-    return http.get(jwt, '/groups/'+groupId, {meta: "description, members", membermeta: "groups", memberattributes: "firstname, lastname"});
+    return http.get(jwt, '/groups/'+groupId, {meta: "description, members", membermeta: "groups", memberattributes: "firstname, lastname, patientnr, gender, phone"});
   }
 
   static updateById(jwt, data) {
