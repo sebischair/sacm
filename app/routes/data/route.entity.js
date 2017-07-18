@@ -7,7 +7,7 @@ const router = express.Router();
 /**
  * @api {get} /entities/:id/deeplinks Get Entity with Deeplinks
  * @apiName GetEntity
- * @apiGroup Entity
+ * @apiGroup Entities
  * @apiParam {String} id ID of the Entity
  * @apiSampleRequest /entities/:id/deeplinks
  * @apiSuccessExample {json} Success-Response:
@@ -343,7 +343,7 @@ router.get('/:id/deeplinks', (req, res, next)=>{
 /**
  * @api {get} /entities/:id Get Entity
  * @apiName GetEntity
- * @apiGroup Entity
+ * @apiGroup Entities
  * @apiParam {String} id ID of the Entity
  * @apiSampleRequest /entities/:id
  * @apiSuccessExample {json} Success-Response:

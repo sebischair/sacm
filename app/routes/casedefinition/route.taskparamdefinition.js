@@ -5,7 +5,7 @@ const router = express.Router();
 /**
  * @api {get} /taskparamdefinitions/:id Get TaskParamDefinition
  * @apiName GetTaskParamDefinition
- * @apiGroup TaskParamDefinition
+ * @apiGroup TaskParamDefinitions
  * @apiParam {String} id ID of the TaskParamDefinition
  * @apiSampleRequest /taskparamdefinitions/:id
  * @apiSuccessExample {json} Success-Response:
@@ -29,7 +29,7 @@ router.get('/:id', (req, res, next)=>{
 /**
  * @api {post} /taskparamdefinitions Create TaskParamDefinition
  * @apiName PostTaskParamDefinition
- * @apiGroup TaskParamDefinition
+ * @apiGroup TaskParamDefinitions
  * @apiParam {String} path Path of the TaskParamDefinition
  * @apiParam {String} isReadOnly Flag if TaskParam is read only
  * @apiParam {String} taskDefinition ID of the TaskDefinition
@@ -56,7 +56,7 @@ router.post('/', (req, res, next)=>{
 /**
  * @api {patch} /taskparamdefinitions/:id Update TaskParamDefinition
  * @apiName UpdateTaskParamDefinition
- * @apiGroup TaskParamDefinition
+ * @apiGroup TaskParamDefinitions
  * @apiParam {String} id ID of the TaskParamDefinition
  * @apiParam {String} path Path of the TaskParamDefinition
  * @apiParam {String} isReadOnly Flag if TaskParam is read only
@@ -86,7 +86,7 @@ router.patch('/:id', (req, res, next)=>{
 /**
  * @api {delete} /sentrydefinitions/:id Delete TaskParamDefinition
  * @apiName DeleteTaskParamDefinition
- * @apiGroup TaskParamDefinition
+ * @apiGroup TaskParamDefinitions
  * @apiParam {String} id ID of the TaskParamDefinition
  * @apiSampleRequest /sentrydefinitions/:id
  * @apiSuccessExample {json} Success-Response:

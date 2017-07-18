@@ -8,7 +8,7 @@ const router = express.Router();
 /*
  * @api {get} /taskdefinitions/:id Get Task Definition
  * @apiName GetTaskParamDefinitionByTaskDefinitionID
- * @apiGroup TaskDefinition
+ * @apiGroup TaskDefinitions
  * @apiParam {String} id ID of the TaskDefinition
  * @apiSampleRequest /taskdefinitions/:id/taskparamdefinitions
  * @apiSuccessExample {json} Success-Response:
@@ -33,7 +33,7 @@ router.get('/:id', (req, res, next)=>{
 /**
  * @api {get} /taskdefinitions/:id/tasks Get Tasks
  * @apiName GetTasksByTaskDefinitionID
- * @apiGroup TaskDefinition
+ * @apiGroup TaskDefinitions
  * @apiParam {String} id ID of the TaskDefinition
  * @apiSampleRequest /taskdefinitions/:id/tasks
  * @apiSuccessExample {json} Success-Response:

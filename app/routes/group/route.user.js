@@ -7,7 +7,7 @@ const router = express.Router();
 /**
  * @api {get} /users Get Users 
  * @apiName GetUsers
- * @apiGroup User
+ * @apiGroup Users
  * @apiSampleRequest /users
  * @apiSuccessExample {json} Success-Response:
  *     [
@@ -34,7 +34,7 @@ router.get('/', (req, res, next)=>{
 /**
  * @api {get} /users/:id Get User
  * @apiName GetUserByID
- * @apiGroup User
+ * @apiGroup Users
  * @apiParam {String} id ID of the User
  * @apiSampleRequest /users/:id
  * @apiSuccessExample {json} Success-Response:
@@ -84,7 +84,7 @@ router.get('/:id', (req, res, next)=>{
 /**
  * @api {post} /users Create User
  * @apiName CreateUser
- * @apiGroup User
+ * @apiGroup Users
  * @apiParam {String} name (mandatory) Name of the user
  * @apiParam {String} email (mandatory) Email of the user
  * @apiParam {String} id (optional) ID of the User (must be unique, max. 32 chars)
@@ -128,7 +128,7 @@ router.post('/', (req, res, next)=>{
 /**
  * @api {delete} /users/:id Delete User
  * @apiName DeleteUserByID
- * @apiGroup User
+ * @apiGroup Users
  * @apiParam {String} id ID of the User
  * @apiSampleRequest /users/:id
  * @apiSuccessExample {json} Success-Response:
@@ -150,7 +150,7 @@ router.delete('/:id', (req, res, next)=>{
 /**
  * @api {patch} /users/:id Update User
  * @apiName UpdateUser
- * @apiGroup User
+ * @apiGroup Users
  * @apiParam {String} id ID of the user
  * @apiParam {String} name (optional) Name of the user
  * @apiParam {String} login (optional) Email of the user
@@ -196,7 +196,7 @@ router.patch('/:id', (req, res, next)=>{
 /**
  * @api {get} /users/me Get own user data
  * @apiName GetOwnUser
- * @apiGroup User
+ * @apiGroup Users
  * @apiSampleRequest /users/me
  * @apiSuccessExample {json} Success-Response:
  *     {

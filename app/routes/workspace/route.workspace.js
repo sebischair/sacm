@@ -8,7 +8,7 @@ const router = express.Router();
 /**
  * @api {get} /workspaces/:id Get Workspace
  * @apiName GetByWorkspaceID
- * @apiGroup Workspace
+ * @apiGroup Workspaces
  * @apiParam {String} ID The ID of the requested Workspace
  * @apiSampleRequest /workspaces/:id
  * @apiSuccessExample {json} Success-Response:
@@ -28,7 +28,7 @@ router.get('/:id', (req, res, next)=>{
 /**
  * @api {get} /workspaces Get Workspaces
  * @apiName Get Workspaces
- * @apiGroup Workspace
+ * @apiGroup Workspaces
  * @apiSampleRequest /workspaces
  * @apiSuccessExample {json} Success-Response:
  * [{
