@@ -7,7 +7,7 @@ const router = express.Router();
 /**
  * @api {get} /groups Get Groups of Workspace
  * @apiName GetGroupsOfWorkspace
- * @apiGroup Group
+ * @apiGroup Groups
  * @apiSampleRequest /groups
  * @apiSuccessExample {json} Success-Response:
  *     [
@@ -30,7 +30,7 @@ router.get('/', (req, res, next)=>{
 /**
  * @api {post} /groups Create Group
  * @apiName CreateGroup
- * @apiGroup Group
+ * @apiGroup Groups
  * @apiParam {String} name Name of the group
  * @apiParam {Array} administrators List of user ids
  * @apiSampleRequest /groups
@@ -73,7 +73,7 @@ router.post('/', (req, res, next)=>{
 /**
  * @api {get} /groups/:id Get Group by ID
  * @apiName GetGroupByID
- * @apiGroup Group
+ * @apiGroup Groups
  * @apiParam {String} id ID of the Group
  * @apiSampleRequest /groups/:id
  * @apiSuccessExample {json} Success-Response:
@@ -114,9 +114,9 @@ router.get('/:id', (req, res, next)=>{
 
 
 /**
- * @api {post} /groups Update Group
+ * @api {patch} /groups Update Group
  * @apiName UpdateGroup
- * @apiGroup Group
+ * @apiGroup Groups
  * @apiParam {String} id ID of the Group
  * @apiParam {String} name (optional) Name of the group
  * @apiParam {Array} administrators (optional) List of user ids
@@ -147,7 +147,7 @@ router.patch('/:id', (req, res, next)=>{
 /**
  * @api {delete} /groups/:id Delete Group by ID
  * @apiName DeleteGroupByID
- * @apiGroup Group
+ * @apiGroup Groups
  * @apiParam {String} id ID of the Group
  * @apiSampleRequest /groups/:id
  * @apiSuccessExample {json} Success-Response:
@@ -168,7 +168,7 @@ router.delete('/:id', (req, res, next)=>{
 /**
  * @api {post} /groups/:id/member/:principalId Add user to group
  * @apiName AddUserToGroup
- * @apiGroup Group
+ * @apiGroup Groups
  * @apiParam {String} id ID of the Group
  * @apiParam {String} principalId ID of the User / Principal
  * @apiSampleRequest /groups/:id/member/:principalId
@@ -191,7 +191,7 @@ router.post('/:id/member/:principalId', (req, res, next)=>{
 /**
  * @api {post} /groups/:id/member/:principalId Remove User from Group
  * @apiName RemoveUserFromGroup
- * @apiGroup Group
+ * @apiGroup Groups
  * @apiParam {String} id ID of the Group
  * @apiParam {String} principalId ID of the User / Principal
  * @apiSampleRequest /groups/:id/member/:principalId
