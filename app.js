@@ -37,52 +37,39 @@ app.use(cookieParser());
 
 app.use('/api', (req, res, next)=>{
 
-  //Authorization: Bearer eyJhbGciOiJIUzI1NiIXVCJ9...TJVA95OrM7E20RMHrHDcEfxjoYZgeFONFh7HgQ
-
-  if(req.headers.Authorization == null){
-    res.status(403).send('Authorization header missing!');
-  }else{
-    let authorization = req.headers.Authorization;
-    if(!authorization.startsWith('Bearer ')){
-      res.status(403).send('Authorization header musst start with "Bearer"!');
-    }else{
-      const token = authorization.replace('Bearer ');
-      jwt.verify(token, secret, {algorithms: ['RS256']}, (err, decoded)=> {
-        if(err){
-          console.log('err: '+err);
-          res.status(403).send(err);
-        }else{
-          console.log('decoded token')
-          console.log(decoded) 
-          req.jwt = token;
-          next();
-        }
-      });
-    }
-  }
- // const token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MDA0OTgwNzEsInVzZXJfbmFtZSI6IntcInV1aWRcIjpcIjJjOTQ4MDg0NWJlZTAzZTcwMTViZmNhZDI4OTkwMDEwXCIsXCJ0ZW5hbnRVdWlkXCI6XCIyYzk0ODA4NDViZWUwM2U3MDE1YmZjMDNkYTYxMDAwMVwiLFwiYXBwbGljYXRpb25VdWlkXCI6XCIyYzk0ODA4NDViZWUwM2U3MDE1YmZjMDI2NmQwMDAwMFwifSIsImF1dGhvcml0aWVzIjpbInVzZXIiXSwianRpIjoiNzk2NGFiNTEtYzdhNy00ZWUxLWJiNDgtOTljMThhMTlmNTdhIiwiY2xpZW50X2lkIjoiMmM5NDgwODQ1YmVlMDNlNzAxNWJmYzAyNjZkMDAwMDAiLCJzY29wZSI6WyJwcm9kdWN0aW9uIl19.FhtBWpNCbSyA8980CRof255Ea0Pwyd-AIGe5mBrj3XPHuC_LxEH-_JNcQYl0oanYpR6bbvxXrgCRWK-15kptHd5jPZYwNskADJYE95HHJETnymOuxw8V3e4obBYOwnfhQpQv5JNlXwB2j-EvpwQdf6ECRiwg1bLOBMcjUTDArQ0AunTjVpktN8idh6sKaf7Em1MRXFphYjuLuRkm84iIRG6vFS_gS2lVWpp7xwueY1-bPjdCDLT-jxJe8bqIK0TMRGaYv4rOjG5vgHtSTvvrzsTPoJsWSSdf7F45ncaNtkJY1yNR93wwXS75DRcM2twdsWj8n-Jn1st_mih2zsWi8Q";
-    
-  
-
-
-  /** this simulates the a custom user /
-
+  /** Testing Simulate User Authorization */
   if(req.headers.simulateuser != null){
     req.jwt = http.generateJWT(req.headers.simulateuser, 'ottto');
     console.log('simulate user '+req.headers.simulateuser);
     console.log(req.jwt);
-  }
-
-  /** this simulates the user Max Mustermann /
-  if(req.jwt == null){
-    req.jwt = 'Basic bXVzdGVybWFubkB0ZXN0LnNjOm90dHRv';
-    console.log('simulate user max mustermann');
-  }
-  if(req.jwt != null){
     next();
   }else{
-    res.status(403).send();
-  }*/
+    
+    /** Production JWT Authorization */
+    //Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MDA0OTgwNzEsInVzZXJfbmFtZSI6IntcInV1aWRcIjpcIjJjOTQ4MDg0NWJlZTAzZTcwMTViZmNhZDI4OTkwMDEwXCIsXCJ0ZW5hbnRVdWlkXCI6XCIyYzk0ODA4NDViZWUwM2U3MDE1YmZjMDNkYTYxMDAwMVwiLFwiYXBwbGljYXRpb25VdWlkXCI6XCIyYzk0ODA4NDViZWUwM2U3MDE1YmZjMDI2NmQwMDAwMFwifSIsImF1dGhvcml0aWVzIjpbInVzZXIiXSwianRpIjoiNzk2NGFiNTEtYzdhNy00ZWUxLWJiNDgtOTljMThhMTlmNTdhIiwiY2xpZW50X2lkIjoiMmM5NDgwODQ1YmVlMDNlNzAxNWJmYzAyNjZkMDAwMDAiLCJzY29wZSI6WyJwcm9kdWN0aW9uIl19.FhtBWpNCbSyA8980CRof255Ea0Pwyd-AIGe5mBrj3XPHuC_LxEH-_JNcQYl0oanYpR6bbvxXrgCRWK-15kptHd5jPZYwNskADJYE95HHJETnymOuxw8V3e4obBYOwnfhQpQv5JNlXwB2j-EvpwQdf6ECRiwg1bLOBMcjUTDArQ0AunTjVpktN8idh6sKaf7Em1MRXFphYjuLuRkm84iIRG6vFS_gS2lVWpp7xwueY1-bPjdCDLT-jxJe8bqIK0TMRGaYv4rOjG5vgHtSTvvrzsTPoJsWSSdf7F45ncaNtkJY1yNR93wwXS75DRcM2twdsWj8n-Jn1st_mih2zsWi8Q
+    if(req.headers.authorization == null){
+      res.status(403).send('Authorization header missing!');
+    }else{
+      const authorization = req.headers.authorization;
+      if(!authorization.startsWith('Bearer ')){
+        res.status(403).send('Authorization header musst start with "Bearer"!');
+      }else{
+        const token = authorization.replace('Bearer ');
+        jwt.verify(token, secret, {algorithms: ['RS256']}, (err, decoded)=> {
+          if(err){
+            console.log('err: '+err);
+            res.status(403).send(err);
+          }else{
+            console.log('decoded token')
+            console.log(decoded) 
+            req.jwt = token;
+            next();
+          }
+        });
+      }
+    }
+
+  }  
 });
 app.use('/api/v1', apiRoutes())
 
