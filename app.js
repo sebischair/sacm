@@ -37,22 +37,35 @@ app.use(cookieParser());
 
 app.use('/api', (req, res, next)=>{
 
-  var token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MDA0OTgwNzEsInVzZXJfbmFtZSI6IntcInV1aWRcIjpcIjJjOTQ4MDg0NWJlZTAzZTcwMTViZmNhZDI4OTkwMDEwXCIsXCJ0ZW5hbnRVdWlkXCI6XCIyYzk0ODA4NDViZWUwM2U3MDE1YmZjMDNkYTYxMDAwMVwiLFwiYXBwbGljYXRpb25VdWlkXCI6XCIyYzk0ODA4NDViZWUwM2U3MDE1YmZjMDI2NmQwMDAwMFwifSIsImF1dGhvcml0aWVzIjpbInVzZXIiXSwianRpIjoiNzk2NGFiNTEtYzdhNy00ZWUxLWJiNDgtOTljMThhMTlmNTdhIiwiY2xpZW50X2lkIjoiMmM5NDgwODQ1YmVlMDNlNzAxNWJmYzAyNjZkMDAwMDAiLCJzY29wZSI6WyJwcm9kdWN0aW9uIl19.FhtBWpNCbSyA8980CRof255Ea0Pwyd-AIGe5mBrj3XPHuC_LxEH-_JNcQYl0oanYpR6bbvxXrgCRWK-15kptHd5jPZYwNskADJYE95HHJETnymOuxw8V3e4obBYOwnfhQpQv5JNlXwB2j-EvpwQdf6ECRiwg1bLOBMcjUTDArQ0AunTjVpktN8idh6sKaf7Em1MRXFphYjuLuRkm84iIRG6vFS_gS2lVWpp7xwueY1-bPjdCDLT-jxJe8bqIK0TMRGaYv4rOjG5vgHtSTvvrzsTPoJsWSSdf7F45ncaNtkJY1yNR93wwXS75DRcM2twdsWj8n-Jn1st_mih2zsWi8Q";
-    
-  jwt.verify(token, secret, {algorithms: ['RS256']}, (err, decoded)=> {
-    if(err){
-      console.log('err: '+err);
-      res.status(403).send(err);
+  //Authorization: Bearer eyJhbGciOiJIUzI1NiIXVCJ9...TJVA95OrM7E20RMHrHDcEfxjoYZgeFONFh7HgQ
+
+  if(req.headers.Authorization == null){
+    res.status(403).send('Authorization header missing!');
+  }else{
+    let authorization = req.headers.Authorization;
+    if(!authorization.startsWith('Bearer ')){
+      res.status(403).send('Authorization header musst start with "Bearer"!');
     }else{
-      console.log('decoded token')
-      console.log(decoded) 
-      req.jwt = token;
-      next();
+      const token = authorization.replace('Bearer ');
+      jwt.verify(token, secret, {algorithms: ['RS256']}, (err, decoded)=> {
+        if(err){
+          console.log('err: '+err);
+          res.status(403).send(err);
+        }else{
+          console.log('decoded token')
+          console.log(decoded) 
+          req.jwt = token;
+          next();
+        }
+      });
     }
-  });
+  }
+ // const token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MDA0OTgwNzEsInVzZXJfbmFtZSI6IntcInV1aWRcIjpcIjJjOTQ4MDg0NWJlZTAzZTcwMTViZmNhZDI4OTkwMDEwXCIsXCJ0ZW5hbnRVdWlkXCI6XCIyYzk0ODA4NDViZWUwM2U3MDE1YmZjMDNkYTYxMDAwMVwiLFwiYXBwbGljYXRpb25VdWlkXCI6XCIyYzk0ODA4NDViZWUwM2U3MDE1YmZjMDI2NmQwMDAwMFwifSIsImF1dGhvcml0aWVzIjpbInVzZXIiXSwianRpIjoiNzk2NGFiNTEtYzdhNy00ZWUxLWJiNDgtOTljMThhMTlmNTdhIiwiY2xpZW50X2lkIjoiMmM5NDgwODQ1YmVlMDNlNzAxNWJmYzAyNjZkMDAwMDAiLCJzY29wZSI6WyJwcm9kdWN0aW9uIl19.FhtBWpNCbSyA8980CRof255Ea0Pwyd-AIGe5mBrj3XPHuC_LxEH-_JNcQYl0oanYpR6bbvxXrgCRWK-15kptHd5jPZYwNskADJYE95HHJETnymOuxw8V3e4obBYOwnfhQpQv5JNlXwB2j-EvpwQdf6ECRiwg1bLOBMcjUTDArQ0AunTjVpktN8idh6sKaf7Em1MRXFphYjuLuRkm84iIRG6vFS_gS2lVWpp7xwueY1-bPjdCDLT-jxJe8bqIK0TMRGaYv4rOjG5vgHtSTvvrzsTPoJsWSSdf7F45ncaNtkJY1yNR93wwXS75DRcM2twdsWj8n-Jn1st_mih2zsWi8Q";
+    
+  
 
 
-  /** this simulates the a custom user */
+  /** this simulates the a custom user /
 
   if(req.headers.simulateuser != null){
     req.jwt = http.generateJWT(req.headers.simulateuser, 'ottto');
@@ -60,7 +73,7 @@ app.use('/api', (req, res, next)=>{
     console.log(req.jwt);
   }
 
-  /** this simulates the user Max Mustermann */
+  /** this simulates the user Max Mustermann /
   if(req.jwt == null){
     req.jwt = 'Basic bXVzdGVybWFubkB0ZXN0LnNjOm90dHRv';
     console.log('simulate user max mustermann');
@@ -69,7 +82,7 @@ app.use('/api', (req, res, next)=>{
     next();
   }else{
     res.status(403).send();
-  }
+  }*/
 });
 app.use('/api/v1', apiRoutes())
 
