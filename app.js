@@ -4,11 +4,14 @@ import favicon from 'serve-favicon';
 import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
+import compression from 'compression';
 import apiRoutes from './app/routes/route.app';
 import docRoutes from './doc/route';
 import http from './app/models/http';
 
 var app = express();
+
+app.use(compression());
 
 // Enable cors
 app.use(function(req, res, next) {
