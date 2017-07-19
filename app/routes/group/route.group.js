@@ -103,7 +103,7 @@ router.post('/', (req, res, next)=>{
  *     }
  */
 router.get('/:id', (req, res, next)=>{
-  Group.findById(req.jwt, req.params.id)
+  Group.findById(req.jwt, req.params.id, req.query)
     .then(group=>{
         res.status(200).send(group);
     })
