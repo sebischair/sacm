@@ -62,7 +62,7 @@ app.use('/api', (req, res, next)=>{
           }else{
             console.log('decoded token')
             console.log(decoded) 
-            req.jwt = token;
+            req.jwt = 'conecarebearer '+token;
             next();
           }
         });
