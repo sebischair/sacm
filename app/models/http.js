@@ -23,15 +23,14 @@ function generateJWT(email, pw){
 };
 
 function getEmailFromJWT(jwt){
-    if(jwt != null){
+    if(jwt != null && jwt.startsWith('Basic ')){
         jwt = jwt.replace('Basic ', '');
         jwt = atob(jwt.trim());
         jwt = jwt.split(':');
         if(jwt.length>0)
             return jwt[0];
     }
-    console.log('Could not decode JWT token')
-    return null;   
+    return '';   
 };
     
 

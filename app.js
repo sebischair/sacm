@@ -25,9 +25,6 @@ app.use(function(req, res, next) {
   next();
 });
 
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -60,8 +57,6 @@ app.use('/api', (req, res, next)=>{
             console.log('err: '+err);
             res.status(403).send(err);
           }else{
-            console.log('decoded token')
-            console.log(decoded) 
             req.jwt = 'conecarebearer '+token;
             next();
           }
