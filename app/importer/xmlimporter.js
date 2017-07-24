@@ -20,6 +20,8 @@ import SentryDefinition from '../models/casedefinition/model.sentrydefinition';
 import Case from '../models/case/model.case';
 import HumanTask from '../models/case/model.humantask';
 import AutomatedTask from '../models/case/model.automatedtask';
+import Process from '../models/case/model.process';
+import Alert from '../models/case/model.alert';
 const xml = Promise.promisifyAll(xml2js);
 const fs = Promise.promisifyAll(require("fs"));
 
@@ -953,7 +955,10 @@ module.exports = class XMLImporter {
         }else if(action.$.id == "CompleteAutomatedTask"){
           const params = this.getParms(action);
           return this.completeAutomatedTaskWithName(caseId, action.$.processId, params)
-        
+
+        }else if(action.$.id == "CreateAlert"){
+          return this.createAlert(caseId, action.$.processId, action)        
+
         }else{
           return Promise.resolve('Action "'+action.$.id+'" not defined!');
         }
@@ -1024,6 +1029,26 @@ module.exports = class XMLImporter {
           if(instance.name == searchedName)
             return instance;
       return null;
+    }
+
+    createAlert(caseId, processName, action){
+       return Process.findAllByCaseId(this.executionJwt, caseId)
+        .then(processes=>{          
+          const p = this.findProcessWithName(processes, processName);
+          return Process.findById(this.executionJwt, p.id);
+        })        
+        .then(p=>{
+          const data = {
+            process: p.id,
+            creationDate: action.$.creationDate,
+            expireDate: action.$.expireDate,
+            text: action.$.text,
+	          data: action.$.data,
+          };
+          if(data.data != null)
+            data.data = JSON.parse(data.data.replace(/'/g,'"'));
+          return Alert.create(this.executionJwt, data);
+        });        
     }
 
 }

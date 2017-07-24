@@ -13,7 +13,7 @@ export default class Task extends Model{
     return http.get(jwt, '/cases/'+caseId+'/tasks');
   }
 
-  static findAllbyCaseId(jwt, caseId){
+  static findAllByCaseId(jwt, caseId){
     return http.get(jwt, '/cases/'+caseId+'/tasks/all');
   }
 

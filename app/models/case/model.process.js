@@ -13,7 +13,7 @@ export default class Process extends Model{
     return http.get(jwt, '/cases/'+caseId+'/processes');
   }
 
-  static findAllbyCaseId(jwt, caseId){
+  static findAllByCaseId(jwt, caseId){
     return http.get(jwt, '/cases/'+caseId+'/processes/all');
   }
 

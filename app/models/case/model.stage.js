@@ -13,7 +13,7 @@ export default class Stage extends Model{
     return http.get(jwt, '/cases/'+caseId+'/stages');
   }
 
-  static findAllbyCaseId(jwt, caseId){
+  static findAllByCaseId(jwt, caseId){
     return http.get(jwt, '/cases/'+caseId+'/stages/all');
   }
 
