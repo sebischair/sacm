@@ -112,6 +112,162 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
         <Contributor principalId="BarcelonaProfessionals"/>
         <Administrator principalId="Me"/>
         <Client principalId="BarcelonaPatients"/>
+
+         <!-- Case Data Defintion -->   
+        <EntityDefinition id="BCS1_CaseData" description="Case Data">
+            <AttributeDefinition id="Patient" type="Link.Users.AssutaPatients" description="Patient"/>
+            <AttributeDefinition id="Owner" type="Link.Users.AssutaCaseManagers" description="Owner"/>
+            <AttributeDefinition id="BCS1_Inclusion" type="Link.EntityDefinition.BCS1_Inclusion" description="Inclusion form"/>      
+            <AttributeDefinition id="BCS1_ClinicalInformation" type="Link.EntityDefinition.BCS1_ClinicalInformation" description="Información clínica"/>             
+        </EntityDefinition>
+
+        <EntityDefinition id="BCS1_CharlsonIndex" description="Charlson index">
+            <AttributeDefinition id="nhc" type="number" multiplicity="maximalOne" description="NHC"/> 
+            <AttributeDefinition id="inclusioncriteria1" type="enumeration" multiplicity="maximalOne" description="Vivir en su casa dentro del sector sanitario">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Si"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="inclusioncriteria2" type="enumeration" multiplicity="maximalOne" description="Tener cuidador durante 24h/día">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Si"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="inclusioncriteria3" type="enumeration" multiplicity="maximalOne" description="Firmar el consentimiento por escrito para participar en el estudio">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Si"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="exclusioncriteria1" type="enumeration" multiplicity="maximalOne" description="Residentes en un asilo de ancianos">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Si"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="exclusioncriteria2" type="enumeration" multiplicity="maximalOne" description="Alto riesgo de deterioro clínico severo no tratable en el hogar, evaluado por el mejor criterio médico">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Si"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="exclusioncriteria3" type="enumeration" multiplicity="maximalOne" description="Admisión en una unidad de corta estancia">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Si"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="exclusioncriteria4" type="enumeration" multiplicity="maximalOne" description="Trastorno psiquiátrico grave">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Si"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="exclusioncriteria5" type="enumeration" multiplicity="maximalOne" description="Personal insuficiente en el equipo profesional que ejecuta el programa">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Si"/>
+            </AttributeDefinition>
+        </EntityDefinition>
+        
+        <EntityDefinition id="BCS1_ClinicalInformation" description="Información clínica">
+            <AttributeDefinition id="healthcareresources" type="string" multiplicity="maximalOne" description="Recursos sanitarios"/>   
+            <AttributeDefinition id="diagnosisinfo" type="string" multiplicity="maximalOne" description="Información de diagnóstico"/>  
+            <AttributeDefinition id="surgeryinfo" type="string" multiplicity="maximalOne" description="Información de cirugía"/>           
+        </EntityDefinition>
+
+        <EntityDefinition id="BCS1_Inclusion" description="Inclusion form">
+            <AttributeDefinition id="ch1" type="enumeration" multiplicity="maximalOne" description="Infarto de Miocardio (se excluye cambios EKG sin antecedentes médicos)">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Si"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="ch2" type="enumeration" multiplicity="maximalOne" description="Insuficiencia Cardiaca Congestiva">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Si"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch3" type="enumeration" multiplicity="maximalOne" description="Enfermedad Vascular Periférica ( incluye Aneurisma de Aorta 6 cm )">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Si"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch4" type="enumeration" multiplicity="maximalOne" description="Enfermedad Cerebrovascular">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Si"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch5" type="enumeration" multiplicity="maximalOne" description="Demencia">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Si"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch6" type="enumeration" multiplicity="maximalOne" description="EPOC">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Si"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch7" type="enumeration" multiplicity="maximalOne" description="Enfermedad del tejido conectivo">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Si"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch8" type="enumeration" multiplicity="maximalOne" description="Ulcus péptico">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Si"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch9" type="enumeration" multiplicity="maximalOne" description="Hepatopatía Leve ( sin hipertensión portal incluye hepatitis crónica)">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Si"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch10" type="enumeration" multiplicity="maximalOne" description="Diabetes mellitus sin evidencia de afectación de órganos diana">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Si"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch11" type="enumeration" multiplicity="maximalOne" description="Diabetes con afectación de órganos dianas (retinopatía,nefropatía etc)">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Si"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch12" type="enumeration" multiplicity="maximalOne" description="Hemiplejia">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Si"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch13" type="enumeration" multiplicity="maximalOne" description="Enfermedad Renal moderada-severa">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Si"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch14" type="enumeration" multiplicity="maximalOne" description="Tumor sin metástasis ( excluir si > 5 años desde el diagnostico)">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Si"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch15" type="enumeration" multiplicity="maximalOne" description="Leucemia (Aguda o Crónica)">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Si"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch16" type="enumeration" multiplicity="maximalOne" description="Linfoma">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Si"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch17" type="enumeration" multiplicity="maximalOne" description="Enfermedad Hepática moderada o severa">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Si"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch18" type="enumeration" multiplicity="maximalOne" description="Tumor Sólido con metástasis">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Si"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch19" type="enumeration" multiplicity="maximalOne" description="SIDA ( no únicamente HIV positivo )">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Si"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch20" type="enumeration" multiplicity="maximalOne" description="Edad">
+                <EnumerationOption value="1" description="50-59"/>
+                <EnumerationOption value="2" description="60-69"/>
+                <EnumerationOption value="3" description="70-79"/>
+                <EnumerationOption value="4" description="80-89"/>
+                <EnumerationOption value="5" description="90-99"/>
+            </AttributeDefinition>           
+            <DerivedAttributeDefinition id="ch21" expression="number(ch1,0) + number(ch2,0) + number(ch3,0) + number(ch4,0) + number(ch5,0) + number(ch6,0) + number(ch7,0) + number(ch8,0) + number(ch9,0) + number(ch10,0) + number(ch11,0)*2 + number(ch12,0)*2 + number(ch13,0)*2 + number(ch14,0)*2 + number(ch15,0)*2 + number(ch16,0)*2 + number(ch17,0)*3 + number(ch18,0)*6 + number(ch19,0)*6 + number(ch20,0)" description="índice de comorbilidad Charlson"/>     
+        </EntityDefinition>
+
+        <EntityDefinition id="BCS1_RiskFactors" description="Risk factors">
+            <AttributeDefinition id="smokingpackyr" type="number" multiplicity="maximalOne" description="Cigarrillos paquetes/año"/>
+            <AttributeDefinition id="activesmoker" type="enumeration" multiplicity="maximalOne" description="Fumador activo">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Si"/>
+            </AttributeDefinition>            
+            <AttributeDefinition id="passivesmoker" type="enumeration" multiplicity="maximalOne" description="Fumador pasivo">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Si"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="bmi" type="number" multiplicity="maximalOne" description="IMC"/>
+            <AttributeDefinition id="sedentarylifestyle" type="enumeration" multiplicity="maximalOne" description="Estilo de vida sedentario">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Si"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="other" type="string" multiplicity="maximalOne" description="Otros (Texto libre)"/>
+        </EntityDefinition>
+
     </Workspace>
 
 <!-- ######################################################################################################################################## -->
