@@ -22,6 +22,7 @@ import HumanTask from '../models/case/model.humantask';
 import AutomatedTask from '../models/case/model.automatedtask';
 import Process from '../models/case/model.process';
 import Alert from '../models/case/model.alert';
+import Settings from '../models/settings/model.settings';
 const xml = Promise.promisifyAll(xml2js);
 const fs = Promise.promisifyAll(require("fs"));
 
@@ -34,7 +35,8 @@ module.exports = class XMLImporter {
       this.workspaceMap = new Map();
       this.userAttributeDefinitionMap = new Map();
       this.userMap = new Map(); //<xmlId, sociocortexId>
-      this.groupMap = new Map(); //<xmlId, sociocortexId>      
+      this.groupMap = new Map(); //<xmlId, sociocortexId> 
+      this.groupMap.set('Administrators', 'administrators');     
       this.entityDefinitionMap = new Map(); //<xmlId, sociocortexId>
       this.attributeDefinitionMap = new Map(); //<xmlEntityId+xmlAttrId, sociocortexId>
       this.derivedAttributeDefinitionMap = new Map(); //<entityName.derAttrName, sociocortexId>
@@ -222,6 +224,9 @@ module.exports = class XMLImporter {
           return this.createMemberships();
         })
         .then(()=>{
+          return this.updateSettings();
+        })
+        .then(()=>{
           return this.createWorkspaces();
         })     
         .then(() => {
@@ -355,7 +360,6 @@ module.exports = class XMLImporter {
       });
     }
 
-
     createGroups(){
       return Promise.each(this.json.Group, g=>{
         const data = {
@@ -401,6 +405,21 @@ module.exports = class XMLImporter {
           return Group.addMember(this.jwt, groupId, principalId);
         });     
       });
+    }
+
+    updateSettings(){
+      if(this.json.Settings == null)
+        return Promise.resolve();
+      const s = this.json.Settings[0];
+      let data = {};
+      if(s.$.mayCreateUsers != null){
+        data.mayCreateUsers = [];
+        let principals = JSON.parse(s.$.mayCreateUsers.replace(/'/g,'"'));
+        for(let i = 0; i<principals.length; i++)
+          data.mayCreateUsers.push(this.getPrincipalIdByXMLId(principals[i]));   
+      }
+      //TODO add other settings parameter
+      return Settings.update(this.jwt, data);
     }
 
     createWorkspaces(){
