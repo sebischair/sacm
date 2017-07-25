@@ -268,6 +268,60 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
             <AttributeDefinition id="other" type="string" multiplicity="maximalOne" description="Otros (Texto libre)"/>
         </EntityDefinition>
 
+        <EntityDefinition id="BCS1_Barthel" description="Barthel">
+            <AttributeDefinition id="barthel1" type="enumeration" multiplicity="maximalOne" description="COMER">
+                <EnumerationOption value="0" description="dependiente"/>
+                <EnumerationOption value="5" description="necesita ayuda para cortar, extender la mantequilla, o requirere dieta modificada"/>
+                <EnumerationOption value="10" description="independente"/>
+            </AttributeDefinition>      
+            <AttributeDefinition id="barthel2" type="enumeration" multiplicity="maximalOne" description="BAÑARSE">
+                <EnumerationOption value="0" description="dependente"/>
+                <EnumerationOption value="5" description="independente"/>
+            </AttributeDefinition>    
+            <AttributeDefinition id="barthel3" type="enumeration" multiplicity="maximalOne" description="ARREGLARSE">
+                <EnumerationOption value="0" description="dependiente"/>
+                <EnumerationOption value="5" description="independiente (lavado de cara, cepillado de dientes, afeitada). Los implementes pueden ser provistos por otra persona"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="barthel4" type="enumeration" multiplicity="maximalOne" description="VESTIRSE">
+                <EnumerationOption value="0" description="dependiente "/>
+                <EnumerationOption value="5" description="necesita ayuda pero puede realizar al menos la mitad de las tareas"/>
+                <EnumerationOption value="10" description="independiente"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="barthel5" type="enumeration" multiplicity="maximalOne" description="DEPOSICION">
+                <EnumerationOption value="0" description="incontinent (incluye administración de enemas o supositoris)"/>
+                <EnumerationOption value="5" description="accidente ocacional"/>
+                <EnumerationOption value="10" description="continente"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="barthel6" type="enumeration" multiplicity="maximalOne" description="MICCION">
+                <EnumerationOption value="0" description="incontinente, incluye pacientes con sonda incapaces de manejarse"/>
+                <EnumerationOption value="5" description="accidente ocacional"/>
+                <EnumerationOption value="10" description="continente"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="barthel7" type="enumeration" multiplicity="maximalOne" description="IR AL RETRETE">
+                <EnumerationOption value="0" description="dependente"/>
+                <EnumerationOption value="5" description="necesita ayuda, pero puede manejarse con pequeña asistencia"/>
+                <EnumerationOption value="10" description="independente (entra y sale solo, vestirse y desvestirse, limpiarse)"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="barthel8" type="enumeration" multiplicity="maximalOne" description="TRASLADARSE SILLON / CAMA">
+                <EnumerationOption value="0" description="dependiente, incapaz de permanecer sentado"/>
+                <EnumerationOption value="5" description="major help (una o dos personas fuertes o entrenadas), can sit"/>
+                <EnumerationOption value="10" description="minor help (supervision verbal o pequña ayuda fisica)"/>
+                <EnumerationOption value="15" description="independent"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="barthel9" type="enumeration" multiplicity="maximalOne" description="DEAMBULACION">
+                <EnumerationOption value="0" description="dependiente (si usa silla de ruedas precisa ser empujado"/>
+                <EnumerationOption value="5" description="wheelchair independent, including corners, > 50 metros"/>
+                <EnumerationOption value="10" description="camina con ayuda de otra persona (verbal or fisica) > 50 metros"/>
+                <EnumerationOption value="15" description="independente (pero puede usar cualquier ayuda, por ejemplo un baston) > 50 metros"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="barthel10" type="enumeration" multiplicity="maximalOne" description="SUBIR Y BAJAR ESCALERAS">
+                <EnumerationOption value="0" description="dependiente"/>
+                <EnumerationOption value="5" description="necesita ayuda (verbal, fisica)"/>
+                <EnumerationOption value="10" description="independiente"/>
+            </AttributeDefinition> 
+            <DerivedAttributeDefinition id="barthel11" expression="number(barthel1,0)+number(barthel2,0)+number(barthel3,0)+number(barthel4,0)+number(barthel5,0)+number(barthel6,0)+number(barthel7,0)+number(barthel8,0)+number(barthel9,0)+number(barthel10,0)" description="Indice de Barthel"/>
+        </EntityDefinition>
+
     </Workspace>
 
 <!-- ######################################################################################################################################## -->
