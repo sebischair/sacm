@@ -17,4 +17,8 @@ export default class Message extends Model{
     return http.get(jwt, '/messages/'+messageId);
   }
 
+  static seen(jwt, messageId) {
+    return http.post(jwt, '/messages/'+messageId+'/seen');
+  }
+
 }

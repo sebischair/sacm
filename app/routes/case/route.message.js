@@ -26,6 +26,26 @@ router.get('/:id', (req, res, next)=>{
 });
 
 
+/**
+ * @api {post} /messages/:id/seen Create Message
+ * @apiName CreateMessage
+ * @apiGroup Messages
+ * @apiParam {String} case ID of the case
+ * @apiParam {String} text Content of the message
+ * @apiSampleRequest /messages/:id/seen
+ * @apiSuccessExample {json} Success-Response:
+ *   {}
+ */
+router.post('/:id/seen', (req, res, next)=>{
+  Message.seen(req.jwt, req.params.id)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
 
 /**
  * @api {post} /messages Create Message
