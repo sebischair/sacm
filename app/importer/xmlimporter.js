@@ -412,11 +412,11 @@ module.exports = class XMLImporter {
         return Promise.resolve();
       const s = this.json.Settings[0];
       let data = {};
-      if(s.$.mayCreateUsers != null){
-        data.mayCreateUsers = [];
-        let principals = JSON.parse(s.$.mayCreateUsers.replace(/'/g,'"'));
+      if(s.$.mayEditUserDefinition != null){
+        data.mayEditUserDefinition = [];
+        let principals = JSON.parse(s.$.mayEditUserDefinition.replace(/'/g,'"'));
         for(let i = 0; i<principals.length; i++)
-          data.mayCreateUsers.push(this.getPrincipalIdByXMLId(principals[i]));   
+          data.mayEditUserDefinition.push(this.getPrincipalIdByXMLId(principals[i]));   
       }
       //TODO add other settings parameter
       return Settings.update(this.jwt, data);

@@ -13,7 +13,8 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
     <Settings 
         mayCreateWorksapces="['Administrators']"
         mayCreateGroups="['Administrators']" 
-        mayCreateUsers="['Administrators', 'AssutaProfessionals']"/>
+        mayCreateUsers="['Administrators', 'AssutaProfessionals']"
+        mayEditUserDefinition="['Administrators', 'AssutaProfessionals']"/>
 
 <!-- ######################################################################################################################################## -->
 <!-- ####### UserDefinition ################################################################################################################# -->
@@ -589,18 +590,43 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
         </EntityDefinition>
 
         <EntityDefinition id="BCS1_DailyHomeVisit" description="Daily home visit">
-            <AttributeDefinition id="assessmentofpatientclinicalstatus" type="string" multiplicity="maximalOne" description="assessment of patient clinical status"/>
-            <AttributeDefinition id="controlofcomorbidconditions" type="string" multiplicity="maximalOne" description="control de las co-mórbilidades"/>
-            <AttributeDefinition id="revisionofthetreatmentplanincludingdressingsandadministrationofintravenoustreatmentifprescribed" type="string" multiplicity="maximalOne" description="revisión del plan de tratamiento, incluidas curaciones y administración de tratamiento intravenoso si se prescribe"/>
-            <AttributeDefinition id="reinforcementoftherapeuticeducationandadherence" type="string" multiplicity="maximalOne" description="refuerzo de la educación y adhesión terapéutica"/>
-            <AttributeDefinition id="checkingoftheequipmentinstalledatthepatientshome" type="string" multiplicity="maximalOne" description="comprobación del equipo instalado en el domicilio del paciente"/>
-            <AttributeDefinition id="assessmentofenvironmentalconditions" type="string" multiplicity="maximalOne" description="Evaluación de las condiciones ambientales"/>
-<!--
-            <AttributeDefinition id="assessmentofenvironmentalconditions" type="string" multiplicity="maximalOne" description="Evaluación de las condiciones ambientales"/>
-            <AttributeDefinition id="assessmentofenvironmentalconditions" type="string" multiplicity="maximalOne" description="Evaluación de las condiciones ambientales"/>
-            <AttributeDefinition id="assessmentofenvironmentalconditions" type="string" multiplicity="maximalOne" description="Evaluación de las condiciones ambientales"/>-->
+            <AttributeDefinition id="dhv1" type="string" multiplicity="maximalOne" description="assessment of patient clinical status"/>
+            <AttributeDefinition id="dhv2" type="string" multiplicity="maximalOne" description="control de las co-mórbilidades"/>
+            <AttributeDefinition id="dhv3" type="string" multiplicity="maximalOne" description="revisión del plan de tratamiento, incluidas curaciones y administración de tratamiento intravenoso si se prescribe"/>
+            <AttributeDefinition id="dhv4" type="string" multiplicity="maximalOne" description="refuerzo de la educación y adhesión terapéutica"/>
+            <AttributeDefinition id="dhv5" type="string" multiplicity="maximalOne" description="comprobación del equipo instalado en el domicilio del paciente"/>
+            <AttributeDefinition id="dhv6" type="string" multiplicity="maximalOne" description="Evaluación de las condiciones ambientales"/>
+            <AttributeDefinition id="dhv7" type="string" multiplicity="maximalOne" description="gases en sangre arterial"/>
+            <AttributeDefinition id="dhv8" type="string" multiplicity="maximalOne" description="analisis sanguineos"/>
+            <AttributeDefinition id="dhv9" type="string" multiplicity="maximalOne" description="cultivo de esputo"/>
+            <AttributeDefinition id="dhv10" type="string" multiplicity="maximalOne" description="espirometria forzada"/>
+            <AttributeDefinition id="dhv12" type="string" multiplicity="maximalOne" description="evaluación del estado clínico del paciente"/>
+            <AttributeDefinition id="dhv13" type="string" multiplicity="maximalOne" description="control de las co-mórbilidades"/>
+            <AttributeDefinition id="dhv14" type="string" multiplicity="maximalOne" description="revisión del plan de tratamiento, incluidas curaciones y tratamiento intravenoso"/>
         </EntityDefinition>
 
+         <!-- Case Definition
+        <CaseDefinition id="BCS1_Barcelona" description="CS1 Barcelona" ownerPath="Owner" entityDefinitionId="BCS1_CaseData">
+
+            <StageDefinition id="BCS1_CaseIdentification" description="Case Identification" isMandatory="true" isRepeatable="false">        
+                <HumanTaskDefinition id="BCS1_Inclusion" description="Select Patient" ownerPath="Owner" isMandatory="true" isRepeatable="false">                
+                    <TaskParamDefinition path="Patient" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="Owner" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>
+            </StageDefinition>
+        
+            <StageDefinition id="CaseEvaluation" description="Case Evaluation" isMandatory="true" isRepeatable="true">  
+                <SentryDefinition>
+                    <precondition processDefinitionId="CaseIdentification"/>
+                </SentryDefinition>
+                <HumanTaskDefinition id="Barthel" description="Barthel" ownerPath="Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="Barthel" entityAttachPath="Barthel">
+                    <TaskParamDefinition path="Barthel.barthel1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="Barthel.barthel2" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>
+            </StageDefinition>
+            
+        </CaseDefinition>
+ -->
     </Workspace>
 
 <!-- ######################################################################################################################################## -->
