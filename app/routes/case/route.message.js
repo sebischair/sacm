@@ -3,6 +3,23 @@ import Message from './../../models/case/model.message';
 const router = express.Router();
 
 
+/**
+ * @api {get} /messages/me/unseen My unseen Messages
+ * @apiName MyUnseenMessages
+ * @apiGroup Messages
+ * @apiSampleRequest /messages/me/unseen
+ * @apiSuccessExample {json} Success-Response:
+ *   {}
+ */
+router.get('/me/unseen', (req, res, next)=>{
+  Message.findByMeUnseen(req.jwt)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
 
 /**
  * @api {get} /messages/:id Get Message
