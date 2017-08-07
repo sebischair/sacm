@@ -131,7 +131,7 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
             <AttributeDefinition id="BCS1_ClinicalInformation" type="Link.EntityDefinition.BCS1_ClinicalInformation" description="Información clínica"/>             
         </EntityDefinition>
 
-        <EntityDefinition id="BCS1_CharlsonIndex" description="Charlson index">
+        <EntityDefinition id="BCS1_Inclusion" description="Inclusion">
             <AttributeDefinition id="nhc" type="number" multiplicity="maximalOne" description="NHC"/> 
             <AttributeDefinition id="inclusioncriteria1" type="enumeration" multiplicity="maximalOne" description="Vivir en su casa dentro del sector sanitario">
                 <EnumerationOption value="0" description="No"/>
@@ -173,7 +173,7 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
             <AttributeDefinition id="surgeryinfo" type="string" multiplicity="maximalOne" description="Información de cirugía"/>           
         </EntityDefinition>
 
-        <EntityDefinition id="BCS1_Inclusion" description="Inclusion form">
+        <EntityDefinition id="BCS1_Charlson" description="Charlson">
             <AttributeDefinition id="ch1" type="enumeration" multiplicity="maximalOne" description="Infarto de Miocardio (se excluye cambios EKG sin antecedentes médicos)">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
@@ -605,16 +605,25 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
             <AttributeDefinition id="dhv14" type="string" multiplicity="maximalOne" description="revisión del plan de tratamiento, incluidas curaciones y tratamiento intravenoso"/>
         </EntityDefinition>
 
-         <!-- Case Definition
+         <!-- Case Definition -->
         <CaseDefinition id="BCS1_Barcelona" description="CS1 Barcelona" ownerPath="Owner" entityDefinitionId="BCS1_CaseData">
 
             <StageDefinition id="BCS1_CaseIdentification" description="Case Identification" isMandatory="true" isRepeatable="false">        
-                <HumanTaskDefinition id="BCS1_Inclusion" description="Select Patient" ownerPath="Owner" isMandatory="true" isRepeatable="false">                
+                <HumanTaskDefinition id="BCS1_Inclusion" description="Inclusion" ownerPath="Owner" isMandatory="true" isRepeatable="false">                
                     <TaskParamDefinition path="Patient" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="Owner" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Inclusion.nhc" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Inclusion.inclusioncriteria1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Inclusion.inclusioncriteria2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Inclusion.inclusioncriteria3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Inclusion.exclusioncriteria1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Inclusion.exclusioncriteria2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Inclusion.exclusioncriteria3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Inclusion.exclusioncriteria4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Inclusion.exclusioncriteria5" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
             </StageDefinition>
-        
+        <!-->
             <StageDefinition id="CaseEvaluation" description="Case Evaluation" isMandatory="true" isRepeatable="true">  
                 <SentryDefinition>
                     <precondition processDefinitionId="CaseIdentification"/>
@@ -624,9 +633,10 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
                     <TaskParamDefinition path="Barthel.barthel2" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
             </StageDefinition>
+            -->
             
         </CaseDefinition>
- -->
+ 
     </Workspace>
 
 <!-- ######################################################################################################################################## -->
