@@ -119,9 +119,13 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
     </Group>
 
     <Workspace id="Barcelona" staticId="Barcelona" description="H. Clínic">
+        <!--
         <Contributor principalId="BarcelonaProfessionals"/>
         <Administrator principalId="Me"/>
-        <Client principalId="BarcelonaPatients"/>
+        <Client principalId="BarcelonaPatients"/>-->
+        <Contributor principalId="AssutaProfessionals"/>
+        <Administrator principalId="Me"/>
+        <Client principalId="AssutaPatients"/>
 
          <!-- Case Data Defintion -->   
         <EntityDefinition id="BCS1_CaseData" description="Case Data">
@@ -729,7 +733,12 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
                     <TaskParamDefinition path="BCS1_SF36.sf36-36" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS1_SF36.sf36-37" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
-                <HumanTaskDefinition id="BCS1_DailyHomeVisit" description="Barthel" ownerPath="Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="BCS1_DailyHomeVisit" entityAttachPath="BCS1_DailyHomeVisit">
+            </StageDefinition>
+            <StageDefinition id="BCS1_WorkplanDefinition" description="Workplan Definition" isMandatory="true" isRepeatable="true">  
+                <SentryDefinition>
+                    <precondition processDefinitionId="BCS1_CaseEvaluation"/>
+                </SentryDefinition>
+                <HumanTaskDefinition id="BCS1_DailyHomeVisit" description="Daily Home Visit" ownerPath="Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="BCS1_DailyHomeVisit" entityAttachPath="BCS1_DailyHomeVisit">
                     <TaskParamDefinition path="BCS1_DailyHomeVisit.dhv1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS1_DailyHomeVisit.dhv2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS1_DailyHomeVisit.dhv3" isReadOnly="false" isMandatory="true"/>
@@ -737,6 +746,17 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
                     <TaskParamDefinition path="BCS1_DailyHomeVisit.dhv5" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS1_DailyHomeVisit.dhv6" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
+                <HumanTaskDefinition id="BCS1_DailyHomeVisit_AterialBlodGases" description="Aterial Blod Gases" ownerPath="Owner" isMandatory="false" isRepeatable="false" isManualActivation="true">
+                    <SentryDefinition>
+                        <precondition processDefinitionId="BCS1_DailyHomeVisit"/>
+                    </SentryDefinition>
+                    <TaskParamDefinition path="BCS1_DailyHomeVisit.dhv7" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>
+            </StageDefinition>
+            <StageDefinition id="BCS1_Discharge" description="Discharge" isMandatory="true" isRepeatable="true">  
+                <SentryDefinition>
+                    <precondition processDefinitionId="BCS1_WorkplanDefinition"/>
+                </SentryDefinition>
             </StageDefinition>
             
             
