@@ -953,7 +953,8 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
             <AttributeDefinition id="Patient" type="Link.Users.AssutaPatients" description="Patient"/>
             <AttributeDefinition id="Owner" type="Link.Users.AssutaCaseManagers" description="Owner"/>
             <AttributeDefinition id="Lace" type="Link.EntityDefinition.Lace" description="Lace"/>
-            <AttributeDefinition id="Barthel" type="Link.EntityDefinition.Barthel" description="Barthel"/>        
+            <AttributeDefinition id="Barthel" type="Link.EntityDefinition.Barthel" description="Barthel"/>                
+            <AttributeDefinition id="SF12" type="Link.EntityDefinition.SF12" description="SF-12"/>    
             <AttributeDefinition id="PhysicalActivity" type="Link.EntityDefinition.PhysicalActivity" description="PhysicalActivity"/>
             <AttributeDefinition id="PatientMonitory" type="Link.EntityDefinition.PatientMonitory" description="PatientMonitory"/>            
         </EntityDefinition>
@@ -1330,6 +1331,25 @@ For each question, please give the one answer that comes closest to the way you 
                 <SentryDefinition>
                     <precondition processDefinitionId="CaseEvaluation"/>
                 </SentryDefinition>
+
+                <AutomatedTaskDefinition id="SF12" description="SF-12" ownerPath="Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="SF12" entityAttachPath="SF12">
+                    <!--<HttpHookDefinition on="ENABLE" url="http://35.157.110.245:8081/v1/producer/point-to-point/sacm/prescription" method="POST"></HttpHookDefinition>-->
+                    <TaskParamDefinition path="SF12.sf12-1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="SF12.sf12-2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="SF12.sf12-3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="SF12.sf12-4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="SF12.sf12-5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="SF12.sf12-6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="SF12.sf12-7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="SF12.sf12-8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="SF12.sf12-9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="SF12.sf12-10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="SF12.sf12-11" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="SF12.sf12-12" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="SF12.sf12-13" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="Patient" isReadOnly="false" isMandatory="false"/>
+                </AutomatedTaskDefinition>
+
                 <HumanTaskDefinition id="PhysicalActivityPrescription" description="Physical Activity Prescription" ownerPath="Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="PhysicalActivity" entityAttachPath="PhysicalActivity">
                     <TaskParamDefinition path="PhysicalActivity.phactp1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="PhysicalActivity.phactp2" isReadOnly="false" isMandatory="true"/>
