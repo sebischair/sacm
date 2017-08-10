@@ -6,5 +6,8 @@ block content
   div(class="section")
     h2 Conceptual Architecture
     img(src='/doc/assets/architecture.png', width="80%")
-
-    h2 Docker Deployment
+    p The Smart Adaptive Case Management (SACM) is composed of several subcomponents and is connected by the CONNECARE Message Broker. In general, the SocioCortex provides the basic Adaptive Case Management (ACM) functionality enriched with the Decisions Support System (DSS) to provide SACM functionality. Clinicians can access the SACM system via Professional User Interface. Following all components are explained more detailed:
+    p <b>SocioCortex-Server</b> has several conceptual layers that are accessible by a JSON based REST API. Beginning from the bottom the layers are: 1) Versioned Linked Content Graph, all content is stored in a linked graph and with version control, 2) Dynamic Schemata, models can be adjusted during runtime, 3) Role Based Access Control, on artefacts based on groups, 4) Advanced Search and Indexing, allows full text search on artefacts, 5) Higher-Order Functional Language, helps to write complex queries on the content graph, 6) Case Modelling, provides the ACM functionality, 7) Case Execution, allows to instantiate and execute the modelled cases. The case data is stored in a local MySQL database.
+    p <b>SACM-Backend</b> and provides a domain specific functionality and provides an API for the Professional Interface and the CONNNECARE Message Broker. Internally, the ACM functionality of the SocioCortex-Server is wrapped and enhanced to provide the domain specific functionality. 
+    p <b>Decision Support System</b> support information for clinicians 
+    p <b>Professional Interface</b> provides information needed by professionals such as doctors, nurses etc.. For simplification, the first prototype of this interface only executes workflows that are modelled based on an XML file before. The client of this interface uses the domain-specific API. 
