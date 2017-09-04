@@ -35,7 +35,7 @@ app.use(cookieParser());
 app.use('/api', (req, res, next)=>{
 
   /** Testing Simulate User Authorization */
-  if(req.headers.simulateuser != null){
+  if(req.headers.simulateuser != null && req.headers.authorization == null){
     req.jwt = http.generateJWT(req.headers.simulateuser, 'ottto');
     console.log('simulate user '+req.headers.simulateuser);
     console.log(req.jwt);
