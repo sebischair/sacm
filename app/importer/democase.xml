@@ -1054,17 +1054,17 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
                 <EnumerationOption value="2" description="Sometimes"/>
             </AttributeDefinition>
             <AttributeDefinition id="gfi15" type="enumeration" multiplicity="maximalOne" description="Welk rapportcijfer geeft patiënt zichzelf voor lichamelijke fitheid? (0-10, 0 is erg slecht, 10 is erg goed).">
-                <EnumerationOption value="1" description="0"/>
-                <EnumerationOption value="1" description="1"/>
-                <EnumerationOption value="1" description="2"/>
-                <EnumerationOption value="1" description="3"/>
-                <EnumerationOption value="1" description="4"/>
-                <EnumerationOption value="1" description="5"/>
-                <EnumerationOption value="1" description="6"/>
-                <EnumerationOption value="0" description="7"/>
-                <EnumerationOption value="0" description="8"/>
-                <EnumerationOption value="0" description="9"/>
-                <EnumerationOption value="0" description="10"/>
+                <EnumerationOption value="1.0001" description="0"/>
+                <EnumerationOption value="1.0002" description="1"/>
+                <EnumerationOption value="1.0003" description="2"/>
+                <EnumerationOption value="1.0004" description="3"/>
+                <EnumerationOption value="1.0005" description="4"/>
+                <EnumerationOption value="1.0006" description="5"/>
+                <EnumerationOption value="1.0007" description="6"/>
+                <EnumerationOption value="0.0001" description="7"/>
+                <EnumerationOption value="0.0002" description="8"/>
+                <EnumerationOption value="0.0003" description="9"/>
+                <EnumerationOption value="0.0004" description="10"/>
             </AttributeDefinition>                  
             <DerivedAttributeDefinition id="gfi16" expression="number(gfi1,0) + number(gfi2,0) + number(gfi3,0) + number(gfi4,0) + number(gfi5,0) + number(gfi6,0) + number(gfi7,0) + number(gfi8,0) + number(gfi9,0) + number(gfi10,0) + number(gfi11,0) + number(gfi12,0) + number(gfi13,0) + number(gfi14,0) + number(gfi15,0)" description="Groningen Frailty Indicator"/>     
         </EntityDefinition>
@@ -1215,7 +1215,7 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
                 <EnumerationOption value="2" description="No psychological problems"/>
             </AttributeDefinition>
             <AttributeDefinition id="mnasf6" type="number" multiplicity="maximalOne" description="Weight in kilograms"/>
-            <AttributeDefinition id="mnasf7" type="number" multiplicity="maximalOne" description="Lenght in centimeters" />
+            <AttributeDefinition id="mnasf7" type="number" multiplicity="maximalOne" description="Lenght in centimeters"/>
             <AttributeDefinition id="mnasf8" type="enumeration" multiplicity="maximalOne" description="BMI">
                 <EnumerationOption value="0" description="BMI less than 19"/>	
                 <EnumerationOption value="1" description="BMI 19 to less than 21"/>
@@ -1227,7 +1227,7 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
 
          <!-- Case Definition -->
         <CaseDefinition id="GCS2" description="Groningen CS2" ownerPath="GCS2_Owner" entityDefinitionId="GCS2_CaseData">
-
+        
             <StageDefinition id="GCS2_CaseIdentification" description="Case Identification" isMandatory="true" isRepeatable="false">        
                 <HumanTaskDefinition id="GCS2_SelectPatient" description="Select Patient" ownerPath="GCS2_Owner" isMandatory="true" isRepeatable="false">                
                     <TaskParamDefinition path="GCS2_Patient" isReadOnly="false" isMandatory="true"/>
@@ -1245,7 +1245,6 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
                     <TaskParamDefinition path="GCS2_ASA.asa6" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
             </StageDefinition>
-        
             <StageDefinition id="GCS2_CaseEvaluation" description="Case Evaluation" isMandatory="true" isRepeatable="true">  
                 <SentryDefinition>
                     <precondition processDefinitionId="GCS2_CaseIdentification"/>
