@@ -868,8 +868,8 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
 
          <!-- Case Data Defintion -->   
         <EntityDefinition id="GCS2_CaseData" description="Case Data">
-            <AttributeDefinition id="Patient" type="Link.Users.AssutaPatients" description="Patient"/>
-            <AttributeDefinition id="Owner" type="Link.Users.AssutaCaseManagers" description="Owner"/>
+            <AttributeDefinition id="GCS2_Patient" type="Link.Users.AssutaPatients" description="Patient"/>
+            <AttributeDefinition id="GCS2_Owner" type="Link.Users.AssutaCaseManagers" description="Owner"/>
             <AttributeDefinition id="GCS2_ASA" type="Link.EntityDefinition.GCS2_ASA" description="ASA"/>    
             <AttributeDefinition id="GCS2_Charlson" type="Link.EntityDefinition.GCS2_Charlson" description="Charlson"/>   
             <AttributeDefinition id="GCS2_GFI" type="Link.EntityDefinition.GCS2_GFI" description="Groningen Frailty Indicator (GFI)"/>   
@@ -1224,6 +1224,59 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
             </AttributeDefinition>           
             <DerivedAttributeDefinition id="mnasf9" expression="number(mnasf1,0) + number(mnasf2,0) + number(mnasf3,0) + number(mnasf4,0) + number(mnasf5,0) + mnasf6 + mnasf7 + number(mnasf8,0)" description="Score"/>            
         </EntityDefinition>
+
+         <!-- Case Definition -->
+        <CaseDefinition id="GCS2" description="Groningen CS2" ownerPath="GCS2_Owner" entityDefinitionId="GCS2_CaseData">
+
+            <StageDefinition id="GCS2_CaseIdentification" description="Case Identification" isMandatory="true" isRepeatable="false">        
+                <HumanTaskDefinition id="GCS2_SelectPatient" description="Select Patient" ownerPath="GCS2_Owner" isMandatory="true" isRepeatable="false">                
+                    <TaskParamDefinition path="GCS2_Patient" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Owner" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>
+                <HumanTaskDefinition id="GCS2_Lace" description="Lace" ownerPath="GCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="GCS2_ASA" entityAttachPath="GCS2_ASA">                
+                    <SentryDefinition>
+                        <precondition processDefinitionId="GCS2_SelectPatient"/>
+                    </SentryDefinition>
+                    <TaskParamDefinition path="GCS2_ASA.asa1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_ASA.asa2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_ASA.asa3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_ASA.asa4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_ASA.asa5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_ASA.asa6" isReadOnly="true" isMandatory="false"/>
+                </HumanTaskDefinition>
+            </StageDefinition>
+        
+            <StageDefinition id="GCS2_CaseEvaluation" description="Case Evaluation" isMandatory="true" isRepeatable="true">  
+                <SentryDefinition>
+                    <precondition processDefinitionId="GCS2_CaseIdentification"/>
+                </SentryDefinition>
+                <HumanTaskDefinition id="GCS2_Charlson" description="Charlson" ownerPath="GCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="GCS2_Charlson" entityAttachPath="GCS2_Charlson">
+                    <TaskParamDefinition path="GCS2_Charlson.ch1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch11" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch12" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch13" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch14" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch15" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch16" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch17" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch18" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch19" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch20" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch21" isReadOnly="true" isMandatory="false"/>
+                </HumanTaskDefinition>
+            </StageDefinition>
+
+            
+        </CaseDefinition>
 
     </Workspace>
 
