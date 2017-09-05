@@ -49,7 +49,7 @@ app.use('/api', (req, res, next)=>{
     }else{
       const authorization = req.headers.authorization;
       if(!authorization.startsWith('Bearer ')){
-        res.status(403).send('Authorization header musst start with "Bearer"!');
+        res.status(403).send('Authorization header must start with "Bearer"!');
       }else{
         const token = authorization.replace('Bearer ','');
         jwt.verify(token, secret, {algorithms: ['RS256']}, (err, decoded)=> {
