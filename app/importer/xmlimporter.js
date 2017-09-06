@@ -111,7 +111,7 @@ module.exports = class XMLImporter {
         if(count == 1)
           return principalId;
         else
-          console.error('ERROR: PrincipalId "'+principalXMLId+'" not found or not unique!');
+          console.error('ERROR: PrincipalId "'+principalXMLId+'" not found or not unique! Found count: '+count);
       }
     }
 
