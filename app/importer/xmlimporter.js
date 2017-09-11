@@ -185,18 +185,33 @@ module.exports = class XMLImporter {
       });
     }
 
-    import(jwt, filePath, isExecuteCase, executionJwt){ 
+    import(jwt, file, isExecuteCase, executionJwt){ 
+      let path = 'app/importer/';
+      let filePath = path+file;
       this.jwt = jwt;     
       this.executionJwt = executionJwt;
       return this.fileExists(filePath)
         .then(exist =>{
           if(!exist)
             throw new Error('File does not exist' + filePath);
-          else          
-            return xml.parseStringAsync(fs.readFileSync(filePath).toString());
+          else {         
+            //return xml.parseStringAsync(fs.readFileSync(filePath).toString());
+            let xml = fs.readFileSync(filePath).toString();
+            xml.match(/<include.*>/g).forEach(include=> {
+              let href = include.match(/href=".*"/g);
+              if(href !== null){
+                href = href[0];
+                href = href.replace('href="','').replace('"','');
+                if(!fs.existsSync(path+'/'+href))
+                  throw new Error('Could not find include file: '+path+'/'+href);
+                let incXml = fs.readFileSync(path+'/'+href).toString();  
+                xml = xml.replace(include, incXml);
+              }
+            });
+            fs.writeFileSync(filePath+'.merged.xml',xml);
+          }
         })
         .then(json=>{
-          this.json = json.SACMDefinition;
           return this.initializeMaps();
         })
         .then(()=>{
@@ -237,7 +252,7 @@ module.exports = class XMLImporter {
             return Promise.resolve(caseInstance);
           else
             return this.executeCase();
-        });
+        });        
     }
 
     fileExists(filePath) {

@@ -27,7 +27,7 @@ router.post('/', (req, res, next)=>{
     executionJwt = http.generateJWT(req.body.executionUser, 'ottto');
   }
 
-  xml.import(req.jwt, 'app/importer/'+file, isExecuteCase, executionJwt)
+  xml.import(req.jwt, file, isExecuteCase, executionJwt)
     .then(case1=>{
       res.status(200).send(case1);
     })
