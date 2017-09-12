@@ -23,7 +23,7 @@ import AutomatedTask from '../models/case/model.automatedtask';
 import Process from '../models/case/model.process';
 import Alert from '../models/case/model.alert';
 import Settings from '../models/settings/model.settings';
-const xml = Promise.promisifyAll(xml2js);
+const xml2jspromise = Promise.promisifyAll(xml2js);
 const fs = Promise.promisifyAll(require("fs"));
 
 
@@ -198,10 +198,10 @@ module.exports = class XMLImporter {
             //return xml.parseStringAsync(fs.readFileSync(filePath).toString());
             let xml = fs.readFileSync(filePath).toString();
             xml.match(/<include.*>/g).forEach(include=> {
-              let href = include.match(/href=".*"/g);
+              let href = include.match(/src=".*"/g);
               if(href !== null){
                 href = href[0];
-                href = href.replace('href="','').replace('"','');
+                href = href.replace('src="','').replace('"','');
                 if(!fs.existsSync(path+'/'+href))
                   throw new Error('Could not find include file: '+path+'/'+href);
                 let incXml = fs.readFileSync(path+'/'+href).toString();  
@@ -209,9 +209,11 @@ module.exports = class XMLImporter {
               }
             });
             fs.writeFileSync(filePath+'.merged.xml',xml);
+            return xml2jspromise.parseStringAsync(xml);
           }
         })
         .then(json=>{
+          this.json = json;
           return this.initializeMaps();
         })
         .then(()=>{
