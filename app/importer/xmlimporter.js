@@ -197,23 +197,26 @@ module.exports = class XMLImporter {
           else {         
             //return xml.parseStringAsync(fs.readFileSync(filePath).toString());
             let xml = fs.readFileSync(filePath).toString();
-            xml.match(/<include.*>/g).forEach(include=> {
-              let href = include.match(/src=".*"/g);
-              if(href !== null){
-                href = href[0];
-                href = href.replace('src="','').replace('"','');
-                if(!fs.existsSync(path+'/'+href))
-                  throw new Error('Could not find include file: '+path+'/'+href);
-                let incXml = fs.readFileSync(path+'/'+href).toString();  
-                xml = xml.replace(include, incXml);
-              }
-            });
+            let includes = xml.match(/<include.*>/g);
+            if(includes)
+              includes.forEach(include=> {
+                let href = include.match(/src=".*"/g);
+                if(href !== null){
+                  href = href[0];
+                  href = href.replace('src="','').replace('"','');
+                  if(!fs.existsSync(path+'/'+href))
+                    throw new Error('Could not find include file: '+path+'/'+href);
+                  let incXml = fs.readFileSync(path+'/'+href).toString();  
+                  xml = xml.replace(include, incXml);
+                }
+              });
             fs.writeFileSync(filePath+'.merged.xml',xml);
             return xml2jspromise.parseStringAsync(xml);
           }
         })
         .then(json=>{
-          this.json = json;
+          this.json = json.SACMDefinition;
+          fs.writeFileSync(filePath+'.merged.json.xml',JSON.stringify(this.json,null,3));
           return this.initializeMaps();
         })
         .then(()=>{
@@ -349,7 +352,8 @@ module.exports = class XMLImporter {
       }); 
     }
 
-    createUsers(){
+    createUsers(){      
+      console.log(this.json.UserDefinition);
       return Promise.each(this.json.User, u=>{      
         const data = {
           name: u.$.id,
