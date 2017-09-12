@@ -1,6 +1,6 @@
 <EntityDefinition id="BCS1_CaseData" description="Case Data">
-    <AttributeDefinition id="Patient" type="Link.Users.AssutaPatients" description="Patient"/>
-    <AttributeDefinition id="Owner" type="Link.Users.AssutaCaseManagers" description="Owner"/>
+    <AttributeDefinition id="BCS1_Patient" type="Link.Users.AssutaPatients" description="Patient"/>
+    <AttributeDefinition id="BCS1_Owner" type="Link.Users.AssutaCaseManagers" description="Owner"/>
     <AttributeDefinition id="BCS1_Inclusion" type="Link.EntityDefinition.BCS1_Inclusion" description="Inclusion form"/>      
     <AttributeDefinition id="BCS1_ClinicalInformation" type="Link.EntityDefinition.BCS1_ClinicalInformation" description="Información clínica"/>             
     <AttributeDefinition id="BCS1_Charlson" type="Link.EntityDefinition.BCS1_Charlson" description="Barthel"/>
@@ -486,12 +486,12 @@
 </EntityDefinition>
 
   <!-- Case Definition -->
-<CaseDefinition id="BCS1_Barcelona" description="CS1 Barcelona" ownerPath="Owner" entityDefinitionId="BCS1_CaseData">
+<CaseDefinition id="BCS1_Barcelona" description="CS1 Barcelona" ownerPath="BCS1_Owner" entityDefinitionId="BCS1_CaseData">
 
     <StageDefinition id="BCS1_CaseIdentification" description="Case Identification" isMandatory="true" isRepeatable="false">        
-        <HumanTaskDefinition id="BCS1_Inclusion" description="Inclusion" ownerPath="Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="BCS1_Inclusion" entityAttachPath="BCS1_Inclusion">                
-            <TaskParamDefinition path="Patient" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="Owner" isReadOnly="false" isMandatory="true"/>
+        <HumanTaskDefinition id="BCS1_Inclusion" description="Inclusion" ownerPath="BCS1_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="BCS1_Inclusion" entityAttachPath="BCS1_Inclusion">                
+            <TaskParamDefinition path="BCS1_Patient" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="BCS1_Owner" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="BCS1_Inclusion.nhc" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="BCS1_Inclusion.inclusioncriteria1" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="BCS1_Inclusion.inclusioncriteria2" isReadOnly="false" isMandatory="true"/>
@@ -508,12 +508,12 @@
         <SentryDefinition>
             <precondition processDefinitionId="BCS1_CaseIdentification"/>
         </SentryDefinition>
-        <HumanTaskDefinition id="BCS1_ClinicalInformation" description="Información clínica" ownerPath="Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="BCS1_ClinicalInformation" entityAttachPath="BCS1_ClinicalInformation">
+        <HumanTaskDefinition id="BCS1_ClinicalInformation" description="Información clínica" ownerPath="BCS1_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="BCS1_ClinicalInformation" entityAttachPath="BCS1_ClinicalInformation">
             <TaskParamDefinition path="BCS1_ClinicalInformation.healthcareresources" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="BCS1_ClinicalInformation.diagnosisinfo" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="BCS1_ClinicalInformation.surgeryinfo" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition>
-        <HumanTaskDefinition id="BCS1_Charlson" description="Charlson index" ownerPath="Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="BCS1_Charlson" entityAttachPath="BCS1_Charlson">
+        <HumanTaskDefinition id="BCS1_Charlson" description="Charlson index" ownerPath="BCS1_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="BCS1_Charlson" entityAttachPath="BCS1_Charlson">
             <TaskParamDefinition path="BCS1_Charlson.ch1" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="BCS1_Charlson.ch2" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="BCS1_Charlson.ch3" isReadOnly="false" isMandatory="true"/>
@@ -536,7 +536,7 @@
             <TaskParamDefinition path="BCS1_Charlson.ch20" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="BCS1_Charlson.ch21" isReadOnly="true" isMandatory="false"/>                   
         </HumanTaskDefinition>
-        <HumanTaskDefinition id="BCS1_RiskFactors" description="Risk Factors" ownerPath="Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="BCS1_RiskFactors" entityAttachPath="BCS1_RiskFactors">
+        <HumanTaskDefinition id="BCS1_RiskFactors" description="Risk Factors" ownerPath="BCS1_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="BCS1_RiskFactors" entityAttachPath="BCS1_RiskFactors">
             <TaskParamDefinition path="BCS1_RiskFactors.smokingpackyr" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="BCS1_RiskFactors.activesmoker" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="BCS1_RiskFactors.passivesmoker" isReadOnly="false" isMandatory="true"/>
@@ -544,7 +544,7 @@
             <TaskParamDefinition path="BCS1_RiskFactors.sedentarylifestyle" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="BCS1_RiskFactors.other" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition>
-        <HumanTaskDefinition id="BCS1_Barthel" description="Barthel" ownerPath="Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="BCS1_Barthel" entityAttachPath="BCS1_Barthel">
+        <HumanTaskDefinition id="BCS1_Barthel" description="Barthel" ownerPath="BCS1_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="BCS1_Barthel" entityAttachPath="BCS1_Barthel">
             <TaskParamDefinition path="BCS1_Barthel.barthel1" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="BCS1_Barthel.barthel2" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="BCS1_Barthel.barthel3" isReadOnly="false" isMandatory="true"/>
@@ -557,14 +557,14 @@
             <TaskParamDefinition path="BCS1_Barthel.barthel10" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="BCS1_Barthel.barthel11" isReadOnly="true" isMandatory="false"/>
         </HumanTaskDefinition>
-        <HumanTaskDefinition id="BCS1_MedicationAdherences" description="Medication Adherences" ownerPath="Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="BCS1_MedicationAdherences" entityAttachPath="BCS1_MedicationAdherences">
+        <HumanTaskDefinition id="BCS1_MedicationAdherences" description="Medication Adherences" ownerPath="BCS1_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="BCS1_MedicationAdherences" entityAttachPath="BCS1_MedicationAdherences">
             <TaskParamDefinition path="BCS1_MedicationAdherences.morisky1" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="BCS1_MedicationAdherences.morisky2" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="BCS1_MedicationAdherences.morisky3" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="BCS1_MedicationAdherences.morisky4" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="BCS1_MedicationAdherences.morisky5" isReadOnly="true" isMandatory="false"/>
         </HumanTaskDefinition>
-        <HumanTaskDefinition id="BCS1_SF36" description="SF-36" ownerPath="Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="BCS1_SF36" entityAttachPath="BCS1_SF36">
+        <HumanTaskDefinition id="BCS1_SF36" description="SF-36" ownerPath="BCS1_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="BCS1_SF36" entityAttachPath="BCS1_SF36">
             <TaskParamDefinition path="BCS1_SF36.sf36-1" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="BCS1_SF36.sf36-2" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="BCS1_SF36.sf36-3" isReadOnly="false" isMandatory="true"/>
@@ -608,7 +608,7 @@
         <SentryDefinition>
             <precondition processDefinitionId="BCS1_CaseEvaluation"/>
         </SentryDefinition>
-        <HumanTaskDefinition id="BCS1_DailyHomeVisit" description="Daily Home Visit" ownerPath="Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="BCS1_DailyHomeVisit" entityAttachPath="BCS1_DailyHomeVisit">
+        <HumanTaskDefinition id="BCS1_DailyHomeVisit" description="Daily Home Visit" ownerPath="BCS1_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="BCS1_DailyHomeVisit" entityAttachPath="BCS1_DailyHomeVisit">
             <TaskParamDefinition path="BCS1_DailyHomeVisit.dhv1" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="BCS1_DailyHomeVisit.dhv2" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="BCS1_DailyHomeVisit.dhv3" isReadOnly="false" isMandatory="true"/>
@@ -616,31 +616,31 @@
             <TaskParamDefinition path="BCS1_DailyHomeVisit.dhv5" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="BCS1_DailyHomeVisit.dhv6" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition>
-        <HumanTaskDefinition id="BCS1_DailyHomeVisit_AterialBlodGases" description="Aterial Blod Gases" ownerPath="Owner" isMandatory="false" isRepeatable="false" isManualActivation="true">
+        <HumanTaskDefinition id="BCS1_DailyHomeVisit_AterialBlodGases" description="Aterial Blod Gases" ownerPath="BCS1_Owner" isMandatory="false" isRepeatable="false" isManualActivation="true">
             <SentryDefinition>
                 <precondition processDefinitionId="BCS1_DailyHomeVisit"/>
             </SentryDefinition>
             <TaskParamDefinition path="BCS1_DailyHomeVisit.dhv7" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition>
-        <HumanTaskDefinition id="BCS1_DailyHomeVisit_BloodAnalytics" description="Blood Analytics" ownerPath="Owner" isMandatory="false" isRepeatable="false" isManualActivation="true">
+        <HumanTaskDefinition id="BCS1_DailyHomeVisit_BloodAnalytics" description="Blood Analytics" ownerPath="BCS1_Owner" isMandatory="false" isRepeatable="false" isManualActivation="true">
             <SentryDefinition>
                 <precondition processDefinitionId="BCS1_DailyHomeVisit"/>
             </SentryDefinition>
             <TaskParamDefinition path="BCS1_DailyHomeVisit.dhv8" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition>                
-        <HumanTaskDefinition id="BCS1_DailyHomeVisit_SputumCulture" description="sputum culture" ownerPath="Owner" isMandatory="false" isRepeatable="false" isManualActivation="true">
+        <HumanTaskDefinition id="BCS1_DailyHomeVisit_SputumCulture" description="sputum culture" ownerPath="BCS1_Owner" isMandatory="false" isRepeatable="false" isManualActivation="true">
             <SentryDefinition>
                 <precondition processDefinitionId="BCS1_DailyHomeVisit"/>
             </SentryDefinition>
             <TaskParamDefinition path="BCS1_DailyHomeVisit.dhv9" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition>
-        <HumanTaskDefinition id="BCS1_DailyHomeVisit_ForcedSpirometry" description="forced spirometry" ownerPath="Owner" isMandatory="false" isRepeatable="false" isManualActivation="true">
+        <HumanTaskDefinition id="BCS1_DailyHomeVisit_ForcedSpirometry" description="forced spirometry" ownerPath="BCS1_Owner" isMandatory="false" isRepeatable="false" isManualActivation="true">
             <SentryDefinition>
                 <precondition processDefinitionId="BCS1_DailyHomeVisit"/>
             </SentryDefinition>
             <TaskParamDefinition path="BCS1_DailyHomeVisit.dhv10" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition>
-        <HumanTaskDefinition id="BCS1_DailyHomeVisit_PhysiciansHomeVisit" description="physician´s home visit" ownerPath="Owner" isMandatory="false" isRepeatable="false" isManualActivation="true">
+        <HumanTaskDefinition id="BCS1_DailyHomeVisit_PhysiciansHomeVisit" description="physician´s home visit" ownerPath="BCS1_Owner" isMandatory="false" isRepeatable="false" isManualActivation="true">
             <SentryDefinition>
                 <precondition processDefinitionId="BCS1_DailyHomeVisit"/>
             </SentryDefinition>
