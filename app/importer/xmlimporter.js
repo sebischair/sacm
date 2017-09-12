@@ -210,13 +210,13 @@ module.exports = class XMLImporter {
                   xml = xml.replace(include, incXml);
                 }
               });
-            fs.writeFileSync(filePath+'.merged.xml',xml);
+            fs.writeFileSync(filePath+'.merged.xml.tmp',xml);
             return xml2jspromise.parseStringAsync(xml);
           }
         })
         .then(json=>{
           this.json = json.SACMDefinition;
-          fs.writeFileSync(filePath+'.merged.json.xml',JSON.stringify(this.json,null,3));
+          fs.writeFileSync(filePath+'.merged.json.tmp',JSON.stringify(this.json,null,3));
           return this.initializeMaps();
         })
         .then(()=>{
