@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+AttributeDefintion types = richstring, text, notype, json, link, string, mxl, longtext, image, boolean, number, enumeration or date
+
+One entit defintion can only belong to one casedefintnion, meaning a entityDefinition can be used only once
+-->
+<SACMDefinition>
+
+<!-- ######################################################################################################################################## -->
+<!-- ####### Settings ################################################################################################################# -->
+<!-- ######################################################################################################################################## -->
+
+    <Settings 
+        mayCreateWorksapces="['Administrators']"
+        mayCreateGroups="['Administrators']" 
+        mayCreateUsers="['Administrators', 'AssutaProfessionals']"
+        mayEditUserDefinition="['Administrators', 'AssutaProfessionals']"/>
+
+<!-- ######################################################################################################################################## -->
+<!-- ####### UserDefinition ################################################################################################################# -->
+<!-- ######################################################################################################################################## -->
+
+    <UserDefinition>
+        <AttributeDefinition id="patientnr" type="string" multiplicity="maximalOne" description="Patient number"/>
+        <AttributeDefinition id="firstname" type="string" multiplicity="maximalOne" description="Firstname"/>
+        <AttributeDefinition id="lastname" type="string" multiplicity="maximalOne" description="Lastname"/>       
+        <AttributeDefinition id="birthdate" type="date" multiplicity="maximalOne" description="Birthdate"/>
+        <DerivedAttributeDefinition id="age" expression="(Today - birthdate)/365" description="Age"/>
+        <AttributeDefinition id="gender" type="enumeration" multiplicity="maximalOne" description="Gender">
+            <EnumerationOption value="MALE" description="Male"/>
+            <EnumerationOption value="FEMALE" description="Female"/>
+            <EnumerationOption value="UNKNOWN" description="Prefer not to say"/>
+        </AttributeDefinition>
+        <AttributeDefinition id="maritalstatus" type="enumeration" multiplicity="maximalOne" description="Marital status">
+            <EnumerationOption value="SINGLE" description="Single"/>
+            <EnumerationOption value="MARRIED" description="Married"/>
+            <EnumerationOption value="WIDOWED" description="Widowed"/>
+            <EnumerationOption value="SEPARATED" description="Separated"/>
+            <EnumerationOption value="DIVORCED" description="Divorced"/>
+            <EnumerationOption value="UNKNOWN" description="Prefer not to say"/>
+        </AttributeDefinition>
+        <AttributeDefinition id="educationallevel" type="enumeration" multiplicity="maximalOne" description="Educational level">
+            <EnumerationOption value="1" description="Early childhood"/>
+            <EnumerationOption value="2" description="Primary education"/>
+            <EnumerationOption value="3" description="Lower secondary education"/>
+            <EnumerationOption value="4" description="Upper secondary education"/>
+            <EnumerationOption value="5" description="Post-secondary non-tertiary education"/>
+            <EnumerationOption value="6" description="Short-cycle tertiary education"/>
+            <EnumerationOption value="7" description="Bachelor"/>
+            <EnumerationOption value="8" description="Master"/>
+            <EnumerationOption value="9" description="Doctoral"/>
+            <EnumerationOption value="10" description="Prefer not to say"/>
+        </AttributeDefinition>
+        <AttributeDefinition id="culturallevel" type="enumeration" multiplicity="maximalOne" description="Socio-cultural level">
+            <EnumerationOption value="LOW" description="Low"/>
+            <EnumerationOption value="MEDIUM" description="Medium"/>
+            <EnumerationOption value="HIGH" description="High"/>
+            <EnumerationOption value="UNKNOWN" description="Prefer not to say"/>
+        </AttributeDefinition>
+        <AttributeDefinition id="phone" type="string" multiplicity="maximalOne" description="Phone"/>
+        <AttributeDefinition id="mobile" type="string" multiplicity="maximalOne" description="Mobile"/>
+        <AttributeDefinition id="language" type="enumeration" multiplicity="maximalOne" description="Language">
+            <!-- ISO 2 Letter Language Codes -->
+            <EnumerationOption value="EN" description="English"/>
+            <EnumerationOption value="NL" description="Dutch"/>
+            <EnumerationOption value="IW" description="Hebrew"/>
+            <EnumerationOption value="ES" description="Spanish"/>
+            <EnumerationOption value="CA" description="Catalan"/>
+            <EnumerationOption value="RU" description="Russian"/>
+        </AttributeDefinition>
+    </UserDefinition>
+
+
+<!-- ######################################################################################################################################## -->
+<!-- ####### Leida ########################################################################################################################## -->
+<!-- ######################################################################################################################################## -->
+
+
+    <Workspace id="Leida" staticId="2c9480885d1737ef015d74deec7f0002" description="Leida">
+        <Contributor principalId="AssutaProfessionals"/>
+        <Administrator principalId="Me"/>
+        <Client principalId="AssutaPatients"/>
+
+        <include src="case.leida.cs1.xml">
+        <!--<ixnclude src="case.leida.cs2.xml"> -->
+
+    </Workspace>
+
+
+
+<!-- ######################################################################################################################################## -->
+<!-- ####### Assuta ######################################################################################################################### -->
+<!-- ######################################################################################################################################## -->
+
+    <Group id="AssutaPatients" staticId="2c9480845bee03e7015bfc056b070002" description="Patients">
+        <Administrator principalId="Me"/>
+        <Membership principalId="connecare-patient"/>
+        <Membership principalId="user1"/>
+        <Membership principalId="user2"/>
+        <Membership principalId="user3"/>
+    </Group>
+    
+    <Group id="AssutaProfessionals" description="Assuta Professionals">
+        <Administrator principalId="Me"/>
+        <Membership principalId="AssutaClinicians"/>
+        <Membership principalId="AssutaCaseManagers"/>
+        <Membership principalId="AssutaNurses"/>
+        <Membership principalId="AssutaAnesthesiologists"/>
+        <Membership principalId="AssutaPhysicians"/>
+        <Membership principalId="AssutaPhysiotherapists"/>
+        <Membership principalId="AssutaSocialworkers"/>
+        <Membership principalId="AssutaPrimaryCareClinician"/>
+        <Membership principalId="AssutaSecretary"/>
+        <Membership principalId="AssutaSiteAdminstrators"/>
+        <Membership principalId="AssutaResearchers"/>
+    </Group>
+
+    <Group id="AssutaClinicians" staticId="2c9480845bee03e7015bfc05a3fc0003" description="Clinicians">
+        <Administrator principalId="Me"/>
+        <Membership principalId="connecare-clinician"/>
+        <Membership principalId="user5"/>
+        <Membership principalId="user6"/>
+        <Membership principalId="user7"/>
+    </Group>
+
+    <Group id="AssutaCaseManagers" staticId="2c9480885d1737ef015d7568f771000a" description="Case Managers">
+        <Administrator principalId="Me"/>
+        <Membership principalId="connecare-clinician"/>
+        <Membership principalId="user5"/>
+        <Membership principalId="user6"/>
+        <Membership principalId="user7"/>
+    </Group>
+
+    <Group id="AssutaNurses" staticId="2c9480885d1737ef015d7568f796000b" description="Nurses">
+        <Administrator principalId="Me"/>
+    </Group>
+
+    <Group id="AssutaAnesthesiologists" staticId="2c9480885d1737ef015d7568f7b5000c" description="Anesthesiologists">
+        <Administrator principalId="Me"/>
+    </Group>
+
+    <Group id="AssutaPhysicians" staticId="2c9480885d1737ef015d7568f810000e" description="Physicians">
+        <Administrator principalId="Me"/>
+    </Group>
+
+    <Group id="AssutaPhysiotherapists" staticId="2c9480885d1737ef015d7568f84c0010" description="Physiotherapists">
+        <Administrator principalId="Me"/>
+    </Group>
+
+    <Group id="AssutaSocialworkers" staticId="2c9480885d1737ef015d7568f8a70013" description="Social workers">
+        <Administrator principalId="Me"/>
+    </Group>
+
+    <Group id="AssutaPrimaryCareClinician" staticId="2c9480885d1737ef015d7568f8c30014" description="Primary Care Clinicians">
+        <Administrator principalId="Me"/>
+    </Group>
+
+    <Group id="AssutaSecretary" description="Secretary">
+        <Administrator principalId="Me"/>
+    </Group>
+
+    <Group id="AssutaSiteAdminstrators" staticId="2c9480845bee03e7015bfc113cfc0007" description="Site Adminstrators">
+        <Administrator principalId="Me"/>
+    </Group>
+
+    <Group id="AssutaResearchers" description="Researchers">
+        <Administrator principalId="Me"/>
+    </Group>
+
+    
+    <Group staticId="2c9480885d1737ef015d74deeac90000" id="IsraelProfessionals" staticId="Israel" description="Israel Professional">
+        <Administrator principalId="Me"/>
+        <Membership principalId="IsraelAdminOfficer"/>
+        <Membership principalId="IsraelAnesthesiologist"/>
+        <Membership principalId="IsraelCaseManager"/>
+        <Membership principalId="IsraelClinician"/>
+        <Membership principalId="IsraelDataManager"/>
+        <Membership principalId="IsraelLabTechnician"/>
+        <Membership principalId="IsraelLocalPulmonologists"/>
+        <Membership principalId="IsraelNurse"/>
+        <Membership principalId="IsraelNutritionist"/>
+        <Membership principalId="IsraelPhysician"/>
+        <Membership principalId="IsraelPhysiotherapist"/>
+        <Membership principalId="IsraelPrimaryCareClinician"/>
+        <Membership principalId="IsraelPsychologist"/>
+        <Membership principalId="IsraelRNST"/>
+        <Membership principalId="IsraelSocialCareer"/>
+        <Membership principalId="IsraelAdmin"/>
+    </Group>
+    <Group staticId="6c686573922811e7bd0c0242ac120002" id="IsraelAdminOfficer" description="Israel Admin Officer">
+        <Administrator principalId="Me"/>
+    </Group>
+    <Group staticId="6c68656e922811e7bd0c0242ac120002" id="IsraelAnesthesiologist" description="Israel Anesthesiologist">
+        <Administrator principalId="Me"/>
+    </Group>
+    <Group staticId="6c686564922811e7bd0c0242ac120002" id="IsraelCaseManager" description="Israel Case Manager">
+        <Administrator principalId="Me"/>
+    </Group>
+    <Group staticId="6c686555922811e7bd0c0242ac120002" id="IsraelClinician" description="Israel Clinician">
+        <Administrator principalId="Me"/>
+        <Membership principalId="millerc"/>
+        <Membership principalId="evansn"/>
+    </Group>
+    <Group staticId="6c6865b2922811e7bd0c0242ac120002" id="IsraelDataManager" description="Israel Data Manager">
+        <Administrator principalId="Me"/>
+    </Group>
+    <Group staticId="6c6865a9922811e7bd0c0242ac120002" id="IsraelLabTechnician" description="Israel Lab Technician">
+        <Administrator principalId="Me"/>
+    </Group>
+    <Group staticId="6c6865ad922811e7bd0c0242ac120002" id="IsraelLocalPulmonologists" description="Israel Local Pulmonologists">
+        <Administrator principalId="Me"/>
+    </Group>
+    <Group staticId="6c686569922811e7bd0c0242ac120002" id="IsraelNurse" description="Israel Nurse">
+        <Administrator principalId="Me"/>
+    </Group>
+    <Group staticId="6c686592922811e7bd0c0242ac120002" id="IsraelNutritionist" description="Israel Nutritionist">
+        <Administrator principalId="Me"/>
+    </Group>
+    <Group staticId="6c686578922811e7bd0c0242ac120002" id="IsraelPhysician" description="Israel Physician">
+        <Administrator principalId="Me"/>
+    </Group>
+    <Group staticId="6c686589922811e7bd0c0242ac120002" id="IsraelPhysiotherapist" description="Israel Physiotherapist">
+        <Administrator principalId="Me"/>
+    </Group>
+    <Group staticId="6c6865a4922811e7bd0c0242ac120002" id="IsraelPrimaryCareClinician" description="Israel Primary Care Clinician">
+        <Administrator principalId="Me"/>
+    </Group>
+    <Group staticId="6c686597922811e7bd0c0242ac120002" id="IsraelPsychologist" description="Israel Psychologist">
+        <Administrator principalId="Me"/>
+    </Group>
+    <Group staticId="6c686580922811e7bd0c0242ac120002" id="IsraelRNST" description="Israel RNST">
+        <Administrator principalId="Me"/>
+    </Group>
+    <Group staticId="6c68659c922811e7bd0c0242ac120002" id="IsraelSocialCareer" description="Israel Social Career">
+        <Administrator principalId="Me"/>
+    </Group>
+    <Group staticId="6c68655c922811e7bd0c0242ac120002" id="IsraelAdmin" description="Israel Admin">
+        <Administrator principalId="Me"/>
+    </Group>
+    <Group staticId="6c6864f0922811e7bd0c0242ac120002" id="IsraelPatient" description="Israel Patient">
+        <Administrator principalId="Me"/>
+        <Membership principalId="alexanderc"/>
+        <Membership principalId="carlsonc"/>
+        <Membership principalId="morrisonk"/>
+    </Group>
+
+
+    <User id="millerc" staticId="millerc" email="charles.miller@professionals.assuta.org">
+        <Attribute attributeDefinitionId="firstname" values="['Charles']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Miller']"/>         
+        <Attribute attributeDefinitionId="birthdate" values="['1980-03-08T15:36:21.000-0000']"/> 
+    </User>
+    <User id="evansn" staticId="evansn" email="nathan.evans@professionals.assuta.org">
+        <Attribute attributeDefinitionId="firstname" values="['Nathan']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Evans']"/>        
+        <Attribute attributeDefinitionId="birthdate" values="['1980-03-08T15:36:21.000-0000']"/> 
+    </User>
+
+    <User id="alexanderc" staticId="alexanderc" email="crystal.alexander@patients.assuta.org">
+        <Attribute attributeDefinitionId="firstname" values="['Crystal']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Alexander']"/>         
+        <Attribute attributeDefinitionId="birthdate" values="['1980-03-08T15:36:21.000-0000']"/> 
+    </User>
+    <User id="carlsonc" staticId="carlsonc" email="carl.carlson@patients.assuta.org">
+        <Attribute attributeDefinitionId="firstname" values="['Carl']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Carlson']"/>         
+        <Attribute attributeDefinitionId="birthdate" values="['1980-03-08T15:36:21.000-0000']"/> 
+    </User>
+	<User id="morrisonk" staticId="morrisonk" email="kelly.morrison@patients.assuta.org">
+        <Attribute attributeDefinitionId="firstname" values="['Kelly']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Morrison']"/>         
+        <Attribute attributeDefinitionId="birthdate" values="['1980-03-08T15:36:21.000-0000']"/> 
+    </User>
+
+    <!--Usernames from https://uinames.com/
+        https://uinames.com/api/?region=United%20States&amount=25&maxlen=25 -->
+
+    <!-- Doctors -->
+    <User id="connecare-clinician" staticId="2c9480845bee03e7015bfcad28990010" email="juanmanuel.fernandez@eurecat.org">
+        <Attribute attributeDefinitionId="firstname" values="['Juan']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Fernandez']"/>         
+        <Attribute attributeDefinitionId="birthdate" values="['1980-03-08T15:36:21.000-0000']"/> 
+    </User>
+    <User id="user5" staticId="ff8081815acbff63015acc019b690002" email="user5@mydomain.org">
+        <Attribute attributeDefinitionId="firstname" values="['Troy']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['McClure']"/>        
+        <Attribute attributeDefinitionId="birthdate" values="['1980-03-08T15:36:21.000-0000']"/> 
+    </User>
+    <User id="user6" staticId="ff8081815acbff63015acc01e6130003" email="user6@mydomain.org">
+        <Attribute attributeDefinitionId="firstname" values="['Maude']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Flanders']"/>         
+        <Attribute attributeDefinitionId="birthdate" values="['1980-03-08T15:36:21.000-0000']"/> 
+    </User>
+    <User id="user7" staticId="ff8081815acbff63015acc021f890004" email="user7@mydomain.org">
+        <Attribute attributeDefinitionId="firstname" values="['Carl']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Carlson']"/>         
+        <Attribute attributeDefinitionId="birthdate" values="['1980-03-08T15:36:21.000-0000']"/> 
+    </User>
+
+    <!-- Patients -->
+    <User id="connecare-patient" staticId="2c9480845bee03e7015bfcad7d0e0011" email="eloisa.vargiu@eurecat.org">
+        <Attribute attributeDefinitionId="firstname" values="['Eloisa']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['vargiu']"/> 
+        <Attribute attributeDefinitionId="birthdate" values="['1980-03-08T15:36:21.000-0000']"/> 
+    </User>
+    <User id="user1" staticId="2c9880835ac881b5015ac8a2d7150011" email="user0@mydomain.org">
+        <Attribute attributeDefinitionId="firstname" values="['Lionel']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Hutz']"/>         
+        <Attribute attributeDefinitionId="birthdate" values="['1980-03-08T15:36:21.000-0000']"/> 
+    </User>                 
+    <User id="user2" staticId="2c9880835ac881b5015ac8a3c37c0012" email="user1@mydomain.org">
+        <Attribute attributeDefinitionId="firstname" values="['Helen']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Lovejoy']"/>         
+        <Attribute attributeDefinitionId="birthdate" values="['1980-03-08T15:36:21.000-0000']"/> 
+    </User>       
+    <User id="user3" staticId="2c9880835ac881b5015ac8a40e360013" email="user2@mydomain.org">
+        <Attribute attributeDefinitionId="firstname" values="['Lenny']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Leonard']"/>         
+        <Attribute attributeDefinitionId="birthdate" values="['1980-03-08T15:36:21.000-0000']"/> 
+    </User>          
+
+
+    <!--Assuta Worksapce-->
+    <Workspace id="Assuta" staticId="2c9480885d1737ef015d74deeac90000" description="Assuta">
+        <Contributor principalId="AssutaProfessionals"/>
+        <Administrator principalId="Me"/>
+        <Client principalId="AssutaPatients"/>
+
+        <!--<ixnclude src="case.israel.demo.xml"> -->
+            
+    </Workspace>
+
+
+
+</SACMDefinition>
+
+

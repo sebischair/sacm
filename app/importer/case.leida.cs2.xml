@@ -1,0 +1,588 @@
+<EntityDefinition id="Charlson" description="Charlson">
+            <AttributeDefinition id="ch1" type="enumeration" multiplicity="maximalOne" description="Myocardial infarct">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="ch2" type="enumeration" multiplicity="maximalOne" description="Congestive heart failure">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="ch3" type="enumeration" multiplicity="maximalOne" description="Peripheral vascular disease">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="ch4" type="enumeration" multiplicity="maximalOne" description="Cerebrovascular disease (except hemiplegia)">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="ch5" type="enumeration" multiplicity="maximalOne" description="Dementia">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="ch6" type="enumeration" multiplicity="maximalOne" description="Chronic pulmonary disease">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="ch7" type="enumeration" multiplicity="maximalOne" description="Connective tissue disease">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="ch8" type="enumeration" multiplicity="maximalOne" description="Ulcer disease">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="ch9" type="enumeration" multiplicity="maximalOne" description="Mild liver disease">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="ch10" type="enumeration" multiplicity="maximalOne" description="Diabetes (without complications)">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="ch11" type="enumeration" multiplicity="maximalOne" description="Diabetes with end organ damage">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="ch12" type="enumeration" multiplicity="maximalOne" description="Hemiplegia">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>                                                                                                                                     
+            <AttributeDefinition id="ch13" type="enumeration" multiplicity="maximalOne" description="Moderate or severe renal disease">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="ch14" type="enumeration" multiplicity="maximalOne" description="Solid tumor (non metastatic)">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="ch15" type="enumeration" multiplicity="maximalOne" description="Leukemia">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="ch16" type="enumeration" multiplicity="maximalOne" description="Lymphoma, Multiple myeloma">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="ch17" type="enumeration" multiplicity="maximalOne" description="Moderate or severe liver disease">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="ch18" type="enumeration" multiplicity="maximalOne" description="Metastatic solid tumor">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="ch19" type="enumeration" multiplicity="maximalOne" description="AIDS">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="ch20" type="enumeration" multiplicity="maximalOne" description="Edad">
+                <EnumerationOption value="1" description="50-59"/>
+                <EnumerationOption value="2" description="60-69"/>
+                <EnumerationOption value="3" description="70-79"/>
+                <EnumerationOption value="4" description="80-89"/>
+                <EnumerationOption value="5" description="90-99"/>
+            </AttributeDefinition>           
+    <DerivedAttributeDefinition id="ch21" expression="number(ch1,0) + number(ch2,0) + number(ch3,0) + number(ch4,0) + number(ch5,0) + number(ch6,0) + number(ch7,0) + number(ch8,0) + number(ch9,0) + number(ch10,0) + number(ch11,0)*2 + number(ch12,0)*2 + number(ch13,0)*2 + number(ch14,0)*2 + number(ch15,0)*2 + number(ch16,0)*2 + number(ch17,0)*3 + number(ch18,0)*6 + number(ch19,0)*6 + number(ch20,0)" description="índice de comorbilidad Charlson"/>     
+</EntityDefinition>
+
+ <EntityDefinition id="ChronicDiseases" description="Chronic Diseases"> 
+            <AttributeDefinition id="cd1" type="enumeration" multiplicity="maximalOne" description="Has the patient more than 3 Chronic Diseases?"> 
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+        </EntityDefinition>
+
+        <EntityDefinition id="PolyMedicationCheck" description="Chronic Diseases"> 
+            <AttributeDefinition id="pmed1" type="enumeration" multiplicity="maximalOne" description="Does the patient take 4 or more pills or drugs per day?"> 
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+        </EntityDefinition>
+
+        <EntityDefinition id="GMA" description="GMA Index"> 
+            <AttributeDefinition id="gma" type="enumeration" multiplicity="maximalOne" description="GMA Index"> 
+                <EnumerationOption value="1" description="Group 1"/>
+                <EnumerationOption value="2" description="Group 2"/>
+                <EnumerationOption value="3" description="Group 3"/>
+                <EnumerationOption value="4" description="Group 4"/>
+            </AttributeDefinition>
+        </EntityDefinition>
+
+        <EntityDefinition id="HospitalEmergencyAdminisions" description="Hospital Emergency Adminisions"> <!-- checkThis(L:39) spelling! is Adminisions right?-->
+            <AttributeDefinition id="admissions1" type="date" multiplicity="maximalOne" description="How many times has the patient been admitted to hospital last year?"/>
+            <AttributeDefinition id="admissions2" type="date" multiplicity="maximalOne" description="How many times has the patient been re-admitted to hospital from emergency last year?"/>  
+        </EntityDefinition>
+
+        <EntityDefinition id="ASAPhysicalStatusClassificationSystem" description="ASA Physical Status Classification System"> 
+            <AttributeDefinition id="ASA1" type="enumeration" multiplicity="maximalOne" description="ASA PS Classification"> 
+                <EnumerationOption value="1" description="ASA I: A normal healthy patient"/>
+                <EnumerationOption value="2" description="ASA II: A patient with mild systemic disease"/>
+                <EnumerationOption value="3" description="ASA III: A patient with severe systemic disease"/>
+                <EnumerationOption value="4" description="ASA IV: A patient with severe systemic disease that is a constant threat to life"/>
+                <EnumerationOption value="5" description="ASA V: A moribund patient who is not expected to survive without the operation"/>
+                <EnumerationOption value="6" description="ASA VI: A declared brain-dead patient whose organs are being removed for donor purposes"/>
+            </AttributeDefinition>
+        </EntityDefinition>
+
+        <EntityDefinition id="TechnologicalTest" description="Technologial Test">
+            <AttributeDefinition id="tech1" type="enumeration" multiplicity="maximalOne" description="Vosté o el seu cuidador tenen connexió a internet?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>   
+
+            <AttributeDefinition id="tech2" type="enumeration" multiplicity="maximalOne" description="Vosté fa anar:"> <!-- checkThis (L:43) -->
+                <EnumerationOption value="1" description="Telèfon mòvil no tan sols per trucar."/>
+                <EnumerationOption value="2" description="Tablet"/>
+                <EnumerationOption value="3" description="Ordinador personal."/>
+                <EnumerationOption value="0" description="Cap"/>
+            </AttributeDefinition>  
+
+            <AttributeDefinition id="tech3" type="enumeration" multiplicity="maximalOne" description="Vosté fa anar:"> 
+                <EnumerationOption value="1" description="Telèfon mòvil no tan sols per trucar."/>
+                <EnumerationOption value="2" description="Tablet"/>
+                <EnumerationOption value="3" description="Ordinador personal."/>
+                <EnumerationOption value="0" description="Cap"/>
+            </AttributeDefinition>  
+
+            <DerivedAttributeDefinition id="tech4" expression="number(tech1,0)+number(tech2,0)+number(tech3,0)" description="Technological test result"/> <!-- checkThis (L:45) -->
+
+        </EntityDefinition>
+
+        <EntityDefinition id="PatientsConsent" description="Patients Consent">
+            <AttributeDefinition id="pConsent1" type="enumeration" multiplicity="maximalOne" description="Accepta participar al procés clínic descrit al present document?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>  
+        </EntityDefinition>
+
+        <EntityDefinition id="CEGMA" description="GMA Index"> <!-- checkThis(L:83) -->
+            <AttributeDefinition id="ce_gma" type="enumeration" multiplicity="maximalOne" description="GMA Index"> 
+                <EnumerationOption value="1" description="Group 1"/>
+                <EnumerationOption value="2" description="Group 2"/>
+                <EnumerationOption value="3" description="Group 3"/>
+                <EnumerationOption value="4" description="Group 4"/>
+            </AttributeDefinition>
+        </EntityDefinition>
+
+        <EntityDefinition id="AnthropometricVariables" description="Anthropometric Variables"> 
+            <AttributeDefinition id="Anthropometric1" type="number" multiplicity="maximalOne" description="Weight"/> 
+            <AttributeDefinition id="Anthropometric2" type="number" multiplicity="maximalOne" description="Height or distance between knee – ankle"/> 
+            <AttributeDefinition id="Anthropometric3" type="enumeration" multiplicity="maximalOne" description="GIMC >= 30"> 
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+        </EntityDefinition>
+
+        <!--TODO check this dublicated name
+        <EntityDefinition id="ASAPhysicalStatusClassificationSystem" description="ASA Physical Status Classification System"> <-- checkThis(L:83) No enum values --
+            <AttributeDefinition id="ce_ASA1" type="enumeration" multiplicity="maximalOne" description="ASA PS Classification"> 
+
+            </AttributeDefinition>
+        </EntityDefinition>
+        -->
+
+        <EntityDefinition id="ProblemsManagingMoney" description="ASA Physical Status Classification System"> 
+            <AttributeDefinition id="money" type="enumeration" multiplicity="maximalOne" description="Problems managing money:"> 
+                <enumeration value="1" description="Totally independent/Not limited at all"/>
+                <enumeration value="2" description="Lightly dependent/limited"/>
+                <enumeration value="3" description="Moderately dependent/limited"/>
+                <enumeration value="4" description="Very dependent/limited"/>
+                <enumeration value="5" description="Completely dependent/limited"/>
+            </AttributeDefinition>
+        </EntityDefinition>
+
+
+        <EntityDefinition id="WOMAC" description="WOMAC"> 
+            <AttributeDefinition id="Womac1" type="enumeration" multiplicity="maximalOne" description="Pain - Walking"> 
+                <enumeration value="0" description="0"/>
+                <enumeration value="1" description="1"/>
+                <enumeration value="2" description="2"/>
+                <enumeration value="3" description="3"/>
+                <enumeration value="4" description="4"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="Womac2" type="enumeration" multiplicity="maximalOne" description="Pain - Stair Climbing"> 
+                <enumeration value="0" description="0"/>
+                <enumeration value="1" description="1"/>
+                <enumeration value="2" description="2"/>
+                <enumeration value="3" description="3"/>
+                <enumeration value="4" description="4"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="Womac3" type="enumeration" multiplicity="maximalOne" description="Pain - Nocturnal"> 
+                <enumeration value="0" description="0"/>
+                <enumeration value="1" description="1"/>
+                <enumeration value="2" description="2"/>
+                <enumeration value="3" description="3"/>
+                <enumeration value="4" description="4"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="Womac4" type="enumeration" multiplicity="maximalOne" description="Pain - Rest"> 
+                <enumeration value="0" description="0"/>
+                <enumeration value="1" description="1"/>
+                <enumeration value="2" description="2"/>
+                <enumeration value="3" description="3"/>
+                <enumeration value="4" description="4"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="Womac5" type="enumeration" multiplicity="maximalOne" description="Pain - Weight bearing"> 
+                <enumeration value="0" description="0"/>
+                <enumeration value="1" description="1"/>
+                <enumeration value="2" description="2"/>
+                <enumeration value="3" description="3"/>
+                <enumeration value="4" description="4"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="Womac6" type="enumeration" multiplicity="maximalOne" description="Stiffness - Morning stiffnes"> 
+                <enumeration value="0" description="0"/>
+                <enumeration value="1" description="1"/>
+                <enumeration value="2" description="2"/>
+                <enumeration value="3" description="3"/>
+                <enumeration value="4" description="4"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="Womac7" type="enumeration" multiplicity="maximalOne" description="Stiffness - Stiffn ess occurring later in the day"> 
+                <enumeration value="0" description="0"/>
+                <enumeration value="1" description="1"/>
+                <enumeration value="2" description="2"/>
+                <enumeration value="3" description="3"/>
+                <enumeration value="4" description="4"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="Womac8" type="enumeration" multiplicity="maximalOne" description="Physical Function - Descending stairs"> 
+                <enumeration value="0" description="0"/>
+                <enumeration value="1" description="1"/>
+                <enumeration value="2" description="2"/>
+                <enumeration value="3" description="3"/>
+                <enumeration value="4" description="4"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="Womac9" type="enumeration" multiplicity="maximalOne" description="Physical Function - Ascending stairs"> 
+                <enumeration value="0" description="0"/>
+                <enumeration value="1" description="1"/>
+                <enumeration value="2" description="2"/>
+                <enumeration value="3" description="3"/>
+                <enumeration value="4" description="4"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="Womac10" type="enumeration" multiplicity="maximalOne" description="Physical Function - Rising from sitting"> 
+                <enumeration value="0" description="0"/>
+                <enumeration value="1" description="1"/>
+                <enumeration value="2" description="2"/>
+                <enumeration value="3" description="3"/>
+                <enumeration value="4" description="4"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="Womac11" type="enumeration" multiplicity="maximalOne" description="Physical Function - Standing"> 
+                <enumeration value="0" description="0"/>
+                <enumeration value="1" description="1"/>
+                <enumeration value="2" description="2"/>
+                <enumeration value="3" description="3"/>
+                <enumeration value="4" description="4"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="Womac12" type="enumeration" multiplicity="maximalOne" description="Physical Function - Bending to floor"> 
+                <enumeration value="0" description="0"/>
+                <enumeration value="1" description="1"/>
+                <enumeration value="2" description="2"/>
+                <enumeration value="3" description="3"/>
+                <enumeration value="4" description="4"/>
+            </AttributeDefinition>
+        </EntityDefinition>
+
+        <EntityDefinition id="DurignHospitalizationPhysicalActivityPrescription" description="Durign Hospitalization Physical Activity Prescription">
+            <AttributeDefinition id="dh-phactp-1" type="date" multiplicity="maximalOne" description="Start date"/>
+            <AttributeDefinition id="dh-phactp-2" type="date" multiplicity="maximalOne" description="End date"/>       
+            <AttributeDefinition id="dh-phactp-3" type="number" multiplicity="maximalOne" description="Number of steps daily"/>       
+            <AttributeDefinition id="dh-phactp-4" type="number" multiplicity="maximalOne" description="Minutes of low level activity daily"/>       
+            <AttributeDefinition id="dh-phactp-5" type="number" multiplicity="maximalOne" description="Minutes of medium level activity daily"/>       
+            <AttributeDefinition id="dh-phactp-6" type="number" multiplicity="maximalOne" description="Minutes of high level activity daily"/> 
+            <AttributeDefinition id="dh-phactp-7" type="number" multiplicity="maximalOne" description="Max minutes without activity allowed daily"/>   
+            <!-- checkThis(L:213) Add patient -->
+            <AttributeDefinition id="dh-phactpx" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Execution Timeseries"/>                 
+        </EntityDefinition>
+
+
+        <EntityDefinition id="PostHospitalizationPhysicalActivityPrescription" description="Post Hospitalization Physical Activity Prescription">
+            <AttributeDefinition id="ph-phactp-1" type="date" multiplicity="maximalOne" description="Start date"/>
+            <AttributeDefinition id="ph-phactp-2" type="date" multiplicity="maximalOne" description="End date"/>       
+            <AttributeDefinition id="ph-phactp-3" type="number" multiplicity="maximalOne" description="Number of steps daily"/>       
+            <AttributeDefinition id="ph-phactp-4" type="number" multiplicity="maximalOne" description="Minutes of low level activity daily"/>       
+            <AttributeDefinition id="ph-phactp-5" type="number" multiplicity="maximalOne" description="Minutes of medium level activity daily"/>       
+            <AttributeDefinition id="ph-phactp-6" type="number" multiplicity="maximalOne" description="Minutes of high level activity daily"/> 
+            <AttributeDefinition id="ph-phactp-7" type="number" multiplicity="maximalOne" description="Max minutes without activity allowed daily"/>   
+            <!-- checkThis(L:224) Add patient -->
+            <AttributeDefinition id="ph-phactpx" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Execution Timeseries"/>                 
+        </EntityDefinition>
+
+        <EntityDefinition id="PostHospitalizationAutocheckHealthStatusPrescription" description="Post Hospitalization Autocheck Health Status Prescription">
+            <AttributeDefinition id="ah_autocheckP1" type="date" multiplicity="maximalOne" description="Start date"/>
+            <AttributeDefinition id="ah_autocheckP2" type="date" multiplicity="maximalOne" description="End date"/>
+            <AttributeDefinition id="ah_autocheckP3" type="enumeration" multiplicity="maximalOne" description="Units of frequency">     
+                <EnumerationOption value="0" description="hours"/>
+                <EnumerationOption value="1" description="days"/>
+                <EnumerationOption value="2" description="weeks"/>
+                <EnumerationOption value="3" description="months"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="ah_autocheckP4" type="string" multiplicity="maximalOne" description="Frequency"/>   
+            <AttributeDefinition id="ah_autocheckP5" type="enumeration" multiplicity="maximalOne" description="EPOC Questionnaire">     
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="ah_autocheckP6" type="enumeration" multiplicity="maximalOne" description="Cardiac Insufficiency Questionnaire">     
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="ah_autocheckPExec" type="json" multiplicity="maximalOne" description="Frequency"/>       
+        </EntityDefinition>
+
+        <EntityDefinition id="PostHospitalizationRehabilitationPrescription" description="Post Hospitalization Rehabilitation Prescription">
+            <AttributeDefinition id="ah_rehabPresc1" type="date" multiplicity="maximalOne" description="Start date"/>
+            <AttributeDefinition id="ah_rehabPresc2" type="date" multiplicity="maximalOne" description="End date"/>              
+            <AttributeDefinition id="ah_rehabPresc3" type="string" multiplicity="maximalOne" description="Frequency"/>              
+        </EntityDefinition>
+
+        <EntityDefinition id="PostHospitalizationPrescriptionVitalSignsMonitoring" description="PostHospitalizationPrescription Vital Signs Monitoring">
+            <AttributeDefinition id="ah_vsm1" type="date" multiplicity="maximalOne" description="Start date"/>
+            <AttributeDefinition id="ah_vsm2" type="date" multiplicity="maximalOne" description="End date"/>              
+            <AttributeDefinition id="ah_vsm3" type="enumeration" multiplicity="maximalOne" description="Vital Sign">     
+                <EnumerationOption value="0" description="Weight"/>
+                <EnumerationOption value="1" description="Oxygen Saturation"/>
+                <EnumerationOption value="2" description="Hearth rate"/>
+            </AttributeDefinition>       
+            <AttributeDefinition id="ah_vsm4" type="enumeration" multiplicity="maximalOne" description="Units of frequency">     
+                <EnumerationOption value="0" description="Hours"/>
+                <EnumerationOption value="1" description="Days"/>
+                <EnumerationOption value="2" description="Weeks"/>
+                <EnumerationOption value="2" description="Months"/>
+            </AttributeDefinition>        
+            <AttributeDefinition id="ah_vsm5" type="string" multiplicity="maximalOne" description="Frequency"/>              
+            <AttributeDefinition id="ah_vsm6" type="string" multiplicity="maximalOne" description="Min. Threshold"/>              
+            <AttributeDefinition id="ah_vsm7" type="string" multiplicity="maximalOne" description="Max. Threshold"/>              
+        </EntityDefinition>
+
+        <EntityDefinition id="PreHospitalizationAnaemiaAssessmentAndManagement" description="Pre Hospitalization Anaemia Assessment And Management">
+            <AttributeDefinition id="bh_bhanemiaExec1" type="number" multiplicity="maximalOne" description="Anaemia assessment and management"/>
+            <AttributeDefinition id="bh_bhanemiaExec2" type="number" multiplicity="maximalOne" description="Anaemia assessment and management"/>              
+            <AttributeDefinition id="bh_bhanemiaExec3" type="boolean" multiplicity="maximalOne" description="Anaemia assessment and management"/>              
+            <AttributeDefinition id="bh_bhanemiaExec4" type="date" multiplicity="maximalOne" description="Iron Prescription"/>              
+            <AttributeDefinition id="bh_bhanemiaExec5" type="date" multiplicity="maximalOne" description="Iron Prescription"/>              
+            <AttributeDefinition id="bh_bhanemiaExec6" type="boolean" multiplicity="maximalOne" description="Iron Prescription"/>  
+            <AttributeDefinition id="bh_bhanemiaExec7" type="number" multiplicity="maximalOne" description="Iron Prescription"/>  
+
+            <AttributeDefinition id="bh_bhanemiaExec7" type="enumeration" multiplicity="maximalOne" description="Iron Prescription">     
+                <EnumerationOption value="0" description="Hours"/>
+                <EnumerationOption value="1" description="Days"/>
+                <EnumerationOption value="2" description="Weeks"/>
+                <EnumerationOption value="2" description="Months"/>
+            </AttributeDefinition>        
+
+            <AttributeDefinition id="bh_bhanemiaExec8" type="enumeration" multiplicity="maximalOne" description="Iron Prescription">     
+                <EnumerationOption value="0" description="Morning"/>
+                <EnumerationOption value="1" description="Noon"/>
+                <EnumerationOption value="3" description="Afternoon"/>
+                <EnumerationOption value="4" description="Evening"/>
+                <EnumerationOption value="5" description="Night"/>
+            </AttributeDefinition>   
+         
+        </EntityDefinition>
+
+        <EntityDefinition id="PreHospitalizatioBloodPressureControl" description="Pre Hospitalizatio Blood Pressure Control">
+            <AttributeDefinition id="Bh_bloodPControl1" type="enumeration" multiplicity="maximalOne" description="Blood Pressure Control Inside the correct values">     
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>       
+        </EntityDefinition>
+
+        <EntityDefinition id="PreHospitalizationDiabetesControl" description="Pre Hospitalization Diabetes Control">
+            <AttributeDefinition id="Bh_DiabetisControl1" type="enumeration" multiplicity="maximalOne" description="Diabetes Inside the correct values">     
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>       
+        </EntityDefinition>
+
+        <EntityDefinition id="PreHospitalizationVerbalNumericalRatingScale" description="PreHospitalizationVerbalNumericalRatingScale">
+            <AttributeDefinition id="Bh_DiabetisControl1" type="enumeration" multiplicity="maximalOne" description="VNRS">     
+                <EnumerationOption value="0" description="0"/>
+                <EnumerationOption value="1" description="1"/>
+                <EnumerationOption value="2" description="2"/>
+                <EnumerationOption value="3" description="3"/>
+                <EnumerationOption value="4" description="4"/>
+                <EnumerationOption value="5" description="5"/>
+                <EnumerationOption value="6" description="6"/>
+                <EnumerationOption value="7" description="7"/>
+                <EnumerationOption value="8" description="8"/>
+                <EnumerationOption value="9" description="9"/>
+                <EnumerationOption value="10" description="10"/>
+            </AttributeDefinition>       
+        </EntityDefinition>
+
+        <EntityDefinition id="PreHospitalizationS-LANSS" description="S-LANSS">
+            <AttributeDefinition id="Bh_slanssExec1" type="enumeration" multiplicity="maximalOne" description="1.In the area where you have pain, do you also have “pins and needles”, tingling or prickling sensations?">     
+                <EnumerationOption value="0" description="NO – I don’t get these sensations"/>
+                <EnumerationOption value="5" description="YES – I get these sensations"/>
+            </AttributeDefinition>       
+            <AttributeDefinition id="Bh_slanssExec2" type="enumeration" multiplicity="maximalOne" description="2. Does the painful area change colour (perhaps look mottled or more red) when the pain is particularly bad?">     
+                <EnumerationOption value="0" description="NO – The pain does not affect the colour of my skin"/>
+                <EnumerationOption value="5" description="YES – I have noticed that the pain does make my skin look different from normal."/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="Bh_slanssExec3" type="enumeration" multiplicity="maximalOne" description="3.Does your pain make the affected skin abnormally sensitive to touch? Getting unpleasant sensations or pain when lightly stroking the skin might describe this.">     
+                <EnumerationOption value="0" description="NO – The pain does not make my skin abnormally sensitive to touch."/>
+                <EnumerationOption value="3" description="YES – My skin in that area is particularly sensitive to touch."/>
+            </AttributeDefinition>    
+            <AttributeDefinition id="Bh_slanssExec4" type="enumeration" multiplicity="maximalOne" description="4. Does your pain come on suddenly and in bursts for no apparent reason when you are completely still? Words like “electric shocks”, jumping and bursting might describe this.">     
+                <EnumerationOption value="0" description="NO – My pain doesn’t really feel like this."/>
+                <EnumerationOption value="2" description="YES – I get these sensations often."/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="Bh_slanssExec5" type="enumeration" multiplicity="maximalOne" description="5. In the area where you have pain, does your skin feel unusually hot like a burning pain?">     
+                <EnumerationOption value="0" description="NO – I don’t have burning pain"/>
+                <EnumerationOption value="1" description="YES – I get burning pain often"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="Bh_slanssExec6" type="enumeration" multiplicity="maximalOne" description="5. In the area where you have pain, does your skin feel unusually hot like a burning pain?">     
+                <EnumerationOption value="0" description="The painful area feels no different from the non-painful area"/>
+                <EnumerationOption value="5" description="I feel discomfort, like pins and needles, tingling or burning in the painful area that is different from the non-painful area."/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="Bh_slanssExec7" type="enumeration" multiplicity="maximalOne" description="7. Gently press on the painful area with your finger tip and then gently press in the same way onto a non-painful area (the same non-painful area that you chose in the last question). How does this feel in the painful area?">     
+                <EnumerationOption value="0" description="The painful area does not feel different from the non-painful area."/>
+                <EnumerationOption value="3" description="I feel numbness or tenderness in the painful area that is different from the non-painful area."/>
+            </AttributeDefinition> 
+            <DerivedAttributeDefinition id="Bh_slanssExec8" expression="number(Bh_slanssExec1,0)+number(Bh_slanssExec2,0)+number(Bh_slanssExec3,0)+number(Bh_slanssExec4,0)+number(Bh_slanssExec5,0)+number(Bh_slanssExec6,0)+number(Bh_slanssExec7,0)" description="Score"/>
+        </EntityDefinition>
+
+        <EntityDefinition id="NutritionalEducation" description="NutritionalEducation">
+            <AttributeDefinition id="Dh_neducaExec1" type="enumeration" multiplicity="maximalOne" description="Has patient's nutritional formation done during the hospitalization?">     
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="Dh_neducaExec2" type="enumeration" multiplicity="maximalOne" description="Has the caregiver's nutritional formation done during the hospitalization?">     
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>    
+        </EntityDefinition>     
+
+        <EntityDefinition id="DuringHospitalizationVerbalNumericalRatingScale" description="DuringHospitalizationVerbalNumericalRatingScale">
+            <AttributeDefinition id="dh_BHVNRSExec1" type="enumeration" multiplicity="maximalOne" description="VNRS">     
+                <EnumerationOption value="0" description="0"/>
+                <EnumerationOption value="1" description="1"/>
+                <EnumerationOption value="2" description="2"/>
+                <EnumerationOption value="3" description="3"/>
+                <EnumerationOption value="4" description="4"/>
+                <EnumerationOption value="5" description="5"/>
+                <EnumerationOption value="6" description="6"/>
+                <EnumerationOption value="7" description="7"/>
+                <EnumerationOption value="8" description="8"/>
+                <EnumerationOption value="9" description="9"/>
+                <EnumerationOption value="10" description="10"/>
+            </AttributeDefinition>
+        </EntityDefinition>   
+
+        <EntityDefinition id="PostHospitalizationS-LANSS" description="PostHospitalizationS-LANSS">
+            <AttributeDefinition id="ph_slanssExec1" type="enumeration" multiplicity="maximalOne" description="1.In the area where you have pain, do you also have “pins and needles”, tingling or prickling sensations?">     
+                <EnumerationOption value="0" description="NO – I don’t get these sensations"/>
+                <EnumerationOption value="5" description="YES – I get these sensations"/>
+            </AttributeDefinition>       
+            <AttributeDefinition id="ph_slanssExec2" type="enumeration" multiplicity="maximalOne" description="2. Does the painful area change colour (perhaps look mottled or more red) when the pain is particularly bad?">     
+                <EnumerationOption value="0" description="NO – The pain does not affect the colour of my skin"/>
+                <EnumerationOption value="5" description="YES – I have noticed that the pain does make my skin look different from normal."/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="ph_slanssExec3" type="enumeration" multiplicity="maximalOne" description="3.Does your pain make the affected skin abnormally sensitive to touch? Getting unpleasant sensations or pain when lightly stroking the skin might describe this.">     
+                <EnumerationOption value="0" description="NO – The pain does not make my skin abnormally sensitive to touch."/>
+                <EnumerationOption value="3" description="YES – My skin in that area is particularly sensitive to touch."/>
+            </AttributeDefinition>    
+            <AttributeDefinition id="ph_slanssExec4" type="enumeration" multiplicity="maximalOne" description="4. Does your pain come on suddenly and in bursts for no apparent reason when you are completely still? Words like “electric shocks”, jumping and bursting might describe this.">     
+                <EnumerationOption value="0" description="NO – My pain doesn’t really feel like this."/>
+                <EnumerationOption value="2" description="YES – I get these sensations often."/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="ph_slanssExec5" type="enumeration" multiplicity="maximalOne" description="5. In the area where you have pain, does your skin feel unusually hot like a burning pain?">     
+                <EnumerationOption value="0" description="NO – I don’t have burning pain"/>
+                <EnumerationOption value="1" description="YES – I get burning pain often"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="ph_slanssExec6" type="enumeration" multiplicity="maximalOne" description="5. In the area where you have pain, does your skin feel unusually hot like a burning pain?">     
+                <EnumerationOption value="0" description="The painful area feels no different from the non-painful area"/>
+                <EnumerationOption value="5" description="I feel discomfort, like pins and needles, tingling or burning in the painful area that is different from the non-painful area."/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="ph_slanssExec7" type="enumeration" multiplicity="maximalOne" description="7. Gently press on the painful area with your finger tip and then gently press in the same way onto a non-painful area (the same non-painful area that you chose in the last question). How does this feel in the painful area?">     
+                <EnumerationOption value="0" description="The painful area does not feel different from the non-painful area."/>
+                <EnumerationOption value="3" description="I feel numbness or tenderness in the painful area that is different from the non-painful area."/>
+            </AttributeDefinition> 
+            <DerivedAttributeDefinition id="ph_slanssExec8" expression="number(ph_slanssExec1,0)+number(ph_slanssExec2,0)+number(ph_slanssExec3,0)+number(ph_slanssExec4,0)+number(ph_slanssExec5,0)+number(ph_slanssExec6,0)+number(ph_slanssExec7,0)" description="Score"/>
+        </EntityDefinition>
+
+        <EntityDefinition id="PostHospitalizationAnswerAutocheckHealthStatus" description="PostHospitalizationAnswerAutocheckHealthStatus">
+            <AttributeDefinition id="Ph_autocheck1" type="enumeration" multiplicity="maximalOne" description="Breathing">     
+                <EnumerationOption value="0" description="I breathe worse than usual*"/>
+                <EnumerationOption value="1" description="No changes in breathing pattern"/>
+            </AttributeDefinition>      
+
+            <AttributeDefinition id="Ph_autocheck2" type="enumeration" multiplicity="maximalOne" description="Vomit">     
+                <EnumerationOption value="1" description="I vomited"/>
+                <EnumerationOption value="0" description="I have not vomited"/>
+            </AttributeDefinition>   
+
+            <AttributeDefinition id="Ph_autocheck3" type="enumeration" multiplicity="maximalOne" description="Vomit">     
+                <EnumerationOption value="1" description="I vomited"/>
+                <EnumerationOption value="0" description="I have not vomited"/>
+            </AttributeDefinition> 
+
+            <AttributeDefinition id="Ph_autocheck2" type="enumeration" multiplicity="maximalOne" description="Dizziness">     
+                <EnumerationOption value="1" description="I feel dizzy often*"/>
+                <EnumerationOption value="0" description="I do not get dizzy"/>
+            </AttributeDefinition> 
+
+            <AttributeDefinition id="Ph_autocheck4" type="enumeration" multiplicity="maximalOne" description="Eating">     
+                <EnumerationOption value="1" description="I eat less than usual*"/>
+                <EnumerationOption value="0" description="No changes in eating pattern"/>
+            </AttributeDefinition> 
+
+            <AttributeDefinition id="Ph_autocheck5" type="enumeration" multiplicity="maximalOne" description="Drinking">     
+                <EnumerationOption value="1" description="I drink less than usual"/>
+                <EnumerationOption value="0" description="No changes in drinking pattern"/>
+            </AttributeDefinition> 
+
+            <AttributeDefinition id="Ph_autocheck6" type="enumeration" multiplicity="maximalOne" description="Urinating">     
+                <EnumerationOption value="1" description="I urinate less than usual"/>
+                <EnumerationOption value="0" description="No changes in urinating pattern"/>
+            </AttributeDefinition> 
+
+            <AttributeDefinition id="Ph_autocheck7" type="enumeration" multiplicity="maximalOne" description="Defecating">     
+                <EnumerationOption value="1" description="I cannot defecate*"/>
+                <EnumerationOption value="0" description="No changes in defecating pattern"/>
+            </AttributeDefinition> 
+
+            <AttributeDefinition id="Ph_autocheck8" type="enumeration" multiplicity="maximalOne" description="Moving">     
+                <EnumerationOption value="1" description="I move less than usual"/>
+                <EnumerationOption value="0" description="No changes in moving pattern"/>
+            </AttributeDefinition> 
+
+            <AttributeDefinition id="Ph_autocheck9" type="enumeration" multiplicity="maximalOne" description="Temperature">     
+                <EnumerationOption value="1" description="I have fever (>37C)"/>
+                <EnumerationOption value="0" description="I don't have fever"/>
+            </AttributeDefinition> 
+
+            <AttributeDefinition id="Ph_autocheck10" type="enumeration" multiplicity="maximalOne" description="Resting and Sleeping">     
+                <EnumerationOption value="1" description="I have more troubles resting / sleeping"/>
+                <EnumerationOption value="0" description="No changes in my resting / sleeping pattern"/>
+            </AttributeDefinition> 
+            
+            <AttributeDefinition id="Ph_autocheck11" type="enumeration" multiplicity="maximalOne" description="Body cleansing">     
+                <EnumerationOption value="1" description="I need help"/>
+                <EnumerationOption value="0" description="I do it on my own"/>
+            </AttributeDefinition> 
+
+            <AttributeDefinition id="Ph_autocheck12" type="enumeration" multiplicity="maximalOne" description="Dressing">     
+                <EnumerationOption value="1" description="I need help"/>
+                <EnumerationOption value="0" description="I do it on my own"/>
+            </AttributeDefinition> 
+
+        </EntityDefinition>
+
+        <EntityDefinition id="PostHospitalizationPatientEducationAndTrainingToTheCaregiver" description="PostHospitalizationPatientEducationAndTrainingToTheCaregiver">
+            <AttributeDefinition id="educaExec1" type="enumeration" multiplicity="maximalOne" description="Has patient's formation done during the hospitalization?">     
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>  
+
+            <AttributeDefinition id="educaExec2" type="enumeration" multiplicity="maximalOne" description="Has patient's formation done after the hospitalization?">     
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>  
+
+            <AttributeDefinition id="educaExec3" type="enumeration" multiplicity="maximalOne" description="Has the caregiver's formation done during the hospitalization?">     
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>  
+
+            <AttributeDefinition id="educaExec4" type="enumeration" multiplicity="maximalOne" description="Has the caregiver's formation done during the hospitalization?">     
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>  
+        </EntityDefinition>

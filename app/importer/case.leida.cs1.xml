@@ -208,7 +208,7 @@
 
 
         <EntityDefinition id="LCS1_PatientsConsent" description="Patients Consent">
-            <AttributeDefinition id="pConsent1" type="enumeration" multiplicity="maximalOne" description="Accepta participar al procés clínic descrit al present document?">
+            <AttributeDefinition id="isConsent" type="enumeration" multiplicity="maximalOne" description="Accepta participar al procés clínic descrit al present document?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>  
@@ -580,7 +580,7 @@
         </EntityDefinition>
 
 
-                <EntityDefinition id="LCS1_HospitalAnxietyAndDepressionScale" description="HospitalAnxietyAndDepressionScale"> 
+        <EntityDefinition id="LCS1_HospitalAnxietyAndDepressionScale" description="HospitalAnxietyAndDepressionScale"> 
             <AttributeDefinition id="hadA1" type="enumeration" multiplicity="maximalOne" description="I feel tense or 'wound up'"> 
                 <EnumerationOption value="0" description="Not at all"/>
                 <EnumerationOption value="1" description="From time to time, occasionally"/>
@@ -1143,3 +1143,84 @@ For each question, please give the one answer that comes closest to the way you 
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>
         </EntityDefinition>
+
+
+
+<CaseDefinition id="LCS1_Leida" description="CS1 Leida" ownerPath="LCS1_Owner" entityDefinitionId="LCS1_CaseData">
+
+    <StageDefinition id="LCS1_CaseIdentification" description="Case Identification" isMandatory="true" isRepeatable="false">        
+        <HumanTaskDefinition id="LCS1_SelectPatient" description="Inclusion" ownerPath="LCS1_Owner" isMandatory="true" isRepeatable="false">                
+            <TaskParamDefinition path="LCS1_Patient" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_Owner" isReadOnly="false" isMandatory="true"/>
+        </HumanTaskDefinition>    
+        <HumanTaskDefinition id="LCS1_Lace" description="Lace" ownerPath="LCS1_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_Lace" entityAttachPath="LCS1_Lace">                
+            <SentryDefinition>
+              <precondition processDefinitionId="LCS1_SelectPatient"/>
+            </SentryDefinition>
+            <TaskParamDefinition path="LCS1_Lace.lace1" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_Lace.lace2" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_Lace.lace3" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_Lace.lace4" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_Lace.lace5" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_Lace.lace6" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_Lace.lace7" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_Lace.lace8" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_Lace.lace9" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_Lace.lace10" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_Lace.lace11" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_Lace.lace12" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_Lace.lace13" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_Lace.lace14" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_Lace.lace15" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_Lace.lace16" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_Lace.lace17" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_Lace.lace18" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_Lace.lace19" isReadOnly="true" isMandatory="false"/>
+        </HumanTaskDefinition>
+        <HumanTaskDefinition id="LCS1_GeriatricDepressionScale" description="" ownerPath="LCS1_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_GeriatricDepressionScale" entityAttachPath="LCS1_GeriatricDepressionScale">                
+            <SentryDefinition>
+              <precondition processDefinitionId="LCS1_SelectPatient"/>
+            </SentryDefinition>
+            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds1" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds2" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds3" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds4" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds5" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds6" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds7" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds8" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds9" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds10" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds11" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds12" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds13" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds14" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds15" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds16" isReadOnly="true" isMandatory="false"/>
+        </HumanTaskDefinition>
+        <HumanTaskDefinition id="LCS1_TechnologicalTest" description="" ownerPath="LCS1_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_TechnologicalTest" entityAttachPath="LCS1_TechnologicalTest">                
+            <SentryDefinition>
+              <precondition processDefinitionId="LCS1_SelectPatient"/>
+            </SentryDefinition>
+            <TaskParamDefinition path="LCS1_TechnologicalTest.tech1" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_TechnologicalTest.tech2" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_TechnologicalTest.tech3" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_TechnologicalTest.tech4" isReadOnly="true" isMandatory="false"/>
+        </HumanTaskDefinition>
+        <HumanTaskDefinition id="LCS1_PatientsConsent" description="" ownerPath="LCS1_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_PatientsConsent" entityAttachPath="LCS1_PatientsConsent">                
+            <SentryDefinition>
+              <precondition processDefinitionId="LCS1_SelectPatient"/>
+            </SentryDefinition>
+            <TaskParamDefinition path="LCS1_PatientsConsent.isConsent" isReadOnly="false" isMandatory="true"/>
+        </HumanTaskDefinition>
+    </StageDefinition>
+
+    <StageDefinition id="LCS1_CaseEvaluation" description="Case Evaluation" isMandatory="true" isRepeatable="true">  
+
+    </StageDefinition>
+    <StageDefinition id="LCS1_Discharge" description="Discharge" isMandatory="true" isRepeatable="true">  
+
+    </StageDefinition>
+    
+    
+</CaseDefinition>
