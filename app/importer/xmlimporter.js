@@ -246,13 +246,13 @@ module.exports = class XMLImporter {
         .then(()=>{
           return this.createAdminMemberships();
         })
-        /*
         .then(()=>{
           return this.updateSettings();
         })
         .then(()=>{
           return this.createWorkspaces();
-        })     
+        })    
+        /* 
         .then(() => {
           return this.createCase();
         })      
