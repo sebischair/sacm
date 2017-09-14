@@ -428,6 +428,20 @@ module.exports = class XMLImporter {
       });
     }
 
+    createAdminMemberships(){
+      if(this.json.Administrator == null)
+        return Promise.resolve();
+      return Promise.each(this.json.Administrator, a=>{
+        if(a.Membership == null)
+          return Promise.resolve();
+        return Promise.each(a.Membership, m=>{
+          const groupId = this.getGroupIdByXMLId('Administrators');
+          const principalId = this.getPrincipalIdByXMLId(m.$.principalId);
+          return Group.addMember(this.jwt, groupId, principalId);
+        });     
+      });
+    }
+
     updateSettings(){
       if(this.json.Settings == null)
         return Promise.resolve();
