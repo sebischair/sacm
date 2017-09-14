@@ -244,6 +244,10 @@ module.exports = class XMLImporter {
           return this.createMemberships();
         })
         .then(()=>{
+          return this.createAdminMemberships();
+        })
+        /*
+        .then(()=>{
           return this.updateSettings();
         })
         .then(()=>{
@@ -257,7 +261,8 @@ module.exports = class XMLImporter {
             return Promise.resolve(caseInstance);
           else
             return this.executeCase();
-        });        
+        });   
+        */     
     }
 
     fileExists(filePath) {
