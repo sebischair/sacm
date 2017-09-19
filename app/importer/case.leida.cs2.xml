@@ -47,6 +47,8 @@
   <AttributeDefinition id="LCS2_DuringHospitalizationSLANSS" type="Link.EntityDefinition.LCS2_DuringHospitalizationSLANSS" description="During Hospitalization S_LANSS"/>
 
   <AttributeDefinition id="LCS2_PostHospitalizationSLANSS" type="Link.EntityDefinition.LCS2_PostHospitalizationSLANSS" description="Post Hospitalization S_LANSS"/>
+  <AttributeDefinition id="LCS2_PostHospitalizationRehabilitation" type="Link.EntityDefinition.LCS2_PostHospitalizationRehabilitation" description="Post Hospitalization Rehabilitation"/>
+  <AttributeDefinition id="LCS2_PostHospitalizationVerbalNumericalRatingScale" type="Link.EntityDefinition.LCS2_PostHospitalizationVerbalNumericalRatingScale" description="Post Hospitalization Verbal Numerical RatingScale"/>
   <AttributeDefinition id="LCS2_PostHospitalizationAnswerAutocheckHealthStatus" type="Link.EntityDefinition.LCS2_PostHospitalizationAnswerAutocheckHealthStatus" description="Post Hospitalization Answer Autocheck Health Status"/>
   <AttributeDefinition id="LCS2_PostHospitalizationPatientEducationAndTrainingToTheCaregiver" type="Link.EntityDefinition.LCS2_PostHospitalizationPatientEducationAndTrainingToTheCaregiver" description="Post Hospitalization Patient Education And Training To The Caregiver"/>
   <AttributeDefinition id="LCS2_Discharge" type="Link.EntityDefinition.LCS2_Discharge" description="Discharge"/>
@@ -983,7 +985,7 @@ For each question, please give the one answer that comes closest to the way you 
         </EntityDefinition>
 
         <EntityDefinition id="LCS2_PreHospitalizationVerbalNumericalRatingScale" description="PreHospitalizationVerbalNumericalRatingScale">
-            <AttributeDefinition id="Bh_DiabetisControl1" type="enumeration" multiplicity="maximalOne" description="VNRS">
+            <AttributeDefinition id="Bh_BHVNRSExec1" type="enumeration" multiplicity="maximalOne" description="VNRS">
                 <EnumerationOption value="0" description="0"/>
                 <EnumerationOption value="1" description="1"/>
                 <EnumerationOption value="2" description="2"/>
@@ -1091,6 +1093,21 @@ For each question, please give the one answer that comes closest to the way you 
         </EntityDefinition>
 
         <!-- Check Work-plan Execution :: Post-hospitalization :: Rehabilitation -->
+        <EntityDefinition id="LCS2_PostHospitalizationRehabilitation" description="Post Hospitalization Rehabilitation">
+            <AttributeDefinition id="Ah_rehabExec1" type="enumeration" multiplicity="maximalOne" description="Has the patient done the rehabilitation exercicies?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+        </EntityDefinition>
+
+        <EntityDefinition id="LCS2_PostHospitalizationVerbalNumericalRatingScale" description="Post Hospitalization Verbal Numerical Rating Scale">
+            <AttributeDefinition id="ph_BHVNRSExec1" type="enumeration" multiplicity="maximalOne" description="Has the patient done the rehabilitation exercicies?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+        </EntityDefinition>
+
+        <AttributeDefinition id="LCS2_PostHospitalizationVerbalNumericalRatingScale" type="Link.EntityDefinition.LCS2_PostHospitalizationVerbalNumericalRatingScale" description="Post Hospitalization Verbal Numerical RatingScale"/> <!-- add entitiy -->
 
         <EntityDefinition id="LCS2_PostHospitalizationSLANSS" description="PostHospitalizationS-LANSS">
             <AttributeDefinition id="ph_slanssExec1" type="enumeration" multiplicity="maximalOne" description="1.In the area where you have pain, do you also have “pins and needles”, tingling or prickling sensations?">
@@ -1581,6 +1598,115 @@ For each question, please give the one answer that comes closest to the way you 
             <TaskParamDefinition path="LCS2_Agreement.wp_agreement3" isReadOnly="false" isMandatory="true"/> 
             <TaskParamDefinition path="LCS2_Agreement.wp_agreement4" isReadOnly="false" isMandatory="true"/> 
             <TaskParamDefinition path="LCS2_Agreement.wp_agreement5" isReadOnly="false" isMandatory="true"/>
+          </HumanTaskDefinition> 
+
+        </StageDefinition>
+
+        <StageDefinition id="LCS2_WorkplanExecution" description="Workplan Execution" isMandatory="true" isRepeatable="false">  
+          <SentryDefinition>
+            <precondition processDefinitionId="LCS2_WorkplanDefinition"/>
+          </SentryDefinition>
+
+          <HumanTaskDefinition id="LCS2_PreHospitalizationAnaemiaAssessmentAndManagement" description="Pre Hospitalization Anaemia Assessment and Management" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_PreHospitalizationAnaemiaAssessmentAndManagement" entityAttachPath="LCS2_PreHospitalizationAnaemiaAssessmentAndManagement">                
+            <TaskParamDefinition path="LCS2_PreHospitalizationAnaemiaAssessmentAndManagement.bh_bhanemiaExec1" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PreHospitalizationAnaemiaAssessmentAndManagement.bh_bhanemiaExec2" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PreHospitalizationAnaemiaAssessmentAndManagement.bh_bhanemiaExec3" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PreHospitalizationAnaemiaAssessmentAndManagement.bh_bhanemiaExec4" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PreHospitalizationAnaemiaAssessmentAndManagement.bh_bhanemiaExec5" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PreHospitalizationAnaemiaAssessmentAndManagement.bh_bhanemiaExec6" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PreHospitalizationAnaemiaAssessmentAndManagement.bh_bhanemiaExec7" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PreHospitalizationAnaemiaAssessmentAndManagement.bh_bhanemiaExec8" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PreHospitalizationAnaemiaAssessmentAndManagement.bh_bhanemiaExec9" isReadOnly="false" isMandatory="true"/> 
+          </HumanTaskDefinition> 
+
+
+          <HumanTaskDefinition id="LCS2_PreHospitalizatioBloodPressureControl" description="Blood Pressure Control" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_PreHospitalizatioBloodPressureControl" entityAttachPath="LCS2_PreHospitalizatioBloodPressureControl">                
+            <TaskParamDefinition path="LCS2_PreHospitalizatioBloodPressureControl.bh_bhanemiaExec1" isReadOnly="false" isMandatory="true"/> 
+          </HumanTaskDefinition> 
+
+          <HumanTaskDefinition id="LCS2_PreHospitalizationDiabetesControl" description="Pre Hospitalization Diabetes Control" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_PreHospitalizationDiabetesControl" entityAttachPath="LCS2_PreHospitalizationDiabetesControl">                
+            <TaskParamDefinition path="LCS2_PreHospitalizationDiabetesControl.Bh_DiabetisControl1" isReadOnly="false" isMandatory="true"/> 
+          </HumanTaskDefinition> 
+
+          <HumanTaskDefinition id="LCS2_PreHospitalizationVerbalNumericalRatingScale" description="Pre Hospitalization Diabetes Control" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_PreHospitalizationVerbalNumericalRatingScale" entityAttachPath="LCS2_PreHospitalizationVerbalNumericalRatingScale">                
+            <TaskParamDefinition path="LCS2_PreHospitalizationVerbalNumericalRatingScale.Bh_BHVNRSExec1" isReadOnly="false" isMandatory="true"/> 
+          </HumanTaskDefinition> 
+
+          <HumanTaskDefinition id="LCS2_PreHospitalizationSLANSS" description="Pre Hospitalization S_LANSS" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_PreHospitalizationSLANSS" entityAttachPath="LCS2_PreHospitalizationSLANSS">                
+            <TaskParamDefinition path="LCS2_PreHospitalizationSLANSS.Bh_slanssExec1" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PreHospitalizationSLANSS.Bh_slanssExec2" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PreHospitalizationSLANSS.Bh_slanssExec3" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PreHospitalizationSLANSS.Bh_slanssExec4" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PreHospitalizationSLANSS.Bh_slanssExec5" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PreHospitalizationSLANSS.Bh_slanssExec6" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PreHospitalizationSLANSS.Bh_slanssExec7" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PreHospitalizationSLANSS.Bh_slanssExec8" isReadOnly="true" isMandatory="false"/> 
+          </HumanTaskDefinition> 
+
+          <HumanTaskDefinition id="LCS2_NutritionalEducation" description="During Hospitalization Nutritional Education" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_NutritionalEducation" entityAttachPath="LCS2_NutritionalEducation">                
+            <TaskParamDefinition path="LCS2_NutritionalEducation.Dh_neducaExec1" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_NutritionalEducation.Dh_neducaExec2" isReadOnly="false" isMandatory="true"/> 
+          </HumanTaskDefinition> 
+
+          <HumanTaskDefinition id="LCS2_DuringHospitalizationVerbalNumericalRatingScale" description="Pre Hospitalization Diabetes Control" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_DuringHospitalizationVerbalNumericalRatingScale" entityAttachPath="LCS2_DuringHospitalizationVerbalNumericalRatingScale">                
+            <TaskParamDefinition path="LCS2_DuringHospitalizationVerbalNumericalRatingScale.dh_BHVNRSExec1" isReadOnly="false" isMandatory="true"/> 
+          </HumanTaskDefinition> 
+
+          <HumanTaskDefinition id="LCS2_DuringHospitalizationSLANSS" description="During Hospitalization S_LANSS" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_DuringHospitalizationSLANSS" entityAttachPath="LCS2_DuringHospitalizationSLANSS">                
+            <TaskParamDefinition path="LCS2_DuringHospitalizationSLANSS.dh_slanssExec1" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_DuringHospitalizationSLANSS.dh_slanssExec2" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_DuringHospitalizationSLANSS.dh_slanssExec3" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_DuringHospitalizationSLANSS.dh_slanssExec4" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_DuringHospitalizationSLANSS.dh_slanssExec5" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_DuringHospitalizationSLANSS.dh_slanssExec6" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_DuringHospitalizationSLANSS.dh_slanssExec7" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_DuringHospitalizationSLANSS.dh_slanssExec8" isReadOnly="true" isMandatory="false"/> 
+          </HumanTaskDefinition> 
+
+
+          <HumanTaskDefinition id="LCS2_PostHospitalizationRehabilitation" description="Post Hospitalization Rehabilitation" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_PostHospitalizationRehabilitation" entityAttachPath="LCS2_PostHospitalizationRehabilitation">                
+            <TaskParamDefinition path="LCS2_PostHospitalizationRehabilitation.ph_BHVNRSExec1" isReadOnly="false" isMandatory="true"/> 
+          </HumanTaskDefinition> 
+
+          <HumanTaskDefinition id="LCS2_PostHospitalizationVerbalNumericalRatingScale" description="Pre Hospitalization Verbal Numerical Rating Scale" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_PostHospitalizationVerbalNumericalRatingScale" entityAttachPath="LCS2_PostHospitalizationVerbalNumericalRatingScale">                
+            <TaskParamDefinition path="LCS2_PostHospitalizationVerbalNumericalRatingScale.ph_BHVNRSExec1" isReadOnly="false" isMandatory="true"/> 
+          </HumanTaskDefinition> 
+
+
+          <HumanTaskDefinition id="LCS2_PostHospitalizationSLANSS" description="Post Hospitalization SLANSS" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_PostHospitalizationSLANSS" entityAttachPath="LCS2_PostHospitalizationSLANSS">                
+            <TaskParamDefinition path="LCS2_PostHospitalizationSLANSS.ph_slanssExec1" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PostHospitalizationSLANSS.ph_slanssExec2" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PostHospitalizationSLANSS.ph_slanssExec3" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PostHospitalizationSLANSS.ph_slanssExec4" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PostHospitalizationSLANSS.ph_slanssExec5" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PostHospitalizationSLANSS.ph_slanssExec6" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PostHospitalizationSLANSS.ph_slanssExec7" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PostHospitalizationSLANSS.ph_slanssExec8" isReadOnly="true" isMandatory="false"/> 
+          </HumanTaskDefinition> 
+
+          <HumanTaskDefinition id="LCS2_PostHospitalizationAnswerAutocheckHealthStatus" description="Post Hospitalization Answer Autocheck Health Status" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_PostHospitalizationAnswerAutocheckHealthStatus" entityAttachPath="LCS2_PostHospitalizationAnswerAutocheckHealthStatus">                
+            <TaskParamDefinition path="LCS2_PostHospitalizationAnswerAutocheckHealthStatus.Ph_autocheck1" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PostHospitalizationAnswerAutocheckHealthStatus.Ph_autocheck2" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PostHospitalizationAnswerAutocheckHealthStatus.Ph_autocheck3" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PostHospitalizationAnswerAutocheckHealthStatus.Ph_autocheck4" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PostHospitalizationAnswerAutocheckHealthStatus.Ph_autocheck5" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PostHospitalizationAnswerAutocheckHealthStatus.Ph_autocheck6" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PostHospitalizationAnswerAutocheckHealthStatus.Ph_autocheck7" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PostHospitalizationAnswerAutocheckHealthStatus.Ph_autocheck8" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PostHospitalizationAnswerAutocheckHealthStatus.Ph_autocheck9" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PostHospitalizationAnswerAutocheckHealthStatus.Ph_autocheck10" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PostHospitalizationAnswerAutocheckHealthStatus.Ph_autocheck11" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PostHospitalizationAnswerAutocheckHealthStatus.Ph_autocheck12" isReadOnly="false" isMandatory="true"/> 
+          </HumanTaskDefinition> 
+
+          <HumanTaskDefinition id="LCS2_PostHospitalizationPatientEducationAndTrainingToTheCaregiver" description="Post Hospitalization Patient Education AndT raining To The Caregiver" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_PostHospitalizationPatientEducationAndTrainingToTheCaregiver" entityAttachPath="LCS2_PostHospitalizationPatientEducationAndTrainingToTheCaregiver">                
+            <TaskParamDefinition path="LCS2_PostHospitalizationPatientEducationAndTrainingToTheCaregiver.educaExec1" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PostHospitalizationPatientEducationAndTrainingToTheCaregiver.educaExec2" isReadOnly="false" isMandatory="true"/> 
+            <TaskParamDefinition path="LCS2_PostHospitalizationPatientEducationAndTrainingToTheCaregiver.educaExec3" isReadOnly="false" isMandatory="true"/> 
+          </HumanTaskDefinition> 
+
+          <HumanTaskDefinition id="LCS2_Discharge" description="Post Hospitalization Patient Education AndT raining To The Caregiver" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_Discharge" entityAttachPath="LCS2_Discharge">                
+            <TaskParamDefinition path="LCS2_Discharge.discharge1" isReadOnly="false" isMandatory="true"/> 
           </HumanTaskDefinition> 
 
         </StageDefinition>
