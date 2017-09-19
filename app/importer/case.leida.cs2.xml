@@ -1,6 +1,6 @@
 <EntityDefinition id="LCS2_CaseData" description="Case Data">
-  <AttributeDefinition id="LCS2_Patient" type="Link.Users.AssutaPatients" description="Patient"/>
-  <AttributeDefinition id="LCS2_Owner" type="Link.Users.AssutaCaseManagers" description="Owner"/>
+  <AttributeDefinition id="LCS2_Patient" type="Link.Users.IrbllPatients" description="Patient"/>
+  <AttributeDefinition id="LCS2_Owner" type="Link.Users.IrbllProfessionals" description="Owner"/>
   <AttributeDefinition id="LCS2_ComorbidityCharlson" type="Link.EntityDefinition.LCS2_ComorbidityCharlson" description="Comorbidity Charlson"/>
   <AttributeDefinition id="LCS2_ChronicDiseases" type="Link.EntityDefinition.LCS2_ChronicDiseases" description="Chronic Diseases"/>
   <AttributeDefinition id="LCS2_PolyMedicationCheck" type="Link.EntityDefinition.LCS2_PolyMedicationCheck" description="Poly Medication Check"/>
@@ -1259,28 +1259,28 @@ For each question, please give the one answer that comes closest to the way you 
               <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch21" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>
 
-            <HumanTaskDefinition id="LCS2_ChronicDiseases" description="Chronic Diseases" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false">              
+            <HumanTaskDefinition id="LCS2_ChronicDiseases" description="Chronic Diseases" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false"  entityDefinitionId="LCS2_ChronicDiseases" entityAttachPath="LCS2_ChronicDiseases">              
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>
               <TaskParamDefinition path="LCS2_ChronicDiseases.cd1" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>  
 
-            <HumanTaskDefinition id="LCS2_PolyMedicationCheck" description="Poly Medication Check" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false">              
+            <HumanTaskDefinition id="LCS2_PolyMedicationCheck" description="Poly Medication Check" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false"  entityDefinitionId="LCS2_PolyMedicationCheck" entityAttachPath="LCS2_PolyMedicationCheck">              
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>
               <TaskParamDefinition path="LCS2_PolyMedicationCheck.pmed1" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>  
 
-            <HumanTaskDefinition id="LCS2_GMA" description="GMA" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false">              
+            <HumanTaskDefinition id="LCS2_GMA" description="GMA" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS_GMA" entityAttachPath="LCS2_GMA">              
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>
               <TaskParamDefinition path="LCS2_GMA2.gma" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>  
 
-            <HumanTaskDefinition id="LCS2_HospitalEmergencyAdminisions" description="Hospital Emergency Adminisions" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false">              
+            <HumanTaskDefinition id="LCS2_HospitalEmergencyAdminisions" description="Hospital Emergency Adminisions" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false"  entityDefinitionId="LCS2_HospitalEmergencyAdminisions" entityAttachPath="LCS2_HospitalEmergencyAdminisions">              
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>
@@ -1288,14 +1288,14 @@ For each question, please give the one answer that comes closest to the way you 
               <TaskParamDefinition path="LCS2_HospitalEmergencyAdminisions.admissions2" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>  
 
-            <HumanTaskDefinition id="LCS2_ASAPhysicalStatusClassificationSystem" description="ASA Physical Status Classification System" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false">              
+            <HumanTaskDefinition id="LCS2_ASAPhysicalStatusClassificationSystem" description="ASA Physical Status Classification System" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false"  entityDefinitionId="LCS2_ASAPhysicalStatusClassificationSystem" entityAttachPath="LCS2_ASAPhysicalStatusClassificationSystem">              
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>
               <TaskParamDefinition path="LCS2_ASAPhysicalStatusClassificationSystem.ASA1" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>  
 
-            <HumanTaskDefinition id="LCS2_TechnologicalTest" description="Technological Test" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false">              
+            <HumanTaskDefinition id="LCS2_TechnologicalTest" description="Technological Test" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false"  entityDefinitionId="LCS2_TechnologicalTest" entityAttachPath="LCS2_TechnologicalTest">              
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>
@@ -1305,7 +1305,7 @@ For each question, please give the one answer that comes closest to the way you 
               <TaskParamDefinition path="LCS2_TechnologicalTest.tech4" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition> 
 
-            <HumanTaskDefinition id="LCS2_PatientsConsent" description="Patients Consent" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false">              
+            <HumanTaskDefinition id="LCS2_PatientsConsent" description="Patients Consent" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false"  entityDefinitionId="LCS2_PatientsConsent" entityAttachPath="LCS2_PatientsConsent">              
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>
@@ -1346,14 +1346,14 @@ For each question, please give the one answer that comes closest to the way you 
               <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch21" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition> 
 
-            <HumanTaskDefinition id="LCS2_GMA" description="Poly Medication Check" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false">              
+            <HumanTaskDefinition id="LCS2_GMA" description="Poly Medication Check" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false"  entityDefinitionId="LCS2_GMA" entityAttachPath="LCS2_GMA">              
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>
               <TaskParamDefinition path="LCS2_GMA.gma" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition> 
 
-            <HumanTaskDefinition id="LCS2_ComorbidityPfeiffer" description="Comorbidity Pfeiffer" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false">              
+            <HumanTaskDefinition id="LCS2_ComorbidityPfeiffer" description="Comorbidity Pfeiffer" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false"  entityDefinitionId="LCS2_ComorbidityPfeiffer" entityAttachPath="LCS2_ComorbidityPfeiffer">              
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>
@@ -1361,7 +1361,7 @@ For each question, please give the one answer that comes closest to the way you 
               <TaskParamDefinition path="LCS2_ComorbidityPfeiffer.pfeiffer2" isReadOnly="true" isMandatory="false"/>
             </HumanTaskDefinition> 
 
-            <HumanTaskDefinition id="LCS2_AnthropometricVariables" description="Anthropometric Variables" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false">              
+            <HumanTaskDefinition id="LCS2_AnthropometricVariables" description="Anthropometric Variables" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false"  entityDefinitionId="LCS2_AnthropometricVariables" entityAttachPath="LCS2_AnthropometricVariables">              
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>
@@ -1370,14 +1370,14 @@ For each question, please give the one answer that comes closest to the way you 
               <TaskParamDefinition path="LCS2_AnthropometricVariables.Anthropometric3" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition> 
 
-            <HumanTaskDefinition id="LCS2_ASAPhysicalStatusClassificationSystem" description="ASA Physical Status Classification System" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false">              
+            <HumanTaskDefinition id="LCS2_ASAPhysicalStatusClassificationSystem" description="ASA Physical Status Classification System" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false"  entityDefinitionId="LCS2_ASAPhysicalStatusClassificationSystem" entityAttachPath="LCS2_ASAPhysicalStatusClassificationSystem">              
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>
               <TaskParamDefinition path="LCS2_ASAPhysicalStatusClassificationSystem.ASA1" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>  
 
-            <HumanTaskDefinition id="LCS2_DiagnosisCommunication" description="Diagnosis Communication" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false">              
+            <HumanTaskDefinition id="LCS2_DiagnosisCommunication" description="Diagnosis Communication" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_DiagnosisCommunication" entityAttachPath="LCS2_DiagnosisCommunication">              
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>
@@ -1388,14 +1388,14 @@ For each question, please give the one answer that comes closest to the way you 
               <TaskParamDefinition path="LCS2_DiagnosisCommunication.comm5" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>  
 
-            <HumanTaskDefinition id="LCS2_ProblemsManagingMoney" description="Problems Managing Money" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false">              
+            <HumanTaskDefinition id="LCS2_ProblemsManagingMoney" description="Problems Managing Money" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false"  entityDefinitionId="LCS2_ProblemsManagingMoney" entityAttachPath="LCS2_ProblemsManagingMoney">              
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>
               <TaskParamDefinition path="LCS2_ProblemsManagingMoney.money" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>
 
-            <HumanTaskDefinition id="LCS2_DiagnosisSmokingAndAlcohol" description="Diagnosis Smoking And Alcohol" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false">              
+            <HumanTaskDefinition id="LCS2_DiagnosisSmokingAndAlcohol" description="Diagnosis Smoking And Alcohol" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false"  entityDefinitionId="LCS2_DiagnosisSmokingAndAlcohol" entityAttachPath="LCS2_DiagnosisSmokingAndAlcohol">              
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>
@@ -1403,7 +1403,7 @@ For each question, please give the one answer that comes closest to the way you 
               <TaskParamDefinition path="LCS2_DiagnosisSmokingAndAlcohol.smalc2" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>
 
-            <HumanTaskDefinition id="LCS2_SocialDwelling" description="Social Dwelling" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false">              
+            <HumanTaskDefinition id="LCS2_SocialDwelling" description="Social Dwelling" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false"  entityDefinitionId="LCS2_SocialDwelling" entityAttachPath="LCS2_SocialDwelling">              
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>
@@ -1413,7 +1413,7 @@ For each question, please give the one answer that comes closest to the way you 
               <TaskParamDefinition path="LCS2_SocialDwelling.dwelling4" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>
 
-            <HumanTaskDefinition id="LCS2_SocialSelfCareCareerAbility" description="Social Self Care Career Ability" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false">              
+            <HumanTaskDefinition id="LCS2_SocialSelfCareCareerAbility" description="Social Self Care Career Ability" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false"  entityDefinitionId="LCS2_SocialSelfCareCareerAbility" entityAttachPath="LCS2_SocialSelfCareCareerAbility">              
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>
@@ -1424,7 +1424,7 @@ For each question, please give the one answer that comes closest to the way you 
               <TaskParamDefinition path="LCS2_SocialSelfCareCareerAbility.career5" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>
 
-            <HumanTaskDefinition id="LCS2_SocialComplexityOfThePatient" description="Social Complexity Of The Patient" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false">              
+            <HumanTaskDefinition id="LCS2_SocialComplexityOfThePatient" description="Social Complexity Of The Patient" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false"  entityDefinitionId="LCS2_SocialComplexityOfThePatient" entityAttachPath="LCS2_SocialComplexityOfThePatient">              
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>
@@ -1434,7 +1434,7 @@ For each question, please give the one answer that comes closest to the way you 
               <TaskParamDefinition path="LCS2_SocialComplexityOfThePatient.complexity4" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>
 
-            <HumanTaskDefinition id="LCS2_FamilySupport" description="Family Support" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false">              
+            <HumanTaskDefinition id="LCS2_FamilySupport" description="Family Support" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false"  entityDefinitionId="LCS2_FamilySupport" entityAttachPath="LCS2_FamilySupport">              
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>
@@ -1442,7 +1442,7 @@ For each question, please give the one answer that comes closest to the way you 
               <TaskParamDefinition path="LCS2_FamilySupport.family2" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>
 
-            <HumanTaskDefinition id="LCS2_HospitalAnxietyAndDepressionScale" description="Hospital Anxiety And Depression Scale" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false">              
+            <HumanTaskDefinition id="LCS2_HospitalAnxietyAndDepressionScale" description="Hospital Anxiety And Depression Scale" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false"  entityDefinitionId="LCS2_HospitalAnxietyAndDepressionScale" entityAttachPath="LCS2_HospitalAnxietyAndDepressionScale">              
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>
@@ -1466,7 +1466,7 @@ For each question, please give the one answer that comes closest to the way you 
               <TaskParamDefinition path="LCS2_HospitalAnxietyAndDepressionScale.hadD9" isReadOnly="true" isMandatory="false"/>
             </HumanTaskDefinition>
 
-            <HumanTaskDefinition id="LCS2_Barthel" description="Barthel" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false">              
+            <HumanTaskDefinition id="LCS2_Barthel" description="Barthel" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false"  entityDefinitionId="LCS2_Barthel" entityAttachPath="LCS2_Barthel">              
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>
@@ -1483,7 +1483,7 @@ For each question, please give the one answer that comes closest to the way you 
               <TaskParamDefinition path="LCS2_Barthel.barthel11" isReadOnly="true" isMandatory="false"/>
             </HumanTaskDefinition>
 
-            <HumanTaskDefinition id="LCS2_WOMAC" description="WOMAC" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false">              
+            <HumanTaskDefinition id="LCS2_WOMAC" description="WOMAC" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false"  entityDefinitionId="LCS2_WOMAC" entityAttachPath="LCS2_WOMAC">              
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>
