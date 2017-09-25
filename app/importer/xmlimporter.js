@@ -613,11 +613,6 @@ module.exports = class XMLImporter {
             groupType: [{id: this.getGroupIdByXMLId(ref[2])}]          
           };
         }
-        /*else if(ref[1] == 'Principals'){
-          attrDef.options.entityDefinition = {
-            id: this.getEntityDefinitionIdByXMLIdSync(ref[2])
-          };    
-        }*/
       } 
       if(attrDef.attributeType == 'enumeration'){
         if(AttributeDefinition.EnumerationOption == null){
