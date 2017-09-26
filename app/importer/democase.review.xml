@@ -227,59 +227,23 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
 
     <!--This executes the case for testing-->
     <Execution>        
-        <Action id="CompleteHumanTask" processId="SelectPatient">
-            <TaskParam path="Patient"  userValue="connecare-patient"/>
-            <TaskParam path="Owner"  userValue="connecare-clinician"/>
+        <Action id="CompleteHumanTask" processId="GCS2_SelectPatient">
+            <TaskParam path="GCS2_Patient"  userValue="vargiue"/>
+            <TaskParam path="GCS2_Owner"  userValue="michelf"/>
         </Action>
-        <Action id="CompleteHumanTask" processId="Lace">
-            <TaskParam path="Lace.lace1"  values="['2']"/>
-            <TaskParam path="Lace.lace2"  values="['1']"/>
-            <TaskParam path="Lace.lace3"  values="['1']"/>
-            <TaskParam path="Lace.lace4"  values="['1']"/>
-            <TaskParam path="Lace.lace5"  values="['1']"/>
-            <TaskParam path="Lace.lace6"  values="['1']"/>
-            <TaskParam path="Lace.lace7"  values="['2']"/>
-            <TaskParam path="Lace.lace8"  values="['2']"/>
-            <TaskParam path="Lace.lace9"  values="['2']"/>
-            <TaskParam path="Lace.lace10" values="['2']"/>
-            <TaskParam path="Lace.lace11" values="['2']"/>
-            <TaskParam path="Lace.lace12" values="['3']"/>
-            <TaskParam path="Lace.lace13" values="['3']"/>
-            <TaskParam path="Lace.lace14" values="['0']"/>
-            <TaskParam path="Lace.lace15" values="['4']"/>
-            <TaskParam path="Lace.lace16" values="['6']"/>                
-            <TaskParam path="Lace.lace18" values="['3']"/> 
+        <Action id="CompleteHumanTask" processId="GCS2_PhysicalActivityPrescription">
+            <TaskParam path="GCS2_PhysicalActivity.phactp1"  values="['2017-06-19T15:36:21.000-0000']"/>
+            <TaskParam path="GCS2_PhysicalActivity.phactp2"  values="['2018-06-21T15:36:21.000-0000']"/>
+            <TaskParam path="GCS2_PhysicalActivity.phactp3"  values="[150]"/>
+            <TaskParam path="GCS2_PhysicalActivity.phactp4"  values="[15]"/>
+            <TaskParam path="GCS2_PhysicalActivity.phactp5"  values="[5]"/>
+            <TaskParam path="GCS2_PhysicalActivity.phactp6"  values="[10]"/>
+            <TaskParam path="GCS2_PhysicalActivity.phactp7"  values="[5]"/>
         </Action>
-        <Action id="CompleteHumanTask" processId="Barthel">
-            <TaskParam path="Barthel.barthel1"  values="['5']"/>
-            <TaskParam path="Barthel.barthel2"  values="['0']"/>
-            <TaskParam path="Barthel.barthel3"  values="['0']"/>
-            <TaskParam path="Barthel.barthel4"  values="['0']"/>
-            <TaskParam path="Barthel.barthel5"  values="['5']"/>
-            <TaskParam path="Barthel.barthel6"  values="['10']"/>
-            <TaskParam path="Barthel.barthel7"  values="['5']"/>
-            <TaskParam path="Barthel.barthel8"  values="['0']"/>
-            <TaskParam path="Barthel.barthel9"  values="['15']"/>
-            <TaskParam path="Barthel.barthel10" values="['10']"/>
-        </Action>
-        <Action id="CompleteHumanTask" processId="PhysicalActivityPrescription">
-            <TaskParam path="PhysicalActivity.phactp1"  values="['2017-06-19T15:36:21.000-0000']"/>
-            <TaskParam path="PhysicalActivity.phactp2"  values="['2018-06-21T15:36:21.000-0000']"/>
-            <TaskParam path="PhysicalActivity.phactp3"  values="[150]"/>
-            <TaskParam path="PhysicalActivity.phactp4"  values="[15]"/>
-            <TaskParam path="PhysicalActivity.phactp5"  values="[5]"/>
-            <TaskParam path="PhysicalActivity.phactp6"  values="[10]"/>
-            <TaskParam path="PhysicalActivity.phactp7"  values="[5]"/>
-        </Action>
-        <Action id="CompleteAutomatedTask" processId="PhysicalActivityExecution">
-            <TaskParam path="PhysicalActivity.phactpx"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
-        </Action>
-        <Action id="CreateAlert" 
-            processId="PhysicalActivityExecution" 
-            expireDate="2018-06-21T15:36:21.000-0000"
-            text="Alert Message"
-            data="{'alertType':'some type', 'application':'Run App', 'priorityLevel':'LOW', 'status':'ACT', 'paramName':'steps per day', 'paramValue':'12', 'minThreshold':'5',  'maxThreshold':'8'}">
-        </Action>
+        <!--<Action id="CompleteAutomatedTask" processId="GCS2_PhysicalActivityExecution">
+            <TaskParam path="GCS2_PhysicalActivity.phactpx"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
+        </Action>-->
+        <!--
         <Action id="CompleteHumanTask" processId="PatientMonitoryPrescription">
             <TaskParam path="PatientMonitory.pmp1_name"  values="['WEIGHT']"/>
             <TaskParam path="PatientMonitory.pmp2_alertmin"  values="[50]"/>
@@ -295,7 +259,7 @@ One entit defintion can only belong to one casedefintnion, meaning a entityDefin
             <TaskParam path="PatientMonitory.pmp12_timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
             <TaskParam path="PatientMonitory.pmp13_timehour"  values="[]"/>
         </Action>
-        <!--
+      
         <Action id="CompleteAutomatedTask" processId="PatientMonitoryExecution">
             <TaskParam path="PatientMonitory.pmpx"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
         </Action>

@@ -251,8 +251,7 @@ module.exports = class XMLImporter {
         })
         .then(()=>{
           return this.createWorkspaces();
-        })    
-        /* 
+        })            
         .then(() => {
           return this.createCase();
         })      
@@ -261,8 +260,7 @@ module.exports = class XMLImporter {
             return Promise.resolve(caseInstance);
           else
             return this.executeCase();
-        });   
-        */     
+        });            
     }
 
     fileExists(filePath) {
