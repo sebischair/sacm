@@ -328,7 +328,8 @@ module.exports = class XMLImporter {
         data.description = ad.$.description;
         data.multiplicity = ad.$.multiplicity; 
         data.entityDefinition = persistedUserDefinitionId;  
-        data.uiReference = ad.$.uiReference;       
+        data.uiReference = ad.$.uiReference;   
+        data.externalId = ad.$.externalId;      
         return AttributeDefinition.create(this.jwt, data)             
           .then(persistedAttributeDefinition =>{
             this.userAttributeDefinitionMap.set(ad.$.id, persistedAttributeDefinition.id);
@@ -350,7 +351,8 @@ module.exports = class XMLImporter {
             description: ad.$.description,
             expression: ad.$.expression,
             entityDefinition: persistedUserDefinitionId,
-            uiReference: ad.$.uiReference  
+            uiReference: ad.$.uiReference,
+            externalId: ad.$.externalId
           });   
       }); 
     }
@@ -567,7 +569,8 @@ module.exports = class XMLImporter {
                 data.description = ad.$.description;
                 data.multiplicity = ad.$.multiplicity; 
                 data.entityDefinition = entityDefId;   
-                data.uiReference = ad.$.uiReference;     
+                data.uiReference = ad.$.uiReference;  
+                data.externalId = ad.$.externalId;   
                 return AttributeDefinition.create(this.jwt, data);
               })
               .then(persistedAttributeDefinition =>{
@@ -645,7 +648,8 @@ module.exports = class XMLImporter {
                 description: ad.$.description,
                 expression: ad.$.expression,
                 entityDefinition: entityDefId,
-                uiReference: ad.$.uiReference  
+                uiReference: ad.$.uiReference,
+                externalId: ad.$.externalId
               });
             })
             .then(persistedAttributeDefinition =>{
@@ -731,7 +735,8 @@ module.exports = class XMLImporter {
               caseDefinition: caseDefId,
               parentStageDefinition: parentStageDefId,              
               newEntityDefinition: entityDefinitionId,
-              newEntityAttachPath: sd.$.entityAttachPath
+              newEntityAttachPath: sd.$.entityAttachPath,
+              externalId: sd.$.externalId
             }
             return StageDefinition.create(this.jwt, data);
           })
@@ -804,7 +809,8 @@ module.exports = class XMLImporter {
               caseDefinition: caseDefId,          
               parentStageDefinition: parentStageDefId,                  
               newEntityDefinition: entityDefinitionId,
-              newEntityAttachPath: td.$.entityAttachPath
+              newEntityAttachPath: td.$.entityAttachPath,
+              externalId: td.$.externalId
             }            
             return HumanTaskDefinition.create(this.jwt, data)
           })
@@ -843,7 +849,8 @@ module.exports = class XMLImporter {
               caseDefinition: caseDefId,
               parentStageDefinition: parentStageDefId,           
               newEntityDefinition: entityDefinitionId,
-              newEntityAttachPath: td.$.entityAttachPath
+              newEntityAttachPath: td.$.entityAttachPath,
+              externalId: td.$.externalId
             }     
             return AutomatedTaskDefinition.create(this.jwt, data)
           })
