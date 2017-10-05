@@ -2,14 +2,14 @@
 import Promise from 'bluebird';
 import fs from 'fs';
 import xml2js from 'xml2js';
-import XMLImporter from './xmlimporter';
+import Importer from './importer';
 import Workspace from '../models/workspace/model.workspace';
 import UserDefinition from '../models/group/model.userdefinition';
 import User from '../models/group/model.user';
 import Group from '../models/group/model.group';
 const xml2jspromise = Promise.promisifyAll(xml2js);
 
-module.exports = class WorkspaceImporter extends XMLImporter{
+module.exports = class WorkspaceImporter extends Importer{
 
     constructor() {
       super();

@@ -1,6 +1,6 @@
 import express from 'express';
-import XMLImporter from './../importer/xmlimporter';
-import WorkspaceImporter from './../importer/WorkspaceImporter';
+import Importer from './../importer/importer';
+import WorkspaceImporter from './../importer/importer.workspace';
 import http from './../models/http';
 const router = express.Router();
 
@@ -15,7 +15,7 @@ const router = express.Router();
  */
 router.post('/all', (req, res, next)=>{
   res.connection.setTimeout(100*60*1000);
-  const xml = new XMLImporter();
+  const xml = new Importer();
   let file = 'democase.xml';
   let isExecuteCase = false;
   let executionJwt = req.jwt;
@@ -54,7 +54,7 @@ router.post('/workspaces', (req, res, next)=>{
   let file = 'democase.xml';
   if(req.body.file)
     file = req.body.file;
-    
+
   wi.import(req.jwt, file)
     .then(case1=>{
       res.status(200).send(case1);

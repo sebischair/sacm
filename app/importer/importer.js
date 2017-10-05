@@ -27,7 +27,7 @@ const xml2jspromise = Promise.promisifyAll(xml2js);
 const fs = Promise.promisifyAll(require("fs"));
 
 
-module.exports = class XMLImporter {
+module.exports = class Importer {
 
     constructor() {
       this.jwt = null; //"Basic bXVzdGVybWFubkB0ZXN0LnNjOm90dHRv"; // Max Mustermann
