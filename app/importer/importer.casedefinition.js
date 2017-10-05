@@ -33,9 +33,9 @@ module.exports = class CaseDefinitionImporter extends Importer{
       })
       .then(()=>{
         if(this.json.Workspace == null)
-          return Promise.reject('No Workspace defined!');
+          return Promise.reject('No Workspace defined in XML!');
         if(this.json.Workspace.length>1)
-          return Promise.reject('Multiple Workspace defined!');
+          return Promise.reject('Multiple Workspace defined in XML!');
         else
           return this.createWorkspaceElements(this.json.Workspace[0]);
       })
