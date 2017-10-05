@@ -25,9 +25,21 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.use(function(req, res, next) {
+  var data = new Buffer('');
+  req.on('data', function(chunk) {    
+    data = Buffer.concat([data, chunk]);
+  });
+  req.on('end', function() {
+    req.rawBody = data;
+    //console.log(data.toString('utf-8'))
+    next();
+  });
+});
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false, limit:'5mb'}));
 app.use(cookieParser());
 
 

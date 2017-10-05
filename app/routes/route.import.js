@@ -50,7 +50,10 @@ router.post('/all', (req, res, next)=>{
 router.post('/workspaces', (req, res, next)=>{
   res.connection.setTimeout(100*60*1000);
   const wi = new WorkspaceImporter();
-
+  const attachedFile = req.rawBody.toString('utf-8');
+  
+  if(req.rawBody.length==0 && !req.query.file)
+    return res.status(500).send('No file attached!')
   if(!req.query.file)
     return res.status(500).send('No file defined!')
 
@@ -62,6 +65,7 @@ router.post('/workspaces', (req, res, next)=>{
       console.log(err);
       res.status(500).send(err)
     });
+    
 });
 
 module.exports = router;
