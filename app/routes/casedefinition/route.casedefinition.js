@@ -130,7 +130,7 @@ router.get('/:id/tree', (req, res, next)=>{
  *     {}
  */
 router.delete('/:id', (req, res, next)=>{
-  CaseDefinition.findById(req.jwt, req.params.id)
+  CaseDefinition.deleteById(req.jwt, req.params.id)
     .then(cd=>{
         console.log(cd);
         return cd.remove();
