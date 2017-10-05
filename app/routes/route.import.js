@@ -95,13 +95,13 @@ router.post('/casedefinition', (req, res, next)=>{
     return res.status(500).send('No file attached!')
   if(!localFile)
     return res.status(500).send('No file defined!')
-
+  
   let Importer = null;
   if(req.rawBody.length>0)
     Importer = cdi.importAttachedFile(req.jwt, attachedFile);
   else
     Importer = cdi.importLocalFile(req.jwt, localFile);
-
+  
   Importer
     .then(workspaces=>{
       res.status(200).send(workspaces);

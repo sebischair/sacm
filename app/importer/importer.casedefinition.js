@@ -27,14 +27,26 @@ module.exports = class CaseDefinitionImporter extends Importer{
   import(jwt, json){ 
     this.jwt = jwt;  
     this.json = json.SACMDefinition;
-    return this.initializeMaps()
-     
+    return this.initializeMaps()     
       .then(()=>{
-        return this.createWorkspaces();
+        return this.initializeMapsWithWorkspace();
       })
-      .then(()=>{
-        return Workspace.findAll(this.jwt);
-      });   
+  }
+
+  initializeMapsWithWorkspace(){
+    if(this.json.Group != null)
+      this.json.Group.forEach(g=>{
+        this.groupMap.set(g.$.id, g.$.staticId);
+      })
+    if(this.json.User != null)
+      this.json.User.forEach(u=>{
+        this.userMap.set(u.$.id, u.$.staticId);
+      })
+    if(this.json.Workspace != null)
+      this.json.Workspace.forEach(w=>{
+        this.workspaceMap.set(w.$.id, w.$.staticId);
+      })
+    return Promise.resolve();
   }
 
 
