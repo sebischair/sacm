@@ -45,21 +45,28 @@ router.post('/all', (req, res, next)=>{
  * @apiGroup Import
  * @apiParam {string} file (mandatory) Imports the defined file
  * @apiSuccessExample {json} Success-Response:
- * TBD
+ * see /workspaces
  */
 router.post('/workspaces', (req, res, next)=>{
   res.connection.setTimeout(100*60*1000);
   const wi = new WorkspaceImporter();
   const attachedFile = req.rawBody.toString('utf-8');
-  
-  if(req.rawBody.length==0 && !req.query.file)
+  const localFile = req.query.file;
+
+  if(req.rawBody.length==0 && !localFile)
     return res.status(500).send('No file attached!')
-  if(!req.query.file)
+  if(!localFile)
     return res.status(500).send('No file defined!')
 
-  wi.import(req.jwt, req.query.file)
-    .then(case1=>{
-      res.status(200).send(case1);
+  let Importer = null;
+  if(req.rawBody.length>0)
+    Importer = wi.importAttachedFile(req.jwt, attachedFile);
+  else
+    Importer = wi.importLocalFile(req.jwt, localFile);
+
+  Importer
+    .then(workspaces=>{
+      res.status(200).send(workspaces);
     })
     .catch(err=>{
       console.log(err);

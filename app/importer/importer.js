@@ -185,6 +185,23 @@ module.exports = class Importer {
       });
     }
 
+    parseXMLFile(localFile){
+      let path = 'app/importer/';
+      let filePath = path+localFile;
+      return this.fileExists(filePath)
+      .then(exist =>{
+        if(!exist)
+          throw new Error('File does not exist' + filePath);
+        else {         
+          return xml2jspromise.parseStringAsync(fs.readFileSync(filePath).toString());
+        }
+      });
+    }
+
+    parseXMLString(xmlString){
+      return xml2jspromise.parseStringAsync(xmlString);
+    }
+
     import(jwt, file, isExecuteCase, executionJwt){ 
       let path = 'app/importer/';
       let filePath = path+file;

@@ -15,23 +15,24 @@ module.exports = class WorkspaceImporter extends Importer{
       super();
     }
 
-    import(jwt, file){ 
-      let path = 'app/importer/';
-      let filePath = path+file;
-      this.jwt = jwt;     
-      return this.fileExists(filePath)
-        .then(exist =>{
-          console.log('here'+filePath);
-          if(!exist)
-            throw new Error('File does not exist' + filePath);
-          else {         
-            return xml2jspromise.parseStringAsync(fs.readFileSync(filePath).toString());
-          }
-        })
+    importLocalFile(jwt, localFile){
+      return this.parseXMLFile(localFile)
         .then(json=>{
-          this.json = json.SACMDefinition;
-          return this.initializeMaps();
-        })
+          return this.import(jwt, json);
+        });
+    }
+
+    importAttachedFile(jwt, attachedFile){
+      return this.parseXMLString(attachedFile)
+        .then(json=>{
+          return this.import(jwt, json);
+        });
+    }
+
+    import(jwt, json){ 
+      this.jwt = jwt;  
+      this.json = json.SACMDefinition;
+      return this.initializeMaps()
         .then(()=>{
           return Workspace.deleteAll(this.jwt);
         })
@@ -64,7 +65,10 @@ module.exports = class WorkspaceImporter extends Importer{
         })
         .then(()=>{
           return this.createWorkspaces();
-        });     
+        })
+        .then(()=>{
+          return Workspace.findAll(this.jwt);
+        });   
     }
 
    
