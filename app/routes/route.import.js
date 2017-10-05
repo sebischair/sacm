@@ -1,6 +1,7 @@
 import express from 'express';
 import Importer from './../importer/importer';
 import WorkspaceImporter from './../importer/importer.workspace';
+import CaseDefinitionImporter from './../importer/importer.casedefinition';
 import http from './../models/http';
 const router = express.Router();
 
@@ -63,6 +64,43 @@ router.post('/workspaces', (req, res, next)=>{
     Importer = wi.importAttachedFile(req.jwt, attachedFile);
   else
     Importer = wi.importLocalFile(req.jwt, localFile);
+
+  Importer
+    .then(workspaces=>{
+      res.status(200).send(workspaces);
+    })
+    .catch(err=>{
+      console.log(err);
+      res.status(500).send(err)
+    });
+    
+});
+
+
+/**
+ * @api {post} /import/casedefinition Import
+ * @apiName Import
+ * @apiGroup Import
+ * @apiParam {string} file (mandatory) Imports the defined file
+ * @apiSuccessExample {json} Success-Response:
+ * see /casedefinition
+ */
+router.post('/casedefinition', (req, res, next)=>{
+  res.connection.setTimeout(100*60*1000);
+  const cdi = new CaseDefinitionImporter();
+  const attachedFile = req.rawBody.toString('utf-8');
+  const localFile = req.query.file;
+
+  if(req.rawBody.length==0 && !localFile)
+    return res.status(500).send('No file attached!')
+  if(!localFile)
+    return res.status(500).send('No file defined!')
+
+  let Importer = null;
+  if(req.rawBody.length>0)
+    Importer = cdi.importAttachedFile(req.jwt, attachedFile);
+  else
+    Importer = cdi.importLocalFile(req.jwt, localFile);
 
   Importer
     .then(workspaces=>{
