@@ -43,19 +43,18 @@ router.post('/all', (req, res, next)=>{
  * @api {post} /import/workspaces Import
  * @apiName Import
  * @apiGroup Import
- * @apiParam {boolean} execute (optional) Executes the imported case if an executed is specified within the xml file, false by default
- * @apiParam {string} file (optional) Importes the defined file, by default imports the democase.xml
+ * @apiParam {string} file (mandatory) Imports the defined file
  * @apiSuccessExample {json} Success-Response:
- * see case/:id/tree route 
+ * TBD
  */
 router.post('/workspaces', (req, res, next)=>{
   res.connection.setTimeout(100*60*1000);
   const wi = new WorkspaceImporter();
-  let file = 'democase.xml';
-  if(req.body.file)
-    file = req.body.file;
 
-  wi.import(req.jwt, file)
+  if(!req.query.file)
+    return res.status(500).send('No file defined!')
+
+  wi.import(req.jwt, req.query.file)
     .then(case1=>{
       res.status(200).send(case1);
     })
