@@ -31,6 +31,14 @@ module.exports = class CaseDefinitionImporter extends Importer{
       .then(()=>{
         return this.initializeMapsWithWorkspace();
       })
+      .then(()=>{
+        if(this.json.Workspace == null)
+          return Promise.reject('No Workspace defined!');
+        if(this.json.Workspace.length>1)
+          return Promise.reject('Multiple Workspace defined!');
+        else
+          return this.createWorkspaceElements(this.json.Workspace[0]);
+      })
   }
 
   initializeMapsWithWorkspace(){
