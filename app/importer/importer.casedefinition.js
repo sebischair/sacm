@@ -2,6 +2,7 @@
 import Promise from 'bluebird';
 import Importer from './importer';
 import Workspace from '../models/workspace/model.workspace';
+import CaseDefinition from '../models/casedefinition/model.casedefinition';
 
 
 module.exports = class CaseDefinitionImporter extends Importer{
@@ -40,6 +41,14 @@ module.exports = class CaseDefinitionImporter extends Importer{
         else
           return this.createWorkspaceElements(this.json.Workspace[0]);
       })
+      .then(()=>{
+        if(this.caseDefinitionMap.size != 1)
+          return Promise.reject();
+        else{
+          let cdId = this.caseDefinitionMap.values().next().value;
+          return CaseDefinition.findById(this.jwt, cdId);
+        }
+      });
   }
 
   initializeMapsWithWorkspace(){
