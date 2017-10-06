@@ -10,21 +10,22 @@ module.exports = class CaseDefinitionImporter extends Importer{
     super();
   }
 
-  importLocalFile(jwt, localFile){
+  importLocalFile(jwt, localFile, version){
     return this.parseXMLFile(localFile)
       .then(json=>{
-        return this.import(jwt, json);
+        return this.import(jwt, json, version);
       });
   }
 
-  importAttachedFile(jwt, attachedFile){
+  importAttachedFile(jwt, attachedFile, version){
     return this.parseXMLString(attachedFile)
       .then(json=>{
-        return this.import(jwt, json);
+        return this.import(jwt, json, version);
       });
   }
 
-  import(jwt, json){ 
+  import(jwt, json, version){ 
+    this.version = version;
     this.jwt = jwt;  
     this.json = json.SACMDefinition;
     return this.initializeMaps()     

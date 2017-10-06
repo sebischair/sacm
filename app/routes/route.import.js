@@ -90,17 +90,20 @@ router.post('/casedefinition', (req, res, next)=>{
   const cdi = new CaseDefinitionImporter();
   const attachedFile = req.rawBody.toString('utf-8');
   const localFile = req.query.file;
+  const version = req.query.version;
 
   if(req.rawBody.length==0 && !localFile)
     return res.status(500).send('No file attached!')
   if(!localFile)
     return res.status(500).send('No file defined!')
-  
+  if(!version)
+    return res.status(500).send('No version defined!')
+   
   let Importer = null;
   if(req.rawBody.length>0)
-    Importer = cdi.importAttachedFile(req.jwt, attachedFile);
+    Importer = cdi.importAttachedFile(req.jwt, attachedFile, version);
   else
-    Importer = cdi.importLocalFile(req.jwt, localFile);
+    Importer = cdi.importLocalFile(req.jwt, localFile, version);
   
   Importer
     .then(workspaces=>{

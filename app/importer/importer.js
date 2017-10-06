@@ -30,6 +30,7 @@ const fs = Promise.promisifyAll(require("fs"));
 module.exports = class Importer {
 
     constructor() {
+      this.version = null;
       this.jwt = null; //"Basic bXVzdGVybWFubkB0ZXN0LnNjOm90dHRv"; // Max Mustermann
       this.executionJwt = null; // used to create a case and execute it.
       this.workspaceMap = new Map();
@@ -299,6 +300,13 @@ module.exports = class Importer {
         })
     }
 
+    addVersion(name){
+      if(this.version != null)
+        return name+'_v'+this.version
+      else
+        return name;
+    }
+
     deleteUserDefinitionAttributeDefinitions(){
       let userDefinition = null;
       return UserDefinition.find(this.jwt)
@@ -561,7 +569,7 @@ module.exports = class Importer {
       return Promise.each(Workspace.EntityDefinition, ed=>{
         return EntityDefinition.create(this.jwt, {
             workspace: this.getWorkspaceIdByXMLId(Workspace.$.id), 
-            name: ed.$.id,
+            name: this.addVersion(ed.$.id),
             description: ed.$.description
           })
           .then(persistedEntityDefinition =>{
