@@ -26,15 +26,19 @@ app.use(function(req, res, next) {
 });
 
 app.use(function(req, res, next) {
-  var data = new Buffer('');
-  req.on('data', function(chunk) {    
-    data = Buffer.concat([data, chunk]);
-  });
-  req.on('end', function() {
-    req.rawBody = data;
-    //console.log(data.toString('utf-8'))
+  if(req.is('application/json')){
     next();
-  });
+  }else{
+    var data = new Buffer('');
+    req.on('data', function(chunk) {    
+      data = Buffer.concat([data, chunk]);
+    });
+    req.on('end', function() {
+      req.rawBody = data;
+      //console.log(data.toString('utf-8'))
+      next();
+    });
+  }
 });
 
 app.use(logger('dev'));

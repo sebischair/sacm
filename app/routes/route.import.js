@@ -91,6 +91,7 @@ router.post('/casedefinition', (req, res, next)=>{
   const attachedFile = req.rawBody.toString('utf-8');
   const localFile = req.query.file;
   const version = req.query.version;
+  const isExecute = req.query.isExecute === 'true';
 
   if(req.rawBody.length==0 && !localFile)
     return res.status(500).send('No file attached!')
@@ -106,13 +107,26 @@ router.post('/casedefinition', (req, res, next)=>{
     Importer = cdi.importLocalFile(req.jwt, localFile, version);
   
   Importer
-    .then(workspaces=>{
-      res.status(200).send(workspaces);
+    .then(caseDefinition=>{
+      if(isExecute === true)
+        return cdi.createCase()
+          .then(()=>{
+            return cdi.executeCase();
+          });
+      else
+        return Promise.resolve(caseDefinition);      
+    })
+    .then(result=>{
+      res.status(200).send(result);
     })
     .catch(err=>{
       console.log(err);
       res.status(500).send(err)
     });
+  
+
+
+
     
 });
 
