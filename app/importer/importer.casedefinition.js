@@ -51,6 +51,14 @@ module.exports = class CaseDefinitionImporter extends Importer{
       });
   }
 
+  createAndExecuteCase(executionJwt){
+    this.executionJwt = executionJwt;
+    return this.createCase()
+      .then(()=>{
+        return this.executeCase();
+      });
+  }
+
   initializeMapsWithWorkspace(){
     if(this.json.Group != null)
       this.json.Group.forEach(g=>{

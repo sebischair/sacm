@@ -109,10 +109,7 @@ router.post('/casedefinition', (req, res, next)=>{
   Importer
     .then(caseDefinition=>{
       if(isExecute === true)
-        return cdi.createCase()
-          .then(()=>{
-            return cdi.executeCase();
-          });
+        return cdi.createAndExecuteCase(req.jwt);
       else
         return Promise.resolve(caseDefinition);      
     })

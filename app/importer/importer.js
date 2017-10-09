@@ -1012,10 +1012,11 @@ module.exports = class Importer {
 
     createCase(){
       const caseDefinitionId = this.caseDefinitionMap.values().next().value;
-      return Case.create(this.executionJwt, {caseDefinition: caseDefinitionId})
-        .then(()=>{
-          return Case.create(this.executionJwt, {caseDefinition: caseDefinitionId});
-        })      
+      console.log('#####################################################')
+      console.log(caseDefinitionId)
+      console.log(this.executionJwt)
+      console.log('#####################################################')
+      return Case.create(this.executionJwt, {caseDefinition: caseDefinitionId})   
         .then(case1=>{
           this.case1 = case1;
           return Case.findTreeById(this.executionJwt, case1.id);
