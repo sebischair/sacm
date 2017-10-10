@@ -649,7 +649,8 @@ module.exports = class Importer {
             const option = AttributeDefinition.EnumerationOption[i];
             const data = {
               value: option.$.value,
-              description: option.$.description
+              description: option.$.description,
+              externalId: option.$.externalId
             }
             attrDef.options.enumerationValues.push(data);
           }          
