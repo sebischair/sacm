@@ -77,9 +77,9 @@ module.exports = {
     },
     post: function(jwt, path, data){
         const start = new Date();
-        console.log('###### POST 2 #######');
-        console.log(JSON.stringify(data));
-        console.log('###### POST 2 END #######');
+        //console.log('###### POST 2 #######');
+        //console.log(JSON.stringify(data));
+        //console.log('###### POST 2 END #######');
         return new Promise(function (resolve, reject){
             rq.post({
                 uri: config.sc.url +path,
