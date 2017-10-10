@@ -383,8 +383,7 @@ module.exports = class Importer {
     }
 
     createUsers(){      
-      console.log(this.json.UserDefinition);
-      return Promise.map(this.json.User, u=>{      
+      return Promise.each(this.json.User, u=>{      
         const data = {
           name: u.$.id,
           email: u.$.email,
@@ -412,7 +411,7 @@ module.exports = class Importer {
     }
 
     createGroups(){
-      return Promise.map(this.json.Group, g=>{
+      return Promise.each(this.json.Group, g=>{
         const data = {
           name: g.$.id,
           description: g.$.description,
@@ -447,10 +446,10 @@ module.exports = class Importer {
     }
 
     createMemberships(){
-      return Promise.map(this.json.Group, g=>{
+      return Promise.each(this.json.Group, g=>{
         if(g.Membership == null)
           return Promise.resolve();
-        return Promise.map(g.Membership, m=>{
+        return Promise.each(g.Membership, m=>{
           const groupId = this.getGroupIdByXMLId(g.$.id);
           const principalId = this.getPrincipalIdByXMLId(m.$.principalId);
           return Group.addMember(this.jwt, groupId, principalId);
