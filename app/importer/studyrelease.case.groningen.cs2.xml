@@ -33,14 +33,14 @@
             <AttributeDefinition id="GCS2_Owner" type="Link.Users.UmcgProfessionals" description="Owner"/>
             <AttributeDefinition id="GCS2_ASA" type="Link.EntityDefinition.GCS2_ASA" description="ASA"/>    
             <AttributeDefinition id="GCS2_Charlson" type="Link.EntityDefinition.GCS2_Charlson" description="Charlson"/>   
-            <!--<AttributeDefinition id="GCS2_GFI" type="Link.EntityDefinition.GCS2_GFI" description="Groningen Frailty Indicator (GFI)"/>   
+            <AttributeDefinition id="GCS2_GFI" type="Link.EntityDefinition.GCS2_GFI" description="Groningen Frailty Indicator (GFI)"/>   
             <AttributeDefinition id="GCS2_ADL" type="Link.EntityDefinition.GCS2_ADL" description="Activities of Daily Living (ADL)"/>   
             <AttributeDefinition id="GCS2_iADL" type="Link.EntityDefinition.GCS2_iADL" description="Instrumental Activities of Daily Living (iADL)"/>   
             <AttributeDefinition id="GCS2_NRS" type="Link.EntityDefinition.GCS2_NRS" description="Nutritional Risk Screening (NRS)"/>   
-            <AttributeDefinition id="GCS2_MNASF" type="Link.EntityDefinition.GCS2_MNASF" description="Mini Nutritional Assesment (MNA-SF)"/> -->  
+            <AttributeDefinition id="GCS2_MNASF" type="Link.EntityDefinition.GCS2_MNASF" description="Mini Nutritional Assesment (MNA-SF)"/> 
             <AttributeDefinition id="GCS2_PhysicalActivity" type="Link.EntityDefinition.GCS2_PhysicalActivity" description="Physical Activity"/>   
             <AttributeDefinition id="GCS2_PatientMonitory" type="Link.EntityDefinition.GCS2_PatientMonitory" description="Patient Monitory"/> 
-            <AttributeDefinition id="GCS2_SF12" type="Link.EntityDefinition.GCS2_SF12" description="SF-12"/> 
+            <AttributeDefinition id="GCS2_SF12" type="Link.EntityDefinition.GCS2_SF12" description="SF-12"/>
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_ASA" description="ASA">
@@ -153,7 +153,7 @@
             </AttributeDefinition>           
             <DerivedAttributeDefinition id="ch21" expression="number(ch1,0) + number(ch2,0) + number(ch3,0) + number(ch4,0) + number(ch5,0) + number(ch6,0) + number(ch7,0) + number(ch8,0) + number(ch9,0) + number(ch10,0) + number(ch11,0)*2 + number(ch12,0)*2 + number(ch13,0)*2 + number(ch14,0)*2 + number(ch15,0)*2 + number(ch16,0)*2 + number(ch17,0)*3 + number(ch18,0)*6 + number(ch19,0)*6 + number(ch20,0)" description="Charlson Comorbidity Index"/>     
         </EntityDefinition>
-        <!--
+    
         <EntityDefinition id="GCS2_GFI" description="Groningen Frailty Indicator (GFI)">
             <AttributeDefinition id="gfi1" type="enumeration" multiplicity="maximalOne" description="Kan patiënt zonder enige hulp van iemand anders zelfstandig deze taak uitvoeren? - Boodschappen doen?">
                 <EnumerationOption value="1" description="No"/>
@@ -388,7 +388,7 @@
             </AttributeDefinition>           
             <DerivedAttributeDefinition id="mnasf9" expression="number(mnasf1,0) + number(mnasf2,0) + number(mnasf3,0) + number(mnasf4,0) + number(mnasf5,0) + default(mnasf6,0) + default(mnasf7,0) + number(mnasf8,0)" description="Score"/>            
         </EntityDefinition>
-        -->
+        
         <EntityDefinition id="GCS2_PhysicalActivity" description="Physical Activity">
             <AttributeDefinition id="phactp1" type="date" multiplicity="maximalOne" description="Start date"/>
             <AttributeDefinition id="phactp2" type="date" multiplicity="maximalOne" description="End date"/>       
@@ -401,6 +401,7 @@
             <!--Collected Data e.g. {stepsFollowing: [{date: '2017-06-09 14:54:53.0', value: 12}], lowFollowing:[], mediumFollowing:[], highFollowing:[], noActivityFollowing:[]}"-->
             <AttributeDefinition id="phactpx" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Execution Timeseries"/>                 
         </EntityDefinition>
+        
         <EntityDefinition id="GCS2_PatientMonitory" description="Patient Monitory">
             <!--Mesurement-->
             <AttributeDefinition id="pmp1_name" type="enumeration" multiplicity="maximalOne" description="Measure name, the posible values are">
@@ -536,8 +537,6 @@
             <SummarySectionDefinition id="GCS2_Charlson" description="Charlson">    
                 <SummaryParamDefinition path="GCS2_Charlson.ch21"/>
             </SummarySectionDefinition>
-            
-            <!--
             <SummarySectionDefinition id="GCS2_GFI" description="Groningen Frailty Indicator (GFI)">    
                 <SummaryParamDefinition path="GCS2_GFI.gfi16"/>
             </SummarySectionDefinition>
@@ -550,7 +549,6 @@
             <SummarySectionDefinition id="GCS2_MNASF" description="Mini Nutritional Assesment (MNA-SF)">    
                 <SummaryParamDefinition path="GCS2_MNASF.mnasf9"/>
             </SummarySectionDefinition>
-            -->
             <SummarySectionDefinition id="GCS2_PhysicalActivity" description="Physical Activity">
                 <SummaryParamDefinition path="GCS2_PhysicalActivity.phactp1"/>
                 <SummaryParamDefinition path="GCS2_PhysicalActivity.phactp2"/>
@@ -601,8 +599,7 @@
                     <TaskParamDefinition path="GCS2_Charlson.ch19" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Charlson.ch20" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Charlson.ch21" isReadOnly="true" isMandatory="false"/>
-                </HumanTaskDefinition>
-                <!--
+                </HumanTaskDefinition>                
                 <HumanTaskDefinition id="GCS2_GFI" description="Groningen Frailty Indicator (GFI)" ownerPath="GCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="GCS2_GFI" entityAttachPath="GCS2_GFI">
                     <TaskParamDefinition path="GCS2_GFI.gfi1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_GFI.gfi2" isReadOnly="false" isMandatory="true"/>
@@ -661,7 +658,6 @@
                     <TaskParamDefinition path="GCS2_MNASF.mnasf8" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_MNASF.mnasf9" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
-                -->
             </StageDefinition>
             <StageDefinition id="GCS2_Workplan" description="Workplan" isMandatory="true" isRepeatable="false">
                 <SentryDefinition>
@@ -765,7 +761,6 @@
             <TaskParam path="GCS2_Patient"  userValue="vargiue"/>
             <TaskParam path="GCS2_Owner"  userValue="michelf"/>
         </Action>
-
         <Action id="CompleteHumanTask" processId="GCS2_ASA">
             <TaskParam path="GCS2_ASA.asa1"  values="['0']"/>
             <TaskParam path="GCS2_ASA.asa2"  values="['1']"/>
@@ -794,6 +789,41 @@
             <TaskParam path="GCS2_Charlson.ch18"  values="['1']"/>            
             <TaskParam path="GCS2_Charlson.ch19"  values="['0']"/>
             <TaskParam path="GCS2_Charlson.ch20"  values="['1']"/>
+        </Action>
+        <Action id="CompleteHumanTask" processId="GCS2_GFI">
+            <TaskParam path="GCS2_GFI.gfi1"  values="['0']"/>
+            <TaskParam path="GCS2_GFI.gfi2"  values="['1']"/>
+            <TaskParam path="GCS2_GFI.gfi3"  values="['1']"/>
+            <TaskParam path="GCS2_GFI.gfi4"  values="['0']"/>
+            <TaskParam path="GCS2_GFI.gfi5"  values="['1']"/>
+            <TaskParam path="GCS2_GFI.gfi6"  values="['0']"/>
+            <TaskParam path="GCS2_GFI.gfi7"  values="['1']"/>
+            <TaskParam path="GCS2_GFI.gfi8"  values="['0']"/>
+            <TaskParam path="GCS2_GFI.gfi9"  values="['0']"/>
+            <TaskParam path="GCS2_GFI.gfi10"  values="['0']"/>
+            <TaskParam path="GCS2_GFI.gfi11"  values="['1']"/>
+            <TaskParam path="GCS2_GFI.gfi12"  values="['0']"/>
+            <TaskParam path="GCS2_GFI.gfi13"  values="['1']"/>
+            <TaskParam path="GCS2_GFI.gfi14"  values="['0']"/>
+            <TaskParam path="GCS2_GFI.gfi15"  values="['1.0001']"/>
+        </Action>
+        <Action id="CompleteHumanTask" processId="GCS2_ADL">
+            <TaskParam path="GCS2_ADL.adl1"  values="['0']"/>
+            <TaskParam path="GCS2_ADL.adl2"  values="['1']"/>
+            <TaskParam path="GCS2_ADL.adl3"  values="['2']"/>
+            <TaskParam path="GCS2_ADL.adl4"  values="['2']"/>
+            <TaskParam path="GCS2_ADL.adl5"  values="['1']"/>
+            <TaskParam path="GCS2_ADL.adl6"  values="['0']"/>
+        </Action>
+        <Action id="CompleteHumanTask" processId="GCS2_iADL">
+            <TaskParam path="GCS2_iADL.iadl1"  values="['1.0001']"/>
+            <TaskParam path="GCS2_iADL.iadl2"  values="['1']"/>
+            <TaskParam path="GCS2_iADL.iadl3"  values="['0.0001']"/>
+            <TaskParam path="GCS2_iADL.iadl4"  values="['1.0003']"/>
+            <TaskParam path="GCS2_iADL.iadl5"  values="['1.0003']"/>
+            <TaskParam path="GCS2_iADL.iadl6"  values="['0']"/>
+            <TaskParam path="GCS2_iADL.iadl7"  values="['1']"/>
+            <TaskParam path="GCS2_iADL.iadl8"  values="['0']"/>
         </Action>
 
         <Action id="CompleteHumanTask" processId="GCS2_PhysicalActivityPrescription">
