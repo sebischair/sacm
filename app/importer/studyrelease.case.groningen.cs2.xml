@@ -405,18 +405,10 @@
             <AttributeDefinition id="pmp1_name" type="enumeration" multiplicity="maximalOne" description="Measure name, the posible values are">
                 <EnumerationOption value="WEIGHT" description="Weight"/>
                 <EnumerationOption value="HEIGHT" description="Height"/>
-                <!--<EnumerationOption value="FATRATIO" description="FatRatio"/>
-                <EnumerationOption value="FATMASSWEIGHT" description="FatMassWeight"/>-->
                 <EnumerationOption value="DIASTOLICBLOODPRESSURE" description="DiastolicBloodPressure"/>
                 <EnumerationOption value="SYSTOLICBLOODPRESSURE" description="SystolicBloodPressure"/>
-                <!--<EnumerationOption value="TEMPERATURE" description="Temperature"/>-->
                 <EnumerationOption value="SP02" description="SP02"/>
                 <EnumerationOption value="BODYTEMPERATURE" description="BodyTemperature"/>
-                <!--<EnumerationOption value="SKINTEMPERATURE" description="SkinTemperature"/>
-                <EnumerationOption value="MUSCLEMASS" description="MuscleMass"/>
-                <EnumerationOption value="HYDRATION" description="Hydration"/>
-                <EnumerationOption value="BONEMASS" description="BoneMass"/>
-                <EnumerationOption value="PULSEWAVEVEOCITY" description="PulseWaveVelocity"/>-->
                 <EnumerationOption value="SLEEP" description="Sleep"/>
             </AttributeDefinition>   
             <AttributeDefinition id="pmp2_alertmin" type="number" multiplicity="maximalOne" description="Min value for this measure"/>       
@@ -447,20 +439,16 @@
                 <EnumerationOption value="AFTERNOONSNACK" description="AfternoonSnack"/>
                 <EnumerationOption value="DINNER" description="Dinner"/>
                 <EnumerationOption value="BEFORESLEEP" description="BeforeSleep"/>
-                <!--<EnumerationOption value="SPECIFICHOUR" description="SpecificHour"/>-->
             </AttributeDefinition>
-            <AttributeDefinition id="pmp13_timehour" type="date" multiplicity="atLeastOne" description="Hour"/>  
             <AttributeDefinition id="pmpx" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Mesurement"/>                      
         </EntityDefinition>
 
         <!-- Case Definition -->
         <CaseDefinition id="GCS2" description="Groningen CS2" ownerPath="GCS2_Owner" entityDefinitionId="GCS2_CaseData">
 
-            <!--
             <SummarySectionDefinition id="GCS2_ASA" description="ASA">            
                 <SummaryParamDefinition path="GCS2_ASA.asa6"/>
             </SummarySectionDefinition>
-            -->
             <SummarySectionDefinition id="GCS2_Charlson" description="Charlson">    
                 <SummaryParamDefinition path="GCS2_Charlson.ch21"/>
             </SummarySectionDefinition>
@@ -631,7 +619,6 @@
                     <TaskParamDefinition path="GCS2_PatientMonitory.pmp10_startdate" isReadOnly="false" isMandatory="false"/>
                     <TaskParamDefinition path="GCS2_PatientMonitory.pmp11_enddate" isReadOnly="false" isMandatory="false"/>
                     <TaskParamDefinition path="GCS2_PatientMonitory.pmp12_timeslot" isReadOnly="false" isMandatory="false"/>
-                    <!--<TaskParamDefinition path="GCS2_PatientMonitory.pmp13_timehour" isReadOnly="false" isMandatory="false"/>-->
                     <TaskParamDefinition path="GCS2_PatientMonitory.pmp6_comments" isReadOnly="false" isMandatory="false"/>
                 </HumanTaskDefinition>
                 <AutomatedTaskDefinition id="GCS2_PatientMonitoryExecution" description="Patient Monitory Execution" ownerPath="GCS2_Owner" isMandatory="true" isRepeatable="false">
@@ -650,19 +637,18 @@
                     <TaskParamDefinition path="GCS2_PatientMonitory.pmp10_startdate" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="GCS2_PatientMonitory.pmp11_enddate" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="GCS2_PatientMonitory.pmp12_timeslot" isReadOnly="true" isMandatory="false"/>
-                <!-- <TaskParamDefinition path="GCS2_PatientMonitory.pmp13_timehour" isReadOnly="true" isMandatory="false"/>-->
                     <TaskParamDefinition path="GCS2_PatientMonitory.pmp6_comments" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="GCS2_Patient" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="GCS2_PatientMonitory.pmpx" isReadOnly="false" isMandatory="true"/>
                 </AutomatedTaskDefinition>
 
             </StageDefinition>
-            <!--
+            
             <StageDefinition id="GCS2_Discharge" description="Discharge" isMandatory="true" isRepeatable="false">
                 <SentryDefinition>
                     <precondition processDefinitionId="GCS2_Workplan"/>
                 </SentryDefinition>
-            </StageDefinition>-->
+            </StageDefinition>
 
         </CaseDefinition>
     </Workspace>
@@ -672,7 +658,6 @@
 <!-- ####### Execution ###################################################################################################################### -->
 <!-- ######################################################################################################################################## -->
 
-    <!--This executes the case for testing-->
     <Execution>        
         <Action id="CompleteHumanTask" processId="GCS2_SelectPatient">
             <TaskParam path="GCS2_Patient"  userValue="vargiue"/>
