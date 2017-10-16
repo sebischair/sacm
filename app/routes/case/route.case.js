@@ -457,6 +457,7 @@ router.post('/:id/terminate', (req, res, next)=>{
  *
  */
 router.delete('/:id', (req, res, next)=>{
+  res.connection.setTimeout(100*60*1000);
   Case.deleteById(req.jwt, req.params.id)
     .then(()=>{
        res.status(200).send();
