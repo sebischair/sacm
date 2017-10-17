@@ -696,7 +696,8 @@ module.exports = class Importer {
               name: cd.$.id,
               description: cd.$.description,
               ownerPath: cd.$.ownerPath,
-              entityDefinition: entityDefinitionId
+              entityDefinition: entityDefinitionId,
+              version: this.version
             };
             return CaseDefinition.create(this.jwt, data)
           })
