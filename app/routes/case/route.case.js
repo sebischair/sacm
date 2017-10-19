@@ -1047,6 +1047,24 @@ router.get('/:id/summarysections', (req, res, next)=>{
     })
 });
 
+/**
+ * @api {post} /cases/:id/messages/seen Marks all messages of a case as seen
+ * @apiName CaseMessagesSeen
+ * @apiGroup Messages
+ * @apiParam {String} id ID of the Case
+ * @apiSampleRequest /cases/:id/messages/seen
+ * @apiSuccessExample {json} Success-Response:
+ * {}
+ */
+router.post('/:id/messages/seen', (req, res, next)=>{
+  Message.seenCase(req.jwt, req.params.id)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
 
 /**
  * @api {get} /cases/:id/permissions Case Permissions
