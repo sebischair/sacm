@@ -13,6 +13,10 @@ export default class User extends Model{
     return http.post(jwt, '/users/'+userId+'/verify', {email: email, magic: magic});
   }
 
+  static disable(jwt, userId){
+    return http.post(jwt, '/users/'+userId+'/disable');
+  }
+
   static createAndVerify(jwt, data) {
     let u = null;
     return User.create(jwt, data)

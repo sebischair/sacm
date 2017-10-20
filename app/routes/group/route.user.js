@@ -5,6 +5,24 @@ const router = express.Router();
 
 
 /**
+ * @api {post} users/:id/disable Disable User
+ * @apiName DisableUser
+ * @apiGroup Users
+ * @apiSampleRequest /users/:id/disable
+ * @apiSuccessExample {json} Success-Response:
+ *   {}
+ */
+router.post('/:id/disable', (req, res, next)=>{
+  User.disable(req.jwt, req.params.id)
+    .then(user=>{
+        res.status(200).send(user);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
  * @api {get} /users Get Users 
  * @apiName GetUsers
  * @apiGroup Users
