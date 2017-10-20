@@ -617,6 +617,8 @@ module.exports = class Importer {
       };
       if(type == null)
         return attrDef;
+      if(AttributeDefinition.$.defaultValues != null)
+        attrDef.defaultValues = JSON.parse(AttributeDefinition.$.defaultValues.replace(/'/g,'"'));      
       const ref = type.split('.');   
       const validTypes = ['link', 'notype', 'string', 'longtext', 'boolean', 'number', 'enumeration', 'date', 'json'];
       if(validTypes.indexOf(ref[0].toLowerCase()) == -1){        
