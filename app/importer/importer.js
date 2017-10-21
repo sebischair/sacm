@@ -922,6 +922,7 @@ module.exports = class Importer {
             on: hhd.$.on,
             url: hhd.$.url,
             method: hhd.$.method,
+            failureMessage: hhd.$.failureMessage,
             processDefinition: processDefinitionId
           }
           return HttpHookDefinition.create(this.jwt, data);

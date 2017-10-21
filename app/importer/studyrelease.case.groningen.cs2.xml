@@ -44,7 +44,7 @@
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_ASA" description="ASA">
-            <AttributeDefinition id="asa1" type="enumeration" multiplicity="maximalOne" description="ASA 1">
+            <AttributeDefinition id="asa1" type="enumeration" multiplicity="maximalOne" description="ASA 1" defaultValues="['1']">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition> 
@@ -676,7 +676,7 @@
                     <SentryDefinition>
                         <precondition processDefinitionId="GCS2_PhysicalActivityPrescription"/>
                     </SentryDefinition>
-                    <HttpHookDefinition on="ENABLE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST"></HttpHookDefinition>
+                    <HttpHookDefinition on="ENABLE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System"></HttpHookDefinition>
                     <TaskParamDefinition path="GCS2_PhysicalActivity.phactp1" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="GCS2_PhysicalActivity.phactp2" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="GCS2_PhysicalActivity.phactp3" isReadOnly="true" isMandatory="false"/>
@@ -705,7 +705,7 @@
                     <SentryDefinition>
                         <precondition processDefinitionId="GCS2_PatientMonitoryPrescription"/>
                     </SentryDefinition>
-                    <HttpHookDefinition on="ACTIVATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST"></HttpHookDefinition>
+                    <HttpHookDefinition on="ENABLE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create monitoring prescription on Self-Management System"></HttpHookDefinition>
                     <TaskParamDefinition path="GCS2_PatientMonitory.pmp1_name" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="GCS2_PatientMonitory.pmp2_alertmin" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="GCS2_PatientMonitory.pmp3_alertmax" isReadOnly="true" isMandatory="false"/>            
@@ -723,7 +723,7 @@
                 </AutomatedTaskDefinition>
 
                 <AutomatedTaskDefinition id="GCS2_SF12" externalId="6C20EE57-C5F7-4F4C-A7AE-BEAC4F8C3C3A" description="SF-12" ownerPath="GCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="GCS2_SF12" entityAttachPath="GCS2_SF12">
-                    <!--<HttpHookDefinition on="ENABLE" url="http://35.157.110.245:8081/v1/producer/point-to-point/sacm/prescription" method="POST"></HttpHookDefinition>-->
+                    <!--<HttpHookDefinition on="ENABLE" url="http://35.157.110.245:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System"></HttpHookDefinition>-->
                     <TaskParamDefinition path="GCS2_SF12.sf12-1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_SF12.sf12-2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_SF12.sf12-3" isReadOnly="false" isMandatory="true"/>
