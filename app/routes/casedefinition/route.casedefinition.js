@@ -38,6 +38,24 @@ router.get('/caninstantiate', (req, res, next)=>{
 });
 
 /**
+ * @api {post} /casedefinitions/:id/disableinstantiation Disable instantiation of CaseDefinition
+ * @apiName DisableCaseDefinitionInstantiation
+ * @apiGroup CaseDefinitions
+ * @apiSampleRequest /casedefinitions/:id/disableinstantiation
+ * @apiSuccessExample {json} Success-Response:
+ * {}
+ */
+router.post('/:id/disableinstantiation', (req, res, next)=>{
+  CaseDefinition.disableInstantiation(req.jwt, req.params.id)
+    .then(cd=>{
+        res.status(200).send(cd);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
  * @api {post} /casedefinitions Create CaseDefinition
  * @apiName CreateCaseDefinition
  * @apiGroup CaseDefinitions
