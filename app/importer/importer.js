@@ -724,6 +724,7 @@ module.exports = class Importer {
           name: ssd.$.id,
           description: ssd.$.description,
           position: ssd.$.position,
+          uiReference: ssd.$.uiReference,
           paths: [],
           caseDefinition: caseDefinitionId
         }
