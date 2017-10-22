@@ -99,9 +99,9 @@ router.post('/casedefinition', (req, res, next)=>{
 
   if(!version)
     return res.status(500).send('No version defined!')
-  if(!isAttachedFile && !localFile)
+  if(!isAttachedFile && !isLocalFile)
     return res.status(500).send('No local file defined AND no file attached!')
-  if(isAttachedFile && localFile)
+  if(isAttachedFile && isLocalFile)
     return res.status(500).send('Local file defined AND file attached!')
 
   let Importer = null;
