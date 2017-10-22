@@ -723,6 +723,7 @@ module.exports = class Importer {
         let data = {
           name: ssd.$.id,
           description: ssd.$.description,
+          position: ssd.$.position,
           paths: [],
           caseDefinition: caseDefinitionId
         }
