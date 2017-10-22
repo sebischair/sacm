@@ -52,15 +52,17 @@ router.post('/workspaces', (req, res, next)=>{
   res.connection.setTimeout(100*60*1000);
   const wi = new WorkspaceImporter();
   const attachedFile = req.rawBody.toString('utf-8');
+  const isAttachedFile = req.rawBody.length>200;
   const localFile = req.query.file;
+  const isLocalFile = localFile != null;
 
-  if(req.rawBody.length==0 && !localFile)
-    return res.status(500).send('No file attached!')
-  if(!localFile)
-    return res.status(500).send('No file defined!')
+  if(!isAttachedFile && !localFile)
+    return res.status(500).send('No local file defined AND no file attached!')
+  if(isAttachedFile && localFile)
+    return res.status(500).send('Local file defined AND file attached!')
 
   let Importer = null;
-  if(req.rawBody.length>0)
+  if(isAttachedFile)
     Importer = wi.importAttachedFile(req.jwt, attachedFile);
   else
     Importer = wi.importLocalFile(req.jwt, localFile);
