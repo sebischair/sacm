@@ -18,90 +18,38 @@ import Case from '../models/case/model.case';
 import HumanTask from '../models/case/model.humantask';
 const router = express.Router();
 
-router.post('/hook', (req, res, next)=>{
-  console.log('Hook arrived');
-  console.log(req.body);
-  res.send({some: "json"});
-})
-
-router.get('/', (req, res, next)=>{
-
-  let workspace = null;  
-  let rootEntityDefinition = null;
-  let caseDefinition = null;
-  let stageDefinitioIdentification = null;
-  let humanTaskDefinitionIdentification = null;
-
-  let case2 = null;
-
-  return Workspace.deleteAll()
-    .then(()=>{
-      return Workspace.create({
-        name: 'Testworkspace'
-      });        
-    })
-    .then(persistedWorkspace=>{
-      workspace = persistedWorkspace;
-      return EntityDefinition.create({
-        workspace: workspace.id,
-        name: 'RootEntityDefinition',
-        namePlural: 'Root Entity Definition'
-      });
-    })
-    .then(persistedRootEntityDefinition=>{
-      rootEntityDefinition = persistedRootEntityDefinition;
-      return CaseDefinition.create({
-        name: 'DemoCase',
-        description: 'Demo Case',
-        summaryPaths: [],
-        entityDefinition: rootEntityDefinition.id
-      });
-    })
-    .then(persistedCaseDefinition =>{      
-      caseDefinition = persistedCaseDefinition;
-      return StageDefinition.create({
-        name: 'IdentificationStage',
-        description: 'Identifictation Stage',
-        isRepeatable: false,
-        isMandatory: true,
-        caseDefinition: caseDefinition.id,
-        parentStageDefinition: null,              
-        newEntityDefinition: null,
-        newEntityAttachPath: null
-      });
-    })
-    .then(persistedStageDefinition=>{
-      stageDefinitioIdentification = persistedStageDefinition;
-      return HumanTaskDefinition.create({
-        name: 'IdentificationTask',
-        description: 'Identification Task',          
-        ownerPath: null,
-        isRepeatable: false,
-        isMandatory: true,
-        caseDefinition: caseDefinition.id,          
-        parentStageDefinition: null,                  
-        newEntityDefinition: null,
-        newEntityAttachPath: null         
-      });
-    })
-    .then(persistedHumanTaskDefinition=>{
-      humanTaskDefinitionIdentification = persistedHumanTaskDefinition;
-      return Promise.resolve();
-    })
-    .then(()=>{
-      return Case.create({
-        caseDefinition: caseDefinition.id
-      });
-    })
+router.get('/visualvm', (req, res, next)=>{
+  Case.create(req.jwt, {caseDefinition: "ph269ah911l"})
     .then(persistedCase=>{
-      case2 = persistedCase;
-      return Case.findTreebyId(case2.id)
+      console.log(persistedCase);
+      return HumanTask.findById(req.jwt, persistedCase.activeProcesses[0].id)
     })
-    .then(caseTree=>{
-      console.log(JSON.stringify(caseTree,null,2));
-      return Promise.resolve(caseTree);
+    .then(humanTask=>{      
+      res.send(humanTask);
     });
-  
+});
+
+router.get('/visualvm2', (req, res, next)=>{
+  HumanTask.draft(req.jwt, {
+    "id": "109jxhtm1kj77",
+    "taskParams": [
+      {
+          "id": "f6dyvtmeushk",
+          "values": [{id: "2c940c085e765068015e7704c2540120"}],
+          "description": "Patient",
+          "name": "GCS2_Patient"
+      },
+      {        
+          "id": "1q3ovio3kjku2",
+          "values": [{"id": "2c940c085e765068015e76786adf0070"}],       
+          "description": "Owner",         
+          "name": "GCS2_Owner"         
+      }
+    ]
+  })
+  .then(draftedTask=>{
+    res.send(draftedTask);
+  });
 });
 
 module.exports = router;
