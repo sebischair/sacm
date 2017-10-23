@@ -697,6 +697,7 @@ module.exports = class Importer {
             const data = {
               name: cd.$.id,
               description: cd.$.description,
+              workspace: this.workspaceMap.get(Workspace.$.id),
               ownerPath: cd.$.ownerPath,
               entityDefinition: entityDefinitionId,
               version: this.version
