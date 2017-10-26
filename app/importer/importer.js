@@ -543,6 +543,8 @@ module.exports = class Importer {
     createWorkspaceElements(Workspace){        
       return this.createEntityDefinitions(Workspace)
         .then(() => {
+          console.log('---MAP--');
+          console.log(this.entityDefinitionMap);
           return this.createAttributeDefinitions(Workspace);
         })
         .then(() => {
