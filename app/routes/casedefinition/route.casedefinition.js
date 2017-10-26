@@ -150,12 +150,8 @@ router.get('/:id/tree', (req, res, next)=>{
 router.delete('/:id', (req, res, next)=>{
   res.connection.setTimeout(100*60*1000);
   CaseDefinition.deleteById(req.jwt, req.params.id)
-    .then(cd=>{
-        console.log(cd);
-        return cd.remove();
-    })
-    .then(()=>{
-       res.status(200).send();
+    .then(data=>{
+       res.status(200).send(data);
     })
     .catch(err=>{
       res.status(500).send(err);
