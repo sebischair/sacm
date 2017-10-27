@@ -543,8 +543,6 @@ module.exports = class Importer {
     createWorkspaceElements(Workspace){        
       return this.createEntityDefinitions(Workspace)
         .then(() => {
-          console.log('---MAP--');
-          console.log(this.entityDefinitionMap);
           return this.createAttributeDefinitions(Workspace);
         })
         .then(() => {
@@ -596,6 +594,8 @@ module.exports = class Importer {
                 data.multiplicity = ad.$.multiplicity; 
                 data.entityDefinition = entityDefId;   
                 data.uiReference = ad.$.uiReference;  
+                if(ad.$.uiConstraint != null)
+                  data.uiConstraint = JSON.parse(ad.$.uiConstraint.replace(/'/g,'"')); 
                 data.externalId = ad.$.externalId;   
                 return AttributeDefinition.create(this.jwt, data);
               })
