@@ -624,10 +624,18 @@ module.exports = class Importer {
       const ref = type.split('.');   
       const validTypes = ['link', 'notype', 'string', 'longtext', 'boolean', 'number', 'enumeration', 'date', 'json'];
       if(validTypes.indexOf(ref[0].toLowerCase()) == -1){        
-        console.log('Could not resolve attibute "'+type+'" type!');
-        throw new Error('Could not resolve attibute type!');
+        console.log('Could not resolve attribute "'+type+'" type!');
+        throw new Error('Could not resolve attribute type!');
       }else{
         attrDef.attributeType = ref[0].toLowerCase();
+      }
+      if(attrDef.attributeType == 'number'){
+        for(let i=1; i<ref.length; i++){
+          if(ref[i].startsWith('min('))            
+            attrDef.options.minValue = ref[i].replace('min(','').replace(')','');
+          if(ref[i].startsWith('max('))
+            attrDef.options.maxValue = ref[i].replace('max(','').replace(')','');
+        }
       }
       if(attrDef.attributeType == 'link'){
         if(ref.length > 2 && ref[1] == 'EntityDefinition'){
