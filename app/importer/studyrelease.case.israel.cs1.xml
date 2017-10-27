@@ -28,12 +28,12 @@
     <Workspace staticId="2c9480885d1737ef015d74deeac90000" id="Assuta">
 
         <EntityDefinition id="ICS1_CaseData" description="Case Data">
-            <AttributeDefinition id="LCS1_Patient" type="Link.Users.AssutaPatients" description="Patient"/>
-            <AttributeDefinition id="LCS1_CaseManager" type="Link.Users.AssutaCaseManagers" description="Case Manager"/>            
-            <AttributeDefinition id="LCS1_Clinician" type="Link.Users.AssutaClinicians" description="Clinician"/>
-            <AttributeDefinition id="LCS1_Nurse" type="Link.Users.AssutaNurses" description="Nurse"/>
-            <AttributeDefinition id="LCS1_SocialCareer" type="Link.Users.AssutaSocialCareers" description="Social carer"/>
-            <AttributeDefinition id="LCS1_Professional" type="Link.Users.AssutaProfessionals" description="Professional"/>
+            <AttributeDefinition id="ICS1_Patient" type="Link.Users.AssutaPatients" description="Patient"/>
+            <AttributeDefinition id="ICS1_CaseManager" type="Link.Users.AssutaCaseManagers" description="Case Manager"/>            
+            <AttributeDefinition id="ICS1_Clinician" type="Link.Users.AssutaClinicians" description="Clinician"/>
+            <AttributeDefinition id="ICS1_Nurse" type="Link.Users.AssutaNurses" description="Nurse"/>
+            <AttributeDefinition id="ICS1_SocialCareer" type="Link.Users.AssutaSocialCareers" description="Social carer"/>
+            <AttributeDefinition id="ICS1_Professional" type="Link.Users.AssutaProfessionals" description="Professional"/>
 
 
             <AttributeDefinition id="ICS1_Lace" type="Link.EntityDefinition.ICS1_Lace" description="Lace"/>  
@@ -55,10 +55,6 @@
             <AttributeDefinition id="ICS1_SmokingAlcohol" type="Link.EntityDefinition.ICS1_SmokingAlcohol" description="עישון ואלכוהול"/>  
             <AttributeDefinition id="ICS1_Medication" type="Link.EntityDefinition.ICS1_Medication" description="עישון ואלכוהול"/>  
             <AttributeDefinition id="ICS1_Sleeping" type="Link.EntityDefinition.ICS1_Medication" description="עישון ואלכוהול"/>  
-            <AttributeDefinition id="ICS1_Medication" type="Link.EntityDefinition.ICS1_Medication" description="עישון ואלכוהול"/>  
-            <AttributeDefinition id="ICS1_Medication" type="Link.EntityDefinition.ICS1_Medication" description="עישון ואלכוהול"/>  
-            <AttributeDefinition id="ICS1_Medication" type="Link.EntityDefinition.ICS1_Medication" description="עישון ואלכוהול"/>  
-            <AttributeDefinition id="ICS1_Medication" type="Link.EntityDefinition.ICS1_Medication" description="עישון ואלכוהול"/>  
         </EntityDefinition>
 
 
@@ -292,7 +288,7 @@
        <EntityDefinition id="ICS1_NutritionalData" description="מצב תזונה"> 
             <AttributeDefinition id="Height" type="number" multiplicity="maximalOne" description="גובה"/>
             <AttributeDefinition id="Weight" type="number" multiplicity="maximalOne" description="משקל"/>
-            <DerivedAttributeDefinition id="Bmi" expression="number(Height,0) / number(Weight,0) * number(Height,0)" description="BMI"/> <!-- DIVISION BY 0 POSSIBLE!! -->
+            <DerivedAttributeDefinition id="Bmi2" expression="Height / Weight * Height" description="BMI"/> <!-- DIVISION BY 0 POSSIBLE!! -->
             <AttributeDefinition id="Albumin" type="number" multiplicity="maximalOne" description="Albumin"/>
             <AttributeDefinition id="Hemoglobin" type="number" multiplicity="maximalOne" description="Hemoglobin"/>
             <AttributeDefinition id="Electrolytes" type="number" multiplicity="maximalOne" description="Electrolytes"/>
@@ -417,7 +413,7 @@
                 <EnumerationOption value="1" description="מאבד לפעמים, או זקוק לאביזר עזר (5)"/>
                 <EnumerationOption value="2" description="שולט שליטה מלאה (10)"/>
             </AttributeDefinition>   
-            <AttributeDefinition id="BarthelToiletHygiene " type="enumeration" multiplicity="maximalOne" description="ברטל- שימוש בשירותים">
+            <AttributeDefinition id="BarthelToiletHygiene" type="enumeration" multiplicity="maximalOne" description="ברטל- שימוש בשירותים">
                 <EnumerationOption value="0" description="זקוק לעזרה מלאה (0)"/>
                 <EnumerationOption value="1" description="זקוק לעזרה אך עצמאי בחלק מהמרכיבים (5)"/>            
                 <EnumerationOption value="2" description="עצמאי בישיבה וקימה מהאסלה, מסתדר עם הלבוש, הניגוב והורדת המים (10)"/>
@@ -670,7 +666,7 @@
 
             <DerivedAttributeDefinition id="HADSDepressionScore" expression="number(HADS2,0)+number(HADS4,0)+number(HADS6,0)+number(HADS8,0)+number(HADS10,0)+number(HADS12,0)+number(HADS14 ,0)" description="תוצאת HADS"/>  
 
-            <DerivedAttributeDefinition id="HADSAnxietyScore" expression="number(HADS1,0)+number(HADS3,0)+number(HADS5,0)+number(HADS7,0)+number(HADS9,0)+number(HADS11,0)+number(SF127 ,0)+number(HADS13,0)" description="תוצאת HADS"/>
+            <DerivedAttributeDefinition id="HADSAnxietyScore" expression="number(HADS1,0)+number(HADS3,0)+number(HADS5,0)+number(HADS7,0)+number(HADS9,0)+number(HADS11,0)+number(HADS13,0)" description="תוצאת HADS"/>
         </EntityDefinition>   
 
         <EntityDefinition id="ICS1_EQ5D" description="EQ5D"> 
@@ -752,7 +748,7 @@
                 <EnumerationOption value="3" description="הצליח/ה שניים (2)"/>
             </AttributeDefinition> 
 
-            <!-- Sett16_11 missing here? -->
+            <!-- Sweet16_11 missing here? -->
 
             <AttributeDefinition id="Sweet16_12" type="enumeration" multiplicity="maximalOne" description="באיזו קומה? או באיזה חדר?">
                 <EnumerationOption value="1" description="לא זכר/ה כלל (0)"/>
@@ -842,7 +838,7 @@
             </AttributeDefinition> 
         </EntityDefinition>
 
-        <EntityDefinition id="ICS1_SmokingAlcohol " description="עישון ואלכוהול"> 
+        <EntityDefinition id="ICS1_SmokingAlcohol" description="עישון ואלכוהול"> 
             <AttributeDefinition id="Smoking" type="enumeration" multiplicity="maximalOne" description="סטאטוס עישון">
                 <EnumerationOption value="1" description="מעשן כרגע "/>
                 <EnumerationOption value="2" description="מעשן לשעבר"/>
@@ -937,7 +933,7 @@
         <SentryDefinition>
           <precondition processDefinitionId="ICS1_CaseIdentification"/>
         </SentryDefinition>        
-        <HumanTaskDefinition id="ICS1_PatientsData" description="פרטים דמוגרפיים של המטופל" ownerPath="LCS1_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="ICS1_PatientsData" entityAttachPath="ICS1_PatientsData">                
+        <HumanTaskDefinition id="ICS1_PatientsData" description="פרטים דמוגרפיים של המטופל" ownerPath="ICS1_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="ICS1_PatientsData" entityAttachPath="ICS1_PatientsData">                
             <TaskParamDefinition path="ICS1_PatientsData.Birthcountry" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS1_PatientsData.ImmigrationYear" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS1_PatientsData.KidsNum" isReadOnly="false" isMandatory="true"/>
