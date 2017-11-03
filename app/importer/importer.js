@@ -629,6 +629,14 @@ module.exports = class Importer {
       }else{
         attrDef.attributeType = ref[0].toLowerCase();
       }
+      if(attrDef.attributeType == 'date'){
+        for(let i=1; i<ref.length; i++){
+          if(ref[i].startsWith('before('))            
+            attrDef.options.beforeDate = ref[i].replace('before(','').replace(')','');
+          if(ref[i].startsWith('after('))
+            attrDef.options.afterDate = ref[i].replace('after(','').replace(')','');
+        }
+      }
       if(attrDef.attributeType == 'number'){
         for(let i=1; i<ref.length; i++){
           if(ref[i].startsWith('min('))            
