@@ -19,6 +19,7 @@ import humantask from './case/route.humantask';
 import automatedtask from './case/route.automatedtask';
 import entity from './data/route.entity';
 import attribute from './data/route.attribute';
+import userdefinition from './group/route.userdefinition';
 import user from './group/route.user';
 import group from './group/route.group';
 import importer from './route.import';
@@ -26,6 +27,9 @@ import test from './route.test';
 
 function routes(){
     const router = express.Router();
+
+    /** UserDefinition routes */
+    router.use('/userdefinitions', userdefinition);
 
     /** Users and Groups routes*/
     router.use('/users', user);

@@ -612,10 +612,10 @@ module.exports = class Importer {
     }
 
     resolveAttributeType(type, AttributeDefinition){
-      /** e.g. {type: 'link', options:{entityDefinition: entityDefinitionId}} */
+      /** e.g. {type: 'link', attributeTypeConstraints:{entityDefinition: entityDefinitionId}} */
       let attrDef = {
         attributeType: 'notype',
-        options: {}
+        attributeTypeConstraints: {}
       };
       if(type == null)
         return attrDef;
@@ -632,28 +632,28 @@ module.exports = class Importer {
       if(attrDef.attributeType == 'date'){
         for(let i=1; i<ref.length; i++){
           if(ref[i].startsWith('before('))            
-            attrDef.options.beforeDate = ref[i].replace('before(','').replace(')','');
+            attrDef.attributeTypeConstraints.beforeDate = ref[i].replace('before(','').replace(')','');
           if(ref[i].startsWith('after('))
-            attrDef.options.afterDate = ref[i].replace('after(','').replace(')','');
+            attrDef.attributeTypeConstraints.afterDate = ref[i].replace('after(','').replace(')','');
         }
       }
       if(attrDef.attributeType == 'number'){
         for(let i=1; i<ref.length; i++){
           if(ref[i].startsWith('min('))            
-            attrDef.options.minValue = ref[i].replace('min(','').replace(')','');
+            attrDef.attributeTypeConstraints.minValue = ref[i].replace('min(','').replace(')','');
           if(ref[i].startsWith('max('))
-            attrDef.options.maxValue = ref[i].replace('max(','').replace(')','');
+            attrDef.attributeTypeConstraints.maxValue = ref[i].replace('max(','').replace(')','');
         }
       }
       if(attrDef.attributeType == 'link'){
         if(ref.length > 2 && ref[1] == 'EntityDefinition'){
-          attrDef.options.entityDefinition = {
+          attrDef.attributeTypeConstraints.entityDefinition = {
             id: this.getEntityDefinitionIdByXMLIdSync(ref[2])
           };          
         }
 
         if(ref.length > 2 && ref[1].toLowerCase() == 'users'){
-          attrDef.options = {
+          attrDef.attributeTypeConstraints = {
             resourceType: 'users',
             groupType: [{id: this.getGroupIdByXMLId(ref[2])}]          
           };
@@ -664,7 +664,7 @@ module.exports = class Importer {
           console.log('A Enumeration should provide at least one value!');
           throw new Error('A Enumeration should provide at least one value!');
         }else{
-          attrDef.options.enumerationValues = []; 
+          attrDef.attributeTypeConstraints.enumerationValues = []; 
           for(let i=0; i<AttributeDefinition.EnumerationOption.length; i++){
             const option = AttributeDefinition.EnumerationOption[i];
             const data = {
@@ -672,7 +672,7 @@ module.exports = class Importer {
               description: option.$.description,
               externalId: option.$.externalId
             }
-            attrDef.options.enumerationValues.push(data);
+            attrDef.attributeTypeConstraints.enumerationValues.push(data);
           }          
         }     
       }
