@@ -836,7 +836,7 @@ module.exports = class Importer {
             console.log('SD here')
             console.log(sd.$$);
             console.log(sd);
-            return this.createTaskDefinitions(caseDefId, parentStageDefId, sd.$$)
+            return this.createTaskDefinitions2(caseDefId, parentStageDefId, sd.$$)
           })
           /*
           .then(()=>{
@@ -849,8 +849,9 @@ module.exports = class Importer {
       });
     }
 
-    createTaskDefinitions(caseDefId, parentStageDefId, taskDefinitions){
+    createTaskDefinitions2(caseDefId, parentStageDefId, taskDefinitions){
       console.log('createTaskDef 1');
+      console.log(parentStageDefId);
       console.log(taskDefinitions)
       if(taskDefinitions == null)
         return Promise.resolve();
@@ -878,6 +879,10 @@ module.exports = class Importer {
               externalId: td.$.externalId
             }
             console.log('data', data);
+            fs.appendFile('message.txt', td.$.id+"\n/n", function (err) {
+              if (err) throw err;
+              console.log('Saved!');
+            });
             if(isHumanTaskDefinition)            
               return HumanTaskDefinition.create(this.jwt, data);
             if(isAutomatedTaskDefinition)       
