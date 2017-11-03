@@ -44,28 +44,14 @@
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_ASA" description="ASA">
-            <AttributeDefinition id="asa1" type="enumeration" multiplicity="maximalOne" description="ASA 1" defaultValues="['1']">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Yes"/>
-            </AttributeDefinition> 
-            <AttributeDefinition id="asa2" type="enumeration" multiplicity="maximalOne" description="ASA 2">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Yes"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="asa3" type="enumeration" multiplicity="maximalOne" description="ASA 3">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Yes"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="asa4" type="enumeration" multiplicity="maximalOne" description="ASA 4">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Yes"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="asa5" type="enumeration" multiplicity="maximalOne" description="ASA 5">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Yes"/>
-            </AttributeDefinition>                     
-            <DerivedAttributeDefinition id="asa6" expression="number(asa1,0) + number(asa2,0) + number(asa3,0) + number(asa4,0) + number(asa5,0)" description="Charlson Comorbidity Index"/>     
-        </EntityDefinition>
+            <AttributeDefinition id="asa" type="enumeration" multiplicity="maximalOne" description="ASA">
+                <EnumerationOption value="1" description="ASA 1"/>
+                <EnumerationOption value="2" description="ASA 2"/>
+                <EnumerationOption value="3" description="ASA 3"/>
+                <EnumerationOption value="4" description="ASA 4"/>
+                <EnumerationOption value="5" description="ASA 5"/>
+            </AttributeDefinition>               
+         </EntityDefinition>
 
         <EntityDefinition id="GCS2_Charlson" description="Charlson">
             <AttributeDefinition id="ch1" type="enumeration" multiplicity="maximalOne" description="Myocardial infarct">
@@ -530,7 +516,7 @@
         <CaseDefinition id="GCS2" description="Groningen CS2" ownerPath="GCS2_Owner" entityDefinitionId="GCS2_CaseData">
 
             <SummarySectionDefinition id="GCS2_ASA" description="ASA" position="LEFT">            
-                <SummaryParamDefinition path="GCS2_ASA.asa6"/>
+                <SummaryParamDefinition path="GCS2_ASA.asa"/>
             </SummarySectionDefinition>
             <SummarySectionDefinition id="GCS2_Charlson" description="Charlson" position="LEFT">    
                 <SummaryParamDefinition path="GCS2_Charlson.ch21"/>
@@ -562,12 +548,7 @@
                     <SentryDefinition>
                         <precondition processDefinitionId="GCS2_SelectPatient"/>
                     </SentryDefinition>
-                    <TaskParamDefinition path="GCS2_ASA.asa1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_ASA.asa2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_ASA.asa3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_ASA.asa4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_ASA.asa5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_ASA.asa6" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_ASA.asa" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
                 
             </StageDefinition>
@@ -760,11 +741,7 @@
             <TaskParam path="GCS2_Owner"  userValue="michelf"/>
         </Action>
         <Action id="CompleteHumanTask" processId="GCS2_ASA">
-            <TaskParam path="GCS2_ASA.asa1"  values="['0']"/>
-            <TaskParam path="GCS2_ASA.asa2"  values="['1']"/>
-            <TaskParam path="GCS2_ASA.asa3"  values="['0']"/>
-            <TaskParam path="GCS2_ASA.asa4"  values="['1']"/>
-            <TaskParam path="GCS2_ASA.asa5"  values="['1']"/>
+            <TaskParam path="GCS2_ASA.asa"  values="['2']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="GCS2_Charlson">
             <TaskParam path="GCS2_Charlson.ch1"  values="['0']"/>
