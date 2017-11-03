@@ -194,13 +194,13 @@ module.exports = class Importer {
         if(!exist)
           throw new Error('File does not exist' + filePath);
         else {         
-          return xml2jspromise.parseStringAsync(fs.readFileSync(filePath).toString());
+          return xml2jspromise.parseStringAsync(fs.readFileSync(filePath).toString(), {explicitChildren:true, preserveChildrenOrder:true});
         }
       });
     }
 
     parseXMLString(xmlString){
-      return xml2jspromise.parseStringAsync(xmlString);
+      return xml2jspromise.parseStringAsync(xmlString, {explicitChildren:true, preserveChildrenOrder:true});
     }
 
     import(jwt, file, isExecuteCase, executionJwt){ 
@@ -811,10 +811,10 @@ module.exports = class Importer {
         return this.getCaseDefinitionIdByXMLId(cd.$.id)
           .then(caseDefeinitionId=>{
             caseDefId = caseDefeinitionId;
-            return this.createHumanTaskDefinitons(caseDefId, null, cd.HumanTaskDefinition);
+            return this.createHumanTaskDefinitions(caseDefId, null, cd.HumanTaskDefinition);
           })
           .then(()=>{
-            return this.createAutomatedTaskDefinitons(caseDefId, null, cd.AutomatedTaskDefinition);
+            return this.createAutomatedTaskDefinitions(caseDefId, null, cd.AutomatedTaskDefinition);
           })
           .then(()=>{
             return this.createTaskDefinitionRecursive(caseDefId, null, cd.StageDefinition);
@@ -833,15 +833,15 @@ module.exports = class Importer {
             return this.createTaskDefinitionRecursive(caseDefId, parentStageDefId, sd.StageDefinition)
           })
           .then(()=>{
-            return this.createHumanTaskDefinitons(caseDefId, parentStageDefId, sd.HumanTaskDefinition)
+            return this.createHumanTaskDefinitions(caseDefId, parentStageDefId, sd.HumanTaskDefinition)
           })
           .then(()=>{
-            return this.createAutomatedTaskDefinitons(caseDefId, parentStageDefId, sd.AutomatedTaskDefinition)
+            return this.createAutomatedTaskDefinitions(caseDefId, parentStageDefId, sd.AutomatedTaskDefinition)
           });
       });
     }
 
-    createHumanTaskDefinitons(caseDefId, parentStageDefId, humanTaskDefinitions){
+    createHumanTaskDefinitions(caseDefId, parentStageDefId, humanTaskDefinitions){
       if(humanTaskDefinitions == null)
         return Promise.resolve();
       return Promise.each(humanTaskDefinitions, td=>{
@@ -881,7 +881,7 @@ module.exports = class Importer {
       });
     }
 
-    createAutomatedTaskDefinitons(caseDefId, parentStageDefId, automatedTaskDefinitions){
+    createAutomatedTaskDefinitions(caseDefId, parentStageDefId, automatedTaskDefinitions){
       if(automatedTaskDefinitions == null)
         return Promise.resolve();
       return Promise.each(automatedTaskDefinitions, td=>{        
