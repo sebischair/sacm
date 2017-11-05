@@ -569,7 +569,8 @@ module.exports = class Importer {
         return EntityDefinition.create(this.jwt, {
             workspace: this.getWorkspaceIdByXMLId(Workspace.$.id), 
             name: this.addVersion(ed.$.id),
-            description: ed.$.description
+            description: ed.$.description,
+            allowFreeAttributes: false
           })
           .then(persistedEntityDefinition =>{
             this.entityDefinitionMap.set(ed.$.id, persistedEntityDefinition.id);
