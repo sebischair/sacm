@@ -332,15 +332,15 @@ module.exports = class Importer {
     createUserDefinition(){
       if(this.json.UserDefinition == null)
         return Promise.resolve();
-      const userDefintion = this.json.UserDefinition[0];
+      const userDefinition = this.json.UserDefinition[0];
       let persistedUserDefinitionId = null;
       return UserDefinition.find(this.jwt)
         .then(persistedUserDef =>{
           persistedUserDefinitionId = persistedUserDef.id;
-          return this.createUserDefinitionAttributeDefinitions(userDefintion, persistedUserDefinitionId);
+          return this.createUserDefinitionAttributeDefinitions(userDefinition, persistedUserDefinitionId);
         })
         .then(()=>{
-          return this.createUserDefinitionDerivedAttributeDefinitions(userDefintion, persistedUserDefinitionId);
+          return this.createUserDefinitionDerivedAttributeDefinitions(userDefinition, persistedUserDefinitionId);
         });
     }
 
