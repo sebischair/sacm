@@ -41,6 +41,7 @@
             <AttributeDefinition id="GCS2_PhysicalActivity" type="Link.EntityDefinition.GCS2_PhysicalActivity" description="Physical Activity"/>   
             <AttributeDefinition id="GCS2_PatientMonitoring" type="Link.EntityDefinition.GCS2_PatientMonitoring" description="Patient Monitory"/> 
             <AttributeDefinition id="GCS2_SF12" type="Link.EntityDefinition.GCS2_SF12" description="SF-12"/>
+            <AttributeDefinition id="GCS2_DischargeForm" type="Link.EntityDefinition.GCS2_DischargeForm" description="Discharge From"/>            
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_ASA" description="ASA">
@@ -511,6 +512,10 @@
             </AttributeDefinition>                   
         </EntityDefinition>
 
+        <EntityDefinition id="GCS2_DischargeForm" description="Discharge From">
+            <AttributeDefinition id="comment" type="longtext" multiplicity="maximalOne" description="Comment">                             
+        </EntityDefinition>
+
 
         <!-- Case Definition -->
         <CaseDefinition id="GCS2" description="Groningen CS2" ownerPath="GCS2_Owner" entityDefinitionId="GCS2_CaseData">
@@ -725,6 +730,9 @@
                 <SentryDefinition>
                     <precondition processDefinitionId="GCS2_Workplan"/>
                 </SentryDefinition>
+                <HumanTaskDefinition id="GCS2_DischargeForm" description="Discharge Form" ownerPath="GCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="GCS2_DischargeForm" entityAttachPath="GCS2_DischargeForm">
+                    <TaskParamDefinition path="GCS2_DischargeForm.comment" isReadOnly="false" isMandatory="true"/>                  
+                </HumanTaskDefinition>
             </StageDefinition>
 
         </CaseDefinition>
