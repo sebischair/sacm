@@ -809,12 +809,9 @@ module.exports = class Importer {
       return Promise.each(Workspace.CaseDefinition, cd=>{
         let caseDefId = null;
         return this.getCaseDefinitionIdByXMLId(cd.$.id)
-          .then(caseDefeinitionId=>{
-            caseDefId = caseDefeinitionId;
-            return this.createHumanTaskDefinitions(caseDefId, null, cd.HumanTaskDefinition);
-          })
-          .then(()=>{
-            return this.createAutomatedTaskDefinitions(caseDefId, null, cd.AutomatedTaskDefinition);
+          .then(caseDefinitionId=>{
+            caseDefId = caseDefinitionId;
+            return this.createTaskDefinitions2(caseDefId, null, cd.$$);
           })
           .then(()=>{
             return this.createTaskDefinitionRecursive(caseDefId, null, cd.StageDefinition);
@@ -833,34 +830,18 @@ module.exports = class Importer {
             return this.createTaskDefinitionRecursive(caseDefId, parentStageDefId, sd.StageDefinition)
           })
           .then(()=>{
-            console.log('SD here')
-            console.log(sd.$$);
-            console.log(sd);
             return this.createTaskDefinitions2(caseDefId, parentStageDefId, sd.$$)
           })
-          /*
-          .then(()=>{
-            return this.createHumanTaskDefinitions(caseDefId, parentStageDefId, sd.HumanTaskDefinition)
-          })
-          .then(()=>{
-            return this.createAutomatedTaskDefinitions(caseDefId, parentStageDefId, sd.AutomatedTaskDefinition)
-          });
-          */
       });
     }
 
     createTaskDefinitions2(caseDefId, parentStageDefId, taskDefinitions){
-      console.log('createTaskDef 1');
-      console.log(parentStageDefId);
-      console.log(taskDefinitions)
       if(taskDefinitions == null)
         return Promise.resolve();
       return Promise.each(taskDefinitions, td=>{
         let taskDefinitionId = null;
         let isHumanTaskDefinition = td['#name']=='HumanTaskDefinition';
-        console.log('isHumanTask: '+isHumanTaskDefinition)
         let isAutomatedTaskDefinition = td['#name']=='AutomatedTaskDefinition';
-        console.log('isAutomatedTask: '+isAutomatedTaskDefinition)
         if(!(isHumanTaskDefinition || isAutomatedTaskDefinition))
           return Promise.resolve();
         return this.getEntityDefinitionIdByXMLId(td.$.entityDefinitionId)
@@ -878,18 +859,12 @@ module.exports = class Importer {
               newEntityAttachPath: td.$.entityAttachPath,
               externalId: td.$.externalId
             }
-            console.log('data', data);
-            fs.appendFile('message.txt', td.$.id+"\n/n", function (err) {
-              if (err) throw err;
-              console.log('Saved!');
-            });
             if(isHumanTaskDefinition)            
               return HumanTaskDefinition.create(this.jwt, data);
             if(isAutomatedTaskDefinition)       
               return AutomatedTaskDefinition.create(this.jwt, data);
           })
           .then(persistedTaskDef=>{
-            console.log('persistentTaskDef', persistedTaskDef.id)
             if(isHumanTaskDefinition)
               this.humanTaskDefinitionMap.set(td.$.id, persistedTaskDef.id);
             if(isAutomatedTaskDefinition)
@@ -910,84 +885,6 @@ module.exports = class Importer {
       });
     }
 
-    createHumanTaskDefinitions(caseDefId, parentStageDefId, humanTaskDefinitions){
-      if(humanTaskDefinitions == null)
-        return Promise.resolve();
-      return Promise.each(humanTaskDefinitions, td=>{
-        let humanTaskDefinitionId = null;
-        return this.getEntityDefinitionIdByXMLId(td.$.entityDefinitionId)
-          .then(entityDefinitionId=>{
-            const data = {
-              name: td.$.id,
-              description: td.$.description,          
-              ownerPath: td.$.ownerPath,
-              isRepeatable: td.$.isRepeatable,
-              isMandatory: td.$.isMandatory,              
-              isManualActivation: td.$.isManualActivation,
-              caseDefinition: caseDefId,          
-              parentStageDefinition: parentStageDefId,                  
-              newEntityDefinition: entityDefinitionId,
-              newEntityAttachPath: td.$.entityAttachPath,
-              externalId: td.$.externalId
-            }            
-            return HumanTaskDefinition.create(this.jwt, data)
-          })
-          .then(persistedHumanTaskDef=>{
-            this.humanTaskDefinitionMap.set(td.$.id, persistedHumanTaskDef.id);
-            humanTaskDefinitionId = persistedHumanTaskDef.id;
-            return this.createTaskParamDefinitions(persistedHumanTaskDef.id, td.TaskParamDefinition);
-          })
-          .then(()=>{
-            return this.createHttpHookDefinitions(humanTaskDefinitionId, td.HttpHookDefinition);
-          })
-          .then(()=>{
-            return Promise.resolve();
-          })
-          .catch(err=>{
-            console.log(err)
-            return Promise.reject(err);
-          });
-      });
-    }
-
-    createAutomatedTaskDefinitions(caseDefId, parentStageDefId, automatedTaskDefinitions){
-      if(automatedTaskDefinitions == null)
-        return Promise.resolve();
-      return Promise.each(automatedTaskDefinitions, td=>{        
-        let automatedTaskDefinitionId = null;
-        return this.getEntityDefinitionIdByXMLId(td.$.entityDefinitionId)
-          .then(entityDefinitionId=>{
-            const data = {
-              name: td.$.id,
-              description: td.$.description,
-              ownerPath: td.$.ownerPath,
-              isRepeatable: td.$.isRepeatable,
-              isMandatory: td.$.isMandatory,              
-              isManualActivation: td.$.isManualActivation,
-              caseDefinition: caseDefId,
-              parentStageDefinition: parentStageDefId,           
-              newEntityDefinition: entityDefinitionId,
-              newEntityAttachPath: td.$.entityAttachPath,
-              externalId: td.$.externalId
-            }     
-            return AutomatedTaskDefinition.create(this.jwt, data)
-          })
-          .then(persistedAutomatedTaskDef=>{
-            this.automatedTaskDefinitionMap.set(td.$.id, persistedAutomatedTaskDef.id);
-            automatedTaskDefinitionId = persistedAutomatedTaskDef.id;
-            return this.createTaskParamDefinitions(persistedAutomatedTaskDef.id, td.TaskParamDefinition);
-          })
-          .then(()=>{
-            return this.createHttpHookDefinitions(automatedTaskDefinitionId, td.HttpHookDefinition);
-          })
-          .then(()=>{
-            return Promise.resolve();
-          })
-          .catch(err=>{
-            return Promise.reject(err);
-          });
-      });
-    }
 
     createTaskParamDefinitions(taskDefinitionId, taskDefinitionParams){
       if(taskDefinitionParams == null)
