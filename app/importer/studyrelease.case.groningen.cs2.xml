@@ -39,7 +39,7 @@
             <AttributeDefinition id="GCS2_NRS" type="Link.EntityDefinition.GCS2_NRS" description="Nutritional Risk Screening (NRS)"/>   
             <AttributeDefinition id="GCS2_MNASF" type="Link.EntityDefinition.GCS2_MNASF" description="Mini Nutritional Assesment (MNA-SF)"/> 
             <AttributeDefinition id="GCS2_PhysicalActivity" type="Link.EntityDefinition.GCS2_PhysicalActivity" description="Physical Activity"/>   
-            <AttributeDefinition id="GCS2_PatientMonitory" type="Link.EntityDefinition.GCS2_PatientMonitory" description="Patient Monitory"/> 
+            <AttributeDefinition id="GCS2_PatientMonitoring" type="Link.EntityDefinition.GCS2_PatientMonitoring" description="Patient Monitory"/> 
             <AttributeDefinition id="GCS2_SF12" type="Link.EntityDefinition.GCS2_SF12" description="SF-12"/>
         </EntityDefinition>
 
@@ -388,7 +388,7 @@
             <AttributeDefinition id="phactpx" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Execution Timeseries"/>                 
         </EntityDefinition>
         
-        <EntityDefinition id="GCS2_PatientMonitory" description="Patient Monitory">
+        <EntityDefinition id="GCS2_PatientMonitoring" description="Patient Monitory">
             <!--Mesurement-->
             <AttributeDefinition id="pmp1_name" type="enumeration" multiplicity="maximalOne" description="Measure name, the posible values are">
                 <EnumerationOption value="WEIGHT" description="Weight"/>
@@ -666,39 +666,39 @@
                     <TaskParamDefinition path="GCS2_Patient" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="GCS2_PhysicalActivity.phactpx" isReadOnly="false" isMandatory="true"/>
                 </AutomatedTaskDefinition>
-                <HumanTaskDefinition id="GCS2_PatientMonitoryPrescription" description="Patient Monitory Prescription" ownerPath="GCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="GCS2_PatientMonitory" entityAttachPath="GCS2_PatientMonitory">
-                    <TaskParamDefinition path="GCS2_PatientMonitory.pmp1_name" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitory.pmp2_alertmin" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitory.pmp3_alertmax" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitory.pmp4_alertfreq" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitory.pmp5_alertfrequnit" isReadOnly="false" isMandatory="false"/>            
-                    <TaskParamDefinition path="GCS2_PatientMonitory.pmp7_freq" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitory.pmp8_freqqunit" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitory.pmp9_maxdelay" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitory.pmp10_startdate" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitory.pmp11_enddate" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitory.pmp12_timeslot" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitory.pmp6_comments" isReadOnly="false" isMandatory="false"/>
+                <HumanTaskDefinition id="GCS2_PatientMonitoringPrescription" description="Patient Monitoring Prescription" ownerPath="GCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="GCS2_PatientMonitoring" entityAttachPath="GCS2_PatientMonitoring">
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp1_name" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp2_alertmin" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp3_alertmax" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp4_alertfreq" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp5_alertfrequnit" isReadOnly="false" isMandatory="false"/>            
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp7_freq" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp8_freqqunit" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp9_maxdelay" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp10_startdate" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp11_enddate" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp12_timeslot" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp6_comments" isReadOnly="false" isMandatory="false"/>
                 </HumanTaskDefinition>
-                <AutomatedTaskDefinition id="GCS2_PatientMonitoryExecution" description="Patient Monitory Execution" ownerPath="GCS2_Owner" isMandatory="true" isRepeatable="false">
+                <AutomatedTaskDefinition id="GCS2_PatientMonitoringExecution" description="Patient Monitoring Execution" ownerPath="GCS2_Owner" isMandatory="true" isRepeatable="false">
                     <SentryDefinition>
-                        <precondition processDefinitionId="GCS2_PatientMonitoryPrescription"/>
+                        <precondition processDefinitionId="GCS2_PatientMonitoringPrescription"/>
                     </SentryDefinition>
                     <HttpHookDefinition on="ENABLE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create monitoring prescription on Self-Management System"></HttpHookDefinition>
-                    <TaskParamDefinition path="GCS2_PatientMonitory.pmp1_name" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitory.pmp2_alertmin" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitory.pmp3_alertmax" isReadOnly="true" isMandatory="false"/>            
-                    <TaskParamDefinition path="GCS2_PatientMonitory.pmp5_alertfrequnit" isReadOnly="true" isMandatory="false"/> 
-                    <TaskParamDefinition path="GCS2_PatientMonitory.pmp4_alertfreq" isReadOnly="true" isMandatory="false"/>          
-                    <TaskParamDefinition path="GCS2_PatientMonitory.pmp8_freqqunit" isReadOnly="true" isMandatory="false"/>      
-                    <TaskParamDefinition path="GCS2_PatientMonitory.pmp7_freq" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitory.pmp9_maxdelay" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitory.pmp10_startdate" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitory.pmp11_enddate" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitory.pmp12_timeslot" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitory.pmp6_comments" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp1_name" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp2_alertmin" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp3_alertmax" isReadOnly="true" isMandatory="false"/>            
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp5_alertfrequnit" isReadOnly="true" isMandatory="false"/> 
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp4_alertfreq" isReadOnly="true" isMandatory="false"/>          
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp8_freqqunit" isReadOnly="true" isMandatory="false"/>      
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp7_freq" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp9_maxdelay" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp10_startdate" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp11_enddate" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp12_timeslot" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp6_comments" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="GCS2_Patient" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitory.pmpx" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmpx" isReadOnly="false" isMandatory="true"/>
                 </AutomatedTaskDefinition>
 
                 <AutomatedTaskDefinition id="GCS2_SF12" externalId="6C20EE57-C5F7-4F4C-A7AE-BEAC4F8C3C3A" description="SF-12" ownerPath="GCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="GCS2_SF12" entityAttachPath="GCS2_SF12">
@@ -853,22 +853,22 @@
         <Action id="CompleteAutomatedTask" processId="GCS2_PhysicalActivityExecution">
             <TaskParam path="GCS2_PhysicalActivity.phactpx"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
         </Action>  -->      
-        <Action id="CompleteHumanTask" processId="GCS2_PatientMonitoryPrescription">
-            <TaskParam path="GCS2_PatientMonitory.pmp1_name"  values="['WEIGHT']"/>
-            <TaskParam path="GCS2_PatientMonitory.pmp2_alertmin"  values="[50]"/>
-            <TaskParam path="GCS2_PatientMonitory.pmp3_alertmax"  values="[150]"/>
-            <TaskParam path="GCS2_PatientMonitory.pmp4_alertfreq"  values="[2]"/>
-            <TaskParam path="GCS2_PatientMonitory.pmp5_alertfrequnit"  values="['DAYS']"/>
-            <TaskParam path="GCS2_PatientMonitory.pmp6_comments"  values="['Some random comment']"/>
-            <TaskParam path="GCS2_PatientMonitory.pmp7_freq"  values="[5]"/>
-            <TaskParam path="GCS2_PatientMonitory.pmp8_freqqunit"  values="['WEEKS']"/>
-            <TaskParam path="GCS2_PatientMonitory.pmp9_maxdelay"  values="[100]"/>
-            <TaskParam path="GCS2_PatientMonitory.pmp10_startdate"  values="['2017-06-09T00:00:00.0']"/>
-            <TaskParam path="GCS2_PatientMonitory.pmp11_enddate"  values="['2019-06-09T00:00:00.0']"/>
-            <TaskParam path="GCS2_PatientMonitory.pmp12_timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
+        <Action id="CompleteHumanTask" processId="GCS2_PatientMonitoringPrescription">
+            <TaskParam path="GCS2_PatientMonitoring.pmp1_name"  values="['WEIGHT']"/>
+            <TaskParam path="GCS2_PatientMonitoring.pmp2_alertmin"  values="[50]"/>
+            <TaskParam path="GCS2_PatientMonitoring.pmp3_alertmax"  values="[150]"/>
+            <TaskParam path="GCS2_PatientMonitoring.pmp4_alertfreq"  values="[2]"/>
+            <TaskParam path="GCS2_PatientMonitoring.pmp5_alertfrequnit"  values="['DAYS']"/>
+            <TaskParam path="GCS2_PatientMonitoring.pmp6_comments"  values="['Some random comment']"/>
+            <TaskParam path="GCS2_PatientMonitoring.pmp7_freq"  values="[5]"/>
+            <TaskParam path="GCS2_PatientMonitoring.pmp8_freqqunit"  values="['WEEKS']"/>
+            <TaskParam path="GCS2_PatientMonitoring.pmp9_maxdelay"  values="[100]"/>
+            <TaskParam path="GCS2_PatientMonitoring.pmp10_startdate"  values="['2017-06-09T00:00:00.0']"/>
+            <TaskParam path="GCS2_PatientMonitoring.pmp11_enddate"  values="['2019-06-09T00:00:00.0']"/>
+            <TaskParam path="GCS2_PatientMonitoring.pmp12_timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
         </Action>      
-        <Action id="CompleteAutomatedTask" processId="GCS2_PatientMonitoryExecution">
-            <TaskParam path="GCS2_PatientMonitory.pmpx"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
+        <Action id="CompleteAutomatedTask" processId="GCS2_PatientMonitoringExecution">
+            <TaskParam path="GCS2_PatientMonitoring.pmpx"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
         </Action>
 
 
