@@ -23,6 +23,24 @@ router.post('/:id/disable', (req, res, next)=>{
 });
 
 /**
+ * @api {post} users/:id/enable Enable User
+ * @apiName EnableUser
+ * @apiGroup Users
+ * @apiSampleRequest /users/:id/enable
+ * @apiSuccessExample {json} Success-Response:
+ *   {}
+ */
+router.post('/:id/enable', (req, res, next)=>{
+  User.enable(req.jwt, req.params.id)
+    .then(user=>{
+        res.status(200).send(user);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
  * @api {get} /users Get Users 
  * @apiName GetUsers
  * @apiGroup Users
