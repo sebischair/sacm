@@ -29,8 +29,8 @@
 
     <Workspace staticId="2c9480885d1737ef015d74deed260006" id="Umcg">
         <EntityDefinition id="GCS2_CaseData" description="Case Data">
-            <AttributeDefinition id="GCS2_Patient" type="Link.Users.UmcgPatients" description="Patient"/>
-            <AttributeDefinition id="GCS2_Owner" type="Link.Users.UmcgProfessionals" description="Owner"/>
+            <AttributeDefinition id="GCS2_Patient" type="Link.Users(UmcgPatients)" description="Patient"/>
+            <AttributeDefinition id="GCS2_Owner" type="Link.Users(UmcgProfessionals)" description="Owner"/>
             <AttributeDefinition id="GCS2_ASA" type="Link.EntityDefinition.GCS2_ASA" description="ASA"/>    
             <AttributeDefinition id="GCS2_Charlson" type="Link.EntityDefinition.GCS2_Charlson" description="Charlson"/>   
             <AttributeDefinition id="GCS2_GFI" type="Link.EntityDefinition.GCS2_GFI" description="Groningen Frailty Indicator (GFI)"/>   
@@ -51,8 +51,11 @@
                 <EnumerationOption value="3" description="ASA 3"/>
                 <EnumerationOption value="4" description="ASA 4"/>
                 <EnumerationOption value="5" description="ASA 5"/>
-            </AttributeDefinition>               
-         </EntityDefinition>
+            </AttributeDefinition> 
+            <AttributeDefinition id="asa2" type="boolean" multiplicity="maximalOne" description="Boolean Testing (will be removed again)"/>            
+            <AttributeDefinition id="asa3" type="notype" multiplicity="maximalOne" description="NoType Testing (will be removed again)"/>            
+            <AttributeDefinition id="asa4" type="longtext" multiplicity="maximalOne" description="Longtext Testing (will be removed again)"/> 
+        </EntityDefinition>
 
         <EntityDefinition id="GCS2_Charlson" description="Charlson">
             <AttributeDefinition id="ch1" type="enumeration" multiplicity="maximalOne" description="Myocardial infarct">
@@ -554,6 +557,9 @@
                         <precondition processDefinitionId="GCS2_SelectPatient"/>
                     </SentryDefinition>
                     <TaskParamDefinition path="GCS2_ASA.asa" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_ASA.asa2" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_ASA.asa3" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_ASA.asa4" isReadOnly="false" isMandatory="false"/>
                 </HumanTaskDefinition>
                 
             </StageDefinition>

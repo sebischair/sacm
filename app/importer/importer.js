@@ -653,11 +653,18 @@ module.exports = class Importer {
           };          
         }
 
-        if(ref.length > 2 && ref[1].toLowerCase() == 'users'){
+        if(ref.length > 1 && ref[1].startsWith('Users')){ 
+          let groups = [];
+          if(ref[1].startsWith('Users(')){
+            let parsedGroups = ref[1].replace('Users(', '').replace(')', '').split(',');
+            parsedGroups.forEach(g=>{      
+              groups.push({id: this.getGroupIdByXMLId(g.trim())});
+            });
+          }         
           attrDef.attributeTypeConstraints = {
             resourceType: 'users',
-            groupType: [{id: this.getGroupIdByXMLId(ref[2])}]          
-          };
+            groupType: groups        
+          };     
         }
       } 
       if(attrDef.attributeType == 'enumeration'){
