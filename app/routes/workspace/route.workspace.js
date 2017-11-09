@@ -1,6 +1,7 @@
 import express from 'express';
 import Workspace from './../../models/workspace/model.workspace';
 import Case from './../../models/case/model.case';
+import CaseDefinition from './../../models/casedefinition/model.casedefinition';
 const router = express.Router();
 
 
@@ -140,8 +141,41 @@ router.get('/:id/cases/me', (req, res, next)=>{
  * }]
  */
 router.get('/:id/cases', (req, res, next)=>{
-  console.log('h2')
   Case.findByWorkspaceId(req.jwt, req.params.id)
+    .then(cd=>{
+        res.status(200).send(cd);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
+ * @api {get} /workspaces/:id/casedefinitions/caninstantiate Get CaseDefinitions that can be instantiated by Workspace
+ * @apiName GetInstantiableCaseDefinitionsByWorkspaceID
+ * @apiGroup CaseDefinitions
+ * @apiParam {String} ID The ID of the the Workspace
+ * @apiSampleRequest /workspaces/:id/casedefinitions/caninstantiate
+ * @apiSuccessExample {json} Success-Response:
+ * [
+ *     {
+ *         "id": "zer6c0a84qap",
+ *         "workspace": {
+ *             "id": "2c9480885d1737ef015d74deed260006",
+ *             "description": null,
+ *             "name": "Umcg",
+ *             "resourceType": "workspaces"
+ *         },
+ *         "description": "Groningen CS2",
+ *         "name": "GCS2",
+ *         "resourceType": "casedefinitions",
+ *         "version": "1"
+ *     }
+ * ]
+ */
+router.get('/:id/casedefinitions/caninstantiate', (req, res, next)=>{
+  console.log('here')
+  CaseDefinition.canInstantiateByWorkspace(req.jwt, req.params.id)
     .then(cd=>{
         res.status(200).send(cd);
     })
