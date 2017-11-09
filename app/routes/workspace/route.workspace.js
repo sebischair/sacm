@@ -151,6 +151,125 @@ router.get('/:id/cases', (req, res, next)=>{
 });
 
 /**
+ * @api {get} /workspaces/:id/casedefinitions Get CaseDefinitions by Workspace
+ * @apiName GetCaseDefinitionsByWorkspaceID
+ * @apiGroup CaseDefinitions
+ * @apiParam {String} ID The ID of the the Workspace
+ * @apiSampleRequest /workspaces/:id/casedefinitions
+ * @apiSuccessExample {json} Success-Response:
+  * [
+ *     {
+ *         "id": "zer6c0a84qap",
+ *         "summarySectionDefinitions": [
+ *             {
+ *                 "position": "CENTER",
+ *                 "id": "13h0c6ion4yp8",
+ *                 "paths": [
+ *                     "GCS2_NRS.nrs8"
+ *                 ],
+ *                 "caseDefinition": "13h0c6ion4yp8",
+ *                 "description": "Nutritional Risk Screening (NRS)",
+ *                 "name": "GCS2_NRS",
+ *                 "uiReference": null,
+ *                 "resourceType": "summarysectiondefinitions"
+ *             },
+ *             {
+ *                 "position": "STRETCHED",
+ *                 "id": "13i9479wu2aac",
+ *                 "paths": [
+ *                     "GCS2_PhysicalActivity.phactp1",
+ *                     "GCS2_PhysicalActivity.phactp2",
+ *                     "GCS2_PhysicalActivity.phactpx"
+ *                 ],
+ *                 "caseDefinition": "13i9479wu2aac",
+ *                 "description": "Physical Activity",
+ *                 "name": "GCS2_PhysicalActivity",
+ *                 "uiReference": null,
+ *                 "resourceType": "summarysectiondefinitions"
+ *             },
+ *             {
+ *                 "position": "LEFT",
+ *                 "id": "14f3feapk9e5h",
+ *                 "paths": [
+ *                     "GCS2_Charlson.ch21"
+ *                 ],
+ *                 "caseDefinition": "14f3feapk9e5h",
+ *                 "description": "Charlson",
+ *                 "name": "GCS2_Charlson",
+ *                 "uiReference": null,
+ *                 "resourceType": "summarysectiondefinitions"
+ *             },
+ *             {
+ *                 "position": "LEFT",
+ *                 "id": "1aed52vybajli",
+ *                 "paths": [
+ *                     "GCS2_GFI.gfi16"
+ *                 ],
+ *                 "caseDefinition": "1aed52vybajli",
+ *                 "description": "Groningen Frailty Indicator (GFI)",
+ *                 "name": "GCS2_GFI",
+ *                 "uiReference": "body",
+ *                 "resourceType": "summarysectiondefinitions"
+ *             },
+ *             {
+ *                 "position": "CENTER",
+ *                 "id": "1w4izn4zhgnqn",
+ *                 "paths": [
+ *                     "GCS2_ADL.adl7"
+ *                 ],
+ *                 "caseDefinition": "1w4izn4zhgnqn",
+ *                 "description": "Activities of Daily Living (ADL)",
+ *                 "name": "GCS2_ADL",
+ *                 "uiReference": null,
+ *                 "resourceType": "summarysectiondefinitions"
+ *             },
+ *             {
+ *                 "position": "RIGHT",
+ *                 "id": "ez54cgp6zcio",
+ *                 "paths": [
+ *                     "GCS2_MNASF.mnasf9"
+ *                 ],
+ *                 "caseDefinition": "ez54cgp6zcio",
+ *                 "description": "Mini Nutritional Assesment (MNA-SF)",
+ *                 "name": "GCS2_MNASF",
+ *                 "uiReference": null,
+ *                 "resourceType": "summarysectiondefinitions"
+ *             },
+ *             {
+ *                 "position": "LEFT",
+ *                 "id": "m7bjg34esivt",
+ *                 "paths": [
+ *                     "GCS2_ASA.asa"
+ *                 ],
+ *                 "caseDefinition": "m7bjg34esivt",
+ *                 "description": "ASA",
+ *                 "name": "GCS2_ASA",
+ *                 "uiReference": null,
+ *                 "resourceType": "summarysectiondefinitions"
+ *             }
+ *         ],
+ *         "workspace": "2c9480885d1737ef015d74deed260006",
+ *         "ownerPath": "GCS2_Owner",
+ *         "description": "Groningen CS2",
+ *         "name": "GCS2",
+ *         "entityDefinition": "1tzlcpc3qdms6",
+ *         "isInstantiable": true,
+ *         "version": "1",
+ *         "resourceType": "casedefinitions"
+ *     }
+ * ]
+ */
+router.get('/:id/casedefinitions', (req, res, next)=>{
+  CaseDefinition.findByWorkspaceId(req.jwt, req.params.id)
+    .then(cd=>{
+        res.status(200).send(cd);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
  * @api {get} /workspaces/:id/casedefinitions/caninstantiate Get CaseDefinitions that can be instantiated by Workspace
  * @apiName GetInstantiableCaseDefinitionsByWorkspaceID
  * @apiGroup CaseDefinitions
@@ -174,7 +293,6 @@ router.get('/:id/cases', (req, res, next)=>{
  * ]
  */
 router.get('/:id/casedefinitions/caninstantiate', (req, res, next)=>{
-  console.log('here')
   CaseDefinition.canInstantiateByWorkspace(req.jwt, req.params.id)
     .then(cd=>{
         res.status(200).send(cd);
