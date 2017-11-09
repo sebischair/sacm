@@ -65,7 +65,7 @@ const router = express.Router();
  * ]
  */
 router.get('/me', (req, res, next)=>{
-  Case.findByMe(req.jwt)
+  Case.findMe(req.jwt)
     .then(cases=>{
         res.status(200).send(cases);
     })
