@@ -29,7 +29,7 @@
 
         <EntityDefinition id="LCS1_CaseData" description="Case Data">
             <AttributeDefinition id="LCS1_Patient" type="Link.Users(IrbllPatients)" description="Pacient"/>
-            <AttributeDefinition id="LCS1_CaseManager" type="Link.Users(IrbllCaseManagers)" description="Case Manager"/>            
+            <AttributeDefinition id="LCS1_CaseManager" type="Link.Users(IrbllCaseManagers)" description="Gestor de casos"/>            
             <AttributeDefinition id="LCS1_Clinician" type="Link.Users(IrbllClinicians)" description="Metge"/>
             <AttributeDefinition id="LCS1_Nurse" type="Link.Users(IrbllNurses)" description="Infermera"/>
             <AttributeDefinition id="LCS1_SocialCareer" type="Link.Users(IrbllSocialCareers)" description="Treaballador social"/>
@@ -64,9 +64,9 @@
             <AttributeDefinition id="LCS1_SelfCareAutoTest" type="Link.EntityDefinition.LCS1_SelfCareAutoTest" description="Capacitat d'autocura"/> 
             <AttributeDefinition id="LCS1_VitalSignsMonitoring" type="Link.EntityDefinition.LCS1_VitalSignsMonitoring" description="Vital Signs Monitoring"/> 
             <AttributeDefinition id="LCS1_AutocheckHealthStatusPrescription" type="Link.EntityDefinition.LCS1_AutocheckHealthStatusPrescription" description="Autocheck Health Status Prescription"/> 
-            <AttributeDefinition id="LCS1_Education" type="Link.EntityDefinition.LCS1_Education" description="Education"/> 
-            <AttributeDefinition id="LCS1_SocialIntervention" type="Link.EntityDefinition.LCS1_SocialIntervention" description="Social Intervention"/> 
-            <AttributeDefinition id="LCS1_Agreement" type="Link.EntityDefinition.LCS1_Agreement" description="Agreement"/> 
+            <AttributeDefinition id="LCS1_Education" type="Link.EntityDefinition.LCS1_Education" description="Pla de formació al pacient i cuidador"/> 
+            <AttributeDefinition id="LCS1_SocialIntervention" type="Link.EntityDefinition.LCS1_SocialIntervention" description="Intervencions socials"/> 
+            <AttributeDefinition id="LCS1_Agreement" type="Link.EntityDefinition.LCS1_Agreement" description="Acord del pla de treball"/> 
             <AttributeDefinition id="LCS1_PhysicalActivity" type="Link.EntityDefinition.LCS1_PhysicalActivity" description="Physical Activity"/> 
             <AttributeDefinition id="LCS1_AutocheckHealthStatus" type="Link.EntityDefinition.LCS1_AutocheckHealthStatus" description="Autocheck Health Status"/> 
             <AttributeDefinition id="LCS1_EducationExec" type="Link.EntityDefinition.LCS1_EducationExec" description="Education Exec"/> 
@@ -1029,21 +1029,14 @@
         <EntityDefinition id="LCS1_VitalSignsMonitoring" description="Vital Signs Monitoring">
             <!--Mesurement-->
             <AttributeDefinition id="pm-1" type="enumeration" multiplicity="maximalOne" description="Paràmetre a monitoritzar">
-                <EnumerationOption value="WEIGHT" description="Weight"/>
-                <EnumerationOption value="HEIGHT" description="Height"/>
-                <EnumerationOption value="FATRATIO" description="FatRatio"/>
-                <EnumerationOption value="FATMASSWEIGHT" description="FatMassWeight"/>
-                <EnumerationOption value="DIASTOLICBLOODPRESSURE" description="DiastolicBloodPressure"/>
-                <EnumerationOption value="SYSTOLICBLOODPRESSURE" description="SystolicBloodPressure"/>
-                <EnumerationOption value="TEMPERATURE" description="Temperature"/>
+                <EnumerationOption value="WEIGHT" description="Pes"/>
+                <EnumerationOption value="HEIGHT" description="Alçada"/>
+                <EnumerationOption value="DIASTOLICBLOODPRESSURE" description="Pressió arterial diastòlica"/>
+                <EnumerationOption value="SYSTOLICBLOODPRESSURE" description="Presiò arterial sistòlica"/>
                 <EnumerationOption value="SP02" description="SP02"/>
-                <EnumerationOption value="BODYTEMPERATURE" description="BodyTemperature"/>
-                <EnumerationOption value="SKINTEMPERATURE" description="SkinTemperature"/>
-                <EnumerationOption value="MUSCLEMASS" description="MuscleMass"/>
-                <EnumerationOption value="HYDRATION" description="Hydration"/>
-                <EnumerationOption value="BONEMASS" description="BoneMass"/>
-                <EnumerationOption value="PULSEWAVEVEOCITY" description="PulseWaveVelocity"/>
-                <EnumerationOption value="SLEEP" description="Sleep"/>
+                <EnumerationOption value="BODYTEMPERATURE" description="Temperatura"/>
+                <EnumerationOption value="PULSEWAVEVEOCITY" description="Pols"/>
+                <EnumerationOption value="SLEEP" description="Son"/>
             </AttributeDefinition>   
             <AttributeDefinition id="pm-2" type="number" multiplicity="maximalOne" description="Valor mínim per activar alerta"/>       
             <AttributeDefinition id="pm-3" type="number" multiplicity="maximalOne" description="Valor màxim per activar alerta"/>       
@@ -1090,8 +1083,8 @@
             <AttributeDefinition id="phactp-patient" type="link" multiplicity="maximalOne" uiReference="linediagram" description="Pacient"/>  <!-- checkThis(L:255) -->              
             <AttributeDefinition id="phactp-x" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Periódicitat d´execució."/>                 
         </EntityDefinition>
-
-        <EntityDefinition id="LCS1_Education" description="Education"> 
+		
+	    <EntityDefinition id="LCS1_Education" description="Pla de formació al pacient i cuidador"> 
             <AttributeDefinition id="educaDef1" type="enumeration" multiplicity="maximalOne" description="És necessari educar al pacient en el curs de la Hospitalització?"> 
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
@@ -1111,7 +1104,7 @@
         </EntityDefinition>
 
 
-        <EntityDefinition id="LCS1_SocialIntervention" description="Social Intervention"> 
+        <EntityDefinition id="LCS1_SocialIntervention" description="Intervencions socials"> 
             <AttributeDefinition id="social1" type="enumeration" multiplicity="maximalOne" description="Proveir cuidador per hores"> 
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
@@ -1132,18 +1125,10 @@
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>
-            <AttributeDefinition id="social6" type="enumeration" multiplicity="maximalOne" description="Proveir cuidador per hores"> 
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="social7" type="enumeration" multiplicity="maximalOne" description="Visites domiciliàries de infermeria"> 
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
-            </AttributeDefinition>
         </EntityDefinition>
 
 
-        <EntityDefinition id="LCS1_Agreement" description="Agreement"> 
+        <EntityDefinition id="LCS1_Agreement" description="Acord del pla de treball"> 
             <AttributeDefinition id="wp_agreement1" type="enumeration" multiplicity="maximalOne" description="Validació de la prescripció de monitorització de variables clíniques"> 
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
@@ -1245,7 +1230,7 @@
         </EntityDefinition>
 
         <!-- checkThis(L:313++) -->
-        <EntityDefinition id="LCS1_EducationExec" description="Education"> 
+        <EntityDefinition id="LCS1_EducationExec" description="Pla de formació al pacient i cuidador - Execució"> 
             <AttributeDefinition id="educaExec1" type="enumeration" multiplicity="maximalOne" description="Ha rebut el pacient formació en el curs de la hospitalització?"> 
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
@@ -1460,6 +1445,7 @@
         <HumanTaskDefinition id="LCS1_DiagnosisAnthropometricVariables" description="Variables antropomètriques" ownerPath="LCS1_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_DiagnosisAnthropometricVariables" entityAttachPath="LCS1_DiagnosisAnthropometricVariables">                
             <TaskParamDefinition path="LCS1_DiagnosisAnthropometricVariables.anth1" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="LCS1_DiagnosisAnthropometricVariables.anth2" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS1_DiagnosisAnthropometricVariables.anth3" isReadOnly="true" isMandatory="false"/>
         </HumanTaskDefinition>
 		
         <HumanTaskDefinition id="LCS1_DiagnosisSmokingAndAlcohol" description="Consum de tabac i alcohol" ownerPath="LCS1_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_DiagnosisSmokingAndAlcohol" entityAttachPath="LCS1_DiagnosisSmokingAndAlcohol">                
@@ -1559,6 +1545,9 @@
 		<SentryDefinition>
 			<precondition processDefinitionId="LCS1_CaseEvaluation"/>
 		</SentryDefinition>
+		
+		<!-- WP Definition -->
+		
 		<HumanTaskDefinition id="LCS1_PhysicalActivityPrescription" description="Monitorització d’activitat física – Prescripció" ownerPath="LCS1_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_PhysicalActivity" entityAttachPath="LCS1_PhysicalActivity">
 			<TaskParamDefinition path="LCS1_PhysicalActivity.phactp1" isReadOnly="false" isMandatory="true"/>
 			<TaskParamDefinition path="LCS1_PhysicalActivity.phactp2" isReadOnly="false" isMandatory="true"/>
@@ -1568,6 +1557,61 @@
 			<TaskParamDefinition path="LCS1_PhysicalActivity.phactp6" isReadOnly="false" isMandatory="true"/>
 			<TaskParamDefinition path="LCS1_PhysicalActivity.phactp7" isReadOnly="false" isMandatory="true"/>                    
 		</HumanTaskDefinition>
+		
+		<HumanTaskDefinition id="LCS1_PatientMonitoryPrescriptionWeight" description="Monitorització del pes – Prescripció" ownerPath="LCS1_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_PatientMonitory" entityAttachPath="LCS1_PatientMonitory">
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp1_name" isReadOnly="false" isMandatory="false"/> <!-- defaultValues="['WEIGHT']"/> -->
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp2_alertmin" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp3_alertmax" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp4_alertfreq" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="[1]"/>  -->
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp5_alertfrequnit" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="['DAYS']"/>  -->            
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp7_freq" isReadOnly="false" isMandatory="false"/> <!--   defaultValues="[1]"/>  -->
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp8_freqqunit" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="['DAYS']"/>  -->
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp9_maxdelay" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="[60]"/>  -->
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp10_startdate" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp11_enddate" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp12_timeslot" isReadOnly="false" isMandatory="false"/> <!--  <defaultValues="['BREAKFAST']"/>  -->
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp6_comments" isReadOnly="false" isMandatory="false"/>
+		</HumanTaskDefinition>
+		
+		<HumanTaskDefinition id="LCS1_PatientMonitoryPrescriptionBodyTemperature" description="Monitorització de temperatura corporal – Prescripció" ownerPath="LCS1_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_PatientMonitory" entityAttachPath="LCS1_PatientMonitory">
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp1_name" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="['BODYTEMPERATURE']"/> -->
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp2_alertmin" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp3_alertmax" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp4_alertfreq" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="[1]"/> -->
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp5_alertfrequnit" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="['DAYS']"/>   -->         
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp7_freq" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="[1]"/> -->
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp8_freqqunit" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="['DAYS']"/> -->
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp9_maxdelay"  isReadOnly="false" isMandatory="false"/> <!--  defaultValues="[60]"/> -->
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp10_startdate" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp11_enddate" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp12_timeslot" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="['BREAKFAST']"/> -->
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp6_comments" isReadOnly="false" isMandatory="false"/>
+		</HumanTaskDefinition>
+		
+		<HumanTaskDefinition id="LCS1_SocialIntervention" description="Intervencions socials" ownerPath="LCS1_SocialCareer" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_SocialIntervention" entityAttachPath="LCS1_SocialIntervention">
+			<TaskParamDefinition path="LCS1_SocialIntervention.social1" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_SocialIntervention.social2" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_SocialIntervention.social3" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_SocialIntervention.social4" isReadOnly="false" isMandatory="false"/>
+		</HumanTaskDefinition>
+	
+		<HumanTaskDefinition id="LCS1_Education" description="Pla de formació al pacient i cuidador" ownerPath="LCS1_Education" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_Education" entityAttachPath="LCS1_Education">
+			<TaskParamDefinition path="LCS1_Education.educaDef1" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_Education.educaDef2" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_Education.educaDef3" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_Education.educaDef4" isReadOnly="false" isMandatory="false"/>
+		</HumanTaskDefinition>
+		
+		<HumanTaskDefinition id="LCS1_Agreement" description="Acord del pla de treball" ownerPath="LCS1_CaseManager" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_Agreement" entityAttachPath="LCS1_Agreement">
+			<TaskParamDefinition path="LCS1_Agreement.wp_agreement1" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_Agreement.wp_agreement2" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_Agreement.wp_agreement3" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_Agreement.wp_agreement4" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_Agreement.wp_agreement5" isReadOnly="false" isMandatory="false"/>
+		</HumanTaskDefinition>
+		
+		<!-- WP Execution -->
+		
 		<AutomatedTaskDefinition id="LCS1_PhysicalActivityExecution" description="Monitorització d’activitat física – Execució" ownerPath="LCS1_Clinician" isMandatory="true" isRepeatable="false">
 			<SentryDefinition>
 				<precondition processDefinitionId="LCS1_PhysicalActivityPrescription"/>
@@ -1583,20 +1627,7 @@
 			<TaskParamDefinition path="LCS1_Patient" isReadOnly="true" isMandatory="false"/>
 			<TaskParamDefinition path="LCS1_PhysicalActivity.phactpx" isReadOnly="false" isMandatory="true"/>
 		</AutomatedTaskDefinition>
-		<HumanTaskDefinition id="LCS1_PatientMonitoryPrescriptionWeight" description="Monitorització del pes – Prescripció" ownerPath="LCS1_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_PatientMonitory" entityAttachPath="LCS1_PatientMonitory">
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp1_name" isReadOnly="false" isMandatory="false"/> <!-- defaultValues="['WEIGHT']"/> -->
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp2_alertmin" isReadOnly="false" isMandatory="false"/>
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp3_alertmax" isReadOnly="false" isMandatory="false"/>
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp4_alertfreq" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="[1]"/>  -->
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp5_alertfrequnit" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="['DAYS']"/>  -->            
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp7_freq" isReadOnly="false" isMandatory="false"/> <!--   defaultValues="[1]"/>  -->
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp8_freqqunit" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="['DAYS']"/>  -->
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp9_maxdelay" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="[60]"/>  -->
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp10_startdate" isReadOnly="false" isMandatory="false"/>
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp11_enddate" isReadOnly="false" isMandatory="false"/>
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp12_timeslot" isReadOnly="false" isMandatory="false"/> <!--  <defaultValues="['BREAKFAST']"/>  -->
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp6_comments" isReadOnly="false" isMandatory="false"/>
-		</HumanTaskDefinition>
+		
 		<AutomatedTaskDefinition id="LCS1_PatientMonitoryExecutionWeight" description="Monitorització del pes – Execució " ownerPath="LCS1_Clinician" isMandatory="true" isRepeatable="false">
 			<SentryDefinition>
 				<precondition processDefinitionId="LCS1_PatientMonitoryPrescriptionWeight"/>
@@ -1617,20 +1648,7 @@
 			<TaskParamDefinition path="LCS1_Patient" isReadOnly="true" isMandatory="false"/>
 			<TaskParamDefinition path="LCS1_PatientMonitory.pmpx" isReadOnly="false" isMandatory="true"/>
 		</AutomatedTaskDefinition>
-		<HumanTaskDefinition id="LCS1_PatientMonitoryPrescriptionBodyTemperature" description="Monitorització de temperatura corporal – Prescripció" ownerPath="LCS1_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_PatientMonitory" entityAttachPath="LCS1_PatientMonitory">
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp1_name" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="['BODYTEMPERATURE']"/> -->
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp2_alertmin" isReadOnly="false" isMandatory="false"/>
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp3_alertmax" isReadOnly="false" isMandatory="false"/>
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp4_alertfreq" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="[1]"/> -->
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp5_alertfrequnit" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="['DAYS']"/>   -->         
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp7_freq" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="[1]"/> -->
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp8_freqqunit" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="['DAYS']"/> -->
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp9_maxdelay"  isReadOnly="false" isMandatory="false"/> <!--  defaultValues="[60]"/> -->
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp10_startdate" isReadOnly="false" isMandatory="false"/>
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp11_enddate" isReadOnly="false" isMandatory="false"/>
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp12_timeslot" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="['BREAKFAST']"/> -->
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp6_comments" isReadOnly="false" isMandatory="false"/>
-		</HumanTaskDefinition>
+		
 		<AutomatedTaskDefinition id="LCS1_PatientMonitoryExecutionBodyTemperature" description="Monitorització de temperatura corporal – Execució" ownerPath="LCS1_Clinician" isMandatory="true" isRepeatable="false">
 			<SentryDefinition>
 				<precondition processDefinitionId="LCS1_PatientMonitoryPrescriptionBodyTemperature"/>
@@ -1651,7 +1669,18 @@
 			<TaskParamDefinition path="LCS1_Patient" isReadOnly="true" isMandatory="false"/>
 			<TaskParamDefinition path="LCS1_PatientMonitory.pmpx" isReadOnly="false" isMandatory="true"/>
 		</AutomatedTaskDefinition>
-    </StageDefinition>
+		
+		<AutomatedTaskDefinition id="LCS1_EducationExec" description="Pla de formació al pacient i cuidador - Execució" ownerPath="LCS1_Clinician" isMandatory="true" isRepeatable="false">
+			<SentryDefinition>
+				<precondition processDefinitionId="LCS1_Education"/>
+			</SentryDefinition>
+			<TaskParamDefinition path="LCS1_EducationExec.educaExec1" isReadOnly="true" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_EducationExec.educaExec2" isReadOnly="true" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_EducationExec.educaExec3" isReadOnly="true" isMandatory="false"/>            
+			<TaskParamDefinition path="LCS1_EducationExec.educaExec4" isReadOnly="true" isMandatory="false"/> 
+		</AutomatedTaskDefinition>
+		
+	</StageDefinition>
     <StageDefinition id="LCS1_Discharge" description="Alta del procés" isMandatory="true" isRepeatable="true">  
         <SentryDefinition>
           <precondition processDefinitionId="LCS1_CaseEvaluation"/>
