@@ -413,7 +413,7 @@ module.exports = class Importer {
     createGroups(){
       return Promise.each(this.json.Group, g=>{
         const data = {
-          name: g.$.id,
+          name: g.$.name,
           description: g.$.description,
           administrators: []
         }
