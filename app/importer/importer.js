@@ -385,7 +385,7 @@ module.exports = class Importer {
     createUsers(){      
       return Promise.each(this.json.User, u=>{      
         const data = {
-          name: u.$.id,
+          name: u.$.name,
           email: u.$.email,
           attributes: []
         }
