@@ -228,7 +228,7 @@
 	  
 	  
 	  <!-- CASE DEFINITION -->				  
-		<CaseDefinition id="LCS2_Leida" description="CS2 Lleida Test Identification v.0.0.43" ownerPath="LCS2_Owner" entityDefinitionId="LCS2_CaseData">	  
+		<CaseDefinition id="LCS2_Leida" description="CS2 Lleida Test Identification v.0.0.45" ownerPath="LCS2_Owner" entityDefinitionId="LCS2_CaseData">	  
 	  
 	  <!-- STAGEDEFINITION: CaseIdentification -->
 	  
@@ -282,13 +282,14 @@
               <TaskParamDefinition path="LCS2_PolyMedicationCheck.pmed1" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>
 
-            <HumanTaskDefinition id="LCS2_GMA" description="GMA" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_GMA" entityAttachPath="LCS2_GMA">
+            <HumanTaskDefinition id="LCS2_GMAIdentification" description="GMA" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_GMA" entityAttachPath="LCS2_GMA">
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>
               <TaskParamDefinition path="LCS2_GMA.gma" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>    	
-		
+
+			
             <HumanTaskDefinition id="LCS2_HospitalEmergencyAdminisions" description="Admissions hospitalàries d'emergència" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false"  entityDefinitionId="LCS2_HospitalEmergencyAdminisions" entityAttachPath="LCS2_HospitalEmergencyAdminisions">
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
@@ -331,11 +332,11 @@
             <precondition processDefinitionId="LCS2_CaseIdentification"/>
           </SentryDefinition>
 
-		  	<HumanTaskDefinition id="LCS2_GMA" description="GMA" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_GMA" entityAttachPath="LCS2_GMA2">
+		  	<HumanTaskDefinition id="LCS2_GMAEvaluation" description="GMA" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_GMA" entityAttachPath="LCS2_GMA">
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>			
-              <TaskParamDefinition path="LCS2_GMA2.gma" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_GMA.gma" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>
 		  
             <HumanTaskDefinition id="LCS2_FamilySupport" description="Suport Familiar" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false"  entityDefinitionId="LCS2_FamilySupport" entityAttachPath="LCS2_FamilySupport">
