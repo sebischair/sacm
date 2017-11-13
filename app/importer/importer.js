@@ -678,6 +678,7 @@ module.exports = class Importer {
             const data = {
               value: option.$.value,
               description: option.$.description,
+              additionalDescription: option.$.additionalDescription,
               externalId: option.$.externalId
             }
             attrDef.attributeTypeConstraints.enumerationValues.push(data);
