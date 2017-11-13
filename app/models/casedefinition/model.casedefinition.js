@@ -9,6 +9,10 @@ export default class CaseDefinition extends Model{
     return http.get(jwt, '/casedefinitions/caninstantiate');
   }
 
+  static canInstantiateByWorkspace(jwt, workspaceId){
+    return http.get(jwt, '/workspaces/'+workspaceId+'/casedefinitions/caninstantiate');
+  }
+
   static disableInstantiation(jwt, caseDefinitionId){
     return http.post(jwt, '/casedefinitions/'+caseDefinitionId+'/disableinstantiation');
   }

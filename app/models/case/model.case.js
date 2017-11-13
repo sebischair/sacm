@@ -73,7 +73,11 @@ export default class Case extends Model{
     return http.del(jwt, '/cases/'+caseId+'/writer/'+principalId);
   }
 
-  static findByMe(jwt) {
+  static findMe(jwt) {
     return http.get(jwt, '/cases/me');
+  }
+
+  static findMeByWorkspace(jwt, workspaceId) {
+    return http.get(jwt, '/workspaces/'+workspaceId+'/cases/me');
   }
 }

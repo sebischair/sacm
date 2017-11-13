@@ -385,7 +385,7 @@ module.exports = class Importer {
     createUsers(){      
       return Promise.each(this.json.User, u=>{      
         const data = {
-          name: u.$.id,
+          name: u.$.name,
           email: u.$.email,
           attributes: []
         }
@@ -413,7 +413,7 @@ module.exports = class Importer {
     createGroups(){
       return Promise.each(this.json.Group, g=>{
         const data = {
-          name: g.$.id,
+          name: g.$.name,
           description: g.$.description,
           administrators: []
         }
@@ -678,6 +678,7 @@ module.exports = class Importer {
             const data = {
               value: option.$.value,
               description: option.$.description,
+              additionalDescription: option.$.additionalDescription,
               externalId: option.$.externalId
             }
             attrDef.attributeTypeConstraints.enumerationValues.push(data);
