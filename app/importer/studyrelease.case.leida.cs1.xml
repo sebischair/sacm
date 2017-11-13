@@ -29,13 +29,14 @@
 
         <EntityDefinition id="LCS1_CaseData" description="Case Data">
             <AttributeDefinition id="LCS1_Patient" type="Link.Users(IrbllPatients)" description="Pacient"/>
-            <AttributeDefinition id="LCS1_CaseManager" type="Link.Users(IrbllCaseManagers)" description="Case Manager"/>            
+            <AttributeDefinition id="LCS1_CaseManager" type="Link.Users(IrbllCaseManagers)" description="Gestor de casos"/>            
             <AttributeDefinition id="LCS1_Clinician" type="Link.Users(IrbllClinicians)" description="Metge"/>
             <AttributeDefinition id="LCS1_Nurse" type="Link.Users(IrbllNurses)" description="Infermera"/>
             <AttributeDefinition id="LCS1_SocialCareer" type="Link.Users(IrbllSocialCareers)" description="Treaballador social"/>
             <!-- <AttributeDefinition id="LCS1_Professional" type="Link.Users(IrbllProfessionals)" description="Professional"/> -->
+			
             <AttributeDefinition id="LCS1_Lace" type="Link.EntityDefinition.LCS1_Lace" description="LACE"/>  
-            <AttributeDefinition id="LCS1_GeriatricDepressionScale" type="Link.EntityDefinition.LCS1_GeriatricDepressionScale" description="Geriatric Depression Scale"/>      
+            <AttributeDefinition id="LCS1_GlobalDeteriorationScale" type="Link.EntityDefinition.LCS1_GlobalDeteriorationScale" description="Global Deterioration Scale"/>      
             <AttributeDefinition id="LCS1_TechnologicalTest" type="Link.EntityDefinition.LCS1_TechnologicalTest" description="Test d'adherència a la tecnología"/>  
             <AttributeDefinition id="LCS1_PatientsConsent" type="Link.EntityDefinition.LCS1_PatientsConsent" description="Consetimient informat del pacient"/>  
             <AttributeDefinition id="LCS1_ComorbidityCharlson" type="Link.EntityDefinition.LCS1_ComorbidityCharlson" description="Índex de comorbilitat de Charlson"/>  
@@ -51,17 +52,21 @@
             <AttributeDefinition id="LCS1_DiagnosisAnthropometricVariables" type="Link.EntityDefinition.LCS1_DiagnosisAnthropometricVariables" description="Variables antropomètriques"/>  
             <!-- TO BE DELETED <AttributeDefinition id="LCS1_SocialDwelling" type="Link.EntityDefinition.LCS1_SocialDwelling" description="Social Dwelling"/>  -->
             <!-- TO BE DELETED <AttributeDefinition id="LCS1_SocialSelfCareCareerAbility" type="Link.EntityDefinition.LCS1_SocialSelfCareCareerAbility" description="Social Self Care Career Ability"/>  -->
-            <AttributeDefinition id="LCS1_SocialComplexityOfThePatient" type="Link.EntityDefinition.LCS1_SocialComplexityOfThePatient" description="Social Complexity Of The Patient"/>  
+            <AttributeDefinition id="LCS1_SocialComplexityOfThePatient" type="Link.EntityDefinition.LCS1_SocialComplexityOfThePatient" description="Complexitat social del pacient"/>  
             <!-- TO BE DELETED <AttributeDefinition id="LCS1_FamilySupport" type="Link.EntityDefinition.LCS1_FamilySupport" description="Family Support"/>  -->
             <AttributeDefinition id="LCS1_HospitalAnxietyAndDepressionScale" type="Link.EntityDefinition.LCS1_HospitalAnxietyAndDepressionScale" description="Escala d'ansietat / depressió (HAD)"/>  
             <AttributeDefinition id="LCS1_SF12" type="Link.EntityDefinition.LCS1_SF12" description="SF12"/>  
             <AttributeDefinition id="LCS1_Barthel" type="Link.EntityDefinition.LCS1_Barthel" description="Barthel"/>  
+			<AttributeDefinition id="LCS1_FallRisk" type="Link.EntityDefinition.LCS1_FallRisk" description="Risc de caigudes"/>
+			<AttributeDefinition id="LCS1_Sleeping" type="Link.EntityDefinition.LCS1_Sleeping" description="Evaluació del son"/>
+            <AttributeDefinition id="LCS1_MedicationFollowing" type="Link.EntityDefinition.LCS1_MedicationFollowing" description="Cumpliment amb el tractament"/>  
+            <AttributeDefinition id="LCS1_Medication" type="Link.EntityDefinition.LCS1_Medication" description="Complexitat del tractament i habilitats per executarlo"/>  
             <AttributeDefinition id="LCS1_SelfCareAutoTest" type="Link.EntityDefinition.LCS1_SelfCareAutoTest" description="Capacitat d'autocura"/> 
             <AttributeDefinition id="LCS1_VitalSignsMonitoring" type="Link.EntityDefinition.LCS1_VitalSignsMonitoring" description="Vital Signs Monitoring"/> 
             <AttributeDefinition id="LCS1_AutocheckHealthStatusPrescription" type="Link.EntityDefinition.LCS1_AutocheckHealthStatusPrescription" description="Autocheck Health Status Prescription"/> 
-            <AttributeDefinition id="LCS1_Education" type="Link.EntityDefinition.LCS1_Education" description="Education"/> 
-            <AttributeDefinition id="LCS1_SocialIntervention" type="Link.EntityDefinition.LCS1_SocialIntervention" description="Social Intervention"/> 
-            <AttributeDefinition id="LCS1_Agreement" type="Link.EntityDefinition.LCS1_Agreement" description="Agreement"/> 
+            <AttributeDefinition id="LCS1_Education" type="Link.EntityDefinition.LCS1_Education" description="Pla de formació al pacient i cuidador"/> 
+            <AttributeDefinition id="LCS1_SocialIntervention" type="Link.EntityDefinition.LCS1_SocialIntervention" description="Intervencions socials"/> 
+            <AttributeDefinition id="LCS1_Agreement" type="Link.EntityDefinition.LCS1_Agreement" description="Acord del pla de treball"/> 
             <AttributeDefinition id="LCS1_PhysicalActivity" type="Link.EntityDefinition.LCS1_PhysicalActivity" description="Physical Activity"/> 
             <AttributeDefinition id="LCS1_AutocheckHealthStatus" type="Link.EntityDefinition.LCS1_AutocheckHealthStatus" description="Autocheck Health Status"/> 
             <AttributeDefinition id="LCS1_EducationExec" type="Link.EntityDefinition.LCS1_EducationExec" description="Education Exec"/> 
@@ -86,11 +91,11 @@
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="lace4" type="enumeration" multiplicity="maximalOne" description="Malatia cerebrovascular">
+            <AttributeDefinition id="lace4" type="enumeration" multiplicity="maximalOne" description="Malaltia cerebrovascular">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="lace5" type="enumeration" multiplicity="maximalOne" description="Malatia vascular perifèrica">
+            <AttributeDefinition id="lace5" type="enumeration" multiplicity="maximalOne" description="Malaltia vascular perifèrica">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition> 
@@ -106,11 +111,11 @@
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="2" description="Sí"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="lace9" type="enumeration" multiplicity="maximalOne" description="Malatia pulmonar crònica">
+            <AttributeDefinition id="lace9" type="enumeration" multiplicity="maximalOne" description="Malaltia pulmonar crònica">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="2" description="Sí"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="lace10" type="enumeration" multiplicity="maximalOne" description="Malatia hepàtica o renal lleugera">
+            <AttributeDefinition id="lace10" type="enumeration" multiplicity="maximalOne" description="Malaltia hepàtica o renal lleugera">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="2" description="Sí"/>
             </AttributeDefinition> 
@@ -122,7 +127,7 @@
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="3" description="Sí"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="lace13" type="enumeration" multiplicity="maximalOne" description="Malatia del teixit conectiu">    
+            <AttributeDefinition id="lace13" type="enumeration" multiplicity="maximalOne" description="Malaltia del teixit conectiu">    
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="3" description="Sí"/>
             </AttributeDefinition>     
@@ -149,69 +154,16 @@
             <DerivedAttributeDefinition id="lace19" expression="number(lace1,0)+number(lace2,0)+lace17+number(lace18,0)" description="Puntuació de LACE"/>  
         </EntityDefinition>
 
-        <EntityDefinition id="LCS1_GeriatricDepressionScale" description="Geriatric Depression Scale">
-            <AttributeDefinition id="gds1" type="enumeration" multiplicity="maximalOne" description="En general, Esteu satisfet amb la vostra vida?">
-                <EnumerationOption value="0" description="Sí"/>
-                <EnumerationOption value="1" description="No"/>
+        <EntityDefinition id="LCS1_GlobalDeteriorationScale" description="Global Deterioration Scale">
+            <AttributeDefinition id="gds1" type="enumeration" multiplicity="maximalOne" description="Estadi">
+                <EnumerationOption value="0" description="GDS 1. Absència de dèficit cognitiu"/>
+                <EnumerationOption value="1" description="GDS 2. Dèficit cognitiu molt lleu l"/>
+				<EnumerationOption value="3" description="GDS 3. Dèficit cognitiu lleu"/>
+                <EnumerationOption value="4" description="GDS 4. Dèficit cognitiu moderat"/>
+				<EnumerationOption value="5" description="GDS 5. Dèficit cognitiu moderadament greu"/>
+                <EnumerationOption value="6" description="GDS 6. Dèficit cognitiu greu"/>
+				<EnumerationOption value="7" description="GDS 7. Déficit cognitiu molt greu"/>
             </AttributeDefinition>        
-            <AttributeDefinition id="gds2" type="enumeration" multiplicity="maximalOne" description="Heu abandonat moltes de les vostres activitats i aficions habituals?">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
-            </AttributeDefinition> 
-            <AttributeDefinition id="gds3" type="enumeration" multiplicity="maximalOne" description="Sentiu que la vostra vida està buida?">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
-            </AttributeDefinition> 
-            <AttributeDefinition id="gds4" type="enumeration" multiplicity="maximalOne" description="Us sentiu amb frequència aborrit/da?">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
-            </AttributeDefinition> 
-            <AttributeDefinition id="gds5" type="enumeration" multiplicity="maximalOne" description="Us trobeu de bon humor la major part del temps?">
-                <EnumerationOption value="0" description="Sí"/>
-                <EnumerationOption value="1" description="No"/>
-            </AttributeDefinition> 
-            <AttributeDefinition id="gds6" type="enumeration" multiplicity="maximalOne" description="Te por de que algo dolent li pugui passar?">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
-            </AttributeDefinition> 
-            <AttributeDefinition id="gds7" type="enumeration" multiplicity="maximalOne" description="Us sentiu feliç la majior part del temps?">
-                <EnumerationOption value="0" description="Sí"/>
-                <EnumerationOption value="1" description="No"/>
-            </AttributeDefinition> 
-            <AttributeDefinition id="gds8" type="enumeration" multiplicity="maximalOne" description="Us sentiu amb frequència desamparat/da , desprotegit /ada?">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
-            </AttributeDefinition> 
-            <AttributeDefinition id="gds9" type="enumeration" multiplicity="maximalOne" description="Preferiu quedar-vos a casa, mes que sortir i fer coses noves?">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
-            </AttributeDefinition> 
-            <AttributeDefinition id="gds10" type="enumeration" multiplicity="maximalOne" description="Creieu que teniu mes problems de memòria que la majoria de gent?">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
-            </AttributeDefinition> 
-            <AttributeDefinition id="gds11" type="enumeration" multiplicity="maximalOne" description="En aquetos moments, Penseu que es fantàstic estar viu?">
-                <EnumerationOption value="0" description="Sí"/>
-                <EnumerationOption value="1" description="No"/>
-            </AttributeDefinition> 
-            <AttributeDefinition id="gds12" type="enumeration" multiplicity="maximalOne" description="Actualment us sentiu un/a inùtil?">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
-            </AttributeDefinition> 
-            <AttributeDefinition id="gds13" type="enumeration" multiplicity="maximalOne" description="Us trubeu ple/na d´energia?">    
-                <EnumerationOption value="0" description="Sí"/>
-                <EnumerationOption value="1" description="No"/>
-            </AttributeDefinition>     
-            <AttributeDefinition id="gds14" type="enumeration" multiplicity="maximalOne" description="Us trubeu sense esperança en aquest moment?">  
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
-            </AttributeDefinition>       
-            <AttributeDefinition id="gds15" type="enumeration" multiplicity="maximalOne" description="Penseu que la majoria de la gent es troba en millor situació que vostè?">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
-            </AttributeDefinition> 
-
-            <DerivedAttributeDefinition id="gds16" expression="number(gds3,0)+number(gds4,0)+number(gds5,0)+number(gds6,0)+number(gds7,0)+number(gds8,0)+number(gds9,0)+number(gds10,0)+number(gds11,0)+number(gds12,0)+number(gds13,0)+number(gds14,0)+number(gds15,0)" description="Puntuació GDS"/>
         </EntityDefinition>
         
 
@@ -249,19 +201,19 @@
 
 
         <EntityDefinition id="LCS1_ComorbidityCharlson" description="Índex de comorbilitat de Charlson">
-            <AttributeDefinition id="ch1" type="enumeration" multiplicity="maximalOne" description="infart de miocardi (els canvis de EKG sense antecedents mèdics queden exclosos)">
+            <AttributeDefinition id="ch1" type="enumeration" multiplicity="maximalOne" description="Infart del miocardi">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>  
-            <AttributeDefinition id="ch2" type="enumeration" multiplicity="maximalOne" description="Insuficiència cardiaca">
+            <AttributeDefinition id="ch2" type="enumeration" multiplicity="maximalOne" description="Insuficiència cardíaca congestiva">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>  
-            <AttributeDefinition id="ch3" type="enumeration" multiplicity="maximalOne" description="Malatia vascular perifèrica">
+            <AttributeDefinition id="ch3" type="enumeration" multiplicity="maximalOne" description="Malaltia vascular perifèrica">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>  
-            <AttributeDefinition id="ch4" type="enumeration" multiplicity="maximalOne" description="Malaltia cerebrovascular (excepte hemiplègia)">
+            <AttributeDefinition id="ch4" type="enumeration" multiplicity="maximalOne" description="Malaltia cerebrovascular">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>  
@@ -269,11 +221,11 @@
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>  
-            <AttributeDefinition id="ch6" type="enumeration" multiplicity="maximalOne" description="Malatia pulmonar crònica">
+            <AttributeDefinition id="ch6" type="enumeration" multiplicity="maximalOne" description="Malaltia pulmonar crònica">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>  
-            <AttributeDefinition id="ch7" type="enumeration" multiplicity="maximalOne" description="Malatia del teixit conectiu">
+            <AttributeDefinition id="ch7" type="enumeration" multiplicity="maximalOne" description="Malaltia del teixit connectiu">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>  
@@ -281,27 +233,27 @@
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>  
-            <AttributeDefinition id="ch9" type="enumeration" multiplicity="maximalOne" description="Quansevol tumor (inclus limfoma o leucèmia)">
+            <AttributeDefinition id="ch9" type="enumeration" multiplicity="maximalOne" description="Malaltia hepàtica lleugera">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>  
-            <AttributeDefinition id="ch10" type="enumeration" multiplicity="maximalOne" description="Demència">
+            <AttributeDefinition id="ch10" type="enumeration" multiplicity="maximalOne" description="Diabetis sense complicacions">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>  
-            <AttributeDefinition id="ch11" type="enumeration" multiplicity="maximalOne" description="Diabetes amb afectació d´organ diana (retinopatía, nefropatía ,etc)">
+            <AttributeDefinition id="ch11" type="enumeration" multiplicity="maximalOne" description="Diabetis amb afectació d´organs diana">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>  
-            <AttributeDefinition id="ch12" type="enumeration" multiplicity="maximalOne" description="Hemiplègia">
+            <AttributeDefinition id="ch12" type="enumeration" multiplicity="maximalOne" description="Hemiplegia">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>                                                                                                                                     
-            <AttributeDefinition id="ch13" type="enumeration" multiplicity="maximalOne" description="insuficiència renal moderada o severa">
+            <AttributeDefinition id="ch13" type="enumeration" multiplicity="maximalOne" description="Insuficiència renal moderada o severa">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>  
-            <AttributeDefinition id="ch14" type="enumeration" multiplicity="maximalOne" description="Tumor sólid (no metastasic). Exclore si fa mes de 5 anys del diagnòstic">
+            <AttributeDefinition id="ch14" type="enumeration" multiplicity="maximalOne" description="Qualsevol tumor  sense metastasi (inclús limfoma o leucèmia)">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>  
@@ -321,7 +273,7 @@
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>  
-            <AttributeDefinition id="ch19" type="enumeration" multiplicity="maximalOne" description="Síndrome de immunodeficiència adquirida (no unicament VIH positiu)">
+            <AttributeDefinition id="ch19" type="enumeration" multiplicity="maximalOne" description="Síndrome de immunodeficiència adquirida">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>  
@@ -349,7 +301,7 @@
                 <EnumerationOption value="9" description="9"/>
                 <EnumerationOption value="10" description="10"/>
             </AttributeDefinition>  
-            <DerivedAttributeDefinition id="pfeiffer2" expression="-1" description="Índex de Pfeiffer"/> <!-- checkThis (L:80) -->
+            <DerivedAttributeDefinition id="pfeiffer2" expression="-1" description="Valoració Pfeiffer"/> <!-- checkThis (L:80) -->
         </EntityDefinition>
 
 
@@ -407,7 +359,7 @@
                 <EnumerationOption value="4" description="Molt dependent/limitat"/>
                 <EnumerationOption value="5" description="Completament dependent/limitat"/>
             </AttributeDefinition>  
-            <AttributeDefinition id="IADL5" type="enumeration" multiplicity="maximalOne" description="Capacitat de moure´s dintre de la comunitat">
+            <AttributeDefinition id="IADL5" type="enumeration" multiplicity="maximalOne" description="Capacitat de moure's dintre de la comunitat">
                 <EnumerationOption value="1" description="Totalment independent/Not limitat at all"/>
                 <EnumerationOption value="2" description="Poc dependent/limitat"/>
                 <EnumerationOption value="3" description="Moderadament dependent/limitat"/>
@@ -424,7 +376,7 @@
         </EntityDefinition>   
 
         <EntityDefinition id="LCS1_DiagnosisCommunication" description="Comunicació"> 
-            <AttributeDefinition id="comm1" type="enumeration" multiplicity="maximalOne" description="Audició">
+			<AttributeDefinition id="comm1" type="enumeration" multiplicity="maximalOne" description="Audició">
                 <EnumerationOption value="1" description="Sense audició"/>
                 <EnumerationOption value="2" description="Dificultat severa :: Dificultat a totes les situacions"/>
                 <EnumerationOption value="3" description="Dificultat moderada :: Problemes escoltant una conversa normal, requereix un entorn silenciós per a escoltar correctament"/>
@@ -452,9 +404,15 @@
                 <EnumerationOption value="3" description=" Sovint es fa entendre :: dificultat per trobar paraules o acabar pensaments i és necessari donar-li peu habitualment"/>
                 <EnumerationOption value="4" description=" Habitualment es fa entendre :: Dificultat en trobar les paraules o acabar els pensament però donant-li temps no es necessària donar-li peu o la necessària és molt petita "/>
                 <EnumerationOption value="5" description="Es fa entendre :: Expressa idees sense dificultat "/>
-            </AttributeDefinition> 
+            </AttributeDefinition>
+			<!-- <AttributeDefinition id="comm6" type="enumeration" multiplicity="maximalOne" description="Valoració final">
+                <EnumerationOption value="1" description="Totalment independent/Gens limitat"/>
+                <EnumerationOption value="2" description="Poc dependent/limitat"/>
+                <EnumerationOption value="3" description="Moderadament dependent/limitat"/>
+                <EnumerationOption value="4" description="Molt dependent/limitat"/>
+                <EnumerationOption value="5" description="Completament dependent/limitat"/>
+            </AttributeDefinition> -->
         </EntityDefinition>
-
 
         <EntityDefinition id="LCS1_DiagnosisSmokingAndAlcohol" description="Consum de tabac i alcohol"> 
             <AttributeDefinition id="smalc1" type="enumeration" multiplicity="maximalOne" description="Consum de tabac">
@@ -482,7 +440,7 @@
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>
-            <AttributeDefinition id="smoke4" type="enumeration" multiplicity="maximalOne" description="Malatia cerebrovascular (excepte hemiplègia)">
+            <AttributeDefinition id="smoke4" type="enumeration" multiplicity="maximalOne" description="Malaltia cerebrovascular (excepte hemiplègia)">
                 <EnumerationOption value="0" description="Falta d'efectivitat"/>
                 <EnumerationOption value="1" description="Costs del tractament"/>
                 <EnumerationOption value="2" description="Impossibilitat per al desplaçament o no disponibilitat de consulta antitabac propera"/>
@@ -514,7 +472,7 @@
         <EntityDefinition id="LCS1_DiagnosisAnthropometricVariables" description="Variables antropomètriques"> 
             <AttributeDefinition id="anth1" type="number" multiplicity="maximalOne" description="Pes (kg)"/>
             <AttributeDefinition id="anth2" type="number" multiplicity="maximalOne" description="Alçada (cm)"/>
-			<AttributeDefinition id="anth3" description="IMC" expression="anth1/(anth2*anth2)"/> 
+			<DerivedAttributeDefinition id="anth3" description="IMC" expression="anth1/(anth2/100*anth2/100)"/> 
         </EntityDefinition>
 		
 <!-- TO BE DELETED 
@@ -601,95 +559,94 @@
 -->
 
         <EntityDefinition id="LCS1_HospitalAnxietyAndDepressionScale" description="HospitalAnxietyAndDepressionScale"> 
-            <AttributeDefinition id="hadA1" type="enumeration" multiplicity="maximalOne" description="Em trobo tens/a o nervios/a"> 
+            <AttributeDefinition id="hadA1" type="enumeration" multiplicity="maximalOne" description="A.1. Em trobo tens/a o nervios/a"> 
                 <EnumerationOption value="0" description="En absolut"/>
                 <EnumerationOption value="1" description="De tant en tant, de manera ocasional"/>
                 <EnumerationOption value="2" description="Gran part del temps"/>
                 <EnumerationOption value="3" description="La mayor part del temps"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadD1" type="enumeration" multiplicity="maximalOne" description="Continuo gaudint de la vida com sempre"> 
+            <AttributeDefinition id="hadD1" type="enumeration" multiplicity="maximalOne" description="D.1. Continuo gaudint de la vida com sempre"> 
                 <EnumerationOption value="0" description="Certament, igual que abans"/>
                 <EnumerationOption value="1" description="No tant com abans"/>
                 <EnumerationOption value="2" description="Solament una mica"/>
                 <EnumerationOption value="3" description="Ja no gaudeixo amb res"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadA2" type="enumeration" multiplicity="maximalOne" description="Sento una espècie de por com si algo dolent fos a passar"> 
+            <AttributeDefinition id="hadA2" type="enumeration" multiplicity="maximalOne" description="A.2.Sento una espècie de por com si algo dolent fos a passar"> 
                 <EnumerationOption value="0" description="En absolut"/>
                 <EnumerationOption value="1" description="Una mica, però no em preocupa"/>
                 <EnumerationOption value="2" description="Sí, però no molt malament"/>
                 <EnumerationOption value="3" description="Molta i bastant malament"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadD2" type="enumeration" multiplicity="maximalOne" description="Soc capaç de riure i veure el costat graciós de les coses:"> 
+            <AttributeDefinition id="hadD2" type="enumeration" multiplicity="maximalOne" description="D.2. Soc capaç de riure i veure el costat graciós de les coses:"> 
                 <EnumerationOption value="0" description="Tant com sempre he pogut"/>
                 <EnumerationOption value="1" description="No tant actualment"/>
                 <EnumerationOption value="2" description="No molt actualment"/>
                 <EnumerationOption value="3" description="En absolut"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadA3" type="enumeration" multiplicity="maximalOne" description="Tinc el cap ple de preocupacions"> 
+            <AttributeDefinition id="hadA3" type="enumeration" multiplicity="maximalOne" description="A.3. Tinc el cap ple de preocupacions"> 
                 <EnumerationOption value="0" description="Només de manera ocasional"/>
                 <EnumerationOption value="1" description="De tant en tant, però no molt freqüèntment"/>
                 <EnumerationOption value="2" description="Molta part del meu temps"/>
                 <EnumerationOption value="3" description="Gran part del temps"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadD3" type="enumeration" multiplicity="maximalOne" description="Em trobo alegre"> 
+            <AttributeDefinition id="hadD3" type="enumeration" multiplicity="maximalOne" description="D.3. Em trobo alegre"> 
                 <EnumerationOption value="0" description="Només de manera ocasional"/>
                 <EnumerationOption value="1" description="De tant en tant, però no molt freqüèntment"/>
                 <EnumerationOption value="2" description="Molta part del meu temps"/>
                 <EnumerationOption value="3" description="Gran part del temps"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadA4" type="enumeration" multiplicity="maximalOne" description="Soc capaç de romandre asegut/da tranquil/a i relaxat/da:"> 
+            <AttributeDefinition id="hadA4" type="enumeration" multiplicity="maximalOne" description="A.4. Soc capaç de romandre asegut/da tranquil/a i relaxat/da:"> 
                 <EnumerationOption value="0" description="Definitivament"/>
                 <EnumerationOption value="1" description="De manera habitual"/>
                 <EnumerationOption value="2" description="No de manera freqüent"/>
                 <EnumerationOption value="3" description="En absolut"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadD4" type="enumeration" multiplicity="maximalOne" description="Em trobo lent i maldestre"> 
+            <AttributeDefinition id="hadD4" type="enumeration" multiplicity="maximalOne" description="D.4. Em trobo lent i maldestre"> 
                 <EnumerationOption value="0" description="En absolut"/>
                 <EnumerationOption value="1" description="De vegades"/>
                 <EnumerationOption value="2" description="Molt sovint"/>
                 <EnumerationOption value="3" description="Pràcticament tot el temps"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadA5" type="enumeration" multiplicity="maximalOne" description="Experimento una desagradable sensació de 'nervis i formigeig' a l'estomac"> 
+            <AttributeDefinition id="hadA5" type="enumeration" multiplicity="maximalOne" description="A.5. Experimento una desagradable sensació de 'nervis i formigeig' a l'estomac"> 
                 <EnumerationOption value="0" description="En absolut"/>
                 <EnumerationOption value="1" description="Ocasionalment"/>
                 <EnumerationOption value="2" description="Bastant sovint"/>
                 <EnumerationOption value="3" description="Molt sovint"/>
             </AttributeDefinition>
-			<AttributeDefinition id="hadD5" type="enumeration" multiplicity="maximalOne" description="He perdut l'interès per el meu aspecte personal"> 
+			<AttributeDefinition id="hadD5" type="enumeration" multiplicity="maximalOne" description="D.5. He perdut l'interès per el meu aspecte personal"> 
                 <EnumerationOption value="0" description="Tinc la mateixa cura que sempre"/>
                 <EnumerationOption value="1" description="No puc tenir molta cura"/>
                 <EnumerationOption value="2" description="No tinc la cura que hauria de tenir "/>
                 <EnumerationOption value="3" description="Definitivament"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadA6" type="enumeration" multiplicity="maximalOne" description="Em trobo inquiet/a com si no pugués parar de moure'm"> 
+            <AttributeDefinition id="hadA6" type="enumeration" multiplicity="maximalOne" description="A.6. Em trobo inquiet/a com si no pugués parar de moure'm"> 
                 <EnumerationOption value="0" description="En absolut"/>
                 <EnumerationOption value="1" description="No molt"/>
                 <EnumerationOption value="2" description="Molt"/>
                 <EnumerationOption value="3" description="De fet, molt"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadD6" type="enumeration" multiplicity="maximalOne" description="Espero les coses amb il•lusió"> 
+            <AttributeDefinition id="hadD6" type="enumeration" multiplicity="maximalOne" description="D.6. Espero les coses amb il·lusió"> 
                 <EnumerationOption value="0" description="Tant com ho he fet sempre"/>
                 <EnumerationOption value="1" description=" Més aviat menys del que solia "/>
                 <EnumerationOption value="2" description=" Definitivament menys del que solia fer "/>
-                <EnumerationOption value="3" description="Tot just tinc il•lusió"/>
+                <EnumerationOption value="3" description="Tot just tinc il·lusió"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadA7" type="enumeration" multiplicity="maximalOne" description="Experimento sobtadament sensacions de gran angoixa o por"> 
+            <AttributeDefinition id="hadA7" type="enumeration" multiplicity="maximalOne" description="A.7. Experimento sobtadament sensacions de gran angoixa o por"> 
                 <EnumerationOption value="0" description="En absolut"/>
                 <EnumerationOption value="1" description="No molt sovint"/>
                 <EnumerationOption value="2" description="Bastant sovint"/>
                 <EnumerationOption value="3" description="De fet, molt sovint"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadD7" type="enumeration" multiplicity="maximalOne" description=""> 
+            <AttributeDefinition id="hadD7" type="enumeration" multiplicity="maximalOne" description="D.7. Soc capaç de disfrutar amb un bon kllibre o amb un bon programa de ràdio o televisió"> 
+                <EnumerationOption value="0" description="Sovint"/>
                 <EnumerationOption value="0" description="Sovint"/>
                 <EnumerationOption value="1" description="De vegades"/>
                 <EnumerationOption value="2" description="No sovint"/>
                 <EnumerationOption value="3" description="Molt poques vegades"/>
             </AttributeDefinition>
 
-             <DerivedAttributeDefinition id="hadA8" expression="number(hadA1,0)+number(hadA2,0)+number(hadA3,0)+number(hadA4,0)+number(hadA5,0)+number(hadA6,0)+number(hadA7,0)" description="Total puntuació ansietat"/> 
-             <DerivedAttributeDefinition id="hadD8" expression="number(hadD1,0)+number(hadD2,0)+number(hadD3,0)+number(hadD4,0)+number(hadD5,0)+number(hadD6,0)+number(hadD7,0)" description="Total puntuació depresió"/> 
-             <DerivedAttributeDefinition id="hadA9" expression="-1" description="Resultat ansietat"/>  <!-- checkThis(L:174) -->
-             <DerivedAttributeDefinition id="hadD9" expression="-1" description="Resultat depresió"/> <!-- checkThis(L:175) -->
+             <DerivedAttributeDefinition id="hadA8" expression="number(hadA1,0)+number(hadA2,0)+number(hadA3,0)+number(hadA4,0)+number(hadA5,0)+number(hadA6,0)+number(hadA7,0)" description="Puntuació total ansietat"/> 
+             <DerivedAttributeDefinition id="hadD8" expression="number(hadD1,0)+number(hadD2,0)+number(hadD3,0)+number(hadD4,0)+number(hadD5,0)+number(hadD6,0)+number(hadD7,0)" description="Puntuació total depresió"/> 
         </EntityDefinition>
 
         <EntityDefinition id="LCS1_SF12" description="SF-12 Health Survay">
@@ -830,6 +787,77 @@
             <DerivedAttributeDefinition id="barthel11" expression="number(barthel1,0)+number(barthel2,0)+number(barthel3,0)+number(barthel4,0)+number(barthel5,0)+number(barthel6,0)+number(barthel7,0)+number(barthel8,0)+number(barthel9,0)+number(barthel10,0)" description="Index de Barthel"/>  
         </EntityDefinition>
 
+		<EntityDefinition id="LCS1_FallRisk" description="Risc de caigudes">
+			<AttributeDefinition id="fallRisk1" type="enumeration" multiplicity="maximalOne" description="Caigudes prèvies">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Sí"/>
+            </AttributeDefinition>  
+			<AttributeDefinition id="fallRisk2" type="enumeration" multiplicity="maximalOne" description="Medicaments">
+                <EnumerationOption value="0" description="Cap"/>
+                <EnumerationOption value="1" description="Tranquil·litzants, sedants, diürètics, antidepressius, altres"/>
+            </AttributeDefinition>  
+			<AttributeDefinition id="fallRisk3" type="enumeration" multiplicity="maximalOne" description="Dèficits sensorials">
+                <EnumerationOption value="0" description="Cap"/>
+                <EnumerationOption value="1" description="Alteracions visuals, auditives"/>
+            </AttributeDefinition>  
+			<AttributeDefinition id="fallRisk4" type="enumeration" multiplicity="maximalOne" description="Estat mental">
+                <EnumerationOption value="0" description="Orientat"/>
+                <EnumerationOption value="1" description="Confús"/>
+            </AttributeDefinition>  
+			<AttributeDefinition id="fallRisk5" type="enumeration" multiplicity="maximalOne" description="Deambulació">
+                <EnumerationOption value="0" description="Normal"/>
+                <EnumerationOption value="1" description="Segura amb ayuda, insegura"/>
+            </AttributeDefinition>  
+			<DerivedAttributeDefinition id="fallRisk6" expression="number(fallRisk1,0)+number(fallRisk2,0)+number(fallRisk3,0)+number(fallRisk4,0)+number(fallRisk5,0)" description="Risc total"/>  
+		</EntityDefinition>
+
+		<EntityDefinition id="LCS1_Sleeping" description="Evaluació del son">
+			<AttributeDefinition id="sleeping1" type="enumeration" multiplicity="maximalOne" description="Dificultat per adormir o quedar-se adormida; es despertar massa aviat; inquietud; somni no reparador">
+                <EnumerationOption value="0" description="No està present"/>
+                <EnumerationOption value="1" description="Present però no exposat en els últims 3 dies"/>
+                <EnumerationOption value="2" description="Present en 1 dels últims 3 dies"/>
+                <EnumerationOption value="3" description="Present en 2 dels últims 3 dies"/>
+                <EnumerationOption value="4" description="Presentat diàriament els últims 3 dies"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="sleeping2" type="enumeration" multiplicity="maximalOne" description="Massa son - Somni excessiu que interfereix amb el funcionament normal de la persona">
+                <EnumerationOption value="0" description="No està present"/>
+                <EnumerationOption value="1" description="Present però no exposat en els últims 3 dies"/>
+                <EnumerationOption value="2" description="Present en 1 dels últims 3 dies"/>
+                <EnumerationOption value="3" description="Present en 2 dels últims 3 dies"/>
+                <EnumerationOption value="4" description="Presentat diàriament els últims 3 dies"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="sleeping3" type="enumeration" multiplicity="maximalOne" description="Ús de medicaments per dormir">
+                <EnumerationOption value="1" description="Sí"/>
+                <EnumerationOption value="2" description="No"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="sleeping4" type="enumeration" multiplicity="maximalOne" description="Fa servir ajudes per al son (BPAP, CPAP)">
+                <EnumerationOption value="1" description="Sí"/>
+                <EnumerationOption value="2" description="No"/>
+            </AttributeDefinition> 
+        </EntityDefinition>
+		
+		<EntityDefinition id="LCS1_MedicationFollowing" description="Compliment del tractament"> 
+            <AttributeDefinition id="Medication1" type="enumeration" multiplicity="maximalOne" description="Supera el 80% de compliment?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Sí"/>
+            </AttributeDefinition>  
+        </EntityDefinition>
+
+		<EntityDefinition id="LCS1_Medication" description="Complexitat del tractament i habilitats per executarlo"> 
+            <AttributeDefinition id="Medication1" type="enumeration" multiplicity="maximalOne" description="Més de 4 pastilles al dia?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Sí"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="Medication2" type="enumeration" multiplicity="maximalOne" description="Més de 4 tipus de medicaments al dia?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Sí"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="Medication3" type="enumeration" multiplicity="maximalOne" description="Hi ha alguna dificultat per preparar el medicament?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Sí"/>
+            </AttributeDefinition> 
+        </EntityDefinition>		
+		
         <EntityDefinition id="LCS1_SelfCareAutoTest" description="Self-care Auto-test">
             <AttributeDefinition id="scat_epoc1" type="enumeration" multiplicity="maximalOne" description="1. Em peso cada día">
                 <EnumerationOption value="1" description="Sempre / Totalment d'acord"/>
@@ -948,21 +976,14 @@
         <EntityDefinition id="LCS1_VitalSignsMonitoring" description="Vital Signs Monitoring">
             <!--Mesurement-->
             <AttributeDefinition id="pm-1" type="enumeration" multiplicity="maximalOne" description="Paràmetre a monitoritzar">
-                <EnumerationOption value="WEIGHT" description="Weight"/>
-                <EnumerationOption value="HEIGHT" description="Height"/>
-                <EnumerationOption value="FATRATIO" description="FatRatio"/>
-                <EnumerationOption value="FATMASSWEIGHT" description="FatMassWeight"/>
-                <EnumerationOption value="DIASTOLICBLOODPRESSURE" description="DiastolicBloodPressure"/>
-                <EnumerationOption value="SYSTOLICBLOODPRESSURE" description="SystolicBloodPressure"/>
-                <EnumerationOption value="TEMPERATURE" description="Temperature"/>
+                <EnumerationOption value="WEIGHT" description="Pes"/>
+                <EnumerationOption value="HEIGHT" description="Alçada"/>
+                <EnumerationOption value="DIASTOLICBLOODPRESSURE" description="Pressió arterial diastòlica"/>
+                <EnumerationOption value="SYSTOLICBLOODPRESSURE" description="Presiò arterial sistòlica"/>
                 <EnumerationOption value="SP02" description="SP02"/>
-                <EnumerationOption value="BODYTEMPERATURE" description="BodyTemperature"/>
-                <EnumerationOption value="SKINTEMPERATURE" description="SkinTemperature"/>
-                <EnumerationOption value="MUSCLEMASS" description="MuscleMass"/>
-                <EnumerationOption value="HYDRATION" description="Hydration"/>
-                <EnumerationOption value="BONEMASS" description="BoneMass"/>
-                <EnumerationOption value="PULSEWAVEVEOCITY" description="PulseWaveVelocity"/>
-                <EnumerationOption value="SLEEP" description="Sleep"/>
+                <EnumerationOption value="BODYTEMPERATURE" description="Temperatura"/>
+                <EnumerationOption value="PULSEWAVEVEOCITY" description="Pols"/>
+                <EnumerationOption value="SLEEP" description="Son"/>
             </AttributeDefinition>   
             <AttributeDefinition id="pm-2" type="number" multiplicity="maximalOne" description="Valor mínim per activar alerta"/>       
             <AttributeDefinition id="pm-3" type="number" multiplicity="maximalOne" description="Valor màxim per activar alerta"/>       
@@ -1009,8 +1030,8 @@
             <AttributeDefinition id="phactp-patient" type="link" multiplicity="maximalOne" uiReference="linediagram" description="Pacient"/>  <!-- checkThis(L:255) -->              
             <AttributeDefinition id="phactp-x" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Periódicitat d´execució."/>                 
         </EntityDefinition>
-
-        <EntityDefinition id="LCS1_Education" description="Education"> 
+		
+	    <EntityDefinition id="LCS1_Education" description="Pla de formació al pacient i cuidador"> 
             <AttributeDefinition id="educaDef1" type="enumeration" multiplicity="maximalOne" description="És necessari educar al pacient en el curs de la Hospitalització?"> 
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
@@ -1030,7 +1051,7 @@
         </EntityDefinition>
 
 
-        <EntityDefinition id="LCS1_SocialIntervention" description="Social Intervention"> 
+        <EntityDefinition id="LCS1_SocialIntervention" description="Intervencions socials"> 
             <AttributeDefinition id="social1" type="enumeration" multiplicity="maximalOne" description="Proveir cuidador per hores"> 
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
@@ -1051,18 +1072,10 @@
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>
-            <AttributeDefinition id="social6" type="enumeration" multiplicity="maximalOne" description="Proveir cuidador per hores"> 
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="social7" type="enumeration" multiplicity="maximalOne" description="Visites domiciliàries de infermeria"> 
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
-            </AttributeDefinition>
         </EntityDefinition>
 
 
-        <EntityDefinition id="LCS1_Agreement" description="Agreement"> 
+        <EntityDefinition id="LCS1_Agreement" description="Acord del pla de treball"> 
             <AttributeDefinition id="wp_agreement1" type="enumeration" multiplicity="maximalOne" description="Validació de la prescripció de monitorització de variables clíniques"> 
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
@@ -1164,7 +1177,7 @@
         </EntityDefinition>
 
         <!-- checkThis(L:313++) -->
-        <EntityDefinition id="LCS1_EducationExec" description="Education"> 
+        <EntityDefinition id="LCS1_EducationExec" description="Pla de formació al pacient i cuidador - Execució"> 
             <AttributeDefinition id="educaExec1" type="enumeration" multiplicity="maximalOne" description="Ha rebut el pacient formació en el curs de la hospitalització?"> 
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
@@ -1231,26 +1244,11 @@
             <TaskParamDefinition path="LCS1_Lace.lace18" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="LCS1_Lace.lace19" isReadOnly="true" isMandatory="false"/>
         </HumanTaskDefinition>
-        <HumanTaskDefinition id="LCS1_GeriatricDepressionScale" description="Geriatric Depression Scale" ownerPath="LCS1_Clinician" isMandatory="false" isRepeatable="false" entityDefinitionId="LCS1_GeriatricDepressionScale" entityAttachPath="LCS1_GeriatricDepressionScale">                
+        <HumanTaskDefinition id="LCS1_GlobalDeteriorationScale" description="Global Deterioration Scale" ownerPath="LCS1_Clinician" isMandatory="false" isRepeatable="false" entityDefinitionId="LCS1_GlobalDeteriorationScale" entityAttachPath="LCS1_GlobalDeteriorationScale">                
             <SentryDefinition>
               <precondition processDefinitionId="LCS1_SelectPatient"/>
             </SentryDefinition>
-            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds1" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds2" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds3" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds4" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds5" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds6" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds7" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds8" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds9" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds10" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds11" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds12" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds13" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds14" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds15" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_GeriatricDepressionScale.gds16" isReadOnly="true" isMandatory="false"/>
+            <TaskParamDefinition path="LCS1_GlobalDeteriorationScale.gds1" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition>
         <HumanTaskDefinition id="LCS1_TechnologicalTest" description="Test d'adherència a la tecnología" ownerPath="LCS1_CaseManager" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_TechnologicalTest" entityAttachPath="LCS1_TechnologicalTest">                
             <SentryDefinition>
@@ -1317,8 +1315,6 @@
             <TaskParamDefinition path="LCS1_HospitalAnxietyAndDepressionScale.hadD7" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="LCS1_HospitalAnxietyAndDepressionScale.hadA8" isReadOnly="true" isMandatory="false"/>
             <TaskParamDefinition path="LCS1_HospitalAnxietyAndDepressionScale.hadD8" isReadOnly="true" isMandatory="false"/>
-            <TaskParamDefinition path="LCS1_HospitalAnxietyAndDepressionScale.hadA9" isReadOnly="true" isMandatory="false"/>
-            <TaskParamDefinition path="LCS1_HospitalAnxietyAndDepressionScale.hadD9" isReadOnly="true" isMandatory="false"/>
         </HumanTaskDefinition>
         <HumanTaskDefinition id="LCS1_Barthel" description="Barthel" ownerPath="LCS1_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_Barthel" entityAttachPath="LCS1_Barthel">                
             <TaskParamDefinition path="LCS1_Barthel.barthel1" isReadOnly="false" isMandatory="true"/>
@@ -1333,6 +1329,34 @@
             <TaskParamDefinition path="LCS1_Barthel.barthel10" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="LCS1_Barthel.barthel11" isReadOnly="true" isMandatory="false"/>
         </HumanTaskDefinition>
+		
+		<HumanTaskDefinition id="LCS1_FallRisk" description="Risc de caigudes" ownerPath="LCS1_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_FallRisk" entityAttachPath="LCS1_FallRisk">                
+            <TaskParamDefinition path="LCS1_FallRisk.fallRisk1" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_FallRisk.fallRisk2" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_FallRisk.fallRisk3" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_FallRisk.fallRisk4" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS1_FallRisk.fallRisk5" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_FallRisk.fallRisk6" isReadOnly="true" isMandatory="false"/>
+        </HumanTaskDefinition>
+		
+		<HumanTaskDefinition id="LCS1_Sleeping" description="Evaluació del son" ownerPath="LCS1_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_Sleeping" entityAttachPath="LCS1_Sleeping">                
+            <TaskParamDefinition path="LCS1_Sleeping.sleeping1" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_Sleeping.sleeping2" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_Sleeping.sleeping3" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_Sleeping.sleeping4" isReadOnly="false" isMandatory="true"/>
+        </HumanTaskDefinition>
+		
+		<HumanTaskDefinition id="LCS1_MedicationFollowing" description="Compliment del tractament" ownerPath="LCS1_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_MedicationFollowing" entityAttachPath="LCS1_MedicationFollowing">                
+            <TaskParamDefinition path="LCS1_MedicationFollowing.medication1" isReadOnly="false" isMandatory="true"/>
+        </HumanTaskDefinition>
+		
+		
+		<HumanTaskDefinition id="LCS1_Medication" description="Complexitat del tractament i habilitats per executarlo" ownerPath="LCS1_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_Medication" entityAttachPath="LCS1_Medication">                
+            <TaskParamDefinition path="LCS1_Medication.Medication1" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_Medication.Medication2" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_Medication.Medication3" isReadOnly="false" isMandatory="true"/>
+        </HumanTaskDefinition>
+		
         <!--TODO check this-->
         <HumanTaskDefinition id="LCS1_DiagnosisIADL" description="Activitats instrumentals de la vida diària" ownerPath="LCS1_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_DiagnosisIADL" entityAttachPath="LCS1_DiagnosisIADL">                
             <TaskParamDefinition path="LCS1_DiagnosisIADL.IADL1" isReadOnly="false" isMandatory="true"/>
@@ -1341,6 +1365,7 @@
             <TaskParamDefinition path="LCS1_DiagnosisIADL.IADL4" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="LCS1_DiagnosisIADL.IADL5" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition>
+		
         <HumanTaskDefinition id="LCS1_DiagnosisCommunication" description="Comunicació" ownerPath="LCS1_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_DiagnosisCommunication" entityAttachPath="LCS1_DiagnosisCommunication">                
             <TaskParamDefinition path="LCS1_DiagnosisCommunication.comm1" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="LCS1_DiagnosisCommunication.comm2" isReadOnly="false" isMandatory="true"/>
@@ -1348,18 +1373,23 @@
             <TaskParamDefinition path="LCS1_DiagnosisCommunication.comm4" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="LCS1_DiagnosisCommunication.comm5" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition>
+		
         <HumanTaskDefinition id="LCS1_DiagnosisAnthropometricVariables" description="Variables antropomètriques" ownerPath="LCS1_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_DiagnosisAnthropometricVariables" entityAttachPath="LCS1_DiagnosisAnthropometricVariables">                
             <TaskParamDefinition path="LCS1_DiagnosisAnthropometricVariables.anth1" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="LCS1_DiagnosisAnthropometricVariables.anth2" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS1_DiagnosisAnthropometricVariables.anth3" isReadOnly="true" isMandatory="false"/>
         </HumanTaskDefinition>
+		
         <HumanTaskDefinition id="LCS1_DiagnosisSmokingAndAlcohol" description="Consum de tabac i alcohol" ownerPath="LCS1_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_DiagnosisSmokingAndAlcohol" entityAttachPath="LCS1_DiagnosisSmokingAndAlcohol">                
             <TaskParamDefinition path="LCS1_DiagnosisSmokingAndAlcohol.smalc1" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="LCS1_DiagnosisSmokingAndAlcohol.smalc2" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition>
-        <HumanTaskDefinition id="LCS1_DiagnosisNyha" description="Diagnosis classe funcional NYHA" ownerPath="LCS1_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_DiagnosisNyha" entityAttachPath="LCS1_DiagnosisNyha">                
+		
+        <HumanTaskDefinition id="LCS1_DiagnosisNyha" description="Diagnosis classe funcional NYHA" ownerPath="LCS1_Clinician" isMandatory="false" isRepeatable="false" entityDefinitionId="LCS1_DiagnosisNyha" entityAttachPath="LCS1_DiagnosisNyha">                
             <TaskParamDefinition path="LCS1_DiagnosisNyha.nyha1" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition>
-        <HumanTaskDefinition id="LCS1_DiagnosisGold" description="Diagnosis grau GOLD" ownerPath="LCS1_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_DiagnosisGold" entityAttachPath="LCS1_DiagnosisGold">                
+		
+        <HumanTaskDefinition id="LCS1_DiagnosisGold" description="Diagnosis grau GOLD" ownerPath="LCS1_Clinician" isMandatory="false" isRepeatable="false" entityDefinitionId="LCS1_DiagnosisGold" entityAttachPath="LCS1_DiagnosisGold">                
             <TaskParamDefinition path="LCS1_DiagnosisGold.gold1" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="LCS1_DiagnosisGold.gold2" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="LCS1_DiagnosisGold.gold3" isReadOnly="false" isMandatory="true"/>
@@ -1367,13 +1397,15 @@
             <!-- <TaskParamDefinition path="LCS1_DiagnosisGold.codex4" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="LCS1_DiagnosisGold.codex5" isReadOnly="true" isMandatory="false"/> -->
         </HumanTaskDefinition>
-        <HumanTaskDefinition id="LCS1_DiagnosisCodex" description="Diagnosis CODEX" ownerPath="LCS1_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_DiagnosisCodex" entityAttachPath="LCS1_DiagnosisCodex">                
+		
+        <HumanTaskDefinition id="LCS1_DiagnosisCodex" description="Diagnosis CODEX" ownerPath="LCS1_Clinician" isMandatory="false" isRepeatable="false" entityDefinitionId="LCS1_DiagnosisCodex" entityAttachPath="LCS1_DiagnosisCodex">                
             <TaskParamDefinition path="LCS1_DiagnosisCodex.codex1" isReadOnly="true" isMandatory="false"/>
             <TaskParamDefinition path="LCS1_DiagnosisCodex.codex2" isReadOnly="true" isMandatory="false"/>
             <TaskParamDefinition path="LCS1_DiagnosisCodex.codex3" isReadOnly="true" isMandatory="false"/>
             <TaskParamDefinition path="LCS1_DiagnosisCodex.codex4" isReadOnly="true" isMandatory="false"/>
             <TaskParamDefinition path="LCS1_DiagnosisCodex.codex5" isReadOnly="true" isMandatory="false"/>
         </HumanTaskDefinition>
+		
         <!--TODO SF12
         <HumanTaskDefinition id="LCS1_SF12" description="" ownerPath="LCS1_CaseManager" isMandatory="true" isRepeatable="false" entityDefinitionId="" entityAttachPath="">                
             <TaskParamDefinition path="" isReadOnly="false" isMandatory="true"/>
@@ -1386,6 +1418,7 @@
             <TaskParamDefinition path="LCS1_TreatmentAccessibility.treatmentAccess3" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="LCS1_TreatmentAccessibility.treatmentAccess4" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition> -->
+		
 		<HumanTaskDefinition id="LCS1_SelfCareAutoTest" description="Capacitat d'autocura" ownerPath="LCS1_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_SelfCareAutoTest" entityAttachPath="LCS1_SelfCareAutoTest">                
             <TaskParamDefinition path="LCS1_SelfCareAutoTest.scat_epoc1" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="LCS1_SelfCareAutoTest.scat_epoc2" isReadOnly="false" isMandatory="true"/>
@@ -1432,7 +1465,7 @@
             <TaskParamDefinition path="LCS1_SocialSelfCareCareerAbility.career5" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition>
 -->
-        <HumanTaskDefinition id="LCS1_SocialComplexityOfThePatient" description="Social Complexity of the Patient" ownerPath="LCS1_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_SocialComplexityOfThePatient" entityAttachPath="LCS1_SocialComplexityOfThePatient">                
+        <HumanTaskDefinition id="LCS1_SocialComplexityOfThePatient" description="Complexitat social del pacient" ownerPath="LCS1_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_SocialComplexityOfThePatient" entityAttachPath="LCS1_SocialComplexityOfThePatient">                
             <TaskParamDefinition path="LCS1_SocialComplexityOfThePatient.complexity1" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="LCS1_SocialComplexityOfThePatient.complexity2" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="LCS1_SocialComplexityOfThePatient.complexity3" isReadOnly="false" isMandatory="true"/>
@@ -1444,6 +1477,9 @@
 		<SentryDefinition>
 			<precondition processDefinitionId="LCS1_CaseEvaluation"/>
 		</SentryDefinition>
+		
+		<!-- WP Definition -->
+		
 		<HumanTaskDefinition id="LCS1_PhysicalActivityPrescription" description="Monitorització d’activitat física – Prescripció" ownerPath="LCS1_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_PhysicalActivity" entityAttachPath="LCS1_PhysicalActivity">
 			<TaskParamDefinition path="LCS1_PhysicalActivity.phactp1" isReadOnly="false" isMandatory="true"/>
 			<TaskParamDefinition path="LCS1_PhysicalActivity.phactp2" isReadOnly="false" isMandatory="true"/>
@@ -1453,6 +1489,61 @@
 			<TaskParamDefinition path="LCS1_PhysicalActivity.phactp6" isReadOnly="false" isMandatory="true"/>
 			<TaskParamDefinition path="LCS1_PhysicalActivity.phactp7" isReadOnly="false" isMandatory="true"/>                    
 		</HumanTaskDefinition>
+		
+		<HumanTaskDefinition id="LCS1_PatientMonitoryPrescriptionWeight" description="Monitorització del pes – Prescripció" ownerPath="LCS1_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_PatientMonitory" entityAttachPath="LCS1_PatientMonitory">
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp1_name" isReadOnly="false" isMandatory="false"/> <!-- defaultValues="['WEIGHT']"/> -->
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp2_alertmin" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp3_alertmax" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp4_alertfreq" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="[1]"/>  -->
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp5_alertfrequnit" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="['DAYS']"/>  -->            
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp7_freq" isReadOnly="false" isMandatory="false"/> <!--   defaultValues="[1]"/>  -->
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp8_freqqunit" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="['DAYS']"/>  -->
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp9_maxdelay" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="[60]"/>  -->
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp10_startdate" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp11_enddate" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp12_timeslot" isReadOnly="false" isMandatory="false"/> <!--  <defaultValues="['BREAKFAST']"/>  -->
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp6_comments" isReadOnly="false" isMandatory="false"/>
+		</HumanTaskDefinition>
+		
+		<HumanTaskDefinition id="LCS1_PatientMonitoryPrescriptionBodyTemperature" description="Monitorització de temperatura corporal – Prescripció" ownerPath="LCS1_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_PatientMonitory" entityAttachPath="LCS1_PatientMonitory">
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp1_name" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="['BODYTEMPERATURE']"/> -->
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp2_alertmin" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp3_alertmax" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp4_alertfreq" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="[1]"/> -->
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp5_alertfrequnit" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="['DAYS']"/>   -->         
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp7_freq" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="[1]"/> -->
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp8_freqqunit" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="['DAYS']"/> -->
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp9_maxdelay"  isReadOnly="false" isMandatory="false"/> <!--  defaultValues="[60]"/> -->
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp10_startdate" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp11_enddate" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp12_timeslot" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="['BREAKFAST']"/> -->
+			<TaskParamDefinition path="LCS1_PatientMonitory.pmp6_comments" isReadOnly="false" isMandatory="false"/>
+		</HumanTaskDefinition>
+		
+		<HumanTaskDefinition id="LCS1_SocialIntervention" description="Intervencions socials" ownerPath="LCS1_SocialCareer" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_SocialIntervention" entityAttachPath="LCS1_SocialIntervention">
+			<TaskParamDefinition path="LCS1_SocialIntervention.social1" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_SocialIntervention.social2" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_SocialIntervention.social3" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_SocialIntervention.social4" isReadOnly="false" isMandatory="false"/>
+		</HumanTaskDefinition>
+	
+		<HumanTaskDefinition id="LCS1_Education" description="Pla de formació al pacient i cuidador" ownerPath="LCS1_Education" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_Education" entityAttachPath="LCS1_Education">
+			<TaskParamDefinition path="LCS1_Education.educaDef1" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_Education.educaDef2" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_Education.educaDef3" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_Education.educaDef4" isReadOnly="false" isMandatory="false"/>
+		</HumanTaskDefinition>
+		
+		<HumanTaskDefinition id="LCS1_Agreement" description="Acord del pla de treball" ownerPath="LCS1_CaseManager" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_Agreement" entityAttachPath="LCS1_Agreement">
+			<TaskParamDefinition path="LCS1_Agreement.wp_agreement1" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_Agreement.wp_agreement2" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_Agreement.wp_agreement3" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_Agreement.wp_agreement4" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_Agreement.wp_agreement5" isReadOnly="false" isMandatory="false"/>
+		</HumanTaskDefinition>
+		
+		<!-- WP Execution -->
+		
 		<AutomatedTaskDefinition id="LCS1_PhysicalActivityExecution" description="Monitorització d’activitat física – Execució" ownerPath="LCS1_Clinician" isMandatory="true" isRepeatable="false">
 			<SentryDefinition>
 				<precondition processDefinitionId="LCS1_PhysicalActivityPrescription"/>
@@ -1468,20 +1559,7 @@
 			<TaskParamDefinition path="LCS1_Patient" isReadOnly="true" isMandatory="false"/>
 			<TaskParamDefinition path="LCS1_PhysicalActivity.phactpx" isReadOnly="false" isMandatory="true"/>
 		</AutomatedTaskDefinition>
-		<HumanTaskDefinition id="LCS1_PatientMonitoryPrescriptionWeight" description="Monitorització del pes – Prescripció" ownerPath="LCS1_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_PatientMonitory" entityAttachPath="LCS1_PatientMonitory">
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp1_name" isReadOnly="false" isMandatory="false"/> <!-- defaultValues="['WEIGHT']"/> -->
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp2_alertmin" isReadOnly="false" isMandatory="false"/>
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp3_alertmax" isReadOnly="false" isMandatory="false"/>
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp4_alertfreq" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="[1]"/>  -->
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp5_alertfrequnit" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="['DAYS']"/>  -->            
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp7_freq" isReadOnly="false" isMandatory="false"/> <!--   defaultValues="[1]"/>  -->
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp8_freqqunit" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="['DAYS']"/>  -->
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp9_maxdelay" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="[60]"/>  -->
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp10_startdate" isReadOnly="false" isMandatory="false"/>
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp11_enddate" isReadOnly="false" isMandatory="false"/>
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp12_timeslot" isReadOnly="false" isMandatory="false"/> <!--  <defaultValues="['BREAKFAST']"/>  -->
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp6_comments" isReadOnly="false" isMandatory="false"/>
-		</HumanTaskDefinition>
+		
 		<AutomatedTaskDefinition id="LCS1_PatientMonitoryExecutionWeight" description="Monitorització del pes – Execució " ownerPath="LCS1_Clinician" isMandatory="true" isRepeatable="false">
 			<SentryDefinition>
 				<precondition processDefinitionId="LCS1_PatientMonitoryPrescriptionWeight"/>
@@ -1502,20 +1580,7 @@
 			<TaskParamDefinition path="LCS1_Patient" isReadOnly="true" isMandatory="false"/>
 			<TaskParamDefinition path="LCS1_PatientMonitory.pmpx" isReadOnly="false" isMandatory="true"/>
 		</AutomatedTaskDefinition>
-		<HumanTaskDefinition id="LCS1_PatientMonitoryPrescriptionBodyTemperature" description="Monitorització de temperatura corporal – Prescripció" ownerPath="LCS1_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_PatientMonitory" entityAttachPath="LCS1_PatientMonitory">
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp1_name" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="['BODYTEMPERATURE']"/> -->
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp2_alertmin" isReadOnly="false" isMandatory="false"/>
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp3_alertmax" isReadOnly="false" isMandatory="false"/>
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp4_alertfreq" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="[1]"/> -->
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp5_alertfrequnit" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="['DAYS']"/>   -->         
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp7_freq" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="[1]"/> -->
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp8_freqqunit" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="['DAYS']"/> -->
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp9_maxdelay"  isReadOnly="false" isMandatory="false"/> <!--  defaultValues="[60]"/> -->
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp10_startdate" isReadOnly="false" isMandatory="false"/>
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp11_enddate" isReadOnly="false" isMandatory="false"/>
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp12_timeslot" isReadOnly="false" isMandatory="false"/> <!--  defaultValues="['BREAKFAST']"/> -->
-			<TaskParamDefinition path="LCS1_PatientMonitory.pmp6_comments" isReadOnly="false" isMandatory="false"/>
-		</HumanTaskDefinition>
+		
 		<AutomatedTaskDefinition id="LCS1_PatientMonitoryExecutionBodyTemperature" description="Monitorització de temperatura corporal – Execució" ownerPath="LCS1_Clinician" isMandatory="true" isRepeatable="false">
 			<SentryDefinition>
 				<precondition processDefinitionId="LCS1_PatientMonitoryPrescriptionBodyTemperature"/>
@@ -1536,7 +1601,18 @@
 			<TaskParamDefinition path="LCS1_Patient" isReadOnly="true" isMandatory="false"/>
 			<TaskParamDefinition path="LCS1_PatientMonitory.pmpx" isReadOnly="false" isMandatory="true"/>
 		</AutomatedTaskDefinition>
-    </StageDefinition>
+		
+		<AutomatedTaskDefinition id="LCS1_EducationExec" description="Pla de formació al pacient i cuidador - Execució" ownerPath="LCS1_Clinician" isMandatory="true" isRepeatable="false">
+			<SentryDefinition>
+				<precondition processDefinitionId="LCS1_Education"/>
+			</SentryDefinition>
+			<TaskParamDefinition path="LCS1_EducationExec.educaExec1" isReadOnly="true" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_EducationExec.educaExec2" isReadOnly="true" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_EducationExec.educaExec3" isReadOnly="true" isMandatory="false"/>            
+			<TaskParamDefinition path="LCS1_EducationExec.educaExec4" isReadOnly="true" isMandatory="false"/> 
+		</AutomatedTaskDefinition>
+		
+	</StageDefinition>
     <StageDefinition id="LCS1_Discharge" description="Alta del procés" isMandatory="true" isRepeatable="true">  
         <SentryDefinition>
           <precondition processDefinitionId="LCS1_CaseEvaluation"/>
