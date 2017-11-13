@@ -59,8 +59,8 @@
             <AttributeDefinition id="LCS1_Barthel" type="Link.EntityDefinition.LCS1_Barthel" description="Barthel"/>  
 			<AttributeDefinition id="LCS1_FallRisk" type="Link.EntityDefinition.LCS1_FallRisk" description="Risc de caigudes"/>
 			<AttributeDefinition id="LCS1_Sleeping" type="Link.EntityDefinition.LCS1_Sleeping" description="Evaluació del son"/>
-            <AttributeDefinition id="LCS1_MedicationFollowing" type="Link.EntityDefinition.LCS1_MedicationFollowing" description="Cumpliment amb el tractament"/>  
-            <AttributeDefinition id="LCS1_Medication" type="Link.EntityDefinition.LCS1_Medication" description="Complexitat del tractament i habilitats per executarlo"/>  
+            <!-- TO BE DELETED  <AttributeDefinition id="LCS1_MedicationFollowing" type="Link.EntityDefinition.LCS1_MedicationFollowing" description="Cumpliment amb el tractament"/>   -->
+            <!-- TO BE DELETED  <AttributeDefinition id="LCS1_Medication" type="Link.EntityDefinition.LCS1_Medication" description="Complexitat del tractament i habilitats per executarlo"/>  -->
             <AttributeDefinition id="LCS1_SelfCareAutoTest" type="Link.EntityDefinition.LCS1_SelfCareAutoTest" description="Capacitat d'autocura"/> 
             <AttributeDefinition id="LCS1_VitalSignsMonitoring" type="Link.EntityDefinition.LCS1_VitalSignsMonitoring" description="Vital Signs Monitoring"/> 
             <AttributeDefinition id="LCS1_AutocheckHealthStatusPrescription" type="Link.EntityDefinition.LCS1_AutocheckHealthStatusPrescription" description="Autocheck Health Status Prescription"/> 
@@ -543,6 +543,10 @@
                 <EnumerationOption value="0" description="Sí"/>
                 <EnumerationOption value="1" description="No"/>
             </AttributeDefinition>
+			<AttributeDefinition id="complexity5" type="enumeration" multiplicity="maximalOne" description="Supera el 80% de compliment?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Sí"/>
+            </AttributeDefinition>  
         </EntityDefinition>
 
 <!-- TO BE DELETED 
@@ -836,12 +840,13 @@
             </AttributeDefinition> 
         </EntityDefinition>
 		
+		<!-- TO BE DELETED
 		<EntityDefinition id="LCS1_MedicationFollowing" description="Compliment del tractament"> 
             <AttributeDefinition id="Medication1" type="enumeration" multiplicity="maximalOne" description="Supera el 80% de compliment?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>  
-        </EntityDefinition>
+        </EntityDefinition> 
 
 		<EntityDefinition id="LCS1_Medication" description="Complexitat del tractament i habilitats per executarlo"> 
             <AttributeDefinition id="Medication1" type="enumeration" multiplicity="maximalOne" description="Més de 4 pastilles al dia?">
@@ -856,7 +861,7 @@
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition> 
-        </EntityDefinition>		
+        </EntityDefinition>	 -->
 		
         <EntityDefinition id="LCS1_SelfCareAutoTest" description="Self-care Auto-test">
             <AttributeDefinition id="scat_epoc1" type="enumeration" multiplicity="maximalOne" description="1. Em peso cada día">
@@ -1346,7 +1351,8 @@
             <TaskParamDefinition path="LCS1_Sleeping.sleeping4" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition>
 		
-		<HumanTaskDefinition id="LCS1_MedicationFollowing" description="Compliment del tractament" ownerPath="LCS1_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_MedicationFollowing" entityAttachPath="LCS1_MedicationFollowing">                
+		<!-- TO BE DELETED -->
+		<!-- <HumanTaskDefinition id="LCS1_MedicationFollowing" description="Compliment del tractament" ownerPath="LCS1_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_MedicationFollowing" entityAttachPath="LCS1_MedicationFollowing">                
             <TaskParamDefinition path="LCS1_MedicationFollowing.medication1" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition>
 		
@@ -1355,7 +1361,7 @@
             <TaskParamDefinition path="LCS1_Medication.Medication1" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="LCS1_Medication.Medication2" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="LCS1_Medication.Medication3" isReadOnly="false" isMandatory="true"/>
-        </HumanTaskDefinition>
+        </HumanTaskDefinition> -->
 		
         <!--TODO check this-->
         <HumanTaskDefinition id="LCS1_DiagnosisIADL" description="Activitats instrumentals de la vida diària" ownerPath="LCS1_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_DiagnosisIADL" entityAttachPath="LCS1_DiagnosisIADL">                
@@ -1470,6 +1476,7 @@
             <TaskParamDefinition path="LCS1_SocialComplexityOfThePatient.complexity2" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="LCS1_SocialComplexityOfThePatient.complexity3" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="LCS1_SocialComplexityOfThePatient.complexity4" isReadOnly="false" isMandatory="true"/>   
+			<TaskParamDefinition path="LCS1_SocialComplexityOfThePatient.complexity5" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition>
         
     </StageDefinition>
