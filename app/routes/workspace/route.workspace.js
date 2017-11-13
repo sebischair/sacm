@@ -2,6 +2,7 @@ import express from 'express';
 import Workspace from './../../models/workspace/model.workspace';
 import Case from './../../models/case/model.case';
 import CaseDefinition from './../../models/casedefinition/model.casedefinition';
+import HumanTask from './../../models/case/model.humantask';
 const router = express.Router();
 
 
@@ -86,7 +87,6 @@ router.get('/', (req, res, next)=>{
  * {}
  */
 router.get('/:id/cases/me', (req, res, next)=>{
-  console.log('ee')
   Case.findMeByWorkspace(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
@@ -278,6 +278,25 @@ router.get('/:id/casedefinitions/caninstantiate', (req, res, next)=>{
   CaseDefinition.canInstantiateByWorkspace(req.jwt, req.params.id)
     .then(cd=>{
         res.status(200).send(cd);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
+ * @api {get} /workspaces/:id/humantasks/me/active Get My active Humantasks by Workspace
+ * @apiName GetMyHumanTasksByWorkspace
+ * @apiGroup HumanTasks
+ * @apiParam {String} ID The ID of the the Workspace
+ * @apiSampleRequest /workspaces/:id/humantasks/me/active
+ * @apiSuccessExample {json} Success-Response:
+ * {}
+ */
+router.get('/:id/humantasks/me/active', (req, res, next)=>{
+  HumanTask.findMeActiveByWorkspaceId(req.jwt, req.params.id)
+    .then(ht=>{
+        res.status(200).send(ht);
     })
     .catch(err=>{
       res.status(500).send(err);
