@@ -254,7 +254,7 @@
                 <EnumerationOption value="1" description="Needs help cutting, spreading butter etc. or requires modified diet"/>
                 <EnumerationOption value="2" description="Needs help with eating, or receives enteral feeding"/>
             </AttributeDefinition>
-            <DerivedAttributeDefinition id="adl7" expression="number(adl1,0) + number(adl2,0) + number(adl2,0) + number(adl3,0) + number(adl4,0) + number(adl5,0) + number(adl6,0)" description="Score"/>     
+            <DerivedAttributeDefinition id="adl7" expression="number(adl1,0) + number(adl2,0) + number(adl2,0) + number(adl3,0) + number(adl4,0) + number(adl5,0) + number(adl6,0)" description="ADL Score"/>     
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_iADL" description="Instrumental Activities of Daily Living (iADL)">
@@ -339,7 +339,7 @@
                 <EnumerationOption value="0" description="< 70 years"/>
                 <EnumerationOption value="1" description="≥ 70 years"/>	
             </AttributeDefinition>
-            <DerivedAttributeDefinition id="nrs8" expression="number(nrs5,0) + number(nrs6,0) + number(nrs7,0)" description="Score"/>            
+            <DerivedAttributeDefinition id="nrs8" expression="number(nrs5,0) + number(nrs6,0) + number(nrs7,0)" description="NRS Score"/>            
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_MNASF" description="Mini Nutritional Assesment (MNA-SF)">
@@ -376,12 +376,12 @@
                 <EnumerationOption value="2" description="BMI 21 to less than 23"/>
                 <EnumerationOption value="3" description="BMI 23 or greater"/>
             </AttributeDefinition>           
-            <DerivedAttributeDefinition id="mnasf9" expression="number(mnasf1,0) + number(mnasf2,0) + number(mnasf3,0) + number(mnasf4,0) + number(mnasf5,0) + default(mnasf6,0) + default(mnasf7,0) + number(mnasf8,0)" description="Score"/>            
+            <DerivedAttributeDefinition id="mnasf9" expression="number(mnasf1,0) + number(mnasf2,0) + number(mnasf3,0) + number(mnasf4,0) + number(mnasf5,0) + default(mnasf6,0) + default(mnasf7,0) + number(mnasf8,0)" description="MNA-SF Score"/>            
         </EntityDefinition>
         
         <EntityDefinition id="GCS2_PhysicalActivity" description="Physical Activity">
             <AttributeDefinition id="phactp1" type="date.after(TODAY)" multiplicity="maximalOne" description="Start date"/>
-            <AttributeDefinition id="phactp2" type="date.before(phactp1)" multiplicity="maximalOne" description="End date"/>       
+            <AttributeDefinition id="phactp2" type="date.after(phactp1)" multiplicity="maximalOne" description="End date"/>       
             <AttributeDefinition id="phactp3" type="number.min(0).max(100000)" defaultValues="[10000]" multiplicity="maximalOne" description="Number of steps daily"/>       
             <AttributeDefinition id="phactp4" type="number.min(0).max(1440)" defaultValues="[60]" multiplicity="maximalOne" description="Minutes of low level activity daily"/>       
             <AttributeDefinition id="phactp5" type="number.min(0).max(1440)" defaultValues="[40]" multiplicity="maximalOne" description="Minutes of medium level activity daily"/>       
@@ -428,7 +428,7 @@
                 <EnumerationOption value="LUNCH" description="Lunch"/>
                 <EnumerationOption value="AFTERNOONSNACK" description="AfternoonSnack"/>
                 <EnumerationOption value="DINNER" description="Dinner"/>
-                <EnumerationOption value="BEFORESLEEP" description="BeforeSleep"/>
+                <EnumerationOption value="BEFORESLEEP" description="BeforeSleep" additionalDescription="Soem test"/>
             </AttributeDefinition>
             <AttributeDefinition id="pmpx" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Mesurement"/>                      
         </EntityDefinition>
@@ -522,24 +522,30 @@
 
         <!-- Case Definition -->
         <CaseDefinition id="GCS2" description="Groningen CS2" ownerPath="GCS2_Owner" entityDefinitionId="GCS2_CaseData">
-
-            <SummarySectionDefinition id="GCS2_ASA" description="ASA" position="LEFT">            
-                <SummaryParamDefinition path="GCS2_ASA.asa"/>
-            </SummarySectionDefinition>
-            <SummarySectionDefinition id="GCS2_Charlson" description="Charlson" position="LEFT">    
-                <SummaryParamDefinition path="GCS2_Charlson.ch21"/>
-            </SummarySectionDefinition>
-            <SummarySectionDefinition id="GCS2_GFI" description="Groningen Frailty Indicator (GFI)" position="LEFT" uiReference="body">    
-                <SummaryParamDefinition path="GCS2_GFI.gfi16"/>
-            </SummarySectionDefinition>
-            <SummarySectionDefinition id="GCS2_ADL" description="Activities of Daily Living (ADL)" position="CENTER">    
-                <SummaryParamDefinition path="GCS2_ADL.adl7"/>
-            </SummarySectionDefinition>
-            <SummarySectionDefinition id="GCS2_NRS" description="Nutritional Risk Screening (NRS)" position="CENTER">    
+           
+            <SummarySectionDefinition id="GCS2_Nutritional" description="Nutritional" position="LEFT">    
                 <SummaryParamDefinition path="GCS2_NRS.nrs8"/>
             </SummarySectionDefinition>
-            <SummarySectionDefinition id="GCS2_MNASF" description="Mini Nutritional Assesment (MNA-SF)" position="RIGHT">    
+            <SummarySectionDefinition id="GCS2_Frailty" description="Frailty" position="LEFT">  
+                <SummaryParamDefinition path="GCS2_GFI.gfi16"/>          
+                <SummaryParamDefinition path="GCS2_ASA.asa"/>
+                <SummaryParamDefinition path="GCS2_Charlson.ch21"/>
+            </SummarySectionDefinition>
+            <SummarySectionDefinition id="GCS2_Functional" description="Functional" position="CENTER">   
+                <SummaryParamDefinition path="GCS2_iADL.iadl1"/>
+                <SummaryParamDefinition path="GCS2_iADL.iadl2"/>
+                <SummaryParamDefinition path="GCS2_iADL.iadl3"/>
+                <SummaryParamDefinition path="GCS2_iADL.iadl4"/>
+                <SummaryParamDefinition path="GCS2_iADL.iadl5"/>
+                <SummaryParamDefinition path="GCS2_iADL.iadl6"/>
+                <SummaryParamDefinition path="GCS2_iADL.iadl7"/>
+                <SummaryParamDefinition path="GCS2_iADL.iadl8"/>
+                <SummaryParamDefinition path="GCS2_ADL.adl7"/>
+            </SummarySectionDefinition>
+            <SummarySectionDefinition id="GCS2_Cognitive" description="Cognitive" position="RIGHT">    
                 <SummaryParamDefinition path="GCS2_MNASF.mnasf9"/>
+            </SummarySectionDefinition>
+            <SummarySectionDefinition id="GCS2_QOL" description="QOL" position="RIGHT">    
             </SummarySectionDefinition>
             <SummarySectionDefinition id="GCS2_PhysicalActivity" description="Physical Activity" position="STRETCHED">
                 <SummaryParamDefinition path="GCS2_PhysicalActivity.phactp1"/>

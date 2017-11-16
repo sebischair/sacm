@@ -83,7 +83,7 @@ router.get('/', (req, res, next)=>{
  * @apiParam {String} ID The ID of the the Workspace
  * @apiSampleRequest /workspaces/:id/cases/me
  * @apiSuccessExample {json} Success-Response:
-
+ * {}
  */
 router.get('/:id/cases/me', (req, res, next)=>{
   console.log('ee')
