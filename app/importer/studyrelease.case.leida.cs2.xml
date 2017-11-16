@@ -35,20 +35,15 @@
 		  <AttributeDefinition id="LCS2_SocialCareer" type="Link.Users(IrbllSocialCareers)" description="Treaballador social"/>
 
 		  <!-- WORKSPACE: CaseIdentification -->				  		 
-		  <!-- 
 		  <AttributeDefinition id="LCS2_ComorbidityCharlson" type="Link.EntityDefinition.LCS2_ComorbidityCharlson" />  
 		  <AttributeDefinition id="LCS2_ChronicDiseases" type="Link.EntityDefinition.LCS2_ChronicDiseases" />
 		  <AttributeDefinition id="LCS2_PolyMedicationCheck" type="Link.EntityDefinition.LCS2_PolyMedicationCheck" />		  
-		  -->				  		 
-		  <AttributeDefinition id="LCS2_GMA" type="Link.EntityDefinition.LCS2_GMA" />		  
-		  
+		  <AttributeDefinition id="LCS2_GMA" type="Link.EntityDefinition.LCS2_GMA" />		  		  
 		  <AttributeDefinition id="LCS2_HospitalEmergencyAdminisions" type="Link.EntityDefinition.LCS2_HospitalEmergencyAdminisions" />
-		  <AttributeDefinition id="LCS2_ASAPhysicalStatusClassificationSystem" type="Link.EntityDefinition.LCS2_ASAPhysicalStatusClassificationSystem" />
-		  
-		  <!-- 
+		  <AttributeDefinition id="LCS2_ASAPhysicalStatusClassificationSystem" type="Link.EntityDefinition.LCS2_ASAPhysicalStatusClassificationSystem" />		  
 		  <AttributeDefinition id="LCS2_TechnologicalTest" type="Link.EntityDefinition.LCS2_TechnologicalTest" />	  
 		  <AttributeDefinition id="LCS2_PatientsConsent" type="Link.EntityDefinition.LCS2_PatientsConsent" />
-		  -->				  		 
+		  
 		  		  
 		  <!-- WORKSPACE: CaseEvaluation -->				  		  
 		  <AttributeDefinition id="LCS2_ComorbidityPfeiffer" type="Link.EntityDefinition.LCS2_ComorbidityPfeiffer"/>
@@ -78,8 +73,8 @@
 		  <AttributeDefinition id="LCS2_SocialIntervention" type="Link.EntityDefinition.LCS2_SocialIntervention" description="Intervenció social"/>
 		  <AttributeDefinition id="LCS2_Agreement" type="Link.EntityDefinition.LCS2_Agreement" description="Acord"/>
 		  
-		  <!-- WORKSPACE: WorkplanExecution -->			
 		  
+		  <!-- WORKSPACE: WorkplanExecution -->					  
 		  <AttributeDefinition id="LCS2_PreHospitalizationAnaemiaAssessmentAndManagement" type="Link.EntityDefinition.LCS2_PreHospitalizationAnaemiaAssessmentAndManagement"/>
 		  <AttributeDefinition id="LCS2_PreHospitalizatioBloodPressureControl" type="Link.EntityDefinition.LCS2_PreHospitalizatioBloodPressureControl"/>		  
 
@@ -103,9 +98,7 @@
 		</EntityDefinition>		
 		
 
-		<!-- ENTITY DEFINITION: CaseIdentification -->		
-		
-		<!--
+		<!-- ENTITY DEFINITION: CaseIdentification -->				
 		<EntityDefinition id="LCS2_ComorbidityCharlson" >
 				<AttributeDefinition id="ch1" type="enumeration" multiplicity="maximalOne" description="infart de miocardi (els canvis de EKG sense antecedents mèdics queden exclosos)">
 					<EnumerationOption value="0" description="No"/>
@@ -206,7 +199,6 @@
 					<EnumerationOption value="1" description="Sí"/>
 				</AttributeDefinition>								
 			</EntityDefinition>
-		-->		
 			
 		<EntityDefinition id="LCS2_GMA" >
 				<AttributeDefinition id="gma" type="enumeration" multiplicity="maximalOne" description="Índex GMA">
@@ -233,7 +225,7 @@
 				</AttributeDefinition>
 			</EntityDefinition>
 
-		<!--
+
 		<EntityDefinition id="LCS2_TechnologicalTest" >
 		<AttributeDefinition id="tech1" type="enumeration" multiplicity="maximalOne" description="Vosté o el seu cuidador tenen connexió a Internet?">
 			<EnumerationOption value="0" description="No"/>
@@ -263,7 +255,6 @@
 					<EnumerationOption value="1" description="Sí"/>
 				</AttributeDefinition>
 		</EntityDefinition>
-		-->	
 		
 	  
 		<!-- ENTITY DEFINITION: CaseEvaluation -->			         
@@ -1351,7 +1342,7 @@
 		
 		
 	<!-- CASE DEFINITION -->				  
-		<CaseDefinition id="LCS2_Leida" description="CS2 Lleida Test v.0.4.1" ownerPath="LCS2_Owner" entityDefinitionId="LCS2_CaseData">	  
+		<CaseDefinition id="LCS2_Leida" description="CS2 Lleida Test v.0.4.3" ownerPath="LCS2_Owner" entityDefinitionId="LCS2_CaseData">	  
 	  
 	<!-- STAGEDEFINITION: CaseIdentification -->	  
         <StageDefinition id="LCS2_CaseIdentification" description="Identificació del cas" isMandatory="true" isRepeatable="false">
@@ -1362,7 +1353,7 @@
 				<TaskParamDefinition path="LCS2_Clinician" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>		
 			
-		<!-- 	
+			
             <HumanTaskDefinition id="LCS2_ComorbidityCharlsonIdentification" description="Índex de comorbilitat de Charlson" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_ComorbidityCharlson" entityAttachPath="LCS2_ComorbidityCharlson">
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
@@ -1406,7 +1397,7 @@
               </SentryDefinition>
               <TaskParamDefinition path="LCS2_PolyMedicationCheck.pmed1" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>			
-		-->	  
+
 			
             <HumanTaskDefinition id="LCS2_GMAIdentification" description="GMA" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_GMA" entityAttachPath="LCS2_GMA">
               <SentryDefinition>
@@ -1432,7 +1423,6 @@
               <TaskParamDefinition path="LCS2_ASAPhysicalStatusClassificationSystem.ASA" isReadOnly="false" isMandatory="true"/>			  
             </HumanTaskDefinition>
 
-		<!-- 				
             <HumanTaskDefinition id="LCS2_TechnologicalTest" description="Test d'adherència a la tecnología" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false"  entityDefinitionId="LCS2_TechnologicalTest" entityAttachPath="LCS2_TechnologicalTest">
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
@@ -1450,7 +1440,6 @@
               </SentryDefinition>
               <TaskParamDefinition path="LCS2_PatientsConsent.pConsent1" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>
-		-->			
 			
 		</StageDefinition>
 		
@@ -1462,7 +1451,6 @@
 				<precondition processDefinitionId="LCS2_CaseIdentification"/>
 			</SentryDefinition> 
 
-			<!--   			
 			<HumanTaskDefinition id="LCS2_ComorbidityCharlsonEvaluation" description="Estat comòrbid - Índex de comorbilitat de Charlson" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_ComorbidityCharlson" entityAttachPath="LCS2_ComorbidityCharlson">		
               <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch1" isReadOnly="false" isMandatory="true"/>
               <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch2" isReadOnly="false" isMandatory="true"/>
@@ -1486,7 +1474,6 @@
               <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch20" isReadOnly="false" isMandatory="true"/>
               <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch21" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>
-			 -->	
 						
 			<HumanTaskDefinition id="LCS2_GMAEvaluation" description="Estat comòrbid - GMA" ownerPath="LCS2_Owner" isMandatory="true" isRepeatable="false">
               <TaskParamDefinition path="LCS2_GMA.gma" isReadOnly="true" isMandatory="false"/>
