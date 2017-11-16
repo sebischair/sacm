@@ -387,6 +387,8 @@ module.exports = class Importer {
         const data = {
           name: u.$.name,
           email: u.$.email,
+          password: 'ottto',
+          passwordAgain: 'ottto',
           attributes: []
         }
         if(u.$.staticId != null)
