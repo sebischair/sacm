@@ -61,7 +61,8 @@
 			<AttributeDefinition id="LCS1_Sleeping" type="Link.EntityDefinition.LCS1_Sleeping" description="Evaluació del son"/>
             <!-- TO BE DELETED  <AttributeDefinition id="LCS1_MedicationFollowing" type="Link.EntityDefinition.LCS1_MedicationFollowing" description="Cumpliment amb el tractament"/>   -->
             <!-- TO BE DELETED  <AttributeDefinition id="LCS1_Medication" type="Link.EntityDefinition.LCS1_Medication" description="Complexitat del tractament i habilitats per executarlo"/>  -->
-            <AttributeDefinition id="LCS1_SelfCareAutoTest" type="Link.EntityDefinition.LCS1_SelfCareAutoTest" description="Capacitat d'autocura"/> 
+            <AttributeDefinition id="LCS1_SelfCareAutoTestEPOC" type="Link.EntityDefinition.LCS1_SelfCareAutoTestEPOC" description="Capacitat d'autocura - MPOC"/> 
+			<AttributeDefinition id="LCS1_SelfCareAutoTestHF" type="Link.EntityDefinition.LCS1_SelfCareAutoTestHF" description="Capacitat d'autocura - IC"/> 
             <AttributeDefinition id="LCS1_VitalSignsMonitoring" type="Link.EntityDefinition.LCS1_VitalSignsMonitoring" description="Vital Signs Monitoring"/> 
             <AttributeDefinition id="LCS1_AutocheckHealthStatusPrescription" type="Link.EntityDefinition.LCS1_AutocheckHealthStatusPrescription" description="Autocheck Health Status Prescription"/> 
             <AttributeDefinition id="LCS1_Education" type="Link.EntityDefinition.LCS1_Education" description="Pla de formació al pacient i cuidador"/> 
@@ -69,8 +70,8 @@
             <AttributeDefinition id="LCS1_Agreement" type="Link.EntityDefinition.LCS1_Agreement" description="Acord del pla de treball"/> 
             <AttributeDefinition id="LCS1_PhysicalActivity" type="Link.EntityDefinition.LCS1_PhysicalActivity" description="Physical Activity"/> 
             <AttributeDefinition id="LCS1_AutocheckHealthStatus" type="Link.EntityDefinition.LCS1_AutocheckHealthStatus" description="Autocheck Health Status"/> 
-            <AttributeDefinition id="LCS1_EducationExec" type="Link.EntityDefinition.LCS1_EducationExec" description="Education Exec"/> 
-            <AttributeDefinition id="LCS1_Discharge" type="Link.EntityDefinition.LCS1_Discharge" description="Discharge"/> 
+            <AttributeDefinition id="LCS1_EducationExec" type="Link.EntityDefinition.LCS1_EducationExec" description="Pla de formació al pacient i cuidador - Execució"/> 
+            <AttributeDefinition id="LCS1_Discharge" type="Link.EntityDefinition.LCS1_Discharge" description="Informe d'alta del procés"/> 
             <AttributeDefinition id="LCS1_PhysicalActivityPrescription" type="Link.EntityDefinition.LCS1_PhysicalActivityPrescription" description="Monitorització d’activitat física – Prescripció"/> 
 			<AttributeDefinition id="LCS1_PatientMonitory" type="Link.EntityDefinition.LCS1_PatientMonitory" description="Monitorització del pacient"/> 
         </EntityDefinition>
@@ -861,8 +862,8 @@
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition> 
         </EntityDefinition>	 -->
-		
-        <EntityDefinition id="LCS1_SelfCareAutoTest" description="Self-care Auto-test">
+
+        <EntityDefinition id="LCS1_SelfCareAutoTestEPOC" description="Capacitat d'autocura - MPOC">
             <AttributeDefinition id="scat_epoc1" type="enumeration" multiplicity="maximalOne" description="1. Em peso cada día">
                 <EnumerationOption value="1" description="Sempre / Totalment d'acord"/>
                 <EnumerationOption value="2" description="D'acord"/>
@@ -925,7 +926,9 @@
             </AttributeDefinition>  
 
             <DerivedAttributeDefinition id="scat_epocTotal" expression="number(scat_epoc1,0)+number(scat_epoc2,0)+number(scat_epoc3,0)+number(scat_epoc4,0)+number(scat_epoc5,0)+number(scat_epoc6,0)+number(scat_epoc7,0)+number(scat_epoc8,0)+number(scat_epoc9,0)+number(scat_epoc10,0)+number(scat_epoc11,0)+number(scat_epoc12,0)" description="Puntuació MPOC"/> 
-
+        </EntityDefinition>
+		
+        <EntityDefinition id="LCS1_SelfCareAutoTestHF" description="Capacitat d'autocura - IC">
             <AttributeDefinition id="scat_ic1" type="enumeration" multiplicity="maximalOne" description="Si tinc dificultat per respirar paro i descanso.">
                 <EnumerationOption value="1" description="Sempre / Totalment d'acord"/>
                 <EnumerationOption value="2" description="D'acord"/>
@@ -1137,7 +1140,7 @@
                 <EnumerationOption value="MONTHS" description="Months"/>
             </AttributeDefinition>
             <!--Prescription Details-->
-            <AttributeDefinition id="pmp6_comments" type="string" multiplicity="maximalOne" description="Comments"/>   
+            <AttributeDefinition id="pmp6_comments" type="longtext" multiplicity="maximalOne" description="Comments"/>   
             <AttributeDefinition id="pmp7_freq" type="number" multiplicity="maximalOne" description="Frecuency"/> 
             <AttributeDefinition id="pmp8_freqqunit" type="enumeration" multiplicity="maximalOne" description="Frecuency Unit, the posiible values are">     
                 <EnumerationOption value="HOURS" description="Hours"/>
@@ -1200,15 +1203,10 @@
             </AttributeDefinition>
         </EntityDefinition>
 
-        <EntityDefinition id="LCS1_Discharge" description="Discharge"> 
-            <AttributeDefinition id="discharge1" type="enumeration" multiplicity="maximalOne" description="Notificar al pacient l´alta del proces?"> 
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="discharge2" type="enumeration" multiplicity="maximalOne" description="Donar d´alta al pacient del proces?"> 
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
-            </AttributeDefinition>
+        <EntityDefinition id="LCS1_Discharge" description="Informe d'alta del procés"> 
+			<AttributeDefinition id="discharge1" type="longtext" multiplicity="maximalOne" description="Com ens ha anat?"/> 
+			<AttributeDefinition id="discharge2" type="longtext" multiplicity="maximalOne" description="Estat actual del pacient"/> 
+			<AttributeDefinition id="discharge3" type="longtext" multiplicity="maximalOne" description="Pronostic (funcional, assistencial i social)"/> 
         </EntityDefinition>
 
 
@@ -1424,30 +1422,34 @@
             <TaskParamDefinition path="LCS1_TreatmentAccessibility.treatmentAccess4" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition> -->
 		
-		<HumanTaskDefinition id="LCS1_SelfCareAutoTest" description="Capacitat d'autocura" ownerPath="LCS1_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_SelfCareAutoTest" entityAttachPath="LCS1_SelfCareAutoTest">                
-            <TaskParamDefinition path="LCS1_SelfCareAutoTest.scat_epoc1" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_SelfCareAutoTest.scat_epoc2" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_SelfCareAutoTest.scat_epoc3" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_SelfCareAutoTest.scat_epoc4" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_SelfCareAutoTest.scat_epoc5" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_SelfCareAutoTest.scat_epoc6" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_SelfCareAutoTest.scat_epoc7" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_SelfCareAutoTest.scat_epoc8" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_SelfCareAutoTest.scat_epoc9" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_SelfCareAutoTest.scat_epoc10" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_SelfCareAutoTest.scat_epoc11" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_SelfCareAutoTest.scat_epoc12" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_SelfCareAutoTest.scat_epocTotal" isReadOnly="true" isMandatory="false"/>            
-            <TaskParamDefinition path="LCS1_SelfCareAutoTest.scat_ic1" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_SelfCareAutoTest.scat_ic2" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_SelfCareAutoTest.scat_ic3" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_SelfCareAutoTest.scat_ic4" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_SelfCareAutoTest.scat_ic5" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_SelfCareAutoTest.scat_ic6" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_SelfCareAutoTest.scat_ic7" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_SelfCareAutoTest.scat_ic8" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS1_SelfCareAutoTest.scat_icTotal" isReadOnly="true" isMandatory="false"/>
+		<HumanTaskDefinition id="LCS1_SelfCareAutoTestEPOC" description="Capacitat d'autocura - MPOC" ownerPath="LCS1_Nurse" isMandatory="false" isRepeatable="false" entityDefinitionId="LCS1_SelfCareAutoTestEPOC" entityAttachPath="LCS1_SelfCareAutoTestEPOC">                
+            <TaskParamDefinition path="LCS1_SelfCareAutoTestEPOC.scat_epoc1" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_SelfCareAutoTestEPOC.scat_epoc2" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_SelfCareAutoTestEPOC.scat_epoc3" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_SelfCareAutoTestEPOC.scat_epoc4" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_SelfCareAutoTestEPOC.scat_epoc5" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_SelfCareAutoTestEPOC.scat_epoc6" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_SelfCareAutoTestEPOC.scat_epoc7" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_SelfCareAutoTestEPOC.scat_epoc8" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_SelfCareAutoTestEPOC.scat_epoc9" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_SelfCareAutoTestEPOC.scat_epoc10" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_SelfCareAutoTestEPOC.scat_epoc11" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_SelfCareAutoTestEPOC.scat_epoc12" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_SelfCareAutoTestEPOC.scat_epocTotal" isReadOnly="true" isMandatory="false"/>            
+		</HumanTaskDefinition>       
+		
+		<HumanTaskDefinition id="LCS1_SelfCareAutoTestHF" description="Capacitat d'autocura - IC" ownerPath="LCS1_Nurse" isMandatory="false" isRepeatable="false" entityDefinitionId="LCS1_SelfCareAutoTestHF" entityAttachPath="LCS1_SelfCareAutoTestHF">                			
+            <TaskParamDefinition path="LCS1_SelfCareAutoTestHF.scat_ic1" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_SelfCareAutoTestHF.scat_ic2" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_SelfCareAutoTestHF.scat_ic3" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_SelfCareAutoTestHF.scat_ic4" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_SelfCareAutoTestHF.scat_ic5" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_SelfCareAutoTestHF.scat_ic6" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_SelfCareAutoTestHF.scat_ic7" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_SelfCareAutoTestHF.scat_ic8" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_SelfCareAutoTestHF.scat_icTotal" isReadOnly="true" isMandatory="false"/>
         </HumanTaskDefinition>       
+		
 <!-- TO BE DELETED         <HumanTaskDefinition id="LCS1_SocialDwelling" description="Social Dwelling" ownerPath="LCS1_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_SocialDwelling" entityAttachPath="LCS1_SocialDwelling">                
             <TaskParamDefinition path="LCS1_SocialDwelling.dwelling1" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="LCS1_SocialDwelling.dwelling2" isReadOnly="false" isMandatory="true"/>
@@ -1619,10 +1621,18 @@
 		</AutomatedTaskDefinition>
 		
 	</StageDefinition>
-    <StageDefinition id="LCS1_Discharge" description="Alta del procés" isMandatory="true" isRepeatable="true">  
-        <SentryDefinition>
+    <StageDefinition id="LCS1_DischargeStage" description="Alta del procés" isMandatory="true" isRepeatable="true">  
+	<!-- Only for test -->
+        <!-- <SentryDefinition>
           <precondition processDefinitionId="LCS1_CaseEvaluation"/>
-        </SentryDefinition>   
+        </SentryDefinition>   -->
+		
+		<HumanTaskDefinition id="LCS1_Discharge" description="Informe d'alta del procés" ownerPath="LCS1_CaseManager" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_Discharge" entityAttachPath="LCS1_Discharge">                
+            <TaskParamDefinition path="LCS1_Discharge.discharge1" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_Discharge.discharge2" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_Discharge.discharge3" isReadOnly="false" isMandatory="true"/>
+        </HumanTaskDefinition>
+		
          <!--TODO check if we need this task
         <HumanTaskDefinition id="LCS1_VitalSignsMonitoring" description="Vital Signs Monitoring" ownerPath="LCS1_CaseManager" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_VitalSignsMonitoring" entityAttachPath="LCS1_VitalSignsMonitoring">                
             <TaskParamDefinition path="" isReadOnly="false" isMandatory="true"/>
