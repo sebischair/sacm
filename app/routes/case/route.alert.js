@@ -4,10 +4,10 @@ const router = express.Router();
 
 
 /**
- * @api {get} /alerts/me Get My Alerts
- * @apiName GetMyAlerts
+ * @api {get} /alerts/me/unseen Get My unseen Alerts
+ * @apiName GetMyUnseenAlerts
  * @apiGroup Alerts
- * @apiSampleRequest /alerts/me
+ * @apiSampleRequest /alerts/me/unseen
  * @apiSuccessExample {json} Success-Response:
  *  [{
  *  	"id": "jdddqzyu6ser7",
@@ -30,8 +30,8 @@ const router = express.Router();
  *  	"resourceType": "alerts"
  *  }]
  */
-router.get('/me', (req, res, next)=>{
-  Alert.findByMe(req.jwt)
+router.get('/me/unseen', (req, res, next)=>{
+  Alert.findMeUnseen(req.jwt)
     .then(c=>{
       res.status(200).send(c);
     })
