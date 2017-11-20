@@ -642,7 +642,7 @@
                 <EnumerationOption value="2" description="Bastant sovint"/>
                 <EnumerationOption value="3" description="De fet, molt sovint"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadD7" type="enumeration" multiplicity="maximalOne" description="D.7. Soc capaç de disfrutar amb un bon kllibre o amb un bon programa de ràdio o televisió"> 
+            <AttributeDefinition id="hadD7" type="enumeration" multiplicity="maximalOne" description="D.7. Soc capaç de disfrutar amb un bon llibre o amb un bon programa de ràdio o televisió"> 
                 <EnumerationOption value="0" description="Sovint"/>
                 <EnumerationOption value="1" description="De vegades"/>
                 <EnumerationOption value="2" description="Poques vegades"/>
@@ -651,6 +651,7 @@
 
              <DerivedAttributeDefinition id="hadA8" expression="number(hadA1,0)+number(hadA2,0)+number(hadA3,0)+number(hadA4,0)+number(hadA5,0)+number(hadA6,0)+number(hadA7,0)" description="Puntuació total ansietat"/> 
              <DerivedAttributeDefinition id="hadD8" expression="number(hadD1,0)+number(hadD2,0)+number(hadD3,0)+number(hadD4,0)+number(hadD5,0)+number(hadD6,0)+number(hadD7,0)" description="Puntuació total depresió"/> 
+             <DerivedAttributeDefinition id="hadFinal" expression="hadD8+hadA8" description="Puntuació total"/> 
         </EntityDefinition>
 
         <EntityDefinition id="LCS1_SF12" description="SF-12 Health Survay">
@@ -1317,7 +1318,10 @@
             <TaskParamDefinition path="LCS1_HospitalAnxietyAndDepressionScale.hadD7" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="LCS1_HospitalAnxietyAndDepressionScale.hadA8" isReadOnly="true" isMandatory="false"/>
             <TaskParamDefinition path="LCS1_HospitalAnxietyAndDepressionScale.hadD8" isReadOnly="true" isMandatory="false"/>
+			<TaskParamDefinition path="LCS1_HospitalAnxietyAndDepressionScale.hadFinal" isReadOnly="true" isMandatory="false"/>
         </HumanTaskDefinition>
+		
+		
         <HumanTaskDefinition id="LCS1_Barthel" description="Barthel" ownerPath="LCS1_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_Barthel" entityAttachPath="LCS1_Barthel">                
             <TaskParamDefinition path="LCS1_Barthel.barthel1" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="LCS1_Barthel.barthel2" isReadOnly="false" isMandatory="true"/>
@@ -1622,10 +1626,10 @@
 		
 	</StageDefinition>
     <StageDefinition id="LCS1_DischargeStage" description="Alta del procés" isMandatory="true" isRepeatable="true">  
-	<!-- Only for test -->
-        <!-- <SentryDefinition>
+	
+        <SentryDefinition>
           <precondition processDefinitionId="LCS1_CaseEvaluation"/>
-        </SentryDefinition>   -->
+        </SentryDefinition>
 		
 		<HumanTaskDefinition id="LCS1_Discharge" description="Informe d'alta del procés" ownerPath="LCS1_CaseManager" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_Discharge" entityAttachPath="LCS1_Discharge">                
             <TaskParamDefinition path="LCS1_Discharge.discharge1" isReadOnly="false" isMandatory="true"/>
