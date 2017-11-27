@@ -655,7 +655,7 @@
              <DerivedAttributeDefinition id="hadFinal" expression="hadD8+hadA8" description="Puntuació total"/> 
         </EntityDefinition>
 
-        <EntityDefinition id="LCS1_SF12" description="SF-12 Health Survay">
+        <EntityDefinition id="LCS1_SF12">
             <AttributeDefinition id="sf12-1#79851563-0932-4cfc-a9a4-0272ca350d01" type="enumeration" multiplicity="maximalOne" description="1. En general, vostè diria que la seva salut és:">
                 <EnumerationOption value="1#f328de67-6a94-4e5a-bca3-e60d78498e05" description="Excel·lent"/>
                 <EnumerationOption value="2#40114fd7-e7d4-43d2-9dce-574b3bc2fbb3" description="Molt bona"/>
@@ -729,14 +729,19 @@
                 <EnumerationOption value="4#a319e684-25ef-4f5a-b7e0-ec3de4c8c4fa" description="Una mica de temps"/>
                 <EnumerationOption value="5#8ef7183f-c931-47e5-8d6d-8aa97e7fd46f" description="Gens de temps"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="sf12-13#" type="enumeration" multiplicity="maximalOne" description="">
+            <AttributeDefinition id="sf12-13#" type="enumeration" multiplicity="maximalOne" description="Tipus de visita">
                 <EnumerationOption value="1#" description="6 setmanes"/>
                 <EnumerationOption value="2#" description="3 mesos"/>
-                <EnumerationOption value="1#" description="6 mesos"/>
-                <EnumerationOption value="2#" description="12 mesos"/>
-                <EnumerationOption value="1#" description="24 mesos"/>
-                <EnumerationOption value="2#" description="altres"/>
-            </AttributeDefinition>                   
+                <EnumerationOption value="3#" description="6 mesos"/>
+                <EnumerationOption value="4#" description="12 mesos"/>
+                <EnumerationOption value="5#" description="24 mesos"/>
+                <EnumerationOption value="6#" description="altres"/>
+            </AttributeDefinition>     
+            <AttributeDefinition id="sf12-14#" type="enumeration" multiplicity="maximalOne" description="Quants cops he de realitzar els exercicis de rehabilitació">
+                <EnumerationOption value="1#" description="Un cop al dia"/>
+                <EnumerationOption value="2#" description="No s'han de fer"/>
+                <EnumerationOption value="3#" description="4 cops al dia"/>
+            </AttributeDefinition>     						
         </EntityDefinition>
 
         <EntityDefinition id="LCS1_Barthel" description="Barthel">
@@ -1415,11 +1420,23 @@
             <TaskParamDefinition path="LCS1_DiagnosisCodex.codex5" isReadOnly="true" isMandatory="false"/>
         </HumanTaskDefinition>
 		
-        <!--TODO SF12
-        <HumanTaskDefinition id="LCS1_SF12" description="" ownerPath="LCS1_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="" entityAttachPath="">                
-            <TaskParamDefinition path="" isReadOnly="false" isMandatory="true"/>
+        <HumanTaskDefinition id="LCS1_SF12" description="SF-12" ownerPath="LCS1_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_SF12" entityAttachPath="LCS1_SF12">                
+            <TaskParamDefinition path="LCS1_SF12.sf12-1" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS1_SF12.sf12-2" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS1_SF12.sf12-3" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS1_SF12.sf12-4" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS1_SF12.sf12-5" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS1_SF12.sf12-6" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS1_SF12.sf12-7" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS1_SF12.sf12-8" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS1_SF12.sf12-9" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_SF12.sf12-10" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS1_SF12.sf12-11" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS1_SF12.sf12-12" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS1_SF12.sf12-13" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS1_SF12.sf12-14" isReadOnly="true" isMandatory="false"/>			
         </HumanTaskDefinition>
-        -->
+
         <!--  TO BE DELETED
 		<HumanTaskDefinition id="LCS1_TreatmentAccessibility" description="Treatment Accessibility" ownerPath="LCS1_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_TreatmentAccessibility" entityAttachPath="LCS1_TreatmentAccessibility">                
             <TaskParamDefinition path="LCS1_TreatmentAccessibility.treatmentAccess1" isReadOnly="false" isMandatory="true"/>
