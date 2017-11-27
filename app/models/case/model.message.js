@@ -21,8 +21,12 @@ export default class Message extends Model{
     return http.post(jwt, '/messages/'+messageId+'/seen');
   }
 
-  static findByMeUnseen(jwt) {
+  static findMeUnseen(jwt) {
     return http.get(jwt, '/messages/me/unseen');
+  }
+
+  static findMeUnseenByWorkspace(jwt, workspaceId) {
+    return http.get(jwt, '/workspaces/'+workspaceId+'/messages/me/unseen');
   }
 
   static seenCase(jwt, caseId) {
