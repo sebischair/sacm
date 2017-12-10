@@ -444,6 +444,26 @@ router.post('/:id/terminate', (req, res, next)=>{
     })
 });
 
+/**
+ * @api {post} /cases/:id/owner/:userId Set Case Owner
+ * @apiName SetCaseOwner
+ * @apiGroup Cases
+ * @apiParam {String} id ID of Case
+ * @apiParam {String} userId of the Owner
+ * @apiSampleRequest /cases/:id/owner/userId
+ * @apiSuccessExample {json} Success-Response:
+ *  {}
+ */
+router.post('/:id/owner/:userId', (req, res, next)=>{
+  Case.setOwner(req.jwt, req.params.id, req.params.userId)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+        res.status(500).send(err);
+    })
+});
+
 
 
 /**

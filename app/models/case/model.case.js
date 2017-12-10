@@ -80,4 +80,8 @@ export default class Case extends Model{
   static findMeByWorkspace(jwt, workspaceId) {
     return http.get(jwt, '/workspaces/'+workspaceId+'/cases/me');
   }
+
+  static setOwner(jwt, caseId, userId){
+    return http.post(jwt, '/cases/'+caseId+'/owner/'+userId);
+  }
 }
