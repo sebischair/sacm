@@ -444,6 +444,27 @@ router.post('/:id/terminate', (req, res, next)=>{
     })
 });
 
+
+/**
+ * @api {get} /cases/:id/owner/autocomplete Get Owner Autocomplete Options for Case
+ * @apiName GetCaseOwnerAutocomplete
+ * @apiGroup Cases 
+ * @apiParam {String} id ID of the Case 
+ * @apiSampleRequest /cases/:id/owner/autocomplete
+ * @apiSuccessExample {json} Success-Response:
+ * {}
+ */
+router.get('/:id/owner/autocomplete', (req, res, next)=>{
+  Case.autocompleteOwner(req.jwt, req.params.id)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+
 /**
  * @api {post} /cases/:id/owner/:userId Set Case Owner
  * @apiName SetCaseOwner

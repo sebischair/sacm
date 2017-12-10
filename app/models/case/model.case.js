@@ -84,4 +84,8 @@ export default class Case extends Model{
   static setOwner(jwt, caseId, userId){
     return http.post(jwt, '/cases/'+caseId+'/owner/'+userId);
   }
+
+  static autocompleteOwner(jwt, caseId){
+    return http.get(jwt, '/cases/'+caseId+'/owner/autocomplete');
+  }
 }
