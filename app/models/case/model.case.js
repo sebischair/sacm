@@ -88,4 +88,8 @@ export default class Case extends Model{
   static autocompleteOwner(jwt, caseId){
     return http.get(jwt, '/cases/'+caseId+'/owner/autocomplete');
   }
+
+  static findClientCasesByWorkspace(jwt, workspaceId, query){
+    return http.get(jwt, '/workspaces/'+workspaceId+'/cases/client/search?query='+query);
+  }
 }
