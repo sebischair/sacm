@@ -732,6 +732,7 @@ module.exports = class Importer {
               description: cd.$.description,
               workspace: this.workspaceMap.get(Workspace.$.id),
               ownerPath: cd.$.ownerPath,
+              clientPath: cd.$.clientPath,
               entityDefinition: entityDefinitionId,
               version: this.version
             };
