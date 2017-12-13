@@ -103,16 +103,15 @@ router.get('/:id/logs', (req, res, next)=>{
 
 
 /**
- * @api {get} /processes/:id/owner/autocomplete Get Owner Autocomplte Options for Process
+ * @api {get} /processes/:id/owner/autocomplete Get Owner Autocomplete Options for Process
  * @apiName GetProcessOwnerAutocomplete
  * @apiGroup Processes 
  * @apiParam {String} id ID of the Process 
  * @apiSampleRequest /processes/:id/owner/autocomplete
  * @apiSuccessExample {json} Success-Response:
- * //TODO
+ * {}
  */
 router.get('/:id/owner/autocomplete', (req, res, next)=>{
-  console.log(req.params.id)
   Process.autocompleteOwner(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);

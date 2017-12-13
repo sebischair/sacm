@@ -99,6 +99,26 @@ router.get('/:id/cases/me', (req, res, next)=>{
 });
 
 /**
+ * @api {get} /workspaces/:id/cases/client/search Search Cases by client and by Workspace
+ * @apiName GetClientCasesByWorkspaceID
+ * @apiGroup Cases
+ * @apiParam {String} ID The ID of the the Workspace
+ * @apiParam {String} query The search string
+ * @apiSampleRequest /workspaces/:id/cases/client/search?query=John
+ * @apiSuccessExample {json} Success-Response:
+ * {}
+ */
+router.get('/:id/cases/client/search', (req, res, next)=>{
+  Case.findClientCasesByWorkspace(req.jwt, req.params.id, req.query.query)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
  * @api {get} /workspaces/:id/cases Get Case by Workspace
  * @apiName GetCasesByWorkspaceID
  * @apiGroup Cases

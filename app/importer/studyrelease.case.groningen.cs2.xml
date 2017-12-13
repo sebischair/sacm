@@ -29,7 +29,7 @@
 
     <Workspace staticId="2c9480885d1737ef015d74deed260006" id="Umcg">
         <EntityDefinition id="GCS2_CaseData" description="Case Data">
-            <AttributeDefinition id="GCS2_Patient" type="Link.Users(UmcgPatients)" description="Patient"/>
+            <AttributeDefinition id="GCS2_Patient" type="Link.Users(UmcgPatients)" description="Patient" additionalDescription="some hint here"/>
             <AttributeDefinition id="GCS2_Owner" type="Link.Users(UmcgProfessionals)" description="Owner"/>
             <AttributeDefinition id="GCS2_ASA" type="Link.EntityDefinition.GCS2_ASA" description="ASA"/>    
             <AttributeDefinition id="GCS2_Charlson" type="Link.EntityDefinition.GCS2_Charlson" description="Charlson"/>   
@@ -52,9 +52,6 @@
                 <EnumerationOption value="4" description="ASA 4"/>
                 <EnumerationOption value="5" description="ASA 5"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="asa2" type="boolean" multiplicity="maximalOne" description="Boolean Testing (will be removed again)"/>            
-            <AttributeDefinition id="asa3" type="notype" multiplicity="maximalOne" description="NoType Testing (will be removed again)"/>            
-            <AttributeDefinition id="asa4" type="longtext" multiplicity="maximalOne" description="Longtext Testing (will be removed again)"/> 
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_Charlson" description="Charlson">
@@ -339,7 +336,7 @@
                 <EnumerationOption value="0" description="< 70 years"/>
                 <EnumerationOption value="1" description="≥ 70 years"/>	
             </AttributeDefinition>
-            <DerivedAttributeDefinition id="nrs8" expression="number(nrs5,0) + number(nrs6,0) + number(nrs7,0)" description="NRS Score"/>            
+            <DerivedAttributeDefinition id="nrs8" expression="number(nrs5,0) + number(nrs6,0) + number(nrs7,0)" description="NRS Score" uiReference="colors(0<=green<=10<orange<=20<red<30)"/>            
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_MNASF" description="Mini Nutritional Assesment (MNA-SF)">
@@ -521,7 +518,7 @@
 
 
         <!-- Case Definition -->
-        <CaseDefinition id="GCS2" description="Groningen CS2" ownerPath="GCS2_Owner" entityDefinitionId="GCS2_CaseData">
+        <CaseDefinition id="GCS2" description="Groningen CS2" ownerPath="GCS2_Owner" clientPath="GCS2_Patient" entityDefinitionId="GCS2_CaseData">
            
             <SummarySectionDefinition id="GCS2_Nutritional" description="Nutritional" position="LEFT">    
                 <SummaryParamDefinition path="GCS2_NRS.nrs8"/>
@@ -563,9 +560,6 @@
                         <precondition processDefinitionId="GCS2_SelectPatient"/>
                     </SentryDefinition>
                     <TaskParamDefinition path="GCS2_ASA.asa" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_ASA.asa2" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_ASA.asa3" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_ASA.asa4" isReadOnly="false" isMandatory="false"/>
                 </HumanTaskDefinition>
                 
             </StageDefinition>

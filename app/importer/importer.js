@@ -351,6 +351,7 @@ module.exports = class Importer {
         let data = this.resolveAttributeType(ad.$.type, ad);
         data.name = ad.$.id;
         data.description = ad.$.description;
+        data.additionalDescription = ad.$.additionalDescription;
         data.multiplicity = ad.$.multiplicity; 
         data.entityDefinition = persistedUserDefinitionId;  
         data.uiReference = ad.$.uiReference;   
@@ -374,6 +375,7 @@ module.exports = class Importer {
           return DerivedAttributeDefinition.create(this.jwt, {
             name: ad.$.id,
             description: ad.$.description,
+            additionalDescription: ad.$.additionalDescription,
             expression: ad.$.expression,
             entityDefinition: persistedUserDefinitionId,
             uiReference: ad.$.uiReference,
@@ -594,6 +596,7 @@ module.exports = class Importer {
                 let data = this.resolveAttributeType(ad.$.type, ad);
                 data.name = ad.$.id;
                 data.description = ad.$.description;
+                data.additionalDescription = ad.$.additionalDescription;
                 data.multiplicity = ad.$.multiplicity; 
                 data.entityDefinition = entityDefId;   
                 data.uiReference = ad.$.uiReference;  
@@ -702,6 +705,7 @@ module.exports = class Importer {
               return DerivedAttributeDefinition.create(this.jwt, {
                 name: ad.$.id,
                 description: ad.$.description,
+                additionalDescription: ad.$.additionalDescription,
                 expression: ad.$.expression,
                 entityDefinition: entityDefId,
                 uiReference: ad.$.uiReference,
@@ -728,6 +732,7 @@ module.exports = class Importer {
               description: cd.$.description,
               workspace: this.workspaceMap.get(Workspace.$.id),
               ownerPath: cd.$.ownerPath,
+              clientPath: cd.$.clientPath,
               entityDefinition: entityDefinitionId,
               version: this.version
             };
