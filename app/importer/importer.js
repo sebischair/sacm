@@ -876,7 +876,7 @@ module.exports = class Importer {
               externalId: td.$.externalId
             }
             if(isHumanTaskDefinition){   
-              data.scheduledDatePath = td.$.scheduledDatePath;
+              data.dueDatePath = td.$.dueDatePath;
               return HumanTaskDefinition.create(this.jwt, data);
             }
             if(isAutomatedTaskDefinition)       
