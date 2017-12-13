@@ -438,20 +438,18 @@ router.post('/:id/owner/:userid', (req, res, next)=>{
 
 
 /**
- * @api {post} /humantasks/:id/scheduledate Set HumanTask Schedule Date
- * @apiName SetHumanTaskScheduleDate
+ * @api {post} /humantasks/:id/duedate Set HumanTask Due Date
+ * @apiName SetHumanTaskDueDate
  * @apiGroup HumanTasks
  * @apiParam {String} id ID of a HumanTask
- * @apiParam {String} scheduleDate 
- * @apiSampleRequest /humantask/:id/scheduledate
- * {scheduleDate: 'some date'}
+ * @apiParam {String} dueDate 
+ * @apiSampleRequest /humantask/:id/duedate
+ * {dueDate: 'some date'}
  * @apiSuccessExample {json} Success-Response:
- *     {
- *      
- *     }
+ *     {}
  */
-router.post('/:id/scheduleddate', (req, res, next)=>{
-  HumanTask.setScheduledDate(req.jwt, req.params.id, req.body.scheduledDate)
+router.post('/:id/duedate', (req, res, next)=>{
+  HumanTask.setDueDate(req.jwt, req.params.id, req.body.dueDate)
     .then(c=>{
         res.status(200).send(c);
     })
