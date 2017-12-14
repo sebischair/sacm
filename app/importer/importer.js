@@ -875,8 +875,10 @@ module.exports = class Importer {
               newEntityAttachPath: td.$.entityAttachPath,
               externalId: td.$.externalId
             }
-            if(isHumanTaskDefinition)            
+            if(isHumanTaskDefinition){   
+              data.dueDatePath = td.$.dueDatePath;
               return HumanTaskDefinition.create(this.jwt, data);
+            }
             if(isAutomatedTaskDefinition)       
               return AutomatedTaskDefinition.create(this.jwt, data);
           })
