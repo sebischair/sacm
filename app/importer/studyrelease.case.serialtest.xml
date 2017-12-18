@@ -1,0 +1,898 @@
+<SACMDefinition>
+    <Group staticId="2c9480885d1737ef015d74deed260006" id="UmcgProfessionals"/>
+    <Group staticId="a412ac82923a11e7bd0c0242ac120002" id="UmcgAdminOfficers"/>
+    <Group staticId="a412ac7c923a11e7bd0c0242ac120002" id="UmcgAnesthesiologists"/>
+    <Group staticId="a412ac70923a11e7bd0c0242ac120002" id="UmcgCaseManagers"/>
+    <Group staticId="a412ac64923a11e7bd0c0242ac120002" id="UmcgClinicians"/>
+    <Group staticId="a412acba923a11e7bd0c0242ac120002" id="UmcgDataManagers"/>
+    <Group staticId="a412acb0923a11e7bd0c0242ac120002" id="UmcgLabTechnicians"/>
+    <Group staticId="a412acb5923a11e7bd0c0242ac120002" id="UmcgLocalPulmonologists"/>
+    <Group staticId="a412ac76923a11e7bd0c0242ac120002" id="UmcgNurses"/>
+    <Group staticId="a412ac99923a11e7bd0c0242ac120002" id="UmcgNutritionists"/>
+    <Group staticId="a412ac88923a11e7bd0c0242ac120002" id="UmcgPhysicians"/>
+    <Group staticId="a412ac94923a11e7bd0c0242ac120002" id="UmcgPhysiotherapists"/>
+    <Group staticId="a412aca9923a11e7bd0c0242ac120002" id="UmcgPrimaryCareClinicians"/>
+    <Group staticId="a412ac9f923a11e7bd0c0242ac120002" id="UmcgPsychologists"/>
+    <Group staticId="a412ac8e923a11e7bd0c0242ac120002" id="UmcgRNSTs"/>
+    <Group staticId="a412aca4923a11e7bd0c0242ac120002" id="UmcgSocialCareers"/>
+    <Group staticId="a412ac6b923a11e7bd0c0242ac120002" id="UmcgAdmins"/>
+    <Group staticId="a412ac01923a11e7bd0c0242ac120002" id="UmcgPatients"/>
+
+	<User staticId="2c940c085e765068015e76786adf0070" id="matthewr"/>
+	<User staticId="2c940c085e765068015e767d84980080" id="schultzj"/>
+    <User staticId="2c9480845bee03e7015bfcad28990010" id="michelf"/>
+
+    <User staticId="2c940c085e765068015e7704c2540120" id="hopkinsc"/>
+    <User staticId="2c940c085e765068015e77087a950130" id="hayesk"/>
+	<User staticId="2c940c085e765068015e770b710b0140" id="williamst"/>
+    <User staticId="2c9480845bee03e7015bfcad7d0e0011" id="vargiue"/>
+
+    <Workspace staticId="2c9480885d1737ef015d74deed260006" id="Umcg">
+        <EntityDefinition id="GCS2_CaseData" description="Case Data">
+            <AttributeDefinition id="GCS2_Patient" type="Link.Users(UmcgPatients)" description="Patient" additionalDescription="some hint here"/>
+            <AttributeDefinition id="GCS2_Owner" type="Link.Users(UmcgProfessionals)" description="Owner"/>
+            <AttributeDefinition id="GCS2_EvaluationDueDate" type="date.after(TODAY)" description="Evaluation default due date"/>
+            <AttributeDefinition id="GCS2_WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date"/>
+            <AttributeDefinition id="GCS2_ASA" type="Link.EntityDefinition.GCS2_ASA" description="ASA"/>    
+            <AttributeDefinition id="GCS2_Charlson" type="Link.EntityDefinition.GCS2_Charlson" description="Charlson"/>   
+            <AttributeDefinition id="GCS2_GFI" type="Link.EntityDefinition.GCS2_GFI" description="Groningen Frailty Indicator (GFI)"/>   
+            <AttributeDefinition id="GCS2_ADL" type="Link.EntityDefinition.GCS2_ADL" description="Activities of Daily Living (ADL)"/>   
+            <AttributeDefinition id="GCS2_iADL" type="Link.EntityDefinition.GCS2_iADL" description="Instrumental Activities of Daily Living (iADL)"/>   
+            <AttributeDefinition id="GCS2_NRS" type="Link.EntityDefinition.GCS2_NRS" description="Nutritional Risk Screening (NRS)"/>   
+            <AttributeDefinition id="GCS2_MNASF" type="Link.EntityDefinition.GCS2_MNASF" description="Mini Nutritional Assesment (MNA-SF)"/> 
+            <AttributeDefinition id="GCS2_PhysicalActivity" type="Link.EntityDefinition.GCS2_PhysicalActivity" description="Physical Activity"/>   
+            <AttributeDefinition id="GCS2_PatientMonitoring" type="Link.EntityDefinition.GCS2_PatientMonitoring" description="Patient Monitory"/> 
+            <AttributeDefinition id="GCS2_SF12" type="Link.EntityDefinition.GCS2_SF12" description="SF-12"/>
+            <AttributeDefinition id="GCS2_DischargeForm" type="Link.EntityDefinition.GCS2_DischargeForm" description="Discharge From"/>            
+        </EntityDefinition>
+
+        <EntityDefinition id="GCS2_ASA" description="ASA">
+            <AttributeDefinition id="asa" type="enumeration" multiplicity="maximalOne" description="ASA">
+                <EnumerationOption value="1" description="ASA 1"/>
+                <EnumerationOption value="2" description="ASA 2"/>
+                <EnumerationOption value="3" description="ASA 3"/>
+                <EnumerationOption value="4" description="ASA 4"/>
+                <EnumerationOption value="5" description="ASA 5"/>
+            </AttributeDefinition> 
+        </EntityDefinition>
+
+        <EntityDefinition id="GCS2_Charlson" description="Charlson">
+            <AttributeDefinition id="ch1" type="enumeration" multiplicity="maximalOne" description="Myocardial infarct">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="ch2" type="enumeration" multiplicity="maximalOne" description="Congestive heart failure">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch3" type="enumeration" multiplicity="maximalOne" description="Peripheral vascular disease">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch4" type="enumeration" multiplicity="maximalOne" description="Cerebrovascular disease (except hemiplegia)">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch5" type="enumeration" multiplicity="maximalOne" description="Dementia">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch6" type="enumeration" multiplicity="maximalOne" description="Chronic pulmonary disease">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch7" type="enumeration" multiplicity="maximalOne" description="Connective tissue disease">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch8" type="enumeration" multiplicity="maximalOne" description="Ulcer disease">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch9" type="enumeration" multiplicity="maximalOne" description="Mild liver disease">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch10" type="enumeration" multiplicity="maximalOne" description="Diabetes (without complications)">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch11" type="enumeration" multiplicity="maximalOne" description="Diabetes with end organ damage">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch12" type="enumeration" multiplicity="maximalOne" description="Hemiplegia">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch13" type="enumeration" multiplicity="maximalOne" description="Moderate or severe renal disease">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch14" type="enumeration" multiplicity="maximalOne" description="Solid tumor (non metastatic)">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch15" type="enumeration" multiplicity="maximalOne" description="Leukemia">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch16" type="enumeration" multiplicity="maximalOne" description="Lymphoma, Multiple myeloma">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch17" type="enumeration" multiplicity="maximalOne" description="Moderate or severe liver disease">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch18" type="enumeration" multiplicity="maximalOne" description="Metastatic solid tumor">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch19" type="enumeration" multiplicity="maximalOne" description="AIDS">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="ch20" type="enumeration" multiplicity="maximalOne" description="Age">
+                <EnumerationOption value="1" description="50-59"/>
+                <EnumerationOption value="2" description="60-69"/>
+                <EnumerationOption value="3" description="70-79"/>
+                <EnumerationOption value="4" description="80-89"/>
+                <EnumerationOption value="5" description="90-99"/>
+            </AttributeDefinition>           
+            <DerivedAttributeDefinition id="ch21" expression="number(ch1,0) + number(ch2,0) + number(ch3,0) + number(ch4,0) + number(ch5,0) + number(ch6,0) + number(ch7,0) + number(ch8,0) + number(ch9,0) + number(ch10,0) + number(ch11,0)*2 + number(ch12,0)*2 + number(ch13,0)*2 + number(ch14,0)*2 + number(ch15,0)*2 + number(ch16,0)*2 + number(ch17,0)*3 + number(ch18,0)*6 + number(ch19,0)*6 + number(ch20,0)" description="Charlson Comorbidity Index"/>     
+        </EntityDefinition>
+    
+        <EntityDefinition id="GCS2_GFI" description="Groningen Frailty Indicator (GFI)">
+            <AttributeDefinition id="gfi1" type="enumeration" multiplicity="maximalOne" description="Kan patiënt zonder enige hulp van iemand anders zelfstandig deze taak uitvoeren? - Boodschappen doen?">
+                <EnumerationOption value="1" description="No"/>
+                <EnumerationOption value="0" description="Yes"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="gfi2" type="enumeration" multiplicity="maximalOne" description="Kan patiënt zonder enige hulp van iemand anders zelfstandig deze taak uitvoeren? Buitenshuis rondlopen?">
+                <EnumerationOption value="1" description="No"/>
+                <EnumerationOption value="0" description="Yes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="gfi3" type="enumeration" multiplicity="maximalOne" description="Kan patiënt zonder enige hulp van iemand anders zelfstandig deze taak uitvoeren? - Aan - en uitkleden?">
+                <EnumerationOption value="1" description="No"/>
+                <EnumerationOption value="0" description="Yes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="gfi4" type="enumeration" multiplicity="maximalOne" description="Kan patiënt zonder enige hulp van iemand anders zelfstandig deze taak uitvoeren? Toiletbezoek?">
+                <EnumerationOption value="1" description="No"/>
+                <EnumerationOption value="0" description="Yes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="gfi5" type="enumeration" multiplicity="maximalOne" description="Ondervindt patiënt problemen in het dagelijks leven door slecht zien?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="gfi6" type="enumeration" multiplicity="maximalOne" description="Ondervindt patiënt problemen in het dagelijks leven door slecht horen?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="gfi7" type="enumeration" multiplicity="maximalOne" description="Is patiënt afgelopen 6 maanden veel (6kg) afgevallen zonder dit zelf te willen? (of 3 kg in een maand)">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="gfi8" type="enumeration" multiplicity="maximalOne" description="Gebruikt patiënt momenteel 4 of meer verschillende soorten medicijnen?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="gfi9" type="enumeration" multiplicity="maximalOne" description="Heeft patiënt momenteel klachten over zijn geheugen (of bekend met dementie)?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+                <EnumerationOption value="2" description="Sometimes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="gfi10" type="enumeration" multiplicity="maximalOne" description="Ervaart patiënt wel eens een leegte om zich heen?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+                <EnumerationOption value="2" description="Sometimes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="gfi11" type="enumeration" multiplicity="maximalOne" description="Mist patiënt wel eens mensen om zich heen?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+                <EnumerationOption value="2" description="Sometimes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="gfi12" type="enumeration" multiplicity="maximalOne" description="Voelt patiënt zich wel eens in de steek gelaten?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+                <EnumerationOption value="2" description="Sometimes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="gfi13" type="enumeration" multiplicity="maximalOne" description="Heeft patiënt zich de laatste tijd somber of neerslachtig gevoeld?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+                <EnumerationOption value="2" description="Sometimes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="gfi14" type="enumeration" multiplicity="maximalOne" description="Heeft patiënt zich de laatste tijd nerveus of angstig gevoeld?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+                <EnumerationOption value="2" description="Sometimes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="gfi15" type="enumeration" multiplicity="maximalOne" description="Welk rapportcijfer geeft patiënt zichzelf voor lichamelijke fitheid? (0-10, 0 is erg slecht, 10 is erg goed).">
+                <EnumerationOption value="1.0001" description="0"/>
+                <EnumerationOption value="1.0002" description="1"/>
+                <EnumerationOption value="1.0003" description="2"/>
+                <EnumerationOption value="1.0004" description="3"/>
+                <EnumerationOption value="1.0005" description="4"/>
+                <EnumerationOption value="1.0006" description="5"/>
+                <EnumerationOption value="1.0007" description="6"/>
+                <EnumerationOption value="0.0001" description="7"/>
+                <EnumerationOption value="0.0002" description="8"/>
+                <EnumerationOption value="0.0003" description="9"/>
+                <EnumerationOption value="0.0004" description="10"/>
+            </AttributeDefinition>                  
+            <DerivedAttributeDefinition id="gfi16" expression="floor(number(gfi1,0) + number(gfi2,0) + number(gfi3,0) + number(gfi4,0) + number(gfi5,0) + number(gfi6,0) + number(gfi7,0) + number(gfi8,0) + number(gfi9,0) + number(gfi10,0) + number(gfi11,0) + number(gfi12,0) + number(gfi13,0) + number(gfi14,0) + number(gfi15,0))" description="Groningen Frailty Indicator"/>     
+        </EntityDefinition>
+
+        <EntityDefinition id="GCS2_ADL" description="Activities of Daily Living (ADL)">
+            <AttributeDefinition id="adl1" type="enumeration" multiplicity="maximalOne" description="Bathing">
+                <EnumerationOption value="0" description="Does not need help"/>
+                <EnumerationOption value="1" description="Needs help with 1 body part"/>
+                <EnumerationOption value="2" description="Needs help with more than 1 body part"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="adl2" type="enumeration" multiplicity="maximalOne" description="Dressing">
+                <EnumerationOption value="0" description="Does the dressing without help, also buttons shirt and ties shoe laces"/>
+                <EnumerationOption value="1" description="Picks clothes independently"/>
+                <EnumerationOption value="2" description="Needs help to button shirt and to tie shoe laces"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="adl3" type="enumeration" multiplicity="maximalOne" description="Toilet use">
+                <EnumerationOption value="0" description="Uses the toilet without help "/>
+                <EnumerationOption value="1" description="Needs help with toilet use"/>
+                <EnumerationOption value="2" description="Does not go to the toilet, uses cathether etc."/>
+            </AttributeDefinition>
+            <AttributeDefinition id="adl4" type="enumeration" multiplicity="maximalOne" description="Transfer">
+                <EnumerationOption value="0" description="Transfers from the bed and back without any help"/>
+                <EnumerationOption value="1" description="Transfers from the bed and back with help"/>
+                <EnumerationOption value="2" description="Does not leave the bed"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="adl5" type="enumeration" multiplicity="maximalOne" description="Bladder and bowel">
+                <EnumerationOption value="0" description="Continent"/>
+                <EnumerationOption value="1" description="Occasional accident"/>
+                <EnumerationOption value="2" description="Incontinent (or needs to be given enemas)"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="adl6" type="enumeration" multiplicity="maximalOne" description="Feeding">
+                <EnumerationOption value="0" description="Indepenent"/>
+                <EnumerationOption value="1" description="Needs help cutting, spreading butter etc. or requires modified diet"/>
+                <EnumerationOption value="2" description="Needs help with eating, or receives enteral feeding"/>
+            </AttributeDefinition>
+            <DerivedAttributeDefinition id="adl7" expression="number(adl1,0) + number(adl2,0) + number(adl2,0) + number(adl3,0) + number(adl4,0) + number(adl5,0) + number(adl6,0)" description="ADL Score"/>     
+        </EntityDefinition>
+
+        <EntityDefinition id="GCS2_iADL" description="Instrumental Activities of Daily Living (iADL)">
+            <AttributeDefinition id="iadl1" type="enumeration" multiplicity="maximalOne" description="Telephoning">
+                <EnumerationOption value="1.0001" description="Uses the telephone, dials the numbers without help"/>
+                <EnumerationOption value="1.0002" description="only calls some known numbers"/>
+                <EnumerationOption value="1.0003" description="Answers the phone, but does not call"/>
+                <EnumerationOption value="0" description="Doest not use the telephone"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="iadl2" type="enumeration" multiplicity="maximalOne" description="Shopping / Doing groceries">
+                <EnumerationOption value="1" description="Does all groceries independently"/>
+                <EnumerationOption value="0.0001" description="Does some groceries independetly"/>
+                <EnumerationOption value="0.0002" description="Needs hepl with doing groceries"/>
+                <EnumerationOption value="0.0003" description="Is not able to do groceries"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="iadl3" type="enumeration" multiplicity="maximalOne" description="Cooking">
+                <EnumerationOption value="1" description="Is able to cook and serve"/>	
+                <EnumerationOption value="0.0001" description="Cooks dinner, but ingredients are delivered"/>
+                <EnumerationOption value="0.0002" description="Heatens meals, but diet is insufficient"/>
+                <EnumerationOption value="0.0003" description="Needs pre-cooked meals"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="iadl4" type="enumeration" multiplicity="maximalOne" description="Housekeeping">
+                <EnumerationOption value="1.0001" description="Runs the household without help"/>
+                <EnumerationOption value="1.0002" description="Does light tasks in the household independent"/>
+                <EnumerationOption value="1.0003" description="Does light tasks independent, but is not able to maintain the household"/>
+                <EnumerationOption value="1.0004" description="Needs help with all housekeeping"/>
+                <EnumerationOption value="1.0005" description="Does not maintain the household"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="iadl5" type="enumeration" multiplicity="maximalOne" description="Laundry">
+                <EnumerationOption value="1.0001" description="Does all laundry"/>
+                <EnumerationOption value="1.0002" description="Does only little laundry (socks etc.)"/>
+                <EnumerationOption value="1.0003" description="All laundry is done by others"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="iadl6" type="enumeration" multiplicity="maximalOne" description="Transport">
+                <EnumerationOption value="1.0001" description="Travels by car or public transport without help "/>
+                <EnumerationOption value="1.0002" description="Organizes taxi but does not travel with public transport"/>
+                <EnumerationOption value="1.0003" description="Needs help with public transport"/>
+                <EnumerationOption value="0" description="Travels by taxi, by car with help, or does not travel"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="iadl7" type="enumeration" multiplicity="maximalOne" description="Responsibility for medication">
+                <EnumerationOption value="1" description="Takes medication according to prescription "/>
+                <EnumerationOption value="0.0001" description="Takes medication if prepared by someone"/>
+                <EnumerationOption value="0.0002" description="Is not able to bear responsibility for medication"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="iadl8" type="enumeration" multiplicity="maximalOne" description="Finances">
+                <EnumerationOption value="1.0001" description="Is able to handle own finances"/>
+                <EnumerationOption value="1.0002" description="Needs help with finances"/>
+                <EnumerationOption value="0" description="Is not able to deal with money"/>
+            </AttributeDefinition>
+        </EntityDefinition>
+
+        <EntityDefinition id="GCS2_NRS" description="Nutritional Risk Screening (NRS)">
+            <AttributeDefinition id="nrs1" type="enumeration" multiplicity="maximalOne" description="Is BMI <20,5?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="nrs2" type="enumeration" multiplicity="maximalOne" description="Has the patient lost weight within the last 3 months?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="nrs3" type="enumeration" multiplicity="maximalOne" description="Has the patient had a reduced dietary intake in the last week?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="nrs4" type="enumeration" multiplicity="maximalOne" description="Is the patient severely ill?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="nrs5" type="enumeration" multiplicity="maximalOne" description="Impared nutritional status">
+                <EnumerationOption value="0" description="Absent"/>
+                <EnumerationOption value="1" description="Weightloss > 5% in 3 months or food intake below 50-7% of normal requierement"/>
+                <EnumerationOption value="2" description="Weightloss > 5% in 2 months or BMI 18.5-20.5 + impaired general condition or food intake 25-60% of normal requirement"/>
+                <EnumerationOption value="3" description="Weightloss > 5% in 1 month (> 15% in 3 months) or BMI < 18.5 + impaired general condition or food intake 0-25% of normal requirement."/>
+            </AttributeDefinition>
+            <AttributeDefinition id="nrs6" type="enumeration" multiplicity="maximalOne" description="Severity of disease">
+                <EnumerationOption value="0" description="Absent"/>
+                <EnumerationOption value="1" description="Hip fracture * chronic patients with acute complications, COPD, cirrhosis *"/>
+                <EnumerationOption value="2" description="Major Abdominal Surgery * Stroke"/>
+                <EnumerationOption value="3" description="Head injury * Bone marrow transplantation"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="nrs7" type="enumeration" multiplicity="maximalOne" description="Age">
+                <EnumerationOption value="0" description="< 70 years"/>
+                <EnumerationOption value="1" description="≥ 70 years"/>	
+            </AttributeDefinition>
+            <DerivedAttributeDefinition id="nrs8" expression="number(nrs5,0) + number(nrs6,0) + number(nrs7,0)" description="NRS Score" uiReference="colors(0<=green<=10<orange<=20<red<30)"/>            
+        </EntityDefinition>
+
+        <EntityDefinition id="GCS2_MNASF" description="Mini Nutritional Assesment (MNA-SF)">
+            <AttributeDefinition id="mnasf1" type="enumeration" multiplicity="maximalOne" description="Has food intake declined over the past 3 months due to loss of appetite, digestive problems, chewing or swallowingen difficulties?">
+                <EnumerationOption value="0" description="Severe decrease in food intake"/>	
+                <EnumerationOption value="1" description="Moderate decrease in food intake"/>
+                <EnumerationOption value="2" description="no decrease in food intake"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="mnasf2" type="enumeration" multiplicity="maximalOne" description="Weight loss during the last 3 months">
+                <EnumerationOption value="0" description="Weight loss greater than 3 kg"/>
+                <EnumerationOption value="1" description="Does not know"/>
+                <EnumerationOption value="2" description="Weight loss between 1 and 3 kg"/>
+                <EnumerationOption value="3" description="No weight loss	"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="mnasf3" type="enumeration" multiplicity="maximalOne" description="Mobility">
+                <EnumerationOption value="0" description="Bed or chair bound"/>	
+                <EnumerationOption value="1" description="Able to get out of bed / chair but does not go out"/>
+                <EnumerationOption value="2" description="Goes out"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="mnasf4" type="enumeration" multiplicity="maximalOne" description="Has suffered psychological stress or acute disease in the past 3 months">
+                <EnumerationOption value="0" description="Yes"/>
+                <EnumerationOption value="2" description="No"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="mnasf5" type="enumeration" multiplicity="maximalOne" description="Neuropsychological problems">
+                <EnumerationOption value="0" description="Severe dementia or depression"/>	
+                <EnumerationOption value="1" description="Mild dementia"/>
+                <EnumerationOption value="2" description="No psychological problems"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="mnasf6" type="number" multiplicity="maximalOne" description="Weight in kilograms"/>
+            <AttributeDefinition id="mnasf7" type="number" multiplicity="maximalOne" description="Length in centimetres"/>
+            <AttributeDefinition id="mnasf8" type="enumeration" multiplicity="maximalOne" description="BMI">
+                <EnumerationOption value="0" description="BMI less than 19"/>	
+                <EnumerationOption value="1" description="BMI 19 to less than 21"/>
+                <EnumerationOption value="2" description="BMI 21 to less than 23"/>
+                <EnumerationOption value="3" description="BMI 23 or greater"/>
+            </AttributeDefinition>           
+            <DerivedAttributeDefinition id="mnasf9" expression="number(mnasf1,0) + number(mnasf2,0) + number(mnasf3,0) + number(mnasf4,0) + number(mnasf5,0) + default(mnasf6,0) + default(mnasf7,0) + number(mnasf8,0)" description="MNA-SF Score"/>            
+        </EntityDefinition>
+        
+        <EntityDefinition id="GCS2_PhysicalActivity" description="Physical Activity">
+            <AttributeDefinition id="phactp1" type="date.after(TODAY)" multiplicity="maximalOne" description="Start date"/>
+            <AttributeDefinition id="phactp2" type="date.after(phactp1)" multiplicity="maximalOne" description="End date"/>       
+            <AttributeDefinition id="phactp3" type="number.min(0).max(100000)" defaultValues="[10000]" multiplicity="maximalOne" description="Number of steps daily"/>       
+            <AttributeDefinition id="phactp4" type="number.min(0).max(1440)" defaultValues="[60]" multiplicity="maximalOne" description="Minutes of low level activity daily"/>       
+            <AttributeDefinition id="phactp5" type="number.min(0).max(1440)" defaultValues="[40]" multiplicity="maximalOne" description="Minutes of medium level activity daily"/>       
+            <AttributeDefinition id="phactp6" type="number.min(0).max(1440)" defaultValues="[20]" multiplicity="maximalOne" description="Minutes of high level activity daily"/> 
+            <AttributeDefinition id="phactp7" type="number.min(0).max(1440)" defaultValues="[240]" multiplicity="maximalOne" description="Max minutes without activity allowed daily"/>   
+            <!--{stepsFollowing: [{date: '2017-06-09 14:54:53.0', value: 12}], lowFollowing:[], mediumFollowing:[], highFollowing:[], noActivityFollowing:[]}-->
+            <!--Collected Data e.g. {stepsFollowing: [{date: '2017-06-09 14:54:53.0', value: 12}], lowFollowing:[], mediumFollowing:[], highFollowing:[], noActivityFollowing:[]}"-->
+            <AttributeDefinition id="phactpx" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Execution Timeseries"/>                 
+        </EntityDefinition>
+        
+        <EntityDefinition id="GCS2_PatientMonitoring" description="Patient Monitory">
+            <!--Mesurement-->
+            <AttributeDefinition id="pmp1_name" type="enumeration" multiplicity="maximalOne" description="Measure name, the posible values are">
+                <EnumerationOption value="WEIGHT" description="Weight"/>
+                <EnumerationOption value="HEIGHT" description="Height"/>
+                <EnumerationOption value="DIASTOLICBLOODPRESSURE" description="DiastolicBloodPressure"/>
+                <EnumerationOption value="SYSTOLICBLOODPRESSURE" description="SystolicBloodPressure"/>
+                <EnumerationOption value="SP02" description="SP02"/>
+                <EnumerationOption value="BODYTEMPERATURE" description="BodyTemperature"/>
+                <EnumerationOption value="SLEEP" description="Sleep"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="pmp2_alertmin" type="number" multiplicity="maximalOne" description="Min value for this measure"/>       
+            <AttributeDefinition id="pmp3_alertmax" type="number" multiplicity="maximalOne" description="Max value for this measure"/>       
+            <AttributeDefinition id="pmp4_alertfreq" type="number" multiplicity="maximalOne" description="Alert Frecuency Value"/>       
+            <AttributeDefinition id="pmp5_alertfrequnit" type="enumeration" multiplicity="maximalOne" description="Frecuency Unit, the posiible values are">     
+                <EnumerationOption value="DAYS" description="Days"/>
+                <EnumerationOption value="WEEKS" description="Weeks"/>
+                <EnumerationOption value="MONTHS" description="Months"/>
+            </AttributeDefinition>
+            <!--Prescription Details-->
+            <AttributeDefinition id="pmp6_comments" type="longtext" multiplicity="maximalOne" description="Comments"/>   
+            <AttributeDefinition id="pmp7_freq" type="number" multiplicity="maximalOne" description="Frecuency"/> 
+            <AttributeDefinition id="pmp8_freqqunit" type="enumeration" multiplicity="maximalOne" description="Frecuency Unit, the posiible values are">     
+                <EnumerationOption value="DAYS" description="Days"/>
+                <EnumerationOption value="WEEKS" description="Weeks"/>
+                <EnumerationOption value="MONTHS" description="Months"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="pmp9_maxdelay" type="number" multiplicity="maximalOne" description="Max delay in minutes"/> 
+            <AttributeDefinition id="pmp10_startdate" type="date" multiplicity="maximalOne" description="Start date"/> 
+            <AttributeDefinition id="pmp11_enddate" type="date" multiplicity="maximalOne" description="End date"/> 
+            <!--Time Slot-->
+            <AttributeDefinition id="pmp12_timeslot" type="enumeration" multiplicity="atLeastOne" description="Slot to take the measurements, the possible values are">     
+                <EnumerationOption value="BREAKFAST" description="BreakFast"/>
+                <EnumerationOption value="LUNCH" description="Lunch"/>
+                <EnumerationOption value="AFTERNOONSNACK" description="AfternoonSnack"/>
+                <EnumerationOption value="DINNER" description="Dinner"/>
+                <EnumerationOption value="BEFORESLEEP" description="BeforeSleep" additionalDescription="Soem test"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="pmpx" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Mesurement"/>                      
+        </EntityDefinition>
+
+        <EntityDefinition id="GCS2_SF12" description="SF-12 Health Survay">
+            <AttributeDefinition id="sf12-1" externalId="79851563-0932-4cfc-a9a4-0272ca350d01" type="enumeration" multiplicity="maximalOne" description="1. In general, would you say your health is:">
+                <EnumerationOption value="1" externalId="f328de67-6a94-4e5a-bca3-e60d78498e05" description="Excellent"/>
+                <EnumerationOption value="2" externalId="40114fd7-e7d4-43d2-9dce-574b3bc2fbb3" description="Very good"/>
+                <EnumerationOption value="3" externalId="ebbb79ef-4907-4222-a150-3c88acd20f16" description="Good"/>
+                <EnumerationOption value="4" externalId="58d4ba41-4c29-462b-b271-cde8ec4ea06a" description="Fair"/>
+                <EnumerationOption value="5" externalId="38bb4a92-96ae-4918-a93c-2957ef16945b" description="Poor"/>
+            </AttributeDefinition>     
+            <AttributeDefinition id="sf12-2" externalId="63270129-5b40-4b57-b0b5-992e88e26696" type="enumeration" multiplicity="maximalOne" description="The following questions are about activities you might do during a typical day. Does your health now limit you in these activities?  If so, how much? 2. Moderate activities such as moving a table, pushing a vacuum cleaner, bowling, or playing golf.">
+                <EnumerationOption value="1" externalId="8c44b826-fffa-4c66-b86e-c997613e4e53" description="Yes, limited a lot"/>
+                <EnumerationOption value="2" externalId="4e02dcfb-5ea3-4a4b-b9c8-f57135033066" description="Yes, limited a little"/>
+                <EnumerationOption value="3" externalId="71c5de4c-2b34-4ac0-a5b5-d79b9326ffdd" description="No, not limited at all"/>
+            </AttributeDefinition>        
+            <AttributeDefinition id="sf12-3" externalId="2335d26a-d2ae-438b-ad02-846c41092da1" type="enumeration" multiplicity="maximalOne" description="The following questions are about activities you might do during a typical day. Does your health now limit you in these activities?  If so, how much? 3.  Climbing several flights of stairs.">
+                <EnumerationOption value="1" externalId="cecb0cdc-8bbf-4315-986a-4f7a1e4d20a7" description="Yes, limited a lot"/>
+                <EnumerationOption value="2" externalId="8fd8570e-da67-4faa-af47-e02333aec74d" description="Yes, limited a little"/>
+                <EnumerationOption value="3" externalId="4cba7c55-f5e8-4847-9957-828333917696" description="No, not limited at all"/>
+            </AttributeDefinition>     
+            <AttributeDefinition id="sf12-4" externalId="4f786fcc-4f66-4c12-888d-1656f8fe395c" type="enumeration" multiplicity="maximalOne" description="During the past 4 weeks, have you had any of the following problems with your work or other regular daily activities as a result of your physical health? 4. Accomplished less than you would like.">
+                <EnumerationOption value="1" externalId="2cfd3542-dd19-44a3-a433-a8210dbacddb" description="Yes"/>
+                <EnumerationOption value="2" externalId="3bb2f5ae-6109-45c4-80ae-3249465a3eff" description="No"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="sf12-5" externalId="93fe59fd-f93a-4baf-bbd2-8db6f7f1c7ed" type="enumeration" multiplicity="maximalOne" description="During the past 4 weeks, have you had any of the following problems with your work or other regular daily activities as a result of your physical health? 5. Were limited in the kind of work or other activities.">
+                <EnumerationOption value="1" externalId="ebb8db83-caaa-42d7-8195-fd843058b587" description="Yes"/>
+                <EnumerationOption value="2" externalId="6a20a3d1-671f-4203-bcbf-352928d991e9" description="No"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="sf12-6" externalId="b20ee433-1a47-4292-ac7c-648cbf029c16" type="enumeration" multiplicity="maximalOne" description="During the past 4 weeks, have you had any of the following problems with your work or other regular daily activities as a result of any emotional problems (such as feeling depressed or anxious)? 6. Accomplished less than you would like.">
+                <EnumerationOption value="1" externalId="5547e150-5ebc-409a-8bc7-b1de9a385a2f" description="Yes"/>
+                <EnumerationOption value="2" externalId="58ed0e77-1f2d-4830-a064-34b6c8a765fb" description="No"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="sf12-7" externalId="8f5b088b-cc59-44a6-8294-1f9d1915079d" type="enumeration" multiplicity="maximalOne" description="During the past 4 weeks, have you had any of the following problems with your work or other regular daily activities as a result of any emotional problems (such as feeling depressed or anxious) 7.  Did work or activities less carefully than usual.">
+                <EnumerationOption value="1" externalId="61b5d8d4-b085-4065-9ad9-2c394c82e1e3" description="Yes"/>
+                <EnumerationOption value="2" externalId="1d395980-851a-45e2-95c6-4907828e641e" description="No"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="sf12-8" externalId="a353991a-1369-449f-9758-6b04f65953c7" type="enumeration" multiplicity="maximalOne" description="During the past 4 weeks, have you had any of the following problems with your work or other regular daily activities as a result of any emotional problems (such as feeling depressed or anxious)? 8. During the past 4 weeks, how much did pain interfere with your normal work (including work outside the home and housework)?">
+                <EnumerationOption value="1" externalId="67e6b3fd-ac43-43fd-8770-6c44563b4bda" description="Not at all"/>
+                <EnumerationOption value="2" externalId="61c48257-8d57-4774-bbc2-0c7e2cc68238" description="A little bit"/>
+                <EnumerationOption value="3" externalId="76c6c1ed-2260-44af-a97e-271116c2c029" description="Moderately"/>
+                <EnumerationOption value="4" externalId="00abd23f-57db-4f38-a96d-2311e81cc478" description="Quite a bit"/>
+                <EnumerationOption value="5" externalId="44adda39-0dd7-4c0c-bc9a-d762226733e1" description="Extremely"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="sf12-9" externalId="684974fc-7bfc-482f-a739-03f753cfc80f" type="enumeration" multiplicity="maximalOne" description="These questions are about how you have been feeling during the past 4 weeks. For each question, please give the one answer that comes closest to the way you have been feeling.  How much of the time during the past 4 weeks...  9. Have you felt calm and peaceful?">
+                <EnumerationOption value="1" externalId="946ba153-c26a-4047-8132-191a1f6367c8" description="All of the time"/>
+                <EnumerationOption value="2" externalId="609b1e56-959d-4ce9-a75f-a4649b9ebe20" description="Most of the time"/>
+                <EnumerationOption value="3" externalId="e47e5bc2-7040-4147-ac11-fdddbfc8d55f" description="A good bit of the time"/>
+                <EnumerationOption value="4" externalId="ee3cc6c1-a704-4fbe-a17f-75132fd540d1" description="Some of the time"/>
+                <EnumerationOption value="5" externalId="d3268511-49e3-4de2-b38a-bca09aec5e25" description="A little of the time"/>
+                <EnumerationOption value="6" externalId="50dfb3c6-97a2-49c0-83fd-fcaf48fc43d4" description="None of the time"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="sf12-10" externalId="741f9807-c3c6-48aa-870b-2120c6b965d8" type="enumeration" multiplicity="maximalOne" description="These questions are about how you have been feeling during the past 4 weeks. For each question, please give the one answer that comes closest to the way you have been feeling.  How much of the time during the past 4 weeks...  10. Did you have a lot of energy?">
+                <EnumerationOption value="1" externalId="205db5c5-4861-47c2-a2bc-5db3629ece03" description="All of the time"/>
+                <EnumerationOption value="2" externalId="bcbd9d85-c6f4-4ddf-b9d3-0b8b23702ea3" description="Most of the time"/>
+                <EnumerationOption value="3" externalId="d02c91b5-fb08-4c08-95ab-54fa59adfce8" description="A good bit of the time"/>
+                <EnumerationOption value="4" externalId="eba09f27-e8fc-4c3f-90bf-2c623acc49a4" description="Some of the time"/>
+                <EnumerationOption value="5" externalId="eeceed35-fa27-4877-9d58-045fb636c373" description="A little of the time"/>
+                <EnumerationOption value="6" externalId="fc30c7a9-6e3f-43e0-aa5f-828a2c1b8dd2" description="None of the time"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="sf12-11" externalId="23d6c841-0c9d-4bcf-a8e7-2b9512a2447c" type="enumeration" multiplicity="maximalOne" description="These questions are about how you have been feeling during the past 4 weeks. For each question, please give the one answer that comes closest to the way you have been feeling.  How much of the time during the past 4 weeks...  11. Have you felt down-hearted and blue?">
+                <EnumerationOption value="1" externalId="384143ca-90e0-4b5f-9bfc-7d32687a3fbd" description="All of the time"/>
+                <EnumerationOption value="2" externalId="1ea5cf55-7a37-4840-abf6-d4a2b666a999" description="Most of the time"/>
+                <EnumerationOption value="3" externalId="ba6affa5-7f88-41a5-b550-6ab564dfd006" description="A good bit of the time"/>
+                <EnumerationOption value="4" externalId="87b1213e-c59c-4c92-b5a4-6889fcc75696" description="Some of the time"/>
+                <EnumerationOption value="5" externalId="36a96635-1c18-417d-ab64-8976142d1ae4" description="A little of the time"/>
+                <EnumerationOption value="6" externalId="25564ce7-33c5-4f04-be54-1aa061333630" description="None of the time"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="sf12-12" externalId="3c5ab574-40c0-4441-b105-022da43a9c70" type="enumeration" multiplicity="maximalOne" description="These questions are about how you have been feeling during the past 4 weeks. For each question, please give the one answer that comes closest to the way you have been feeling.  How much of the time during the past 4 weeks... 12. During the past 4 weeks, how much of the time has your physical health or emotional problems interfered with your social activities (like visiting friends, relatives, etc.)?">
+                <EnumerationOption value="1" externalId="a0dcf5f0-5867-4156-ab11-8b1b43cdfede" description="All of the time"/>
+                <EnumerationOption value="2" externalId="21e614d2-af8b-4b56-a0da-ee0552555739" description="Most of the time"/>
+                <EnumerationOption value="3" externalId="023901a3-b2ac-40a6-958b-54bf58d2dcf5" description="Some of the time "/>
+                <EnumerationOption value="4" externalId="a319e684-25ef-4f5a-b7e0-ec3de4c8c4fa" description="A little of the time"/>
+                <EnumerationOption value="5" externalId="8ef7183f-c931-47e5-8d6d-8aa97e7fd46f" description="None of the time"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="sf12-13" type="enumeration" multiplicity="maximalOne" description="Visit type (circle one) Preop">
+                <EnumerationOption value="1" description="6 weeks"/>
+                <EnumerationOption value="2" description="3 months"/>
+                <EnumerationOption value="1" description="6 months"/>
+                <EnumerationOption value="2" description="12 months"/>
+                <EnumerationOption value="1" description="24 months"/>
+                <EnumerationOption value="2" description="other"/>
+            </AttributeDefinition>                   
+        </EntityDefinition>
+
+        <EntityDefinition id="GCS2_DischargeForm" description="Discharge From">
+            <AttributeDefinition id="comment" type="longtext" multiplicity="maximalOne" description="Comment"/>                             
+        </EntityDefinition>
+
+
+        <!-- Case Definition -->
+        <CaseDefinition id="GCS2" description="Groningen CS2" ownerPath="GCS2_Owner" clientPath="GCS2_Patient" entityDefinitionId="GCS2_CaseData">
+           
+            <SummarySectionDefinition id="GCS2_Nutritional" description="Nutritional" position="LEFT">    
+                <SummaryParamDefinition path="GCS2_NRS.nrs8"/>
+            </SummarySectionDefinition>
+            <SummarySectionDefinition id="GCS2_Frailty" description="Frailty" position="LEFT">  
+                <SummaryParamDefinition path="GCS2_GFI.gfi16"/>          
+                <SummaryParamDefinition path="GCS2_ASA.asa"/>
+                <SummaryParamDefinition path="GCS2_Charlson.ch21"/>
+            </SummarySectionDefinition>
+            <SummarySectionDefinition id="GCS2_Functional" description="Functional" position="CENTER">   
+                <SummaryParamDefinition path="GCS2_iADL.iadl1"/>
+                <SummaryParamDefinition path="GCS2_iADL.iadl2"/>
+                <SummaryParamDefinition path="GCS2_iADL.iadl3"/>
+                <SummaryParamDefinition path="GCS2_iADL.iadl4"/>
+                <SummaryParamDefinition path="GCS2_iADL.iadl5"/>
+                <SummaryParamDefinition path="GCS2_iADL.iadl6"/>
+                <SummaryParamDefinition path="GCS2_iADL.iadl7"/>
+                <SummaryParamDefinition path="GCS2_iADL.iadl8"/>
+                <SummaryParamDefinition path="GCS2_ADL.adl7"/>
+            </SummarySectionDefinition>
+            <SummarySectionDefinition id="GCS2_Cognitive" description="Cognitive" position="RIGHT">    
+                <SummaryParamDefinition path="GCS2_MNASF.mnasf9"/>
+            </SummarySectionDefinition>
+            <SummarySectionDefinition id="GCS2_QOL" description="QOL" position="RIGHT">    
+            </SummarySectionDefinition>
+            <SummarySectionDefinition id="GCS2_PhysicalActivity" description="Physical Activity" position="STRETCHED">
+                <SummaryParamDefinition path="GCS2_PhysicalActivity.phactp1"/>
+                <SummaryParamDefinition path="GCS2_PhysicalActivity.phactp2"/>
+                <SummaryParamDefinition path="GCS2_PhysicalActivity.phactpx"/>
+            </SummarySectionDefinition>
+
+            <StageDefinition id="GCS2_CaseIdentification" description="Case Identification" isMandatory="true" repeatable="ONCE">        
+                <HumanTaskDefinition id="GCS2_SelectPatient" description="Select Patient" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE">                
+                    <TaskParamDefinition path="GCS2_Patient" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Owner" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_EvaluationDueDate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_WorkplanDueDate" isReadOnly="false" isMandatory="true"/>                    
+                </HumanTaskDefinition>
+                <HumanTaskDefinition id="GCS2_ASA" description="ASA" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_ASA" entityAttachPath="GCS2_ASA">                
+                    <SentryDefinition>
+                        <precondition processDefinitionId="GCS2_SelectPatient"/>
+                    </SentryDefinition>
+                    <TaskParamDefinition path="GCS2_ASA.asa" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>
+                
+            </StageDefinition>
+            <StageDefinition id="GCS2_CaseEvaluation" description="Case Evaluation" isMandatory="true" repeatable="ONCE">  
+                <SentryDefinition>
+                    <precondition processDefinitionId="GCS2_CaseIdentification"/>
+                </SentryDefinition>        
+                <HumanTaskDefinition id="GCS2_Charlson" description="Charlson" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_Charlson" entityAttachPath="GCS2_Charlson">
+                    <TaskParamDefinition path="GCS2_Charlson.ch1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch11" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch12" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch13" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch14" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch15" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch16" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch17" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch18" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch19" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch20" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch21" isReadOnly="true" isMandatory="false"/>
+                </HumanTaskDefinition>                
+                <HumanTaskDefinition id="GCS2_GFI" description="Groningen Frailty Indicator (GFI)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_GFI" entityAttachPath="GCS2_GFI">
+                    <TaskParamDefinition path="GCS2_GFI.gfi1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_GFI.gfi2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_GFI.gfi3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_GFI.gfi4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_GFI.gfi5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_GFI.gfi6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_GFI.gfi7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_GFI.gfi8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_GFI.gfi9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_GFI.gfi10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_GFI.gfi11" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_GFI.gfi12" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_GFI.gfi13" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_GFI.gfi14" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_GFI.gfi15" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_GFI.gfi16" isReadOnly="true" isMandatory="false"/>
+                </HumanTaskDefinition>                
+                <HumanTaskDefinition id="GCS2_ADL" description="Activities of Daily Living (ADL)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_ADL" entityAttachPath="GCS2_ADL">
+                    <TaskParamDefinition path="GCS2_ADL.adl1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_ADL.adl2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_ADL.adl3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_ADL.adl4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_ADL.adl5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_ADL.adl6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_ADL.adl7" isReadOnly="true" isMandatory="false"/>
+                </HumanTaskDefinition>
+                <HumanTaskDefinition id="GCS2_iADL" description="Instrumental Activities of Daily Living (iADL)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_iADL" entityAttachPath="GCS2_iADL">
+                    <TaskParamDefinition path="GCS2_iADL.iadl1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_iADL.iadl2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_iADL.iadl3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_iADL.iadl4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_iADL.iadl5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_iADL.iadl6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_iADL.iadl7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_iADL.iadl8" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>
+                <HumanTaskDefinition id="GCS2_NRS" description="Nutritional Risk Screening (NRS)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_NRS" entityAttachPath="GCS2_NRS">
+                    <TaskParamDefinition path="GCS2_NRS.nrs1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_NRS.nrs2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_NRS.nrs3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_NRS.nrs4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_NRS.nrs5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_NRS.nrs6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_NRS.nrs7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_NRS.nrs8" isReadOnly="true" isMandatory="false"/>
+                </HumanTaskDefinition>
+                <HumanTaskDefinition id="GCS2_MNASF" description="Mini Nutritional Assesment (MNA-SF)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_MNASF" entityAttachPath="GCS2_MNASF">
+                    <TaskParamDefinition path="GCS2_MNASF.mnasf1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_MNASF.mnasf2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_MNASF.mnasf3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_MNASF.mnasf4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_MNASF.mnasf5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_MNASF.mnasf6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_MNASF.mnasf7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_MNASF.mnasf8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_MNASF.mnasf9" isReadOnly="true" isMandatory="false"/>
+                </HumanTaskDefinition>
+            </StageDefinition>
+            <StageDefinition id="GCS2_Workplan" description="Workplan" isMandatory="true" repeatable="ONCE">
+                <SentryDefinition>
+                    <precondition processDefinitionId="GCS2_CaseEvaluation"/>
+                </SentryDefinition>
+                <HumanTaskDefinition id="GCS2_PhysicalActivityPrescription" description="Physical Activity Prescription" ownerPath="GCS2_Owner" dueDatePath="GCS2_WorkplanDueDate"  isMandatory="true" repeatable="PARALLEL" isManualActivation="true" entityDefinitionId="GCS2_PhysicalActivity" entityAttachPath="GCS2_PhysicalActivity">
+                    <TaskParamDefinition path="GCS2_PhysicalActivity.phactp1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_PhysicalActivity.phactp2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_PhysicalActivity.phactp3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_PhysicalActivity.phactp4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_PhysicalActivity.phactp5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_PhysicalActivity.phactp6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_PhysicalActivity.phactp7" isReadOnly="false" isMandatory="true"/>                    
+                </HumanTaskDefinition>
+                <AutomatedTaskDefinition id="GCS2_PhysicalActivityExecution" description="Physical Activity Execution" ownerPath="GCS2_Owner" isMandatory="true" repeatable="PARALLEL" isManualActivation="true">
+                    <SentryDefinition>
+                        <precondition processDefinitionId="GCS2_PhysicalActivityPrescription"/>
+                    </SentryDefinition>
+                    <HttpHookDefinition on="ENABLE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System"></HttpHookDefinition>
+                    <TaskParamDefinition path="GCS2_PhysicalActivity.phactp1" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PhysicalActivity.phactp2" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PhysicalActivity.phactp3" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PhysicalActivity.phactp4" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PhysicalActivity.phactp5" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PhysicalActivity.phactp6" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PhysicalActivity.phactp7" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Patient" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PhysicalActivity.phactpx" isReadOnly="false" isMandatory="true"/>
+                </AutomatedTaskDefinition>
+                <HumanTaskDefinition id="GCS2_PatientMonitoringPrescription" description="Patient Monitoring Prescription" ownerPath="GCS2_Owner" dueDatePath="GCS2_WorkplanDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_PatientMonitoring" entityAttachPath="GCS2_PatientMonitoring">
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp1_name" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp2_alertmin" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp3_alertmax" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp4_alertfreq" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp5_alertfrequnit" isReadOnly="false" isMandatory="false"/>            
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp7_freq" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp8_freqqunit" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp9_maxdelay" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp10_startdate" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp11_enddate" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp12_timeslot" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp6_comments" isReadOnly="false" isMandatory="false"/>
+                </HumanTaskDefinition>
+                <AutomatedTaskDefinition id="GCS2_PatientMonitoringExecution" description="Patient Monitoring Execution" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE">
+                    <SentryDefinition>
+                        <precondition processDefinitionId="GCS2_PatientMonitoringPrescription"/>
+                    </SentryDefinition>
+                    <HttpHookDefinition on="ENABLE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create monitoring prescription on Self-Management System"></HttpHookDefinition>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp1_name" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp2_alertmin" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp3_alertmax" isReadOnly="true" isMandatory="false"/>            
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp5_alertfrequnit" isReadOnly="true" isMandatory="false"/> 
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp4_alertfreq" isReadOnly="true" isMandatory="false"/>          
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp8_freqqunit" isReadOnly="true" isMandatory="false"/>      
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp7_freq" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp9_maxdelay" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp10_startdate" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp11_enddate" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp12_timeslot" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp6_comments" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Patient" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmpx" isReadOnly="false" isMandatory="true"/>
+                </AutomatedTaskDefinition>
+
+                <AutomatedTaskDefinition id="GCS2_SF12" externalId="6C20EE57-C5F7-4F4C-A7AE-BEAC4F8C3C3A" description="SF-12" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_SF12" entityAttachPath="GCS2_SF12">
+                    <!--<HttpHookDefinition on="ENABLE" url="http://35.157.110.245:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System"></HttpHookDefinition>-->
+                    <TaskParamDefinition path="GCS2_SF12.sf12-1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_SF12.sf12-2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_SF12.sf12-3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_SF12.sf12-4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_SF12.sf12-5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_SF12.sf12-6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_SF12.sf12-7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_SF12.sf12-8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_SF12.sf12-9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_SF12.sf12-10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_SF12.sf12-11" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_SF12.sf12-12" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_SF12.sf12-13" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Patient" isReadOnly="true" isMandatory="false"/>
+                </AutomatedTaskDefinition>
+
+            </StageDefinition>
+            
+            <StageDefinition id="GCS2_Discharge" description="Discharge" isMandatory="true" repeatable="ONCE">
+                <SentryDefinition>
+                    <precondition processDefinitionId="GCS2_Workplan"/>
+                </SentryDefinition>
+                <HumanTaskDefinition id="GCS2_DischargeForm" description="Discharge Form" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_DischargeForm" entityAttachPath="GCS2_DischargeForm">
+                    <TaskParamDefinition path="GCS2_DischargeForm.comment" isReadOnly="false" isMandatory="true"/>                  
+                </HumanTaskDefinition>
+            </StageDefinition>
+
+        </CaseDefinition>
+    </Workspace>
+
+
+<!-- ######################################################################################################################################## -->
+<!-- ####### Execution ###################################################################################################################### -->
+<!-- ######################################################################################################################################## -->
+
+    <Execution>        
+        <Action id="CompleteHumanTask" processId="GCS2_SelectPatient">
+            <TaskParam path="GCS2_Patient"  userValue="vargiue"/>
+            <TaskParam path="GCS2_Owner"  userValue="michelf"/>
+            <TaskParam path="GCS2_EvaluationDueDate" values="['2017-12-26T00:00:00.000']"/>
+            <TaskParam path="GCS2_WorkplanDueDate" values="['2017-12-28T00:00:00.000']"/>
+        </Action>
+        <Action id="CompleteHumanTask" processId="GCS2_ASA">
+            <TaskParam path="GCS2_ASA.asa"  values="['2']"/>
+        </Action>
+        <Action id="CompleteHumanTask" processId="GCS2_Charlson">
+            <TaskParam path="GCS2_Charlson.ch1"  values="['0']"/>
+            <TaskParam path="GCS2_Charlson.ch2"  values="['1']"/>
+            <TaskParam path="GCS2_Charlson.ch3"  values="['0']"/>
+            <TaskParam path="GCS2_Charlson.ch4"  values="['1']"/>
+            <TaskParam path="GCS2_Charlson.ch5"  values="['0']"/>
+            <TaskParam path="GCS2_Charlson.ch6"  values="['1']"/>
+            <TaskParam path="GCS2_Charlson.ch7"  values="['0']"/>
+            <TaskParam path="GCS2_Charlson.ch8"  values="['1']"/>
+            <TaskParam path="GCS2_Charlson.ch9"  values="['0']"/>
+            <TaskParam path="GCS2_Charlson.ch10"  values="['1']"/>
+            <TaskParam path="GCS2_Charlson.ch11"  values="['0']"/>
+            <TaskParam path="GCS2_Charlson.ch12"  values="['1']"/>
+            <TaskParam path="GCS2_Charlson.ch13"  values="['0']"/>
+            <TaskParam path="GCS2_Charlson.ch14"  values="['1']"/>            
+            <TaskParam path="GCS2_Charlson.ch15"  values="['0']"/>
+            <TaskParam path="GCS2_Charlson.ch16"  values="['1']"/>
+            <TaskParam path="GCS2_Charlson.ch17"  values="['0']"/>
+            <TaskParam path="GCS2_Charlson.ch18"  values="['1']"/>            
+            <TaskParam path="GCS2_Charlson.ch19"  values="['0']"/>
+            <TaskParam path="GCS2_Charlson.ch20"  values="['1']"/>
+        </Action>
+        <Action id="CompleteHumanTask" processId="GCS2_GFI">
+            <TaskParam path="GCS2_GFI.gfi1"  values="['0']"/>
+            <TaskParam path="GCS2_GFI.gfi2"  values="['1']"/>
+            <TaskParam path="GCS2_GFI.gfi3"  values="['1']"/>
+            <TaskParam path="GCS2_GFI.gfi4"  values="['0']"/>
+            <TaskParam path="GCS2_GFI.gfi5"  values="['1']"/>
+            <TaskParam path="GCS2_GFI.gfi6"  values="['0']"/>
+            <TaskParam path="GCS2_GFI.gfi7"  values="['1']"/>
+            <TaskParam path="GCS2_GFI.gfi8"  values="['0']"/>
+            <TaskParam path="GCS2_GFI.gfi9"  values="['0']"/>
+            <TaskParam path="GCS2_GFI.gfi10"  values="['0']"/>
+            <TaskParam path="GCS2_GFI.gfi11"  values="['1']"/>
+            <TaskParam path="GCS2_GFI.gfi12"  values="['0']"/>
+            <TaskParam path="GCS2_GFI.gfi13"  values="['1']"/>
+            <TaskParam path="GCS2_GFI.gfi14"  values="['0']"/>
+            <TaskParam path="GCS2_GFI.gfi15"  values="['1.0001']"/>
+        </Action>
+        <Action id="CompleteHumanTask" processId="GCS2_ADL">
+            <TaskParam path="GCS2_ADL.adl1"  values="['0']"/>
+            <TaskParam path="GCS2_ADL.adl2"  values="['1']"/>
+            <TaskParam path="GCS2_ADL.adl3"  values="['2']"/>
+            <TaskParam path="GCS2_ADL.adl4"  values="['2']"/>
+            <TaskParam path="GCS2_ADL.adl5"  values="['1']"/>
+            <TaskParam path="GCS2_ADL.adl6"  values="['0']"/>
+        </Action>
+        <Action id="CompleteHumanTask" processId="GCS2_iADL">
+            <TaskParam path="GCS2_iADL.iadl1"  values="['1.0001']"/>
+            <TaskParam path="GCS2_iADL.iadl2"  values="['1']"/>
+            <TaskParam path="GCS2_iADL.iadl3"  values="['0.0001']"/>
+            <TaskParam path="GCS2_iADL.iadl4"  values="['1.0003']"/>
+            <TaskParam path="GCS2_iADL.iadl5"  values="['1.0003']"/>
+            <TaskParam path="GCS2_iADL.iadl6"  values="['0']"/>
+            <TaskParam path="GCS2_iADL.iadl7"  values="['1']"/>
+            <TaskParam path="GCS2_iADL.iadl8"  values="['0']"/>
+        </Action>
+        <Action id="CompleteHumanTask" processId="GCS2_NRS">
+            <TaskParam path="GCS2_NRS.nrs1"  values="['1']"/>
+            <TaskParam path="GCS2_NRS.nrs2"  values="['0']"/>
+            <TaskParam path="GCS2_NRS.nrs3"  values="['1']"/>
+            <TaskParam path="GCS2_NRS.nrs4"  values="['0']"/>
+            <TaskParam path="GCS2_NRS.nrs5"  values="['3']"/>
+            <TaskParam path="GCS2_NRS.nrs6"  values="['2']"/>
+            <TaskParam path="GCS2_NRS.nrs7"  values="['1']"/>
+        </Action>
+        <Action id="CompleteHumanTask" processId="GCS2_MNASF">
+            <TaskParam path="GCS2_MNASF.mnasf1"  values="['0']"/>
+            <TaskParam path="GCS2_MNASF.mnasf2"  values="['2']"/>
+            <TaskParam path="GCS2_MNASF.mnasf3"  values="['2']"/>
+            <TaskParam path="GCS2_MNASF.mnasf4"  values="['0']"/>
+            <TaskParam path="GCS2_MNASF.mnasf5"  values="['1']"/>
+            <TaskParam path="GCS2_MNASF.mnasf6"  values="[70]"/>
+            <TaskParam path="GCS2_MNASF.mnasf7"  values="[180]"/>
+            <TaskParam path="GCS2_MNASF.mnasf8"  values="['0']"/>
+        </Action>
+        <Action id="CreateAlert" 
+            processId="GCS2_SF12" 
+            expireDate="2018-06-21T15:36:21.000"
+            text="Alert Message"
+            data="{'alertType':'some type', 'application':'Run App', 'priorityLevel':'LOW', 'status':'ACT', 'paramName':'steps per day', 'paramValue':'12', 'minThreshold':'5',  'maxThreshold':'8'}">
+        </Action>
+        <Action id="CompleteAutomatedTask" processId="GCS2_SF12">
+            <TaskParam path="GCS2_SF12.sf12-1"  values="['1']"/>
+            <TaskParam path="GCS2_SF12.sf12-2"  values="['1']"/>
+            <TaskParam path="GCS2_SF12.sf12-3"  values="['1']"/>
+            <TaskParam path="GCS2_SF12.sf12-4"  values="['1']"/>
+            <TaskParam path="GCS2_SF12.sf12-5"  values="['1']"/>
+            <TaskParam path="GCS2_SF12.sf12-6"  values="['1']"/>
+            <TaskParam path="GCS2_SF12.sf12-7"  values="['1']"/>            
+            <TaskParam path="GCS2_SF12.sf12-8"  values="['1']"/>
+            <TaskParam path="GCS2_SF12.sf12-9"  values="['1']"/>
+            <TaskParam path="GCS2_SF12.sf12-10"  values="['1']"/>
+            <TaskParam path="GCS2_SF12.sf12-11"  values="['1']"/>
+            <TaskParam path="GCS2_SF12.sf12-12"  values="['1']"/>
+            <TaskParam path="GCS2_SF12.sf12-13"  values="['1']"/>
+        </Action>
+        <Action id="CompleteHumanTask" processId="GCS2_PhysicalActivityPrescription">
+            <TaskParam path="GCS2_PhysicalActivity.phactp1"  values="['2017-09-26T00:00:00.000']"/>
+            <TaskParam path="GCS2_PhysicalActivity.phactp2"  values="['2018-09-27T00:00:00.000']"/>
+            <TaskParam path="GCS2_PhysicalActivity.phactp3"  values="[10000]"/>
+            <TaskParam path="GCS2_PhysicalActivity.phactp4"  values="[15]"/>
+            <TaskParam path="GCS2_PhysicalActivity.phactp5"  values="[5]"/>
+            <TaskParam path="GCS2_PhysicalActivity.phactp6"  values="[10]"/>
+            <TaskParam path="GCS2_PhysicalActivity.phactp7"  values="[30]"/>
+        </Action>
+        <!--
+        <Action id="CompleteAutomatedTask" processId="GCS2_PhysicalActivityExecution">
+            <TaskParam path="GCS2_PhysicalActivity.phactpx"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
+        </Action>  -->      
+        <!--
+        <Action id="CompleteHumanTask" processId="GCS2_PatientMonitoringPrescription">
+            <TaskParam path="GCS2_PatientMonitoring.pmp1_name"  values="['WEIGHT']"/>
+            <TaskParam path="GCS2_PatientMonitoring.pmp2_alertmin"  values="[50]"/>
+            <TaskParam path="GCS2_PatientMonitoring.pmp3_alertmax"  values="[150]"/>
+            <TaskParam path="GCS2_PatientMonitoring.pmp4_alertfreq"  values="[2]"/>
+            <TaskParam path="GCS2_PatientMonitoring.pmp5_alertfrequnit"  values="['DAYS']"/>
+            <TaskParam path="GCS2_PatientMonitoring.pmp6_comments"  values="['Some random comment']"/>
+            <TaskParam path="GCS2_PatientMonitoring.pmp7_freq"  values="[5]"/>
+            <TaskParam path="GCS2_PatientMonitoring.pmp8_freqqunit"  values="['WEEKS']"/>
+            <TaskParam path="GCS2_PatientMonitoring.pmp9_maxdelay"  values="[100]"/>
+            <TaskParam path="GCS2_PatientMonitoring.pmp10_startdate"  values="['2017-06-09T00:00:00.0']"/>
+            <TaskParam path="GCS2_PatientMonitoring.pmp11_enddate"  values="['2019-06-09T00:00:00.0']"/>
+            <TaskParam path="GCS2_PatientMonitoring.pmp12_timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
+        </Action>      
+        <Action id="CompleteAutomatedTask" processId="GCS2_PatientMonitoringExecution">
+            <TaskParam path="GCS2_PatientMonitoring.pmpx"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
+        </Action>
+        -->
+
+    </Execution>
+
+</SACMDefinition>
