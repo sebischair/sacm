@@ -64,6 +64,11 @@
                 <SentryDefinition>
                     <precondition processDefinitionId="GCS2_CaseIdentification"/>
                 </SentryDefinition>
+
+                <StageDefinition id="GCS2_PhysicalActivityPrescriptionStage" description="Physical Activity Prescription Stage" isMandatory="false" repeatable="PARALLEL" isManualActivation="true" entityDefinitionId="GCS2_PhysicalActivity" entityAttachPath="GCS2_PhysicalActivity">
+
+                </StageDefinition>
+                <!--
                 <HumanTaskDefinition id="GCS2_PhysicalActivityPrescription" description="Physical Activity Prescription" ownerPath="GCS2_Owner" dueDatePath="GCS2_WorkplanDueDate"  isMandatory="true" repeatable="PARALLEL" isManualActivation="true" entityDefinitionId="GCS2_PhysicalActivity" entityAttachPath="GCS2_PhysicalActivity">
                     <TaskParamDefinition path="GCS2_PhysicalActivity.phactp1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_PhysicalActivity.phactp2" isReadOnly="false" isMandatory="true"/>
@@ -87,6 +92,7 @@
                     <TaskParamDefinition path="GCS2_Patient" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="GCS2_PhysicalActivity.phactpx" isReadOnly="false" isMandatory="true"/>
                 </AutomatedTaskDefinition>
+                -->
               
             </StageDefinition>
 
@@ -108,7 +114,7 @@
        
        
       
-       
+       <!--
         <Action id="CompleteHumanTask" processId="GCS2_PhysicalActivityPrescription">
             <TaskParam path="GCS2_PhysicalActivity.phactp1"  values="['2017-09-26T00:00:00.000']"/>
             <TaskParam path="GCS2_PhysicalActivity.phactp2"  values="['2018-09-27T00:00:00.000']"/>
@@ -118,6 +124,7 @@
             <TaskParam path="GCS2_PhysicalActivity.phactp6"  values="[10]"/>
             <TaskParam path="GCS2_PhysicalActivity.phactp7"  values="[30]"/>
         </Action>
+        -->
         <!--
         <Action id="CompleteAutomatedTask" processId="GCS2_PhysicalActivityExecution">
             <TaskParam path="GCS2_PhysicalActivity.phactpx"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
