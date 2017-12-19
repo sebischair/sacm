@@ -29,8 +29,10 @@
 
     <Workspace staticId="2c9480885d1737ef015d74deed260006" id="Umcg">
         <EntityDefinition id="GCS2_CaseData" description="Case Data">
-            <AttributeDefinition id="GCS2_Patient" type="Link.Users(UmcgPatients)" description="Patient"/>
+            <AttributeDefinition id="GCS2_Patient" type="Link.Users(UmcgPatients)" description="Patient" additionalDescription="some hint here"/>
             <AttributeDefinition id="GCS2_Owner" type="Link.Users(UmcgProfessionals)" description="Owner"/>
+            <AttributeDefinition id="GCS2_EvaluationDueDate" type="date.after(TODAY)" description="Evaluation default due date"/>
+            <AttributeDefinition id="GCS2_WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date"/>
             <AttributeDefinition id="GCS2_ASA" type="Link.EntityDefinition.GCS2_ASA" description="ASA"/>    
             <AttributeDefinition id="GCS2_Charlson" type="Link.EntityDefinition.GCS2_Charlson" description="Charlson"/>   
             <AttributeDefinition id="GCS2_GFI" type="Link.EntityDefinition.GCS2_GFI" description="Groningen Frailty Indicator (GFI)"/>   
@@ -52,9 +54,6 @@
                 <EnumerationOption value="4" description="ASA 4"/>
                 <EnumerationOption value="5" description="ASA 5"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="asa2" type="boolean" multiplicity="maximalOne" description="Boolean Testing (will be removed again)"/>            
-            <AttributeDefinition id="asa3" type="notype" multiplicity="maximalOne" description="NoType Testing (will be removed again)"/>            
-            <AttributeDefinition id="asa4" type="longtext" multiplicity="maximalOne" description="Longtext Testing (will be removed again)"/> 
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_Charlson" description="Charlson">
@@ -339,7 +338,7 @@
                 <EnumerationOption value="0" description="< 70 years"/>
                 <EnumerationOption value="1" description="≥ 70 years"/>	
             </AttributeDefinition>
-            <DerivedAttributeDefinition id="nrs8" expression="number(nrs5,0) + number(nrs6,0) + number(nrs7,0)" description="NRS Score"/>            
+            <DerivedAttributeDefinition id="nrs8" expression="number(nrs5,0) + number(nrs6,0) + number(nrs7,0)" description="NRS Score" uiReference="colors(0<=green<=10<orange<=20<red<30)"/>            
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_MNASF" description="Mini Nutritional Assesment (MNA-SF)">
@@ -521,7 +520,7 @@
 
 
         <!-- Case Definition -->
-        <CaseDefinition id="GCS2" description="Groningen CS2" ownerPath="GCS2_Owner" entityDefinitionId="GCS2_CaseData">
+        <CaseDefinition id="GCS2" description="Groningen CS2" ownerPath="GCS2_Owner" clientPath="GCS2_Patient" entityDefinitionId="GCS2_CaseData">
            
             <SummarySectionDefinition id="GCS2_Nutritional" description="Nutritional" position="LEFT">    
                 <SummaryParamDefinition path="GCS2_NRS.nrs8"/>
@@ -557,15 +556,14 @@
                 <HumanTaskDefinition id="GCS2_SelectPatient" description="Select Patient" ownerPath="GCS2_Owner" isMandatory="true" isRepeatable="false">                
                     <TaskParamDefinition path="GCS2_Patient" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Owner" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_EvaluationDueDate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_WorkplanDueDate" isReadOnly="false" isMandatory="true"/>                    
                 </HumanTaskDefinition>
                 <HumanTaskDefinition id="GCS2_ASA" description="ASA" ownerPath="GCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="GCS2_ASA" entityAttachPath="GCS2_ASA">                
                     <SentryDefinition>
                         <precondition processDefinitionId="GCS2_SelectPatient"/>
                     </SentryDefinition>
                     <TaskParamDefinition path="GCS2_ASA.asa" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_ASA.asa2" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_ASA.asa3" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_ASA.asa4" isReadOnly="false" isMandatory="false"/>
                 </HumanTaskDefinition>
                 
             </StageDefinition>
@@ -573,7 +571,7 @@
                 <SentryDefinition>
                     <precondition processDefinitionId="GCS2_CaseIdentification"/>
                 </SentryDefinition>        
-                <HumanTaskDefinition id="GCS2_Charlson" description="Charlson" ownerPath="GCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="GCS2_Charlson" entityAttachPath="GCS2_Charlson">
+                <HumanTaskDefinition id="GCS2_Charlson" description="Charlson" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" isRepeatable="false" entityDefinitionId="GCS2_Charlson" entityAttachPath="GCS2_Charlson">
                     <TaskParamDefinition path="GCS2_Charlson.ch1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Charlson.ch2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Charlson.ch3" isReadOnly="false" isMandatory="true"/>
@@ -596,7 +594,7 @@
                     <TaskParamDefinition path="GCS2_Charlson.ch20" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Charlson.ch21" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>                
-                <HumanTaskDefinition id="GCS2_GFI" description="Groningen Frailty Indicator (GFI)" ownerPath="GCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="GCS2_GFI" entityAttachPath="GCS2_GFI">
+                <HumanTaskDefinition id="GCS2_GFI" description="Groningen Frailty Indicator (GFI)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" isRepeatable="false" entityDefinitionId="GCS2_GFI" entityAttachPath="GCS2_GFI">
                     <TaskParamDefinition path="GCS2_GFI.gfi1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_GFI.gfi2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_GFI.gfi3" isReadOnly="false" isMandatory="true"/>
@@ -614,7 +612,7 @@
                     <TaskParamDefinition path="GCS2_GFI.gfi15" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_GFI.gfi16" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>                
-                <HumanTaskDefinition id="GCS2_ADL" description="Activities of Daily Living (ADL)" ownerPath="GCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="GCS2_ADL" entityAttachPath="GCS2_ADL">
+                <HumanTaskDefinition id="GCS2_ADL" description="Activities of Daily Living (ADL)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" isRepeatable="false" entityDefinitionId="GCS2_ADL" entityAttachPath="GCS2_ADL">
                     <TaskParamDefinition path="GCS2_ADL.adl1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_ADL.adl2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_ADL.adl3" isReadOnly="false" isMandatory="true"/>
@@ -623,7 +621,7 @@
                     <TaskParamDefinition path="GCS2_ADL.adl6" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_ADL.adl7" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
-                <HumanTaskDefinition id="GCS2_iADL" description="Instrumental Activities of Daily Living (iADL)" ownerPath="GCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="GCS2_iADL" entityAttachPath="GCS2_iADL">
+                <HumanTaskDefinition id="GCS2_iADL" description="Instrumental Activities of Daily Living (iADL)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" isRepeatable="false" entityDefinitionId="GCS2_iADL" entityAttachPath="GCS2_iADL">
                     <TaskParamDefinition path="GCS2_iADL.iadl1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_iADL.iadl2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_iADL.iadl3" isReadOnly="false" isMandatory="true"/>
@@ -633,7 +631,7 @@
                     <TaskParamDefinition path="GCS2_iADL.iadl7" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_iADL.iadl8" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
-                <HumanTaskDefinition id="GCS2_NRS" description="Nutritional Risk Screening (NRS)" ownerPath="GCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="GCS2_NRS" entityAttachPath="GCS2_NRS">
+                <HumanTaskDefinition id="GCS2_NRS" description="Nutritional Risk Screening (NRS)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" isRepeatable="false" entityDefinitionId="GCS2_NRS" entityAttachPath="GCS2_NRS">
                     <TaskParamDefinition path="GCS2_NRS.nrs1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_NRS.nrs2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_NRS.nrs3" isReadOnly="false" isMandatory="true"/>
@@ -643,7 +641,7 @@
                     <TaskParamDefinition path="GCS2_NRS.nrs7" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_NRS.nrs8" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
-                <HumanTaskDefinition id="GCS2_MNASF" description="Mini Nutritional Assesment (MNA-SF)" ownerPath="GCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="GCS2_MNASF" entityAttachPath="GCS2_MNASF">
+                <HumanTaskDefinition id="GCS2_MNASF" description="Mini Nutritional Assesment (MNA-SF)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" isRepeatable="false" entityDefinitionId="GCS2_MNASF" entityAttachPath="GCS2_MNASF">
                     <TaskParamDefinition path="GCS2_MNASF.mnasf1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_MNASF.mnasf2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_MNASF.mnasf3" isReadOnly="false" isMandatory="true"/>
@@ -659,7 +657,7 @@
                 <SentryDefinition>
                     <precondition processDefinitionId="GCS2_CaseEvaluation"/>
                 </SentryDefinition>
-                <HumanTaskDefinition id="GCS2_PhysicalActivityPrescription" description="Physical Activity Prescription" ownerPath="GCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="GCS2_PhysicalActivity" entityAttachPath="GCS2_PhysicalActivity">
+                <HumanTaskDefinition id="GCS2_PhysicalActivityPrescription" description="Physical Activity Prescription" ownerPath="GCS2_Owner" dueDatePath="GCS2_WorkplanDueDate"  isMandatory="true" isRepeatable="false" entityDefinitionId="GCS2_PhysicalActivity" entityAttachPath="GCS2_PhysicalActivity">
                     <TaskParamDefinition path="GCS2_PhysicalActivity.phactp1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_PhysicalActivity.phactp2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_PhysicalActivity.phactp3" isReadOnly="false" isMandatory="true"/>
@@ -683,7 +681,7 @@
                     <TaskParamDefinition path="GCS2_Patient" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="GCS2_PhysicalActivity.phactpx" isReadOnly="false" isMandatory="true"/>
                 </AutomatedTaskDefinition>
-                <HumanTaskDefinition id="GCS2_PatientMonitoringPrescription" description="Patient Monitoring Prescription" ownerPath="GCS2_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="GCS2_PatientMonitoring" entityAttachPath="GCS2_PatientMonitoring">
+                <HumanTaskDefinition id="GCS2_PatientMonitoringPrescription" description="Patient Monitoring Prescription" ownerPath="GCS2_Owner" dueDatePath="GCS2_WorkplanDueDate" isMandatory="true" isRepeatable="false" entityDefinitionId="GCS2_PatientMonitoring" entityAttachPath="GCS2_PatientMonitoring">
                     <TaskParamDefinition path="GCS2_PatientMonitoring.pmp1_name" isReadOnly="false" isMandatory="false"/>
                     <TaskParamDefinition path="GCS2_PatientMonitoring.pmp2_alertmin" isReadOnly="false" isMandatory="false"/>
                     <TaskParamDefinition path="GCS2_PatientMonitoring.pmp3_alertmax" isReadOnly="false" isMandatory="false"/>
@@ -759,6 +757,8 @@
         <Action id="CompleteHumanTask" processId="GCS2_SelectPatient">
             <TaskParam path="GCS2_Patient"  userValue="vargiue"/>
             <TaskParam path="GCS2_Owner"  userValue="michelf"/>
+            <TaskParam path="GCS2_EvaluationDueDate" values="['2017-12-26T00:00:00.000']"/>
+            <TaskParam path="GCS2_WorkplanDueDate" values="['2017-12-28T00:00:00.000']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="GCS2_ASA">
             <TaskParam path="GCS2_ASA.asa"  values="['2']"/>

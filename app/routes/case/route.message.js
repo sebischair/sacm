@@ -12,7 +12,7 @@ const router = express.Router();
  *   {}
  */
 router.get('/me/unseen', (req, res, next)=>{
-  Message.findByMeUnseen(req.jwt)
+  Message.findMeUnseen(req.jwt)
     .then(c=>{
         res.status(200).send(c);
     })

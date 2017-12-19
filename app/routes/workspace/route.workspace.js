@@ -4,6 +4,7 @@ import Case from './../../models/case/model.case';
 import CaseDefinition from './../../models/casedefinition/model.casedefinition';
 import HumanTask from './../../models/case/model.humantask';
 import Alert from './../../models/case/model.alert';
+import Message from './../../models/case/model.message';
 const router = express.Router();
 
 
@@ -89,6 +90,26 @@ router.get('/', (req, res, next)=>{
  */
 router.get('/:id/cases/me', (req, res, next)=>{
   Case.findMeByWorkspace(req.jwt, req.params.id)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
+ * @api {get} /workspaces/:id/cases/client/search Search Cases by client and by Workspace
+ * @apiName GetClientCasesByWorkspaceID
+ * @apiGroup Cases
+ * @apiParam {String} ID The ID of the the Workspace
+ * @apiParam {String} query The search string
+ * @apiSampleRequest /workspaces/:id/cases/client/search?query=John
+ * @apiSuccessExample {json} Success-Response:
+ * {}
+ */
+router.get('/:id/cases/client/search', (req, res, next)=>{
+  Case.findClientCasesByWorkspace(req.jwt, req.params.id, req.query.query)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -317,6 +338,25 @@ router.get('/:id/alerts/me/unseen', (req, res, next)=>{
   Alert.findMeUnseenByWorkspace(req.jwt, req.params.id)
     .then(a=>{
         res.status(200).send(a);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
+ * @api {get} /workspaces/:id/messages/me/unseen Get My unseen Messages by Workspace
+ * @apiName GetMyUnseenMessagesByWorkspace
+ * @apiGroup Messages
+ * @apiParam {String} ID The ID of the the Workspace
+ * @apiSampleRequest /workspaces/:id/messages/me/unseen
+ * @apiSuccessExample {json} Success-Response:
+ * {}
+ */
+router.get('/:id/messages/me/unseen', (req, res, next)=>{
+  Message.findMeUnseenByWorkspace(req.jwt, req.params.id)
+    .then(m=>{
+        res.status(200).send(m);
     })
     .catch(err=>{
       res.status(500).send(err);
