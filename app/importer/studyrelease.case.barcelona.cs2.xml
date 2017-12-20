@@ -30,7 +30,12 @@
         <EntityDefinition id="BCS2_CaseData" description="Case Data">
             <AttributeDefinition id="BCS2_Patient" type="Link.Users(IdibapsPatients)" description="Patient"/>
             <AttributeDefinition id="BCS2_Owner" type="Link.Users(IdibapsProfessionals)" description="Owner"/>
-            <AttributeDefinition id="BCS2_Inclusion" type="Link.EntityDefinition.BCS2_Inclusion" description="Inclusion form"/>      
+            <AttributeDefinition id="BCS2_Inclusion" type="Link.EntityDefinition.BCS2_Inclusion" description="Inclusion form"/>    
+
+            <AttributeDefinition id="BCS2_SelectedProfessionals" type="Link.EntityDefinition.BCS2_SelectedProfessionals" description="Inclusion form"/>    
+
+
+
             <AttributeDefinition id="BCS2_ClinicalInformation" type="Link.EntityDefinition.BCS2_ClinicalInformation" description="Información clínica"/>             
             <AttributeDefinition id="BCS2_Charlson" type="Link.EntityDefinition.BCS2_Charlson" description="Barthel"/>
             <AttributeDefinition id="BCS2_RiskFactors" type="Link.EntityDefinition.BCS2_RiskFactors" description="Risk Factors"/>
@@ -39,6 +44,8 @@
             <AttributeDefinition id="BCS2_SF36" type="Link.EntityDefinition.BCS2_SF36" description="Barthel"/>
             <AttributeDefinition id="BCS2_DailyHomeVisit" type="Link.EntityDefinition.BCS2_DailyHomeVisit" description="Barthel"/>
         </EntityDefinition>
+
+        
 
         <EntityDefinition id="BCS2_Inclusion" description="Inclusion">
             <AttributeDefinition id="name" type="string" multiplicity="maximalOne" description="Nombre"/> 
@@ -75,8 +82,14 @@
 
 
 
-        <EntityDefinition id="BCS2_InitialSelectionOfProfessionals" description="Selección inicial de profesionales">
-            <!-- How is this done -->         
+        <EntityDefinition id="BCS2_SelectedProfessionals" description="Selección inicial de profesionales">
+            <!-- How is this done -->
+            <AttributeDefinition id="SelectOwnerAnesthesia" type="Link.Users(IdibapsAnesthesiologists)" multiplicity="maximalOne" description="Selecciona el profesional encargado para realizar el rol de anestesista:"/>
+            <AttributeDefinition id="SelectOwnerNurse" type="Link.Users(IdibapsNurses)" multiplicity="maximalOne" description="Selecciona el profesional encargado para realizar el rol de enfermero:"/>
+
+
+
+
         </EntityDefinition>
 
         <EntityDefinition id="BCS2_Charlson" description="Charlson">
