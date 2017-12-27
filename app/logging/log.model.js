@@ -73,7 +73,8 @@ const LogSchema = new mongoose.Schema({
   isSimulateUser: {type: Boolean, index: true}, 
   userId: {type: String, index: true},
   email: {type: String, index: true},
-  workspaceId: {type: String, index: true}
+  workspaceId: {type: String, index: true},
+  body: Mixed
 },{timestamps: true});
 
 LogSchema.statics.jwtUserLog = (req, userId, workspaceId)=>{
@@ -108,7 +109,7 @@ LogSchema.statics.log = (req, isSimulateUser, userId, email, workspaceId)=>{
   let isMobile = false;
   if (userAgent != null && /Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(userAgent))
     isMobile = true;
-  
+
   Log.create({
     application: application,
     ip: ip,
@@ -123,7 +124,8 @@ LogSchema.statics.log = (req, isSimulateUser, userId, email, workspaceId)=>{
     isSimulateUser: isSimulateUser,
     userId: userId,
     email: email,
-    workspaceId: workspaceId
+    workspaceId: workspaceId,
+    body: req.body
   });
 }
 
