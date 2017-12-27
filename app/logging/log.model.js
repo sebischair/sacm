@@ -68,7 +68,7 @@ const LogSchema = new mongoose.Schema({
   urlPattern: {type: String, index: true},
   resource: {type: String, index: true},
   body: {type: String, index: true},
-  isGzipEncoding: {type: String, index: true},  
+  isGzip: {type: String, index: true},  
   acceptLanguage: {type: String, index: true},
   isSimulateUser: {type: Boolean, index: true}, 
   userId: {type: String, index: true},
@@ -99,9 +99,9 @@ LogSchema.statics.log = (req, isSimulateUser, userId, email)=>{
 
   let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
-  let isGzipEncoding = false;
+  let isGzip = false;
   if(req.headers['accept-encoding'] != null && req.headers['accept-encoding'].indexOf('gzip') !== -1)
-    isGzipEncoding = true;
+  isGzip = true;
 
   let userAgent = req.headers['user-agent'];
   let isMobile = false;
@@ -117,7 +117,7 @@ LogSchema.statics.log = (req, isSimulateUser, userId, email)=>{
     url: req.url,
     urlPattern: extractUrlPattern(req.url),
     resource: extractResource(req.url),
-    isGzipEncoding: isGzipEncoding,
+    isGzip: isGzip,
     acceptLanguage: req.headers['accept-language'],
     isSimulateUser: isSimulateUser,
     userId: userId,
