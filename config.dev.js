@@ -8,7 +8,7 @@ if(process.env.LOGGING_ENABLED !== null)
         defaultPassword: process.env.SOCIOCORTEX_DEFAULT_PASSWORD || 'ottto',
     },
     logging:{
-        isEnabled: process.env.LOGGING_ENABLED || true,
+        isEnabled: isLoggingEnabled,
         mongoUrl: process.env.MONGO_URL || 'mongodb://localhost:27017/sacmlog'
     }
  };
