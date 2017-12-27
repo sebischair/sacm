@@ -74,6 +74,9 @@ const LogSchema = new mongoose.Schema({
   userId: {type: String, index: true},
   email: {type: String, index: true},
   workspaceId: {type: String, index: true},
+  statusCode: {type: Number, index: true},
+  uuid: {type: String, index: true},
+  duration: {type: Number, index: true},
   body: Mixed
 },{timestamps: true});
 
@@ -88,11 +91,7 @@ LogSchema.statics.simulateUserLog = (req, email)=>{
 LogSchema.statics.log = (req, isSimulateUser, userId, email, workspaceId)=>{
   if(!config.logging.isEnabled)
     return;
-  /*
-  console.log(req.rawHeaders)
-  console.log(req.query)
-  console.log(req.params)
-  */
+
   let application = applications.NA;
   if(req.headers['postman-token'] != null)
     application = applications.POSTMAN;
@@ -125,9 +124,19 @@ LogSchema.statics.log = (req, isSimulateUser, userId, email, workspaceId)=>{
     userId: userId,
     email: email,
     workspaceId: workspaceId,
-    body: req.body
+    body: req.body,
+    statusCode: 1,
+    uuid: req.uuid
   });
 }
+
+LogSchema.statics.setStatus = (uuid, status, duration)=>{
+  Log.update({uuid:uuid}, {$set: {uuid: null, statusCode:status, duration:duration}}, function (err){
+    if (err)
+      console.log(err);    
+  });
+}
+
 
 let Log = mongoose.model('Log', LogSchema);
 export default Log;

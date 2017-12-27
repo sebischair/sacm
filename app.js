@@ -14,6 +14,7 @@ import Promise from 'bluebird';
 import config from './config';
 import mongoose from 'mongoose';
 import Log from './app/logging/log.model';
+import uuid from 'uuid/v1';
 
 const secret = fs.readFileSync('public.key.pem')+'';
 
@@ -38,6 +39,20 @@ app.use(function(req, res, next) {
 });
 
 app.use(function(req, res, next) {
+
+  /** Inject UUID */
+  req.uuid = uuid();
+  req.start = new Date().getTime();
+
+  /** Inject logging responses after send */
+  var send = res.send;
+  res.send = function(body){
+    const duration = new Date().getTime()-req.start;
+    Log.setStatus(req.uuid, this.statusCode, duration);
+    send.call(this, body);
+  };
+
+  /** Encode XML bodies */
   if(req.is('application/json')){
     next();
   }else{
