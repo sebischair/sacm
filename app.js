@@ -86,8 +86,9 @@ app.use('/api/v1', (req, res, next)=>{
             console.log('err: '+err);
             res.status(403).send(err);
           }else{
-            req.jwt = 'conecarebearer '+token;           
-            Log.jwtUserLog(req, JSON.parse(decoded.user_name).uuid);
+            req.jwt = 'conecarebearer '+token;  
+            let un = JSON.parse(decoded.user_name);         
+            Log.jwtUserLog(req, un.uuid, un.tenantUuid);
             next();
           }
         });
