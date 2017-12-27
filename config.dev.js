@@ -1,6 +1,6 @@
  module.exports = {
     sociocortex : {
-        url: process.env.SOCIOCORTEX_URL || 'http://localhost:8083/api/v1!',
+        url: process.env.SOCIOCORTEX_URL || 'http://localhost:8083/api/v1',
         defaultPassword: process.env.SOCIOCORTEX_DEFAULT_PASSWORD || 'ottto',
     },
     logging:{

@@ -1,7 +1,7 @@
 module.exports = {
     sociocortex : {
         url: process.env.SOCIOCORTEX_URL || 'SocioCortex URL not set!',
-        defaultPassword: process.env.SOCIOCORTEX_DEFAULT_PW || 'ottto',
+        defaultPassword: process.env.SOCIOCORTEX_DEFAULT_PASSWORD || 'ottto',
     },
     logging:{
         isEnabled: process.env.LOGGING_ENABLED || true,

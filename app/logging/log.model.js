@@ -39,7 +39,6 @@ function allClients(){
 function extractUrlPattern(url){
   if(url == null)
     return null;
-  console.log(url.split('/'));
   url.split('/').forEach(urlSection=>{
     if(/\d/.test(urlSection) && /[A-Za-z]/.test(urlSection))
       url = url.replace(urlSection, ':id');
@@ -85,7 +84,6 @@ LogSchema.statics.simulateUserLog = (req, email)=>{
 }
 
 LogSchema.statics.log = (req, isSimulateUser, userId, email)=>{
-  console.log('logging'+config.logging.isEnabled)
   if(!config.logging.isEnabled)
     return;
   /*
