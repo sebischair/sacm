@@ -48,7 +48,10 @@ app.use(function(req, res, next) {
   var send = res.send;
   res.send = function(body){
     const duration = new Date().getTime()-req.start;
-    Log.setStatus(req.uuid, this.statusCode, duration);
+    let resBody = null;
+    if(this.statusCode != 200)
+      resBody = body;
+    Log.setStatus(req.uuid, this.statusCode, duration, resBody);
     send.call(this, body);
   };
 

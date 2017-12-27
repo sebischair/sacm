@@ -74,10 +74,11 @@ const LogSchema = new mongoose.Schema({
   userId: {type: String, index: true},
   email: {type: String, index: true},
   workspaceId: {type: String, index: true},
-  statusCode: {type: Number, index: true},
+  status: {type: Number, index: true},
   uuid: {type: String, index: true},
   duration: {type: Number, index: true},
-  body: Mixed
+  reqBody: Mixed,
+  resBody: Mixed
 },{timestamps: true});
 
 LogSchema.statics.jwtUserLog = (req, userId, workspaceId)=>{
@@ -124,14 +125,14 @@ LogSchema.statics.log = (req, isSimulateUser, userId, email, workspaceId)=>{
     userId: userId,
     email: email,
     workspaceId: workspaceId,
-    body: req.body,
-    statusCode: 1,
+    reqBody: req.body,
     uuid: req.uuid
   });
 }
 
-LogSchema.statics.setStatus = (uuid, status, duration)=>{
-  Log.update({uuid:uuid}, {$set: {uuid: null, statusCode:status, duration:duration}}, function (err){
+LogSchema.statics.setStatus = (uuid, status, duration, resBody)=>{
+  const data = {status:status, duration:duration, resBody:resBody};
+  Log.update({uuid:uuid, status:null}, {$set: data}, function (err){
     if (err)
       console.log(err);    
   });
