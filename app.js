@@ -66,7 +66,7 @@ app.use('/api/v1', (req, res, next)=>{
     req.jwt = http.generateJWT(req.headers.simulateuser, 'ottto');
     console.log('simulate user '+req.headers.simulateuser);
     console.log(req.jwt);    
-    Log.createLog(req);
+    Log.simulateUserLog(req, req.headers.simulateuser);
     next();
   }else{
     
@@ -85,7 +85,8 @@ app.use('/api/v1', (req, res, next)=>{
             console.log('err: '+err);
             res.status(403).send(err);
           }else{
-            req.jwt = 'conecarebearer '+token;
+            req.jwt = 'conecarebearer '+token;           
+            Log.jwtUserLog(req, JSON.parse(decoded.user_name).uuid);
             next();
           }
         });

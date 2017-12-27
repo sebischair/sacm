@@ -70,10 +70,20 @@ const LogSchema = new mongoose.Schema({
   body: {type: String, index: true},
   gzipEncoding: {type: String, index: true},  
   acceptLanguage: {type: String, index: true},
+  isSimulateUser: {type: Boolean, index: true}, 
+  userId: {type: String, index: true},
+  email: {type: String, index: true},
 },{timestamps: true});
 
+LogSchema.statics.jwtUserLog = (req, userId)=>{
+  Log.log(req, false, userId, null);
+}
 
-LogSchema.statics.createLog = (req)=>{
+LogSchema.statics.simulateUserLog = (req, email)=>{
+  Log.log(req, true, null, email);
+}
+
+LogSchema.statics.log = (req, isSimulateUser, userId, email)=>{
   /*
   console.log(req.rawHeaders)
   console.log(req.query)
@@ -106,7 +116,10 @@ LogSchema.statics.createLog = (req)=>{
     urlPattern: extractUrlPattern(req.url),
     resource: extractResource(req.url),
     gzipEncoding: gzipEncoding,
-    acceptLanguage: req.headers['accept-language']
+    acceptLanguage: req.headers['accept-language'],
+    isSimulateUser: isSimulateUser,
+    userId: userId,
+    email: email
   });
 }
 
