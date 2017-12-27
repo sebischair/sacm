@@ -46,7 +46,7 @@ function extractUrlPattern(url){
   return url;
 }
 
-const resources = new Set(['alerts', 'automatedtasks', 'cases', 'humantasks', 'logs', 'messages', 'processes', 'stages', 'summarysections', 'tasks', 'taskparams']);
+const resources = new Set(['workspaces', 'groups', 'users', 'entities', 'alerts', 'automatedtasks', 'cases', 'humantasks', 'logs', 'messages', 'processes', 'stages', 'summarysections', 'tasks', 'taskparams']);
 function extractResource(urlPattern){
   if(urlPattern == null)
     return;
@@ -127,3 +127,17 @@ LogSchema.statics.log = (req, isSimulateUser, userId, email)=>{
 
 let Log = mongoose.model('Log', LogSchema);
 export default Log;
+
+
+/** Mongo DB query for analytics 
+db.getCollection('logs').aggregate(
+   [
+      {
+        $group : {
+           _id : "$resource",
+           count: { $sum: 1 }
+        }
+      }
+   ])
+
+*/

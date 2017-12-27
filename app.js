@@ -19,7 +19,7 @@ const secret = fs.readFileSync('public.key.pem')+'';
 
 if(config.logging.isEnabled){
   mongoose.Promise = Promise;
-  mongoose.connect(config.logging.mongoUrl);
+  mongoose.connect(config.logging.mongoUrl, {useMongoClient: true});
   mongoose.connection.on('error', () => {
     throw new Error('unable to connect to SACM log database: '+config.logging.mongoUrl);
   });
