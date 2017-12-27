@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
-import Promise, { method } from 'bluebird';
+import Promise from 'bluebird';
+import config from './../../config';
 
 const ObjectId = mongoose.Schema.Types.ObjectId;
 const Mixed = mongoose.Schema.Types.Mixed;
@@ -68,7 +69,7 @@ const LogSchema = new mongoose.Schema({
   urlPattern: {type: String, index: true},
   resource: {type: String, index: true},
   body: {type: String, index: true},
-  gzipEncoding: {type: String, index: true},  
+  isGzipEncoding: {type: String, index: true},  
   acceptLanguage: {type: String, index: true},
   isSimulateUser: {type: Boolean, index: true}, 
   userId: {type: String, index: true},
@@ -84,6 +85,9 @@ LogSchema.statics.simulateUserLog = (req, email)=>{
 }
 
 LogSchema.statics.log = (req, isSimulateUser, userId, email)=>{
+  console.log('logging'+config.logging.isEnabled)
+  if(!config.logging.isEnabled)
+    return;
   /*
   console.log(req.rawHeaders)
   console.log(req.query)
@@ -97,9 +101,9 @@ LogSchema.statics.log = (req, isSimulateUser, userId, email)=>{
 
   let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
-  let gzipEncoding = false;
+  let isGzipEncoding = false;
   if(req.headers['accept-encoding'] != null && req.headers['accept-encoding'].indexOf('gzip') !== -1)
-    gzipEncoding = true;
+    isGzipEncoding = true;
 
   let userAgent = req.headers['user-agent'];
   let isMobile = false;
@@ -115,7 +119,7 @@ LogSchema.statics.log = (req, isSimulateUser, userId, email)=>{
     url: req.url,
     urlPattern: extractUrlPattern(req.url),
     resource: extractResource(req.url),
-    gzipEncoding: gzipEncoding,
+    isGzipEncoding: isGzipEncoding,
     acceptLanguage: req.headers['accept-language'],
     isSimulateUser: isSimulateUser,
     userId: userId,

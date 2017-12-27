@@ -11,18 +11,19 @@ import http from './app/models/http';
 import jwt from 'jsonwebtoken';
 import fs from 'fs';
 import Promise from 'bluebird'; 
+import config from './config';
 import mongoose from 'mongoose';
 import Log from './app/logging/log.model';
 
 const secret = fs.readFileSync('public.key.pem')+'';
 
-
-mongoose.Promise = Promise;
-mongoose.connect(/*config.mongoConnectionURL*/ 'mongodb://localhost:27017/sacmlog', { server: {socketOptions:{keepAlive:1}}});
-mongoose.connection.on('error', () => {
-  throw new Error(`unable to connect to database: ${config.mongoConnectionURL}`);
-});
-
+if(config.logging.isEnabled){
+  mongoose.Promise = Promise;
+  mongoose.connect(config.logging.mongoUrl);
+  mongoose.connection.on('error', () => {
+    throw new Error('unable to connect to SACM log database: '+config.logging.mongoUrl);
+  });
+}
 
 var app = express();
 
@@ -63,7 +64,7 @@ app.use('/api/v1', (req, res, next)=>{
 
   /** Testing Simulate User Authorization */
   if(req.headers.simulateuser != null && req.headers.authorization == null){
-    req.jwt = http.generateJWT(req.headers.simulateuser, 'ottto');
+    req.jwt = http.generateJWT(req.headers.simulateuser, config.sociocortex.defaultPassword);
     console.log('simulate user '+req.headers.simulateuser);
     console.log(req.jwt);    
     Log.simulateUserLog(req, req.headers.simulateuser);

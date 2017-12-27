@@ -23,6 +23,7 @@ import AutomatedTask from '../models/case/model.automatedtask';
 import Process from '../models/case/model.process';
 import Alert from '../models/case/model.alert';
 import Settings from '../models/settings/model.settings';
+import config from '../../config';
 const xml2jspromise = Promise.promisifyAll(xml2js);
 const fs = Promise.promisifyAll(require("fs"));
 
@@ -389,8 +390,8 @@ module.exports = class Importer {
         const data = {
           name: u.$.name,
           email: u.$.email,
-          password: 'ottto',
-          passwordAgain: 'ottto',
+          password: config.sociocortex.defaultPassword,
+          passwordAgain: config.sociocortex.defaultPassword,
           attributes: []
         }
         if(u.$.staticId != null)
