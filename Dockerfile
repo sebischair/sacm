@@ -12,9 +12,9 @@ RUN npm install apidoc -g
 # Bundle app source
 COPY . /usr/src/app
 
-RUN rm /usr/src/app/config.js
-RUN cp /usr/src/app/config.production.js /usr/src/app/config.js
-RUN rm /usr/src/app/config.production.js
+#RUN rm /usr/src/app/config.js
+#RUN cp /usr/src/app/config.production.js /usr/src/app/config.js
+#RUN rm /usr/src/app/config.production.js
 
 EXPOSE 3000
 
