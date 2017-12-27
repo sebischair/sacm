@@ -1,6 +1,6 @@
 let isLoggingEnabled = true;
-if(process.env.LOGGING_ENABLED !== null)
-    isLoggingEnabled = process.env.LOGGING_ENABLED === 'true';
+if(process.env.LOGGING_ENABLED)
+    isLoggingEnabled = process.env.LOGGING_ENABLED == 'true';
 
 module.exports = {
     sociocortex : {

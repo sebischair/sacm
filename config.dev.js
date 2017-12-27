@@ -1,7 +1,7 @@
-let isLoggingEnabled = false;
-if(process.env.LOGGING_ENABLED !== null)
-    isLoggingEnabled = process.env.LOGGING_ENABLED === 'true';
-
+let isLoggingEnabled = true;
+if(process.env.LOGGING_ENABLED)
+    isLoggingEnabled = process.env.LOGGING_ENABLED == 'true';
+    
  module.exports = {
     sociocortex : {
         url: process.env.SOCIOCORTEX_URL || 'http://localhost:8083/api/v1',
