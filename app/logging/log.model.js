@@ -40,7 +40,7 @@ function extractUrlPattern(url){
   if(url == null)
     return null;
   url.split('/').forEach(urlSection=>{
-    if(/\d/.test(urlSection) && /[A-Za-z]/.test(urlSection))
+    if((/\d/.test(urlSection) && /[A-Za-z]/.test(urlSection)) || 'null'==urlSection)
       url = url.replace(urlSection, ':id');
   })
   return url;
