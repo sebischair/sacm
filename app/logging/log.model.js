@@ -22,16 +22,16 @@ function allMethods(){
   return arr;
 }
 
-const clients = {
+const applications = {
   SACMFRONTEND: 'SACM.FRONTEND',
   POSTMAN: 'POSTMAN',
   NA: 'NA'
 }
 
-function allClients(){
+function allApplications(){
   const arr = [];
-  Object.keys(clients).forEach(k => {
-    arr.push(clients[k]);
+  Object.keys(applications).forEach(k => {
+    arr.push(applications[k]);
   });
   return arr;
 }
@@ -46,7 +46,7 @@ function extractUrlPattern(url){
   return url;
 }
 
-const resources = new Set(['workspaces', 'groups', 'users', 'entities', 'alerts', 'automatedtasks', 'cases', 'humantasks', 'logs', 'messages', 'processes', 'stages', 'summarysections', 'tasks', 'taskparams']);
+const resources = new Set(['import', 'workspaces', 'groups', 'users', 'entities', 'alerts', 'automatedtasks', 'cases', 'humantasks', 'logs', 'messages', 'processes', 'stages', 'summarysections', 'tasks', 'taskparams']);
 function extractResource(urlPattern){
   if(urlPattern == null)
     return;
@@ -59,7 +59,7 @@ function extractResource(urlPattern){
 }
 
 const LogSchema = new mongoose.Schema({  
-  client: {type: String, enum: allClients(), index: true},
+  application: {type: String, enum: allApplications(), index: true},
   ip: {type: String, index: true},
   userAgent: {type: String, index: true},
   isMobile: {type: Boolean, index: true},
@@ -92,11 +92,11 @@ LogSchema.statics.log = (req, isSimulateUser, userId, email, workspaceId)=>{
   console.log(req.query)
   console.log(req.params)
   */
-  let client = clients.NA;
+  let application = applications.NA;
   if(req.headers['postman-token'] != null)
-    client = clients.POSTMAN;
-  if(req.headers['client'] == 'sacm.fronted')
-    client = clients.SACMFRONTEND;
+    application = applications.POSTMAN;
+  if(req.headers['application'] == applications.SACMFRONTEND.toLowerCase())
+    application = applications.SACMFRONTEND;
 
   let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
@@ -110,7 +110,7 @@ LogSchema.statics.log = (req, isSimulateUser, userId, email, workspaceId)=>{
     isMobile = true;
   
   Log.create({
-    client: client,
+    application: application,
     ip: ip,
     userAgent: userAgent,
     isMobile: isMobile,
