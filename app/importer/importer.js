@@ -18,11 +18,13 @@ import TaskParamDefinition from '../models/casedefinition/model.taskparamdefinit
 import HttpHookDefinition from '../models/casedefinition/model.httphookdefinition';
 import SentryDefinition from '../models/casedefinition/model.sentrydefinition';
 import Case from '../models/case/model.case';
+import Stage from '../models/case/model.stage';
 import HumanTask from '../models/case/model.humantask';
 import AutomatedTask from '../models/case/model.automatedtask';
 import Process from '../models/case/model.process';
 import Alert from '../models/case/model.alert';
 import Settings from '../models/settings/model.settings';
+import { isAbsolute } from 'path';
 const xml2jspromise = Promise.promisifyAll(xml2js);
 const fs = Promise.promisifyAll(require("fs"));
 
@@ -1038,7 +1040,10 @@ module.exports = class Importer {
         return Promise.resolve('No Action Element Defined!');
       return Promise.each(actions, action=>{
         
-        if(action.$.id == "CompleteHumanTask"){
+        if(action.$.id == "ActivateStage"){
+          return this.activateStageWithName(caseId, action.$.processId);
+
+        }else if(action.$.id == "CompleteHumanTask"){
           const params = this.getParms(action);
           return this.completeHumanTaskWithName(caseId, action.$.processId, params)
         
@@ -1090,6 +1095,25 @@ module.exports = class Importer {
           }
           return AutomatedTask.complete(this.executionJwt, task);
         });        
+    }
+
+    activateStageWithName(caseId, stageName){
+      return Stage.findAllByCaseId(this.executionJwt, caseId)
+      .then(allStages=>{
+        let foundStage = null;
+        allStages.forEach(repeatedStages=>{
+          repeatedStages.forEach(repeatedStage=>{
+            if(!foundStage && repeatedStage.name == stageName && repeatedStage.possibleActions.includes('ACTIVATE')){
+              foundStage = repeatedStage;              
+            }
+          });
+        });
+        if(foundStage){
+          return Stage.activate(this.executionJwt, foundStage.id);
+        }else{
+          return Promise.reject('Could not activate Stage "'+stageName+'"!')
+        }       
+      });
     }
 
     /**
