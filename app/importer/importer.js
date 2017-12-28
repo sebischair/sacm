@@ -1041,7 +1041,7 @@ module.exports = class Importer {
       return Promise.each(actions, action=>{
         let p = Promise.resolve();
         if(action.$.cmdConfirm)
-          p = prompt('Press enter to continue: ')
+          p = prompt('Press enter to continue with action "'+action.$.id+'('+action.$.processId+')": ')
         return p.then(()=>{
           if(action.$.id == "ActivateStage"){
             return this.activateStageWithName(caseId, action.$.processId);
