@@ -24,7 +24,6 @@ import AutomatedTask from '../models/case/model.automatedtask';
 import Process from '../models/case/model.process';
 import Alert from '../models/case/model.alert';
 import Settings from '../models/settings/model.settings';
-import { isAbsolute } from 'path';
 const xml2jspromise = Promise.promisifyAll(xml2js);
 const fs = Promise.promisifyAll(require("fs"));
 
