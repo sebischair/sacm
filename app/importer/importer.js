@@ -2,6 +2,7 @@
 import Promise from 'bluebird';
 import request from 'request-promise';
 import xml2js from 'xml2js';
+import prompt from 'prompt-promise';
 import Workspace from '../models/workspace/model.workspace';
 import UserDefinition from '../models/group/model.userdefinition';
 import User from '../models/group/model.user';
@@ -1038,24 +1039,28 @@ module.exports = class Importer {
       if(actions == null)
         return Promise.resolve('No Action Element Defined!');
       return Promise.each(actions, action=>{
-        
-        if(action.$.id == "ActivateStage"){
-          return this.activateStageWithName(caseId, action.$.processId);
+        let p = Promise.resolve();
+        if(action.$.cmdConfirm)
+          p = prompt('Press enter to continue: ')
+        return p.then(()=>{
+          if(action.$.id == "ActivateStage"){
+            return this.activateStageWithName(caseId, action.$.processId);
 
-        }else if(action.$.id == "CompleteHumanTask"){
-          const params = this.getParms(action);
-          return this.completeHumanTaskWithName(caseId, action.$.processId, params)
-        
-        }else if(action.$.id == "CompleteAutomatedTask"){
-          const params = this.getParms(action);
-          return this.completeAutomatedTaskWithName(caseId, action.$.processId, params)
+          }else if(action.$.id == "CompleteHumanTask"){
+            const params = this.getParms(action);
+            return this.completeHumanTaskWithName(caseId, action.$.processId, params)
+          
+          }else if(action.$.id == "CompleteAutomatedTask"){
+            const params = this.getParms(action);
+            return this.completeAutomatedTaskWithName(caseId, action.$.processId, params)
 
-        }else if(action.$.id == "CreateAlert"){
-          return this.createAlert(caseId, action.$.processId, action)        
+          }else if(action.$.id == "CreateAlert"){
+            return this.createAlert(caseId, action.$.processId, action)        
 
-        }else{
-          return Promise.resolve('Action "'+action.$.id+'" not defined!');
-        }
+          }else{
+            return Promise.resolve('Action "'+action.$.id+'" not defined!');
+          }
+        })
       })
       .then(()=>{
         return Case.findTreeById(this.executionJwt, caseId);
