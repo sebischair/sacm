@@ -24,6 +24,8 @@ function allMethods(){
 
 const applications = {
   SACMFRONTEND: 'SACM.FRONTEND',
+  UIM: 'UIM',
+  SMS: 'SMS',
   POSTMAN: 'POSTMAN',
   NA: 'NA'
 }
