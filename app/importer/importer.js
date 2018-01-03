@@ -1040,7 +1040,7 @@ module.exports = class Importer {
         return Promise.resolve('No Action Element Defined!');
       return Promise.each(actions, action=>{
         let p = Promise.resolve();
-        if(action.$.cmdConfirm)
+        if(action.$.breakpoint)
           p = prompt('Press enter to continue with action "'+action.$.id+'('+action.$.processId+')": ')
         return p.then(()=>{
           if(action.$.id == "ActivateStage"){
