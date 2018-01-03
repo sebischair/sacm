@@ -1038,6 +1038,11 @@ module.exports = class Importer {
       const actions = execution[0].Action;
       if(actions == null)
         return Promise.resolve('No Action Element Defined!');
+      //console.log(JSON.stringify(actions,null,2))
+      console.log('Execute following actions: ')
+      actions.forEach(action=>{
+        console.log(action.$.id+'('+action.$.processId+')');
+      });
       return Promise.each(actions, action=>{
         let p = Promise.resolve();
         if(action.$.breakpoint)
