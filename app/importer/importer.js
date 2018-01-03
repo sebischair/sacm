@@ -1128,7 +1128,7 @@ module.exports = class Importer {
     completeHumanTaskWithName(caseId, taskName, paramsMap){     
        return HumanTask.findAllByCaseId(this.executionJwt, caseId)
         .then(humanTasks=>{          
-          const ht = this.findProcessWithName(humanTasks, taskName);
+          const ht = this.findActiveProcessWithName(humanTasks, taskName);
           return HumanTask.findById(this.executionJwt, ht.id);
         })        
         .then(humanTask=>{
@@ -1139,6 +1139,14 @@ module.exports = class Importer {
           }
           return HumanTask.complete(this.executionJwt, humanTask);
         });        
+    }
+
+    findActiveProcessWithName(nestedProcesses, searchedName){
+      for(let process of nestedProcesses)     
+        for(let instance of process)
+          if(instance.name == searchedName && instance.state == "ACTIVE")
+            return instance;
+      return null;
     }
 
     findProcessWithName(nestedProcesses, searchedName){
