@@ -1088,7 +1088,7 @@ module.exports = class Importer {
     completeAutomatedTaskWithName(caseId, taskName, paramsMap){     
        return AutomatedTask.findAllByCaseId(this.executionJwt, caseId)
         .then(tasks=>{          
-          const t = this.findProcessWithName(tasks, taskName);
+          const t = this.findActiveProcessWithName(tasks, taskName);
           return AutomatedTask.findById(this.executionJwt, t.id);
         })        
         .then(task=>{
