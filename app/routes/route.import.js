@@ -121,7 +121,7 @@ router.post('/casedefinition', (req, res, next)=>{
       res.status(200).send(result);
     })
     .catch(err=>{
-      res.status(500).send(err.toString())
+      res.status(500).send(err)
     });
   
 
