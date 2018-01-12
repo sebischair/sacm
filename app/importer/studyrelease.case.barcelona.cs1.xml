@@ -38,6 +38,8 @@
             <AttributeDefinition id="BCS1_MedicationAdherences" type="Link.EntityDefinition.BCS1_MedicationAdherences" description="Barthel"/>
             <AttributeDefinition id="BCS1_SF36" type="Link.EntityDefinition.BCS1_SF36" description="Barthel"/>
             <AttributeDefinition id="BCS1_DailyHomeVisit" type="Link.EntityDefinition.BCS1_DailyHomeVisit" description="Barthel"/>
+            <AttributeDefinition id="BCS1_RemotePatientSelfMonitoring" type="Link.EntityDefinition.BCS1_RemotePatientSelfMonitoring" description="Remote Patient Self-monitoring"/>
+            <AttributeDefinition id="BCS1_ManagementOfCallCenterEvents" type="Link.EntityDefinition.BCS1_ManagementOfCallCenterEvents" description="Management of call center events"/>
         </EntityDefinition>
 
         <EntityDefinition id="BCS1_Inclusion" description="Inclusion">
@@ -514,6 +516,20 @@
             <AttributeDefinition id="dhv14" type="string" multiplicity="maximalOne" description="revisión del plan de tratamiento, incluidas curaciones y tratamiento intravenoso"/>
         </EntityDefinition>
 
+        <EntityDefinition id="BCS1_RemotePatientSelfMonitoring" description="Remote Patient Self-monitoring">
+            <AttributeDefinition id="pulse_oximeter" type="number" multiplicity="maximalOne" description="oxímetro de pulso"/>
+            <AttributeDefinition id="spirometer" type="number" multiplicity="maximalOne" description="espirómetro"/>
+            <AttributeDefinition id="scale" type="number" multiplicity="maximalOne" description="escala"/>
+            <AttributeDefinition id="glucometer" type="number" multiplicity="maximalOne" description="glucómetro"/>
+        </EntityDefinition>
+
+        <EntityDefinition id="BCS1_ManagementOfCallCenterEvents" description="Management of call center events">
+            <AttributeDefinition id="health_issues" type="string" multiplicity="maximalOne" description="cuestiones relacionadas al estado de salud"/>
+            <AttributeDefinition id="administrative_problems" type="string" multiplicity="maximalOne" description="problemas administrativos"/>
+            <AttributeDefinition id="social_support_requests" type="string" multiplicity="maximalOne" description="solicitudes de apoyo social"/>
+        </EntityDefinition>
+
+
         <!-- Case Definition -->
         <CaseDefinition id="BCS1_Barcelona" description="CS1 Barcelona" ownerPath="BCS1_Owner" clientPath="BCS1_Patient" entityDefinitionId="BCS1_CaseData">
 
@@ -675,7 +691,25 @@
                     </SentryDefinition>
                     <TaskParamDefinition path="BCS1_DailyHomeVisit.dhv11" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
+
+
+	            <HumanTaskDefinition id="BCS1_RemotePatientSelfMonitoring" description="Remote Patient Self-monitoring" isMandatory="true" isRepeatable="true">  
+	                <TaskParamDefinition path="BCS1_RemotePatientSelfMonitoring.pulse_oximeter" isReadOnly="false" isMandatory="true"/>
+	                <TaskParamDefinition path="BCS1_RemotePatientSelfMonitoring.spirometer" isReadOnly="false" isMandatory="true"/>
+	                <TaskParamDefinition path="BCS1_RemotePatientSelfMonitoring.scale" isReadOnly="false" isMandatory="true"/>
+	                <TaskParamDefinition path="BCS1_RemotePatientSelfMonitoring.glucometer" isReadOnly="false" isMandatory="true"/>
+	            </HumanTaskDefinition>
+
+	            <HumanTaskDefinition id="BCS1_ManagementOfCallCenterEvents" description="Management of call center events" isMandatory="true" isRepeatable="true">  
+	                <TaskParamDefinition path="BCS1_ManagementOfCallCenterEvents.health_issues" isReadOnly="false" isMandatory="true"/>
+	                <TaskParamDefinition path="BCS1_ManagementOfCallCenterEvents.administrative_problems" isReadOnly="false" isMandatory="true"/>
+	                <TaskParamDefinition path="BCS1_ManagementOfCallCenterEvents.social_support_requests" isReadOnly="false" isMandatory="true"/>
+	            </HumanTaskDefinition>
+
             </StageDefinition>
+
+
+
             <StageDefinition id="BCS1_Discharge" description="Discharge" isMandatory="true" isRepeatable="true">  
                 <SentryDefinition>
                     <precondition processDefinitionId="BCS1_WorkplanDefinition"/>
