@@ -66,8 +66,6 @@
 			<AttributeDefinition id="LCS1_SelfCareAutoTestHF" type="Link.EntityDefinition.LCS1_SelfCareAutoTestHF" description="Capacitat d'autocura - IC"/> 
             <AttributeDefinition id="LCS1_VitalSignsMonitoring" type="Link.EntityDefinition.LCS1_VitalSignsMonitoring" description="Vital Signs Monitoring"/> 
             <AttributeDefinition id="LCS1_AutocheckHealthStatusPrescription" type="Link.EntityDefinition.LCS1_AutocheckHealthStatusPrescription" description="Autocheck Health Status Prescription"/> 
-            <AttributeDefinition id="LCS1_Education" type="Link.EntityDefinition.LCS1_Education" description="Pla de formació al pacient i cuidador"/> 
-            <AttributeDefinition id="LCS1_SocialIntervention" type="Link.EntityDefinition.LCS1_SocialIntervention" description="Intervencions socials"/> 
             <AttributeDefinition id="LCS1_AutocheckHealthStatus" type="Link.EntityDefinition.LCS1_AutocheckHealthStatus" description="Autocheck Health Status"/> 
             <AttributeDefinition id="LCS1_EducationExec" type="Link.EntityDefinition.LCS1_EducationExec" description="Pla de formació al pacient i cuidador - Execució"/> 
             <AttributeDefinition id="LCS1_Discharge" type="Link.EntityDefinition.LCS1_Discharge" description="Informe d'alta del procés"/> 
@@ -76,7 +74,10 @@
 			
 			<!-- WORKSPACE: CaseEvaluation -->				
 			
-			<!-- WORKSPACE: WorkplanDefinition -->		
+			<!-- WORKSPACE: WorkplanDefinition -->					
+			<AttributeDefinition id="LCS1_SocialIntervention" type="Link.EntityDefinition.LCS1_SocialIntervention"/> 
+            <AttributeDefinition id="LCS1_Education" type="Link.EntityDefinition.LCS1_Education"/> 
+			
 			<!-- <AttributeDefinition id="LCS1_PatientMonitoring" type="Link.EntityDefinition.LCS1_PatientMonitoring" description="Monitorització del pacient"/> -->
 			<AttributeDefinition id="LCS1_PatientMonitoringWeight" type="Link.EntityDefinition.LCS1_PatientMonitoringWeight"/>  <!-- description="Monitorització del pes – Prescripció" -->			
 			<AttributeDefinition id="LCS1_PatientMonitoringDiastolicBloodPressure" type="Link.EntityDefinition.LCS1_PatientMonitoringDiastolicBloodPressure"/> 			
@@ -1086,7 +1087,7 @@
         </EntityDefinition>
 		-->		
 		
-	    <EntityDefinition id="LCS1_Education" description="Pla de formació al pacient i cuidador"> 
+	    <EntityDefinition id="LCS1_Education"> 
             <AttributeDefinition id="educaDef1" type="enumeration" multiplicity="maximalOne" description="És necessari educar al pacient en el curs de la Hospitalització?"> 
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
@@ -1774,6 +1775,16 @@
 		</HumanTaskDefinition>
 		
 		<HumanTaskDefinition id="LCS1_AgreementClinician" description="Acord del pla de treball - Metge" ownerPath="LCS1_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_Agreement" entityAttachPath="LCS1_Agreement">
+        <SentryDefinition>
+            <precondition processDefinitionId="LCS1_SocialIntervention"/>
+			<precondition processDefinitionId="LCS1_Education"/>						
+			<precondition processDefinitionId="LCS1_PatientMonitoringWeightPrescription"/>			
+			<precondition processDefinitionId="LCS1_PatientMonitoringDiastolicBloodPressurePrescription"/>			
+			<precondition processDefinitionId="LCS1_PatientMonitoringSystolicBloodPressurePrescription"/>			
+			<precondition processDefinitionId="LCS1_PatientMonitoringP02Prescription"/>						
+			<precondition processDefinitionId="LCS1_PatientMonitoringSleepPrescription"/>			
+			<precondition processDefinitionId="LCS1_PhysicalActivityPrescription"/>						
+        </SentryDefinition>		
 			<TaskParamDefinition path="LCS1_Agreement.wp_agreement1" isReadOnly="false" isMandatory="false"/>
 			<TaskParamDefinition path="LCS1_Agreement.wp_agreement2" isReadOnly="false" isMandatory="false"/>
 			<TaskParamDefinition path="LCS1_Agreement.wp_agreement3" isReadOnly="false" isMandatory="false"/>
@@ -1782,6 +1793,16 @@
 		</HumanTaskDefinition>
 		
 		<HumanTaskDefinition id="LCS1_AgreementCaseManager" description="Acord del pla de treball - Gestor de casos" ownerPath="LCS1_CaseManager" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_Agreement" entityAttachPath="LCS1_Agreement">
+        <SentryDefinition>
+            <precondition processDefinitionId="LCS1_SocialIntervention"/>
+			<precondition processDefinitionId="LCS1_Education"/>						
+			<precondition processDefinitionId="LCS1_PatientMonitoringWeightPrescription"/>			
+			<precondition processDefinitionId="LCS1_PatientMonitoringDiastolicBloodPressurePrescription"/>			
+			<precondition processDefinitionId="LCS1_PatientMonitoringSystolicBloodPressurePrescription"/>			
+			<precondition processDefinitionId="LCS1_PatientMonitoringP02Prescription"/>						
+			<precondition processDefinitionId="LCS1_PatientMonitoringSleepPrescription"/>			
+			<precondition processDefinitionId="LCS1_PhysicalActivityPrescription"/>						
+        </SentryDefinition>		
 			<TaskParamDefinition path="LCS1_Agreement.wp_agreement1" isReadOnly="false" isMandatory="false"/>
 			<TaskParamDefinition path="LCS1_Agreement.wp_agreement2" isReadOnly="false" isMandatory="false"/>
 			<TaskParamDefinition path="LCS1_Agreement.wp_agreement3" isReadOnly="false" isMandatory="false"/>
@@ -1790,6 +1811,16 @@
 		</HumanTaskDefinition>
 
 		<HumanTaskDefinition id="LCS1_AgreementNurse" description="Acord del pla de treball - Infermera" ownerPath="LCS1_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_Agreement" entityAttachPath="LCS1_Agreement">
+        <SentryDefinition>
+            <precondition processDefinitionId="LCS1_SocialIntervention"/>
+			<precondition processDefinitionId="LCS1_Education"/>						
+			<precondition processDefinitionId="LCS1_PatientMonitoringWeightPrescription"/>			
+			<precondition processDefinitionId="LCS1_PatientMonitoringDiastolicBloodPressurePrescription"/>			
+			<precondition processDefinitionId="LCS1_PatientMonitoringSystolicBloodPressurePrescription"/>			
+			<precondition processDefinitionId="LCS1_PatientMonitoringP02Prescription"/>						
+			<precondition processDefinitionId="LCS1_PatientMonitoringSleepPrescription"/>			
+			<precondition processDefinitionId="LCS1_PhysicalActivityPrescription"/>						
+        </SentryDefinition>		
 			<TaskParamDefinition path="LCS1_Agreement.wp_agreement1" isReadOnly="false" isMandatory="false"/>
 			<TaskParamDefinition path="LCS1_Agreement.wp_agreement2" isReadOnly="false" isMandatory="false"/>
 			<TaskParamDefinition path="LCS1_Agreement.wp_agreement3" isReadOnly="false" isMandatory="false"/>
@@ -1798,6 +1829,16 @@
 		</HumanTaskDefinition>
 
 		<HumanTaskDefinition id="LCS1_AgreementSocialCareer" description="Acord del pla de treball - Treballador social" ownerPath="LCS1_SocialCareer" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_Agreement" entityAttachPath="LCS1_Agreement">
+        <SentryDefinition>
+            <precondition processDefinitionId="LCS1_SocialIntervention"/>
+			<precondition processDefinitionId="LCS1_Education"/>						
+			<precondition processDefinitionId="LCS1_PatientMonitoringWeightPrescription"/>			
+			<precondition processDefinitionId="LCS1_PatientMonitoringDiastolicBloodPressurePrescription"/>			
+			<precondition processDefinitionId="LCS1_PatientMonitoringSystolicBloodPressurePrescription"/>			
+			<precondition processDefinitionId="LCS1_PatientMonitoringP02Prescription"/>						
+			<precondition processDefinitionId="LCS1_PatientMonitoringSleepPrescription"/>			
+			<precondition processDefinitionId="LCS1_PhysicalActivityPrescription"/>						
+        </SentryDefinition>				
 			<TaskParamDefinition path="LCS1_Agreement.wp_agreement1" isReadOnly="false" isMandatory="false"/>
 			<TaskParamDefinition path="LCS1_Agreement.wp_agreement2" isReadOnly="false" isMandatory="false"/>
 			<TaskParamDefinition path="LCS1_Agreement.wp_agreement3" isReadOnly="false" isMandatory="false"/>
@@ -1806,8 +1847,7 @@
 		</HumanTaskDefinition>		
 		
 
-		<!-- WP Execution -->
-		
+		<!-- WP Execution -->		
 		<AutomatedTaskDefinition id="LCS1_PatientMonitoringExecutionWeight" description="Monitorització del pes – Execució " ownerPath="LCS1_Owner" isMandatory="true" isRepeatable="false">
 			<SentryDefinition>
 				<precondition processDefinitionId="LCS1_PatientMonitoringWeightPrescription"/>
