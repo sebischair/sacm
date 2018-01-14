@@ -194,10 +194,14 @@ module.exports = class Importer {
       .then(exist =>{
         if(!exist)
           throw new Error('File does not exist' + filePath);
-        else {         
+        else {  
           return xml2jspromise.parseStringAsync(fs.readFileSync(filePath).toString(), {explicitChildren:true, preserveChildrenOrder:true});
         }
-      });
+      })
+      .catch(err=>{
+        console.log(err);
+        return Promise.reject(err);
+      })
     }
 
     parseXMLString(xmlString){
