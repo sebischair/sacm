@@ -1,4 +1,4 @@
-let isLoggingEnabled = true;
+let isLoggingEnabled = false;
 if(process.env.LOGGING_ENABLED)
     isLoggingEnabled = process.env.LOGGING_ENABLED == 'true';
     
