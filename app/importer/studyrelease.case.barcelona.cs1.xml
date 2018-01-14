@@ -38,8 +38,18 @@
             <AttributeDefinition id="BCS1_MedicationAdherences" type="Link.EntityDefinition.BCS1_MedicationAdherences" description="Barthel"/>
             <AttributeDefinition id="BCS1_SF36" type="Link.EntityDefinition.BCS1_SF36" description="Barthel"/>
             <AttributeDefinition id="BCS1_DailyHomeVisit" type="Link.EntityDefinition.BCS1_DailyHomeVisit" description="Barthel"/>
+            <AttributeDefinition id="BCS1_DailyHomeVisit_AterialBlodGases" type="Link.EntityDefinition.BCS1_DailyHomeVisit_AterialBlodGases" description="Daily Home Visit"/>
+
+            <AttributeDefinition id="BCS1_DailyHomeVisit_BloodAnalytics" type="Link.EntityDefinition.BCS1_DailyHomeVisit_BloodAnalytics" description="Daily Home Visit"/>
+            <AttributeDefinition id="BCS1_DailyHomeVisit_SputumCulture" type="Link.EntityDefinition.BCS1_DailyHomeVisit_SputumCulture" description="Daily Home Visit"/>
+            <AttributeDefinition id="BCS1_DailyHomeVisit_ForcedSpirometry" type="Link.EntityDefinition.BCS1_DailyHomeVisit_ForcedSpirometry" description="Daily Home Visit"/>
+            <AttributeDefinition id="BCS1_DailyHomeVisit_PhysiciansHomeVisit" type="Link.EntityDefinition.BCS1_DailyHomeVisit_PhysiciansHomeVisit" description="Daily Home Visit"/>
+
+
+
             <AttributeDefinition id="BCS1_RemotePatientSelfMonitoring" type="Link.EntityDefinition.BCS1_RemotePatientSelfMonitoring" description="Remote Patient Self-monitoring"/>
             <AttributeDefinition id="BCS1_ManagementOfCallCenterEvents" type="Link.EntityDefinition.BCS1_ManagementOfCallCenterEvents" description="Management of call center events"/>
+            <AttributeDefinition id="BCS1_Discharge" type="Link.EntityDefinition.BCS1_Discharge" description="Discharge"/>
         </EntityDefinition>
 
         <EntityDefinition id="BCS1_Inclusion" description="Inclusion">
@@ -516,6 +526,29 @@
             <AttributeDefinition id="dhv14" type="string" multiplicity="maximalOne" description="revisión del plan de tratamiento, incluidas curaciones y tratamiento intravenoso"/>
         </EntityDefinition>
 
+        <EntityDefinition id="BCS1_DailyHomeVisit_AterialBlodGases" description="Aterial Blood Gases">
+            <AttributeDefinition id="abg" type="string" multiplicity="maximalOne" description="assessment of environmental conditions"/>
+        </EntityDefinition>
+
+        <EntityDefinition id="BCS1_DailyHomeVisit_BloodAnalytics" description="Blood Analytics">
+            <AttributeDefinition id="ba" type="string" multiplicity="maximalOne" description="assessment of environmental conditions"/>
+        </EntityDefinition>
+
+        <EntityDefinition id="BCS1_DailyHomeVisit_SputumCulture" description="Spectrum Culture">
+            <AttributeDefinition id="sc" type="string" multiplicity="maximalOne" description="assessment of environmental conditions"/>
+        </EntityDefinition>
+
+        <EntityDefinition id="BCS1_DailyHomeVisit_ForcedSpirometry" description="Forced Spirometry">
+            <AttributeDefinition id="fs" type="string" multiplicity="maximalOne" description="assessment of environmental conditions"/>
+        </EntityDefinition>
+
+        <EntityDefinition id="BCS1_DailyHomeVisit_PhysiciansHomeVisit" description="Physicians Home Visit">
+            <AttributeDefinition id="phv" type="string" multiplicity="maximalOne" description="assessment of environmental conditions"/>
+        </EntityDefinition>
+
+        
+
+
         <EntityDefinition id="BCS1_RemotePatientSelfMonitoring" description="Remote Patient Self-monitoring">
             <AttributeDefinition id="pulse_oximeter" type="number" multiplicity="maximalOne" description="oxímetro de pulso"/>
             <AttributeDefinition id="spirometer" type="number" multiplicity="maximalOne" description="espirómetro"/>
@@ -528,6 +561,12 @@
             <AttributeDefinition id="administrative_problems" type="string" multiplicity="maximalOne" description="problemas administrativos"/>
             <AttributeDefinition id="social_support_requests" type="string" multiplicity="maximalOne" description="solicitudes de apoyo social"/>
         </EntityDefinition>
+
+        <EntityDefinition id="BCS1_Discharge" description="Discharge Patient">
+            <AttributeDefinition id="comment" type="string" multiplicity="maximalOne" description="comment"/>
+        </EntityDefinition>
+
+        
 
 
         <!-- Case Definition -->
@@ -661,46 +700,46 @@
                     <TaskParamDefinition path="BCS1_DailyHomeVisit.dhv5" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS1_DailyHomeVisit.dhv6" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
-                <HumanTaskDefinition id="BCS1_DailyHomeVisit_AterialBlodGases" description="Aterial Blod Gases" ownerPath="BCS1_Owner" isMandatory="false" isRepeatable="false" isManualActivation="true">
+                <HumanTaskDefinition id="BCS1_DailyHomeVisit_AterialBlodGases" entityDefinitionId="BCS1_DailyHomeVisit_AterialBlodGases" entityAttachPath="BCS1_DailyHomeVisit_AterialBlodGases" description="Aterial Blod Gases" ownerPath="BCS1_Owner" isMandatory="false" isRepeatable="false" isManualActivation="true">
                     <SentryDefinition>
                         <precondition processDefinitionId="BCS1_DailyHomeVisit"/>
                     </SentryDefinition>
                     <TaskParamDefinition path="BCS1_DailyHomeVisit.dhv7" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
-                <HumanTaskDefinition id="BCS1_DailyHomeVisit_BloodAnalytics" description="Blood Analytics" ownerPath="BCS1_Owner" isMandatory="false" isRepeatable="false" isManualActivation="true">
+                <HumanTaskDefinition id="BCS1_DailyHomeVisit_BloodAnalytics" entityDefinitionId="BCS1_DailyHomeVisit_BloodAnalytics" entityAttachPath="BCS1_DailyHomeVisit_BloodAnalytics" description="Blood Analytics" ownerPath="BCS1_Owner" isMandatory="false" isRepeatable="false" isManualActivation="true">
                     <SentryDefinition>
                         <precondition processDefinitionId="BCS1_DailyHomeVisit"/>
                     </SentryDefinition>
-                    <TaskParamDefinition path="BCS1_DailyHomeVisit.dhv8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_DailyHomeVisit_BloodAnalytics.ba" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>                
-                <HumanTaskDefinition id="BCS1_DailyHomeVisit_SputumCulture" description="sputum culture" ownerPath="BCS1_Owner" isMandatory="false" isRepeatable="false" isManualActivation="true">
+                <HumanTaskDefinition id="BCS1_DailyHomeVisit_SputumCulture" entityDefinitionId="BCS1_DailyHomeVisit_SputumCulture" entityAttachPath="BCS1_DailyHomeVisit_SputumCulture" description="sputum culture" ownerPath="BCS1_Owner" isMandatory="false" isRepeatable="false" isManualActivation="true">
                     <SentryDefinition>
                         <precondition processDefinitionId="BCS1_DailyHomeVisit"/>
                     </SentryDefinition>
-                    <TaskParamDefinition path="BCS1_DailyHomeVisit.dhv9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_DailyHomeVisit_SputumCulture.sc" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
-                <HumanTaskDefinition id="BCS1_DailyHomeVisit_ForcedSpirometry" description="forced spirometry" ownerPath="BCS1_Owner" isMandatory="false" isRepeatable="false" isManualActivation="true">
+                <HumanTaskDefinition id="BCS1_DailyHomeVisit_ForcedSpirometry" entityDefinitionId="BCS1_DailyHomeVisit_ForcedSpirometry" entityAttachPath="BCS1_DailyHomeVisit_ForcedSpirometry" description="forced spirometry" ownerPath="BCS1_Owner" isMandatory="false" isRepeatable="false" isManualActivation="true">
                     <SentryDefinition>
                         <precondition processDefinitionId="BCS1_DailyHomeVisit"/>
                     </SentryDefinition>
-                    <TaskParamDefinition path="BCS1_DailyHomeVisit.dhv10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_DailyHomeVisit_ForcedSpirometry.fs" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
-                <HumanTaskDefinition id="BCS1_DailyHomeVisit_PhysiciansHomeVisit" description="physician´s home visit" ownerPath="BCS1_Owner" isMandatory="false" isRepeatable="false" isManualActivation="true">
+                <HumanTaskDefinition id="BCS1_DailyHomeVisit_PhysiciansHomeVisit" entityDefinitionId="BCS1_DailyHomeVisit_PhysiciansHomeVisit" entityAttachPath="BCS1_DailyHomeVisit_PhysiciansHomeVisit" description="physician´s home visit" ownerPath="BCS1_Owner" isMandatory="false" isRepeatable="false" isManualActivation="true">
                     <SentryDefinition>
                         <precondition processDefinitionId="BCS1_DailyHomeVisit"/>
                     </SentryDefinition>
-                    <TaskParamDefinition path="BCS1_DailyHomeVisit.dhv11" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_DailyHomeVisit_PhysiciansHomeVisit.phv" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
 
 
-	            <HumanTaskDefinition id="BCS1_RemotePatientSelfMonitoring" description="Remote Patient Self-monitoring" isMandatory="true" isRepeatable="true">  
+	            <HumanTaskDefinition id="BCS1_RemotePatientSelfMonitoring" entityDefinitionId="BCS1_RemotePatientSelfMonitoring" entityAttachPath="BCS1_RemotePatientSelfMonitoring" description="Remote Patient Self-monitoring" isMandatory="true" isRepeatable="true">  
 	                <TaskParamDefinition path="BCS1_RemotePatientSelfMonitoring.pulse_oximeter" isReadOnly="false" isMandatory="true"/>
 	                <TaskParamDefinition path="BCS1_RemotePatientSelfMonitoring.spirometer" isReadOnly="false" isMandatory="true"/>
 	                <TaskParamDefinition path="BCS1_RemotePatientSelfMonitoring.scale" isReadOnly="false" isMandatory="true"/>
 	                <TaskParamDefinition path="BCS1_RemotePatientSelfMonitoring.glucometer" isReadOnly="false" isMandatory="true"/>
 	            </HumanTaskDefinition>
 
-	            <HumanTaskDefinition id="BCS1_ManagementOfCallCenterEvents" description="Management of call center events" isMandatory="true" isRepeatable="true">  
+	            <HumanTaskDefinition id="BCS1_ManagementOfCallCenterEvents" entityDefinitionId="BCS1_ManagementOfCallCenterEvents" entityAttachPath="BCS1_ManagementOfCallCenterEvents" description="Management of call center events" isMandatory="true" isRepeatable="true">  
 	                <TaskParamDefinition path="BCS1_ManagementOfCallCenterEvents.health_issues" isReadOnly="false" isMandatory="true"/>
 	                <TaskParamDefinition path="BCS1_ManagementOfCallCenterEvents.administrative_problems" isReadOnly="false" isMandatory="true"/>
 	                <TaskParamDefinition path="BCS1_ManagementOfCallCenterEvents.social_support_requests" isReadOnly="false" isMandatory="true"/>
@@ -710,10 +749,13 @@
 
 
 
-            <StageDefinition id="BCS1_Discharge" description="Discharge" isMandatory="true" isRepeatable="true">  
+            <StageDefinition id="BCS1_DischargePatient" description="Discharge" isMandatory="true" isRepeatable="true">  
                 <SentryDefinition>
                     <precondition processDefinitionId="BCS1_WorkplanDefinition"/>
                 </SentryDefinition>
+                <HumanTaskDefinition id="BCS1_Discharge" entityDefinitionId="BCS1_Discharge" entityAttachPath="BCS1_Discharge" description="Discharge Patient" isMandatory="true" isRepeatable="true">  
+                    <TaskParamDefinition path="BCS1_Discharge.comment" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>
             </StageDefinition>
             
             
