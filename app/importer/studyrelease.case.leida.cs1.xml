@@ -35,12 +35,8 @@
             <AttributeDefinition id="LCS1_SocialCareer" type="Link.Users(IrbllSocialCareers)" description="Treballador social"/>
             <!-- <AttributeDefinition id="LCS1_Professional" type="Link.Users(IrbllProfessionals)" description="Professional"/> -->
 			<AttributeDefinition id="LCS1_Owner" type="Link.Users(IrbllProfessionals)" description="Owner"/>  
-			
-            <AttributeDefinition id="LCS1_Lace" type="Link.EntityDefinition.LCS1_Lace" description="LACE"/>  
-            <AttributeDefinition id="LCS1_GlobalDeteriorationScale" type="Link.EntityDefinition.LCS1_GlobalDeteriorationScale" description="Global Deterioration Scale"/>      
-            <AttributeDefinition id="LCS1_TechnologicalTest" type="Link.EntityDefinition.LCS1_TechnologicalTest" description="Test d'adherència a la tecnología"/>  
-            <AttributeDefinition id="LCS1_PatientsConsent" type="Link.EntityDefinition.LCS1_PatientsConsent" description="Consetimient informat del pacient"/>  
-            <AttributeDefinition id="LCS1_ComorbidityCharlson" type="Link.EntityDefinition.LCS1_ComorbidityCharlson" description="Índex de comorbilitat de Charlson"/>  
+			            
+           <AttributeDefinition id="LCS1_ComorbidityCharlson" type="Link.EntityDefinition.LCS1_ComorbidityCharlson" description="Índex de comorbilitat de Charlson"/>  
             <AttributeDefinition id="LCS1_ComorbidityPfeiffer" type="Link.EntityDefinition.LCS1_ComorbidityPfeiffer" description="Test de Pfeiffer"/>  
             <AttributeDefinition id="LCS1_DiagnosisNyha" type="Link.EntityDefinition.LCS1_DiagnosisNyha" description="Diagnosis classe funcional NYHA"/>  
             <AttributeDefinition id="LCS1_DiagnosisCodex" type="Link.EntityDefinition.LCS1_DiagnosisCodex" description="Diagnosis CODEX"/>  
@@ -70,7 +66,12 @@
             <AttributeDefinition id="LCS1_EducationExec" type="Link.EntityDefinition.LCS1_EducationExec" description="Pla de formació al pacient i cuidador - Execució"/> 
             <AttributeDefinition id="LCS1_Discharge" type="Link.EntityDefinition.LCS1_Discharge" description="Informe d'alta del procés"/> 
 			
-			<!-- WORKSPACE: CaseIdentification -->				
+			<!-- WORKSPACE: CaseIdentification -->	
+			<AttributeDefinition id="LCS1_Lace" type="Link.EntityDefinition.LCS1_Lace"/>  			
+			<AttributeDefinition id="LCS1_GlobalDeteriorationScale" type="Link.EntityDefinition.LCS1_GlobalDeteriorationScale"/>      
+            <AttributeDefinition id="LCS1_TechnologicalTest" type="Link.EntityDefinition.LCS1_TechnologicalTest"/>  
+            <AttributeDefinition id="LCS1_PatientsConsent" type="Link.EntityDefinition.LCS1_PatientsConsent"/>  
+ 
 			
 			<!-- WORKSPACE: CaseEvaluation -->				
 			
@@ -94,7 +95,7 @@
 			<!-- LCS1_PatientMonitoryExecutionWeight -->
 			
         </EntityDefinition>
-        <EntityDefinition id="LCS1_Lace" description="LACE">
+        <EntityDefinition id="LCS1_Lace">
             <AttributeDefinition id="lace1" type="enumeration" multiplicity="maximalOne" description="Durada de la estada en nº dies (dia de ingrès i d'alta inclós)">
                 <EnumerationOption value="1" description="1 dia"/>
                 <EnumerationOption value="2" description="2 dies"/>
@@ -174,7 +175,7 @@
             <DerivedAttributeDefinition id="lace19" expression="number(lace1,0)+number(lace2,0)+lace17+number(lace18,0)" description="Puntuació de LACE"/>  
         </EntityDefinition>
 
-        <EntityDefinition id="LCS1_GlobalDeteriorationScale" description="Global Deterioration Scale">
+        <EntityDefinition id="LCS1_GlobalDeteriorationScale">
             <AttributeDefinition id="gds1" type="enumeration" multiplicity="maximalOne" description="Estadi">
                 <EnumerationOption value="0" description="GDS 1. Absència de dèficit cognitiu"/>
                 <EnumerationOption value="1" description="GDS 2. Dèficit cognitiu molt lleu l"/>
@@ -187,7 +188,7 @@
         </EntityDefinition>
         
 
-        <EntityDefinition id="LCS1_TechnologicalTest" description="Technologial Test">
+        <EntityDefinition id="LCS1_TechnologicalTest">
             <AttributeDefinition id="tech1" type="enumeration" multiplicity="maximalOne" description="Vosté o el seu cuidador tenen connexió a internet?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
@@ -212,7 +213,7 @@
         </EntityDefinition>
 
 
-        <EntityDefinition id="LCS1_PatientsConsent" description="Consentiment informat del pacient">
+        <EntityDefinition id="LCS1_PatientsConsent">
             <AttributeDefinition id="isConsent" type="enumeration" multiplicity="maximalOne" description="Accepta participar al procés clínic descrit al present document?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
@@ -1387,7 +1388,8 @@
             <TaskParamDefinition path="LCS1_SocialCareer" isReadOnly="false" isMandatory="true"/>
             <!-- TO BE DELETED <TaskParamDefinition path="LCS1_Professional" isReadOnly="false" isMandatory="true"/> -->
         </HumanTaskDefinition>    
-        <HumanTaskDefinition id="LCS1_Lace" description="LACE" ownerPath="LCS1_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_Lace" entityAttachPath="LCS1_Lace">                
+		
+        <HumanTaskDefinition id="LCS1_Lace" description="LACE" ownerPath="LCS1_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_Lace" entityAttachPath="LCS1_Lace">                
             <SentryDefinition>
               <precondition processDefinitionId="LCS1_SelectPatient"/>
             </SentryDefinition>
@@ -1411,13 +1413,15 @@
             <TaskParamDefinition path="LCS1_Lace.lace18" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="LCS1_Lace.lace19" isReadOnly="true" isMandatory="false"/>
         </HumanTaskDefinition>
-        <HumanTaskDefinition id="LCS1_GlobalDeteriorationScale" description="Global Deterioration Scale" ownerPath="LCS1_Owner" isMandatory="false" isRepeatable="false" entityDefinitionId="LCS1_GlobalDeteriorationScale" entityAttachPath="LCS1_GlobalDeteriorationScale">                
+		
+        <HumanTaskDefinition id="LCS1_GlobalDeteriorationScale" description="Escala de danys globals (GDS)" ownerPath="LCS1_Clinician" isMandatory="false" isRepeatable="false" entityDefinitionId="LCS1_GlobalDeteriorationScale" entityAttachPath="LCS1_GlobalDeteriorationScale">                
             <SentryDefinition>
               <precondition processDefinitionId="LCS1_SelectPatient"/>
             </SentryDefinition>
             <TaskParamDefinition path="LCS1_GlobalDeteriorationScale.gds1" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition>
-        <HumanTaskDefinition id="LCS1_TechnologicalTest" description="Test d'adherència a la tecnología" ownerPath="LCS1_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_TechnologicalTest" entityAttachPath="LCS1_TechnologicalTest">                
+		
+        <HumanTaskDefinition id="LCS1_TechnologicalTest" description="Test d'adherència a la tecnología" ownerPath="LCS1_CaseManager" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_TechnologicalTest" entityAttachPath="LCS1_TechnologicalTest">                
             <SentryDefinition>
               <precondition processDefinitionId="LCS1_SelectPatient"/>
             </SentryDefinition>
@@ -1426,7 +1430,8 @@
             <TaskParamDefinition path="LCS1_TechnologicalTest.tech3" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="LCS1_TechnologicalTest.tech4" isReadOnly="true" isMandatory="false"/>
         </HumanTaskDefinition>
-        <HumanTaskDefinition id="LCS1_PatientsConsent" description="Consentiment informat del pacient" ownerPath="LCS1_Owner" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_PatientsConsent" entityAttachPath="LCS1_PatientsConsent">                
+		
+        <HumanTaskDefinition id="LCS1_PatientsConsent" description="Consentiment informat del pacient" ownerPath="LCS1_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_PatientsConsent" entityAttachPath="LCS1_PatientsConsent">                
             <SentryDefinition>
               <precondition processDefinitionId="LCS1_SelectPatient"/>
             </SentryDefinition>
