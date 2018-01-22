@@ -15,6 +15,7 @@ import SummarySectionDefinition from '../models/casedefinition/model.summarysect
 import StageDefinition from '../models/casedefinition/model.stagedefinition';
 import HumanTaskDefinition from '../models/casedefinition/model.humantaskdefinition';
 import AutomatedTaskDefinition from '../models/casedefinition/model.automatedtaskdefinition';
+import DualTaskDefinition from './../models/casedefinition/model.dualtaskdefinition';
 import TaskParamDefinition from '../models/casedefinition/model.taskparamdefinition';
 import HttpHookDefinition from '../models/casedefinition/model.httphookdefinition';
 import SentryDefinition from '../models/casedefinition/model.sentrydefinition';
@@ -865,7 +866,8 @@ module.exports = class Importer {
         let taskDefinitionId = null;
         let isHumanTaskDefinition = td['#name']=='HumanTaskDefinition';
         let isAutomatedTaskDefinition = td['#name']=='AutomatedTaskDefinition';
-        if(!(isHumanTaskDefinition || isAutomatedTaskDefinition))
+        let isDualTaskDefinition = td['#name']=='DualTaskDefinition';
+        if(!(isHumanTaskDefinition || isAutomatedTaskDefinition || isDualTaskDefinition))
           return Promise.resolve();
         return this.getEntityDefinitionIdByXMLId(td.$.entityDefinitionId)
           .then(entityDefinitionId=>{
@@ -885,6 +887,10 @@ module.exports = class Importer {
             if(isHumanTaskDefinition){   
               data.dueDatePath = td.$.dueDatePath;
               return HumanTaskDefinition.create(this.jwt, data);
+            }
+            if(isDualTaskDefinition){   
+              data.dueDatePath = td.$.dueDatePath;
+              return DualTaskDefinition.create(this.jwt, data);
             }
             if(isAutomatedTaskDefinition)       
               return AutomatedTaskDefinition.create(this.jwt, data);
