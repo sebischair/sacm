@@ -10,8 +10,21 @@ import docRoutes from './doc/route';
 import http from './app/models/http';
 import jwt from 'jsonwebtoken';
 import fs from 'fs';
+import Promise from 'bluebird'; 
+import config from './config';
+import mongoose from 'mongoose';
+import Log from './app/logging/log.model';
+import uuid from 'uuid/v1';
 
 const secret = fs.readFileSync('public.key.pem')+'';
+
+if(config.logging.isEnabled){
+  mongoose.Promise = Promise;
+  mongoose.connect(config.logging.mongoUrl, {useMongoClient: true});
+  mongoose.connection.on('error', () => {
+    throw new Error('unable to connect to SACM log database: '+config.logging.mongoUrl);
+  });
+}
 
 var app = express();
 
@@ -26,6 +39,23 @@ app.use(function(req, res, next) {
 });
 
 app.use(function(req, res, next) {
+
+  /** Inject UUID */
+  req.uuid = uuid();
+  req.start = new Date().getTime();
+
+  /** Inject logging responses after send */
+  var send = res.send;
+  res.send = function(body){
+    const duration = new Date().getTime()-req.start;
+    let resBody = null;
+    if(this.statusCode != 200)
+      resBody = body;
+    Log.setStatus(req.uuid, this.statusCode, duration, resBody);
+    send.call(this, body);
+  };
+
+  /** Encode XML bodies */
   if(req.is('application/json')){
     next();
   }else{
@@ -48,13 +78,14 @@ app.use(cookieParser());
 
 
 
-app.use('/api', (req, res, next)=>{
+app.use('/api/v1', (req, res, next)=>{
 
   /** Testing Simulate User Authorization */
   if(req.headers.simulateuser != null && req.headers.authorization == null){
-    req.jwt = http.generateJWT(req.headers.simulateuser, 'ottto');
+    req.jwt = http.generateJWT(req.headers.simulateuser, config.sociocortex.defaultPassword);
     console.log('simulate user '+req.headers.simulateuser);
-    console.log(req.jwt);
+    console.log(req.jwt);    
+    Log.simulateUserLog(req, req.headers.simulateuser);
     next();
   }else{
     
@@ -73,13 +104,14 @@ app.use('/api', (req, res, next)=>{
             console.log('err: '+err);
             res.status(403).send(err);
           }else{
-            req.jwt = 'conecarebearer '+token;
+            req.jwt = 'conecarebearer '+token;  
+            let un = JSON.parse(decoded.user_name);         
+            Log.jwtUserLog(req, un.uuid, un.tenantUuid);
             next();
           }
         });
       }
     }
-
   }  
 });
 app.use('/api/v1', apiRoutes())

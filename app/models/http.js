@@ -5,11 +5,6 @@ import Promise from 'bluebird';
 import colors from 'colors';
 import atob from 'atob';
 
-const headers = {
-    'Authorization': 'Basic ' + new Buffer(config.sc.user + ':' + config.sc.pass).toString('base64'),
-    'Content-Type': 'application/json'
-};
-
 function header(jwt){
     return {
         'Authorization': jwt,
@@ -60,17 +55,17 @@ module.exports = {
                 });
             }
             rq.get({
-                uri: config.sc.url +path+p,
+                uri: config.sociocortex.url +path+p,
                 headers: header(jwt),                
                 json: true,
                 resolveWithFullResponse: true 
             })
             .then(res=>{
-                successRequest('GET', config.sc.url+path+p, '', res.body, res.statusCode, start, jwt);
+                successRequest('GET', config.sociocortex.url+path+p, '', res.body, res.statusCode, start, jwt);
                 resolve(res.body);
             })
             .catch(res=>{
-                errorRequest('GET', config.sc.url+path+p, '', res.error, res.statusCode, start, jwt);
+                errorRequest('GET', config.sociocortex.url+path+p, '', res.error, res.statusCode, start, jwt);
                 reject(res.error);
             });          
         });
@@ -82,18 +77,18 @@ module.exports = {
         //console.log('###### POST 2 END #######');
         return new Promise(function (resolve, reject){
             rq.post({
-                uri: config.sc.url +path,
+                uri: config.sociocortex.url +path,
                 headers: header(jwt),
                 body: data,
                 json: true,
                 resolveWithFullResponse: true 
             })
             .then(res=>{
-                successRequest('POST', config.sc.url+path, data, res.body, res.statusCode, start, jwt);
+                successRequest('POST', config.sociocortex.url+path, data, res.body, res.statusCode, start, jwt);
                 resolve(res.body);
             })
             .catch(res=>{
-                errorRequest('POST', config.sc.url+path, data, res.error, res.statusCode, start, jwt);
+                errorRequest('POST', config.sociocortex.url+path, data, res.error, res.statusCode, start, jwt);
                 reject(res.error);
             });          
         });
@@ -102,18 +97,18 @@ module.exports = {
         const start = new Date();
         return new Promise(function (resolve, reject){
             rq.put({
-                uri: config.sc.url +path,
+                uri: config.sociocortex.url +path,
                 headers: header(jwt),
                 body: data,
                 json: true,
                 resolveWithFullResponse: true 
             })
             .then(res=>{
-                successRequest('PUT', config.sc.url+path, data, res.body, res.statusCode, start, jwt);
+                successRequest('PUT', config.sociocortex.url+path, data, res.body, res.statusCode, start, jwt);
                 resolve(res.body);
             })
             .catch(res=>{
-                errorRequest('PUT', config.sc.url+path, data, res.error, res.statusCode, start, jwt);
+                errorRequest('PUT', config.sociocortex.url+path, data, res.error, res.statusCode, start, jwt);
                 reject(res.error);
             });          
         });
@@ -122,17 +117,17 @@ module.exports = {
         const start = new Date();
         return new Promise(function (resolve, reject){
             rq.del({
-                uri: config.sc.url +path,
+                uri: config.sociocortex.url +path,
                 headers: header(jwt),                
                 json: true,
                 resolveWithFullResponse: true 
             })
             .then(res=>{
-                successRequest('DEL', config.sc.url+path, '', res.body, res.statusCode, start, jwt);
+                successRequest('DEL', config.sociocortex.url+path, '', res.body, res.statusCode, start, jwt);
                 resolve(res.body);
             })
             .catch(res=>{
-                errorRequest('DEL', config.sc.url+path, '', res.error, res.statusCode, start, jwt);
+                errorRequest('DEL', config.sociocortex.url+path, '', res.error, res.statusCode, start, jwt);
                 reject(res.error);
             });          
         });

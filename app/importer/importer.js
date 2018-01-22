@@ -25,6 +25,7 @@ import AutomatedTask from '../models/case/model.automatedtask';
 import Process from '../models/case/model.process';
 import Alert from '../models/case/model.alert';
 import Settings from '../models/settings/model.settings';
+import config from '../../config';
 const xml2jspromise = Promise.promisifyAll(xml2js);
 const fs = Promise.promisifyAll(require("fs"));
 
@@ -195,10 +196,14 @@ module.exports = class Importer {
       .then(exist =>{
         if(!exist)
           throw new Error('File does not exist' + filePath);
-        else {         
+        else {  
           return xml2jspromise.parseStringAsync(fs.readFileSync(filePath).toString(), {explicitChildren:true, preserveChildrenOrder:true});
         }
-      });
+      })
+      .catch(err=>{
+        console.log(err);
+        return Promise.reject(err);
+      })
     }
 
     parseXMLString(xmlString){
@@ -391,8 +396,8 @@ module.exports = class Importer {
         const data = {
           name: u.$.name,
           email: u.$.email,
-          password: 'ottto',
-          passwordAgain: 'ottto',
+          password: config.sociocortex.defaultPassword,
+          passwordAgain: config.sociocortex.defaultPassword,
           attributes: []
         }
         if(u.$.staticId != null)

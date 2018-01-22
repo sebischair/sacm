@@ -73,7 +73,7 @@ router.post('/workspaces', (req, res, next)=>{
     })
     .catch(err=>{
       console.log(err);
-      res.status(500).send(err)
+      res.status(500).send(err.toString())
     });
     
 });
@@ -121,7 +121,6 @@ router.post('/casedefinition', (req, res, next)=>{
       res.status(200).send(result);
     })
     .catch(err=>{
-      console.log(err);
       res.status(500).send(err)
     });
   
