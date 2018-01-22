@@ -23,6 +23,7 @@ import Case from '../models/case/model.case';
 import Stage from '../models/case/model.stage';
 import HumanTask from '../models/case/model.humantask';
 import AutomatedTask from '../models/case/model.automatedtask';
+import DualTask from '../models/case/model.dualtask';
 import Process from '../models/case/model.process';
 import Alert from '../models/case/model.alert';
 import Settings from '../models/settings/model.settings';
@@ -1070,6 +1071,10 @@ module.exports = class Importer {
           }else if(action.$.id == "CompleteAutomatedTask"){
             const params = this.getParms(action);
             return this.completeAutomatedTaskWithName(caseId, action.$.processId, params)
+         
+          }else if(action.$.id == "CompleteDualTask"){
+            const params = this.getParms(action);
+            return this.completeAutomatedTaskWithName(caseId, action.$.processId, params)
 
           }else if(action.$.id == "CreateAlert"){
             return this.createAlert(caseId, action.$.processId, action)        
@@ -1117,6 +1122,22 @@ module.exports = class Importer {
           return AutomatedTask.complete(this.executionJwt, task);
         });        
     }
+
+    completeDualTaskWithName(caseId, taskName, paramsMap){     
+      return DualTask.findAllByCaseId(this.executionJwt, caseId)
+       .then(tasks=>{          
+         const t = this.findActiveProcessWithName(tasks, taskName);
+         return DualTask.findById(this.executionJwt, t.id);
+       })        
+       .then(task=>{
+         for(let i=0; i<task.taskParams.length; i++){
+           let tp = task.taskParams[i];
+           if(paramsMap.hasOwnProperty(tp.name))
+             task.taskParams[i].values = paramsMap[tp.name];            
+         }
+         return DualTask.complete(this.executionJwt, task);
+       });        
+   }
 
     activateStageWithName(caseId, stageName){
       return Stage.findAllByCaseId(this.executionJwt, caseId)
