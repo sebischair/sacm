@@ -6,6 +6,7 @@ import stagedefinition from './casedefinition/route.stagedefinition';
 import taskdefinition from './casedefinition/route.taskdefinition';
 import humantaskdefinition from './casedefinition/route.humantaskdefinition';
 import automatedtaskdefinition from './casedefinition/route.automatedtaskdefinition';
+import dualtaskdefinition from './casedefinition/route.dualtaskdefinition';
 import taskparamdefinition from './casedefinition/route.taskparamdefinition';
 import sentrydefinition from './casedefinition/route.sentrydefinition';
 import alert from './case/route.alert';
@@ -17,6 +18,7 @@ import task from './case/route.task';
 import taskparam from './case/route.taskparam';
 import humantask from './case/route.humantask';
 import automatedtask from './case/route.automatedtask';
+import dualtask from './case/route.dualtask';
 import entity from './data/route.entity';
 import attribute from './data/route.attribute';
 import userdefinition from './group/route.userdefinition';
@@ -47,9 +49,9 @@ function routes(){
     router.use('/processdefinitions', processdefinition);
     router.use('/stagedefinitions', stagedefinition);
     router.use('/taskdefinitions', taskdefinition);
-    router.use('/humantaskdefinition', humantaskdefinition);
     router.use('/humantaskdefinitions', humantaskdefinition);
     router.use('/automatedtaskdefinitions', automatedtaskdefinition);
+    router.use('/dualtaskdefinitions', dualtaskdefinition);
     router.use('/taskparamdefinitions', taskparamdefinition);
     router.use('/sentrydefinitions', sentrydefinition);
 
@@ -60,6 +62,7 @@ function routes(){
     router.use('/taskparams', taskparam);
     router.use('/humantasks', humantask);
     router.use('/automatedtasks', automatedtask);
+    router.use('/dualtasks', dualtask);
     router.use('/alerts', alert);
     router.use('/messages', message);
     router.use('/processes', process_);
