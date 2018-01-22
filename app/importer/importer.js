@@ -917,6 +917,7 @@ module.exports = class Importer {
       return Promise.each(taskDefinitionParams, tp=>{
         const data = {
           path: tp.$.path,
+          part: tp.$.part,
           isReadOnly: tp.$.isReadOnly,
           isMandatory: tp.$.isMandatory,
           taskDefinition: taskDefinitionId
