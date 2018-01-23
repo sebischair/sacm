@@ -1075,6 +1075,10 @@ module.exports = class Importer {
           }else if(action.$.id == "CompleteDualTaskHumanPart"){
             const params = this.getParms(action);
             return this.completeDualTaskHumanPartWithName(caseId, action.$.processId, params)
+          
+          }else if(action.$.id == "CompleteDualTaskAutomatedPart"){
+            const params = this.getParms(action);
+            return this.completeDualTaskAutomatedPartWithName(caseId, action.$.processId, params)
 
           }else if(action.$.id == "CreateAlert"){
             return this.createAlert(caseId, action.$.processId, action)        
@@ -1138,6 +1142,22 @@ module.exports = class Importer {
          return DualTask.completeHumanPart(this.executionJwt, task);
        });        
    }
+
+   completeDualTaskAutomatedPartWithName(caseId, taskName, paramsMap){     
+    return DualTask.findAllByCaseId(this.executionJwt, caseId)
+     .then(tasks=>{          
+       const t = this.findActiveProcessWithName(tasks, taskName);
+       return DualTask.findById(this.executionJwt, t.id);
+     })        
+     .then(task=>{
+       for(let i=0; i<task.taskParams.length; i++){
+         let tp = task.taskParams[i];
+         if(paramsMap.hasOwnProperty(tp.name))
+           task.taskParams[i].values = paramsMap[tp.name];            
+       }
+       return DualTask.completeAutomatedPart(this.executionJwt, task);
+     });        
+ }
 
     activateStageWithName(caseId, stageName){
       return Stage.findAllByCaseId(this.executionJwt, caseId)
