@@ -21,7 +21,7 @@ const router = express.Router();
  *   "isRepeatable": false,
  *   "next": null,
  *   "state": "ACTIVE",
- *   "resourceType": "humantasks",
+ *   "resourceType": "dualtasks",
  *   "prev": null,
  *   "scheduledDate": null,
  *   "id": "9411d2nyotg3",
@@ -46,10 +46,10 @@ router.get('/me/active', (req, res, next)=>{
 });
 
 /**
- * @api {get} dualtasks/:id Get HumanTask
- * @apiName GetHumanDefinition
- * @apiGroup HumanTasks
- * @apiParam {String} id ID of a HumanTask
+ * @api {get} dualtasks/:id Get DualTask
+ * @apiName GetDualDefinition
+ * @apiGroup DualTasks
+ * @apiParam {String} id ID of a DualTask
  * @apiSuccessExample {json} Success-Response:
  * {
  *   "parentStage": "1x26mpxg3dabq",
@@ -64,7 +64,7 @@ router.get('/me/active', (req, res, next)=>{
  *   "isRepeatable": false,
  *   "next": null,
  *   "state": "COMPLETED",
- *   "resourceType": "humantasks",
+ *   "resourceType": "dualtasks",
  *   "prev": null,
  *   "scheduledDate": null,
  *   "id": "9411d2nyotg3",
@@ -147,10 +147,10 @@ router.get('/:id', (req, res, next)=>{
 });
 
 /**
- * @api {post} dualtasks/:id/activate Activate HumanTask
- * @apiName ActivateHumanTask
- * @apiGroup HumanTasks
- * @apiParam {String} id ID of a HumanTask
+ * @api {post} dualtasks/:id/activate Activate DualTask
+ * @apiName ActivateDualTask
+ * @apiGroup DualTasks
+ * @apiParam {String} id ID of a DualTask
  */
 router.post('/:id/activate', (req, res, next)=>{
   DualTask.activate(req.jwt, req.params.id)
@@ -164,7 +164,7 @@ router.post('/:id/activate', (req, res, next)=>{
 
 /**
  * @api {post} dualtasks/:id/humanpart/draft Draft DualTask human part
- * @apiName DraftHumanTask
+ * @apiName DraftDualTaskHumanPart
  * @apiGroup DualTasks
  * @apiParam {String} id ID of a DualTask
  * @apiParam {Array} taskParams An array of task paramerts
@@ -192,7 +192,7 @@ router.post('/:id/activate', (req, res, next)=>{
  *   "isRepeatable": false,
  *   "next": null,
  *   "state": "ACTIVE",
- *   "resourceType": "humantasks",
+ *   "resourceType": "dualtasks",
  *   "prev": null,
  *   "scheduledDate": null,
  *   "id": "9411d2nyotg3",
@@ -305,7 +305,7 @@ router.post('/:id/humanpart/draft', (req, res, next)=>{
  *   "isRepeatable": false,
  *   "next": null,
  *   "state": "ACTIVE",
- *   "resourceType": "humantasks",
+ *   "resourceType": "dualtasks",
  *   "prev": null,
  *   "scheduledDate": null,
  *   "id": "9411d2nyotg3",
@@ -422,7 +422,7 @@ router.post('/:id/automatedpart/draft', (req, res, next)=>{
  *   "isRepeatable": false,
  *   "next": null,
  *   "state": "COMPLETED",
- *   "resourceType": "humantasks",
+ *   "resourceType": "dualtasks",
  *   "prev": null,
  *   "scheduledDate": null,
  *   "id": "9411d2nyotg3",
@@ -541,7 +541,7 @@ router.post('/:id/humanpart/complete', (req, res, next)=>{
  *   "isRepeatable": false,
  *   "next": null,
  *   "state": "COMPLETED",
- *   "resourceType": "humantasks",
+ *   "resourceType": "dualtasks",
  *   "prev": null,
  *   "scheduledDate": null,
  *   "id": "9411d2nyotg3",
@@ -626,11 +626,11 @@ router.post('/:id/automatedpart/complete', (req, res, next)=>{
   });
 
 /**
- * @api {post} /dualtasks/:id/terminate Terminate HumanTask
- * @apiName TerminateHumanTask
- * @apiGroup HumanTasks
- * @apiParam {String} id ID of a HumanTask
- * @apiSampleRequest /humantask/:id/terminate
+ * @api {post} /dualtasks/:id/terminate Terminate DualTask
+ * @apiName TerminateDualTask
+ * @apiGroup DualTasks
+ * @apiParam {String} id ID of a DualTask
+ * @apiSampleRequest /dualtasks/:id/terminate
  * @apiSuccessExample {json} Success-Response:
  *     {
  *     }
@@ -647,11 +647,11 @@ router.post('/:id/terminate', (req, res, next)=>{
 
 /**
  * @api {post} /dualtasks/:id/owner/:userid Set DualTask Owner
- * @apiName SetOwnerHumanTask
- * @apiGroup HumanTasks
- * @apiParam {String} id ID of a HumanTask
+ * @apiName SetOwnerDualTask
+ * @apiGroup DualTasks
+ * @apiParam {String} id ID of a DualTask
  * @apiParam {String} userId of the Owner
- * @apiSampleRequest /humantask/:id/owner/userid
+ * @apiSampleRequest /dualtask/:id/owner/userid
  * @apiSuccessExample {json} Success-Response:
  *     {
  *     }
@@ -669,11 +669,11 @@ router.post('/:id/owner/:userid', (req, res, next)=>{
 
 /**
  * @api {post} /dualtasks/:id/duedate Set DualTask Due Date
- * @apiName SetHumanTaskDueDate
- * @apiGroup HumanTasks
- * @apiParam {String} id ID of a HumanTask
+ * @apiName SetDualTaskDueDate
+ * @apiGroup DualTasks
+ * @apiParam {String} id ID of a DualTask
  * @apiParam {String} dueDate 
- * @apiSampleRequest /humantask/:id/duedate
+ * @apiSampleRequest /dualtask/:id/duedate
  * {dueDate: 'some date'}
  * @apiSuccessExample {json} Success-Response:
  *     {}
