@@ -29,12 +29,20 @@ export default class DualTask extends Model{
     return http.post(jwt, '/dualtasks/'+dualTaskId+'/activate');
   }
 
-  static draft(jwt, data) {
-    return http.post(jwt, '/dualtasks/'+data.id+'/draft', data);
+  static draftHumanPart(jwt, data) {
+    return http.post(jwt, '/dualtasks/'+data.id+'/humanpart/draft', data);
   }
 
-  static complete(jwt, data) {
-    return http.post(jwt, '/dualtasks/'+data.id+'/complete', data);
+  static draftAutomatedPart(jwt, data) {
+    return http.post(jwt, '/dualtasks/'+data.id+'/automatedpart/draft', data);
+  }
+
+  static completeHumanPart(jwt, data) {
+    return http.post(jwt, '/dualtasks/'+data.id+'/humanpart/complete', data);
+  }
+
+  static completeAutomatedPart(jwt, data) {
+    return http.post(jwt, '/dualtasks/'+data.id+'/automatedpart/complete', data);
   }
 
   static terminate(jwt, dualTaskId) {
