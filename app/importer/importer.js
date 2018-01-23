@@ -1072,9 +1072,9 @@ module.exports = class Importer {
             const params = this.getParms(action);
             return this.completeAutomatedTaskWithName(caseId, action.$.processId, params)
          
-          }else if(action.$.id == "CompleteDualTask"){
+          }else if(action.$.id == "CompleteDualTaskHumanPart"){
             const params = this.getParms(action);
-            return this.completeAutomatedTaskWithName(caseId, action.$.processId, params)
+            return this.completeDualTaskHumanPartWithName(caseId, action.$.processId, params)
 
           }else if(action.$.id == "CreateAlert"){
             return this.createAlert(caseId, action.$.processId, action)        
@@ -1123,7 +1123,7 @@ module.exports = class Importer {
         });        
     }
 
-    completeDualTaskWithName(caseId, taskName, paramsMap){     
+    completeDualTaskHumanPartWithName(caseId, taskName, paramsMap){     
       return DualTask.findAllByCaseId(this.executionJwt, caseId)
        .then(tasks=>{          
          const t = this.findActiveProcessWithName(tasks, taskName);
@@ -1135,7 +1135,7 @@ module.exports = class Importer {
            if(paramsMap.hasOwnProperty(tp.name))
              task.taskParams[i].values = paramsMap[tp.name];            
          }
-         return DualTask.complete(this.executionJwt, task);
+         return DualTask.completeHumanPart(this.executionJwt, task);
        });        
    }
 
