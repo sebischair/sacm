@@ -1064,6 +1064,9 @@ module.exports = class Importer {
           if(action.$.id == "ActivateStage"){
             return this.activateStageWithName(caseId, action.$.processId);
 
+          }else if(action.$.id == "ActivateDualTask"){
+            return this.activateDualTaskWithName(caseId, action.$.processId);
+
           }else if(action.$.id == "CompleteHumanTask"){
             const params = this.getParms(action);
             return this.completeHumanTaskWithName(caseId, action.$.processId, params)
@@ -1157,7 +1160,7 @@ module.exports = class Importer {
        }
        return DualTask.completeAutomatedPart(this.executionJwt, task);
      });        
- }
+  }
 
     activateStageWithName(caseId, stageName){
       return Stage.findAllByCaseId(this.executionJwt, caseId)
@@ -1174,6 +1177,26 @@ module.exports = class Importer {
           return Stage.activate(this.executionJwt, foundStage.id);
         }else{
           return Promise.reject('Could not activate Stage "'+stageName+'"!')
+        }       
+      });
+    }
+
+
+    activateDualTaskWithName(caseId, taskName){
+      return DualTask.findAllByCaseId(this.executionJwt, caseId)
+      .then(allTasks=>{
+        let foundTask = null;
+        allTasks.forEach(repeatedTasks=>{
+          repeatedTasks.forEach(repeatedTask=>{
+            if(!foundTask && repeatedTask.name == taskName && repeatedTask.possibleActions.includes('ACTIVATE')){
+              foundTask = repeatedTask;              
+            }
+          });
+        });
+        if(foundTask){
+          return DualTask.activate(this.executionJwt, foundTask.id);
+        }else{
+          return Promise.reject('Could not activate DualTask "'+taskName+'"!')
         }       
       });
     }
