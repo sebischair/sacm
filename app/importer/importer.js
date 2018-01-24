@@ -1043,7 +1043,7 @@ module.exports = class Importer {
         });
     }
 
-    executeCase(){
+    executeCase(isDebug){
       const caseId = this.case1.id;
       const execution = this.json.Execution;
       if(execution == null)
@@ -1058,7 +1058,7 @@ module.exports = class Importer {
       });
       return Promise.each(actions, action=>{
         let p = Promise.resolve();
-        if(action.$.breakpoint)
+        if(isDebug && action.$.breakpoint)
           p = prompt('Press enter to continue with action "'+action.$.id+'('+action.$.processId+')": ')
         return p.then(()=>{
           if(action.$.id == "ActivateStage"){
