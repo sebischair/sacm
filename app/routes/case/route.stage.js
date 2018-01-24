@@ -276,7 +276,7 @@ router.get('/:id/automatedtasks', (req, res, next)=>{
  *
  */
 router.get('/:id/humantasks', (req, res, next)=>{
-   HumanTask.findByStageId(req.jwt, req.params.id)
+  HumanTask.findByStageId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })

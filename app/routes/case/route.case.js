@@ -769,7 +769,7 @@ router.get('/:id/tasks/all', (req, res, next)=>{
  *          "resourceType": "humantasks"
  *     }]
  */
-router.get('/:id/humantasks/all', (req, res, next)=>{
+router.get('/:id/humantasks', (req, res, next)=>{
   HumanTask.findByCaseId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
@@ -808,7 +808,7 @@ router.get('/:id/humantasks/all', (req, res, next)=>{
  *     }]
  */
 router.get('/:id/humantasks/all', (req, res, next)=>{
-  HumanTask.findALLbyCaseId(req.jwt, req.params.id)
+  HumanTask.findAllByCaseId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })
@@ -883,7 +883,7 @@ router.get('/:id/automatedtasks', (req, res, next)=>{
  *     }]
  */
 router.get('/:id/automatedtasks/all', (req, res, next)=>{
-  AutomatedTask.findALLbyCaseId(req.jwt, req.params.id)
+  AutomatedTask.findAllByCaseId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })

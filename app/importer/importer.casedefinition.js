@@ -51,11 +51,11 @@ module.exports = class CaseDefinitionImporter extends Importer{
       });
   }
 
-  createAndExecuteCase(executionJwt){
+  createAndExecuteCase(executionJwt, isDebug){
     this.executionJwt = executionJwt;
     return this.createCase()
       .then(()=>{
-        return this.executeCase();
+        return this.executeCase(isDebug);
       });
   }
 

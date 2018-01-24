@@ -892,8 +892,8 @@
 
 <CaseDefinition id="ICS2_Assuta" description="CS2 Assuta" ownerPath="ICS2_CaseManager" clientPath="ICS2_Patient" entityDefinitionId="ICS2_CaseData">
 
-    <StageDefinition id="ICS2_CaseIdentification" description="Case Identification" isMandatory="true" isRepeatable="false">        
-        <HumanTaskDefinition id="ICS2_InclusionCriteria" description="Inclusion" ownerPath="ICS2_CaseManager" isMandatory="true" isRepeatable="false" entityDefinitionId="ICS2_InclusionCriteria" entityAttachPath="ICS2_InclusionCriteria">     
+    <StageDefinition id="ICS2_CaseIdentification" description="Case Identification" isMandatory="true" repeatable="ONCE">        
+        <HumanTaskDefinition id="ICS2_InclusionCriteria" description="Inclusion" ownerPath="ICS2_CaseManager" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_InclusionCriteria" entityAttachPath="ICS2_InclusionCriteria">     
             <TaskParamDefinition path="ICS2_InclusionCriteria.BasicAge" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_InclusionCriteria.BasicResidantual" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_InclusionCriteria.BasicLace" isReadOnly="false" isMandatory="true"/>
@@ -904,7 +904,7 @@
             <TaskParamDefinition path="ICS2_InclusionCriteria.BasicLanguegue" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition>   
 
-        <HumanTaskDefinition id="ICS2_ThechTest" description="הסכמת המטופל" ownerPath="ICS2_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="ICS2_ThechTest" entityAttachPath="ICS2_ThechTest">                
+        <HumanTaskDefinition id="ICS2_ThechTest" description="הסכמת המטופל" ownerPath="ICS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_ThechTest" entityAttachPath="ICS2_ThechTest">                
             <SentryDefinition>
               <precondition processDefinitionId="ICS2_InclusionCriteria"/>
             </SentryDefinition>
@@ -913,7 +913,7 @@
             <TaskParamDefinition path="ICS2_ThechTest.TechInternet" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition>
 
-        <HumanTaskDefinition id="ICS2_PatientsConsent" description="הסכמת המטופל" ownerPath="ICS2_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="ICS2_PatientsConsent" entityAttachPath="ICS2_PatientsConsent">                
+        <HumanTaskDefinition id="ICS2_PatientsConsent" description="הסכמת המטופל" ownerPath="ICS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PatientsConsent" entityAttachPath="ICS2_PatientsConsent">                
             <SentryDefinition>
               <precondition processDefinitionId="ICS2_InclusionCriteria"/>
             </SentryDefinition>
@@ -922,11 +922,11 @@
         </HumanTaskDefinition>
     </StageDefinition>
 
-    <StageDefinition id="ICS2_CaseEvaluation" description="Case Evaluation" isMandatory="true" isRepeatable="true">  
+    <StageDefinition id="ICS2_CaseEvaluation" description="Case Evaluation" isMandatory="true" repeatable="ONCE">  
         <SentryDefinition>
           <precondition processDefinitionId="ICS2_CaseIdentification"/>
         </SentryDefinition>        
-        <HumanTaskDefinition id="ICS2_PatientsData" description="פרטים דמוגרפיים של המטופל" ownerPath="ICS2_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="ICS2_PatientsData" entityAttachPath="ICS2_PatientsData">                
+        <HumanTaskDefinition id="ICS2_PatientsData" description="פרטים דמוגרפיים של המטופל" ownerPath="ICS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PatientsData" entityAttachPath="ICS2_PatientsData">                
             <TaskParamDefinition path="ICS2_PatientsData.Birthcountry" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_PatientsData.ImmigrationYear" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_PatientsData.KidsNum" isReadOnly="false" isMandatory="true"/>
@@ -944,7 +944,7 @@
             <TaskParamDefinition path="ICS2_PatientsData.Language" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition>
 
-        <HumanTaskDefinition id="ICS2_ClinicalData" description="מידע רפואי" ownerPath="ICS2_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="ICS2_ClinicalData" entityAttachPath="ICS2_ClinicalData">                
+        <HumanTaskDefinition id="ICS2_ClinicalData" description="מידע רפואי" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_ClinicalData" entityAttachPath="ICS2_ClinicalData">                
             <TaskParamDefinition path="ICS2_ClinicalData.NameAndContactOfPrimaryPhysicianInTheCommunity" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_ClinicalData.Diagnosis" isReadOnly="true" isMandatory="false"/>
             <TaskParamDefinition path="ICS2_ClinicalData.Medications" isReadOnly="true" isMandatory="false"/>
@@ -957,7 +957,7 @@
         </HumanTaskDefinition>
 
 
-        <HumanTaskDefinition id="ICS2_NutritionalData" description="מצב תזונה" ownerPath="ICS2_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="ICS2_NutritionalData" entityAttachPath="ICS2_NutritionalData">                
+        <HumanTaskDefinition id="ICS2_NutritionalData" description="מצב תזונה" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_NutritionalData" entityAttachPath="ICS2_NutritionalData">                
             <TaskParamDefinition path="ICS2_NutritionalData.Height" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_NutritionalData.Weight" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_NutritionalData.Bmi" isReadOnly="true" isMandatory="false"/>
@@ -968,7 +968,7 @@
         </HumanTaskDefinition>
 
 
-        <HumanTaskDefinition id="ICS2_Charlson" description="Charlson" ownerPath="ICS2_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="ICS2_Charlson" entityAttachPath="ICS2_Charlson">                
+        <HumanTaskDefinition id="ICS2_Charlson" description="Charlson" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Charlson" entityAttachPath="ICS2_Charlson">                
             <TaskParamDefinition path="ICS2_Charlson.ch1" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_Charlson.ch2" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_Charlson.ch3" isReadOnly="false" isMandatory="true"/>
@@ -993,7 +993,7 @@
         </HumanTaskDefinition>
 
 
-        <HumanTaskDefinition id="ICS2_ADLBarthel" description="ברטל" ownerPath="ICS2_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="ICS2_ADLBarthel" entityAttachPath="ICS2_ADLBarthel">                
+        <HumanTaskDefinition id="ICS2_ADLBarthel" description="ברטל" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_ADLBarthel" entityAttachPath="ICS2_ADLBarthel">                
             <TaskParamDefinition path="ICS2_ADLBarthel.BarthelFeeding" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_ADLBarthel.BarthelBathing" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_ADLBarthel.BarthelGrooming" isReadOnly="true" isMandatory="false"/>
@@ -1008,7 +1008,7 @@
         </HumanTaskDefinition>
 
 
-        <HumanTaskDefinition id="ICS2_iADLLawton" description="Lawton" ownerPath="ICS2_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="ICS2_iADLLawton" entityAttachPath="ICS2_iADLLawton">                
+        <HumanTaskDefinition id="ICS2_iADLLawton" description="Lawton" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_iADLLawton" entityAttachPath="ICS2_iADLLawton">                
             <TaskParamDefinition path="ICS2_iADLLawton.LawtonTelephone" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_iADLLawton.LawtonShopping" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_iADLLawton.LawtonFoodPreparation" isReadOnly="false" isMandatory="true"/>
@@ -1021,7 +1021,7 @@
         </HumanTaskDefinition>
 
 
-        <HumanTaskDefinition id="ICS2_SF12" description="SF-12" ownerPath="ICS2_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="ICS2_SF12" entityAttachPath="ICS2_SF12">                
+        <HumanTaskDefinition id="ICS2_SF12" description="SF-12" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_SF12" entityAttachPath="ICS2_SF12">                
             <TaskParamDefinition path="ICS2_SF12.SF121" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_SF12.SF122" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_SF12.SF123" isReadOnly="false" isMandatory="true"/>
@@ -1037,7 +1037,7 @@
             <TaskParamDefinition path="ICS2_SF12.SF12Score" isReadOnly="true" isMandatory="false"/>
         </HumanTaskDefinition>
 
-        <HumanTaskDefinition id="ICS2_HADS" description="HADS" ownerPath="ICS2_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="ICS2_HADS" entityAttachPath="ICS2_HADS">                
+        <HumanTaskDefinition id="ICS2_HADS" description="HADS" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_HADS" entityAttachPath="ICS2_HADS">                
             <TaskParamDefinition path="ICS2_HADS.HADS1" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_HADS.HADS2" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_HADS.HADS3" isReadOnly="false" isMandatory="true"/>
@@ -1056,7 +1056,7 @@
             <TaskParamDefinition path="ICS2_HADS.HADSAnxietyScore" isReadOnly="true" isMandatory="false"/>
         </HumanTaskDefinition>
 
-        <HumanTaskDefinition id="ICS2_EQ5D" description="EQ5D" ownerPath="ICS2_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="ICS2_EQ5D" entityAttachPath="ICS2_EQ5D">                
+        <HumanTaskDefinition id="ICS2_EQ5D" description="EQ5D" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_EQ5D" entityAttachPath="ICS2_EQ5D">                
             <TaskParamDefinition path="ICS2_EQ5D.EQ5DMobility" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_EQ5D.EQ5DSelfCare" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_EQ5D.EQ5DUsualActivities" isReadOnly="false" isMandatory="true"/>
@@ -1065,7 +1065,7 @@
             <TaskParamDefinition path="ICS2_EQ5D.EQ5DHealthToday" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition>
 
-        <HumanTaskDefinition id="ICS2_Sweet16" description="Sweet16" ownerPath="ICS2_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="ICS2_Sweet16" entityAttachPath="ICS2_Sweet16">                
+        <HumanTaskDefinition id="ICS2_Sweet16" description="Sweet16" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Sweet16" entityAttachPath="ICS2_Sweet16">                
             <TaskParamDefinition path="ICS2_Sweet16.Sweet16_1" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_Sweet16.Sweet16_2" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_Sweet16.Sweet16_3" isReadOnly="false" isMandatory="true"/>
@@ -1083,7 +1083,7 @@
             <TaskParamDefinition path="ICS2_Sweet16.Sweet16_Score" isReadOnly="true" isMandatory="false"/>
         </HumanTaskDefinition>
 
-        <HumanTaskDefinition id="ICS2_ResidenceSituationOfDwelling" description="מגורים / מצב הבית" ownerPath="ICS2_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="ICS2_ResidenceSituationOfDwelling" entityAttachPath="ICS2_ResidenceSituationOfDwelling">                
+        <HumanTaskDefinition id="ICS2_ResidenceSituationOfDwelling" description="מגורים / מצב הבית" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_ResidenceSituationOfDwelling" entityAttachPath="ICS2_ResidenceSituationOfDwelling">                
             <TaskParamDefinition path="ICS2_ResidenceSituationOfDwelling.ResidenceType" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_ResidenceSituationOfDwelling.ResidenceArrangements" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_ResidenceSituationOfDwelling.ResidenceAccessibility" isReadOnly="false" isMandatory="true"/>
@@ -1093,7 +1093,7 @@
             <TaskParamDefinition path="ICS2_ResidenceSituationOfDwelling.ResidenceAbuse" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition>
 
-        <HumanTaskDefinition id="ICS2_Communication" description="עישון ואלכוהול" ownerPath="ICS2_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="ICS2_Communication" entityAttachPath="ICS2_Communication">                
+        <HumanTaskDefinition id="ICS2_Communication" description="עישון ואלכוהול" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Communication" entityAttachPath="ICS2_Communication">                
             <TaskParamDefinition path="ICS2_Communication.CommHearing" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_Communication.CommHearingAid" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_Communication.CommVision" isReadOnly="false" isMandatory="true"/>
@@ -1102,13 +1102,13 @@
         </HumanTaskDefinition>
 
 
-        <HumanTaskDefinition id="ICS2_SmokingAlcohol" description="תקשורת" ownerPath="ICS2_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="ICS2_SmokingAlcohol" entityAttachPath="ICS2_SmokingAlcohol">                
+        <HumanTaskDefinition id="ICS2_SmokingAlcohol" description="תקשורת" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_SmokingAlcohol" entityAttachPath="ICS2_SmokingAlcohol">                
             <TaskParamDefinition path="ICS2_SmokingAlcohol.Smoking" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_SmokingAlcohol.Alcohol" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition>
 
 
-        <HumanTaskDefinition id="ICS2_RiskOfFallsDowntonIndex" description="סיכון לנפילות - מדד דוטון" ownerPath="ICS2_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="ICS2_RiskOfFallsDowntonIndex" entityAttachPath="ICS2_RiskOfFallsDowntonIndex">                
+        <HumanTaskDefinition id="ICS2_RiskOfFallsDowntonIndex" description="סיכון לנפילות - מדד דוטון" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_RiskOfFallsDowntonIndex" entityAttachPath="ICS2_RiskOfFallsDowntonIndex">                
             <TaskParamDefinition path="ICS2_RiskOfFallsDowntonIndex.Downton1" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_RiskOfFallsDowntonIndex.Downton2" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_RiskOfFallsDowntonIndex.Downton3" isReadOnly="false" isMandatory="true"/>
@@ -1117,14 +1117,14 @@
             <TaskParamDefinition path="ICS2_RiskOfFallsDowntonIndex.DowntonSum" isReadOnly="true" isMandatory="false"/>
         </HumanTaskDefinition>
 
-        <HumanTaskDefinition id="ICS2_Sleeping" description="עישון ואלכוהול" ownerPath="ICS2_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="ICS2_Sleeping" entityAttachPath="ICS2_Sleeping">                
+        <HumanTaskDefinition id="ICS2_Sleeping" description="עישון ואלכוהול" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Sleeping" entityAttachPath="ICS2_Sleeping">                
             <TaskParamDefinition path="ICS2_Sleeping.sleeping1" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_Sleeping.sleeping2" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_Sleeping.sleeping3" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_Sleeping.sleeping4" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition>
 
-        <HumanTaskDefinition id="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist" description="הערכה רפואית של מחלקת הכירורגיה או המרדים" ownerPath="ICS2_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist" entityAttachPath="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist">                
+        <HumanTaskDefinition id="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist" description="הערכה רפואית של מחלקת הכירורגיה או המרדים" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist" entityAttachPath="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist">                
             <TaskParamDefinition path="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss1" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss2" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss3" isReadOnly="false" isMandatory="true"/>
