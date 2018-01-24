@@ -81,14 +81,14 @@
                 <SummaryParamDefinition path="Lace.lace2"/>
             </SummarySectionDefinition>
 
-            <StageDefinition id="CaseIdentification" description="Case Identification" isMandetory="true" isRepeatable="false">        
-                <HumanTaskDefinition id="Lace" description="Lace" ownerPath="Owner" isMandetory="true" isRepeatable="false" entityDefinitionId="Lace" entityAttachPath="Lace">                
+            <StageDefinition id="CaseIdentification" description="Case Identification" isMandetory="true" repeatable="ONCE">        
+                <HumanTaskDefinition id="Lace" description="Lace" ownerPath="Owner" isMandetory="true" repeatable="ONCE" entityDefinitionId="Lace" entityAttachPath="Lace">                
                     <TaskParamDefinition path="Lace.lace1" isReadOnly="false" isMandetory="true"/>
                     <TaskParamDefinition path="Lace.lace2" isReadOnly="false" isMandetory="true"/>
                 </HumanTaskDefinition>
             </StageDefinition>
         
-            <StageDefinition id="CaseEvaluation" description="Case Evaluation" isMandetory="false" isRepeatable="true">  
+            <StageDefinition id="CaseEvaluation" description="Case Evaluation" isMandetory="false" repeatable="ONCE">  
                 <SentryDefinition>
                     <precondition processDefinitionId="CaseIdentification"/>
                     <precondition expression="number(Lace.lace1)>1"/>
@@ -96,24 +96,24 @@
                 <SentryDefinition>
                     <precondition processDefinitionId="WorkplanDefinition"/>
                 </SentryDefinition>
-                <HumanTaskDefinition id="Barthel" description="Barthel" ownerPath="Owner" isMandetory="true" isRepeatable="false" entityDefinitionId="Barthel" entityAttachPath="Barthel">
+                <HumanTaskDefinition id="Barthel" description="Barthel" ownerPath="Owner" isMandetory="true" repeatable="ONCE" entityDefinitionId="Barthel" entityAttachPath="Barthel">
                     <TaskParamDefinition path="Barthel.barthel1" isReadOnly="false" isMandetory="true"/>
                     <TaskParamDefinition path="Barthel.barthel2" isReadOnly="false" isMandetory="true"/>
                 </HumanTaskDefinition>
             </StageDefinition>
 
-            <StageDefinition id="WorkplanDefinition" description="Workplan Definition" isMandetory="false" isRepeatable="true">  
+            <StageDefinition id="WorkplanDefinition" description="Workplan Definition" isMandetory="false" repeatable="ONCE">  
                 <SentryDefinition>
                     <precondition processDefinitionId="CaseEvaluation"/>
                 </SentryDefinition>
-                <HumanTaskDefinition id="PhysicalActivityPrescription" description="Physical Activity Prescription" ownerPath="Owner" isMandetory="true" isRepeatable="false" entityDefinitionId="PhysicalActivityPrescription" entityAttachPath="PhysicalActivityPrescription">
+                <HumanTaskDefinition id="PhysicalActivityPrescription" description="Physical Activity Prescription" ownerPath="Owner" isMandetory="true" repeatable="ONCE" entityDefinitionId="PhysicalActivityPrescription" entityAttachPath="PhysicalActivityPrescription">
                     <TaskParamDefinition path="PhysicalActivityPrescription.phactp1" isReadOnly="false" isMandetory="true"/>
                     <TaskParamDefinition path="PhysicalActivityPrescription.phactp2" isReadOnly="false" isMandetory="true"/>
                 </HumanTaskDefinition>
             </StageDefinition>
 
-            <StageDefinition id="Discharge" description="Discharge" isMandetory="true" isRepeatable="false">        
-                <HumanTaskDefinition id="DischageForm" description="Dischargefrom" ownerPath="Owner" isMandetory="true" isRepeatable="false" entityDefinitionId="Discharge" entityAttachPath="Discharge">                
+            <StageDefinition id="Discharge" description="Discharge" isMandetory="true" repeatable="ONCE">        
+                <HumanTaskDefinition id="DischageForm" description="Dischargefrom" ownerPath="Owner" isMandetory="true" repeatable="ONCE" entityDefinitionId="Discharge" entityAttachPath="Discharge">                
                     <TaskParamDefinition path="Discharge.reason" isReadOnly="false" isMandetory="true"/>
                     <TaskParamDefinition path="Discharge.date" isReadOnly="false" isMandetory="true"/>
                 </HumanTaskDefinition>
