@@ -2,6 +2,7 @@
 import Promise from 'bluebird';
 import request from 'request-promise';
 import xml2js from 'xml2js';
+import prompt from 'prompt-promise';
 import Workspace from '../models/workspace/model.workspace';
 import UserDefinition from '../models/group/model.userdefinition';
 import User from '../models/group/model.user';
@@ -14,12 +15,15 @@ import SummarySectionDefinition from '../models/casedefinition/model.summarysect
 import StageDefinition from '../models/casedefinition/model.stagedefinition';
 import HumanTaskDefinition from '../models/casedefinition/model.humantaskdefinition';
 import AutomatedTaskDefinition from '../models/casedefinition/model.automatedtaskdefinition';
+import DualTaskDefinition from './../models/casedefinition/model.dualtaskdefinition';
 import TaskParamDefinition from '../models/casedefinition/model.taskparamdefinition';
 import HttpHookDefinition from '../models/casedefinition/model.httphookdefinition';
 import SentryDefinition from '../models/casedefinition/model.sentrydefinition';
 import Case from '../models/case/model.case';
+import Stage from '../models/case/model.stage';
 import HumanTask from '../models/case/model.humantask';
 import AutomatedTask from '../models/case/model.automatedtask';
+import DualTask from '../models/case/model.dualtask';
 import Process from '../models/case/model.process';
 import Alert from '../models/case/model.alert';
 import Settings from '../models/settings/model.settings';
@@ -799,7 +803,7 @@ module.exports = class Importer {
               name: sd.$.id,
               description: sd.$.description,
               ownerPath: sd.$.ownerPath,
-              isRepeatable: sd.$.isRepeatable,
+              repeatable: sd.$.repeatable,
               isMandatory: sd.$.isMandatory,
               isManualActivation: sd.$.isManualActivation,
               caseDefinition: caseDefId,
@@ -863,7 +867,8 @@ module.exports = class Importer {
         let taskDefinitionId = null;
         let isHumanTaskDefinition = td['#name']=='HumanTaskDefinition';
         let isAutomatedTaskDefinition = td['#name']=='AutomatedTaskDefinition';
-        if(!(isHumanTaskDefinition || isAutomatedTaskDefinition))
+        let isDualTaskDefinition = td['#name']=='DualTaskDefinition';
+        if(!(isHumanTaskDefinition || isAutomatedTaskDefinition || isDualTaskDefinition))
           return Promise.resolve();
         return this.getEntityDefinitionIdByXMLId(td.$.entityDefinitionId)
           .then(entityDefinitionId=>{
@@ -871,7 +876,7 @@ module.exports = class Importer {
               name: td.$.id,
               description: td.$.description,          
               ownerPath: td.$.ownerPath,
-              isRepeatable: td.$.isRepeatable,
+              repeatable: td.$.repeatable,
               isMandatory: td.$.isMandatory,              
               isManualActivation: td.$.isManualActivation,
               caseDefinition: caseDefId,          
@@ -883,6 +888,10 @@ module.exports = class Importer {
             if(isHumanTaskDefinition){   
               data.dueDatePath = td.$.dueDatePath;
               return HumanTaskDefinition.create(this.jwt, data);
+            }
+            if(isDualTaskDefinition){   
+              data.dueDatePath = td.$.dueDatePath;
+              return DualTaskDefinition.create(this.jwt, data);
             }
             if(isAutomatedTaskDefinition)       
               return AutomatedTaskDefinition.create(this.jwt, data);
@@ -915,6 +924,7 @@ module.exports = class Importer {
       return Promise.each(taskDefinitionParams, tp=>{
         const data = {
           path: tp.$.path,
+          part: tp.$.part,
           isReadOnly: tp.$.isReadOnly,
           isMandatory: tp.$.isMandatory,
           taskDefinition: taskDefinitionId
@@ -1041,22 +1051,45 @@ module.exports = class Importer {
       const actions = execution[0].Action;
       if(actions == null)
         return Promise.resolve('No Action Element Defined!');
+      //console.log(JSON.stringify(actions,null,2))
+      console.log('Execute following actions: ')
+      actions.forEach(action=>{
+        console.log(action.$.id+'('+action.$.processId+')');
+      });
       return Promise.each(actions, action=>{
-        
-        if(action.$.id == "CompleteHumanTask"){
-          const params = this.getParms(action);
-          return this.completeHumanTaskWithName(caseId, action.$.processId, params)
-        
-        }else if(action.$.id == "CompleteAutomatedTask"){
-          const params = this.getParms(action);
-          return this.completeAutomatedTaskWithName(caseId, action.$.processId, params)
+        let p = Promise.resolve();
+        if(action.$.breakpoint)
+          p = prompt('Press enter to continue with action "'+action.$.id+'('+action.$.processId+')": ')
+        return p.then(()=>{
+          if(action.$.id == "ActivateStage"){
+            return this.activateStageWithName(caseId, action.$.processId);
 
-        }else if(action.$.id == "CreateAlert"){
-          return this.createAlert(caseId, action.$.processId, action)        
+          }else if(action.$.id == "ActivateDualTask"){
+            return this.activateDualTaskWithName(caseId, action.$.processId);
 
-        }else{
-          return Promise.resolve('Action "'+action.$.id+'" not defined!');
-        }
+          }else if(action.$.id == "CompleteHumanTask"){
+            const params = this.getParms(action);
+            return this.completeHumanTaskWithName(caseId, action.$.processId, params)
+          
+          }else if(action.$.id == "CompleteAutomatedTask"){
+            const params = this.getParms(action);
+            return this.completeAutomatedTaskWithName(caseId, action.$.processId, params)
+         
+          }else if(action.$.id == "CompleteDualTaskHumanPart"){
+            const params = this.getParms(action);
+            return this.completeDualTaskHumanPartWithName(caseId, action.$.processId, params)
+          
+          }else if(action.$.id == "CompleteDualTaskAutomatedPart"){
+            const params = this.getParms(action);
+            return this.completeDualTaskAutomatedPartWithName(caseId, action.$.processId, params)
+
+          }else if(action.$.id == "CreateAlert"){
+            return this.createAlert(caseId, action.$.processId, action)        
+
+          }else{
+            return Promise.resolve('Action "'+action.$.id+'" not defined!');
+          }
+        })
       })
       .then(()=>{
         return Case.findTreeById(this.executionJwt, caseId);
@@ -1084,7 +1117,7 @@ module.exports = class Importer {
     completeAutomatedTaskWithName(caseId, taskName, paramsMap){     
        return AutomatedTask.findAllByCaseId(this.executionJwt, caseId)
         .then(tasks=>{          
-          const t = this.findProcessWithName(tasks, taskName);
+          const t = this.findActiveProcessWithName(tasks, taskName);
           return AutomatedTask.findById(this.executionJwt, t.id);
         })        
         .then(task=>{
@@ -1097,6 +1130,77 @@ module.exports = class Importer {
         });        
     }
 
+    completeDualTaskHumanPartWithName(caseId, taskName, paramsMap){     
+      return DualTask.findAllByCaseId(this.executionJwt, caseId)
+       .then(tasks=>{          
+         const t = this.findActiveProcessWithName(tasks, taskName);
+         return DualTask.findById(this.executionJwt, t.id);
+       })        
+       .then(task=>{
+         for(let i=0; i<task.taskParams.length; i++){
+           let tp = task.taskParams[i];
+           if(paramsMap.hasOwnProperty(tp.name))
+             task.taskParams[i].values = paramsMap[tp.name];            
+         }
+         return DualTask.completeHumanPart(this.executionJwt, task);
+       });        
+   }
+
+   completeDualTaskAutomatedPartWithName(caseId, taskName, paramsMap){     
+    return DualTask.findAllByCaseId(this.executionJwt, caseId)
+     .then(tasks=>{          
+       const t = this.findActiveProcessWithName(tasks, taskName);
+       return DualTask.findById(this.executionJwt, t.id);
+     })        
+     .then(task=>{
+       for(let i=0; i<task.taskParams.length; i++){
+         let tp = task.taskParams[i];
+         if(paramsMap.hasOwnProperty(tp.name))
+           task.taskParams[i].values = paramsMap[tp.name];            
+       }
+       return DualTask.completeAutomatedPart(this.executionJwt, task);
+     });        
+  }
+
+    activateStageWithName(caseId, stageName){
+      return Stage.findAllByCaseId(this.executionJwt, caseId)
+      .then(allStages=>{
+        let foundStage = null;
+        allStages.forEach(repeatedStages=>{
+          repeatedStages.forEach(repeatedStage=>{
+            if(!foundStage && repeatedStage.name == stageName && repeatedStage.possibleActions.includes('ACTIVATE')){
+              foundStage = repeatedStage;              
+            }
+          });
+        });
+        if(foundStage){
+          return Stage.activate(this.executionJwt, foundStage.id);
+        }else{
+          return Promise.reject('Could not activate Stage "'+stageName+'"!')
+        }       
+      });
+    }
+
+
+    activateDualTaskWithName(caseId, taskName){
+      return DualTask.findAllByCaseId(this.executionJwt, caseId)
+      .then(allTasks=>{
+        let foundTask = null;
+        allTasks.forEach(repeatedTasks=>{
+          repeatedTasks.forEach(repeatedTask=>{
+            if(!foundTask && repeatedTask.name == taskName && repeatedTask.possibleActions.includes('ACTIVATE')){
+              foundTask = repeatedTask;              
+            }
+          });
+        });
+        if(foundTask){
+          return DualTask.activate(this.executionJwt, foundTask.id);
+        }else{
+          return Promise.reject('Could not activate DualTask "'+taskName+'"!')
+        }       
+      });
+    }
+
     /**
      * @param caseId 
      * @param taskName 
@@ -1105,7 +1209,7 @@ module.exports = class Importer {
     completeHumanTaskWithName(caseId, taskName, paramsMap){     
        return HumanTask.findAllByCaseId(this.executionJwt, caseId)
         .then(humanTasks=>{          
-          const ht = this.findProcessWithName(humanTasks, taskName);
+          const ht = this.findActiveProcessWithName(humanTasks, taskName);
           return HumanTask.findById(this.executionJwt, ht.id);
         })        
         .then(humanTask=>{
@@ -1116,6 +1220,14 @@ module.exports = class Importer {
           }
           return HumanTask.complete(this.executionJwt, humanTask);
         });        
+    }
+
+    findActiveProcessWithName(nestedProcesses, searchedName){
+      for(let process of nestedProcesses)     
+        for(let instance of process)
+          if(instance.name == searchedName && instance.state == "ACTIVE")
+            return instance;
+      return null;
     }
 
     findProcessWithName(nestedProcesses, searchedName){
