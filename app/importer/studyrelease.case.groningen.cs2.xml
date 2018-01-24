@@ -140,7 +140,8 @@
                 <EnumerationOption value="4" description="80-89"/>
                 <EnumerationOption value="5" description="90-99"/>
             </AttributeDefinition>           
-            <DerivedAttributeDefinition id="ch21" expression="number(ch1,0) + number(ch2,0) + number(ch3,0) + number(ch4,0) + number(ch5,0) + number(ch6,0) + number(ch7,0) + number(ch8,0) + number(ch9,0) + number(ch10,0) + number(ch11,0)*2 + number(ch12,0)*2 + number(ch13,0)*2 + number(ch14,0)*2 + number(ch15,0)*2 + number(ch16,0)*2 + number(ch17,0)*3 + number(ch18,0)*6 + number(ch19,0)*6 + number(ch20,0)" description="Charlson Comorbidity Index"/>     
+            <DerivedAttributeDefinition id="ch21" expression="number(ch1,0) + number(ch2,0) + number(ch3,0) + number(ch4,0) + number(ch5,0) + number(ch6,0) + number(ch7,0) + number(ch8,0) + number(ch9,0) + number(ch10,0) + number(ch11,0)*2 + number(ch12,0)*2 + number(ch13,0)*2 + number(ch14,0)*2 + number(ch15,0)*2 + number(ch16,0)*2 + number(ch17,0)*3 + number(ch18,0)*6 + number(ch19,0)*6 + number(ch20,0)" description="Charlson Comorbidity Index (age adjusted)"/>     
+            <DerivedAttributeDefinition id="ch22" expression="number(ch1,0) + number(ch2,0) + number(ch3,0) + number(ch4,0) + number(ch5,0) + number(ch6,0) + number(ch7,0) + number(ch8,0) + number(ch9,0) + number(ch10,0) + number(ch11,0)*2 + number(ch12,0)*2 + number(ch13,0)*2 + number(ch14,0)*2 + number(ch15,0)*2 + number(ch16,0)*2 + number(ch17,0)*3 + number(ch18,0)*6 + number(ch19,0)*6" description="Charlson Comorbidity Index (unadjusted)"/>     
         </EntityDefinition>
     
         <EntityDefinition id="GCS2_GFI" description="Groningen Frailty Indicator (GFI)">
@@ -303,6 +304,7 @@
                 <EnumerationOption value="1.0002" description="Needs help with finances"/>
                 <EnumerationOption value="0" description="Is not able to deal with money"/>
             </AttributeDefinition>
+            <DerivedAttributeDefinition id="iadl9" expression="number(iadl1,0) + number(iadl2,0) + number(iadl2,0) + number(iadl3,0) + number(iadl4,0) + number(iadl5,0) + number(iadl6,0) + number(iadl7,0) + number(iadl8,0)" description="iADL Score"/> 
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_NRS" description="Nutritional Risk Screening (NRS)">
@@ -369,13 +371,19 @@
             </AttributeDefinition>
             <AttributeDefinition id="mnasf6" type="number" multiplicity="maximalOne" description="Weight in kilograms"/>
             <AttributeDefinition id="mnasf7" type="number" multiplicity="maximalOne" description="Length in centimetres"/>
+
+            <DerivedAttributeDefinition id="mnasf8" expression="mnasf6 / (mnasf7 * mnasf7)" description="BMI"/>  
+            <DerivedAttributeDefinition id="mnasf9" expression="if mnasf8 < 19 then 0 else if mnasf8 >= 19 and mnasf8 < 21 then 1 else if mnasf8 >= 21 and mnasf8 < 23 then 2 else 3" description="BMI"/>  
+
+            <!--
             <AttributeDefinition id="mnasf8" type="enumeration" multiplicity="maximalOne" description="BMI">
                 <EnumerationOption value="0" description="BMI less than 19"/>	
                 <EnumerationOption value="1" description="BMI 19 to less than 21"/>
                 <EnumerationOption value="2" description="BMI 21 to less than 23"/>
                 <EnumerationOption value="3" description="BMI 23 or greater"/>
-            </AttributeDefinition>           
-            <DerivedAttributeDefinition id="mnasf9" expression="number(mnasf1,0) + number(mnasf2,0) + number(mnasf3,0) + number(mnasf4,0) + number(mnasf5,0) + default(mnasf6,0) + default(mnasf7,0) + number(mnasf8,0)" description="MNA-SF Score"/>            
+            </AttributeDefinition> 
+            -->          
+            <DerivedAttributeDefinition id="mnasf10" expression="number(mnasf1,0) + number(mnasf2,0) + number(mnasf3,0) + number(mnasf4,0) + mnasf9" description="MNA-SF Score"/>            
         </EntityDefinition>
         
         <EntityDefinition id="GCS2_PhysicalActivity" description="Physical Activity">
@@ -529,6 +537,7 @@
                 <SummaryParamDefinition path="GCS2_GFI.gfi16"/>          
                 <SummaryParamDefinition path="GCS2_ASA.asa"/>
                 <SummaryParamDefinition path="GCS2_Charlson.ch21"/>
+                <SummaryParamDefinition path="GCS2_Charlson.ch22"/>
             </SummarySectionDefinition>
             <SummarySectionDefinition id="GCS2_Functional" description="Functional" position="CENTER">   
                 <SummaryParamDefinition path="GCS2_iADL.iadl1"/>
@@ -539,6 +548,7 @@
                 <SummaryParamDefinition path="GCS2_iADL.iadl6"/>
                 <SummaryParamDefinition path="GCS2_iADL.iadl7"/>
                 <SummaryParamDefinition path="GCS2_iADL.iadl8"/>
+                <SummaryParamDefinition path="GCS2_iADL.iadl9"/>
                 <SummaryParamDefinition path="GCS2_ADL.adl7"/>
             </SummarySectionDefinition>
             <SummarySectionDefinition id="GCS2_Cognitive" description="Cognitive" position="RIGHT">    
@@ -593,6 +603,7 @@
                     <TaskParamDefinition path="GCS2_Charlson.ch19" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Charlson.ch20" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Charlson.ch21" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Charlson.ch22" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>                
                 <HumanTaskDefinition id="GCS2_GFI" description="Groningen Frailty Indicator (GFI)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" isRepeatable="false" entityDefinitionId="GCS2_GFI" entityAttachPath="GCS2_GFI">
                     <TaskParamDefinition path="GCS2_GFI.gfi1" isReadOnly="false" isMandatory="true"/>
@@ -630,6 +641,7 @@
                     <TaskParamDefinition path="GCS2_iADL.iadl6" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_iADL.iadl7" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_iADL.iadl8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_iADL.iadl9" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
                 <HumanTaskDefinition id="GCS2_NRS" description="Nutritional Risk Screening (NRS)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" isRepeatable="false" entityDefinitionId="GCS2_NRS" entityAttachPath="GCS2_NRS">
                     <TaskParamDefinition path="GCS2_NRS.nrs1" isReadOnly="false" isMandatory="true"/>
@@ -649,8 +661,9 @@
                     <TaskParamDefinition path="GCS2_MNASF.mnasf5" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_MNASF.mnasf6" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_MNASF.mnasf7" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_MNASF.mnasf8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_MNASF.mnasf8" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="GCS2_MNASF.mnasf9" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_MNASF.mnasf10" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
             </StageDefinition>
             <StageDefinition id="GCS2_Workplan" description="Workplan" isMandatory="true" isRepeatable="false">
@@ -837,7 +850,6 @@
             <TaskParam path="GCS2_MNASF.mnasf5"  values="['1']"/>
             <TaskParam path="GCS2_MNASF.mnasf6"  values="[70]"/>
             <TaskParam path="GCS2_MNASF.mnasf7"  values="[180]"/>
-            <TaskParam path="GCS2_MNASF.mnasf8"  values="['0']"/>
         </Action>
         <Action id="CreateAlert" 
             processId="GCS2_SF12" 
