@@ -810,7 +810,8 @@ module.exports = class Importer {
               parentStageDefinition: parentStageDefId,              
               newEntityDefinition: entityDefinitionId,
               newEntityAttachPath: sd.$.entityAttachPath,
-              externalId: sd.$.externalId
+              externalId: sd.$.externalId,
+              dynamicDescriptionPath: sd.$.dynamicDescriptionPath
             }
             return StageDefinition.create(this.jwt, data);
           })
@@ -883,7 +884,8 @@ module.exports = class Importer {
               parentStageDefinition: parentStageDefId,                  
               newEntityDefinition: entityDefinitionId,
               newEntityAttachPath: td.$.entityAttachPath,
-              externalId: td.$.externalId
+              externalId: td.$.externalId,
+              dynamicDescriptionPath: sd.$.dynamicDescriptionPath
             }
             if(isHumanTaskDefinition){   
               data.dueDatePath = td.$.dueDatePath;
