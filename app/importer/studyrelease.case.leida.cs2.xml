@@ -36,13 +36,12 @@
 		  <AttributeDefinition id="LCS2_SocialCareer" type="Link.Users(IrbllSocialCareers)" description="Treballador social"/>
 		  <AttributeDefinition id="LCS2_Owner" type="Link.Users(IrbllProfessionals)" description="Owner"/>
 
+		  
 		  <!-- WORKSPACE: CaseIdentification -->				  		 
 		  <AttributeDefinition id="LCS2_TechnologicalTest" type="Link.EntityDefinition.LCS2_TechnologicalTest" />	  
 		  <AttributeDefinition id="LCS2_ComorbidityCharlson" type="Link.EntityDefinition.LCS2_ComorbidityCharlson" />  
 		  <AttributeDefinition id="LCS2_GMA" type="Link.EntityDefinition.LCS2_GMA" />		  		  
-		  <AttributeDefinition id="LCS2_ASAPhysicalStatusClassificationSystem" type="Link.EntityDefinition.LCS2_ASAPhysicalStatusClassificationSystem" />		  
-		  <AttributeDefinition id="LCS2_ChronicDiseases" type="Link.EntityDefinition.LCS2_ChronicDiseases" />
-		  <AttributeDefinition id="LCS2_PolyMedicationCheck" type="Link.EntityDefinition.LCS2_PolyMedicationCheck" />		  
+		  <AttributeDefinition id="LCS2_ComplexityRisk" type="Link.EntityDefinition.LCS2_ComplexityRisk" />		  		  
 		  <AttributeDefinition id="LCS2_HospitalEmergencyAdminisions" type="Link.EntityDefinition.LCS2_HospitalEmergencyAdminisions" />
 		  <AttributeDefinition id="LCS2_PatientsConsent" type="Link.EntityDefinition.LCS2_PatientsConsent" />
 		  
@@ -189,20 +188,29 @@
             </AttributeDefinition>           
             <DerivedAttributeDefinition id="ch21" expression="number(ch1,0) + number(ch2,0) + number(ch3,0) + number(ch4,0) + number(ch5,0) + number(ch6,0) + number(ch7,0) + number(ch8,0) + number(ch9,0) + number(ch10,0) + number(ch11,0)*2 + number(ch12,0)*2 + number(ch13,0)*2 + number(ch14,0)*2 + number(ch15,0)*2 + number(ch16,0)*2 + number(ch17,0)*3 + number(ch18,0)*6 + number(ch19,0)*6 + number(ch20,0)" description="Índex de Charlson"/>
 			</EntityDefinition>
-
-		<EntityDefinition id="LCS2_ChronicDiseases" >
-				<AttributeDefinition id="cd1" type="enumeration" multiplicity="maximalOne" description="Té el pacient més de 3 malaltíes cròniques?">
+			
+		
+		<EntityDefinition id="LCS2_ComplexityRisk" >
+				<AttributeDefinition id="cd1" type="enumeration" multiplicity="maximalOne" description="Malalties cròniques - Té el pacient més de 3 malaltíes cròniques?">
 					<EnumerationOption value="0" description="No"/>
 					<EnumerationOption value="1" description="Sí"/>
+				</AttributeDefinition>		
+				
+				<AttributeDefinition id="pmed1" type="enumeration" multiplicity="maximalOne" description="Revisió de medicaments - Pren el pacient cada día, 4 o més pastilles o medicaments?">
+					<EnumerationOption value="0" description="No"/>
+					<EnumerationOption value="1" description="Sí"/>
+				</AttributeDefinition>		
+
+				<AttributeDefinition id="ASA" type="enumeration" multiplicity="maximalOne" description="Sistema de classificació d'estat físic (ASA)">
+					<EnumerationOption value="1" description="ASA I: Un pacient saludable normal"/>
+					<EnumerationOption value="2" description="ASA II: Pacient amb una lleu malaltia sistèmica"/>
+					<EnumerationOption value="3" description="ASA III: Un pacient amb greu malaltia sistèmica"/>
+					<EnumerationOption value="4" description="ASA IV: Un pacient amb greu malaltia sistèmica que constitueix una amenaça constant per a la vida"/>
+					<EnumerationOption value="5" description="ASA V: Un pacient moribund que no s'espera que sobrevisqui sense l'operació"/>
+					<EnumerationOption value="6" description="ASA VI: Un pacient declarat mort cerebral els òrgans són eliminats amb finalitats donants"/>
 				</AttributeDefinition>
-			</EntityDefinition>
-
-		<EntityDefinition id="LCS2_PolyMedicationCheck" >
-				<AttributeDefinition id="pmed1" type="enumeration" multiplicity="maximalOne" description="Pren el pacient cada día, 4 o més pastilles o medicaments?">
-					<EnumerationOption value="0" description="No"/>
-					<EnumerationOption value="1" description="Sí"/>
-				</AttributeDefinition>								
-			</EntityDefinition>
+		</EntityDefinition>
+		
 			
 		<EntityDefinition id="LCS2_GMA" >
 				<AttributeDefinition id="gma" type="enumeration" multiplicity="maximalOne" description="Índex GMA">
@@ -218,17 +226,6 @@
 			<AttributeDefinition id="admissions2" type="number" multiplicity="maximalOne" description="Quantes vegades ha estat atés el pacient a urgències durant l´ultim any? (incloses  urgències de primària)"/>       
 		</EntityDefinition>
 		
-		<EntityDefinition id="LCS2_ASAPhysicalStatusClassificationSystem" >
-				<AttributeDefinition id="ASA" type="enumeration" multiplicity="maximalOne" description="Clasificació ASA">
-					<EnumerationOption value="1" description="ASA I: Un pacient saludable normal"/>
-					<EnumerationOption value="2" description="ASA II: Pacient amb una lleu malaltia sistèmica"/>
-					<EnumerationOption value="3" description="ASA III: Un pacient amb greu malaltia sistèmica"/>
-					<EnumerationOption value="4" description="ASA IV: Un pacient amb greu malaltia sistèmica que constitueix una amenaça constant per a la vida"/>
-					<EnumerationOption value="5" description="ASA V: Un pacient moribund que no s'espera que sobrevisqui sense l'operació"/>
-					<EnumerationOption value="6" description="ASA VI: Un pacient declarat mort cerebral els òrgans són eliminats amb finalitats donants"/>
-				</AttributeDefinition>
-			</EntityDefinition>
-
 
 		<EntityDefinition id="LCS2_TechnologicalTest" >
 			<AttributeDefinition id="tech1" type="enumeration" multiplicity="maximalOne" description="Vosté o el seu cuidador tenen connexió a Internet?">
@@ -1471,7 +1468,7 @@
 		
 		
 	<!-- CASE DEFINITION -->				  
-		<CaseDefinition id="LCS2_Leida" description="CS2 Lleida - Kitiara Test" ownerPath="LCS2_Owner" clientPath="LCS2_Patient" entityDefinitionId="LCS2_CaseData">	  
+		<CaseDefinition id="LCS2_Leida" description="CS2 Lleida" ownerPath="LCS2_Owner" clientPath="LCS2_Patient" entityDefinitionId="LCS2_CaseData">	  
 	  
 	<!-- STAGEDEFINITION: CaseIdentification -->	  
         <StageDefinition id="LCS2_CaseIdentification" description="Identificació del cas" isMandatory="true" repeatable="ONCE">
@@ -1484,7 +1481,6 @@
 				<TaskParamDefinition path="LCS2_SocialCareer" isReadOnly="false" isMandatory="true"/>            
 				<TaskParamDefinition path="LCS2_Anesthesiologist" isReadOnly="false" isMandatory="true"/> 
 				<TaskParamDefinition path="LCS2_Physiotherapist" isReadOnly="false" isMandatory="true"/> 
-				<!-- <TaskParamDefinition path="LCS2_Owner" isReadOnly="false" isMandatory="true"/>	-->		
             </HumanTaskDefinition>		
 
             <HumanTaskDefinition id="LCS2_TechnologicalTest" description="Test d'adherència a la tecnología" ownerPath="LCS2_CaseManager" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_TechnologicalTest" entityAttachPath="LCS2_TechnologicalTest">
@@ -1532,26 +1528,16 @@
               <TaskParamDefinition path="LCS2_GMA.gma" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition> 
 
-            <HumanTaskDefinition id="LCS2_ASAPhysicalStatusClassificationSystemIdentification" description="Sistema de classificació d'estat físic (ASA)" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_ASAPhysicalStatusClassificationSystem" entityAttachPath="LCS2_ASAPhysicalStatusClassificationSystem">
-              <SentryDefinition>
-                <precondition processDefinitionId="LCS2_SelectPatient"/>
-              </SentryDefinition>
-              <TaskParamDefinition path="LCS2_ASAPhysicalStatusClassificationSystem.ASA" isReadOnly="false" isMandatory="true"/>			  
-            </HumanTaskDefinition>
 			
-            <HumanTaskDefinition id="LCS2_ChronicDiseases" description="Malalties cròniques" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_ChronicDiseases" entityAttachPath="LCS2_ChronicDiseases">
+            <HumanTaskDefinition id="LCS2_ComplexityRisk" description="Test complexitat-risc" ownerPath="LCS2_Anesthesiologist" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_ComplexityRisk" entityAttachPath="LCS2_ComplexityRisk">
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>
-              <TaskParamDefinition path="LCS2_ChronicDiseases.cd1" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_ComplexityRisk.cd1" isReadOnly="false" isMandatory="true"/> 
+				<TaskParamDefinition path="LCS2_ComplexityRisk.pmed1" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_ComplexityRisk.ASA" isReadOnly="false" isMandatory="true"/>	<!-- LCS2_ASAPhysicalStatusClassificationSystemIdentification -->
             </HumanTaskDefinition>
-			
-            <HumanTaskDefinition id="LCS2_PolyMedicationCheck" description="Revisió de medicaments" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_PolyMedicationCheck" entityAttachPath="LCS2_PolyMedicationCheck">
-              <SentryDefinition>
-                <precondition processDefinitionId="LCS2_SelectPatient"/>
-              </SentryDefinition>
-              <TaskParamDefinition path="LCS2_PolyMedicationCheck.pmed1" isReadOnly="false" isMandatory="true"/>
-            </HumanTaskDefinition>			
+
 			
             <HumanTaskDefinition id="LCS2_HospitalEmergencyAdminisions" description="Admissions hospitalàries d'emergència" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_HospitalEmergencyAdminisions" entityAttachPath="LCS2_HospitalEmergencyAdminisions">
               <SentryDefinition>
@@ -1617,7 +1603,7 @@
             </HumanTaskDefinition>		  
 		  
 			<HumanTaskDefinition id="LCS2_ASAPhysicalStatusClassificationSystemEvaluation" description="Diagnòstic - Sistema de classificació d'estat físic (ASA)" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE">
-              <TaskParamDefinition path="LCS2_ASAPhysicalStatusClassificationSystem.ASA" isReadOnly="true" isMandatory="false"/>			  
+              <TaskParamDefinition path="LCS2_ComplexityRisk.ASA" isReadOnly="true" isMandatory="false"/>			  
             </HumanTaskDefinition>			
 			
 			<HumanTaskDefinition id="LCS2_DiagnosisCommunication" description="Diagnòstic - Communicació" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_DiagnosisCommunication" entityAttachPath="LCS2_DiagnosisCommunication">
