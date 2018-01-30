@@ -44,6 +44,7 @@
             <AttributeDefinition id="BCS2_FunctionalCapacityHandGrip" type="Link.EntityDefinition.BCS2_FunctionalCapacityHandGrip" description="Capacidad Funcional Hand Grip"/>
             <AttributeDefinition id="BCS2_FunctionalCapacitySitToStand" type="Link.EntityDefinition.BCS2_FunctionalCapacitySitToStand" description="Capacidad Funcional Sit to Stand"/>
             <AttributeDefinition id="BCS2_FunctionalCapacity6MWT" type="Link.EntityDefinition.BCS2_FunctionalCapacity6MWT" description="Capacidad Funcional 6MWT"/>
+            <AttributeDefinition id="BCS2_FunctionalCapacityYPA" type="Link.EntityDefinition.BCS2_FunctionalCapacityYPA" description="Capacidad Funcional YPA"/>
 
 
 
@@ -91,10 +92,9 @@
             <!-- How is this done -->
             <AttributeDefinition id="SelectOwnerAnesthesia" type="Link.Users(IdibapsAnesthesiologists)" multiplicity="maximalOne" description="Selecciona el profesional encargado para realizar el rol de anestesista:"/>
             <AttributeDefinition id="SelectOwnerNurse" type="Link.Users(IdibapsNurses)" multiplicity="maximalOne" description="Selecciona el profesional encargado para realizar el rol de enfermero:"/>
-            <AttributeDefinition id="SelectOwnerNurse" type="Link.Users(IdibapsNurses)" multiplicity="maximalOne" description="Selecciona el profesional encargado para realizar el rol de enfermero:"/>
-            <AttributeDefinition id="SelectOwnerNutri" type="Link.Users(IdibapsNurses)" multiplicity="maximalOne" description="Selecciona el profesional encargado para realizar el rol de nutricionista:"/>
-            <AttributeDefinition id="SelectOwnerPsico" type="Link.Users(IdibapsNurses)" multiplicity="maximalOne" description="Selecciona el profesional encargado para realizar el rol de psicólogo:"/>
-            <AttributeDefinition id="SelectOwnerFisio" type="Link.Users(IdibapsNurses)" multiplicity="maximalOne" description="Selecciona el profesional encargado para realizar el rol de fisioterapeuta:"/>
+            <AttributeDefinition id="SelectOwnerNutri" type="Link.Users(IdibapsNutritionists)" multiplicity="maximalOne" description="Selecciona el profesional encargado para realizar el rol de nutricionista:"/>
+            <AttributeDefinition id="SelectOwnerPsico" type="Link.Users(IdibapsPsychologists)" multiplicity="maximalOne" description="Selecciona el profesional encargado para realizar el rol de psicólogo:"/>
+            <AttributeDefinition id="SelectOwnerFisio" type="Link.Users(IdibapsPhysiotherapists)" multiplicity="maximalOne" description="Selecciona el profesional encargado para realizar el rol de fisioterapeuta:"/>
         </EntityDefinition>
 
 
@@ -348,7 +348,7 @@
         <EntityDefinition id="BCS2_PhysicalExamination" description="Examinación física">
             <AttributeDefinition id="Height" type="number" multiplicity="maximalOne" description="Altura (cm)"/>
             <AttributeDefinition id="Weight" type="number" multiplicity="maximalOne" description="Peso (Kg)"/>
-            <DerivedAttributeDefinition id="Bmi" expression="number(0, Height)" multiplicity="maximalOne" description="Bmi"/>
+            <DerivedAttributeDefinition id="Bmi" expression="Height" multiplicity="maximalOne" description="Bmi"/>
             <AttributeDefinition id="BloodPressSist" type="number" multiplicity="maximalOne" description="Presión Arterial Sistólica (mmHg)"/>
             <AttributeDefinition id="BloodPressDiast" type="number" multiplicity="maximalOne" description="Presión Arterial Diastólica (mmHg)"/>
             <AttributeDefinition id="HeartRate" type="number" multiplicity="maximalOne" description="Freq. Cardíaca (bps)"/>
@@ -376,7 +376,7 @@
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <DerivedAttributeDefinition id="MustScore" expression="number(0, BmiCat)+number(0, WeightLoss) + number(0, RecentAcuteDisease) * 2" multiplicity="maximalOne" description="Must Score"/>
+            <DerivedAttributeDefinition id="MustScore" expression="BmiCat + WeightLoss + number(RecentAcuteDisease,0) * 2" multiplicity="maximalOne" description="Must Score"/>
         </EntityDefinition>
 
 
@@ -462,7 +462,7 @@
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <DerivedAttributeDefinition id="DukeScore" expression="number(0, DukeVale)*2.75+number(0, DukeCam)*1.75 + number(0, DukeCamu)*2.75 + number(0, DukeSub)*5.5 + number(0, DukeCorre)*8 + number(0, DukeReal)*2.7 + number(0, DukePasa)*3.5 + number(0, DukeArreg)*8 + number(0, DukeBici)*4.5 + number(0, DukeTene)*5.25 + number(0, DukeBail)*6 + number(0, DukeEjerin)*7.5" multiplicity="maximalOne" description="Duke Activity Status Index"/>
+            <DerivedAttributeDefinition id="DukeScore" expression="number(DukeVale,0)*2.75+number(DukeCam,0)*1.75 + number(DukeCamu,0)*2.75 + number(DukeSub,0)*5.5 + number(DukeCorre,0)*8 + number(DukeReal,0)*2.7 + number(DukePasa,0)*3.5 + number(DukeArreg,0)*8 + number(DukeBici,0)*4.5 + number(DukeTene,0)*5.25 + number(DukeBail,0)*6 + number( DukeEjerin,0)*7.5" multiplicity="maximalOne" description="Duke Activity Status Index"/>
         </EntityDefinition>
 
         <EntityDefinition id="BCS2_FunctionalCapacityHandGrip" description="Capacidad Funcional Hand Grip">
@@ -523,9 +523,9 @@
            <DerivedAttributeDefinition id="YPASsdipme" expression="YPASdipme" multiplicity="maximalOne" description="Score actividad fisica intensa dias por mes"/>
 
 
-            <AttributeDefinition id="YPASsti" type="enumeration" description="Score actividad fisica intensa tiempo"></AttributeDefinition> <!-- Check this -->
+            <!--<AttributeDefinition id="YPASsti" type="enumeration" description="Score actividad fisica intensa tiempo"></AttributeDefinition>  Check this -->
 
-            <DerivedAttributeDefinition id="YPASsactfi" expression="number(0,YPASdipme)*number(0, YPASti) * 5" multiplicity="maximalOne" description="YPAS indice Act Vigorosa"/>
+            <DerivedAttributeDefinition id="YPASsactfi" expression="number(YPASdipme,0)*number(YPASti,0) * 5" multiplicity="maximalOne" description="YPAS indice Act Vigorosa"/>
 
 
             <AttributeDefinition id="YPASpdipme" type="enumeration" description="¿Piense en los paseos que ha realizado durante el ultimo mes. Aproximadamente cuantas veces al mes fue a pasear al menos 10 minutos o más sin parar pero que no fue suficiente para causar grandes incrementos en la respiración, pulso, cansancio de piernas ni le hacía sudar?">
@@ -545,10 +545,10 @@
             <DerivedAttributeDefinition id="YPASpsdipme" expression="YPASpdipme" multiplicity="maximalOne" description="Score Paseos dias por mes"/>
 
 
-            <AttributeDefinition id="YPASpsti" type="enumeration" description="Score Paseos tiempo"></AttributeDefinition> <!-- CheckThis -->
+            <!-- <AttributeDefinition id="YPASpsti" type="enumeration" description="Score Paseos tiempo"></AttributeDefinition>  CheckThis -->
 
 
-            <DerivedAttributeDefinition id="YPASspas" expression="number(0,YPASpsdipme)*number(0, YPASpdipme) * 3" multiplicity="maximalOne" description="YPAS indice Pasear"/>
+            <DerivedAttributeDefinition id="YPASspas" expression="number(YPASpsdipme,0)*number(YPASpdipme,0) * 3" multiplicity="maximalOne" description="YPAS indice Pasear"/>
 
 
             <AttributeDefinition id="YPAStiemov" type="enumeration" description="Aproximadamente cuantas horas al dia pasa moviendose de un lado a otro mientras hace cosas?(Por favor, insistir sobre el tiempo realmente en movimiento)">
@@ -561,7 +561,7 @@
             </AttributeDefinition>
 
 
-            <DerivedAttributeDefinition id="YPASstiemov" expression="number(0,YPAStiemov) * 3" multiplicity="maximalOne" description="YPAS indice Movimiento"/>
+            <DerivedAttributeDefinition id="YPASstiemov" expression="number(YPAStiemov,0) * 3" multiplicity="maximalOne" description="YPAS indice Movimiento"/>
 
 
             <AttributeDefinition id="YPASesdep" type="enumeration" description="¿Piense en cuanto tiempo paso de pie, como promedio, durante el ultimo mes.Aproximadamente cuantas horas al dia esta de pie?">
@@ -574,7 +574,7 @@
             </AttributeDefinition>
 
 
-            <DerivedAttributeDefinition id="YPASsesdep" expression="number(0,YPASesdep)*2" multiplicity="maximalOne" description="YPAS indice Bipedestacion"/>
+            <DerivedAttributeDefinition id="YPASsesdep" expression="number(YPASesdep,0)*2" multiplicity="maximalOne" description="YPAS indice Bipedestacion"/>
 
 
             <AttributeDefinition id="YPAStisen" type="enumeration" description="¿Aproximadamente, en un día típico del último mes, cuantas horas paso sentado/a?">
@@ -586,9 +586,9 @@
                 <EnumerationOption value="5" description="mas de 7 horas al dia"/>
             </AttributeDefinition>
 
-            <DerivedAttributeDefinition id="YPASstisen" expression="number(0,YPAStisen)" multiplicity="maximalOne" description="YPAS indice Sedestacion"/>
+            <DerivedAttributeDefinition id="YPASstisen" expression="number(YPAStisen,0)" multiplicity="maximalOne" description="YPAS indice Sedestacion"/>
 
-            <DerivedAttributeDefinition id="YPASsindre" expression="number(0,YPASspas)+number(0,YPASstiemov)+number(0,YPASstisen)" multiplicity="maximalOne" description="INIDICE RESUMEN DE ACTIVIDAD FISICA"/>
+            <DerivedAttributeDefinition id="YPASsindre" expression="YPASspas+YPASstiemov+YPASstisen" multiplicity="maximalOne" description="INIDICE RESUMEN DE ACTIVIDAD FISICA"/>
 
 
         </EntityDefinition>
@@ -759,12 +759,12 @@
                     <TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPASdipme" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPASti" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPASsdipme" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPASsti" isReadOnly="false" isMandatory="true"/>
+                    <!--<TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPASsti" isReadOnly="false" isMandatory="true"/>-->
                     <TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPASsactfi" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPASpdipme" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPASpti" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPASpsdipme" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPASpsti" isReadOnly="false" isMandatory="true"/>
+                    <!--<TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPASpsti" isReadOnly="false" isMandatory="true"/>-->
                     <TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPASspas" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPAStiemov" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPASstiemov" isReadOnly="true" isMandatory="false"/>
