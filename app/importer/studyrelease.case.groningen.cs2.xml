@@ -35,12 +35,11 @@
             <AttributeDefinition id="GCS2_WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date"/>
             <AttributeDefinition id="GCS2_Identification" type="Link.EntityDefinition.GCS2_Identification" description="Identification"/>    
             <AttributeDefinition id="GCS2_Evaluation" type="Link.EntityDefinition.GCS2_Evaluation" description="Evaluation"/>            
-            <AttributeDefinition id="GCS2_PhysicalActivity" type="Link.EntityDefinition.GCS2_PhysicalActivity" description="Physical Activity"/>
-            <AttributeDefinition id="GCS2_PatientMonitoring" type="Link.EntityDefinition.GCS2_PatientMonitoring" description="Patient Monitory"/> 
-            <AttributeDefinition id="GCS2_SF12" type="Link.EntityDefinition.GCS2_SF12" description="SF-12"/>
+            <AttributeDefinition id="GCS2_Workplan" type="Link.EntityDefinition.GCS2_Workplan" description="Workplan"/> 
             <AttributeDefinition id="GCS2_DischargeForm" type="Link.EntityDefinition.GCS2_DischargeForm" description="Discharge From"/>            
         </EntityDefinition>
 
+        <!-- Identification Entity Definitions -->
         <EntityDefinition id="GCS2_Identification" description="Identification">
             <AttributeDefinition id="GCS2_ASA" type="Link.EntityDefinition.GCS2_ASA" multiplicity="maximalOne" description="ASA"/> 
         </EntityDefinition>
@@ -55,6 +54,7 @@
             </AttributeDefinition> 
         </EntityDefinition>
 
+        <!-- Evaluation Entity Definitions -->
         <EntityDefinition id="GCS2_Evaluation" description="Evaluation">
             <AttributeDefinition id="GCS2_Charlson" type="Link.EntityDefinition.GCS2_Charlson" description="Charlson"/>   
             <AttributeDefinition id="GCS2_GFI" type="Link.EntityDefinition.GCS2_GFI" description="Groningen Frailty Indicator (GFI)"/>   
@@ -394,6 +394,13 @@
             <DerivedAttributeDefinition id="mnasf10" expression="number(mnasf1,0) + number(mnasf2,0) + number(mnasf3,0) + number(mnasf4,0) + mnasf9" description="MNA-SF Score"/>            
         </EntityDefinition>
         
+        <!-- Workplan Entity Definitions -->
+        <EntityDefinition id="GCS2_Workplan" description="Workplan">
+            <AttributeDefinition id="GCS2_PhysicalActivity" type="Link.EntityDefinition.GCS2_PhysicalActivity" description="Physical Activity"/>
+            <AttributeDefinition id="GCS2_PatientMonitoring" type="Link.EntityDefinition.GCS2_PatientMonitoring" description="Patient Monitory"/> 
+            <AttributeDefinition id="GCS2_SF12" type="Link.EntityDefinition.GCS2_SF12" description="SF-12"/>
+        </EntityDefinition>
+
         <EntityDefinition id="GCS2_PhysicalActivity" description="Physical Activity">
             <AttributeDefinition id="phactp1" type="date.after(TODAY)" multiplicity="maximalOne" description="Start date"/>
             <AttributeDefinition id="phactp2" type="date.after(phactp1)" multiplicity="maximalOne" description="End date"/>       
@@ -667,84 +674,85 @@
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf10" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
             </StageDefinition>
-            <StageDefinition id="GCS2_Workplan" description="Workplan" isMandatory="true" repeatable="ONCE">
+
+            <StageDefinition id="GCS2_Workplan" description="Workplan" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_Workplan" entityAttachPath="GCS2_Workplan">
                 <SentryDefinition>
                     <precondition processDefinitionId="GCS2_CaseEvaluation"/>
                 </SentryDefinition>
-                <HumanTaskDefinition id="GCS2_PhysicalActivityPrescription" description="Physical Activity Prescription" ownerPath="GCS2_Owner" dueDatePath="GCS2_WorkplanDueDate"  isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_PhysicalActivity" entityAttachPath="GCS2_PhysicalActivity">
-                    <TaskParamDefinition path="GCS2_PhysicalActivity.phactp1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_PhysicalActivity.phactp2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_PhysicalActivity.phactp3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_PhysicalActivity.phactp4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_PhysicalActivity.phactp5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_PhysicalActivity.phactp6" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_PhysicalActivity.phactp7" isReadOnly="false" isMandatory="true"/>                    
+                <HumanTaskDefinition id="GCS2_PhysicalActivityPrescription" description="Physical Activity Prescription" ownerPath="GCS2_Owner" dueDatePath="GCS2_WorkplanDueDate"  isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_PhysicalActivity" entityAttachPath="GCS2_Workplan.GCS2_PhysicalActivity">
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.phactp1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.phactp2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.phactp3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.phactp4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.phactp5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.phactp6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.phactp7" isReadOnly="false" isMandatory="true"/>                    
                 </HumanTaskDefinition>
                 <AutomatedTaskDefinition id="GCS2_PhysicalActivityExecution" description="Physical Activity Execution" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE">
                     <SentryDefinition>
                         <precondition processDefinitionId="GCS2_PhysicalActivityPrescription"/>
                     </SentryDefinition>
                     <HttpHookDefinition on="ENABLE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System"></HttpHookDefinition>
-                    <TaskParamDefinition path="GCS2_PhysicalActivity.phactp1" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PhysicalActivity.phactp2" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PhysicalActivity.phactp3" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PhysicalActivity.phactp4" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PhysicalActivity.phactp5" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PhysicalActivity.phactp6" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PhysicalActivity.phactp7" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.phactp1" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.phactp2" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.phactp3" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.phactp4" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.phactp5" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.phactp6" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.phactp7" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="GCS2_Patient" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PhysicalActivity.phactpx" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.phactpx" isReadOnly="false" isMandatory="true"/>
                 </AutomatedTaskDefinition>
-                <HumanTaskDefinition id="GCS2_PatientMonitoringPrescription" description="Patient Monitoring Prescription" ownerPath="GCS2_Owner" dueDatePath="GCS2_WorkplanDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_PatientMonitoring" entityAttachPath="GCS2_PatientMonitoring">
-                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp1_name" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp2_alertmin" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp3_alertmax" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp4_alertfreq" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp5_alertfrequnit" isReadOnly="false" isMandatory="false"/>            
-                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp7_freq" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp8_freqqunit" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp9_maxdelay" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp10_startdate" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp11_enddate" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp12_timeslot" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp6_comments" isReadOnly="false" isMandatory="false"/>
+                <HumanTaskDefinition id="GCS2_PatientMonitoringPrescription" description="Patient Monitoring Prescription" ownerPath="GCS2_Owner" dueDatePath="GCS2_WorkplanDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_PatientMonitoring" entityAttachPath="GCS2_Workplan.GCS2_PatientMonitoring">
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp1_name" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp2_alertmin" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp3_alertmax" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp4_alertfreq" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp5_alertfrequnit" isReadOnly="false" isMandatory="false"/>            
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp7_freq" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp8_freqqunit" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp9_maxdelay" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp10_startdate" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp11_enddate" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp12_timeslot" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp6_comments" isReadOnly="false" isMandatory="false"/>
                 </HumanTaskDefinition>
                 <AutomatedTaskDefinition id="GCS2_PatientMonitoringExecution" description="Patient Monitoring Execution" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE">
                     <SentryDefinition>
                         <precondition processDefinitionId="GCS2_PatientMonitoringPrescription"/>
                     </SentryDefinition>
                     <HttpHookDefinition on="ENABLE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create monitoring prescription on Self-Management System"></HttpHookDefinition>
-                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp1_name" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp2_alertmin" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp3_alertmax" isReadOnly="true" isMandatory="false"/>            
-                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp5_alertfrequnit" isReadOnly="true" isMandatory="false"/> 
-                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp4_alertfreq" isReadOnly="true" isMandatory="false"/>          
-                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp8_freqqunit" isReadOnly="true" isMandatory="false"/>      
-                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp7_freq" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp9_maxdelay" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp10_startdate" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp11_enddate" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp12_timeslot" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmp6_comments" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp1_name" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp2_alertmin" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp3_alertmax" isReadOnly="true" isMandatory="false"/>            
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp5_alertfrequnit" isReadOnly="true" isMandatory="false"/> 
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp4_alertfreq" isReadOnly="true" isMandatory="false"/>          
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp8_freqqunit" isReadOnly="true" isMandatory="false"/>      
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp7_freq" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp9_maxdelay" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp10_startdate" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp11_enddate" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp12_timeslot" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp6_comments" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="GCS2_Patient" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_PatientMonitoring.pmpx" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmpx" isReadOnly="false" isMandatory="true"/>
                 </AutomatedTaskDefinition>
 
-                <AutomatedTaskDefinition id="GCS2_SF12" externalId="6C20EE57-C5F7-4F4C-A7AE-BEAC4F8C3C3A" description="SF-12" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_SF12" entityAttachPath="GCS2_SF12">
+                <AutomatedTaskDefinition id="GCS2_SF12" externalId="6C20EE57-C5F7-4F4C-A7AE-BEAC4F8C3C3A" description="SF-12" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_SF12" entityAttachPath="GCS2_Workplan.GCS2_SF12">
                     <!--<HttpHookDefinition on="ENABLE" url="http://35.157.110.245:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System"></HttpHookDefinition>-->
-                    <TaskParamDefinition path="GCS2_SF12.sf12-1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_SF12.sf12-2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_SF12.sf12-3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_SF12.sf12-4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_SF12.sf12-5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_SF12.sf12-6" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_SF12.sf12-7" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_SF12.sf12-8" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_SF12.sf12-9" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_SF12.sf12-10" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_SF12.sf12-11" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_SF12.sf12-12" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_SF12.sf12-13" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_SF12.sf12-1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_SF12.sf12-2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_SF12.sf12-3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_SF12.sf12-4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_SF12.sf12-5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_SF12.sf12-6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_SF12.sf12-7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_SF12.sf12-8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_SF12.sf12-9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_SF12.sf12-10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_SF12.sf12-11" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_SF12.sf12-12" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_SF12.sf12-13" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Patient" isReadOnly="true" isMandatory="false"/>
                 </AutomatedTaskDefinition>
 
