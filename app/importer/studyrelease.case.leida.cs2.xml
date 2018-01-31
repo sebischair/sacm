@@ -52,24 +52,24 @@
 			  <!-- Diagnòstic -->	
 			  <AttributeDefinition id="LCS2_AnthropometricVariables" type="Link.EntityDefinition.LCS2_AnthropometricVariables"/>		  
 			  <AttributeDefinition id="LCS2_DiagnosisSmokingAndAlcohol" type="Link.EntityDefinition.LCS2_DiagnosisSmokingAndAlcohol"/>  		  
+			  <!-- Falta qüestionari Diagnostic-Nutrició -->
 			  
 			  <!-- Estat cognitu/mental -->			  
 			  <AttributeDefinition id="LCS2_ComorbidityPfeiffer" type="Link.EntityDefinition.LCS2_ComorbidityPfeiffer"/>
 			  <AttributeDefinition id="LCS2_HospitalAnxietyAndDepressionScale" type="Link.EntityDefinition.LCS2_HospitalAnxietyAndDepressionScale"/>
 
-			  <!-- Barreres - Estat funcional -->				  
+			  <!-- Estat funcional -->				  
 			  <AttributeDefinition id="LCS2_Barthel" type="Link.EntityDefinition.LCS2_Barthel"/>
 			  <AttributeDefinition id="LCS2_DiagnosisCommunication" type="Link.EntityDefinition.LCS2_DiagnosisCommunication"/>    
 			  <AttributeDefinition id="LCS2_Sleeping" type="Link.EntityDefinition.LCS2_Sleeping"/>
-			  
-			  <AttributeDefinition id="LCS2_ProblemsManagingMoney" type="Link.EntityDefinition.LCS2_ProblemsManagingMoney"/>
-			  <!-- Diagnostic-Nutrició -->
-			  
-			  <!-- Diagnòstic -->		
 			  <AttributeDefinition id="LCS2_WOMAC" type="Link.EntityDefinition.LCS2_WOMAC"/>  		  
+			  
+			  <!-- Diagnòstic dolor -->					  			  
 			  <AttributeDefinition id="LCS2_EVA" type="Link.EntityDefinition.LCS2_EVA"/>		  
 			  <AttributeDefinition id="LCS2_SF12" type="Link.EntityDefinition.LCS2_SF12"/>		  
 			  
+			  <!-- Barreres -->				  
+			  <AttributeDefinition id="LCS2_ProblemsManagingMoney" type="Link.EntityDefinition.LCS2_ProblemsManagingMoney"/>			  
 			  <AttributeDefinition id="LCS2_SocialDwelling" type="Link.EntityDefinition.LCS2_SocialDwelling"/>      
 			  <AttributeDefinition id="LCS2_SocialSelfCareCareerAbility" type="Link.EntityDefinition.LCS2_SocialSelfCareCareerAbility"/>		  
 			  <AttributeDefinition id="LCS2_SocialComplexityOfThePatient" type="Link.EntityDefinition.LCS2_SocialComplexityOfThePatient"/>		  
@@ -1708,18 +1708,10 @@
 				<TaskParamDefinition path="LCS2_Sleeping.sleeping3" isReadOnly="false" isMandatory="true"/>
 				<TaskParamDefinition path="LCS2_Sleeping.sleeping4" isReadOnly="false" isMandatory="true"/>
 			</HumanTaskDefinition>	
-			
-            <HumanTaskDefinition id="LCS2_ProblemsManagingMoney" description="Estat funcional - Problemes fent servir diners" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_ProblemsManagingMoney" entityAttachPath="LCS2_ProblemsManagingMoney">
-              <TaskParamDefinition path="LCS2_ProblemsManagingMoney.money" isReadOnly="false" isMandatory="true"/>
-            </HumanTaskDefinition>			
-
-			<!-- Nutrition? Diagnostic-Nutrició (proteins I hemoglobina); Anestesiòleg -->
 						
-			<HumanTaskDefinition id="LCS2_ASAPhysicalStatusClassificationSystemEvaluation" description="Diagnòstic - Sistema de classificació d'estat físic (ASA)" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE">
-              <TaskParamDefinition path="LCS2_ComplexityRisk.ASA" isReadOnly="true" isMandatory="false"/>			  
-            </HumanTaskDefinition>			
+			<!-- Nutrition? Diagnostic-Nutrició (proteins I hemoglobina); Anestesiòleg -->			
 			
-			<HumanTaskDefinition id="LCS2_WOMAC" description="Diagnòstic - WOMAC (Abans cirurgia)" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_WOMAC" entityAttachPath="LCS2_WOMAC">
+			<HumanTaskDefinition id="LCS2_WOMAC" description="Estat  funcional - WOMAC (Abans cirurgia)" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_WOMAC" entityAttachPath="LCS2_WOMAC">
               <TaskParamDefinition path="LCS2_WOMAC.Womac1" isReadOnly="false" isMandatory="true"/>
               <TaskParamDefinition path="LCS2_WOMAC.Womac2" isReadOnly="false" isMandatory="true"/>
               <TaskParamDefinition path="LCS2_WOMAC.Womac3" isReadOnly="false" isMandatory="true"/>
@@ -1768,6 +1760,14 @@
 				<TaskParamDefinition path="LCS2_SF12.sf12-13" isReadOnly="false" isMandatory="true"/>
 				<TaskParamDefinition path="LCS2_SF12.sf12-14" isReadOnly="false" isMandatory="true"/>			
 			</HumanTaskDefinition>
+						
+			<HumanTaskDefinition id="LCS2_ASAPhysicalStatusClassificationSystemEvaluation" description="Risc quirúrgiuc - Sistema de classificació d'estat físic (ASA)" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE">
+              <TaskParamDefinition path="LCS2_ComplexityRisk.ASA" isReadOnly="true" isMandatory="false"/>			  
+            </HumanTaskDefinition>			
+			
+			<HumanTaskDefinition id="LCS2_ProblemsManagingMoney" description="Barreres - Problemes fent servir diners" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_ProblemsManagingMoney" entityAttachPath="LCS2_ProblemsManagingMoney">
+              <TaskParamDefinition path="LCS2_ProblemsManagingMoney.money" isReadOnly="false" isMandatory="true"/>
+            </HumanTaskDefinition>			
 
             <HumanTaskDefinition id="LCS2_SocialDwelling" description="Barreres - Habitatge social" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_SocialDwelling" entityAttachPath="LCS2_SocialDwelling">
               <TaskParamDefinition path="LCS2_SocialDwelling.dwelling1" isReadOnly="false" isMandatory="true"/>
@@ -1776,7 +1776,7 @@
               <TaskParamDefinition path="LCS2_SocialDwelling.dwelling4" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>
 			
-            <HumanTaskDefinition id="LCS2_SocialSelfCareCareerAbility" description="Barreres - Capacitat del cuidador" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_SocialSelfCareCareerAbility" entityAttachPath="LCS2_SocialSelfCareCareerAbility">
+            <HumanTaskDefinition id="LCS2_SocialSelfCareCareerAbility" description="Barreres - Autocura i capacitat del cuidador" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_SocialSelfCareCareerAbility" entityAttachPath="LCS2_SocialSelfCareCareerAbility">
               <TaskParamDefinition path="LCS2_SocialSelfCareCareerAbility.career1" isReadOnly="false" isMandatory="true"/>
               <TaskParamDefinition path="LCS2_SocialSelfCareCareerAbility.career2" isReadOnly="false" isMandatory="true"/>
               <TaskParamDefinition path="LCS2_SocialSelfCareCareerAbility.career3" isReadOnly="false" isMandatory="true"/>
