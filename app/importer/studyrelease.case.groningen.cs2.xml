@@ -36,7 +36,7 @@
             <AttributeDefinition id="GCS2_Identification" type="Link.EntityDefinition.GCS2_Identification" description="Identification"/>    
             <AttributeDefinition id="GCS2_Evaluation" type="Link.EntityDefinition.GCS2_Evaluation" description="Evaluation"/>            
             <AttributeDefinition id="GCS2_Workplan" type="Link.EntityDefinition.GCS2_Workplan" description="Workplan"/> 
-            <AttributeDefinition id="GCS2_DischargeForm" type="Link.EntityDefinition.GCS2_DischargeForm" description="Discharge From"/>            
+            <AttributeDefinition id="GCS2_Discharge" type="Link.EntityDefinition.GCS2_Discharge" description="Discharge"/>                        
         </EntityDefinition>
 
         <!-- Identification Entity Definitions -->
@@ -537,6 +537,12 @@
             </AttributeDefinition>                   
         </EntityDefinition>
 
+
+        <!-- Discharge Entity Definitions -->
+        <EntityDefinition id="GCS2_Discharge" description="GCS2_Discharge">
+            <AttributeDefinition id="GCS2_DischargeForm" type="Link.EntityDefinition.GCS2_DischargeForm" description="Discharge From"/> 
+        </EntityDefinition>
+
         <EntityDefinition id="GCS2_DischargeForm" description="Discharge From">
             <AttributeDefinition id="comment" type="longtext" multiplicity="maximalOne" description="Comment"/>                             
         </EntityDefinition>
@@ -758,12 +764,12 @@
 
             </StageDefinition>
             
-            <StageDefinition id="GCS2_Discharge" description="Discharge" isMandatory="true" repeatable="ONCE">
+            <StageDefinition id="GCS2_Discharge" description="Discharge" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_Discharge" entityAttachPath="GCS2_Discharge">
                 <SentryDefinition>
                     <precondition processDefinitionId="GCS2_Workplan"/>
                 </SentryDefinition>
-                <HumanTaskDefinition id="GCS2_DischargeForm" description="Discharge Form" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_DischargeForm" entityAttachPath="GCS2_DischargeForm">
-                    <TaskParamDefinition path="GCS2_DischargeForm.comment" isReadOnly="false" isMandatory="true"/>                  
+                <HumanTaskDefinition id="GCS2_DischargeForm" description="Discharge Form" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_DischargeForm" entityAttachPath="GCS2_Discharge.GCS2_DischargeForm">
+                    <TaskParamDefinition path="GCS2_Discharge.GCS2_DischargeForm.comment" isReadOnly="false" isMandatory="true"/>                  
                 </HumanTaskDefinition>
             </StageDefinition>
 
