@@ -304,7 +304,7 @@
                 <EnumerationOption value="1.0002" description="Needs help with finances"/>
                 <EnumerationOption value="0" description="Is not able to deal with money"/>
             </AttributeDefinition>
-            <DerivedAttributeDefinition id="iadl9" expression="number(iadl1,0) + number(iadl2,0) + number(iadl2,0) + number(iadl3,0) + number(iadl4,0) + number(iadl5,0) + number(iadl6,0) + number(iadl7,0) + number(iadl8,0)" description="iADL Score"/> 
+            <DerivedAttributeDefinition id="iadl9" expression="floor(number(iadl1,0) + number(iadl2,0) + number(iadl3,0) + number(iadl4,0) + number(iadl5,0) + number(iadl6,0) + number(iadl7,0) + number(iadl8,0))" description="iADL Score"/> 
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_NRS" description="Nutritional Risk Screening (NRS)">
@@ -372,8 +372,8 @@
             <AttributeDefinition id="mnasf6" type="number" multiplicity="maximalOne" description="Weight in kilograms"/>
             <AttributeDefinition id="mnasf7" type="number" multiplicity="maximalOne" description="Length in centimetres"/>
 
-            <DerivedAttributeDefinition id="mnasf8" expression="mnasf6 / (mnasf7 * mnasf7)" description="BMI"/>  
-            <DerivedAttributeDefinition id="mnasf9" expression="if mnasf8 < 19 then 0 else if mnasf8 >= 19 and mnasf8 < 21 then 1 else if mnasf8 >= 21 and mnasf8 < 23 then 2 else 3" description="BMI"/>  
+            <DerivedAttributeDefinition id="mnasf8" expression="round((mnasf6 / ((mnasf7/100) * (mnasf7/100))), 2)" description="BMI raw"/>  
+            <DerivedAttributeDefinition id="mnasf9" expression="if mnasf8 < 19 then 0 else if mnasf8 >= 19 and mnasf8 < 21 then 1 else if mnasf8 >= 21 and mnasf8 < 23 then 2 else 3" description="BMI range indicator"/>  
 
             <!--
             <AttributeDefinition id="mnasf8" type="enumeration" multiplicity="maximalOne" description="BMI">
@@ -532,6 +532,7 @@
            
             <SummarySectionDefinition id="GCS2_Nutritional" description="Nutritional" position="LEFT">    
                 <SummaryParamDefinition path="GCS2_NRS.nrs8"/>
+                <SummaryParamDefinition path="GCS2_MNASF.mnasf9"/>
             </SummarySectionDefinition>
             <SummarySectionDefinition id="GCS2_Frailty" description="Frailty" position="LEFT">  
                 <SummaryParamDefinition path="GCS2_GFI.gfi16"/>          
@@ -540,19 +541,11 @@
                 <SummaryParamDefinition path="GCS2_Charlson.ch22"/>
             </SummarySectionDefinition>
             <SummarySectionDefinition id="GCS2_Functional" description="Functional" position="CENTER">   
-                <SummaryParamDefinition path="GCS2_iADL.iadl1"/>
-                <SummaryParamDefinition path="GCS2_iADL.iadl2"/>
-                <SummaryParamDefinition path="GCS2_iADL.iadl3"/>
-                <SummaryParamDefinition path="GCS2_iADL.iadl4"/>
-                <SummaryParamDefinition path="GCS2_iADL.iadl5"/>
-                <SummaryParamDefinition path="GCS2_iADL.iadl6"/>
-                <SummaryParamDefinition path="GCS2_iADL.iadl7"/>
-                <SummaryParamDefinition path="GCS2_iADL.iadl8"/>
                 <SummaryParamDefinition path="GCS2_iADL.iadl9"/>
                 <SummaryParamDefinition path="GCS2_ADL.adl7"/>
             </SummarySectionDefinition>
             <SummarySectionDefinition id="GCS2_Cognitive" description="Cognitive" position="RIGHT">    
-                <SummaryParamDefinition path="GCS2_MNASF.mnasf9"/>
+                
             </SummarySectionDefinition>
             <SummarySectionDefinition id="GCS2_QOL" description="QOL" position="RIGHT">    
             </SummarySectionDefinition>
