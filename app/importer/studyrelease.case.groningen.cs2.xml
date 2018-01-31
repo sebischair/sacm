@@ -33,7 +33,7 @@
             <AttributeDefinition id="GCS2_Owner" type="Link.Users(UmcgProfessionals)" description="Owner"/>
             <AttributeDefinition id="GCS2_EvaluationDueDate" type="date.after(TODAY)" description="Evaluation default due date"/>
             <AttributeDefinition id="GCS2_WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date"/>
-            <AttributeDefinition id="GCS2_ASA" type="Link.EntityDefinition.GCS2_ASA" description="ASA"/>    
+            <AttributeDefinition id="GCS2_Identification" type="Link.EntityDefinition.GCS2_Identification" description="Identification"/>    
             <AttributeDefinition id="GCS2_Charlson" type="Link.EntityDefinition.GCS2_Charlson" description="Charlson"/>   
             <AttributeDefinition id="GCS2_GFI" type="Link.EntityDefinition.GCS2_GFI" description="Groningen Frailty Indicator (GFI)"/>   
             <AttributeDefinition id="GCS2_ADL" type="Link.EntityDefinition.GCS2_ADL" description="Activities of Daily Living (ADL)"/>   
@@ -44,6 +44,10 @@
             <AttributeDefinition id="GCS2_PatientMonitoring" type="Link.EntityDefinition.GCS2_PatientMonitoring" description="Patient Monitory"/> 
             <AttributeDefinition id="GCS2_SF12" type="Link.EntityDefinition.GCS2_SF12" description="SF-12"/>
             <AttributeDefinition id="GCS2_DischargeForm" type="Link.EntityDefinition.GCS2_DischargeForm" description="Discharge From"/>            
+        </EntityDefinition>
+
+        <EntityDefinition id="GCS2_Identification" description="Identification">
+            <AttributeDefinition id="GCS2_ASA" type="Link.EntityDefinition.GCS2_ASA" multiplicity="maximalOne" description="ASA"/> 
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_ASA" description="ASA">
@@ -555,18 +559,18 @@
                 <SummaryParamDefinition path="GCS2_PhysicalActivity.phactpx"/>
             </SummarySectionDefinition>
 
-            <StageDefinition id="GCS2_CaseIdentification" description="Case Identification" isMandatory="true" repeatable="ONCE">        
+            <StageDefinition id="GCS2_CaseIdentification" description="Case Identification" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_Identification" entityAttachPath="GCS2_Identification">        
                 <HumanTaskDefinition id="GCS2_SelectPatient" description="Select Patient" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE">                
                     <TaskParamDefinition path="GCS2_Patient" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Owner" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_EvaluationDueDate" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_WorkplanDueDate" isReadOnly="false" isMandatory="true"/>                    
                 </HumanTaskDefinition>
-                <HumanTaskDefinition id="GCS2_ASA" description="ASA" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_ASA" entityAttachPath="GCS2_ASA">                
+                <HumanTaskDefinition id="GCS2_ASA" description="ASA" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_ASA" entityAttachPath="GCS2_Identification.GCS2_ASA">                
                     <SentryDefinition>
                         <precondition processDefinitionId="GCS2_SelectPatient"/>
                     </SentryDefinition>
-                    <TaskParamDefinition path="GCS2_ASA.asa" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Identification.GCS2_ASA.asa" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
                 
             </StageDefinition>
@@ -767,7 +771,7 @@
             <TaskParam path="GCS2_WorkplanDueDate" values="['2017-12-28T00:00:00.000']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="GCS2_ASA">
-            <TaskParam path="GCS2_ASA.asa"  values="['2']"/>
+            <TaskParam path="GCS2_Identification.GCS2_ASA.asa"  values="['2']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="GCS2_Charlson">
             <TaskParam path="GCS2_Charlson.ch1"  values="['0']"/>
