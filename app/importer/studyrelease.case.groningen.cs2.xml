@@ -34,13 +34,8 @@
             <AttributeDefinition id="GCS2_EvaluationDueDate" type="date.after(TODAY)" description="Evaluation default due date"/>
             <AttributeDefinition id="GCS2_WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date"/>
             <AttributeDefinition id="GCS2_Identification" type="Link.EntityDefinition.GCS2_Identification" description="Identification"/>    
-            <AttributeDefinition id="GCS2_Charlson" type="Link.EntityDefinition.GCS2_Charlson" description="Charlson"/>   
-            <AttributeDefinition id="GCS2_GFI" type="Link.EntityDefinition.GCS2_GFI" description="Groningen Frailty Indicator (GFI)"/>   
-            <AttributeDefinition id="GCS2_ADL" type="Link.EntityDefinition.GCS2_ADL" description="Activities of Daily Living (ADL)"/>   
-            <AttributeDefinition id="GCS2_iADL" type="Link.EntityDefinition.GCS2_iADL" description="Instrumental Activities of Daily Living (iADL)"/>   
-            <AttributeDefinition id="GCS2_NRS" type="Link.EntityDefinition.GCS2_NRS" description="Nutritional Risk Screening (NRS)"/>   
-            <AttributeDefinition id="GCS2_MNASF" type="Link.EntityDefinition.GCS2_MNASF" description="Mini Nutritional Assesment (MNA-SF)"/> 
-            <AttributeDefinition id="GCS2_PhysicalActivity" type="Link.EntityDefinition.GCS2_PhysicalActivity" description="Physical Activity"/>   
+            <AttributeDefinition id="GCS2_Evaluation" type="Link.EntityDefinition.GCS2_Evaluation" description="Evaluation"/>            
+            <AttributeDefinition id="GCS2_PhysicalActivity" type="Link.EntityDefinition.GCS2_PhysicalActivity" description="Physical Activity"/>
             <AttributeDefinition id="GCS2_PatientMonitoring" type="Link.EntityDefinition.GCS2_PatientMonitoring" description="Patient Monitory"/> 
             <AttributeDefinition id="GCS2_SF12" type="Link.EntityDefinition.GCS2_SF12" description="SF-12"/>
             <AttributeDefinition id="GCS2_DischargeForm" type="Link.EntityDefinition.GCS2_DischargeForm" description="Discharge From"/>            
@@ -58,6 +53,15 @@
                 <EnumerationOption value="4" description="ASA 4"/>
                 <EnumerationOption value="5" description="ASA 5"/>
             </AttributeDefinition> 
+        </EntityDefinition>
+
+        <EntityDefinition id="GCS2_Evaluation" description="Evaluation">
+            <AttributeDefinition id="GCS2_Charlson" type="Link.EntityDefinition.GCS2_Charlson" description="Charlson"/>   
+            <AttributeDefinition id="GCS2_GFI" type="Link.EntityDefinition.GCS2_GFI" description="Groningen Frailty Indicator (GFI)"/>   
+            <AttributeDefinition id="GCS2_ADL" type="Link.EntityDefinition.GCS2_ADL" description="Activities of Daily Living (ADL)"/>   
+            <AttributeDefinition id="GCS2_iADL" type="Link.EntityDefinition.GCS2_iADL" description="Instrumental Activities of Daily Living (iADL)"/>   
+            <AttributeDefinition id="GCS2_NRS" type="Link.EntityDefinition.GCS2_NRS" description="Nutritional Risk Screening (NRS)"/>   
+            <AttributeDefinition id="GCS2_MNASF" type="Link.EntityDefinition.GCS2_MNASF" description="Mini Nutritional Assesment (MNA-SF)"/> 
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_Charlson" description="Charlson">
@@ -574,93 +578,93 @@
                 </HumanTaskDefinition>
                 
             </StageDefinition>
-            <StageDefinition id="GCS2_CaseEvaluation" description="Case Evaluation" isMandatory="true" repeatable="ONCE">  
+            <StageDefinition id="GCS2_CaseEvaluation" description="Case Evaluation" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_Evaluation" entityAttachPath="GCS2_Evaluation">  
                 <SentryDefinition>
                     <precondition processDefinitionId="GCS2_CaseIdentification"/>
                 </SentryDefinition>        
-                <HumanTaskDefinition id="GCS2_Charlson" description="Charlson" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_Charlson" entityAttachPath="GCS2_Charlson">
-                    <TaskParamDefinition path="GCS2_Charlson.ch1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_Charlson.ch2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_Charlson.ch3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_Charlson.ch4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_Charlson.ch5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_Charlson.ch6" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_Charlson.ch7" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_Charlson.ch8" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_Charlson.ch9" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_Charlson.ch10" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_Charlson.ch11" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_Charlson.ch12" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_Charlson.ch13" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_Charlson.ch14" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_Charlson.ch15" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_Charlson.ch16" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_Charlson.ch17" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_Charlson.ch18" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_Charlson.ch19" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_Charlson.ch20" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_Charlson.ch21" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_Charlson.ch22" isReadOnly="true" isMandatory="false"/>
+                <HumanTaskDefinition id="GCS2_Charlson" description="Charlson" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_Charlson" entityAttachPath="GCS2_Evaluation.GCS2_Charlson">
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch11" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch12" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch13" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch14" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch15" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch16" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch17" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch18" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch19" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch20" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch21" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch22" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>                
-                <HumanTaskDefinition id="GCS2_GFI" description="Groningen Frailty Indicator (GFI)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_GFI" entityAttachPath="GCS2_GFI">
-                    <TaskParamDefinition path="GCS2_GFI.gfi1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_GFI.gfi2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_GFI.gfi3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_GFI.gfi4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_GFI.gfi5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_GFI.gfi6" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_GFI.gfi7" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_GFI.gfi8" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_GFI.gfi9" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_GFI.gfi10" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_GFI.gfi11" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_GFI.gfi12" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_GFI.gfi13" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_GFI.gfi14" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_GFI.gfi15" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_GFI.gfi16" isReadOnly="true" isMandatory="false"/>
+                <HumanTaskDefinition id="GCS2_GFI" description="Groningen Frailty Indicator (GFI)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_GFI" entityAttachPath="GCS2_Evaluation.GCS2_GFI">
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_GFI.gfi1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_GFI.gfi2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_GFI.gfi3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_GFI.gfi4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_GFI.gfi5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_GFI.gfi6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_GFI.gfi7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_GFI.gfi8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_GFI.gfi9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_GFI.gfi10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_GFI.gfi11" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_GFI.gfi12" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_GFI.gfi13" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_GFI.gfi14" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_GFI.gfi15" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_GFI.gfi16" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>                
-                <HumanTaskDefinition id="GCS2_ADL" description="Activities of Daily Living (ADL)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_ADL" entityAttachPath="GCS2_ADL">
-                    <TaskParamDefinition path="GCS2_ADL.adl1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_ADL.adl2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_ADL.adl3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_ADL.adl4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_ADL.adl5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_ADL.adl6" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_ADL.adl7" isReadOnly="true" isMandatory="false"/>
+                <HumanTaskDefinition id="GCS2_ADL" description="Activities of Daily Living (ADL)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_ADL" entityAttachPath="GCS2_Evaluation.GCS2_ADL">
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_ADL.adl1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_ADL.adl2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_ADL.adl3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_ADL.adl4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_ADL.adl5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_ADL.adl6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_ADL.adl7" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
-                <HumanTaskDefinition id="GCS2_iADL" description="Instrumental Activities of Daily Living (iADL)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_iADL" entityAttachPath="GCS2_iADL">
-                    <TaskParamDefinition path="GCS2_iADL.iadl1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_iADL.iadl2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_iADL.iadl3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_iADL.iadl4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_iADL.iadl5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_iADL.iadl6" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_iADL.iadl7" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_iADL.iadl8" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_iADL.iadl9" isReadOnly="true" isMandatory="false"/>
+                <HumanTaskDefinition id="GCS2_iADL" description="Instrumental Activities of Daily Living (iADL)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_iADL" entityAttachPath="GCS2_Evaluation.GCS2_iADL">
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_iADL.iadl1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_iADL.iadl2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_iADL.iadl3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_iADL.iadl4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_iADL.iadl5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_iADL.iadl6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_iADL.iadl7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_iADL.iadl8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_iADL.iadl9" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
-                <HumanTaskDefinition id="GCS2_NRS" description="Nutritional Risk Screening (NRS)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_NRS" entityAttachPath="GCS2_NRS">
-                    <TaskParamDefinition path="GCS2_NRS.nrs1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_NRS.nrs2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_NRS.nrs3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_NRS.nrs4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_NRS.nrs5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_NRS.nrs6" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_NRS.nrs7" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_NRS.nrs8" isReadOnly="true" isMandatory="false"/>
+                <HumanTaskDefinition id="GCS2_NRS" description="Nutritional Risk Screening (NRS)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_NRS" entityAttachPath="GCS2_Evaluation.GCS2_NRS">
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_NRS.nrs1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_NRS.nrs2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_NRS.nrs3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_NRS.nrs4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_NRS.nrs5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_NRS.nrs6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_NRS.nrs7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_NRS.nrs8" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
-                <HumanTaskDefinition id="GCS2_MNASF" description="Mini Nutritional Assesment (MNA-SF)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_MNASF" entityAttachPath="GCS2_MNASF">
-                    <TaskParamDefinition path="GCS2_MNASF.mnasf1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_MNASF.mnasf2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_MNASF.mnasf3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_MNASF.mnasf4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_MNASF.mnasf5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_MNASF.mnasf6" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_MNASF.mnasf7" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_MNASF.mnasf8" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_MNASF.mnasf9" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_MNASF.mnasf10" isReadOnly="true" isMandatory="false"/>
+                <HumanTaskDefinition id="GCS2_MNASF" description="Mini Nutritional Assesment (MNA-SF)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_MNASF" entityAttachPath="GCS2_Evaluation.GCS2_MNASF">
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf8" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf9" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf10" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
             </StageDefinition>
             <StageDefinition id="GCS2_Workplan" description="Workplan" isMandatory="true" repeatable="ONCE">
@@ -774,79 +778,79 @@
             <TaskParam path="GCS2_Identification.GCS2_ASA.asa"  values="['2']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="GCS2_Charlson">
-            <TaskParam path="GCS2_Charlson.ch1"  values="['0']"/>
-            <TaskParam path="GCS2_Charlson.ch2"  values="['1']"/>
-            <TaskParam path="GCS2_Charlson.ch3"  values="['0']"/>
-            <TaskParam path="GCS2_Charlson.ch4"  values="['1']"/>
-            <TaskParam path="GCS2_Charlson.ch5"  values="['0']"/>
-            <TaskParam path="GCS2_Charlson.ch6"  values="['1']"/>
-            <TaskParam path="GCS2_Charlson.ch7"  values="['0']"/>
-            <TaskParam path="GCS2_Charlson.ch8"  values="['1']"/>
-            <TaskParam path="GCS2_Charlson.ch9"  values="['0']"/>
-            <TaskParam path="GCS2_Charlson.ch10"  values="['1']"/>
-            <TaskParam path="GCS2_Charlson.ch11"  values="['0']"/>
-            <TaskParam path="GCS2_Charlson.ch12"  values="['1']"/>
-            <TaskParam path="GCS2_Charlson.ch13"  values="['0']"/>
-            <TaskParam path="GCS2_Charlson.ch14"  values="['1']"/>            
-            <TaskParam path="GCS2_Charlson.ch15"  values="['0']"/>
-            <TaskParam path="GCS2_Charlson.ch16"  values="['1']"/>
-            <TaskParam path="GCS2_Charlson.ch17"  values="['0']"/>
-            <TaskParam path="GCS2_Charlson.ch18"  values="['1']"/>            
-            <TaskParam path="GCS2_Charlson.ch19"  values="['0']"/>
-            <TaskParam path="GCS2_Charlson.ch20"  values="['1']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_Charlson.ch1"  values="['0']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_Charlson.ch2"  values="['1']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_Charlson.ch3"  values="['0']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_Charlson.ch4"  values="['1']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_Charlson.ch5"  values="['0']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_Charlson.ch6"  values="['1']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_Charlson.ch7"  values="['0']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_Charlson.ch8"  values="['1']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_Charlson.ch9"  values="['0']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_Charlson.ch10"  values="['1']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_Charlson.ch11"  values="['0']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_Charlson.ch12"  values="['1']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_Charlson.ch13"  values="['0']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_Charlson.ch14"  values="['1']"/>            
+            <TaskParam path="GCS2_Evaluation.GCS2_Charlson.ch15"  values="['0']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_Charlson.ch16"  values="['1']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_Charlson.ch17"  values="['0']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_Charlson.ch18"  values="['1']"/>            
+            <TaskParam path="GCS2_Evaluation.GCS2_Charlson.ch19"  values="['0']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_Charlson.ch20"  values="['1']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="GCS2_GFI">
-            <TaskParam path="GCS2_GFI.gfi1"  values="['0']"/>
-            <TaskParam path="GCS2_GFI.gfi2"  values="['1']"/>
-            <TaskParam path="GCS2_GFI.gfi3"  values="['1']"/>
-            <TaskParam path="GCS2_GFI.gfi4"  values="['0']"/>
-            <TaskParam path="GCS2_GFI.gfi5"  values="['1']"/>
-            <TaskParam path="GCS2_GFI.gfi6"  values="['0']"/>
-            <TaskParam path="GCS2_GFI.gfi7"  values="['1']"/>
-            <TaskParam path="GCS2_GFI.gfi8"  values="['0']"/>
-            <TaskParam path="GCS2_GFI.gfi9"  values="['0']"/>
-            <TaskParam path="GCS2_GFI.gfi10"  values="['0']"/>
-            <TaskParam path="GCS2_GFI.gfi11"  values="['1']"/>
-            <TaskParam path="GCS2_GFI.gfi12"  values="['0']"/>
-            <TaskParam path="GCS2_GFI.gfi13"  values="['1']"/>
-            <TaskParam path="GCS2_GFI.gfi14"  values="['0']"/>
-            <TaskParam path="GCS2_GFI.gfi15"  values="['1.0001']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_GFI.gfi1"  values="['0']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_GFI.gfi2"  values="['1']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_GFI.gfi3"  values="['1']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_GFI.gfi4"  values="['0']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_GFI.gfi5"  values="['1']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_GFI.gfi6"  values="['0']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_GFI.gfi7"  values="['1']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_GFI.gfi8"  values="['0']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_GFI.gfi9"  values="['0']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_GFI.gfi10"  values="['0']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_GFI.gfi11"  values="['1']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_GFI.gfi12"  values="['0']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_GFI.gfi13"  values="['1']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_GFI.gfi14"  values="['0']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_GFI.gfi15"  values="['1.0001']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="GCS2_ADL">
-            <TaskParam path="GCS2_ADL.adl1"  values="['0']"/>
-            <TaskParam path="GCS2_ADL.adl2"  values="['1']"/>
-            <TaskParam path="GCS2_ADL.adl3"  values="['2']"/>
-            <TaskParam path="GCS2_ADL.adl4"  values="['2']"/>
-            <TaskParam path="GCS2_ADL.adl5"  values="['1']"/>
-            <TaskParam path="GCS2_ADL.adl6"  values="['0']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_ADL.adl1"  values="['0']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_ADL.adl2"  values="['1']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_ADL.adl3"  values="['2']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_ADL.adl4"  values="['2']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_ADL.adl5"  values="['1']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_ADL.adl6"  values="['0']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="GCS2_iADL">
-            <TaskParam path="GCS2_iADL.iadl1"  values="['1.0001']"/>
-            <TaskParam path="GCS2_iADL.iadl2"  values="['1']"/>
-            <TaskParam path="GCS2_iADL.iadl3"  values="['0.0001']"/>
-            <TaskParam path="GCS2_iADL.iadl4"  values="['1.0003']"/>
-            <TaskParam path="GCS2_iADL.iadl5"  values="['1.0003']"/>
-            <TaskParam path="GCS2_iADL.iadl6"  values="['0']"/>
-            <TaskParam path="GCS2_iADL.iadl7"  values="['1']"/>
-            <TaskParam path="GCS2_iADL.iadl8"  values="['0']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_iADL.iadl1"  values="['1.0001']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_iADL.iadl2"  values="['1']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_iADL.iadl3"  values="['0.0001']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_iADL.iadl4"  values="['1.0003']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_iADL.iadl5"  values="['1.0003']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_iADL.iadl6"  values="['0']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_iADL.iadl7"  values="['1']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_iADL.iadl8"  values="['0']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="GCS2_NRS">
-            <TaskParam path="GCS2_NRS.nrs1"  values="['1']"/>
-            <TaskParam path="GCS2_NRS.nrs2"  values="['0']"/>
-            <TaskParam path="GCS2_NRS.nrs3"  values="['1']"/>
-            <TaskParam path="GCS2_NRS.nrs4"  values="['0']"/>
-            <TaskParam path="GCS2_NRS.nrs5"  values="['3']"/>
-            <TaskParam path="GCS2_NRS.nrs6"  values="['2']"/>
-            <TaskParam path="GCS2_NRS.nrs7"  values="['1']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_NRS.nrs1"  values="['1']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_NRS.nrs2"  values="['0']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_NRS.nrs3"  values="['1']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_NRS.nrs4"  values="['0']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_NRS.nrs5"  values="['3']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_NRS.nrs6"  values="['2']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_NRS.nrs7"  values="['1']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="GCS2_MNASF">
-            <TaskParam path="GCS2_MNASF.mnasf1"  values="['0']"/>
-            <TaskParam path="GCS2_MNASF.mnasf2"  values="['2']"/>
-            <TaskParam path="GCS2_MNASF.mnasf3"  values="['2']"/>
-            <TaskParam path="GCS2_MNASF.mnasf4"  values="['0']"/>
-            <TaskParam path="GCS2_MNASF.mnasf5"  values="['1']"/>
-            <TaskParam path="GCS2_MNASF.mnasf6"  values="[70]"/>
-            <TaskParam path="GCS2_MNASF.mnasf7"  values="[180]"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_MNASF.mnasf1"  values="['0']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_MNASF.mnasf2"  values="['2']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_MNASF.mnasf3"  values="['2']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_MNASF.mnasf4"  values="['0']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_MNASF.mnasf5"  values="['1']"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_MNASF.mnasf6"  values="[70]"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_MNASF.mnasf7"  values="[180]"/>
         </Action>
         <Action id="CreateAlert" 
             processId="GCS2_SF12" 
