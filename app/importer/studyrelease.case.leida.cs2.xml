@@ -402,27 +402,24 @@
         </EntityDefinition>		
 
         <EntityDefinition id="LCS2_SocialSelfCareCareerAbility"> 
-            <AttributeDefinition id="career1" type="enumeration" multiplicity="maximalOne" description="Puntuació en el test d´autocura"> 
+            <AttributeDefinition id="career1" type="enumeration" multiplicity="maximalOne" description="El Cuidador és no apte (informat per serveis socials o per profesionals de la salut)"> 
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>
-            <AttributeDefinition id="career2" type="enumeration" multiplicity="maximalOne" description="Sól o amb un cuidador no apte (informat per serveis socials o per profesionals de la salut)"> 
+            <AttributeDefinition id="career2" type="enumeration" multiplicity="maximalOne" description="El cuidador també té una malatía crónica"> 
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>
-            <AttributeDefinition id="career3" type="enumeration" multiplicity="maximalOne" description="El cuidador també té una malatía crónica."> 
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="career4" type="enumeration" multiplicity="maximalOne" description="Percepció del recolzament rebut per el pacient"> 
+            <AttributeDefinition id="career3" type="enumeration" multiplicity="maximalOne" description="Percepció del recolzament rebut pel pacient"> 
                 <EnumerationOption value="0" description="Adequat"/>
                 <EnumerationOption value="1" description="Inadecuat"/>
             </AttributeDefinition>
-            <AttributeDefinition id="career5" type="enumeration" multiplicity="maximalOne" description="Tipus de recolzament"> 
-                <EnumerationOption value="0" description="Suport parcial setmanal o viu sol/a"/>
-                <EnumerationOption value="1" description="Suport parcial diari"/>
-                <EnumerationOption value="2" description="Suport complert 24h"/>
+            <AttributeDefinition id="career4" type="enumeration" multiplicity="maximalOne" description="Tipus de recolzament"> 
+                <EnumerationOption value="1" description="Suport parcial setmanal o viu sol/a"/>
+                <EnumerationOption value="0.01" description="Suport parcial diari"/>
+                <EnumerationOption value="0.02" description="Suport complert 24h"/>
             </AttributeDefinition>
+			<DerivedAttributeDefinition id="career5" expression="number(career1,0)+number(career2,0)+number(career3,0)+round(number(career4,0))" description="Puntuació total"/> 
         </EntityDefinition>		
 
 		<EntityDefinition id="LCS2_SocialComplexityOfThePatient"> 
