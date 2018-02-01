@@ -52,9 +52,9 @@
             <AttributeDefinition id="ICS2_ResidenceSituationOfDwelling" type="Link.EntityDefinition.ICS2_ResidenceSituationOfDwelling" description="מגורים / מצב הבית"/>  
             <AttributeDefinition id="ICS2_Communication" type="Link.EntityDefinition.ICS2_Communication" description="תקשורת"/>  
             <AttributeDefinition id="ICS2_SmokingAlcohol" type="Link.EntityDefinition.ICS2_SmokingAlcohol" description="עישון ואלכוהול"/>  
-            <AttributeDefinition id="ICS2_Medication" type="Link.EntityDefinition.ICS2_Medication" description="עישון ואלכוהול"/>  
+            <AttributeDefinition id="ICS2_Medication" type="Link.EntityDefinition.ICS2_Medication" description="טיפול תרופתי"/>  
             <AttributeDefinition id="ICS2_RiskOfFallsDowntonIndex" type="Link.EntityDefinition.ICS2_RiskOfFallsDowntonIndex" description="סיכון לנפילות - מדד דוטון"/>  
-            <AttributeDefinition id="ICS2_Sleeping" type="Link.EntityDefinition.ICS2_Medication" description="עישון ואלכוהול"/>  
+            <AttributeDefinition id="ICS2_Sleeping" type="Link.EntityDefinition.ICS2_Medication" description="איכות שינה"/>  
             <AttributeDefinition id="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist" type="Link.EntityDefinition.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist" description="הערכה רפואית של מחלקת הכירורגיה או המרדים"/>  
         </EntityDefinition>
 
@@ -766,7 +766,7 @@
             </AttributeDefinition> 
         </EntityDefinition>
 
-        <EntityDefinition id="ICS2_Medication" description="עישון ואלכוהול"> 
+        <EntityDefinition id="ICS2_Medication" description="טיפול תרופתי"> 
             <AttributeDefinition id="Medication1" type="enumeration" multiplicity="maximalOne" description="יותר מ-4 כדורים ביום?">
                 <EnumerationOption value="0" description="לא"/>
                 <EnumerationOption value="1" description="כן"/>
@@ -784,34 +784,34 @@
 
         <EntityDefinition id="ICS2_RiskOfFallsDowntonIndex" description="סיכון לנפילות - מדד דוטון"> 
             <AttributeDefinition id="Downton1" type="enumeration" multiplicity="maximalOne" description="נפילות בשנה האחרונה">
-                <EnumerationOption value="0" description="לא (0)"/>
-                <EnumerationOption value="1" description="כן (1)"/>
+                <EnumerationOption value="0" description="לא "/>
+                <EnumerationOption value="1" description="כן "/>
             </AttributeDefinition>  
-            <AttributeDefinition id="Downton2" type="enumeration" multiplicity="maximalOne" description="יסוגי תרופות רשומות">
-                <EnumerationOption value="1" description="None (0)"/>
-                <EnumerationOption value="2" description="Tranquilizer or sedative (1)"/>
-                <EnumerationOption value="3" description="Diuretics (1)"/>
-                <EnumerationOption value="4" description="Hypotensive (1)"/>
-                <EnumerationOption value="5" description="Anti-Parkinson's (1)"/>
-                <EnumerationOption value="6" description="Antidepressants (1)"/>
-                <EnumerationOption value="7" description="Other medicines (1)"/>
+            <AttributeDefinition id="Downton2" type="enumeration" multiplicity="maximalOne" description="סוגי תרופות רשומות">
+                <EnumerationOption value="0" description="ללא "/>
+                <EnumerationOption value="1" description="תרופות הרגעה"/>
+                <EnumerationOption value="2" description="משתנים "/>
+                <EnumerationOption value="3" description="להורדת לחץ דם "/>
+                <EnumerationOption value="4" description="לטיפול בפרקינסון "/>
+                <EnumerationOption value="5" description="תרופות אנטי דכאון "/>
+                <EnumerationOption value="6" description="תרופות אחרות"/>
             </AttributeDefinition> 
             <AttributeDefinition id="Downton3" type="enumeration" multiplicity="maximalOne" description="בעיות חושיות">
-                <EnumerationOption value="1" description="ללא בעיות חושיות (0)"/>
-                <EnumerationOption value="2" description="בעיית ראייה בינונית או חמורה או עיוורת (1)"/>
-                <EnumerationOption value="3" description="בעיית שמיעה או חירשות (1)"/>
-                <EnumerationOption value="4" description="מיומנויות מוטוריות מופחתות או נכות (1)"/>
+                <EnumerationOption value="0" description="ללא בעיות חושיות "/>
+                <EnumerationOption value="1" description="בעיית ראייה בינונית או חמורה או עיוורת"/>
+                <EnumerationOption value="2" description="בעיית שמיעה או חירשות "/>
+                <EnumerationOption value="3" description="מיומנויות מוטוריות מופחתות או נכות "/>
             </AttributeDefinition> 
-            <AttributeDefinition id="Downton4" type="enumeration" multiplicity="maximalOne" description="בעיות חושיות"> <!-- Check this :: L162 -->
-                <EnumerationOption value="1" description="Not oriented (1)"/>
-                <EnumerationOption value="0" description="Oriented (0)"/>
+            <AttributeDefinition id="Downton4" type="enumeration" multiplicity="maximalOne" description="מצב קוגנטיבי"> <!-- Check this :: L162 -->
+                <EnumerationOption value="1" description="ללא אורנטצייה "/>
+                <EnumerationOption value="0" description="בעל אורנטצייה "/>
             </AttributeDefinition>   
 
-            <AttributeDefinition id="Downton5" type="enumeration" multiplicity="maximalOne" description="בעיות חושיות">
-                <EnumerationOption value="1" description="הליכה בטוחה עם או בלי עזרי הליכה (0)"/>
-                <EnumerationOption value="2" description="הליכה בטוחה עם או בלי עזרי הליכה (0)"/>
-                <EnumerationOption value="3" description="הליכה לא בטוחה עם או ללא עזרה (1)"/>
-                <EnumerationOption value="4" description="יכולת הליכה אינה אפשרית (1)"/>
+            <AttributeDefinition id="Downton5" type="enumeration" multiplicity="maximalOne" description="יכולת הליכה">
+                <EnumerationOption value="1" description="הליכה בטוחה עם או בלי עזרי הליכה "/>
+                <EnumerationOption value="2" description="הליכה בטוחה עם או בלי עזרי הליכה "/>
+                <EnumerationOption value="3" description="הליכה לא בטוחה עם או ללא עזרה "/>
+                <EnumerationOption value="4" description="יכולת הליכה אינה אפשרית "/>
             </AttributeDefinition> 
 
             <DerivedAttributeDefinition id="DowntonSum" expression="number(Downton1, 0) + number(Downton2, 0) + number(Downton3, 0) + number(Downton4, 0) + number(Downton5, 0)" description="ציון אינדקס דוונטון"/>          
@@ -821,26 +821,26 @@
 
         <!-- Check this :: L180-185 -->
 
-        <EntityDefinition id="ICS2_Sleeping" description="עישון ואלכוהול"> 
-            <AttributeDefinition id="sleeping1" type="enumeration" multiplicity="maximalOne" description="יותר מ-4 כדורים ביום?">
+        <EntityDefinition id="ICS2_Sleeping" description="בעיות שינה"> 
+            <AttributeDefinition id="sleeping1" type="enumeration" multiplicity="maximalOne" description="קושי הרדמות או הפרעות שינה - יקיצות מוקדמות, חוסר מנוחה">
                 <EnumerationOption value="0" description="לא קיים"/>
                 <EnumerationOption value="1" description="קיים אך לא הופיע ב -3 הימים האחרונים"/>
                 <EnumerationOption value="2" description="הופיע ביום אחד מתוך 3 הימים האחרונים"/>
                 <EnumerationOption value="3" description="הופיע בשניים מתוך 3 הימים האחרונים"/>
                 <EnumerationOption value="4" description="הופיע מדי יום ב 3 הימים האחרונים"/>
             </AttributeDefinition>  
-            <AttributeDefinition id="sleeping2" type="enumeration" multiplicity="maximalOne" description="יותר מ-4 סוגי תרופות ליום?">
+            <AttributeDefinition id="sleeping2" type="enumeration" multiplicity="maximalOne" description="שינת יתר - שעות שינה רבות שמפריעות לתפקוד הנורמלי">
                 <EnumerationOption value="0" description="לא קיים"/>
                 <EnumerationOption value="1" description="קיים אך לא הופיע ב -3 הימים האחרונים"/>
                 <EnumerationOption value="2" description="הופיע ביום אחד מתוך 3 הימים האחרונים"/>
                 <EnumerationOption value="3" description="הופיע בשניים מתוך 3 הימים האחרונים"/>
                 <EnumerationOption value="4" description="הופיע מדי יום ב 3 הימים האחרונים"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="sleeping3" type="enumeration" multiplicity="maximalOne" description="האם קיים קושי בהכנת התרופה ללקיחה?">
+            <AttributeDefinition id="sleeping3" type="enumeration" multiplicity="maximalOne" description="שימוש בתרופות על מנת להרדם">
                 <EnumerationOption value="0" description="לא"/>
                 <EnumerationOption value="1" description="כן"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="sleeping4" type="enumeration" multiplicity="maximalOne" description="האם קיים קושי בהכנת התרופה ללקיחה?">
+            <AttributeDefinition id="sleeping4" type="enumeration" multiplicity="maximalOne" description="שימוש במכשירי עזר בזמן השינה - BPAP, CPAP">
                 <EnumerationOption value="0" description="לא"/>
                 <EnumerationOption value="1" description="כן"/>
             </AttributeDefinition> 
@@ -858,10 +858,12 @@
                 <EnumerationOption value="0" description="לא"/>
                 <EnumerationOption value="1" description="כן"/>
             </AttributeDefinition> 
+			
+		<AttributeDefinition id="CDHealthAss8" type="string" multiplicity="maximalOne" description="מרשמי התרופות החדשים המלאים" />
 
             <!-- Check this :: L174 -->
 
-            <AttributeDefinition id="CDHealthAss5" type="enumeration" multiplicity="maximalOne" description="האם ישנו שינוי במרשמי התרופות טרם הניתוח?">
+            <AttributeDefinition id="CDHealthAss5" type="enumeration" multiplicity="maximalOne" description="האם נתנו הפניות להערכה או טיפול על ידי צוות רפואי אחר">
                 <EnumerationOption value="0" description="לא"/>
                 <EnumerationOption value="1" description="כן"/>
             </AttributeDefinition>   
@@ -1081,7 +1083,7 @@
             <TaskParamDefinition path="ICS2_ResidenceSituationOfDwelling.ResidenceAbuse" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition>
 
-        <HumanTaskDefinition id="ICS2_Communication" description="עישון ואלכוהול" ownerPath="ICS2_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="ICS2_Communication" entityAttachPath="ICS2_Communication">                
+        <HumanTaskDefinition id="ICS2_Communication" description="תקשורת" ownerPath="ICS2_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="ICS2_Communication" entityAttachPath="ICS2_Communication">                
             <TaskParamDefinition path="ICS2_Communication.CommHearing" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_Communication.CommHearingAid" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_Communication.CommVision" isReadOnly="false" isMandatory="true"/>
@@ -1090,7 +1092,7 @@
         </HumanTaskDefinition>
 
 
-        <HumanTaskDefinition id="ICS2_SmokingAlcohol" description="תקשורת" ownerPath="ICS2_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="ICS2_SmokingAlcohol" entityAttachPath="ICS2_SmokingAlcohol">                
+        <HumanTaskDefinition id="ICS2_SmokingAlcohol" description="עישון ואלכוהול" ownerPath="ICS2_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="ICS2_SmokingAlcohol" entityAttachPath="ICS2_SmokingAlcohol">                
             <TaskParamDefinition path="ICS2_SmokingAlcohol.Smoking" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_SmokingAlcohol.Alcohol" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition>
@@ -1105,7 +1107,7 @@
             <TaskParamDefinition path="ICS2_RiskOfFallsDowntonIndex.DowntonSum" isReadOnly="true" isMandatory="false"/>
         </HumanTaskDefinition>
 
-        <HumanTaskDefinition id="ICS2_Sleeping" description="עישון ואלכוהול" ownerPath="ICS2_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="ICS2_Sleeping" entityAttachPath="ICS2_Sleeping">                
+        <HumanTaskDefinition id="ICS2_Sleeping" description="בעיות שינה" ownerPath="ICS2_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="ICS2_Sleeping" entityAttachPath="ICS2_Sleeping">                
             <TaskParamDefinition path="ICS2_Sleeping.sleeping1" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_Sleeping.sleeping2" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_Sleeping.sleeping3" isReadOnly="false" isMandatory="true"/>
@@ -1119,7 +1121,8 @@
           <!--  <TaskParamDefinition path="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss4" isReadOnly="false" isMandatory="true"/> -->
             <TaskParamDefinition path="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss5" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss6" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss7" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss7" isReadOnly="false" isMandatory="false"/>
+			<TaskParamDefinition path="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss8" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition>
 
         
