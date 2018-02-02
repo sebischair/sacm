@@ -414,46 +414,89 @@
             <AttributeDefinition id="phactpx" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Execution Timeseries"/>                 
         </EntityDefinition>
         
+        <!--dynamci task title pmp1_name-->
         <EntityDefinition id="GCS2_PatientMonitoring" description="Patient Monitory">
             <!--Mesurement-->
-            <AttributeDefinition id="pmp1_name" type="enumeration" multiplicity="maximalOne" description="Measure name, the posible values are">
-                <EnumerationOption value="WEIGHT" description="Weight"/>
-                <EnumerationOption value="HEIGHT" description="Height"/>
-                <EnumerationOption value="DIASTOLICBLOODPRESSURE" description="DiastolicBloodPressure"/>
-                <EnumerationOption value="SYSTOLICBLOODPRESSURE" description="SystolicBloodPressure"/>
-                <EnumerationOption value="SP02" description="SP02"/>
-                <EnumerationOption value="BODYTEMPERATURE" description="BodyTemperature"/>
-                <EnumerationOption value="SLEEP" description="Sleep"/>
+            <AttributeDefinition id="pmp1_name" type="enumeration" multiplicity="exactlyOne" description="Measure type">
+                <!--<EnumerationOption value="WEIGHT" description="Weight"/>
+                <EnumerationOption value="HEIGHT" description="Height"/>-->
+                <EnumerationOption value="DIASTOLICBLOODPRESSURE" description="Diastolic Blood Pressure"/>
+                <EnumerationOption value="SYSTOLICBLOODPRESSURE" description="Systolic Blood Pressure"/>
+                <!--<EnumerationOption value="SP02" description="SP02"/>
+                <EnumerationOption value="BODYTEMPERATURE" description="Body Temperature"/>
+                <EnumerationOption value="SLEEP" description="Sleep"/>-->
             </AttributeDefinition>   
-            <AttributeDefinition id="pmp2_alertmin" type="number" multiplicity="maximalOne" description="Min value for this measure"/>       
-            <AttributeDefinition id="pmp3_alertmax" type="number" multiplicity="maximalOne" description="Max value for this measure"/>       
-            <AttributeDefinition id="pmp4_alertfreq" type="number" multiplicity="maximalOne" description="Alert Frecuency Value"/>       
-            <AttributeDefinition id="pmp5_alertfrequnit" type="enumeration" multiplicity="maximalOne" description="Frecuency Unit, the posiible values are">     
+            <AttributeDefinition id="pmp2_alertmin" type="number.min(0)" multiplicity="exactlyOne" description="Min value allowed" additionalDescription="Minimum value for this measuremnt greather than 0"/>       
+            <AttributeDefinition id="pmp3_alertmax" type="number.min(0)" multiplicity="exactlyOne" description="Max value allowed" additionalDescription="Maximum value for this measuremnt greather than 0"/>      
+            <!--  to be refactored to one attribute-->
+            <AttributeDefinition id="pmp4_alertfreq" type="number" multiplicity="exactlyOne" description="Alert Frecuency Value"/>       
+            <AttributeDefinition id="pmp5_alertfrequnit" type="enumeration" multiplicity="exactlyOne" description="Frecuency Unit, the posible values are">     
                 <EnumerationOption value="DAYS" description="Days"/>
                 <EnumerationOption value="WEEKS" description="Weeks"/>
                 <EnumerationOption value="MONTHS" description="Months"/>
             </AttributeDefinition>
             <!--Prescription Details-->
-            <AttributeDefinition id="pmp6_comments" type="longtext" multiplicity="maximalOne" description="Comments"/>   
-            <AttributeDefinition id="pmp7_freq" type="number" multiplicity="maximalOne" description="Frecuency"/> 
-            <AttributeDefinition id="pmp8_freqqunit" type="enumeration" multiplicity="maximalOne" description="Frecuency Unit, the posiible values are">     
+            <!--  to be refactored to one attribute-->
+            <AttributeDefinition id="pmp7_freq" type="number" multiplicity="exactlyOne" description="Frecuency"/> 
+            <AttributeDefinition id="pmp8_freqqunit" type="enumeration" multiplicity="exactlyOne" description="Frecuency Unit, the posible values are">     
                 <EnumerationOption value="DAYS" description="Days"/>
                 <EnumerationOption value="WEEKS" description="Weeks"/>
                 <EnumerationOption value="MONTHS" description="Months"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="pmp9_maxdelay" type="number" multiplicity="maximalOne" description="Max delay in minutes"/> 
-            <AttributeDefinition id="pmp10_startdate" type="date" multiplicity="maximalOne" description="Start date"/> 
-            <AttributeDefinition id="pmp11_enddate" type="date" multiplicity="maximalOne" description="End date"/> 
+            <AttributeDefinition id="pmp9_maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="maximalOne" description="Max delay in minutes" additionalDescription="Maximum delay to fullfill the prescription by the patient"/> 
+            <AttributeDefinition id="pmp10_startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Start date"/> 
+            <AttributeDefinition id="pmp11_enddate" type="date.after(pmp10_startdate)" multiplicity="exactlyOne" description="End date"/> 
+            
             <!--Time Slot-->
-            <AttributeDefinition id="pmp12_timeslot" type="enumeration" multiplicity="atLeastOne" description="Slot to take the measurements, the possible values are">     
-                <EnumerationOption value="BREAKFAST" description="BreakFast"/>
+            <AttributeDefinition id="pmp12_timeslot" type="enumeration" multiplicity="atLeastOne" description="Slots to take the measurements" additionalDescription="Multiple slots can be selected, at least one slot need to be selected">     
+                <EnumerationOption value="BREAKFAST" description="Breakfast"/>
                 <EnumerationOption value="LUNCH" description="Lunch"/>
-                <EnumerationOption value="AFTERNOONSNACK" description="AfternoonSnack"/>
+                <EnumerationOption value="AFTERNOONSNACK" description="Afternoon Snack"/>
                 <EnumerationOption value="DINNER" description="Dinner"/>
-                <EnumerationOption value="BEFORESLEEP" description="BeforeSleep" additionalDescription="Soem test"/>
+                <EnumerationOption value="BEFORESLEEP" description="Before Sleep"/>
+                <!--Include any time a day value-->
             </AttributeDefinition>
+            <AttributeDefinition id="pmp6_comments" type="longtext" multiplicity="maximalOne" description="Comments" additionalDescription="Please provide additional hints for the patient."/>   
+
             <AttributeDefinition id="pmpx" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Mesurement"/>                      
         </EntityDefinition>
+
+        <EntityDefinition id="GCS2_SimpleTask" description="Simple Task">
+            <AttributeDefinition id="sm_type" type="enumeration" multiplicity="exactlyOne" description="Activity Type">     
+                <EnumerationOption value="RAISEYOURHANDS" description="Raise your hands"/>
+                <EnumerationOption value="RAISEYOURLEGS" description="Raise your legs"/>
+                <EnumerationOption value="PUSHAPS" description="Push Aps"/>
+                <EnumerationOption value="DANCE" description="Dance"/>
+                <EnumerationOption value="DRUGS" description="Drugs"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="sm_freq" type="number" multiplicity="exactlyOne" description="Repetitions during the day"/> 
+            <!--  to be refactored to one attribute-->
+            <AttributeDefinition id="sm_freq" type="number" multiplicity="exactlyOne" description="Frecuency"/> 
+            <AttributeDefinition id="sm_freqqunit" type="enumeration" multiplicity="exactlyOne" description="Frecuency Unit, the posible values are">     
+                <EnumerationOption value="DAYS" description="Days"/>
+                <EnumerationOption value="WEEKS" description="Weeks"/>
+                <EnumerationOption value="MONTHS" description="Months"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="pmp9_maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="maximalOne" description="Max delay in minutes" additionalDescription="Maximum delay to fullfill the prescription by the patient"/> 
+            <AttributeDefinition id="pmp10_startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Start date"/> 
+            <AttributeDefinition id="pmp11_enddate" type="date.after(pmp10_startdate)" multiplicity="exactlyOne" description="End date"/> 
+            
+            <AttributeDefinition id="sm_timeslot" type="enumeration" multiplicity="atLeastOne" description="Part del dia per prendre les mesures, els possibles valors són:">     
+                <EnumerationOption value="REPETITIONSET" description="Repeat during the day"/>
+                <EnumerationOption value="BREAKFAST" description="Esmorzar"/>
+                <EnumerationOption value="LUNCH" description="Dinar"/>
+                <EnumerationOption value="AFTERNOONSNACK" description="Berenar"/>
+                <EnumerationOption value="DINNER" description="Sopar"/>
+                <EnumerationOption value="BEFORESLEEP" description="Abans d'anar a dormir"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="sm_repetitionsByDay" type="number" description="Repetitions by day"/>
+            <AttributeDefinition id="pmp6_comments" type="longtext" multiplicity="maximalOne" description="Comments" additionalDescription="Please provide additional hints for the patient."/>   
+            <AttributeDefinition id="pmp6_comments" type="longtext" multiplicity="maximalOne" description="Comments" additionalDescription="Please provide additional hints for the patient."/>   
+
+            <AttributeDefinition id="pmpx" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Mesurement"/>      
+        </EntityDefinition>
+
+
 
         <EntityDefinition id="GCS2_SF12" description="SF-12 Health Survay">
             <AttributeDefinition id="sf12-1" type="enumeration" multiplicity="maximalOne" description="1. In general, would you say your health is:">
