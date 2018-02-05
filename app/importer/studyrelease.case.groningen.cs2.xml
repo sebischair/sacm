@@ -397,7 +397,7 @@
         <!-- Workplan Entity Definitions -->
         <EntityDefinition id="GCS2_Workplan" description="Workplan">
             <AttributeDefinition id="GCS2_PhysicalActivity" type="Link.EntityDefinition.GCS2_PhysicalActivity" description="Physical Activity"/>
-            <AttributeDefinition id="GCS2_MonitoringPrescription" type="Link.EntityDefinition.GCS2_MonitoringPrescription" description="Patient Monitory"/> 
+            <AttributeDefinition id="GCS2_MonitoringPrescription" type="Link.EntityDefinition.GCS2_MonitoringPrescription" description="Monitoring Prescription"/> 
             <AttributeDefinition id="GCS2_SimpleTask" type="Link.EntityDefinition.GCS2_SimpleTask" description="Simple Task"/>
         </EntityDefinition>
 
@@ -414,7 +414,6 @@
             <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Measurement"/>                 
         </EntityDefinition>
         
-        <!--dynamci task title pmp1_name-->
         <EntityDefinition id="GCS2_MonitoringPrescription" description="Patient Monitory">
             <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Measure type" additionalDescription="Select measure type for patient monitory.">
                 <EnumerationOption value="DIASTOLICBLOODPRESSURE" description="Diastolic Blood Pressure"/>
@@ -778,43 +777,46 @@
             <TaskParam path="GCS2_Evaluation.GCS2_MNASF.mnasf6"  values="[70]"/>
             <TaskParam path="GCS2_Evaluation.GCS2_MNASF.mnasf7"  values="[180]"/>
         </Action>
+        <!--
         <Action id="CreateAlert" 
             processId="GCS2_SF12" 
             expireDate="2018-06-21T15:36:21.000"
             text="Alert Message"
             data="{'alertType':'some type', 'application':'Run App', 'priorityLevel':'LOW', 'status':'ACT', 'paramName':'steps per day', 'paramValue':'12', 'minThreshold':'5',  'maxThreshold':'8'}">
         </Action>
-        <Action id="CompleteHumanTask" processId="GCS2_PhysicalActivityPrescription">
-            <TaskParam path="GCS2_PhysicalActivity.phactp1"  values="['2017-09-26T00:00:00.000']"/>
-            <TaskParam path="GCS2_PhysicalActivity.phactp2"  values="['2018-09-27T00:00:00.000']"/>
-            <TaskParam path="GCS2_PhysicalActivity.phactp3"  values="[10000]"/>
-            <TaskParam path="GCS2_PhysicalActivity.phactp4"  values="[15]"/>
-            <TaskParam path="GCS2_PhysicalActivity.phactp5"  values="[5]"/>
-            <TaskParam path="GCS2_PhysicalActivity.phactp6"  values="[10]"/>
-            <TaskParam path="GCS2_PhysicalActivity.phactp7"  values="[30]"/>
+    -->
+        <Action id="ActivateDualTask" processId="GCS2_PhysicalActivity" breakpoint="true"/>
+        <Action id="CompleteDualTaskHumanPart" processId="GCS2_PhysicalActivity" breakpoint="true">
+            <TaskParam path="GCS2_Workplan.GCS2_PhysicalActivity.startdate"  values="['2017-09-26T00:00:00.000']"/>
+            <TaskParam path="GCS2_Workplan.GCS2_PhysicalActivity.enddate"  values="['2018-09-27T00:00:00.000']"/>
+            <TaskParam path="GCS2_Workplan.GCS2_PhysicalActivity.dailysteps"  values="[10000]"/>
+            <TaskParam path="GCS2_Workplan.GCS2_PhysicalActivity.dailylowlevel"  values="[15]"/>
+            <TaskParam path="GCS2_Workplan.GCS2_PhysicalActivity.dailymediumlevel"  values="[5]"/>
+            <TaskParam path="GCS2_Workplan.GCS2_PhysicalActivity.dailyhighlevel"  values="[10]"/>
+            <TaskParam path="GCS2_Workplan.GCS2_PhysicalActivity.dailynoactivity"  values="[30]"/>
         </Action>
-        <!--
-        <Action id="CompleteAutomatedTask" processId="GCS2_PhysicalActivityExecution">
-            <TaskParam path="GCS2_PhysicalActivity.phactpx"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
-        </Action>  -->      
-        <Action id="CompleteHumanTask" processId="GCS2_PatientMonitoringPrescription">
-            <TaskParam path="GCS2_PatientMonitoring.pmp1_name"  values="['WEIGHT']"/>
-            <TaskParam path="GCS2_PatientMonitoring.pmp2_alertmin"  values="[50]"/>
-            <TaskParam path="GCS2_PatientMonitoring.pmp3_alertmax"  values="[150]"/>
-            <TaskParam path="GCS2_PatientMonitoring.pmp4_alertfreq"  values="[2]"/>
-            <TaskParam path="GCS2_PatientMonitoring.pmp5_alertfrequnit"  values="['DAYS']"/>
-            <TaskParam path="GCS2_PatientMonitoring.pmp6_comments"  values="['Some random comment']"/>
-            <TaskParam path="GCS2_PatientMonitoring.pmp7_freq"  values="[5]"/>
-            <TaskParam path="GCS2_PatientMonitoring.pmp8_freqqunit"  values="['WEEKS']"/>
-            <TaskParam path="GCS2_PatientMonitoring.pmp9_maxdelay"  values="[100]"/>
-            <TaskParam path="GCS2_PatientMonitoring.pmp10_startdate"  values="['2017-06-09T00:00:00.0']"/>
-            <TaskParam path="GCS2_PatientMonitoring.pmp11_enddate"  values="['2019-06-09T00:00:00.0']"/>
-            <TaskParam path="GCS2_PatientMonitoring.pmp12_timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
-        </Action>      
-        <Action id="CompleteAutomatedTask" processId="GCS2_PatientMonitoringExecution">
-            <TaskParam path="GCS2_PatientMonitoring.pmpx"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
+        <Action id="CompleteDualTaskAutomatedPart" processId="GCS2_PhysicalActivity">
+            <TaskParam path="GCS2_Workplan.GCS2_PhysicalActivity.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
         </Action>
 
+        <Action id="ActivateDualTask" processId="GCS2_MonitoringPrescription" breakpoint="true"/>
+        <Action id="CompleteDualTaskHumanPart" processId="GCS2_MonitoringPrescription" breakpoint="true">
+            <TaskParam path="GCS2_WorkplanGCS2_MonitoringPrescription.type"  values="['DIASTOLICBLOODPRESSURE']"/>
+            <TaskParam path="GCS2_WorkplanGCS2_MonitoringPrescription.alertmin"  values="[50]"/>
+            <TaskParam path="GCS2_WorkplanGCS2_MonitoringPrescription.alertmax"  values="[150]"/>
+            <TaskParam path="GCS2_WorkplanGCS2_MonitoringPrescription.alertfreq"  values="[2]"/>
+            <TaskParam path="GCS2_WorkplanGCS2_MonitoringPrescription.alertfrequnit"  values="['DAYS']"/>
+            <TaskParam path="GCS2_WorkplanGCS2_MonitoringPrescription.comments"  values="['Some random comment']"/>
+            <TaskParam path="GCS2_WorkplanGCS2_MonitoringPrescription.freq"  values="[5]"/>
+            <TaskParam path="GCS2_WorkplanGCS2_MonitoringPrescription.freqqunit"  values="['WEEKS']"/>
+            <TaskParam path="GCS2_WorkplanGCS2_MonitoringPrescription.maxdelay"  values="[100]"/>
+            <TaskParam path="GCS2_WorkplanGCS2_MonitoringPrescription.startdate"  values="['2017-06-09T00:00:00.0']"/>
+            <TaskParam path="GCS2_WorkplanGCS2_MonitoringPrescription.enddate"  values="['2019-06-09T00:00:00.0']"/>
+            <TaskParam path="GCS2_WorkplanGCS2_MonitoringPrescription.timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
+        </Action>
+        <Action id="CompleteDualTaskAutomatedPart" processId="GCS2_MonitoringPrescription">
+            <TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescription.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
+        </Action>
 
     </Execution>
 
