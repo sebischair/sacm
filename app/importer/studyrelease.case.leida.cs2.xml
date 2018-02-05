@@ -71,6 +71,7 @@
 			  
 			  <!-- Barreres -->				  
 			  <AttributeDefinition id="LCS2_ProblemsManagingMoney" type="Link.EntityDefinition.LCS2_ProblemsManagingMoney"/>			  
+			  <AttributeDefinition id="LCS2_SelfCareAuto" type="Link.EntityDefinition.LCS2_SelfCareAuto"/>      
 			  <AttributeDefinition id="LCS2_SocialDwelling" type="Link.EntityDefinition.LCS2_SocialDwelling"/>      
 			  <AttributeDefinition id="LCS2_SocialSelfCareCareerAbility" type="Link.EntityDefinition.LCS2_SocialSelfCareCareerAbility"/>		  
 			  <AttributeDefinition id="LCS2_SocialComplexityOfThePatient" type="Link.EntityDefinition.LCS2_SocialComplexityOfThePatient"/>		  
@@ -376,6 +377,30 @@
                 <EnumerationOption value="5" description="Completament dependent/Limitat"/>
             </AttributeDefinition>
         </EntityDefinition>
+		
+		<EntityDefinition id="LCS2_SelfCareAuto">
+           <AttributeDefinition id="sca1" type="enumeration" multiplicity="maximalOne" description="Quants cops he de realitzar els exercicis de rehabilitació?">
+                <EnumerationOption value="0" description="Un cop al dia"/>
+                <EnumerationOption value="0.01" description="No s'han de fer"/>
+                <EnumerationOption value="1" description="4 cops al dia"/>			                  
+            </AttributeDefinition>        
+            <AttributeDefinition id="sca2" type="enumeration" multiplicity="maximalOne" description="Que he de fer si s'inflama la cama?">
+                <EnumerationOption value="0" description="Estirar la cama en una cadira"/>
+                <EnumerationOption value="1" description="Estirar-me, aixecar les cames i moure els peus cap endavant i endarrera"/>
+                <EnumerationOption value="0.01" description="Sentar-me, fer repòs en una cadira"/>
+            </AttributeDefinition>      
+            <AttributeDefinition id="sca3" type="enumeration" multiplicity="maximalOne" description="Que és millor per a la meva recuperació?">
+                <EnumerationOption value="0" description="Fer repòs al llit"/>
+                <EnumerationOption value="1" description="Circuit durant el dia: caminar, repòs cadira o llit, exercicis"/>
+                <EnumerationOption value="0.01" description="Aguantar el dolor"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="sca4" type="enumeration" multiplicity="maximalOne" description="I si tinc molt dolor, tot i prendre correctament la pauta analgèsica?">
+                <EnumerationOption value="0" description="Aguantar el dolor"/>
+                <EnumerationOption value="0.01" description="Prenent el doble dosi de calmant"/>
+                <EnumerationOption value="1" description="Ho comunicaré al meu metge de capçalera"/>
+            </AttributeDefinition>   
+			<DerivedAttributeDefinition id="sca5" expression="round(number(sca1,0))+round(number(sca2,0))+round(number(sca3,0))+round(number(sca4,0))" description="Puntuació"/> 
+		</EntityDefinition>		
 
         <EntityDefinition id="LCS2_SocialDwelling"> 
             <AttributeDefinition id="dwelling1" type="enumeration" multiplicity="maximalOne" description="Tipus de vivenda"> 
@@ -586,7 +611,7 @@
                 <EnumerationOption value="15" description="independent"/>
             </AttributeDefinition>   
             <AttributeDefinition id="barthel9" type="enumeration" multiplicity="maximalOne" description="Marxa">
-                <EnumerationOption value="0" description="immobile o incapaç de caminar < 50 metres"/>
+                <EnumerationOption value="0" description="inmóvil o incapaç de caminar menys 50 metres"/>
                 <EnumerationOption value="5" description="independent en cadira de rodes, incloent portes i cantonades superant els 50 metres"/>
                 <EnumerationOption value="10" description="camina, amb la ajuda d'una persona (verbal o física) o elements externs (caminador), 50 metres"/>
                 <EnumerationOption value="15" description="independent (però amb ajudes; com per exemple un bastó) camina al menys 50 metres"/>
@@ -1554,7 +1579,7 @@
 		
 		
 	<!-- CASE DEFINITION -->				  
-		<CaseDefinition id="LCS2_Leida" description="CS2 Lleida - Kitiara test 2" ownerPath="LCS2_Owner" clientPath="LCS2_Patient" entityDefinitionId="LCS2_CaseData">	  
+		<CaseDefinition id="LCS2_Leida" description="CS2 Lleida" ownerPath="LCS2_Owner" clientPath="LCS2_Patient" entityDefinitionId="LCS2_CaseData">	  
 	  
 	<!-- STAGEDEFINITION: CaseIdentification -->	  
         <StageDefinition id="LCS2_CaseIdentification" description="Identificació del cas" isMandatory="true" repeatable="ONCE">
@@ -1810,6 +1835,14 @@
 			<HumanTaskDefinition id="LCS2_ProblemsManagingMoney" description="Barreres - Problemes fent servir diners" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_ProblemsManagingMoney" entityAttachPath="LCS2_ProblemsManagingMoney">
               <TaskParamDefinition path="LCS2_ProblemsManagingMoney.money" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>			
+							
+			<HumanTaskDefinition id="LCS2_SelfCareAuto" description="Barreres - Test d'autocura" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_SelfCareAuto" entityAttachPath="LCS2_SelfCareAuto">
+              <TaskParamDefinition path="LCS2_SelfCareAuto.sca1" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SelfCareAuto.sca2" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SelfCareAuto.sca3" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SelfCareAuto.sca4" isReadOnly="false" isMandatory="true"/>
+			  <TaskParamDefinition path="LCS2_SelfCareAuto.sca5" isReadOnly="true" isMandatory="false"/>
+            </HumanTaskDefinition>
 
             <HumanTaskDefinition id="LCS2_SocialDwelling" description="Barreres - Habitatge social" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_SocialDwelling" entityAttachPath="LCS2_SocialDwelling">
               <TaskParamDefinition path="LCS2_SocialDwelling.dwelling1" isReadOnly="false" isMandatory="true"/>
