@@ -397,91 +397,76 @@
         <!-- Workplan Entity Definitions -->
         <EntityDefinition id="GCS2_Workplan" description="Workplan">
             <AttributeDefinition id="GCS2_PhysicalActivity" type="Link.EntityDefinition.GCS2_PhysicalActivity" description="Physical Activity"/>
-            <AttributeDefinition id="GCS2_PatientMonitoring" type="Link.EntityDefinition.GCS2_PatientMonitoring" description="Patient Monitory"/> 
-            <AttributeDefinition id="GCS2_SF12" type="Link.EntityDefinition.GCS2_SF12" description="SF-12"/>
+            <AttributeDefinition id="GCS2_MonitoringPrescription" type="Link.EntityDefinition.GCS2_MonitoringPrescription" description="Patient Monitory"/> 
+            <AttributeDefinition id="GCS2_SimpleTask" type="Link.EntityDefinition.GCS2_SimpleTask" description="Simple Task"/>
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_PhysicalActivity" description="Physical Activity">
-            <AttributeDefinition id="phactp1" type="date.after(TODAY)" multiplicity="maximalOne" description="Start date"/>
-            <AttributeDefinition id="phactp2" type="date.after(phactp1)" multiplicity="maximalOne" description="End date"/>       
-            <AttributeDefinition id="phactp3" type="number.min(0).max(100000)" defaultValues="[10000]" multiplicity="maximalOne" description="Number of steps daily"/>       
-            <AttributeDefinition id="phactp4" type="number.min(0).max(1440)" defaultValues="[60]" multiplicity="maximalOne" description="Minutes of low level activity daily"/>       
-            <AttributeDefinition id="phactp5" type="number.min(0).max(1440)" defaultValues="[40]" multiplicity="maximalOne" description="Minutes of medium level activity daily"/>       
-            <AttributeDefinition id="phactp6" type="number.min(0).max(1440)" defaultValues="[20]" multiplicity="maximalOne" description="Minutes of high level activity daily"/> 
-            <AttributeDefinition id="phactp7" type="number.min(0).max(1440)" defaultValues="[240]" multiplicity="maximalOne" description="Max minutes without activity allowed daily"/>   
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="maximalOne" description="Start date"/>
+            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="maximalOne" description="End date"/>       
+            <AttributeDefinition id="dailysteps" type="number.min(0).max(100000)" defaultValues="[10000]" multiplicity="maximalOne" description="Number of steps daily"/>       
+            <AttributeDefinition id="dailylowlevel" type="number.min(0).max(1440)" defaultValues="[60]" multiplicity="maximalOne" description="Minutes of low level activity daily"/>       
+            <AttributeDefinition id="dailymediumlevel" type="number.min(0).max(1440)" defaultValues="[40]" multiplicity="maximalOne" description="Minutes of medium level activity daily"/>       
+            <AttributeDefinition id="dailyhighlevel" type="number.min(0).max(1440)" defaultValues="[20]" multiplicity="maximalOne" description="Minutes of high level activity daily"/> 
+            <AttributeDefinition id="dailynoactivity" type="number.min(0).max(1440)" defaultValues="[240]" multiplicity="maximalOne" description="Max minutes without activity allowed daily"/>   
             <!--{stepsFollowing: [{date: '2017-06-09 14:54:53.0', value: 12}], lowFollowing:[], mediumFollowing:[], highFollowing:[], noActivityFollowing:[]}-->
             <!--Collected Data e.g. {stepsFollowing: [{date: '2017-06-09 14:54:53.0', value: 12}], lowFollowing:[], mediumFollowing:[], highFollowing:[], noActivityFollowing:[]}"-->
-            <AttributeDefinition id="phactpx" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Execution Timeseries"/>                 
+            <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Measurement"/>                 
         </EntityDefinition>
         
         <!--dynamci task title pmp1_name-->
-        <EntityDefinition id="GCS2_PatientMonitoring" description="Patient Monitory">
-            <!--Mesurement-->
-            <AttributeDefinition id="pmp1_name" type="enumeration" multiplicity="exactlyOne" description="Measure type">
-                <!--<EnumerationOption value="WEIGHT" description="Weight"/>
-                <EnumerationOption value="HEIGHT" description="Height"/>-->
+        <EntityDefinition id="GCS2_MonitoringPrescription" description="Patient Monitory">
+            <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Measure type" additionalDescription="Select measure type for patient monitory.">
                 <EnumerationOption value="DIASTOLICBLOODPRESSURE" description="Diastolic Blood Pressure"/>
                 <EnumerationOption value="SYSTOLICBLOODPRESSURE" description="Systolic Blood Pressure"/>
-                <!--<EnumerationOption value="SP02" description="SP02"/>
-                <EnumerationOption value="BODYTEMPERATURE" description="Body Temperature"/>
-                <EnumerationOption value="SLEEP" description="Sleep"/>-->
             </AttributeDefinition>   
-            <AttributeDefinition id="pmp2_alertmin" type="number.min(0)" multiplicity="exactlyOne" description="Min value allowed" additionalDescription="Minimum value for this measuremnt greather than 0"/>       
-            <AttributeDefinition id="pmp3_alertmax" type="number.min(0)" multiplicity="exactlyOne" description="Max value allowed" additionalDescription="Maximum value for this measuremnt greather than 0"/>      
-            <!--  to be refactored to one attribute-->
-            <AttributeDefinition id="pmp4_alertfreq" type="number" multiplicity="exactlyOne" description="Alert Frecuency Value"/>       
-            <AttributeDefinition id="pmp5_alertfrequnit" type="enumeration" multiplicity="exactlyOne" description="Frecuency Unit, the posible values are">     
+            <AttributeDefinition id="alertmin" type="number.min(0)" multiplicity="exactlyOne" description="Min value allowed" additionalDescription="Minimum value for this measuremnt greather than 0"/>       
+            <AttributeDefinition id="alertmax" type="number.min(0)" multiplicity="exactlyOne" description="Max value allowed" additionalDescription="Maximum value for this measuremnt greather than 0"/>      
+            <AttributeDefinition id="alertfreq" type="number" defaultValues="[1]" multiplicity="exactlyOne" description="Alert Frecuency Value"/>       
+            <AttributeDefinition id="alertfrequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Frecuency Unit">     
                 <EnumerationOption value="DAYS" description="Days"/>
                 <EnumerationOption value="WEEKS" description="Weeks"/>
                 <EnumerationOption value="MONTHS" description="Months"/>
             </AttributeDefinition>
-            <!--Prescription Details-->
-            <!--  to be refactored to one attribute-->
-            <AttributeDefinition id="pmp7_freq" type="number" multiplicity="exactlyOne" description="Frecuency"/> 
-            <AttributeDefinition id="pmp8_freqqunit" type="enumeration" multiplicity="exactlyOne" description="Frecuency Unit, the posible values are">     
+            <AttributeDefinition id="freq" type="number.min(0)" defaultValues="[1]" multiplicity="exactlyOne" description="Frecuency"/> 
+            <AttributeDefinition id="frequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Frecuency Unit">     
                 <EnumerationOption value="DAYS" description="Days"/>
                 <EnumerationOption value="WEEKS" description="Weeks"/>
                 <EnumerationOption value="MONTHS" description="Months"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="pmp9_maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="maximalOne" description="Max delay in minutes" additionalDescription="Maximum delay to fullfill the prescription by the patient"/> 
-            <AttributeDefinition id="pmp10_startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Start date"/> 
-            <AttributeDefinition id="pmp11_enddate" type="date.after(pmp10_startdate)" multiplicity="exactlyOne" description="End date"/> 
-            
-            <!--Time Slot-->
-            <AttributeDefinition id="pmp12_timeslot" type="enumeration" multiplicity="atLeastOne" description="Slots to take the measurements" additionalDescription="Multiple slots can be selected, at least one slot need to be selected">     
+            <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="maximalOne" description="Max delay in minutes" additionalDescription="Maximum delay to fullfill the prescription by the patient"/> 
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Start date"/> 
+            <AttributeDefinition id="enddate" type="date.after(tartdate)" multiplicity="exactlyOne" description="End date"/> 
+            <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="Slots to take the measurements" additionalDescription="Multiple slots can be selected, at least one slot need to be selected">     
                 <EnumerationOption value="BREAKFAST" description="Breakfast"/>
                 <EnumerationOption value="LUNCH" description="Lunch"/>
                 <EnumerationOption value="AFTERNOONSNACK" description="Afternoon Snack"/>
                 <EnumerationOption value="DINNER" description="Dinner"/>
                 <EnumerationOption value="BEFORESLEEP" description="Before Sleep"/>
-                <!--Include any time a day value-->
+                <EnumerationOption value="ANYTIMEDURINGDAY" description="Any time a day" additionalDescription="Please select this option when the timeslot of a day doesn't matter."/>
             </AttributeDefinition>
-            <AttributeDefinition id="pmp6_comments" type="longtext" multiplicity="maximalOne" description="Comments" additionalDescription="Please provide additional hints for the patient."/>   
-
-            <AttributeDefinition id="pmpx" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Mesurement"/>                      
+            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comments" additionalDescription="Please provide additional hints for the patient."/>   
+            <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Measurement"/>                      
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_SimpleTask" description="Simple Task">
-            <AttributeDefinition id="sm_type" type="enumeration" multiplicity="exactlyOne" description="Activity Type">     
+            <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Activity Type" additionalDescription="Select simple task type.">     
                 <EnumerationOption value="RAISEYOURHANDS" description="Raise your hands"/>
                 <EnumerationOption value="RAISEYOURLEGS" description="Raise your legs"/>
                 <EnumerationOption value="PUSHAPS" description="Push Aps"/>
                 <EnumerationOption value="DANCE" description="Dance"/>
                 <EnumerationOption value="DRUGS" description="Drugs"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="sm_freq" type="number" multiplicity="exactlyOne" description="Repetitions during the day"/> 
-            <!--  to be refactored to one attribute-->
-            <AttributeDefinition id="sm_freq" type="number" multiplicity="exactlyOne" description="Frecuency"/> 
-            <AttributeDefinition id="sm_freqqunit" type="enumeration" multiplicity="exactlyOne" description="Frecuency Unit, the posible values are">     
+            <AttributeDefinition id="freq" type="number" multiplicity="exactlyOne" description="Frecuency" additionalDescription="Repetitions during the day"/> 
+            <AttributeDefinition id="freqqunit" type="enumeration" multiplicity="exactlyOne" description="Frecuency Unit, the posible values are">     
                 <EnumerationOption value="DAYS" description="Days"/>
                 <EnumerationOption value="WEEKS" description="Weeks"/>
                 <EnumerationOption value="MONTHS" description="Months"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="pmp9_maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="maximalOne" description="Max delay in minutes" additionalDescription="Maximum delay to fullfill the prescription by the patient"/> 
-            <AttributeDefinition id="pmp10_startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Start date"/> 
-            <AttributeDefinition id="pmp11_enddate" type="date.after(pmp10_startdate)" multiplicity="exactlyOne" description="End date"/> 
-            
-            <AttributeDefinition id="sm_timeslot" type="enumeration" multiplicity="atLeastOne" description="Part del dia per prendre les mesures, els possibles valors són:">     
+            <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="maximalOne" description="Max delay in minutes" additionalDescription="Maximum delay to fullfill the prescription by the patient"/> 
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Start date"/> 
+            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="End date"/> 
+            <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="Part del dia per prendre les mesures, els possibles valors són:">     
                 <EnumerationOption value="REPETITIONSET" description="Repeat during the day"/>
                 <EnumerationOption value="BREAKFAST" description="Esmorzar"/>
                 <EnumerationOption value="LUNCH" description="Dinar"/>
@@ -489,15 +474,13 @@
                 <EnumerationOption value="DINNER" description="Sopar"/>
                 <EnumerationOption value="BEFORESLEEP" description="Abans d'anar a dormir"/>
             </AttributeDefinition>
-            <AttributeDefinition id="sm_repetitionsByDay" type="number" description="Repetitions by day"/>
-            <AttributeDefinition id="pmp6_comments" type="longtext" multiplicity="maximalOne" description="Comments" additionalDescription="Please provide additional hints for the patient."/>   
-            <AttributeDefinition id="pmp6_comments" type="longtext" multiplicity="maximalOne" description="Comments" additionalDescription="Please provide additional hints for the patient."/>   
-
-            <AttributeDefinition id="pmpx" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Mesurement"/>      
+            <AttributeDefinition id="repetitionseachday" type="number" description="Repetitions each day"/>
+            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comments" additionalDescription="Please provide additional hints for the patient."/>   
+            <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Measurement"/>      
         </EntityDefinition>
 
 
-
+        <!--
         <EntityDefinition id="GCS2_SF12" description="SF-12 Health Survay">
             <AttributeDefinition id="sf12-1" type="enumeration" multiplicity="maximalOne" description="1. In general, would you say your health is:">
                 <EnumerationOption value="1" description="Excellent"/>
@@ -579,7 +562,7 @@
                 <EnumerationOption value="2" description="other"/>
             </AttributeDefinition>                   
         </EntityDefinition>
-
+        -->
 
         <!-- Discharge Entity Definitions -->
         <EntityDefinition id="GCS2_Discharge" description="GCS2_Discharge">
@@ -728,67 +711,56 @@
                 <SentryDefinition>
                     <precondition processDefinitionId="GCS2_CaseEvaluation"/>
                 </SentryDefinition>
-                <HumanTaskDefinition id="GCS2_PhysicalActivityPrescription" description="Physical Activity Prescription" ownerPath="GCS2_Owner" dueDatePath="GCS2_WorkplanDueDate"  isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_PhysicalActivity" entityAttachPath="GCS2_Workplan.GCS2_PhysicalActivity">
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.phactp1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.phactp2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.phactp3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.phactp4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.phactp5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.phactp6" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.phactp7" isReadOnly="false" isMandatory="true"/>                    
-                </HumanTaskDefinition>
-                <AutomatedTaskDefinition id="GCS2_PhysicalActivityExecution" description="Physical Activity Execution" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE">
-                    <SentryDefinition>
-                        <precondition processDefinitionId="GCS2_PhysicalActivityPrescription"/>
-                    </SentryDefinition>
-                    <HttpHookDefinition on="ENABLE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System"></HttpHookDefinition>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.phactp1" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.phactp2" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.phactp3" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.phactp4" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.phactp5" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.phactp6" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.phactp7" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_Patient" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.phactpx" isReadOnly="false" isMandatory="true"/>
-                </AutomatedTaskDefinition>
-                <HumanTaskDefinition id="GCS2_PatientMonitoringPrescription" description="Patient Monitoring Prescription" ownerPath="GCS2_Owner" dueDatePath="GCS2_WorkplanDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_PatientMonitoring" entityAttachPath="GCS2_Workplan.GCS2_PatientMonitoring">
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp1_name" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp2_alertmin" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp3_alertmax" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp4_alertfreq" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp5_alertfrequnit" isReadOnly="false" isMandatory="false"/>            
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp7_freq" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp8_freqqunit" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp9_maxdelay" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp10_startdate" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp11_enddate" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp12_timeslot" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp6_comments" isReadOnly="false" isMandatory="false"/>
-                </HumanTaskDefinition>
-                <AutomatedTaskDefinition id="GCS2_PatientMonitoringExecution" description="Patient Monitoring Execution" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE">
-                    <SentryDefinition>
-                        <precondition processDefinitionId="GCS2_PatientMonitoringPrescription"/>
-                    </SentryDefinition>
-                    <HttpHookDefinition on="ENABLE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create monitoring prescription on Self-Management System"></HttpHookDefinition>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp1_name" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp2_alertmin" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp3_alertmax" isReadOnly="true" isMandatory="false"/>            
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp5_alertfrequnit" isReadOnly="true" isMandatory="false"/> 
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp4_alertfreq" isReadOnly="true" isMandatory="false"/>          
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp8_freqqunit" isReadOnly="true" isMandatory="false"/>      
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp7_freq" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp9_maxdelay" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp10_startdate" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp11_enddate" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp12_timeslot" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmp6_comments" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_Patient" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_Workplan.GCS2_PatientMonitoring.pmpx" isReadOnly="false" isMandatory="true"/>
-                </AutomatedTaskDefinition>
 
+                <DualTaskDefinition id="GCS2_PhysicalActivity" description="Physical Activity" ownerPath="GCS2_Owner" dueDatePath="GCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" isManualActivation="true" entityDefinitionId="GCS2_PhysicalActivity" entityAttachPath="GCS2_Workplan.GCS2_PhysicalActivity">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_PhysicalActivity.startdate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_PhysicalActivity.enddate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_PhysicalActivity.dailysteps" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_PhysicalActivity.dailylowlevel" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_PhysicalActivity.dailymediumlevel" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_PhysicalActivity.dailyhighlevel" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_PhysicalActivity.dailynoactivity" isReadOnly="false" isMandatory="true"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="GCS2_Workplan.GCS2_PhysicalActivity.measurement" isReadOnly="false" isMandatory="true"/>
+                </DualTaskDefinition>
+
+                <DualTaskDefinition id="GCS2_MonitoringPrescription" description="Monitoring Prescription" dynamicDescription="GCS2_Workplan.GCS2_PhysicalActivity.type" ownerPath="GCS2_Owner" dueDatePath="GCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" isManualActivation="true" entityDefinitionId="GCS2_MonitoringPrescription" entityAttachPath="GCS2_Workplan.GCS2_MonitoringPrescription">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_MonitoringPrescription.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_MonitoringPrescription.alertmin" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_MonitoringPrescription.alertmax" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_MonitoringPrescription.alertfreq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_MonitoringPrescription.alertfrequnit" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_MonitoringPrescription.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_MonitoringPrescription.frequnit" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_MonitoringPrescription.maxdelay" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_MonitoringPrescription.startdate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_MonitoringPrescription.enddate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_MonitoringPrescription.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_MonitoringPrescription.comments" isReadOnly="false" isMandatory="true"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="GCS2_Workplan.GCS2_MonitoringPrescription.measurement" isReadOnly="false" isMandatory="true"/>
+                </DualTaskDefinition>
+
+                <DualTaskDefinition id="GCS2_SimpleTask" description="Simple Task" dynamicDescription="GCS2_Workplan.GCS2_SimpleTask.type" ownerPath="GCS2_Owner" dueDatePath="GCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" isManualActivation="true" entityDefinitionId="GCS2_SimpleTask" entityAttachPath="GCS2_Workplan.GCS2_SimpleTask">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"></HttpHookDefinition>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"></HttpHookDefinition>
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_SimpleTask.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_SimpleTask.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_SimpleTask.freqqunit" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_SimpleTask.maxdelay" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_SimpleTask.startdate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_SimpleTask.enddate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_SimpleTask.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_SimpleTask.repetitionseachday" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_SimpleTask.comments" isReadOnly="false" isMandatory="true"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="GCS2_Workplan.GCS2_SimpleTask.measurement" isReadOnly="false" isMandatory="true"/>
+                </DualTaskDefinition>
+
+                <!--
                 <AutomatedTaskDefinition id="GCS2_SF12" description="SF-12" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_SF12" entityAttachPath="GCS2_Workplan.GCS2_SF12">
-                    <!--<HttpHookDefinition on="ENABLE" url="http://35.157.110.245:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System"></HttpHookDefinition>-->
+                    <!--<HttpHookDefinition on="ENABLE" url="http://35.157.110.245:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System"></HttpHookDefinition>--
                     <TaskParamDefinition path="GCS2_Workplan.GCS2_SF12.sf12-1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Workplan.GCS2_SF12.sf12-2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Workplan.GCS2_SF12.sf12-3" isReadOnly="false" isMandatory="true"/>
@@ -804,7 +776,8 @@
                     <TaskParamDefinition path="GCS2_Workplan.GCS2_SF12.sf12-13" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Patient" isReadOnly="true" isMandatory="false"/>
                 </AutomatedTaskDefinition>
-
+                -->
+                
             </StageDefinition>
             
             <StageDefinition id="GCS2_Discharge" description="Discharge" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_Discharge" entityAttachPath="GCS2_Discharge">
@@ -915,6 +888,7 @@
             text="Alert Message"
             data="{'alertType':'some type', 'application':'Run App', 'priorityLevel':'LOW', 'status':'ACT', 'paramName':'steps per day', 'paramValue':'12', 'minThreshold':'5',  'maxThreshold':'8'}">
         </Action>
+        <!--
         <Action id="CompleteAutomatedTask" processId="GCS2_SF12">
             <TaskParam path="GCS2_SF12.sf12-1"  values="['1']"/>
             <TaskParam path="GCS2_SF12.sf12-2"  values="['1']"/>
@@ -930,6 +904,7 @@
             <TaskParam path="GCS2_SF12.sf12-12"  values="['1']"/>
             <TaskParam path="GCS2_SF12.sf12-13"  values="['1']"/>
         </Action>
+        -->
         <Action id="CompleteHumanTask" processId="GCS2_PhysicalActivityPrescription">
             <TaskParam path="GCS2_PhysicalActivity.phactp1"  values="['2017-09-26T00:00:00.000']"/>
             <TaskParam path="GCS2_PhysicalActivity.phactp2"  values="['2018-09-27T00:00:00.000']"/>
