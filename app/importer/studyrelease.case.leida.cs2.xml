@@ -38,21 +38,23 @@
 		  <AttributeDefinition id="LCS2_AnesClinic" type="Link.Users(IrbllAnesthesiologists, IrbllClinicians)" description="Anestesiòleg o Cirurgià"/>            		  
 		  
 		  <!-- WORKSPACE: CaseIdentification -->				  		 
+			  <AttributeDefinition id="LCS2_ComorbidityCharlson" type="Link.EntityDefinition.LCS2_ComorbidityCharlson" />  	  		  
 			  <AttributeDefinition id="LCS2_GMA" type="Link.EntityDefinition.LCS2_GMA" />		  		  
 			  <AttributeDefinition id="LCS2_TechnologicalTest" type="Link.EntityDefinition.LCS2_TechnologicalTest" />	  
 			  <AttributeDefinition id="LCS2_ComplexityRisk" type="Link.EntityDefinition.LCS2_ComplexityRisk" />		  		  
 			  <AttributeDefinition id="LCS2_HospitalEmergencyAdminisions" type="Link.EntityDefinition.LCS2_HospitalEmergencyAdminisions" />
 			  <AttributeDefinition id="LCS2_PatientsConsent" type="Link.EntityDefinition.LCS2_PatientsConsent" />
 		  
-		  		  
+		  
 		  <!-- WORKSPACE: CaseEvaluation -->	
 			  <!-- Estat comòrbid -->				
-			  <AttributeDefinition id="LCS2_ComorbidityCharlson" type="Link.EntityDefinition.LCS2_ComorbidityCharlson" />  	  		  
+			  <!-- LCS2_ComorbidityCharlson; Read only -->
+			  <!-- LCS2_GMA; Read only -->
 			  
 			  <!-- Diagnòstic -->	
 			  <AttributeDefinition id="LCS2_AnthropometricVariables" type="Link.EntityDefinition.LCS2_AnthropometricVariables"/>		  
 			  <AttributeDefinition id="LCS2_DiagnosisSmokingAndAlcohol" type="Link.EntityDefinition.LCS2_DiagnosisSmokingAndAlcohol"/>  		  
-			  <!-- Falta qüestionari Diagnostic-Nutrició -->
+			  <AttributeDefinition id="LCS2_DiagnosisNutrition" type="Link.EntityDefinition.LCS2_DiagnosisNutrition" />
 			  
 			  <!-- Estat cognitu/mental -->			  
 			  <AttributeDefinition id="LCS2_ComorbidityPfeiffer" type="Link.EntityDefinition.LCS2_ComorbidityPfeiffer"/>
@@ -373,6 +375,11 @@
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>  
         </EntityDefinition>	
+		
+		<EntityDefinition id="LCS2_DiagnosisNutrition" > 		
+			<AttributeDefinition id="nutrition1" type="number" multiplicity="maximalOne" description="Hemoglobina (gr/dl)"/>       
+			<AttributeDefinition id="nutrition2" type="number" multiplicity="maximalOne" description="Proteínes (gr/dl)"/>       
+		</EntityDefinition>		
 		
 		<EntityDefinition id="LCS2_ProblemsManagingMoney">
             <AttributeDefinition id="money" type="enumeration" multiplicity="maximalOne" description="Problemes fent servir diners:">
@@ -1705,30 +1712,30 @@
 			<SentryDefinition>
 				<precondition processDefinitionId="LCS2_CaseIdentification"/>
 			</SentryDefinition> 
-
+			
 			<!-- Infermera  -->				
-			<HumanTaskDefinition id="LCS2_ComorbidityCharlsonEvaluation" description="Estat comòrbid - Índex de comorbilitat de Charlson" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_ComorbidityCharlson" entityAttachPath="LCS2_ComorbidityCharlson">		
-              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch1" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch2" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch3" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch4" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch5" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch6" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch7" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch8" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch9" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch10" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch11" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch12" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch13" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch14" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch15" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch16" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch17" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch18" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch19" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch20" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch21" isReadOnly="false" isMandatory="true"/>
+			<HumanTaskDefinition id="LCS2_ComorbidityCharlsonEvaluation" description="Estat comòrbid - Índex de comorbilitat de Charlson" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE">		
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch1" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch2" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch3" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch4" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch5" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch6" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch7" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch8" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch9" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch10" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch11" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch12" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch13" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch14" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch15" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch16" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch17" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch18" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch19" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch20" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch21" isReadOnly="true" isMandatory="false"/>
             </HumanTaskDefinition>
 			
 			<!-- Infermera  -->				
@@ -1750,6 +1757,12 @@
               <TaskParamDefinition path="LCS2_DiagnosisSmokingAndAlcohol.smalc1" isReadOnly="false" isMandatory="true"/>
               <TaskParamDefinition path="LCS2_DiagnosisSmokingAndAlcohol.smalc2" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>
+			
+			<!-- Anestesista  -->				
+			<HumanTaskDefinition id="LCS2_DiagnosisNutrition" description="Diagnòstic - Nutrició (proteínes)" ownerPath="LCS2_Anesthesiologist" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_DiagnosisNutrition" entityAttachPath="LCS2_DiagnosisNutrition">
+              <TaskParamDefinition path="LCS2_DiagnosisNutrition.nutrition1" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_DiagnosisNutrition.nutrition2" isReadOnly="false" isMandatory="true"/>
+            </HumanTaskDefinition>			
 			
 			<!-- Infermera  -->				
             <HumanTaskDefinition id="LCS2_ComorbidityPfeiffer" description="Estat cognitiu/mental - Pfeiffer" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_ComorbidityPfeiffer" entityAttachPath="LCS2_ComorbidityPfeiffer">

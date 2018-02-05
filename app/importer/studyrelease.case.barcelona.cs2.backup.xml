@@ -30,14 +30,9 @@
         <EntityDefinition id="BCS2_CaseData" description="Case Data">
             <AttributeDefinition id="BCS2_Patient" type="Link.Users(IdibapsPatients)" description="Patient"/>
             <AttributeDefinition id="BCS2_Owner" type="Link.Users(IdibapsProfessionals)" description="Owner"/>
-            <AttributeDefinition id="BCS2_EvaluationDueDate" type="date.after(TODAY)" description="Evaluation default due date"/>
-            <AttributeDefinition id="BCS2_WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date"/>            
-
-            <AttributeDefinition id="BCS2_Identification" type="Link.EntityDefinition.BCS2_Identification" description="Identification"/>
-            <AttributeDefinition id="BCS2_Evaluation" type="Link.EntityDefinition.BCS2_Identification" description="Evaluation"/>
-
-            <!--
+            <AttributeDefinition id="BCS2_Inclusion" type="Link.EntityDefinition.BCS2_Inclusion" description="Inclusion form"/>
             <AttributeDefinition id="BCS2_SelectedProfessionals" type="Link.EntityDefinition.BCS2_SelectedProfessionals" description="Inclusion form"/>
+
             <AttributeDefinition id="BCS2_ASATest" type="Link.EntityDefinition.BCS2_ASATest" description="ASA Test"/>
             <AttributeDefinition id="BCS2_ClinicalInformation" type="Link.EntityDefinition.BCS2_ClinicalInformation" description="Clinical Information"/>
             <AttributeDefinition id="BCS2_Charlson" type="Link.EntityDefinition.BCS2_Charlson" description="Charlson"/>
@@ -50,14 +45,12 @@
             <AttributeDefinition id="BCS2_FunctionalCapacitySitToStand" type="Link.EntityDefinition.BCS2_FunctionalCapacitySitToStand" description="Capacidad Funcional Sit to Stand"/>
             <AttributeDefinition id="BCS2_FunctionalCapacity6MWT" type="Link.EntityDefinition.BCS2_FunctionalCapacity6MWT" description="Capacidad Funcional 6MWT"/>
             <AttributeDefinition id="BCS2_FunctionalCapacityYPA" type="Link.EntityDefinition.BCS2_FunctionalCapacityYPA" description="Capacidad Funcional YPA"/>
-            -->
-        </EntityDefinition>
 
 
-        <!-- Identification Entity Definitions -->
-        <EntityDefinition id="BCS2_Identification" description="Identification">
-            <AttributeDefinition id="BCS2_Inclusion" type="Link.EntityDefinition.BCS2_Inclusion" multiplicity="maximalOne" description="Inclusion"/> 
+
+
         </EntityDefinition>
+
 
 
         <EntityDefinition id="BCS2_Inclusion" description="Inclusion">
@@ -93,22 +86,7 @@
             -->
         </EntityDefinition>
 
-        <!-- Identification Entity Definitions -->
-        <EntityDefinition id="BCS2_Evaluation" description="Evaluation">
-            <AttributeDefinition id="BCS2_SelectedProfessionals" type="Link.EntityDefinition.BCS2_SelectedProfessionals" multiplicity="maximalOne" description="Selección inicial de profesionales"/> 
-            <AttributeDefinition id="BCS2_ASATest" type="Link.EntityDefinition.BCS2_ASATest" multiplicity="maximalOne" description="ASA Test"/> 
-            <AttributeDefinition id="BCS2_ClinicalInformation" type="Link.EntityDefinition.BCS2_ClinicalInformation" multiplicity="maximalOne" description="Clinical Information"/> 
-            <AttributeDefinition id="BCS2_Charlson" type="Link.EntityDefinition.BCS2_Charlson" multiplicity="maximalOne" description="Charlson"/> 
-            <AttributeDefinition id="BCS2_PhysicalExamination" type="Link.EntityDefinition.BCS2_PhysicalExamination" multiplicity="maximalOne" description="Physical Examination"/> 
-            <AttributeDefinition id="BCS2_NutritionalInformationMUST" type="Link.EntityDefinition.BCS2_NutritionalInformationMUST" multiplicity="maximalOne" description="Información nutricional - MUST"/> 
-            <AttributeDefinition id="BCS2_NutritionalInformationSGA" type="Link.EntityDefinition.BCS2_NutritionalInformationSGA" multiplicity="maximalOne" description="Información nutricional - SGA"/> 
-            <AttributeDefinition id="BCS2_NutritionalSupport" type="Link.EntityDefinition.BCS2_NutritionalSupport" multiplicity="maximalOne" description="¿Requiere soporte nutricional?"/> 
-            <AttributeDefinition id="BCS2_FunctionalCapacityDUKE" type="Link.EntityDefinition.BCS2_FunctionalCapacityDUKE" multiplicity="maximalOne" description="Capacidad Funcional DUKE"/> 
-            <AttributeDefinition id="BCS2_FunctionalCapacityHandGrip" type="Link.EntityDefinition.BCS2_FunctionalCapacityHandGrip" multiplicity="maximalOne" description="Capacidad Funcional Hand Grip"/> 
-            <AttributeDefinition id="BCS2_FunctionalCapacitySitToStand" type="Link.EntityDefinition.BCS2_FunctionalCapacitySitToStand" multiplicity="maximalOne" description="Capacidad Funcional Sit to Stand"/> 
-            <AttributeDefinition id="BCS2_FunctionalCapacity6MWT" type="Link.EntityDefinition.BCS2_FunctionalCapacity6MWT" multiplicity="maximalOne" description="Capacidad Funcional 6MWT"/> 
-            <AttributeDefinition id="BCS2_FunctionalCapacityYPA" type="Link.EntityDefinition.BCS2_FunctionalCapacityYPA" multiplicity="maximalOne" description="Capacidad Funcional YPA"/> 
-        </EntityDefinition>
+
 
         <EntityDefinition id="BCS2_SelectedProfessionals" description="Selección inicial de profesionales">
             <!-- How is this done -->
@@ -370,7 +348,7 @@
         <EntityDefinition id="BCS2_PhysicalExamination" description="Examinación física">
             <AttributeDefinition id="Height" type="number" multiplicity="maximalOne" description="Altura (cm)"/>
             <AttributeDefinition id="Weight" type="number" multiplicity="maximalOne" description="Peso (Kg)"/>
-            <DerivedAttributeDefinition id="Bmi" expression="(Weight / ((Height/100) * (Height/100)))" sdescription="Bmi"/>
+            <DerivedAttributeDefinition id="Bmi" expression="Height" multiplicity="maximalOne" description="Bmi"/>
             <AttributeDefinition id="BloodPressSist" type="number" multiplicity="maximalOne" description="Presión Arterial Sistólica (mmHg)"/>
             <AttributeDefinition id="BloodPressDiast" type="number" multiplicity="maximalOne" description="Presión Arterial Diastólica (mmHg)"/>
             <AttributeDefinition id="HeartRate" type="number" multiplicity="maximalOne" description="Freq. Cardíaca (bps)"/>
@@ -545,7 +523,7 @@
            <DerivedAttributeDefinition id="YPASsdipme" expression="YPASdipme" multiplicity="maximalOne" description="Score actividad fisica intensa dias por mes"/>
 
 
-            <DerivedAttributeDefinition id="YPASsti" expression="if number(YPASti,0) = 0 then 1 else if number(YPASti,0) = 1 then 2 else 3" description="Score actividad fisica intensa tiempo"/>
+            <!--<AttributeDefinition id="YPASsti" type="enumeration" description="Score actividad fisica intensa tiempo"></AttributeDefinition>  Check this -->
 
             <DerivedAttributeDefinition id="YPASsactfi" expression="number(YPASdipme,0)*number(YPASti,0) * 5" multiplicity="maximalOne" description="YPAS indice Act Vigorosa"/>
 
@@ -567,7 +545,7 @@
             <DerivedAttributeDefinition id="YPASpsdipme" expression="YPASpdipme" multiplicity="maximalOne" description="Score Paseos dias por mes"/>
 
 
-            <DerivedAttributeDefinition id="YPASpsti" expression="if number(YPASpti, 0) = 0 then 1 else if number(YPASpti, 0) = 1 then 2 else 3" description="Score Paseos tiempo"/>
+            <!-- <AttributeDefinition id="YPASpsti" type="enumeration" description="Score Paseos tiempo"></AttributeDefinition>  CheckThis -->
 
 
             <DerivedAttributeDefinition id="YPASspas" expression="number(YPASpsdipme,0)*number(YPASpdipme,0) * 3" multiplicity="maximalOne" description="YPAS indice Pasear"/>
@@ -619,187 +597,182 @@
         <!-- Case Definition -->
         <CaseDefinition id="BCS2_Barcelona" description="CS2 Barcelona" ownerPath="BCS2_Owner" clientPath="BCS2_Patient" entityDefinitionId="BCS2_CaseData">
 
-            <StageDefinition id="BCS2_CaseIdentification" description="Case Identification" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_Identification" entityAttachPath="BCS2_Identification">
-
-                <HumanTaskDefinition id="BCS2_SelectPatient" description="Select Patient" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE"> 
+            <StageDefinition id="BCS2_CaseIdentification" description="Case Identification" isMandatory="true" repeatable="ONCE">
+                <HumanTaskDefinition id="BCS2_Inclusion" description="Inclusion" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_Inclusion" entityAttachPath="BCS2_Inclusion">
                     <TaskParamDefinition path="BCS2_Patient" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_Owner" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_EvaluationDueDate" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_WorkplanDueDate" isReadOnly="false" isMandatory="true"/>  
-                </HumanTaskDefinition>
-                <HumanTaskDefinition id="BCS2_Inclusion" description="Inclusion" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_Inclusion" entityAttachPath="BCS2_Identification.BCS2_Inclusion">
-                    <TaskParamDefinition path="BCS2_Identification.BCS2_Inclusion.name" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Identification.BCS2_Inclusion.nhc" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Identification.BCS2_Inclusion.age" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Identification.BCS2_Inclusion.MajorSurgerySpecialty" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Identification.BCS2_Inclusion.AsaScore" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Identification.BCS2_Inclusion.SurgeryPriority" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Identification.BCS2_Inclusion.IdentificacionComments" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Inclusion.name" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Inclusion.nhc" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Inclusion.age" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Inclusion.MajorSurgerySpecialty" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Inclusion.AsaScore" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Inclusion.SurgeryPriority" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Inclusion.IdentificacionComments" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
             </StageDefinition>
 
-            <StageDefinition id="BCS2_CaseEvaluation" description="Case Evaluation" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_Evaluation" entityAttachPath="BCS2_Evaluation">
+            <StageDefinition id="BCS2_CaseEvaluation" description="Case Evaluation" isMandatory="true" repeatable="ONCE">
                 <SentryDefinition>
                     <precondition processDefinitionId="BCS2_CaseIdentification"/>
                 </SentryDefinition>
-                <HumanTaskDefinition id="BCS2_SelectedProfessionals" description="Select Professional" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_SelectedProfessionals" entityAttachPath="BCS2_Evaluation.BCS2_SelectedProfessionals">
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_SelectedProfessionals.SelectOwnerAnesthesia" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_SelectedProfessionals.SelectOwnerNurse" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_SelectedProfessionals.SelectOwnerNutri" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_SelectedProfessionals.SelectOwnerPsico" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_SelectedProfessionals.SelectOwnerFisio" isReadOnly="false" isMandatory="true"/>
+                <HumanTaskDefinition id="BCS2_SelectedProfessionals" description="Select Professional" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_SelectedProfessionals" entityAttachPath="BCS2_SelectedProfessionals">
+                    <TaskParamDefinition path="BCS2_SelectedProfessionals.SelectOwnerAnesthesia" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_SelectedProfessionals.SelectOwnerNurse" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_SelectedProfessionals.SelectOwnerNutri" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_SelectedProfessionals.SelectOwnerPsico" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_SelectedProfessionals.SelectOwnerFisio" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="BCS2_ASATest" description="ASA Test" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_ASATest" entityAttachPath="BCS2_Evaluation.BCS2_ASATest">
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_ASATest.AsaCalculator" isReadOnly="false" isMandatory="true"/>
-                </HumanTaskDefinition>
-
-
-                <HumanTaskDefinition id="BCS2_ClinicalInformation" description="Clinical Information" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_ClinicalInformation" entityAttachPath="BCS2_Evaluation.BCS2_ClinicalInformation">
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.SociodemoAddress" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.SociodemoTelf" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.SociodemoEmail" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.SociodemoZone" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.SociodemoAge" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.SociodemoSex" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.SociodemoPhoto" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.DiagnosisInfo" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.SurgeryInfo" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.Onco" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.Neo" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.NeoStart" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.NeoEnd" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.Tabaquism" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.QuitSmokingProgram" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.Frailty" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.NumDrugs" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.DrugTreatment" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.ClinicInfoComment" isReadOnly="false" isMandatory="true"/>
+                <HumanTaskDefinition id="BCS2_ASATest" description="ASA Test" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_ASATest" entityAttachPath="BCS2_ASATest">
+                    <TaskParamDefinition path="BCS2_ASATest.AsaCalculator" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
 
 
-                <HumanTaskDefinition id="BCS2_Charlson" description="Charlson index" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_Charlson" entityAttachPath="BCS2_Evaluation.BCS2_Charlson">
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_Charlson.ch1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_Charlson.ch2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_Charlson.ch3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_Charlson.ch4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_Charlson.ch5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_Charlson.ch6" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_Charlson.ch7" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_Charlson.ch8" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_Charlson.ch9" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_Charlson.ch10" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_Charlson.ch11" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_Charlson.ch12" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_Charlson.ch13" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_Charlson.ch14" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_Charlson.ch15" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_Charlson.ch16" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_Charlson.ch17" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_Charlson.ch18" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_Charlson.ch19" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_Charlson.ch20" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_Charlson.ch21" isReadOnly="true" isMandatory="false"/>
+                <HumanTaskDefinition id="BCS2_ClinicalInformation" description="Clinical Information" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_ClinicalInformation" entityAttachPath="BCS2_ClinicalInformation">
+                    <TaskParamDefinition path="BCS2_ClinicalInformation.SociodemoAddress" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_ClinicalInformation.SociodemoTelf" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_ClinicalInformation.SociodemoEmail" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_ClinicalInformation.SociodemoZone" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_ClinicalInformation.SociodemoAge" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_ClinicalInformation.SociodemoSex" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_ClinicalInformation.SociodemoPhoto" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_ClinicalInformation.DiagnosisInfo" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_ClinicalInformation.SurgeryInfo" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_ClinicalInformation.Onco" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_ClinicalInformation.Neo" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_ClinicalInformation.NeoStart" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_ClinicalInformation.NeoEnd" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_ClinicalInformation.Tabaquism" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_ClinicalInformation.QuitSmokingProgram" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_ClinicalInformation.Frailty" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_ClinicalInformation.NumDrugs" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_ClinicalInformation.DrugTreatment" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_ClinicalInformation.ClinicInfoComment" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
 
 
-                <HumanTaskDefinition id="BCS2_PhysicalExamination" description="Physical Examination" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_PhysicalExamination" entityAttachPath="BCS2_Evaluation.BCS2_PhysicalExamination">
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_PhysicalExamination.Height" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_PhysicalExamination.Weight" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_PhysicalExamination.Bmi" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_PhysicalExamination.BloodPressSist" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_PhysicalExamination.BloodPressDiast" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_PhysicalExamination.HeartRate" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_PhysicalExamination.OxygenSat" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_PhysicalExamination.Albumina" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_PhysicalExamination.Hemo" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_PhysicalExamination.FerroTherapy" isReadOnly="false" isMandatory="true"/>
-                </HumanTaskDefinition>
-
-                <HumanTaskDefinition id="BCS2_NutritionalInformationMUST" description="Nutritional Information MUST" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_NutritionalInformationMUST" entityAttachPath="BCS2_Evaluation.BCS2_NutritionalInformationMUST">
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_NutritionalInformationMUST.BmiCat" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_NutritionalInformationMUST.WeightLoss" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_NutritionalInformationMUST.RecentAcuteDisease" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_NutritionalInformationMUST.MustScore" isReadOnly="true" isMandatory="false"/>
-                </HumanTaskDefinition>
-
-                <HumanTaskDefinition id="BCS2_NutritionalInformationSGA" description="Nutritional Information SGA" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_NutritionalInformationSGA" entityAttachPath="BCS2_Evaluation.BCS2_NutritionalInformationSGA">
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_NutritionalInformationSGA.Sga" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_NutritionalInformationSGA.SgaScore" isReadOnly="false" isMandatory="true"/>
-                </HumanTaskDefinition>
-
-                <HumanTaskDefinition id="BCS2_NutritionalSupport" description="Nutritional Information Support" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_NutritionalSupport" entityAttachPath="BCS2_Evaluation.BCS2_NutritionalSupport">
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_NutritionalSupport.MustNutritionFollowup" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_NutritionalSupport.MustNutritionGroup" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_NutritionalSupport.PersonalisedSuppl" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_NutritionalSupport.SupplDosis" isReadOnly="false" isMandatory="true"/>
-                </HumanTaskDefinition>
-
-                <HumanTaskDefinition id="BCS2_FunctionalCapacityDUKE" description="Functional Capacity DUKE" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_FunctionalCapacityDUKE" entityAttachPath="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE">
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE.DukeVale" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE.DukeCam" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE.DukeCamu" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE.DukeSub" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE.DukeReal" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE.DukePasa" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE.DukeArreg" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE.DukeBici" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE.DukeTene" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE.DukeBail" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE.DukeScore" isReadOnly="true" isMandatory="false"/>
-                </HumanTaskDefinition>
-
-                <HumanTaskDefinition id="BCS2_FunctionalCapacityHandGrip" description="Functional Capacity Hand Grip" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_FunctionalCapacityHandGrip" entityAttachPath="BCS2_Evaluation.BCS2_FunctionalCapacityHandGrip">
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityHandGrip.BestDominantHand" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityHandGrip.BestNonDominantHand" isReadOnly="false" isMandatory="true"/>
+                <HumanTaskDefinition id="BCS2_Charlson" description="Charlson index" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_Charlson" entityAttachPath="BCS2_Charlson">
+                    <TaskParamDefinition path="BCS2_Charlson.ch1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Charlson.ch2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Charlson.ch3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Charlson.ch4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Charlson.ch5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Charlson.ch6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Charlson.ch7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Charlson.ch8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Charlson.ch9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Charlson.ch10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Charlson.ch11" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Charlson.ch12" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Charlson.ch13" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Charlson.ch14" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Charlson.ch15" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Charlson.ch16" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Charlson.ch17" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Charlson.ch18" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Charlson.ch19" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Charlson.ch20" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Charlson.ch21" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
 
 
-                <HumanTaskDefinition id="BCS2_FunctionalCapacitySitToStand" description="Functional Capacity Sit To Stand" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_FunctionalCapacitySitToStand" entityAttachPath="BCS2_Evaluation.BCS2_FunctionalCapacitySitToStand">
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacitySitToStand.S2S1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacitySitToStand.S2S2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacitySitToStand.S2S3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacitySitToStand.S2S4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacitySitToStand.S2S5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacitySitToStand.S2S6" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacitySitToStand.S2S7" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacitySitToStand.S2S8" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacitySitToStand.S2S9" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacitySitToStand.S2S10" isReadOnly="false" isMandatory="true"/>
+                <HumanTaskDefinition id="BCS2_PhysicalExamination" description="Physical Examination" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_PhysicalExamination" entityAttachPath="BCS2_PhysicalExamination">
+                    <TaskParamDefinition path="BCS2_PhysicalExamination.Height" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_PhysicalExamination.Weight" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_PhysicalExamination.Bmi" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="BCS2_PhysicalExamination.BloodPressSist" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_PhysicalExamination.BloodPressDiast" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_PhysicalExamination.HeartRate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_PhysicalExamination.OxygenSat" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_PhysicalExamination.Albumina" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_PhysicalExamination.Hemo" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_PhysicalExamination.FerroTherapy" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="BCS2_FunctionalCapacity6MWT" description="Functional Capacity 6MWT" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_FunctionalCapacity6MWT" entityAttachPath="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT">
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTmeters" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTinitialFC" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTfinalFC" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTinitialSat" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTfinalSat" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTinitialDisnea" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTfinalDisnea" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTinitialFatigue" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTfinalFatigue" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTHRR1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTstop" isReadOnly="false" isMandatory="true"/>
+                <HumanTaskDefinition id="BCS2_NutritionalInformationMUST" description="Nutritional Information MUST" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_NutritionalInformationMUST" entityAttachPath="BCS2_NutritionalInformationMUST">
+                    <TaskParamDefinition path="BCS2_NutritionalInformationMUST.BmiCat" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_NutritionalInformationMUST.WeightLoss" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_NutritionalInformationMUST.RecentAcuteDisease" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_NutritionalInformationMUST.MustScore" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="BCS2_FunctionalCapacityYPA" description="Capacidad Funcional YPA" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_FunctionalCapacityYPA" entityAttachPath="BCS2_Evaluation.BCS2_FunctionalCapacityYPA">
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASdipme" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASti" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASsdipme" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASsti" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASsactfi" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASpdipme" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASpti" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASpsdipme" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASpsti" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASspas" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPAStiemov" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASstiemov" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASesdep" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASsesdep" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPAStisen" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASstisen" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASsindre" isReadOnly="true" isMandatory="false"/>
+                <HumanTaskDefinition id="BCS2_NutritionalInformationSGA" description="Nutritional Information SGA" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_NutritionalInformationSGA" entityAttachPath="BCS2_NutritionalInformationSGA">
+                    <TaskParamDefinition path="BCS2_NutritionalInformationSGA.Sga" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_NutritionalInformationSGA.SgaScore" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="BCS2_NutritionalSupport" description="Nutritional Information Support" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_NutritionalSupport" entityAttachPath="BCS2_NutritionalSupport">
+                    <TaskParamDefinition path="BCS2_NutritionalSupport.MustNutritionFollowup" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_NutritionalSupport.MustNutritionGroup" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_NutritionalSupport.PersonalisedSuppl" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_NutritionalSupport.SupplDosis" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="BCS2_FunctionalCapacityDUKE" description="Functional Capacity DUKE" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_FunctionalCapacityDUKE" entityAttachPath="BCS2_FunctionalCapacityDUKE">
+                    <TaskParamDefinition path="BCS2_FunctionalCapacityDUKE.DukeVale" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacityDUKE.DukeCam" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacityDUKE.DukeCamu" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacityDUKE.DukeSub" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacityDUKE.DukeReal" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacityDUKE.DukePasa" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacityDUKE.DukeArreg" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacityDUKE.DukeBici" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacityDUKE.DukeTene" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacityDUKE.DukeBail" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacityDUKE.DukeScore" isReadOnly="true" isMandatory="false"/>
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="BCS2_FunctionalCapacityHandGrip" description="Functional Capacity Hand Grip" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_FunctionalCapacityHandGrip" entityAttachPath="BCS2_FunctionalCapacityHandGrip">
+                    <TaskParamDefinition path="BCS2_FunctionalCapacityHandGrip.BestDominantHand" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacityHandGrip.BestNonDominantHand" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>
+
+
+                <HumanTaskDefinition id="BCS2_FunctionalCapacitySitToStand" description="Functional Capacity Sit To Stand" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_FunctionalCapacitySitToStand" entityAttachPath="BCS2_FunctionalCapacitySitToStand">
+                    <TaskParamDefinition path="BCS2_FunctionalCapacitySitToStand.S2S1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacitySitToStand.S2S2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacitySitToStand.S2S3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacitySitToStand.S2S4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacitySitToStand.S2S5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacitySitToStand.S2S6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacitySitToStand.S2S7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacitySitToStand.S2S8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacitySitToStand.S2S9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacitySitToStand.S2S10" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="BCS2_FunctionalCapacity6MWT" description="Functional Capacity 6MWT" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_FunctionalCapacity6MWT" entityAttachPath="BCS2_FunctionalCapacity6MWT">
+                    <TaskParamDefinition path="BCS2_FunctionalCapacity6MWT.6MWTmeters" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacity6MWT.6MWTinitialFC" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacity6MWT.6MWTfinalFC" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacity6MWT.6MWTinitialSat" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacity6MWT.6MWTfinalSat" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacity6MWT.6MWTinitialDisnea" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacity6MWT.6MWTfinalDisnea" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacity6MWT.6MWTinitialFatigue" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacity6MWT.6MWTfinalFatigue" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacity6MWT.6MWTHRR1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacity6MWT.6MWTstop" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="BCS2_FunctionalCapacityYPA" description="Capacidad Funcional YPA" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_FunctionalCapacityYPA" entityAttachPath="BCS2_FunctionalCapacityYPA">
+                    <TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPASdipme" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPASti" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPASsdipme" isReadOnly="true" isMandatory="false"/>
+                    <!--<TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPASsti" isReadOnly="false" isMandatory="true"/>-->
+                    <TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPASsactfi" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPASpdipme" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPASpti" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPASpsdipme" isReadOnly="true" isMandatory="false"/>
+                    <!--<TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPASpsti" isReadOnly="false" isMandatory="true"/>-->
+                    <TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPASspas" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPAStiemov" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPASstiemov" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPASesdep" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPASsesdep" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPAStisen" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPASstisen" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="BCS2_FunctionalCapacityYPA.YPASsindre" isReadOnly="true" isMandatory="false"/>
 
                 </HumanTaskDefinition>
             </StageDefinition>
@@ -810,28 +783,17 @@
 <!-- ####### Execution ###################################################################################################################### -->
 <!-- ######################################################################################################################################## -->
 
-
     <Execution>
-
-        <!--
-        <Action id="CompleteHumanTask" processId="BCS2_SelectPatient">
-            <TaskParam path="BCS2_Patient"  userValue="vargiue"/>
-            <TaskParam path="BCS2_Owner"  userValue="salazart"/>
-            <TaskParam path="BCS2_EvaluationDueDate" values="['2018-12-26T00:00:00.000']"/>
-            <TaskParam path="BCS2_WorkplanDueDate" values="['2018-12-28T00:00:00.000']"/>
+        <Action id="CompleteHumanTask" processId="BCS2_Inclusion">
+            <TaskParam path="BCS2_Inclusion.name" values="['Test Inclusion']"/>
+            <TaskParam path="BCS2_Inclusion.nhc"  values="['20']"/>
+            <TaskParam path="BCS2_Inclusion.age" values="['80']"/>
+            <TaskParam path="BCS2_Inclusion.MajorSurgerySpecialty" values="['3']"/>
+            <TaskParam path="BCS2_Inclusion.AsaScore" values="['0']"/>
+            <TaskParam path="BCS2_Inclusion.SurgeryPriority" values="['1']"/>
+            <TaskParam path="BCS2_Inclusion.IdentificacionComments" values="['Almost dead']"/>
         </Action>
-        -->
-
-        <Action id="CompleteHumanTask" processId="BCS2_Inclusion">            
-            <TaskParam path="BCS2_Identification.BCS2_Inclusion.name" values="['Test Inclusion']"/>
-            <TaskParam path="BCS2_Identification.BCS2_Inclusion.nhc"  values="['20']"/>
-            <TaskParam path="BCS2_Identification.BCS2_Inclusion.age" values="['80']"/>
-            <TaskParam path="BCS2_Identification.BCS2_Inclusion.MajorSurgerySpecialty" values="['3']"/>
-            <TaskParam path="BCS2_Identification.BCS2_Inclusion.AsaScore" values="['0']"/>
-            <TaskParam path="BCS2_Identification.BCS2_Inclusion.SurgeryPriority" values="['1']"/>
-            <TaskParam path="BCS2_Identification.BCS2_Inclusion.IdentificacionComments" values="['Almost dead']"/>
-        </Action>
-
+        <!-- SELECT Professionals missing -->
         <Action id="CompleteHumanTask" processId="BCS2_ASATest">
             <TaskParam path="BCS2_ASATest.AsaCalculator" values="['Here should be an ASA score']"/>
         </Action>
@@ -950,6 +912,5 @@
             <TaskParam path="BCS2_FunctionalCapacityYPA.YPAStisen" values="['5']"/>
         </Action>
     </Execution>
-
 
 </SACMDefinition>
