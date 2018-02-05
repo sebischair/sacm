@@ -640,7 +640,7 @@
                     <TaskParamDefinition part="AUTOMATED" path="GCS2_Workplan.GCS2_PhysicalActivity.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>
 
-                <DualTaskDefinition id="GCS2_MonitoringPrescription" description="Monitoring Prescription" dynamicDescriptionPath="GCS2_Workplan.GCS2_PhysicalActivity.type" ownerPath="GCS2_Owner" dueDatePath="GCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" isManualActivation="true" entityDefinitionId="GCS2_MonitoringPrescription" entityAttachPath="GCS2_Workplan.GCS2_MonitoringPrescription">
+                <DualTaskDefinition id="GCS2_MonitoringPrescription" description="Monitoring Prescription" dynamicDescriptionPath="GCS2_Workplan.GCS2_MonitoringPrescription.type" ownerPath="GCS2_Owner" dueDatePath="GCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" isManualActivation="true" entityDefinitionId="GCS2_MonitoringPrescription" entityAttachPath="GCS2_Workplan.GCS2_MonitoringPrescription">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_MonitoringPrescription.type" isReadOnly="false" isMandatory="true"/>
@@ -801,21 +801,37 @@
 
         <Action id="ActivateDualTask" processId="GCS2_MonitoringPrescription" breakpoint="true"/>
         <Action id="CompleteDualTaskHumanPart" processId="GCS2_MonitoringPrescription" breakpoint="true">
-            <TaskParam path="GCS2_WorkplanGCS2_MonitoringPrescription.type"  values="['DIASTOLICBLOODPRESSURE']"/>
-            <TaskParam path="GCS2_WorkplanGCS2_MonitoringPrescription.alertmin"  values="[50]"/>
-            <TaskParam path="GCS2_WorkplanGCS2_MonitoringPrescription.alertmax"  values="[150]"/>
-            <TaskParam path="GCS2_WorkplanGCS2_MonitoringPrescription.alertfreq"  values="[2]"/>
-            <TaskParam path="GCS2_WorkplanGCS2_MonitoringPrescription.alertfrequnit"  values="['DAYS']"/>
-            <TaskParam path="GCS2_WorkplanGCS2_MonitoringPrescription.comments"  values="['Some random comment']"/>
-            <TaskParam path="GCS2_WorkplanGCS2_MonitoringPrescription.freq"  values="[5]"/>
-            <TaskParam path="GCS2_WorkplanGCS2_MonitoringPrescription.freqqunit"  values="['WEEKS']"/>
-            <TaskParam path="GCS2_WorkplanGCS2_MonitoringPrescription.maxdelay"  values="[100]"/>
-            <TaskParam path="GCS2_WorkplanGCS2_MonitoringPrescription.startdate"  values="['2017-06-09T00:00:00.0']"/>
-            <TaskParam path="GCS2_WorkplanGCS2_MonitoringPrescription.enddate"  values="['2019-06-09T00:00:00.0']"/>
-            <TaskParam path="GCS2_WorkplanGCS2_MonitoringPrescription.timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
+            <TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescription.type"  values="['DIASTOLICBLOODPRESSURE']"/>
+            <TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescription.alertmin"  values="[50]"/>
+            <TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescription.alertmax"  values="[150]"/>
+            <TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescription.alertfreq"  values="[2]"/>
+            <TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescription.alertfrequnit"  values="['DAYS']"/>
+            <TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescription.comments"  values="['Some random comment']"/>
+            <TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescription.freq"  values="[5]"/>
+            <TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescription.freqqunit"  values="['WEEKS']"/>
+            <TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescription.maxdelay"  values="[100]"/>
+            <TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescription.startdate"  values="['2017-06-09T00:00:00.0']"/>
+            <TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescription.enddate"  values="['2019-06-09T00:00:00.0']"/>
+            <TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescription.timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
         </Action>
         <Action id="CompleteDualTaskAutomatedPart" processId="GCS2_MonitoringPrescription">
             <TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescription.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
+        </Action>
+
+        <Action id="ActivateDualTask" processId="GCS2_SimpleTask" breakpoint="true"/>
+        <Action id="CompleteDualTaskHumanPart" processId="GCS2_SimpleTask" breakpoint="true">
+            <TaskParam path="GCS2_Workplan.GCS2_SimpleTask.type"  values="['RAISEYOURHANDS']"/>
+            <TaskParam path="GCS2_Workplan.GCS2_SimpleTask.freq"  values="[5]"/>
+            <TaskParam path="GCS2_Workplan.GCS2_SimpleTask.freqqunit"  values="['WEEKS']"/>
+            <TaskParam path="GCS2_Workplan.GCS2_SimpleTask.maxdelay"  values="[100]"/>
+            <TaskParam path="GCS2_Workplan.GCS2_SimpleTask.startdate"  values="['2017-06-09T00:00:00.0']"/>
+            <TaskParam path="GCS2_Workplan.GCS2_SimpleTask.enddate"  values="['2019-06-09T00:00:00.0']"/>
+            <TaskParam path="GCS2_Workplan.GCS2_SimpleTask.timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
+            <TaskParam path="GCS2_Workplan.GCS2_SimpleTask.repetitionseachday"  values="[5]"/>            
+            <TaskParam path="GCS2_Workplan.GCS2_SimpleTask.comments"  values="['Some random comment']"/>
+        </Action>
+        <Action id="CompleteDualTaskAutomatedPart" processId="GCS2_SimpleTask">
+            <TaskParam path="GCS2_Workplan.GCS2_SimpleTask.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
         </Action>
 
     </Execution>
