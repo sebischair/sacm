@@ -38,13 +38,12 @@
 		  <AttributeDefinition id="LCS2_AnesClinic" type="Link.Users(IrbllAnesthesiologists, IrbllClinicians)" description="Anestesiòleg o Cirurgià"/>            		  
 		  
 		  <!-- WORKSPACE: CaseIdentification -->				  		 
-			  <AttributeDefinition id="LCS2_ComorbidityCharlson" type="Link.EntityDefinition.LCS2_ComorbidityCharlson" />  	  		  
-			  <AttributeDefinition id="LCS2_GMA" type="Link.EntityDefinition.LCS2_GMA" />		  		  
 			  <AttributeDefinition id="LCS2_TechnologicalTest" type="Link.EntityDefinition.LCS2_TechnologicalTest" />	  
+			  <AttributeDefinition id="LCS2_ComorbidityCharlson" type="Link.EntityDefinition.LCS2_ComorbidityCharlson" />  	  		  
+			  <AttributeDefinition id="LCS2_GMA" type="Link.EntityDefinition.LCS2_GMA" />		  		  			  
 			  <AttributeDefinition id="LCS2_ComplexityRisk" type="Link.EntityDefinition.LCS2_ComplexityRisk" />		  		  
 			  <!-- TO BE DELETED <AttributeDefinition id="LCS2_HospitalEmergencyAdminisions" type="Link.EntityDefinition.LCS2_HospitalEmergencyAdminisions" /> -->
-			  <AttributeDefinition id="LCS2_PatientsConsent" type="Link.EntityDefinition.LCS2_PatientsConsent" />
-		  
+			  <AttributeDefinition id="LCS2_PatientsConsent" type="Link.EntityDefinition.LCS2_PatientsConsent" />		  
 		  
 		  <!-- WORKSPACE: CaseEvaluation -->	
 			  <!-- Estat comòrbid -->				
@@ -121,7 +120,29 @@
 		</EntityDefinition>		
 		
 
-		<!-- ENTITY DEFINITION: CaseIdentification -->				
+		<!-- ENTITY DEFINITION: CaseIdentification -->			
+		<EntityDefinition id="LCS2_TechnologicalTest" >
+			<AttributeDefinition id="tech1" type="enumeration" multiplicity="maximalOne" description="Vosté o el seu cuidador tenen connexió a Internet?">
+				<EnumerationOption value="0" description="No"/>
+				<EnumerationOption value="1" description="Sí"/>
+			</AttributeDefinition>
+
+			<AttributeDefinition id="tech2" type="enumeration" multiplicity="maximalOne" description="Vosté fa anar:">
+				<EnumerationOption value="1" description="Telèfon mòvil no tan sols per trucar."/>
+				<EnumerationOption value="2" description="Tablet"/>
+				<EnumerationOption value="3" description="Ordinador personal."/>
+				<EnumerationOption value="0" description="Cap"/>
+			</AttributeDefinition>
+
+			<AttributeDefinition id="tech3" type="enumeration" multiplicity="maximalOne" description="El seu cuidador principal fa anar:">
+				<EnumerationOption value="1" description="Telèfon mòvil no tan sols per trucar."/>
+				<EnumerationOption value="2" description="Tablet"/>
+				<EnumerationOption value="3" description="Ordinador personal."/>
+				<EnumerationOption value="0" description="Cap"/>
+			</AttributeDefinition>
+			<DerivedAttributeDefinition id="tech4" expression="number(tech1,0)+number(tech2,0)+number(tech3,0)" description="Technological test result"/>
+		</EntityDefinition>	  	
+		
 		<EntityDefinition id="LCS2_ComorbidityCharlson" >
             <AttributeDefinition id="ch1" type="enumeration" multiplicity="maximalOne" description="Infart del miocardi">
                 <EnumerationOption value="0" description="No"/>
@@ -241,6 +262,7 @@
 					<EnumerationOption value="5" description="ASA V: Un pacient moribund que no s'espera que sobrevisqui sense l'operació"/>
 					<EnumerationOption value="6" description="ASA VI: Un pacient declarat mort cerebral els òrgans són eliminats amb finalitats donants"/>
 				-->
+				<DerivedAttributeDefinition id="complexityrisk" expression="round(number(cd1,0))+round(number(pmed1,0))+round(number(age,0))+round(number(ASA,0))" description="Puntuació"/> 
 		</EntityDefinition>
 		
 			
@@ -259,29 +281,6 @@
 			<AttributeDefinition id="admissions2" type="number" multiplicity="maximalOne" description="Quantes vegades ha estat atés el pacient a urgències durant l´ultim any? (incloses  urgències de primària)"/>       
 		</EntityDefinition> -->
 		
-
-		<EntityDefinition id="LCS2_TechnologicalTest" >
-			<AttributeDefinition id="tech1" type="enumeration" multiplicity="maximalOne" description="Vosté o el seu cuidador tenen connexió a Internet?">
-				<EnumerationOption value="0" description="No"/>
-				<EnumerationOption value="1" description="Sí"/>
-			</AttributeDefinition>
-
-			<AttributeDefinition id="tech2" type="enumeration" multiplicity="maximalOne" description="Vosté fa anar:">
-				<EnumerationOption value="1" description="Telèfon mòvil no tan sols per trucar."/>
-				<EnumerationOption value="2" description="Tablet"/>
-				<EnumerationOption value="3" description="Ordinador personal."/>
-				<EnumerationOption value="0" description="Cap"/>
-			</AttributeDefinition>
-
-			<AttributeDefinition id="tech3" type="enumeration" multiplicity="maximalOne" description="El seu cuidador principal fa anar:">
-				<EnumerationOption value="1" description="Telèfon mòvil no tan sols per trucar."/>
-				<EnumerationOption value="2" description="Tablet"/>
-				<EnumerationOption value="3" description="Ordinador personal."/>
-				<EnumerationOption value="0" description="Cap"/>
-			</AttributeDefinition>
-			<DerivedAttributeDefinition id="tech4" expression="number(tech1,0)+number(tech2,0)+number(tech3,0)" description="Technological test result"/>
-
-		</EntityDefinition>	  	
 
 		<EntityDefinition id="LCS2_PatientsConsent" >
 				<AttributeDefinition id="pConsent1" type="enumeration" multiplicity="maximalOne" description="Accepta participar al procés clínic descrit al present document?">
@@ -310,10 +309,10 @@
         </EntityDefinition>
 	  
         <EntityDefinition id="LCS2_AnthropometricVariables">
-            <AttributeDefinition id="Anthropometric1" type="number" multiplicity="maximalOne" description="Pes (kg)"/>
-			<AttributeDefinition id="Anthropometric2" type="number" multiplicity="maximalOne" description="Alçada(cm)"/>
+            <AttributeDefinition id="AnWeigh" type="number" multiplicity="maximalOne" description="Pes (kg)"/>
+			<AttributeDefinition id="AnHeight" type="number" multiplicity="maximalOne" description="Alçada(cm)"/>
             <AttributeDefinition id="Anthropometric3" type="number" multiplicity="maximalOne" description="Distancia entre genoll i turmell (cm)"/>
-			<DerivedAttributeDefinition id="Anthropometric4" type="number" multiplicity="maximalOne" description="IMC (kg/m2)" expression="Anthropometric1/(Anthropometric2/100*Anthropometric2/100)"/> 
+			<DerivedAttributeDefinition id="Anthropometric4" type="number" multiplicity="maximalOne" description="IMC (kg/m2)" expression="AnWeigh/(AnHeight/100*AnHeight/100)"/> 
             <AttributeDefinition id="Anthropometric5" type="enumeration" multiplicity="maximalOne" description="IMC >= 30 kg/m2">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
@@ -1646,6 +1645,7 @@
 				<TaskParamDefinition path="LCS2_Physiotherapist" isReadOnly="false" isMandatory="true"/> 
             </HumanTaskDefinition>		
 
+			<!-- Gestor de Casos -->
             <HumanTaskDefinition id="LCS2_TechnologicalTest" description="Test d'adherència a la tecnología" ownerPath="LCS2_CaseManager" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_TechnologicalTest" entityAttachPath="LCS2_TechnologicalTest">
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
@@ -1656,6 +1656,7 @@
               <TaskParamDefinition path="LCS2_TechnologicalTest.tech4" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>			
 			
+			<!-- Infermera  -->				
             <HumanTaskDefinition id="LCS2_ComorbidityCharlsonIdentification" description="Índex de comorbilitat de Charlson" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_ComorbidityCharlson" entityAttachPath="LCS2_ComorbidityCharlson">
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
@@ -1683,7 +1684,8 @@
               <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch20" isReadOnly="false" isMandatory="true"/>
               <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch21" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>
-						
+			
+			<!-- Clínic  -->			
             <HumanTaskDefinition id="LCS2_GMAIdentification" description="GMA" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_GMA" entityAttachPath="LCS2_GMA">
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
@@ -1691,8 +1693,8 @@
               <TaskParamDefinition path="LCS2_GMA.gma" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition> 
 
-			
-            <HumanTaskDefinition id="LCS2_ComplexityRisk" description="Test complexitat-risc" ownerPath="LCS2_Anesthesiologist" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_ComplexityRisk" entityAttachPath="LCS2_ComplexityRisk">
+			<!-- PDT Cirurgiá/Anestesista  -->	
+            <HumanTaskDefinition id="LCS2_ComplexityRisk" description="Test complexitat-risc" ownerPath="LCS2_AnesClinic" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_ComplexityRisk" entityAttachPath="LCS2_ComplexityRisk">
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>
@@ -1701,9 +1703,9 @@
 				<TaskParamDefinition path="LCS2_ComplexityRisk.admissions1" isReadOnly="false" isMandatory="true"/>
 				<TaskParamDefinition path="LCS2_ComplexityRisk.admissions2" isReadOnly="false" isMandatory="true"/>
 				<TaskParamDefinition path="LCS2_ComplexityRisk.age" isReadOnly="false" isMandatory="true"/>
-				<TaskParamDefinition path="LCS2_ComplexityRisk.ASA" isReadOnly="false" isMandatory="true"/>	<!-- LCS2_ASAPhysicalStatusClassificationSystemIdentification -->
+				<TaskParamDefinition path="LCS2_ComplexityRisk.ASA" isReadOnly="false" isMandatory="true"/>	<!-- LCS2_ASAPhysicalStatusClassificationSystemIdentification -->				
+				<TaskParamDefinition path="LCS2_ComplexityRisk.complexityrisk" isReadOnly="false" isMandatory="false"/>				
             </HumanTaskDefinition>
-
 			
             <!-- TO BE DELETED
 			<HumanTaskDefinition id="LCS2_HospitalEmergencyAdminisions" description="Admissions hospitalàries d'emergència" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_HospitalEmergencyAdminisions" entityAttachPath="LCS2_HospitalEmergencyAdminisions">
@@ -1714,6 +1716,7 @@
               <TaskParamDefinition path="LCS2_HospitalEmergencyAdminisions.admissions2" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition> -->
 
+			<!-- Gestor de Casos -->
             <HumanTaskDefinition id="LCS2_PatientsConsent" description="Consentiment informat del pacient" ownerPath="LCS2_CaseManager" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_PatientsConsent" entityAttachPath="LCS2_PatientsConsent">			
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
@@ -1762,8 +1765,8 @@
 
 			<!-- Infermera  -->				
 			<HumanTaskDefinition id="LCS2_AnthropometricVariables" description="Diagnòstic - Variables antropomètriques" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_AnthropometricVariables" entityAttachPath="LCS2_AnthropometricVariables">
-              <TaskParamDefinition path="LCS2_AnthropometricVariables.Anthropometric1" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_AnthropometricVariables.Anthropometric2" isReadOnly="false" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_AnthropometricVariables.AnWeigh" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_AnthropometricVariables.AnHeight" isReadOnly="false" isMandatory="false"/>
               <TaskParamDefinition path="LCS2_AnthropometricVariables.Anthropometric3" isReadOnly="false" isMandatory="false"/>
 			  <TaskParamDefinition path="LCS2_AnthropometricVariables.Anthropometric4" isReadOnly="true" isMandatory="false"/>
 			  <TaskParamDefinition path="LCS2_AnthropometricVariables.Anthropometric5" isReadOnly="false" isMandatory="true"/>
