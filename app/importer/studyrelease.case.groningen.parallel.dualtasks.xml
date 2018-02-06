@@ -49,7 +49,7 @@
         
        
         <!-- Case Definition -->
-        <CaseDefinition id="Parallel Testing" description="Parallel Case Testing" ownerPath="GCS2PDT_Owner" clientPath="GCS2PDT_Patient" entityDefinitionId="GCS2PDT_CaseData">
+        <CaseDefinition id="Parallel Testing DualTasks" description="Parallel Case Testing with DualTasks" ownerPath="GCS2PDT_Owner" clientPath="GCS2PDT_Patient" entityDefinitionId="GCS2PDT_CaseData">
                    
             <StageDefinition id="GCS2PDT_CaseIdentification" description="Case Identification" isMandatory="true" repeatable="ONCE">        
                 <HumanTaskDefinition id="GCS2PDT_SelectPatient" description="Select Patient" ownerPath="GCS2PDT_Owner" isMandatory="true" repeatable="ONCE">                
@@ -78,6 +78,12 @@
                     <TaskParamDefinition part="AUTOMATED" path="GCS2PDT_PhysicalActivity.phactpx" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>
               
+            </StageDefinition>
+
+            <StageDefinition id="GCS2PDT_Discharge" description="Case Discharge" isMandatory="false" isManualActivation="true" repeatable="SERIAL">        
+                <HumanTaskDefinition id="GCS2PDT_ChangeDueDates" description="Change Workplan Dates" ownerPath="GCS2PDT_Owner" isMandatory="true" repeatable="ONCE">                
+                    <TaskParamDefinition path="GCS2PDT_WorkplanDueDate" isReadOnly="false" isMandatory="true"/>                    
+                </HumanTaskDefinition>
             </StageDefinition>
 
         </CaseDefinition>
