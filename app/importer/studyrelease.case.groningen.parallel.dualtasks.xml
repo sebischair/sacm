@@ -81,9 +81,9 @@
             </StageDefinition>
 
             <StageDefinition id="GCS2PDT_Discharge" description="Case Discharge" isMandatory="false" isManualActivation="true" repeatable="SERIAL">        
-                <HumanTaskDefinition id="GCS2PDT_ChangeDueDates" description="Change Workplan Dates" ownerPath="GCS2PDT_Owner" isMandatory="true" repeatable="ONCE">                
+                <!--<HumanTaskDefinition id="GCS2PDT_ChangeDueDates" description="Change Workplan Dates" ownerPath="GCS2PDT_Owner" isMandatory="true" repeatable="ONCE">                
                     <TaskParamDefinition path="GCS2PDT_WorkplanDueDate" isReadOnly="false" isMandatory="true"/>                    
-                </HumanTaskDefinition>
+                </HumanTaskDefinition>-->
             </StageDefinition>
 
         </CaseDefinition>
@@ -101,9 +101,9 @@
             <TaskParam path="GCS2PDT_EvaluationDueDate" values="['2017-12-26T00:00:00.000']"/>
             <TaskParam path="GCS2PDT_WorkplanDueDate" values="['2017-12-28T00:00:00.000']"/>
         </Action>
-        <Action id="ActivateDualTask" processId="GCS2PDT_PhysicalActivity" breakpoint="true"/>
-        <Action id="ActivateDualTask" processId="GCS2PDT_PhysicalActivity" breakpoint="true"/>
-        <Action id="CompleteDualTaskHumanPart" processId="GCS2PDT_PhysicalActivity" breakpoint="true">
+        <Action id="ActivateDualTask" processId="GCS2PDT_PhysicalActivity"/>
+        <Action id="ActivateDualTask" processId="GCS2PDT_PhysicalActivity"/>
+        <Action id="CompleteDualTaskHumanPart" processId="GCS2PDT_PhysicalActivity">
             <TaskParam path="GCS2PDT_PhysicalActivity.phactp1"  values="['2017-09-26T00:00:00.000']"/>
             <TaskParam path="GCS2PDT_PhysicalActivity.phactp2"  values="['2018-09-27T00:00:00.000']"/>
             <TaskParam path="GCS2PDT_PhysicalActivity.phactp3"  values="[10000]"/>
@@ -115,7 +115,10 @@
         <Action id="CompleteDualTaskAutomatedPart" processId="GCS2PDT_PhysicalActivity">
             <TaskParam path="GCS2PDT_PhysicalActivity.phactpx"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
         </Action>
-        <Action id="ActivateStage" processId="GCS2PDT_Discharge" breakpoint="true"/>
+        <Action id="ActivateStage" processId="GCS2PDT_Discharge"/>
+        <Action id="CompleteStage" processId="GCS2PDT_Discharge"/>
+        <Action id="ActivateStage" processId="GCS2PDT_Discharge"/>
+        <Action id="TerminateStage" processId="GCS2PDT_Discharge" breakpoint="true"/>
 
     </Execution>
 
