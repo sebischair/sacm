@@ -211,7 +211,7 @@
 			
 		
 		<EntityDefinition id="LCS2_ComplexityRisk" >
-				<AttributeDefinition id="cd1" type="enumeration" multiplicity="maximalOne" description="Malalties cròniques - Té el pacient més de 3 malaltíes cròniques?">
+				<AttributeDefinition id="cd1" type="enumeration" multiplicity="maximalOne" description="Malalties cròniques - Té el pacient una o més malaltíes cròniques (no artrosi) o alternativament, un índex de Charlson superior a 3?">
 					<EnumerationOption value="0" description="No"/>
 					<EnumerationOption value="1" description="Sí"/>
 				</AttributeDefinition>		
@@ -295,12 +295,12 @@
             </AttributeDefinition>
             <DerivedAttributeDefinition id="pfeiffer2" expression="-1" description="Índex de Pfeiffer"/>
         </EntityDefinition>
-	  
+	  	  
         <EntityDefinition id="LCS2_AnthropometricVariables">
-            <AttributeDefinition id="Anthropometric1" type="number" multiplicity="maximalOne" description="Pes (kg)"/>
-			<AttributeDefinition id="Anthropometric2" type="number" multiplicity="maximalOne" description="Alçada(cm)"/>
+            <AttributeDefinition id="AnWeigh" type="number" multiplicity="maximalOne" description="Pes (kg)"/>
+			<AttributeDefinition id="AnHeight" type="number" multiplicity="maximalOne" description="Alçada(cm)"/>
             <AttributeDefinition id="Anthropometric3" type="number" multiplicity="maximalOne" description="Distancia entre genoll i turmell (cm)"/>
-			<DerivedAttributeDefinition id="Anthropometric4" type="number" multiplicity="maximalOne" description="IMC (kg/m2)" expression="Anthropometric1/(Anthropometric2/100*Anthropometric2/100)"/> 
+			<DerivedAttributeDefinition id="Anthropometric4" type="number" multiplicity="maximalOne" description="IMC (kg/m2)" expression="AnWeigh/(AnHeight/100*AnHeight/100)"/> 
             <AttributeDefinition id="Anthropometric5" type="enumeration" multiplicity="maximalOne" description="IMC >= 30 kg/m2">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
@@ -1745,8 +1745,8 @@
 
 			<!-- Infermera  -->				
 			<HumanTaskDefinition id="LCS2_AnthropometricVariables" description="Diagnòstic - Variables antropomètriques" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_AnthropometricVariables" entityAttachPath="LCS2_AnthropometricVariables">
-              <TaskParamDefinition path="LCS2_AnthropometricVariables.Anthropometric1" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_AnthropometricVariables.Anthropometric2" isReadOnly="false" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_AnthropometricVariables.AnWeigh" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_AnthropometricVariables.AnHeight" isReadOnly="false" isMandatory="false"/>
               <TaskParamDefinition path="LCS2_AnthropometricVariables.Anthropometric3" isReadOnly="false" isMandatory="false"/>
 			  <TaskParamDefinition path="LCS2_AnthropometricVariables.Anthropometric4" isReadOnly="true" isMandatory="false"/>
 			  <TaskParamDefinition path="LCS2_AnthropometricVariables.Anthropometric5" isReadOnly="false" isMandatory="true"/>
