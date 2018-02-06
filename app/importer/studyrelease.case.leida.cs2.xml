@@ -42,7 +42,7 @@
 			  <AttributeDefinition id="LCS2_GMA" type="Link.EntityDefinition.LCS2_GMA" />		  		  
 			  <AttributeDefinition id="LCS2_TechnologicalTest" type="Link.EntityDefinition.LCS2_TechnologicalTest" />	  
 			  <AttributeDefinition id="LCS2_ComplexityRisk" type="Link.EntityDefinition.LCS2_ComplexityRisk" />		  		  
-			  <AttributeDefinition id="LCS2_HospitalEmergencyAdminisions" type="Link.EntityDefinition.LCS2_HospitalEmergencyAdminisions" />
+			  <!-- TO BE DELETED <AttributeDefinition id="LCS2_HospitalEmergencyAdminisions" type="Link.EntityDefinition.LCS2_HospitalEmergencyAdminisions" /> -->
 			  <AttributeDefinition id="LCS2_PatientsConsent" type="Link.EntityDefinition.LCS2_PatientsConsent" />
 		  
 		  
@@ -221,14 +221,26 @@
 					<EnumerationOption value="1" description="Sí"/>
 				</AttributeDefinition>		
 
-				<AttributeDefinition id="ASA" type="enumeration" multiplicity="maximalOne" description="Sistema de classificació d'estat físic (ASA)">
+				<AttributeDefinition id="admissions1" type="number" multiplicity="maximalOne" description="Quantes vegades ha estat ingressat el pacient durant el darrer any?"/>       
+				<AttributeDefinition id="admissions2" type="number" multiplicity="maximalOne" description="Quantes vegades ha estat atés el pacient a urgències durant l´ultim any? (incloses  urgències de primària)"/>       
+
+				<AttributeDefinition id="age" type="enumeration" multiplicity="maximalOne" description="Edat superior als 65 anys?">
+					<EnumerationOption value="0" description="No"/>
+					<EnumerationOption value="1" description="Sí"/>
+				</AttributeDefinition>		
+				
+				<AttributeDefinition id="ASA" type="enumeration" multiplicity="maximalOne" description="Sistema de classificació d'estat físic (ASA) II / III">
+					<EnumerationOption value="0" description="No"/>
+					<EnumerationOption value="1" description="Sí"/>
+				</AttributeDefinition>
+				<!-- TO BE DELETED
 					<EnumerationOption value="1" description="ASA I: Un pacient saludable normal"/>
 					<EnumerationOption value="2" description="ASA II: Pacient amb una lleu malaltia sistèmica"/>
 					<EnumerationOption value="3" description="ASA III: Un pacient amb greu malaltia sistèmica"/>
 					<EnumerationOption value="4" description="ASA IV: Un pacient amb greu malaltia sistèmica que constitueix una amenaça constant per a la vida"/>
 					<EnumerationOption value="5" description="ASA V: Un pacient moribund que no s'espera que sobrevisqui sense l'operació"/>
 					<EnumerationOption value="6" description="ASA VI: Un pacient declarat mort cerebral els òrgans són eliminats amb finalitats donants"/>
-				</AttributeDefinition>
+				-->
 		</EntityDefinition>
 		
 			
@@ -241,10 +253,11 @@
 				</AttributeDefinition>
 			</EntityDefinition> 
 	  	  
+		<!-- TO BE DELETED
 		<EntityDefinition id="LCS2_HospitalEmergencyAdminisions" > 		
 			<AttributeDefinition id="admissions1" type="number" multiplicity="maximalOne" description="Quantes vegades ha estat ingressat el pacient durant el darrer any?"/>       
 			<AttributeDefinition id="admissions2" type="number" multiplicity="maximalOne" description="Quantes vegades ha estat atés el pacient a urgències durant l´ultim any? (incloses  urgències de primària)"/>       
-		</EntityDefinition>
+		</EntityDefinition> -->
 		
 
 		<EntityDefinition id="LCS2_TechnologicalTest" >
@@ -1685,17 +1698,21 @@
               </SentryDefinition>
 				<TaskParamDefinition path="LCS2_ComplexityRisk.cd1" isReadOnly="false" isMandatory="true"/> 
 				<TaskParamDefinition path="LCS2_ComplexityRisk.pmed1" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_ComplexityRisk.admissions1" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_ComplexityRisk.admissions2" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_ComplexityRisk.age" isReadOnly="false" isMandatory="true"/>
 				<TaskParamDefinition path="LCS2_ComplexityRisk.ASA" isReadOnly="false" isMandatory="true"/>	<!-- LCS2_ASAPhysicalStatusClassificationSystemIdentification -->
             </HumanTaskDefinition>
 
 			
-            <HumanTaskDefinition id="LCS2_HospitalEmergencyAdminisions" description="Admissions hospitalàries d'emergència" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_HospitalEmergencyAdminisions" entityAttachPath="LCS2_HospitalEmergencyAdminisions">
+            <!-- TO BE DELETED
+			<HumanTaskDefinition id="LCS2_HospitalEmergencyAdminisions" description="Admissions hospitalàries d'emergència" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_HospitalEmergencyAdminisions" entityAttachPath="LCS2_HospitalEmergencyAdminisions">
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>
               <TaskParamDefinition path="LCS2_HospitalEmergencyAdminisions.admissions1" isReadOnly="false" isMandatory="true"/>
               <TaskParamDefinition path="LCS2_HospitalEmergencyAdminisions.admissions2" isReadOnly="false" isMandatory="true"/>
-            </HumanTaskDefinition>
+            </HumanTaskDefinition> -->
 
             <HumanTaskDefinition id="LCS2_PatientsConsent" description="Consentiment informat del pacient" ownerPath="LCS2_CaseManager" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_PatientsConsent" entityAttachPath="LCS2_PatientsConsent">			
               <SentryDefinition>
