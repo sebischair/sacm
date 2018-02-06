@@ -1621,18 +1621,11 @@
 		 
 		
 		<!-- ENTITY DEFINITION: Discharge -->	
-		
-        <EntityDefinition id="LCS2_Discharge" description="Alta del procés">
-          <AttributeDefinition id="discharge1" type="enumeration" multiplicity="maximalOne" description="Notificar al pacient l´alta del procés?">
-              <EnumerationOption value="0" description="No"/>
-              <EnumerationOption value="1" description="Sí"/>
-          </AttributeDefinition>
-          <AttributeDefinition id="discharge2" type="enumeration" multiplicity="maximalOne" description="Donar l´alta el pacient del procés?">
-              <EnumerationOption value="0" description="No"/>
-              <EnumerationOption value="1" description="Sí"/>
-          </AttributeDefinition>
-      </EntityDefinition>
-		
+		<EntityDefinition id="LCS2_Discharge"> 
+			<AttributeDefinition id="discharge1" type="longtext" multiplicity="maximalOne" description="Com ens ha anat?"/> 
+			<AttributeDefinition id="discharge2" type="longtext" multiplicity="maximalOne" description="Estat actual del pacient"/> 
+			<AttributeDefinition id="discharge3" type="longtext" multiplicity="maximalOne" description="Pronostic (funcional, assistencial i social)"/> 
+        </EntityDefinition>
 		
 		
 	<!-- CASE DEFINITION -->				  
@@ -2224,10 +2217,11 @@
 		<StageDefinition id="LCS2_DischargeProces" description="Alta del procés" isMandatory="true" repeatable="ONCE">  			
 		<SentryDefinition>
             <precondition processDefinitionId="LCS2_WorkplanExecution"/>
-          </SentryDefinition> 		
+          </SentryDefinition> 	
           <HumanTaskDefinition id="LCS2_Discharge" description="Alta del procés" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_Discharge" entityAttachPath="LCS2_Discharge">
             <TaskParamDefinition path="LCS2_Discharge.discharge1" isReadOnly="false" isMandatory="true"/>
-			<TaskParamDefinition path="LCS2_Discharge.discharge2" isReadOnly="false" isMandatory="true"/>						
+			<TaskParamDefinition path="LCS2_Discharge.discharge2" isReadOnly="false" isMandatory="true"/>		
+			<TaskParamDefinition path="LCS2_Discharge.discharge3" isReadOnly="false" isMandatory="true"/>			
           </HumanTaskDefinition>
 		</StageDefinition>
 	
