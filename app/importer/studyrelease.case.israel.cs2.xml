@@ -29,7 +29,7 @@
 
         <EntityDefinition id="ICS2_CaseData" description="Case Data">
             <AttributeDefinition id="ICS2_Patient" type="Link.Users(AssutaPatients)" description="Patient"/>
-            <AttributeDefinition id="ICS2_CaseManager" type="Link.Users(AssutaCaseManagers)" description="Case Manager"/>
+            <AttributeDefinition id="ICS2_CaseManager" type="Link.Users(AssutaProfessionals)" description="Case Manager"/> <!-- AssutaCaseManagers to AssutaProfessionals -->
             <AttributeDefinition id="ICS2_EvaluationDueDate" type="date.after(TODAY)" description="Evaluation default due date"/>
             <AttributeDefinition id="ICS2_WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date"/>
 
@@ -160,7 +160,7 @@
             <AttributeDefinition id="ICS2_HADS" type="Link.EntityDefinition.ICS2_HADS" multiplicity="maximalOne" description="HADS"/> 
             <AttributeDefinition id="ICS2_EQ5D" type="Link.EntityDefinition.ICS2_EQ5D" multiplicity="maximalOne" description="EQ5D"/> 
             <AttributeDefinition id="ICS2_Sweet16" type="Link.EntityDefinition.ICS2_Sweet16" multiplicity="maximalOne" description="Sweet16"/> 
-            <AttributeDefinition id="ICS2_ResidenceSituationOfDwelling" type="Link.EntityDefinition.ICS2_iADLLawton" multiplicity="maximalOne" description="מגורים / מצב הבית"/> 
+            <AttributeDefinition id="ICS2_ResidenceSituationOfDwelling" type="Link.EntityDefinition.ICS2_ResidenceSituationOfDwelling" multiplicity="maximalOne" description="מגורים / מצב הבית"/> 
             <AttributeDefinition id="ICS2_Communication" type="Link.EntityDefinition.ICS2_Communication" multiplicity="maximalOne" description="תקשורת"/> 
             <AttributeDefinition id="ICS2_SmokingAlcohol" type="Link.EntityDefinition.ICS2_SmokingAlcohol" multiplicity="maximalOne" description="עישון ואלכוהול"/> 
             <AttributeDefinition id="ICS2_Medication" type="Link.EntityDefinition.ICS2_Medication" multiplicity="maximalOne" description="טיפול תרופתי"/> 
@@ -1228,6 +1228,12 @@
             <TaskParamDefinition path="ICS2_Evaluation.ICS2_SmokingAlcohol.Alcohol" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition>
 
+        <HumanTaskDefinition id="ICS2_Medication" description="טיפול תרופתי" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Medication" entityAttachPath="ICS2_Evaluation.ICS2_Medication">                
+            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Medication.Medication1" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Medication.Medication2" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Medication.Medication3" isReadOnly="false" isMandatory="true"/>
+        </HumanTaskDefinition>
+
 
         <HumanTaskDefinition id="ICS2_RiskOfFallsDowntonIndex" description="סיכון לנפילות - מדד דוטון" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_RiskOfFallsDowntonIndex" entityAttachPath="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex">                
             <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton1" isReadOnly="false" isMandatory="true"/>
@@ -1315,7 +1321,8 @@
 
     <Execution>
 
-        <Action id="CompleteHumanTask" processId="BCS2_SelectPatient">
+
+        <Action id="CompleteHumanTask" processId="ICS2_SelectPatient">
             <TaskParam path="ICS2_Patient"  userValue="carlsonc"/>
             <TaskParam path="ICS2_CaseManager"  userValue="millerc"/>
             <TaskParam path="ICS2_EvaluationDueDate" values="['2018-05-26T00:00:00.000']"/>
@@ -1338,11 +1345,260 @@
         </Action>
 
         <Action id="CompleteHumanTask" processId="ICS2_PatientsConsent">
-            <TaskParam path="ICS2_Identification.ICS2_PatientsConsent.ConsentYN"  values="['1']"/>
-            <TaskParam path="ICS2_Identification.ICS2_PatientsConsent.ConsentDate"  values="['2018-05-26T00:00:00.000']"/>
+            <TaskParam path="ICS2_Identification.ICS2_PatientsConsent.ConsentYN" values="['1']"/>
+            <TaskParam path="ICS2_Identification.ICS2_PatientsConsent.ConsentDate" values="['2018-05-26T00:00:00.000']"/>
         </Action>
+
+        <Action id="CompleteHumanTask" processId="ICS2_PatientsData">
+            <TaskParam path="ICS2_Evaluation.ICS2_PatientsData.Birthcountry" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PatientsData.ImmigrationYear" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PatientsData.KidsNum" values="['2']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PatientsData.Nation" values="['2']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PatientsData.Religiousness" values="['2']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PatientsData.Education" values="['2']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PatientsData.WorkStatus" values="['2']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PatientsData.OldAgeSubsidy" values="['0']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PatientsData.IncomeSupplementSubsidy" values="['0']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PatientsData.OtherSocialSecuritySubsidies" values="['0']"/>
+        </Action>           
+
+        <Action id="CompleteHumanTask" processId="ICS2_ClinicalData">
+            <TaskParam path="ICS2_Evaluation.ICS2_ClinicalData.NameAndContactOfPrimaryPhysicianInTheCommunity" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_ClinicalData.Diagnosis" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_ClinicalData.Medications" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_ClinicalData.Allergies" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_ClinicalData.ClinicInfoComment" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_ClinicalData.BloodPressSist" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_ClinicalData.BloodPressDiast" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_ClinicalData.HeartRate" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_ClinicalData.OxygenSat" values="['1']"/>
+        </Action>
+
+        <Action id="CompleteHumanTask" processId="ICS2_NutritionalData">
+            <TaskParam path="ICS2_Evaluation.ICS2_NutritionalData.Height" values="['180']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_NutritionalData.Weight" values="['80']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_NutritionalData.Albumin" values="['80']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_NutritionalData.Hemoglobin" values="['80']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_NutritionalData.Electrolytes" values="['80']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_NutritionalData.Proteins" values="['80']"/>
+        </Action>
+
+        <Action id="CompleteHumanTask" processId="ICS2_Charlson">
+            <TaskParam path="ICS2_Evaluation.ICS2_Charlson.ch1" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Charlson.ch2" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Charlson.ch3" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Charlson.ch4" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Charlson.ch5" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Charlson.ch6" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Charlson.ch7" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Charlson.ch8" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Charlson.ch9" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Charlson.ch10" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Charlson.ch11" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Charlson.ch12" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Charlson.ch13" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Charlson.ch14" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Charlson.ch15" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Charlson.ch16" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Charlson.ch17" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Charlson.ch18" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Charlson.ch19" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Charlson.ch20" values="['1']"/>
+        </Action>
+
+        <Action id="CompleteHumanTask" processId="ICS2_ADLBarthel">
+            <TaskParam path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelFeeding" values="['0']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelBathing" values="['0']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelGrooming" values="['0']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelDressing" values="['0']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelBOWELS" values="['0']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelBLADDER" values="['5']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelToiletHygiene" values="['5']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelTRANSFERS" values="['5']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelMobility" values="['5']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelStairs" values="['5']"/>
+        </Action>
+
+        <Action id="CompleteHumanTask" processId="ICS2_iADLLawton">
+            <TaskParam path="ICS2_Evaluation.ICS2_iADLLawton.LawtonTelephone" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_iADLLawton.LawtonShopping" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_iADLLawton.LawtonFoodPreparation" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_iADLLawton.LawtonHousekeeping" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_iADLLawton.LawtonLaundry" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_iADLLawton.LawtonTransportation" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_iADLLawton.LawtonMedications" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_iADLLawton.LawtonFinances" values="['1']"/>
+        </Action>
+
+        <Action id="CompleteHumanTask" processId="ICS2_SF12">
+            <TaskParam path="ICS2_Evaluation.ICS2_SF12.SF121" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_SF12.SF122" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_SF12.SF123" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_SF12.SF124" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_SF12.SF125" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_SF12.SF126" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_SF12.SF127" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_SF12.SF128" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_SF12.SF129" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_SF12.SF1210" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_SF12.SF1211" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_SF12.SF1212" values="['1']"/>
+        </Action>
+
+        <Action id="CompleteHumanTask" processId="ICS2_HADS">
+            <TaskParam path="ICS2_Evaluation.ICS2_HADS.HADS1" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_HADS.HADS2" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_HADS.HADS3" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_HADS.HADS4" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_HADS.HADS5" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_HADS.HADS6" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_HADS.HADS7" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_HADS.HADS8" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_HADS.HADS9" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_HADS.HADS10" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_HADS.HADS11" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_HADS.HADS12" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_HADS.HADS13" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_HADS.HADS14" values="['1']"/>
+        </Action>
+
+
+
+        <Action id="CompleteHumanTask" processId="ICS2_EQ5D">
+            <TaskParam path="ICS2_Evaluation.ICS2_EQ5D.EQ5DMobility" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_EQ5D.EQ5DSelfCare" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_EQ5D.EQ5DUsualActivities" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_EQ5D.EQ5DPainDiscomfort" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_EQ5D.EQ5DAnxietyDepression" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_EQ5D.EQ5DHealthToday" values="['1']"/>
+        </Action>
+
+        
+
+        <Action id="CompleteHumanTask" processId="ICS2_Sweet16">
+            <TaskParam path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_1" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_2" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_3" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_4" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_5" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_6" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_7" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_8" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_9" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_10" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_11" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_12" values="['1']"/>
+        </Action>
+
+        <Action id="CompleteHumanTask" processId="ICS2_ResidenceSituationOfDwelling">
+            <TaskParam path="ICS2_Evaluation.ICS2_ResidenceSituationOfDwelling.ResidenceType" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_ResidenceSituationOfDwelling.ResidenceArrangements" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_ResidenceSituationOfDwelling.ResidenceAccessibility" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_ResidenceSituationOfDwelling.ResidenceTidiness" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_ResidenceSituationOfDwelling.ResidenceSupport" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_ResidenceSituationOfDwelling.ResidenceSupportType" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_ResidenceSituationOfDwelling.ResidenceAbuse" values="['1']"/>
+        </Action>
+
+
+
+        <Action id="CompleteHumanTask" processId="ICS2_Communication">
+            <TaskParam path="ICS2_Evaluation.ICS2_Communication.CommHearing" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Communication.CommHearingAid" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Communication.CommVision" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Communication.CommVisualAid" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Communication.CommExpression" values="['1']"/>
+        </Action>
+
+
+
+        <Action id="CompleteHumanTask" processId="ICS2_SmokingAlcohol">
+            <TaskParam path="ICS2_Evaluation.ICS2_SmokingAlcohol.Smoking" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_SmokingAlcohol.Alcohol" values="['1']"/>
+        </Action>
+
+        
+
+
+        <Action id="CompleteHumanTask" processId="ICS2_Medication">
+            <TaskParam path="ICS2_Evaluation.ICS2_Medication.Medication1" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Medication.Medication2" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Medication.Medication3" values="['1']"/>
+        </Action>
+
+
+
+        <Action id="CompleteHumanTask" processId="ICS2_RiskOfFallsDowntonIndex">
+            <TaskParam path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton1" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton2" values="['0']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton3" values="['0']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton4" values="['0']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton5" values="['0']"/>
+        </Action>
+
+
+
+        <Action id="CompleteHumanTask" processId="ICS2_Sleeping">
+            <TaskParam path="ICS2_Evaluation.ICS2_Sleeping.sleeping1" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Sleeping.sleeping2" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Sleeping.sleeping3" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_Sleeping.sleeping4" values="['1']"/>
+        </Action>
+
+        <Action id="CompleteHumanTask" processId="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist">
+            <TaskParam path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss1" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss2" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss3" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss5" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss6" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss7" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss8" values="['1']"/>
+        </Action>
+
+
+        <Action id="CompleteHumanTask" processId="ICS2_MUST">
+            <TaskParam path="ICS2_Evaluation.ICS2_MUST.BmiCat" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_MUST.WeightLoss" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_MUST.RecentAcuteDisease" values="['1']"/>
+        </Action>
+
+
+
+        <Action id="CompleteHumanTask" processId="ICS2_PhysiotherapistEvaluationDataBeforeTest">
+            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.PulseRest" values="['1']"/>
+            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.Age" values="['1']"/>
+            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.PhysioRemarks" values="['1']"/>
+        </Action>
+
+        <Action id="CompleteHumanTask" processId="ICS2_PhysiotherapistEvaluationTimedUp">
+            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUG1" values="['1']"/>
+            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUG2" values="['1']"/>
+            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUGRemarks" values="['1']"/>
+        </Action>
+
+        <Action id="CompleteHumanTask" processId="ICS2_PhysiotherapistEvaluation6MWT">
+            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT1" values="['1']"/>
+            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT2" values="['1']"/>
+            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT3" values="['1']"/>
+            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT4" values="['1']"/>
+            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT5" values="['1']"/>
+            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT6" values="['1']"/>
+            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWTRemarks" values="['1']"/>
+        </Action>
+
+        <Action id="CompleteHumanTask" processId="ICS2_PhysiotherapistEvaluation30SSTS">
+            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS1" values="['1']"/>
+            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS2" values="['1']"/>
+            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS3" values="['1']"/>
+            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS4" values="['1']"/>
+            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS5" values="['1']"/>
+            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS6" values="['1']"/>
+            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTSRemarks" values="['1']"/>
+        </Action>
+
+         
+
  
     </Execution>
-
 
 </SACMDefinition>
