@@ -51,11 +51,6 @@
 			  <!-- LCS2_ComorbidityCharlson; Read only -->
 			  <!-- LCS2_GMA; Read only -->
 			  
-			  <!-- Diagnòstic -->	
-			  <AttributeDefinition id="LCS2_AnthropometricVariables" type="Link.EntityDefinition.LCS2_AnthropometricVariables"/>		  
-			  <AttributeDefinition id="LCS2_DiagnosisSmokingAndAlcohol" type="Link.EntityDefinition.LCS2_DiagnosisSmokingAndAlcohol"/>  		  
-			  <AttributeDefinition id="LCS2_DiagnosisNutrition" type="Link.EntityDefinition.LCS2_DiagnosisNutrition" />
-			  
 			  <!-- Estat cognitu/mental -->			  
 			  <AttributeDefinition id="LCS2_ComorbidityPfeiffer" type="Link.EntityDefinition.LCS2_ComorbidityPfeiffer"/>
 			  <AttributeDefinition id="LCS2_HospitalAnxietyAndDepressionScale" type="Link.EntityDefinition.LCS2_HospitalAnxietyAndDepressionScale"/>
@@ -77,14 +72,21 @@
 			  <!-- Diagnòstic -->		
 			  <AttributeDefinition id="LCS2_SLANSS" type="Link.EntityDefinition.LCS2_SLANSS"/>  					   
 			  
+			  <!-- Diagnòstic -->	
+			  <AttributeDefinition id="LCS2_AnthropometricVariables" type="Link.EntityDefinition.LCS2_AnthropometricVariables"/>		  
+			  <AttributeDefinition id="LCS2_DiagnosisSmokingAndAlcohol" type="Link.EntityDefinition.LCS2_DiagnosisSmokingAndAlcohol"/>  		  
+			  <AttributeDefinition id="LCS2_DiagnosisNutrition" type="Link.EntityDefinition.LCS2_DiagnosisNutrition" />
+			  
+			  
 			  <!-- Barreres -->				  
 			  <AttributeDefinition id="LCS2_MedicationFollowing" type="Link.EntityDefinition.LCS2_MedicationFollowing"/> 
 			  <AttributeDefinition id="LCS2_Medication" type="Link.EntityDefinition.LCS2_Medication"/>			  
 			  <AttributeDefinition id="LCS2_SelfCareAuto" type="Link.EntityDefinition.LCS2_SelfCareAuto"/>      
 			  <AttributeDefinition id="LCS2_SocialDwelling" type="Link.EntityDefinition.LCS2_SocialDwelling"/>      
 			  <AttributeDefinition id="LCS2_SocialSelfCareCareerAbility" type="Link.EntityDefinition.LCS2_SocialSelfCareCareerAbility"/>		  
+			  <!--
 			  <AttributeDefinition id="LCS2_SocialComplexityOfThePatient" type="Link.EntityDefinition.LCS2_SocialComplexityOfThePatient"/>		  
-			  <AttributeDefinition id="LCS2_FamilySupport" type="Link.EntityDefinition.LCS2_FamilySupport"/>      
+			  <AttributeDefinition id="LCS2_FamilySupport" type="Link.EntityDefinition.LCS2_FamilySupport"/>  -->    
 			  <!-- TO BE DELETED  <AttributeDefinition id="LCS2_SelfCareAutoTestEPOC" type="Link.EntityDefinition.LCS2_SelfCareAutoTestEPOC"/>
 			  <AttributeDefinition id="LCS2_SelfCareAutoTestHF" type="Link.EntityDefinition.LCS2_SelfCareAutoTestHF"/> 
 			  <AttributeDefinition id="LCS2_SelfCareAutoTest" type="Link.EntityDefinition.LCS2_SelfCareAutoTest"/>	-->	  		  	  		  
@@ -135,18 +137,18 @@
 
 			<AttributeDefinition id="tech2" type="enumeration" multiplicity="maximalOne" description="Vosté fa anar:">
 				<EnumerationOption value="1" description="Telèfon mòvil no tan sols per trucar."/>
-				<EnumerationOption value="2" description="Tablet"/>
-				<EnumerationOption value="3" description="Ordinador personal."/>
+				<EnumerationOption value="0.01" description="Tablet"/>
+				<EnumerationOption value="0.02" description="Ordinador personal."/>
 				<EnumerationOption value="0" description="Cap"/>
 			</AttributeDefinition>
 
 			<AttributeDefinition id="tech3" type="enumeration" multiplicity="maximalOne" description="El seu cuidador principal fa anar:">
 				<EnumerationOption value="1" description="Telèfon mòvil no tan sols per trucar."/>
-				<EnumerationOption value="2" description="Tablet"/>
-				<EnumerationOption value="3" description="Ordinador personal."/>
+				<EnumerationOption value="0.01" description="Tablet"/>
+				<EnumerationOption value="0.02" description="Ordinador personal."/>
 				<EnumerationOption value="0" description="Cap"/>
 			</AttributeDefinition>
-			<DerivedAttributeDefinition id="tech4" expression="number(tech1,0)+number(tech2,0)+number(tech3,0)" description="Technological test result"/>
+			<DerivedAttributeDefinition id="tech4" expression="round(number(tech1,0))+round(number(tech2,0))+round(number(tech3,0))" description="Resultat del test tecnològic"/>
 		</EntityDefinition>	  	
 		
 		<EntityDefinition id="LCS2_ComorbidityCharlson" >
@@ -256,9 +258,9 @@
 				<AttributeDefinition id="admissions1" type="number" multiplicity="maximalOne" description="Hospitalitzacions no programades el pacient durant el darrer any?"/>       
 				<AttributeDefinition id="admissions2" type="number" multiplicity="maximalOne" description="Visites a urgències durant l´ultim any(incloses  urgències de primària)"/>       
 				
-				<AttributeDefinition id="ASA" type="enumeration" multiplicity="maximalOne" description="Sistema de classificació d'estat físic (ASA) II / III">
-					<EnumerationOption value="0" description="No"/>
-					<EnumerationOption value="1" description="Sí"/>
+				<AttributeDefinition id="ASA" type="enumeration" multiplicity="maximalOne" description="Sistema de classificació d'estat físic - ASA de tipus:">
+					<EnumerationOption value="1.01" description="II"/>
+					<EnumerationOption value="1" description="III"/>
 				</AttributeDefinition>
 				<!-- TO BE DELETED
 					<EnumerationOption value="1" description="ASA I: Un pacient saludable normal"/>
@@ -318,7 +320,7 @@
             <AttributeDefinition id="AnWeigh" type="number" multiplicity="maximalOne" description="Pes (kg)"/>
 			<AttributeDefinition id="AnHeight" type="number" multiplicity="maximalOne" description="Alçada(cm)"/>
             <AttributeDefinition id="Anthropometric3" type="number" multiplicity="maximalOne" description="Distancia entre genoll i turmell (cm)"/>
-			<DerivedAttributeDefinition id="Anthropometric4" type="number" multiplicity="maximalOne" description="IMC (kg/m2)" expression="AnWeigh/(AnHeight/100*AnHeight/100)"/> 
+			<DerivedAttributeDefinition id="Anthropometric4" type="number" multiplicity="maximalOne" description="IMC (kg/m2)" expression="round(AnWeigh/(AnHeight/100*AnHeight/100),2)"/> 
             <AttributeDefinition id="Anthropometric5" type="enumeration" multiplicity="maximalOne" description="IMC >= 30 kg/m2">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
@@ -506,6 +508,7 @@
 			<DerivedAttributeDefinition id="career5" expression="number(career1,0)+number(career2,0)+number(career3,0)+round(number(career4,0))" description="Puntuació total"/> 
         </EntityDefinition>		
 
+		<!--
 		<EntityDefinition id="LCS2_SocialComplexityOfThePatient"> 
             <AttributeDefinition id="complexity1" type="enumeration" multiplicity="maximalOne" description="El tractament, suposa prendre de 4 comprimits al día?"> 
                 <EnumerationOption value="0" description="No"/>
@@ -534,7 +537,7 @@
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>
-        </EntityDefinition>	  
+        </EntityDefinition>	  -->
 		
 		<EntityDefinition id="LCS2_HospitalAnxietyAndDepressionScale">
             <AttributeDefinition id="hadA1" type="enumeration" multiplicity="maximalOne" description="A.1. Em trobo tens/a o nervios/a"> 
@@ -682,168 +685,168 @@
         </EntityDefinition>
 
 		<EntityDefinition id="LCS2_WOMAC">
-            <AttributeDefinition id="Womac1" type="enumeration" multiplicity="maximalOne" description="Dolor - En caminar a peu pla">
+            <AttributeDefinition id="Womac1" type="enumeration" multiplicity="maximalOne" description="Dolor - Quant dolor sent en caminar a peu pla">
                 <EnumerationOption value="0" description="Cap"/>
                 <EnumerationOption value="1" description="Una mica"/>
                 <EnumerationOption value="2" description="Bastant"/>
                 <EnumerationOption value="3" description="Molt"/>
                 <EnumerationOption value="4" description="Moltíssim"/>
             </AttributeDefinition>
-            <AttributeDefinition id="Womac2" type="enumeration" multiplicity="maximalOne" description="Dolor - En pujar i baixar escales">
+            <AttributeDefinition id="Womac2" type="enumeration" multiplicity="maximalOne" description="Dolor - Quant dolor sent en pujar i baixar escales">
                 <EnumerationOption value="0" description="Cap"/>
                 <EnumerationOption value="1" description="Una mica"/>
                 <EnumerationOption value="2" description="Bastant"/>
                 <EnumerationOption value="3" description="Molt"/>
                 <EnumerationOption value="4" description="Moltíssim"/>
             </AttributeDefinition>
-            <AttributeDefinition id="Womac3" type="enumeration" multiplicity="maximalOne" description="Dolor - Durant la nit">
+            <AttributeDefinition id="Womac3" type="enumeration" multiplicity="maximalOne" description="Dolor - Quant dolor sent durant la nit">
                 <EnumerationOption value="0" description="Cap"/>
                 <EnumerationOption value="1" description="Una mica"/>
                 <EnumerationOption value="2" description="Bastant"/>
                 <EnumerationOption value="3" description="Molt"/>
                 <EnumerationOption value="4" description="Moltíssim"/>
             </AttributeDefinition>
-            <AttributeDefinition id="Womac4" type="enumeration" multiplicity="maximalOne" description="Dolor - En estar assegut o estirat">
+            <AttributeDefinition id="Womac4" type="enumeration" multiplicity="maximalOne" description="Dolor - Quant dolor sent en estar assegut o estirat">
                 <EnumerationOption value="0" description="Cap"/>
                 <EnumerationOption value="1" description="Una mica"/>
                 <EnumerationOption value="2" description="Bastant"/>
                 <EnumerationOption value="3" description="Molt"/>
                 <EnumerationOption value="4" description="Moltíssim"/>
             </AttributeDefinition>
-            <AttributeDefinition id="Womac5" type="enumeration" multiplicity="maximalOne" description="Dolor - En estar dret">
+            <AttributeDefinition id="Womac5" type="enumeration" multiplicity="maximalOne" description="Dolor - Quant dolor sent en estar dret">
                 <EnumerationOption value="0" description="Cap"/>
                 <EnumerationOption value="1" description="Una mica"/>
                 <EnumerationOption value="2" description="Bastant"/>
                 <EnumerationOption value="3" description="Molt"/>
                 <EnumerationOption value="4" description="Moltíssim"/>
             </AttributeDefinition>
-            <AttributeDefinition id="Womac6" type="enumeration" multiplicity="maximalOne" description="Rigidesa - Cuánta rigidesa noteu despres d´aixecar-vos al matí?">
+            <AttributeDefinition id="Womac6" type="enumeration" multiplicity="maximalOne" description="Rigidesa - Quanta rigidesa noteu despres d´aixecar-vos al matí?">
                 <EnumerationOption value="0" description="Cap"/>
                 <EnumerationOption value="1" description="Una mica"/>
                 <EnumerationOption value="2" description="Bastant"/>
                 <EnumerationOption value="3" description="Molt"/>
                 <EnumerationOption value="4" description="Moltíssim"/>
             </AttributeDefinition>
-            <AttributeDefinition id="Womac7" type="enumeration" multiplicity="maximalOne" description="Rigidesa - Cuánta rigidesa noteu la resta del día despres de estar assegut, estirat o descansant?">
+            <AttributeDefinition id="Womac7" type="enumeration" multiplicity="maximalOne" description="Rigidesa - Quanta rigidesa noteu la resta del día despres de estar assegut, estirat o descansant?">
                 <EnumerationOption value="0" description="Cap"/>
                 <EnumerationOption value="1" description="Una mica"/>
                 <EnumerationOption value="2" description="Bastant"/>
                 <EnumerationOption value="3" description="Molt"/>
                 <EnumerationOption value="4" description="Moltíssim"/>
             </AttributeDefinition>
-            <AttributeDefinition id="Womac8" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Baixar escales">
+            <AttributeDefinition id="Womac8" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Quin grau de dificultat té al baixar escales?">
                 <EnumerationOption value="0" description="Cap"/>
                 <EnumerationOption value="1" description="Una mica"/>
                 <EnumerationOption value="2" description="Bastant"/>
                 <EnumerationOption value="3" description="Molt"/>
                 <EnumerationOption value="4" description="Moltíssim"/>
             </AttributeDefinition>
-            <AttributeDefinition id="Womac9" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Pujar escales">
+            <AttributeDefinition id="Womac9" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Quin grau de dificultat té al pujar escales?">
                 <EnumerationOption value="0" description="Cap"/>
                 <EnumerationOption value="1" description="Una mica"/>
                 <EnumerationOption value="2" description="Bastant"/>
                 <EnumerationOption value="3" description="Molt"/>
                 <EnumerationOption value="4" description="Moltíssim"/>
             </AttributeDefinition>
-            <AttributeDefinition id="Womac10" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Aixecar-se després de estar assegut">
+            <AttributeDefinition id="Womac10" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Quin grau de dificultat té a l'aixecar-se després d'estar assegut?">
                 <EnumerationOption value="0" description="Cap"/>
                 <EnumerationOption value="1" description="Una mica"/>
                 <EnumerationOption value="2" description="Bastant"/>
                 <EnumerationOption value="3" description="Molt"/>
                 <EnumerationOption value="4" description="Moltíssim"/>
             </AttributeDefinition>
-            <AttributeDefinition id="Womac11" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Estar dret">
+            <AttributeDefinition id="Womac11" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Quin grau de dificultat té a l'estar dret?">
                 <EnumerationOption value="0" description="Cap"/>
                 <EnumerationOption value="1" description="Una mica"/>
                 <EnumerationOption value="2" description="Bastant"/>
                 <EnumerationOption value="3" description="Molt"/>
                 <EnumerationOption value="4" description="Moltíssim"/>
             </AttributeDefinition>
-            <AttributeDefinition id="Womac12" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Ajupir-se per agafar algo del terra">
+            <AttributeDefinition id="Womac12" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Quin grau de dificultat té a l'ajupir-se per agafar algo del terra?">
                 <EnumerationOption value="0" description="Cap"/>
                 <EnumerationOption value="1" description="Una mica"/>
                 <EnumerationOption value="2" description="Bastant"/>
                 <EnumerationOption value="3" description="Molt"/>
                 <EnumerationOption value="4" description="Moltíssim"/>
             </AttributeDefinition>
-           <AttributeDefinition id="Womac13" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Caminar a peu pla">
+           <AttributeDefinition id="Womac13" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Quin grau de dificultat té al caminar a peu pla?">
                 <EnumerationOption value="0" description="Cap"/>
                 <EnumerationOption value="1" description="Una mica"/>
                 <EnumerationOption value="2" description="Bastant"/>
                 <EnumerationOption value="3" description="Molt"/>
                 <EnumerationOption value="4" description="Moltíssim"/>
             </AttributeDefinition>
-            <AttributeDefinition id="Womac14" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Entrar i sortir del cotxe">
+            <AttributeDefinition id="Womac14" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Quin grau de dificultat té a l'entrar i sortir del cotxe?">
                 <EnumerationOption value="0" description="Cap"/>
                 <EnumerationOption value="1" description="Una mica"/>
                 <EnumerationOption value="2" description="Bastant"/>
                 <EnumerationOption value="3" description="Molt"/>
                 <EnumerationOption value="4" description="Moltíssim"/>
             </AttributeDefinition>
-            <AttributeDefinition id="Womac15" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Anar de compres">
+            <AttributeDefinition id="Womac15" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Quin grau de dificultat té a l'anar de compres?">
                 <EnumerationOption value="0" description="Cap"/>
                 <EnumerationOption value="1" description="Una mica"/>
                 <EnumerationOption value="2" description="Bastant"/>
                 <EnumerationOption value="3" description="Molt"/>
                 <EnumerationOption value="4" description="Moltíssim"/>
             </AttributeDefinition>
-            <AttributeDefinition id="Womac16" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Posar-se les mitjes o els mitjons">
+            <AttributeDefinition id="Womac16" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Quin grau de dificultat té al posar-se les mitjes o els mitjons?">
                 <EnumerationOption value="0" description="Cap"/>
                 <EnumerationOption value="1" description="Una mica"/>
                 <EnumerationOption value="2" description="Bastant"/>
                 <EnumerationOption value="3" description="Molt"/>
                 <EnumerationOption value="4" description="Moltíssim"/>
             </AttributeDefinition>
-            <AttributeDefinition id="Womac17" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Aixecar-se del llit">
+            <AttributeDefinition id="Womac17" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Quin grau de dificultat té a l'aixecar-se del llit?">
                 <EnumerationOption value="0" description="Cap"/>
                 <EnumerationOption value="1" description="Una mica"/>
                 <EnumerationOption value="2" description="Bastant"/>
                 <EnumerationOption value="3" description="Molt"/>
                 <EnumerationOption value="4" description="Moltíssim"/>
             </AttributeDefinition>
-            <AttributeDefinition id="Womac18" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Treure´s les mitjes o els mitjons">
+            <AttributeDefinition id="Womac18" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Quin grau de dificultat té al treure´s les mitjes o els mitjons?">
                 <EnumerationOption value="0" description="Cap"/>
                 <EnumerationOption value="1" description="Una mica"/>
                 <EnumerationOption value="2" description="Bastant"/>
                 <EnumerationOption value="3" description="Molt"/>
                 <EnumerationOption value="4" description="Moltíssim"/>
             </AttributeDefinition>
-            <AttributeDefinition id="Womac19" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Estar estirat al llit">
+            <AttributeDefinition id="Womac19" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Quin grau de dificultat té a l'estar estirat al llit?">
                 <EnumerationOption value="0" description="Cap"/>
                 <EnumerationOption value="1" description="Una mica"/>
                 <EnumerationOption value="2" description="Bastant"/>
                 <EnumerationOption value="3" description="Molt"/>
                 <EnumerationOption value="4" description="Moltíssim"/>
             </AttributeDefinition>
-            <AttributeDefinition id="Womac20" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Entrar i sortir de la dutxa/banyera">
+            <AttributeDefinition id="Womac20" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Quin grau de dificultat té a l'entrar i sortir de la dutxa/banyera?">
                 <EnumerationOption value="0" description="Cap"/>
                 <EnumerationOption value="1" description="Una mica"/>
                 <EnumerationOption value="2" description="Bastant"/>
                 <EnumerationOption value="3" description="Molt"/>
                 <EnumerationOption value="4" description="Moltíssim"/>
             </AttributeDefinition> 		
-           <AttributeDefinition id="Womac21" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Estar assegut">
+           <AttributeDefinition id="Womac21" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Quin grau de dificultat té a l'estar assegut?">
                 <EnumerationOption value="0" description="Cap"/>
                 <EnumerationOption value="1" description="Una mica"/>
                 <EnumerationOption value="2" description="Bastant"/>
                 <EnumerationOption value="3" description="Molt"/>
                 <EnumerationOption value="4" description="Moltíssim"/>
             </AttributeDefinition>
-            <AttributeDefinition id="Womac22" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Asseure i aixecar-se del lavabo">
+            <AttributeDefinition id="Womac22" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Quin grau de dificultat té a l'asseure i aixecar-se del lavabo?">
                 <EnumerationOption value="0" description="Cap"/>
                 <EnumerationOption value="1" description="Una mica"/>
                 <EnumerationOption value="2" description="Bastant"/>
                 <EnumerationOption value="3" description="Molt"/>
                 <EnumerationOption value="4" description="Moltíssim"/>
             </AttributeDefinition>
-            <AttributeDefinition id="Womac23" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - fer tasques domèstiques pesades">
+            <AttributeDefinition id="Womac23" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Quin grau de dificultat té al fer tasques domèstiques pesades?">
                 <EnumerationOption value="0" description="Cap"/>
                 <EnumerationOption value="1" description="Una mica"/>
                 <EnumerationOption value="2" description="Bastant"/>
                 <EnumerationOption value="3" description="Molt"/>
                 <EnumerationOption value="4" description="Moltíssim"/>
             </AttributeDefinition>
-            <AttributeDefinition id="Womac24" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - fer tasques domèstiques lleugeres">
+            <AttributeDefinition id="Womac24" type="enumeration" multiplicity="maximalOne" description="Capacitat funcional - Quin grau de dificultat té al fer tasques domèstiques lleugeres?">
                 <EnumerationOption value="0" description="Cap"/>
                 <EnumerationOption value="1" description="Una mica"/>
                 <EnumerationOption value="2" description="Bastant"/>
@@ -1732,10 +1735,11 @@
 			<SentryDefinition>
 				<precondition processDefinitionId="LCS2_CaseIdentification"/>
 			</SentryDefinition> 
-						
+			
+			<!-- Va al final de la lista; enfermera y clinician -->
 		    <HumanTaskDefinition id="LCS2_SelectPatient2" description="Evaluació" ownerPath="LCS2_Owner" isMandatory="true" repeatable="ONCE">
 				<TaskParamDefinition path="LCS2_PrimaryCareClinicians" isReadOnly="false" isMandatory="true"/> 
-				<TaskParamDefinition path="LCS2_PrimaryCareClinicians" isReadOnly="false" isMandatory="true"/> 
+				<TaskParamDefinition path="LCS2_Nurse" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>		
 			
 			<!-- Infermera  -->				
@@ -1963,19 +1967,19 @@
               <TaskParamDefinition path="LCS2_SocialSelfCareCareerAbility.career5" isReadOnly="true" isMandatory="false"/>
             </HumanTaskDefinition>			
 
-			<!-- Infermera  -->	
+			<!-- Infermera  
             <HumanTaskDefinition id="LCS2_SocialComplexityOfThePatient" description="Barreres - Complexitat social del pacient" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_SocialComplexityOfThePatient" entityAttachPath="LCS2_SocialComplexityOfThePatient">
               <TaskParamDefinition path="LCS2_SocialComplexityOfThePatient.complexity1" isReadOnly="false" isMandatory="true"/>
               <TaskParamDefinition path="LCS2_SocialComplexityOfThePatient.complexity2" isReadOnly="false" isMandatory="true"/>
               <TaskParamDefinition path="LCS2_SocialComplexityOfThePatient.complexity3" isReadOnly="false" isMandatory="true"/>
               <TaskParamDefinition path="LCS2_SocialComplexityOfThePatient.complexity4" isReadOnly="false" isMandatory="true"/>
-            </HumanTaskDefinition>
+            </HumanTaskDefinition>-->	
 						
-			<!-- Infermera  -->	
+			<!-- Infermera  
 			<HumanTaskDefinition id="LCS2_FamilySupport" description="Barreres - Suport Familiar" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_FamilySupport" entityAttachPath="LCS2_FamilySupport">
               <TaskParamDefinition path="LCS2_FamilySupport.family1" isReadOnly="false" isMandatory="true"/>
               <TaskParamDefinition path="LCS2_FamilySupport.family2" isReadOnly="false" isMandatory="true"/>
-            </HumanTaskDefinition>
+            </HumanTaskDefinition>-->	
 					
 			<!-- TO BE DELETED
             <HumanTaskDefinition id="LCS2_SelfCareAutoTest" description="Barreres - Autocontrol Auto-test" ownerPath="LCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_SelfCareAutoTest" entityAttachPath="LCS2_SelfCareAutoTest">
