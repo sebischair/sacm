@@ -35,7 +35,8 @@
 		  <AttributeDefinition id="LCS2_Nurse" type="Link.Users(IrbllNurses)" description="Infermera"/>
 		  <AttributeDefinition id="LCS2_SocialCareer" type="Link.Users(IrbllSocialCareers)" description="Treballador social"/>
 		  <AttributeDefinition id="LCS2_Owner" type="Link.Users(IrbllProfessionals)" description="Owner"/>
-		  <AttributeDefinition id="LCS2_AnesClinic" type="Link.Users(IrbllAnesthesiologists, IrbllClinicians)" description="Anestesiòleg o Cirurgià"/>            		  
+		  <AttributeDefinition id="LCS2_AnesClinic" type="Link.Users(IrbllAnesthesiologists, IrbllClinicians)" description="Anestesiòleg o Cirurgià"/>            		  		  
+		  <AttributeDefinition id="LCS2_PrimaryCareClinicians" type="Link.Users(IrbllPrimaryCareClinicians)" description="Atenció Primària"/>
 		  
 		  <!-- WORKSPACE: CaseIdentification -->				  		 
 			  <AttributeDefinition id="LCS2_TechnologicalTest" type="Link.EntityDefinition.LCS2_TechnologicalTest" />	  
@@ -1731,6 +1732,11 @@
 			<SentryDefinition>
 				<precondition processDefinitionId="LCS2_CaseIdentification"/>
 			</SentryDefinition> 
+						
+		    <HumanTaskDefinition id="LCS2_SelectPatient2" description="Evaluació" ownerPath="LCS2_Owner" isMandatory="true" repeatable="ONCE">
+				<TaskParamDefinition path="LCS2_PrimaryCareClinicians" isReadOnly="false" isMandatory="true"/> 
+				<TaskParamDefinition path="LCS2_PrimaryCareClinicians" isReadOnly="false" isMandatory="true"/> 
+            </HumanTaskDefinition>		
 			
 			<!-- Infermera  -->				
 			<HumanTaskDefinition id="LCS2_ComorbidityCharlsonEvaluation" description="Estat comòrbid - Índex de comorbilitat de Charlson" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE">		
@@ -1762,7 +1768,7 @@
               <TaskParamDefinition path="LCS2_GMA.gma" isReadOnly="true" isMandatory="false"/>
             </HumanTaskDefinition>						
 
-			<!-- Infermera  -->				
+			<!-- Infermera; Test LCS2_PrimaryCareClinicians -->				
 			<HumanTaskDefinition id="LCS2_AnthropometricVariables" description="Diagnòstic - Variables antropomètriques" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_AnthropometricVariables" entityAttachPath="LCS2_AnthropometricVariables">
               <TaskParamDefinition path="LCS2_AnthropometricVariables.AnWeigh" isReadOnly="false" isMandatory="true"/>
               <TaskParamDefinition path="LCS2_AnthropometricVariables.AnHeight" isReadOnly="false" isMandatory="false"/>
