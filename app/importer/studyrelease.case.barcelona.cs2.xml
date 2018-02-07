@@ -34,7 +34,7 @@
             <AttributeDefinition id="BCS2_WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date"/>            
 
             <AttributeDefinition id="BCS2_Identification" type="Link.EntityDefinition.BCS2_Identification" description="Identification"/>
-            <AttributeDefinition id="BCS2_Evaluation" type="Link.EntityDefinition.BCS2_Identification" description="Evaluation"/>
+            <AttributeDefinition id="BCS2_Evaluation" type="Link.EntityDefinition.BCS2_Evaluation" description="Evaluation"/>
 
             <!--
             <AttributeDefinition id="BCS2_SelectedProfessionals" type="Link.EntityDefinition.BCS2_SelectedProfessionals" description="Inclusion form"/>
@@ -93,29 +93,44 @@
             -->
         </EntityDefinition>
 
-        <!-- Identification Entity Definitions -->
+        <!-- Evaluation Entity Definitions -->
         <EntityDefinition id="BCS2_Evaluation" description="Evaluation">
             <AttributeDefinition id="BCS2_SelectedProfessionals" type="Link.EntityDefinition.BCS2_SelectedProfessionals" multiplicity="maximalOne" description="Selección inicial de profesionales"/> 
+
             <AttributeDefinition id="BCS2_ASATest" type="Link.EntityDefinition.BCS2_ASATest" multiplicity="maximalOne" description="ASA Test"/> 
+
             <AttributeDefinition id="BCS2_ClinicalInformation" type="Link.EntityDefinition.BCS2_ClinicalInformation" multiplicity="maximalOne" description="Clinical Information"/> 
+
             <AttributeDefinition id="BCS2_Charlson" type="Link.EntityDefinition.BCS2_Charlson" multiplicity="maximalOne" description="Charlson"/> 
+
             <AttributeDefinition id="BCS2_PhysicalExamination" type="Link.EntityDefinition.BCS2_PhysicalExamination" multiplicity="maximalOne" description="Physical Examination"/> 
+
             <AttributeDefinition id="BCS2_NutritionalInformationMUST" type="Link.EntityDefinition.BCS2_NutritionalInformationMUST" multiplicity="maximalOne" description="Información nutricional - MUST"/> 
-            <AttributeDefinition id="BCS2_NutritionalInformationSGA" type="Link.EntityDefinition.BCS2_NutritionalInformationSGA" multiplicity="maximalOne" description="Información nutricional - SGA"/> 
+
+            <AttributeDefinition id="BCS2_NutritionalInformationSGA" type="Link.EntityDefinition.BCS2_NutritionalInformationSGA" multiplicity="maximalOne" description="Información nutricional - SGA"/>
+
             <AttributeDefinition id="BCS2_NutritionalSupport" type="Link.EntityDefinition.BCS2_NutritionalSupport" multiplicity="maximalOne" description="¿Requiere soporte nutricional?"/> 
+
             <AttributeDefinition id="BCS2_FunctionalCapacityDUKE" type="Link.EntityDefinition.BCS2_FunctionalCapacityDUKE" multiplicity="maximalOne" description="Capacidad Funcional DUKE"/> 
+
             <AttributeDefinition id="BCS2_FunctionalCapacityHandGrip" type="Link.EntityDefinition.BCS2_FunctionalCapacityHandGrip" multiplicity="maximalOne" description="Capacidad Funcional Hand Grip"/> 
+
             <AttributeDefinition id="BCS2_FunctionalCapacitySitToStand" type="Link.EntityDefinition.BCS2_FunctionalCapacitySitToStand" multiplicity="maximalOne" description="Capacidad Funcional Sit to Stand"/> 
+
             <AttributeDefinition id="BCS2_FunctionalCapacity6MWT" type="Link.EntityDefinition.BCS2_FunctionalCapacity6MWT" multiplicity="maximalOne" description="Capacidad Funcional 6MWT"/> 
+
             <AttributeDefinition id="BCS2_FunctionalCapacityYPA" type="Link.EntityDefinition.BCS2_FunctionalCapacityYPA" multiplicity="maximalOne" description="Capacidad Funcional YPA"/> 
         </EntityDefinition>
 
         <EntityDefinition id="BCS2_SelectedProfessionals" description="Selección inicial de profesionales">
-            <!-- How is this done -->
             <AttributeDefinition id="SelectOwnerAnesthesia" type="Link.Users(IdibapsAnesthesiologists)" multiplicity="maximalOne" description="Selecciona el profesional encargado para realizar el rol de anestesista:"/>
+
             <AttributeDefinition id="SelectOwnerNurse" type="Link.Users(IdibapsNurses)" multiplicity="maximalOne" description="Selecciona el profesional encargado para realizar el rol de enfermero:"/>
+
             <AttributeDefinition id="SelectOwnerNutri" type="Link.Users(IdibapsNutritionists)" multiplicity="maximalOne" description="Selecciona el profesional encargado para realizar el rol de nutricionista:"/>
+
             <AttributeDefinition id="SelectOwnerPsico" type="Link.Users(IdibapsPsychologists)" multiplicity="maximalOne" description="Selecciona el profesional encargado para realizar el rol de psicólogo:"/>
+
             <AttributeDefinition id="SelectOwnerFisio" type="Link.Users(IdibapsPhysiotherapists)" multiplicity="maximalOne" description="Selecciona el profesional encargado para realizar el rol de fisioterapeuta:"/>
         </EntityDefinition>
 
@@ -813,14 +828,14 @@
 
     <Execution>
 
-        <!--
+
         <Action id="CompleteHumanTask" processId="BCS2_SelectPatient">
-            <TaskParam path="BCS2_Patient"  userValue="vargiue"/>
+            <TaskParam path="BCS2_Patient"  userValue="coled"/>
             <TaskParam path="BCS2_Owner"  userValue="salazart"/>
-            <TaskParam path="BCS2_EvaluationDueDate" values="['2018-12-26T00:00:00.000']"/>
-            <TaskParam path="BCS2_WorkplanDueDate" values="['2018-12-28T00:00:00.000']"/>
+            <TaskParam path="BCS2_EvaluationDueDate" values="['2018-05-26T00:00:00.000']"/>
+            <TaskParam path="BCS2_WorkplanDueDate" values="['2019-12-28T00:00:00.000']"/>
         </Action>
-        -->
+
 
         <Action id="CompleteHumanTask" processId="BCS2_Inclusion">            
             <TaskParam path="BCS2_Identification.BCS2_Inclusion.name" values="['Test Inclusion']"/>
@@ -832,123 +847,127 @@
             <TaskParam path="BCS2_Identification.BCS2_Inclusion.IdentificacionComments" values="['Almost dead']"/>
         </Action>
 
+    
         <Action id="CompleteHumanTask" processId="BCS2_ASATest">
-            <TaskParam path="BCS2_ASATest.AsaCalculator" values="['Here should be an ASA score']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_ASATest.AsaCalculator" values="['4390']"/>
         </Action>
+      
         <Action id="CompleteHumanTask" processId="BCS2_ClinicalInformation">
-            <TaskParam path="BCS2_ClinicalInformation.SociodemoAddress" values="['Here should be an ASA score']"/>
-            <TaskParam path="BCS2_ClinicalInformation.SociodemoTelf" values="['3423']"/>
-            <TaskParam path="BCS2_ClinicalInformation.SociodemoEmail" values="['tjhashdj@gmail.com']"/>
-            <TaskParam path="BCS2_ClinicalInformation.SociodemoZone" values="['0']"/>
-            <TaskParam path="BCS2_ClinicalInformation.SociodemoAge" values="['75']"/>
-            <TaskParam path="BCS2_ClinicalInformation.SociodemoSex" values="['0']"/>
-            <TaskParam path="BCS2_ClinicalInformation.SociodemoPhoto" values="['9823482394.jpg']"/>
-            <TaskParam path="BCS2_ClinicalInformation.DiagnosisInfo" values="['3']"/>
-            <TaskParam path="BCS2_ClinicalInformation.SurgeryInfo" values="['6']"/>
-            <TaskParam path="BCS2_ClinicalInformation.Onco" values="['0']"/>
-            <TaskParam path="BCS2_ClinicalInformation.Neo" values="['1']"/>
-            <TaskParam path="BCS2_ClinicalInformation.NeoStart" values="['2019-06-09T00:00:00.0']"/>
-            <TaskParam path="BCS2_ClinicalInformation.NeoEnd" values="['2019-10-09T00:00:00.0']"/>
-            <TaskParam path="BCS2_ClinicalInformation.Tabaquism" values="['2']"/>
-            <TaskParam path="BCS2_ClinicalInformation.QuitSmokingProgram" values="['1']"/>
-            <TaskParam path="BCS2_ClinicalInformation.Frailty" values="['3']"/>
-            <TaskParam path="BCS2_ClinicalInformation.NumDrugs" values="['1']"/>
-            <TaskParam path="BCS2_ClinicalInformation.DrugTreatment" values="['3']"/>
-            <TaskParam path="BCS2_ClinicalInformation.ClinicInfoComment" values="['Almost dead']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_ClinicalInformation.SociodemoAddress" values="['Here should be an ASA score']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_ClinicalInformation.SociodemoTelf" values="['3423']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_ClinicalInformation.SociodemoEmail" values="['tjhashdj@gmail.com']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_ClinicalInformation.SociodemoZone" values="['0']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_ClinicalInformation.SociodemoAge" values="['75']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_ClinicalInformation.SociodemoSex" values="['0']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_ClinicalInformation.SociodemoPhoto" values="['9823482394.jpg']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_ClinicalInformation.DiagnosisInfo" values="['3']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_ClinicalInformation.SurgeryInfo" values="['6']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_ClinicalInformation.Onco" values="['0']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_ClinicalInformation.Neo" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_ClinicalInformation.NeoStart" values="['2019-06-09T00:00:00.0']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_ClinicalInformation.NeoEnd" values="['2019-10-09T00:00:00.0']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_ClinicalInformation.Tabaquism" values="['2']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_ClinicalInformation.QuitSmokingProgram" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_ClinicalInformation.Frailty" values="['3']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_ClinicalInformation.NumDrugs" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_ClinicalInformation.DrugTreatment" values="['3']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_ClinicalInformation.ClinicInfoComment" values="['Almost dead']"/>
         </Action>
+
         <Action id="CompleteHumanTask" processId="BCS2_Charlson">
-            <TaskParam path="BCS2_Charlson.ch1"  values="['0']"/>
-            <TaskParam path="BCS2_Charlson.ch2"  values="['1']"/>
-            <TaskParam path="BCS2_Charlson.ch3"  values="['0']"/>
-            <TaskParam path="BCS2_Charlson.ch4"  values="['1']"/>
-            <TaskParam path="BCS2_Charlson.ch5"  values="['0']"/>
-            <TaskParam path="BCS2_Charlson.ch6"  values="['1']"/>
-            <TaskParam path="BCS2_Charlson.ch7"  values="['0']"/>
-            <TaskParam path="BCS2_Charlson.ch8"  values="['1']"/>
-            <TaskParam path="BCS2_Charlson.ch9"  values="['0']"/>
-            <TaskParam path="BCS2_Charlson.ch10"  values="['1']"/>
-            <TaskParam path="BCS2_Charlson.ch11"  values="['0']"/>
-            <TaskParam path="BCS2_Charlson.ch12"  values="['1']"/>
-            <TaskParam path="BCS2_Charlson.ch13"  values="['0']"/>
-            <TaskParam path="BCS2_Charlson.ch14"  values="['1']"/>            
-            <TaskParam path="BCS2_Charlson.ch15"  values="['0']"/>
-            <TaskParam path="BCS2_Charlson.ch16"  values="['1']"/>
-            <TaskParam path="BCS2_Charlson.ch17"  values="['0']"/>
-            <TaskParam path="BCS2_Charlson.ch18"  values="['1']"/>            
-            <TaskParam path="BCS2_Charlson.ch19"  values="['0']"/>
-            <TaskParam path="BCS2_Charlson.ch20"  values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_Charlson.ch1"  values="['0']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_Charlson.ch2"  values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_Charlson.ch3"  values="['0']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_Charlson.ch4"  values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_Charlson.ch5"  values="['0']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_Charlson.ch6"  values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_Charlson.ch7"  values="['0']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_Charlson.ch8"  values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_Charlson.ch9"  values="['0']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_Charlson.ch10"  values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_Charlson.ch11"  values="['0']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_Charlson.ch12"  values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_Charlson.ch13"  values="['0']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_Charlson.ch14"  values="['1']"/>            
+            <TaskParam path="BCS2_Evaluation.BCS2_Charlson.ch15"  values="['0']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_Charlson.ch16"  values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_Charlson.ch17"  values="['0']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_Charlson.ch18"  values="['1']"/>            
+            <TaskParam path="BCS2_Evaluation.BCS2_Charlson.ch19"  values="['0']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_Charlson.ch20"  values="['1']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="BCS2_PhysicalExamination">
-            <TaskParam path="BCS2_PhysicalExamination.Height" values="['180']"/>
-            <TaskParam path="BCS2_PhysicalExamination.Weight" values="['80']"/>
-            <TaskParam path="BCS2_PhysicalExamination.BloodPressSist" values="['32']"/>
-            <TaskParam path="BCS2_PhysicalExamination.BloodPressDiast" values="['84']"/>
-            <TaskParam path="BCS2_PhysicalExamination.HeartRate" values="['21']"/>
-            <TaskParam path="BCS2_PhysicalExamination.OxygenSat" values="['55']"/>
-            <TaskParam path="BCS2_PhysicalExamination.Albumina" values="['12']"/>
-            <TaskParam path="BCS2_PhysicalExamination.Hemo" values="['78']"/>
-            <TaskParam path="BCS2_PhysicalExamination.FerroTherapy" values="['0']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_PhysicalExamination.Height" values="['180']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_PhysicalExamination.Weight" values="['80']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_PhysicalExamination.BloodPressSist" values="['32']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_PhysicalExamination.BloodPressDiast" values="['84']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_PhysicalExamination.HeartRate" values="['21']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_PhysicalExamination.OxygenSat" values="['55']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_PhysicalExamination.Albumina" values="['12']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_PhysicalExamination.Hemo" values="['78']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_PhysicalExamination.FerroTherapy" values="['0']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="BCS2_NutritionalInformationMUST">
-            <TaskParam path="BCS2_NutritionalInformationMUST.BmiCat" values="['1']"/>
-            <TaskParam path="BCS2_NutritionalInformationMUST.WeightLoss" values="['1']"/>
-            <TaskParam path="BCS2_NutritionalInformationMUST.RecentAcuteDisease" values="['0']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_NutritionalInformationMUST.BmiCat" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_NutritionalInformationMUST.WeightLoss" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_NutritionalInformationMUST.RecentAcuteDisease" values="['0']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="BCS2_NutritionalSupport">
-            <TaskParam path="BCS2_NutritionalSupport.MustNutritionFollowup" values="['1']"/>
-            <TaskParam path="BCS2_NutritionalSupport.MustNutritionGroup" values="['1']"/>
-            <TaskParam path="BCS2_NutritionalSupport.PersonalisedSuppl" values="['0']"/>
-            <TaskParam path="BCS2_NutritionalSupport.SupplDosis" values="['3']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_NutritionalSupport.MustNutritionFollowup" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_NutritionalSupport.MustNutritionGroup" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_NutritionalSupport.PersonalisedSuppl" values="['0']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_NutritionalSupport.SupplDosis" values="['3']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="BCS2_FunctionalCapacityDUKE">
-            <TaskParam path="BCS2_FunctionalCapacityDUKE.DukeVale" values="['1']"/>
-            <TaskParam path="BCS2_FunctionalCapacityDUKE.DukeCam" values="['1']"/>
-            <TaskParam path="BCS2_FunctionalCapacityDUKE.DukeCamu" values="['0']"/>
-            <TaskParam path="BCS2_FunctionalCapacityDUKE.DukeSub" values="['1']"/>
-            <TaskParam path="BCS2_FunctionalCapacityDUKE.DukeCorre" values="['1']"/>
-            <TaskParam path="BCS2_FunctionalCapacityDUKE.DukeReal" values="['0']"/>
-            <TaskParam path="BCS2_FunctionalCapacityDUKE.DukePasa" values="['0']"/>
-            <TaskParam path="BCS2_FunctionalCapacityDUKE.DukeArreg" values="['0']"/>
-            <TaskParam path="BCS2_FunctionalCapacityDUKE.DukeBici" values="['0']"/>
-            <TaskParam path="BCS2_FunctionalCapacityDUKE.DukeTene" values="['1']"/>
-            <TaskParam path="BCS2_FunctionalCapacityDUKE.DukeBail" values="['0']"/>
-            <TaskParam path="BCS2_FunctionalCapacityDUKE.DukeEjerin" values="['0']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE.DukeVale" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE.DukeCam" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE.DukeCamu" values="['0']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE.DukeSub" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE.DukeCorre" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE.DukeReal" values="['0']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE.DukePasa" values="['0']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE.DukeArreg" values="['0']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE.DukeBici" values="['0']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE.DukeTene" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE.DukeBail" values="['0']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE.DukeEjerin" values="['0']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="BCS2_FunctionalCapacityHandGrip">
-            <TaskParam path="BCS2_FunctionalCapacityHandGrip.BestDominantHand" values="['56']"/>
-            <TaskParam path="BCS2_FunctionalCapacityHandGrip.BestNonDominantHand" values="['32']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityHandGrip.BestDominantHand" values="['56']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityHandGrip.BestNonDominantHand" values="['32']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="BCS2_FunctionalCapacitySitToStand">
-            <TaskParam path="BCS2_FunctionalCapacitySitToStand.S2S1" values="['23']"/>
-            <TaskParam path="BCS2_FunctionalCapacitySitToStand.S2S2" values="['3']"/>
-            <TaskParam path="BCS2_FunctionalCapacitySitToStand.S2S3" values="['29']"/>
-            <TaskParam path="BCS2_FunctionalCapacitySitToStand.S2S4" values="['38']"/>
-            <TaskParam path="BCS2_FunctionalCapacitySitToStand.S2S5" values="['17']"/>
-            <TaskParam path="BCS2_FunctionalCapacitySitToStand.S2S6" values="['36']"/>
-            <TaskParam path="BCS2_FunctionalCapacitySitToStand.S2S7" values="['12']"/>
-            <TaskParam path="BCS2_FunctionalCapacitySitToStand.S2S8" values="['32']"/>
-            <TaskParam path="BCS2_FunctionalCapacitySitToStand.S2S9" values="['18']"/>
-            <TaskParam path="BCS2_FunctionalCapacitySitToStand.S2S10" values="['0']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacitySitToStand.S2S1" values="['23']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacitySitToStand.S2S2" values="['3']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacitySitToStand.S2S3" values="['29']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacitySitToStand.S2S4" values="['38']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacitySitToStand.S2S5" values="['17']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacitySitToStand.S2S6" values="['36']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacitySitToStand.S2S7" values="['12']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacitySitToStand.S2S8" values="['32']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacitySitToStand.S2S9" values="['18']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacitySitToStand.S2S10" values="['0']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="BCS2_FunctionalCapacity6MWT">
-            <TaskParam path="BCS2_FunctionalCapacity6MWT.6MWTmeters" values="['56']"/>
-            <TaskParam path="BCS2_FunctionalCapacity6MWT.6MWTinitialFC" values="['32']"/>
-            <TaskParam path="BCS2_FunctionalCapacity6MWT.6MWTfinalFC" values="['32']"/>
-            <TaskParam path="BCS2_FunctionalCapacity6MWT.6MWTinitialSat" values="['32']"/>
-            <TaskParam path="BCS2_FunctionalCapacity6MWT.6MWTinitialDisnea" values="['9']"/>
-            <TaskParam path="BCS2_FunctionalCapacity6MWT.6MWTfinalDisnea" values="['8']"/>
-            <TaskParam path="BCS2_FunctionalCapacity6MWT.6MWTinitialFatigue" values="['7']"/>
-            <TaskParam path="BCS2_FunctionalCapacity6MWT.6MWTfinalFatigue" values="['6']"/>
-            <TaskParam path="BCS2_FunctionalCapacity6MWT.6MWTHRR1" values="['43']"/>
-            <TaskParam path="BCS2_FunctionalCapacity6MWT.6MWTstop" values="['0']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTmeters" values="['56']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTinitialFC" values="['32']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTfinalFC" values="['32']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTinitialSat" values="['32']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTinitialDisnea" values="['9']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTfinalDisnea" values="['8']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTinitialFatigue" values="['7']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTfinalFatigue" values="['6']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTHRR1" values="['43']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTstop" values="['0']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="BCS2_FunctionalCapacityYPA">
-            <TaskParam path="BCS2_FunctionalCapacityYPA.YPASdipme" values="['4']"/>
-            <TaskParam path="BCS2_FunctionalCapacityYPA.YPASti" values="['2']"/>
-            <TaskParam path="BCS2_FunctionalCapacityYPA.YPASpdipme" values="['4']"/>
-            <TaskParam path="BCS2_FunctionalCapacityYPA.YPASesdep" values="['3']"/>
-            <TaskParam path="BCS2_FunctionalCapacityYPA.YPAStisen" values="['5']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASdipme" values="['4']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASti" values="['2']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASpdipme" values="['4']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASesdep" values="['3']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPAStisen" values="['5']"/>
         </Action>
+  
     </Execution>
 
 

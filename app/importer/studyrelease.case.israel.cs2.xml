@@ -9,14 +9,14 @@
     <Group staticId="6c6865ad922811e7bd0c0242ac120002" id="AssutaLocalPulmonologists"/>
     <Group staticId="6c686569922811e7bd0c0242ac120002" id="AssutaNurses"/>
     <Group staticId="6c686592922811e7bd0c0242ac120002" id="AssutaNutritionists"/>
-    <Group staticId="6c686592922811e7bd0c0242ac120002" id="AssutaPhysicians"/>
-    <Group staticId="6c686592922811e7bd0c0242ac120002" id="AssutaPhysiotherapists"/>
-    <Group staticId="6c686592922811e7bd0c0242ac120002" id="AssutaPrimaryCareClinicians"/>
-    <Group staticId="6c686592922811e7bd0c0242ac120002" id="AssutaPsychologists"/>
-    <Group staticId="6c686592922811e7bd0c0242ac120002" id="AssutaRNSTs"/>
-    <Group staticId="6c686592922811e7bd0c0242ac120002" id="AssutaSocialCareers"/>
-    <Group staticId="6c686592922811e7bd0c0242ac120002" id="AssutaAdmins"/>
-    <Group staticId="6c686592922811e7bd0c0242ac120002" id="AssutaPatients"/>
+    <Group staticId="6c686578922811e7bd0c0242ac120002" id="AssutaPhysicians"/>
+    <Group staticId="6c686589922811e7bd0c0242ac120002" id="AssutaPhysiotherapists"/>
+    <Group staticId="6c6865a4922811e7bd0c0242ac120002" id="AssutaPrimaryCareClinicians"/>
+    <Group staticId="6c686597922811e7bd0c0242ac120002" id="AssutaPsychologists"/>
+    <Group staticId="6c686580922811e7bd0c0242ac120002" id="AssutaRNSTs"/>
+    <Group staticId="6c68659c922811e7bd0c0242ac120002" id="AssutaSocialCareers"/>
+    <Group staticId="6c686580922811e7bd0c0242ac120002" id="AssutaAdmins"/>
+    <Group staticId="6c6864f0922811e7bd0c0242ac120002" id="AssutaPatients"/>
 
     <User staticId="2c940c085e7644c5015e7647d4270000" id="millerc"/>
     <User staticId="2c940c085e76225c015e762a46cf0030" id="evansn"/>
@@ -29,7 +29,10 @@
 
         <EntityDefinition id="ICS2_CaseData" description="Case Data">
             <AttributeDefinition id="ICS2_Patient" type="Link.Users(AssutaPatients)" description="Patient"/>
-            <AttributeDefinition id="ICS2_CaseManager" type="Link.Users(AssutaCaseManagers)" description="Case Manager"/>            
+            <AttributeDefinition id="ICS2_CaseManager" type="Link.Users(AssutaCaseManagers)" description="Case Manager"/>
+            <AttributeDefinition id="ICS2_EvaluationDueDate" type="date.after(TODAY)" description="Evaluation default due date"/>
+            <AttributeDefinition id="ICS2_WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date"/>
+
             <AttributeDefinition id="ICS2_Clinician" type="Link.Users(AssutaClinicians)" description="Clinician"/>
             <AttributeDefinition id="ICS2_Nurse" type="Link.Users(AssutaNurses)" description="Nurse"/>
             <AttributeDefinition id="ICS2_SocialCareer" type="Link.Users(AssutaSocialCareers)" description="Social carer"/>
@@ -199,7 +202,7 @@
        <EntityDefinition id="ICS2_NutritionalData" description="מצב תזונה"> 
             <AttributeDefinition id="Height" type="number" multiplicity="maximalOne" description="גובה"/>
             <AttributeDefinition id="Weight" type="number" multiplicity="maximalOne" description="משקל"/>
-            <DerivedAttributeDefinition id="Bmi" expression="Height / Weight * Height" description="BMI"/> <!-- DIVISION BY 0 POSSIBLE!! -->
+            <DerivedAttributeDefinition id="Bmi" expression="round((Weight / ((Height/100) * (Height/100))), 2)" description="BMI"/> <!-- DIVISION BY 0 POSSIBLE!! -->
             <AttributeDefinition id="Albumin" type="number" multiplicity="maximalOne" description="Albumin"/>
             <AttributeDefinition id="Hemoglobin" type="number" multiplicity="maximalOne" description="Hemoglobin"/>
             <AttributeDefinition id="Electrolytes" type="number" multiplicity="maximalOne" description="Electrolytes"/>
@@ -789,32 +792,32 @@
             </AttributeDefinition>  
             <AttributeDefinition id="Downton2" type="enumeration" multiplicity="maximalOne" description="סוגי תרופות רשומות">
                 <EnumerationOption value="0" description="ללא "/>
-                <EnumerationOption value="1" description="תרופות הרגעה"/>
-                <EnumerationOption value="2" description="משתנים "/>
-                <EnumerationOption value="3" description="להורדת לחץ דם "/>
-                <EnumerationOption value="4" description="לטיפול בפרקינסון "/>
-                <EnumerationOption value="5" description="תרופות אנטי דכאון "/>
-                <EnumerationOption value="6" description="תרופות אחרות"/>
+                <EnumerationOption value="1.0001" description="תרופות הרגעה"/>
+                <EnumerationOption value="1.0002" description="משתנים "/>
+                <EnumerationOption value="1.0003" description="להורדת לחץ דם "/>
+                <EnumerationOption value="1.0004" description="לטיפול בפרקינסון "/>
+                <EnumerationOption value="1.0005" description="תרופות אנטי דכאון "/>
+                <EnumerationOption value="1.0006" description="תרופות אחרות"/>
             </AttributeDefinition> 
             <AttributeDefinition id="Downton3" type="enumeration" multiplicity="maximalOne" description="בעיות חושיות">
                 <EnumerationOption value="0" description="ללא בעיות חושיות "/>
-                <EnumerationOption value="1" description="בעיית ראייה בינונית או חמורה או עיוורת"/>
-                <EnumerationOption value="2" description="בעיית שמיעה או חירשות "/>
-                <EnumerationOption value="3" description="מיומנויות מוטוריות מופחתות או נכות "/>
+                <EnumerationOption value="1.0001" description="בעיית ראייה בינונית או חמורה או עיוורת"/>
+                <EnumerationOption value="1.0002" description="בעיית שמיעה או חירשות "/>
+                <EnumerationOption value="1.0003" description="מיומנויות מוטוריות מופחתות או נכות "/>
             </AttributeDefinition> 
             <AttributeDefinition id="Downton4" type="enumeration" multiplicity="maximalOne" description="מצב קוגנטיבי"> <!-- Check this :: L162 -->
-                <EnumerationOption value="1" description="ללא אורנטצייה "/>
-                <EnumerationOption value="0" description="בעל אורנטצייה "/>
+                <EnumerationOption value="0" description="ללא אורנטצייה "/>
+                <EnumerationOption value="1" description="בעל אורנטצייה "/>
             </AttributeDefinition>   
 
             <AttributeDefinition id="Downton5" type="enumeration" multiplicity="maximalOne" description="יכולת הליכה">
-                <EnumerationOption value="1" description="הליכה בטוחה עם או בלי עזרי הליכה "/>
-                <EnumerationOption value="2" description="הליכה בטוחה עם או בלי עזרי הליכה "/>
-                <EnumerationOption value="3" description="הליכה לא בטוחה עם או ללא עזרה "/>
-                <EnumerationOption value="4" description="יכולת הליכה אינה אפשרית "/>
+                <EnumerationOption value="0" description="הליכה בטוחה עם או בלי עזרי הליכה "/>
+                <EnumerationOption value="1.0001" description="הליכה בטוחה עם או בלי עזרי הליכה "/>
+                <EnumerationOption value="1.0002" description="הליכה לא בטוחה עם או ללא עזרה "/>
+                <EnumerationOption value="1.0003" description="יכולת הליכה אינה אפשרית "/>
             </AttributeDefinition> 
 
-            <DerivedAttributeDefinition id="DowntonSum" expression="number(Downton1, 0) + number(Downton2, 0) + number(Downton3, 0) + number(Downton4, 0) + number(Downton5, 0)" description="ציון אינדקס דוונטון"/>          
+            <DerivedAttributeDefinition id="DowntonSum" expression="round(number(Downton1, 0)) + round(number(Downton2, 0)) + round(number(Downton3, 0)) + round(number(Downton4, 0)) + round(number(Downton5, 0))" description="ציון אינדקס דוונטון"/>          
         </EntityDefinition>
 
 
@@ -889,7 +892,17 @@
 
 <CaseDefinition id="ICS2_Assuta" description="CS2 Assuta" ownerPath="ICS2_CaseManager" clientPath="ICS2_Patient" entityDefinitionId="ICS2_CaseData">
 
-    <StageDefinition id="ICS2_CaseIdentification" description="Case Identification" isMandatory="true" repeatable="ONCE">        
+    <StageDefinition id="ICS2_CaseIdentification" description="Case Identification" isMandatory="true" repeatable="ONCE">
+
+
+        <HumanTaskDefinition id="ICS2_SelectPatient" description="Select Patient" ownerPath="ICS2_CaseManager" isMandatory="true" repeatable="ONCE"> 
+            <TaskParamDefinition path="ICS2_Patient" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="ICS2_CaseManager" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="ICS2_EvaluationDueDate" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="ICS2_WorkplanDueDate" isReadOnly="false" isMandatory="true"/>  
+        </HumanTaskDefinition>
+
+
         <HumanTaskDefinition id="ICS2_InclusionCriteria" description="Inclusion" ownerPath="ICS2_CaseManager" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_InclusionCriteria" entityAttachPath="ICS2_InclusionCriteria">     
             <TaskParamDefinition path="ICS2_InclusionCriteria.BasicAge" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_InclusionCriteria.BasicResidantual" isReadOnly="false" isMandatory="true"/>
