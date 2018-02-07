@@ -1066,6 +1066,9 @@ module.exports = class Importer {
           if(action.$.id == "ActivateStage"){
             return this.activateStageWithName(caseId, action.$.processId);
 
+          }else if(action.$.id == "CompleteStage"){
+            return this.completeStageWithName(caseId, action.$.processId);
+
           }else if(action.$.id == "ActivateDualTask"){
             return this.activateDualTaskWithName(caseId, action.$.processId);
 
@@ -1147,6 +1150,22 @@ module.exports = class Importer {
          return DualTask.completeHumanPart(this.executionJwt, task);
        });        
    }
+
+  completeStageWithName(caseId, stageName){     
+    return Stage.findAllByCaseId(this.executionJwt, caseId)
+     .then(stages=>{          
+       const s = this.findActiveProcessWithName(stages, stageName);
+       return Stage.complete(this.executionJwt, s.id);
+     });      
+  }
+
+  terminateStageWithName(caseId, stageName){     
+    return Stage.findAllByCaseId(this.executionJwt, caseId)
+     .then(stages=>{          
+       const s = this.findActiveProcessWithName(stages, stageName);
+       return Stage.terminate(this.executionJwt, s.id);
+     });      
+  }
 
    completeDualTaskAutomatedPartWithName(caseId, taskName, paramsMap){     
     return DualTask.findAllByCaseId(this.executionJwt, caseId)
