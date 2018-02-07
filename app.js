@@ -80,6 +80,12 @@ app.use(cookieParser());
 
 app.use('/api/v1', (req, res, next)=>{
 
+  /** Use different user for test execution as for import */
+  if(req.headers.executionuser != null){
+    req.executionJwt = http.generateJWT(req.headers.executionuser, config.sociocortex.defaultPassword);
+    console.log(req.executionJwt);    
+  }
+
   /** Testing Simulate User Authorization */
   if(req.headers.simulateuser != null && req.headers.authorization == null){
     req.jwt = http.generateJWT(req.headers.simulateuser, config.sociocortex.defaultPassword);

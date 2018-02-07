@@ -97,6 +97,11 @@ router.post('/casedefinition', (req, res, next)=>{
   const version = req.query.version;
   const isExecute = req.query.isExecute === 'true';
   const isDebug = req.query.isDebug === 'true';
+  const jwt = req.jwt;
+  let executionJwt = req.executionJwt
+  
+  if(!executionJwt)
+    executionJwt = jwt;
 
   if(!version)
     return res.status(500).send('No version defined!')
@@ -107,14 +112,14 @@ router.post('/casedefinition', (req, res, next)=>{
 
   let Importer = null;
   if(isAttachedFile)
-    Importer = cdi.importAttachedFile(req.jwt, attachedFile, version);
+    Importer = cdi.importAttachedFile(jwt, attachedFile, version);
   else
-    Importer = cdi.importLocalFile(req.jwt, localFile, version);
+    Importer = cdi.importLocalFile(jwt, localFile, version);
   
   Importer
     .then(caseDefinition=>{
       if(isExecute === true)
-        return cdi.createAndExecuteCase(req.jwt, isDebug);
+        return cdi.createAndExecuteCase(executionJwt, isDebug);
       else
         return Promise.resolve(caseDefinition);      
     })
