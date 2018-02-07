@@ -59,6 +59,14 @@
             <AttributeDefinition id="ICS2_RiskOfFallsDowntonIndex" type="Link.EntityDefinition.ICS2_RiskOfFallsDowntonIndex" description="סיכון לנפילות - מדד דוטון"/>  
             <AttributeDefinition id="ICS2_Sleeping" type="Link.EntityDefinition.ICS2_Medication" description="איכות שינה"/>  
             <AttributeDefinition id="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist" type="Link.EntityDefinition.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist" description="הערכה רפואית של מחלקת הכירורגיה או המרדים"/>  
+
+            <!-- new -->
+            <AttributeDefinition id="ICS2_MUST" type="Link.EntityDefinition.ICS2_MUST" description="הערכת סיום לתת תזונה - MUST"/>  
+            <AttributeDefinition id="ICS2_PhysiotherapistEvaluationDataBeforeTest" type="Link.EntityDefinition.ICS2_PhysiotherapistEvaluationDataBeforeTest" description="הערכת פיזיותרפיסט - נתוני התחלה"/>  
+            <AttributeDefinition id="ICS2_PhysiotherapistEvaluationTimedUp" type="Link.EntityDefinition.ICS2_PhysiotherapistEvaluationTimedUp" description="הערכת פיזיותרפיסט - Timed up and go"/>  
+            <AttributeDefinition id="ICS2_PhysiotherapistEvaluation6MWT" type="Link.EntityDefinition.ICS2_PhysiotherapistEvaluation6MWT" description="הערכת פיזיותרפיסט - 6MWT"/>  
+            <AttributeDefinition id="ICS2_PhysiotherapistEvaluation30SSTS" type="Link.EntityDefinition.ICS2_PhysiotherapistEvaluation30SSTS" description="הערכת פיזיותרפיסט - 30sSTS"/>  
+
         </EntityDefinition>
 
 
@@ -885,6 +893,71 @@
 
         </EntityDefinition>
 
+        <!-- new -->
+        <EntityDefinition id="ICS2_MUST" description="הערכת סיום לתת תזונה - MUST"> 
+            <AttributeDefinition id="BmiCat" type="enumeration" multiplicity="maximalOne" description="BMI">
+                <EnumerationOption value="0" description="גדול מ 20 "/>
+                <EnumerationOption value="1" description="18.5 - 20"/>
+                <EnumerationOption value="2" description="18.5 קטן מ"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="WeightLoss" type="enumeration" multiplicity="maximalOne" description="איבוד משקל לא מתוכנן בחצי השנה האחרונה">
+                <EnumerationOption value="0" description="מעל 5% ממסת הגוף"/>
+                <EnumerationOption value="1" description="5% - 10%"/>
+                <EnumerationOption value="2" description="10% מעל"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="RecentAcuteDisease" type="enumeration" multiplicity="maximalOne" description="תחלואה אקוטית בחמישה הימים האחרונים">
+                <EnumerationOption value="0" description="לא"/>
+                <EnumerationOption value="1" description="כן"/>
+            </AttributeDefinition> 
+            <DerivedAttributeDefinition id="MustScore" expression="number(BmiCat, 0) + number(WeightLoss, 0) + number(RecentAcuteDisease, 0)" description="MUST ציון שאלון"/>
+        </EntityDefinition>
+
+        <EntityDefinition id="ICS2_PhysiotherapistEvaluationDataBeforeTest" description="הערכת פיזיותרפיסט - נתוני התחלה"> 
+            <AttributeDefinition id="PulseRest" type="number" multiplicity="maximalOne" description="דופק במנוחה"/>
+            <AttributeDefinition id="Age" type="number" multiplicity="maximalOne" description="גיל המטופל היום"/>
+            <DerivedAttributeDefinition id="MaxPulse" expression="(0.8 * (220 - Age) - PulseRest) + PulseRest" description="דופק מקסימאלי להפסקת בדיקה"/>
+            <AttributeDefinition id="PhysioRemarks" type="string" multiplicity="maximalOne" description="הערות"/>
+        </EntityDefinition>
+
+        <EntityDefinition id="ICS2_PhysiotherapistEvaluationTimedUp" description="הערכת פיזיותרפיסט - Timed up and go"> 
+            <AttributeDefinition id="TUG1" type="number" multiplicity="maximalOne" description="זמן ביצוע ממוצע (בדקות)"/>
+            <AttributeDefinition id="TUG2" type="number" multiplicity="maximalOne" description="מס' צעדים ממוצע"/>
+            <AttributeDefinition id="TUGRemarks" type="string" multiplicity="maximalOne" description="הערות"/>
+        </EntityDefinition>
+
+
+        <EntityDefinition id="ICS2_PhysiotherapistEvaluation6MWT" description="הערכת פיזיותרפיסט - 6MWT"> 
+            <AttributeDefinition id="6MWT1" type="number" multiplicity="maximalOne" description="דופק התחלתי"/>
+            <AttributeDefinition id="6MWT2" type="number" multiplicity="maximalOne" description="דופק ממוצע"/>
+            <AttributeDefinition id="6MWT3" type="number" multiplicity="maximalOne" description="דופק בסיום"/>
+            <AttributeDefinition id="6MWT4" type="number" multiplicity="maximalOne" description="דופק דקה לאחר מנוחה"/>
+            <AttributeDefinition id="6MWT5" type="number" multiplicity="maximalOne" description="מרחק הליכה בשש דקות"/>
+            <AttributeDefinition id="6MWT6" type="enumeration" multiplicity="maximalOne" description="רמת קושי (יש לשאול את המטופל)">
+                <EnumerationOption value="0" description="קשה מאוד"/>
+                <EnumerationOption value="1" description="קשה"/>
+                <EnumerationOption value="2" description="בינוני"/>
+                <EnumerationOption value="3" description="קל"/>
+                <EnumerationOption value="4" description="קל מאוד"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="6MWTRemarks" type="string" multiplicity="maximalOne" description="דופק התחלתי"/>
+        </EntityDefinition>
+
+        <EntityDefinition id="ICS2_PhysiotherapistEvaluation30SSTS" description="הערכת פיזיותרפיסט - 30sSTS"> 
+            <AttributeDefinition id="30sSTS1" type="number" multiplicity="maximalOne" description="דופק התחלתי"/>
+            <AttributeDefinition id="30sSTS2" type="number" multiplicity="maximalOne" description="דופק ממוצע"/>
+            <AttributeDefinition id="30sSTS3" type="number" multiplicity="maximalOne" description="דופק בסיום"/>
+            <AttributeDefinition id="30sSTS4" type="number" multiplicity="maximalOne" description="דופק דקה לאחר מנוחה"/>
+            <AttributeDefinition id="30sSTS5" type="number" multiplicity="maximalOne" description="מספר קימות ב 30 שניות"/>
+            <AttributeDefinition id="30sSTS6" type="enumeration" multiplicity="maximalOne" description="רמת קושי (יש לשאול את המטופל)">
+                <EnumerationOption value="0" description="קשה מאוד"/>
+                <EnumerationOption value="1" description="קשה"/>
+                <EnumerationOption value="2" description="בינוני"/>
+                <EnumerationOption value="3" description="קל"/>
+                <EnumerationOption value="4" description="קל מאוד"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="30sSTSRemarks" type="string" multiplicity="maximalOne" description="הערות"/>
+        </EntityDefinition>
+
 
         <!-- 1337 -->
 
@@ -1138,8 +1211,57 @@
 			<TaskParamDefinition path="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss8" isReadOnly="false" isMandatory="true"/>
         </HumanTaskDefinition>
 
+        <HumanTaskDefinition id="ICS2_MUST" description="MUST" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_MUST" entityAttachPath="ICS2_MUST">                
+            <TaskParamDefinition path="ICS2_MUST.BMICat" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="ICS2_MUST.WeightLoss" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="ICS2_MUST.RecentAcuteDisease" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="ICS2_MUST.MustScore" isReadOnly="true" isMandatory="false"/>
+        </HumanTaskDefinition>
+
         
     </StageDefinition>    
+
+    <!-- new -->
+    <StageDefinition id="ICS2_PhysiotherapistEvaluation" description="Physiotherapist Evaluation" isMandatory="true" repeatable="ONCE"> 
+
+        <SentryDefinition>
+          <precondition processDefinitionId="ICS2_CaseEvaluation"/>
+        </SentryDefinition> 
+
+        <HumanTaskDefinition id="ICS2_PhysiotherapistEvaluationDataBeforeTest" description="Data before test" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluationDataBeforeTest" entityAttachPath="ICS2_PhysiotherapistEvaluationDataBeforeTest">                
+            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluationDataBeforeTest.PulseRest" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluationDataBeforeTest.Age" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluationDataBeforeTest.MaxPulse" isReadOnly="true" isMandatory="false"/>
+            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluationDataBeforeTest.PhysioRemarks" isReadOnly="false" isMandatory="false"/>
+        </HumanTaskDefinition>
+
+        <HumanTaskDefinition id="ICS2_PhysiotherapistEvaluationTimedUp" description="Timed Up" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluationTimedUp" entityAttachPath="ICS2_PhysiotherapistEvaluationTimedUp">                
+            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluationTimedUp.TUG1" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluationTimedUp.TUG2" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluationTimedUp.TUGRemarks" isReadOnly="false" isMandatory="false"/>
+        </HumanTaskDefinition>
+
+        <HumanTaskDefinition id="ICS2_PhysiotherapistEvaluation6MWT" description="6MWT" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluation6MWT" entityAttachPath="ICS2_PhysiotherapistEvaluation6MWT">                
+            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation6MWT.6MWT1" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation6MWT.6MWT2" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation6MWT.6MWT3" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation6MWT.6MWT4" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation6MWT.6MWT5" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation6MWT.6MWT6" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation6MWT.6MWTRemarks" isReadOnly="false" isMandatory="false"/>
+        </HumanTaskDefinition>
+
+        <HumanTaskDefinition id="ICS2_PhysiotherapistEvaluation30SSTS" description="30s STS" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluation30SSTS" entityAttachPath="ICS2_PhysiotherapistEvaluation30SSTS">                
+            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation30SSTS.30sSTS1" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation30SSTS.30sSTS2" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation30SSTS.30sSTS3" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation30SSTS.30sSTS4" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation30SSTS.30sSTS5" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation30SSTS.30sSTS6" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation30SSTS.30sSTSRemarks" isReadOnly="false" isMandatory="false"/>
+        </HumanTaskDefinition>
+
+    </StageDefinition>
     
 </CaseDefinition>
 </Workspace>
