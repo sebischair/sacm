@@ -30,7 +30,7 @@
 		  <AttributeDefinition id="LCS2_Anesthesiologist" type="Link.Users(IrbllAnesthesiologists)" description="Anestesiòleg"/>            
 		  <AttributeDefinition id="LCS2_Physiotherapist" type="Link.Users(IrbllPhysiotherapists)" description="Fisioterapeuta"/>            		
 		  <AttributeDefinition id="LCS2_Patient" type="Link.Users(IrbllPatients)" description="Pacient"/>
-		  <AttributeDefinition id="LCS2_CaseManager" type="Link.Users(IrbllProfessionals)" description="Gestor de casos"/>            
+		  <AttributeDefinition id="LCS2_CaseManager" type="Link.Users(IrbllCaseManagers)" description="Gestor de casos"/>            
 		  <AttributeDefinition id="LCS2_Clinician" type="Link.Users(IrbllClinicians)" description="Cirurgià"/> <!-- Metge -->
 		  <AttributeDefinition id="LCS2_Nurse" type="Link.Users(IrbllNurses)" description="Infermera"/>
 		  <AttributeDefinition id="LCS2_SocialCareer" type="Link.Users(IrbllSocialCareers)" description="Treballador social"/>
@@ -38,24 +38,95 @@
 		  <AttributeDefinition id="LCS2_AnesClinic" type="Link.Users(IrbllAnesthesiologists, IrbllClinicians)" description="Anestesiòleg o Cirurgià"/>            		  		  
 		  <AttributeDefinition id="LCS2_PrimaryCareClinicians" type="Link.Users(IrbllPrimaryCareClinicians)" description="Atenció Primària"/>
 		  
-		  <!-- WORKSPACE: CaseIdentification -->
-		  	<AttributeDefinition id="LCS2_Identification" type="Link.EntityDefinition.LCS2_Identification" description="Case Identification"/>  		 
-
+		  <!-- WORKSPACE: CaseIdentification -->				  		 
+			  <AttributeDefinition id="LCS2_TechnologicalTest" type="Link.EntityDefinition.LCS2_TechnologicalTest" />	  
+			  <AttributeDefinition id="LCS2_ComorbidityCharlson" type="Link.EntityDefinition.LCS2_ComorbidityCharlson" />  	  		  
+			  <AttributeDefinition id="LCS2_GMA" type="Link.EntityDefinition.LCS2_GMA" />		  		  			  
+			  <AttributeDefinition id="LCS2_ComplexityRisk" type="Link.EntityDefinition.LCS2_ComplexityRisk" />		  		  
+			  <!-- TO BE DELETED <AttributeDefinition id="LCS2_HospitalEmergencyAdminisions" type="Link.EntityDefinition.LCS2_HospitalEmergencyAdminisions" /> -->
+			  <AttributeDefinition id="LCS2_PatientsConsent" type="Link.EntityDefinition.LCS2_PatientsConsent" />		  
 		  
 		  <!-- WORKSPACE: CaseEvaluation -->	
-		  	<AttributeDefinition id="LCS2_Evaluation" type="Link.EntityDefinition.LCS2_Evaluation" description="Case Evaluation"/>  		  
+			  <!-- Estat comòrbid -->				
+			  <!-- LCS2_ComorbidityCharlson; Read only -->
+			  <!-- LCS2_GMA; Read only -->
+			  
+			  <!-- Estat cognitu/mental -->			  
+			  <AttributeDefinition id="LCS2_ComorbidityPfeiffer" type="Link.EntityDefinition.LCS2_ComorbidityPfeiffer"/>
+			  <AttributeDefinition id="LCS2_HospitalAnxietyAndDepressionScale" type="Link.EntityDefinition.LCS2_HospitalAnxietyAndDepressionScale"/>
+
+			  <!-- Estat funcional -->				  
+			  <AttributeDefinition id="LCS2_Barthel" type="Link.EntityDefinition.LCS2_Barthel"/>
+			  <AttributeDefinition id="LCS2_DiagnosisCommunication" type="Link.EntityDefinition.LCS2_DiagnosisCommunication"/>    
+			  <AttributeDefinition id="LCS2_Sleeping" type="Link.EntityDefinition.LCS2_Sleeping"/>
+			  <AttributeDefinition id="LCS2_ProblemsManagingMoney" type="Link.EntityDefinition.LCS2_ProblemsManagingMoney"/>			  
+			  
+			  <!-- Diagnòstic -->		
+			  <!-- LCS2_ASAPhysicalStatusClassificationSystemEvaluation; Read only -->			  
+			  <AttributeDefinition id="LCS2_WOMAC" type="Link.EntityDefinition.LCS2_WOMAC"/>  		  
+			  
+			  <!-- Diagnòstic dolor -->					  			  
+			  <AttributeDefinition id="LCS2_EVA" type="Link.EntityDefinition.LCS2_EVA"/>		  
+			  <AttributeDefinition id="LCS2_SF12" type="Link.EntityDefinition.LCS2_SF12"/>		
+			  
+			  <!-- Diagnòstic -->		
+			  <AttributeDefinition id="LCS2_SLANSS" type="Link.EntityDefinition.LCS2_SLANSS"/>  					   
+			  
+			  <!-- Diagnòstic -->	
+			  <AttributeDefinition id="LCS2_AnthropometricVariables" type="Link.EntityDefinition.LCS2_AnthropometricVariables"/>		  
+			  <AttributeDefinition id="LCS2_DiagnosisSmokingAndAlcohol" type="Link.EntityDefinition.LCS2_DiagnosisSmokingAndAlcohol"/>  		  
+			  <AttributeDefinition id="LCS2_DiagnosisNutrition" type="Link.EntityDefinition.LCS2_DiagnosisNutrition" />
+			  
+			  
+			  <!-- Barreres -->				  
+			  <AttributeDefinition id="LCS2_MedicationFollowing" type="Link.EntityDefinition.LCS2_MedicationFollowing"/> 
+			  <AttributeDefinition id="LCS2_Medication" type="Link.EntityDefinition.LCS2_Medication"/>			  
+			  <AttributeDefinition id="LCS2_SelfCareAuto" type="Link.EntityDefinition.LCS2_SelfCareAuto"/>      
+			  <AttributeDefinition id="LCS2_SocialDwelling" type="Link.EntityDefinition.LCS2_SocialDwelling"/>      
+			  <AttributeDefinition id="LCS2_SocialSelfCareCareerAbility" type="Link.EntityDefinition.LCS2_SocialSelfCareCareerAbility"/>		  
+			  <!--
+			  <AttributeDefinition id="LCS2_SocialComplexityOfThePatient" type="Link.EntityDefinition.LCS2_SocialComplexityOfThePatient"/>		  
+			  <AttributeDefinition id="LCS2_FamilySupport" type="Link.EntityDefinition.LCS2_FamilySupport"/>  -->    
+			  <!-- TO BE DELETED  <AttributeDefinition id="LCS2_SelfCareAutoTestEPOC" type="Link.EntityDefinition.LCS2_SelfCareAutoTestEPOC"/>
+			  <AttributeDefinition id="LCS2_SelfCareAutoTestHF" type="Link.EntityDefinition.LCS2_SelfCareAutoTestHF"/> 
+			  <AttributeDefinition id="LCS2_SelfCareAutoTest" type="Link.EntityDefinition.LCS2_SelfCareAutoTest"/>	-->	  		  	  		  
+
+		  
+		  <!-- WORKSPACE: WorkplanDefinition -->		
+			<!-- TO BE DELETED
+			  <AttributeDefinition id="LCS2_DuringHospitalizationPhysicalActivityPrescription" type="Link.EntityDefinition.LCS2_DuringHospitalizationPhysicalActivityPrescription"/>
+			  <AttributeDefinition id="LCS2_PostHospitalizationPhysicalActivityPrescription" type="Link.EntityDefinition.LCS2_PostHospitalizationPhysicalActivityPrescription"/>
+			  <AttributeDefinition id="LCS2_PostHospitalizationAutocheckHealthStatusPrescription" type="Link.EntityDefinition.LCS2_PostHospitalizationAutocheckHealthStatusPrescription"/>
+			  <AttributeDefinition id="LCS2_PostHospitalizationRehabilitationPrescription" type="Link.EntityDefinition.LCS2_PostHospitalizationRehabilitationPrescription"/>		  
+			  <AttributeDefinition id="LCS2_PostHospitalizationPrescriptionVitalSignsMonitoring" type="Link.EntityDefinition.LCS2_PostHospitalizationPrescriptionVitalSignsMonitoring"/>
+			  <AttributeDefinition id="LCS2_SocialIntervention" type="Link.EntityDefinition.LCS2_SocialIntervention" description="Intervenció social"/>
+			-->
+			  <!-- <AttributeDefinition id="LCS2_Agreement" type="Link.EntityDefinition.LCS2_Agreement" description="Acord"/> -->
+		  
+		  
+		  <!-- WORKSPACE: WorkplanExecution -->					  
+			  <AttributeDefinition id="LCS2_PreHospitalizationAnaemiaAssessmentAndManagement" type="Link.EntityDefinition.LCS2_PreHospitalizationAnaemiaAssessmentAndManagement"/>
+			  <AttributeDefinition id="LCS2_PreHospitalizatioBloodPressureControl" type="Link.EntityDefinition.LCS2_PreHospitalizatioBloodPressureControl"/>		  
+
+			  <AttributeDefinition id="LCS2_PreHospitalizationDiabetesControl" type="Link.EntityDefinition.LCS2_PreHospitalizationDiabetesControl"/>
+			  <AttributeDefinition id="LCS2_PreHospitalizationVerbalNumericalRatingScale" type="Link.EntityDefinition.LCS2_PreHospitalizationVerbalNumericalRatingScale"/>
+
+			  <AttributeDefinition id="LCS2_PreHospitalizationSLANSS" type="Link.EntityDefinition.LCS2_PreHospitalizationSLANSS"/>
+			  <AttributeDefinition id="LCS2_NutritionalEducation" type="Link.EntityDefinition.LCS2_NutritionalEducation"/>
+			  <AttributeDefinition id="LCS2_DuringHospitalizationVerbalNumericalRatingScale" type="Link.EntityDefinition.LCS2_DuringHospitalizationVerbalNumericalRatingScale"/>		  
+			  <AttributeDefinition id="LCS2_DuringHospitalizationSLANSS" type="Link.EntityDefinition.LCS2_DuringHospitalizationSLANSS"/>  		
+	  
+			  <AttributeDefinition id="LCS2_PostHospitalizationSLANSS" type="Link.EntityDefinition.LCS2_PostHospitalizationSLANSS"/>
+			  <AttributeDefinition id="LCS2_PostHospitalizationRehabilitation" type="Link.EntityDefinition.LCS2_PostHospitalizationRehabilitation"/>
+			  <AttributeDefinition id="LCS2_PostHospitalizationVerbalNumericalRatingScale" type="Link.EntityDefinition.LCS2_PostHospitalizationVerbalNumericalRatingScale"/>
+			  <AttributeDefinition id="LCS2_PostHospitalizationAnswerAutocheckHealthStatus" type="Link.EntityDefinition.LCS2_PostHospitalizationAnswerAutocheckHealthStatus"/>
+			  <AttributeDefinition id="LCS2_PostHospitalizationPatientEducationAndTrainingToTheCaregiver" type="Link.EntityDefinition.LCS2_PostHospitalizationPatientEducationAndTrainingToTheCaregiver"/>
+		  
+		  <!-- WORKSPACE: Discharge -->	
+			  <AttributeDefinition id="LCS2_Discharge" type="Link.EntityDefinition.LCS2_Discharge"/>
+		  
 		</EntityDefinition>		
 		
-
-        <!-- Identification Entity Definitions -->
-        <EntityDefinition id="LCS2_Identification" description="Identification">
-            <AttributeDefinition id="LCS2_TechnologicalTest" type="Link.EntityDefinition.LCS2_TechnologicalTest" multiplicity="maximalOne" description="Technological test"/> 
-            <AttributeDefinition id="LCS2_ComorbidityCharlson" type="Link.EntityDefinition.LCS2_ComorbidityCharlson" multiplicity="maximalOne" description="Comorbidity Charlson"/> 
-            <AttributeDefinition id="LCS2_ComplexityRisk" type="Link.EntityDefinition.LCS2_ComplexityRisk" multiplicity="maximalOne" description="Complexity risk"/> 
-            <AttributeDefinition id="LCS2_GMA" type="Link.EntityDefinition.LCS2_GMA" multiplicity="maximalOne" description="GMA"/> 
-            <AttributeDefinition id="LCS2_PatientsConsent" type="Link.EntityDefinition.LCS2_PatientsConsent" multiplicity="maximalOne" description="Patients consent"/> 
-        </EntityDefinition>
-
 
 		<!-- ENTITY DEFINITION: CaseIdentification -->			
 		<EntityDefinition id="LCS2_TechnologicalTest" >
@@ -227,31 +298,7 @@
 		</EntityDefinition>
 		
 	  
-		<!-- ENTITY DEFINITION: CaseEvaluation -->		
-        <EntityDefinition id="LCS2_Evaluation" description="Case evaluation">
-            <AttributeDefinition id="LCS2_ComorbidityPfeiffer" type="Link.EntityDefinition.LCS2_ComorbidityPfeiffer" multiplicity="maximalOne" description="Comorbidity Pfeiffer"/> 
-            <AttributeDefinition id="LCS2_ComorbidityCharlson" type="Link.EntityDefinition.LCS2_ComorbidityCharlson" multiplicity="maximalOne" description="Comorbidity Charlson"/> 
-            <AttributeDefinition id="LCS2_GMA" type="Link.EntityDefinition.LCS2_GMA" multiplicity="maximalOne" description="GMA"/> 
-            <AttributeDefinition id="LCS2_ComplexityRisk" type="Link.EntityDefinition.LCS2_ComplexityRisk" multiplicity="maximalOne" description="Complexity risk"/> 
-            <AttributeDefinition id="LCS2_AnthropometricVariables" type="Link.EntityDefinition.LCS2_AnthropometricVariables" multiplicity="maximalOne" description="Anthropometric variables"/> 
-            <AttributeDefinition id="LCS2_DiagnosisCommunication" type="Link.EntityDefinition.LCS2_DiagnosisCommunication" multiplicity="maximalOne" description="Diagnosis Communication"/> 
-            <AttributeDefinition id="LCS2_Sleeping" type="Link.EntityDefinition.LCS2_Sleeping" multiplicity="maximalOne" description="Sleeping"/> 
-            <AttributeDefinition id="LCS2_DiagnosisSmokingAndAlcohol" type="Link.EntityDefinition.LCS2_DiagnosisSmokingAndAlcohol" multiplicity="maximalOne" description="Diagnosis smoking and alcohol"/> 
-            <AttributeDefinition id="LCS2_DiagnosisNutrition" type="Link.EntityDefinition.LCS2_DiagnosisNutrition" multiplicity="maximalOne" description="Diagnosis nutrition"/> 
-            <AttributeDefinition id="LCS2_ProblemsManagingMoney" type="Link.EntityDefinition.LCS2_ProblemsManagingMoney" multiplicity="maximalOne" description="Problems managing money"/> 
-            <AttributeDefinition id="LCS2_MedicationFollowing" type="Link.EntityDefinition.LCS2_MedicationFollowing" multiplicity="maximalOne" description="Medication following"/> 
-            <AttributeDefinition id="LCS2_Medication" type="Link.EntityDefinition.LCS2_Medication" multiplicity="maximalOne" description="Medication"/> 
-            <AttributeDefinition id="LCS2_SelfCareAuto" type="Link.EntityDefinition.LCS2_SelfCareAuto" multiplicity="maximalOne" description="Self care auto"/> 
-            <AttributeDefinition id="LCS2_SocialDwelling" type="Link.EntityDefinition.LCS2_SocialDwelling" multiplicity="maximalOne" description="Social dwelling"/> 
-            <AttributeDefinition id="LCS2_SocialSelfCareCareerAbility" type="Link.EntityDefinition.LCS2_SocialSelfCareCareerAbility" multiplicity="maximalOne" description="Social self career ability"/> 
-            <AttributeDefinition id="LCS2_HospitalAnxietyAndDepressionScale" type="Link.EntityDefinition.LCS2_HospitalAnxietyAndDepressionScale" multiplicity="maximalOne" description="Hospital anxiety and depression scale"/> 
-            <AttributeDefinition id="LCS2_Barthel" type="Link.EntityDefinition.LCS2_Barthel" multiplicity="maximalOne" description="Barthel"/> 
-            <AttributeDefinition id="LCS2_WOMAC" type="Link.EntityDefinition.LCS2_WOMAC" multiplicity="maximalOne" description="WOMAC"/> 
-            <AttributeDefinition id="LCS2_EVA" type="Link.EntityDefinition.LCS2_EVA" multiplicity="maximalOne" description="EVA"/> 
-            <AttributeDefinition id="LCS2_SLANSS" type="Link.EntityDefinition.LCS2_SLANSS" multiplicity="maximalOne" description="SLANSS"/> 
-            <AttributeDefinition id="LCS2_SF12" type="Link.EntityDefinition.LCS2_SF12" multiplicity="maximalOne" description="SF12"/> 
-        </EntityDefinition>
-
+		<!-- ENTITY DEFINITION: CaseEvaluation -->			         
         <EntityDefinition id="LCS2_ComorbidityPfeiffer">
             <AttributeDefinition id="pfeiffer1" type="enumeration" multiplicity="maximalOne" description="Número de errades">
                 <EnumerationOption value="0" description="0"/>
@@ -1589,7 +1636,7 @@
 		<CaseDefinition id="LCS2_Leida" description="CS2 Lleida" ownerPath="LCS2_Owner" clientPath="LCS2_Patient" entityDefinitionId="LCS2_CaseData">	  
 	  
 	<!-- STAGEDEFINITION: CaseIdentification -->	  
-        <StageDefinition id="LCS2_CaseIdentification" description="Identificació del cas" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_Identification" entityAttachPath="LCS2_Identification">
+        <StageDefinition id="LCS2_CaseIdentification" description="Identificació del cas" isMandatory="true" repeatable="ONCE">
            
 		    <HumanTaskDefinition id="LCS2_SelectPatient" description="Inclusió" ownerPath="LCS2_Owner" isMandatory="true" repeatable="ONCE">
                 <TaskParamDefinition path="LCS2_Patient" isReadOnly="false" isMandatory="true"/>                
@@ -1602,323 +1649,323 @@
             </HumanTaskDefinition>		
 
 			<!-- Gestor de Casos -->
-            <HumanTaskDefinition id="LCS2_TechnologicalTest" description="Test d'adherència a la tecnología" ownerPath="LCS2_CaseManager" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_TechnologicalTest" entityAttachPath="LCS2_Identification.LCS2_TechnologicalTest">
+            <HumanTaskDefinition id="LCS2_TechnologicalTest" description="Test d'adherència a la tecnología" ownerPath="LCS2_CaseManager" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_TechnologicalTest" entityAttachPath="LCS2_TechnologicalTest">
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>
-              <TaskParamDefinition path="LCS2_Identification.LCS2_TechnologicalTest.tech1" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Identification.LCS2_TechnologicalTest.tech2" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Identification.LCS2_TechnologicalTest.tech3" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Identification.LCS2_TechnologicalTest.tech4" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_TechnologicalTest.tech1" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_TechnologicalTest.tech2" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_TechnologicalTest.tech3" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_TechnologicalTest.tech4" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>			
 			
 			<!-- Infermera  -->				
-            <HumanTaskDefinition id="LCS2_ComorbidityCharlsonIdentification" description="Índex de comorbilitat de Charlson" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_ComorbidityCharlson" entityAttachPath="LCS2_Identification.LCS2_ComorbidityCharlson">
+            <HumanTaskDefinition id="LCS2_ComorbidityCharlsonIdentification" description="Índex de comorbilitat de Charlson" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_ComorbidityCharlson" entityAttachPath="LCS2_ComorbidityCharlson">
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>			
 			  
-              <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlson.ch1" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlson.ch2" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlson.ch3" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlson.ch4" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlson.ch5" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlson.ch6" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlson.ch7" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlson.ch8" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlson.ch9" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlson.ch10" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlson.ch11" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlson.ch12" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlson.ch13" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlson.ch14" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlson.ch15" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlson.ch16" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlson.ch17" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlson.ch18" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlson.ch19" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlson.ch20" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlson.ch21" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch1" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch2" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch3" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch4" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch5" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch6" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch7" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch8" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch9" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch10" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch11" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch12" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch13" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch14" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch15" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch16" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch17" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch18" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch19" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch20" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch21" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>
 			
 			<!-- Clínic  -->			
-            <HumanTaskDefinition id="LCS2_GMAIdentification" description="GMA" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_GMA" entityAttachPath="LCS2_Identification.LCS2_GMA">
+            <HumanTaskDefinition id="LCS2_GMAIdentification" description="GMA" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_GMA" entityAttachPath="LCS2_GMA">
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>
-              <TaskParamDefinition path="LCS2_Identification.LCS2_GMA.gma" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_GMA.gma" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition> 
 
 			<!-- PDT Cirurgiá/Anestesista  -->	
-            <HumanTaskDefinition id="LCS2_ComplexityRisk" description="Test complexitat-risc" ownerPath="LCS2_AnesClinic" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_ComplexityRisk" entityAttachPath="LCS2_Identification.LCS2_ComplexityRisk">
+            <HumanTaskDefinition id="LCS2_ComplexityRisk" description="Test complexitat-risc" ownerPath="LCS2_AnesClinic" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_ComplexityRisk" entityAttachPath="LCS2_ComplexityRisk">
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>
-				<TaskParamDefinition path="LCS2_Identification.LCS2_ComplexityRisk.cd1" isReadOnly="false" isMandatory="true"/> 
-				<TaskParamDefinition path="LCS2_Identification.LCS2_ComplexityRisk.pmed1" isReadOnly="false" isMandatory="true"/>
-				<TaskParamDefinition path="LCS2_Identification.LCS2_ComplexityRisk.admissions1" isReadOnly="false" isMandatory="true"/>
-				<TaskParamDefinition path="LCS2_Identification.LCS2_ComplexityRisk.admissions2" isReadOnly="false" isMandatory="true"/>
-				<TaskParamDefinition path="LCS2_Identification.LCS2_ComplexityRisk.age" isReadOnly="false" isMandatory="true"/>
-				<TaskParamDefinition path="LCS2_Identification.LCS2_ComplexityRisk.ASA" isReadOnly="false" isMandatory="true"/>	<!-- LCS2_ASAPhysicalStatusClassificationSystemIdentification -->				
-				<TaskParamDefinition path="LCS2_Identification.LCS2_ComplexityRisk.complexityrisk" isReadOnly="false" isMandatory="false"/>				
+				<TaskParamDefinition path="LCS2_ComplexityRisk.cd1" isReadOnly="false" isMandatory="true"/> 
+				<TaskParamDefinition path="LCS2_ComplexityRisk.pmed1" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_ComplexityRisk.admissions1" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_ComplexityRisk.admissions2" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_ComplexityRisk.age" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_ComplexityRisk.ASA" isReadOnly="false" isMandatory="true"/>	<!-- LCS2_ASAPhysicalStatusClassificationSystemIdentification -->				
+				<TaskParamDefinition path="LCS2_ComplexityRisk.complexityrisk" isReadOnly="false" isMandatory="false"/>				
             </HumanTaskDefinition>
 			
             <!-- TO BE DELETED
-			<HumanTaskDefinition id="LCS2_HospitalEmergencyAdminisions" description="Admissions hospitalàries d'emergència" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_HospitalEmergencyAdminisions" entityAttachPath="LCS2_Identification.LCS2_HospitalEmergencyAdminisions">
+			<HumanTaskDefinition id="LCS2_HospitalEmergencyAdminisions" description="Admissions hospitalàries d'emergència" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_HospitalEmergencyAdminisions" entityAttachPath="LCS2_HospitalEmergencyAdminisions">
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>
-              <TaskParamDefinition path="LCS2_Identification.LCS2_HospitalEmergencyAdminisions.admissions1" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Identification.LCS2_HospitalEmergencyAdminisions.admissions2" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_HospitalEmergencyAdminisions.admissions1" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_HospitalEmergencyAdminisions.admissions2" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition> -->
 
 			<!-- Gestor de Casos -->
-            <HumanTaskDefinition id="LCS2_PatientsConsent" description="Consentiment informat del pacient" ownerPath="LCS2_CaseManager" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_PatientsConsent" entityAttachPath="LCS2_Identification.LCS2_PatientsConsent">			
+            <HumanTaskDefinition id="LCS2_PatientsConsent" description="Consentiment informat del pacient" ownerPath="LCS2_CaseManager" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_PatientsConsent" entityAttachPath="LCS2_PatientsConsent">			
               <SentryDefinition>
                 <precondition processDefinitionId="LCS2_SelectPatient"/>
               </SentryDefinition>
-              <TaskParamDefinition path="LCS2_Identification.LCS2_PatientsConsent.pConsent1" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_PatientsConsent.pConsent1" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>			
 		</StageDefinition>
 		
 		
-    <!-- STAGEDEFINITION: CaseEvaluation -->    
-    <StageDefinition id="LCS2_CaseEvaluation" description="Evaluació del cas" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_Evaluation" entityAttachPath="LCS2_Evaluation.LCS2_Evaluation">
-     
-      <SentryDefinition>
-        <precondition processDefinitionId="LCS2_CaseIdentification"/>
-      </SentryDefinition> 
-      
-      <!-- Va al final de la lista; enfermera y clinician -->
-       <HumanTaskDefinition id="LCS2_SelectPatient2" description="Evaluació" ownerPath="LCS2_Owner" isMandatory="true" repeatable="ONCE">
-        	<TaskParamDefinition path="LCS2_PrimaryCareClinicians" isReadOnly="false" isMandatory="true"/> 
-        	<TaskParamDefinition path="LCS2_Nurse" isReadOnly="false" isMandatory="true"/>
-       </HumanTaskDefinition>    
-      
-      <!-- Infermera  -->       
-      <HumanTaskDefinition id="LCS2_ComorbidityCharlsonEvaluation" description="Estat comòrbid - Índex de comorbilitat de Charlson" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_ComorbidityCharlson" entityAttachPath="LCS2_Evaluation.LCS2_ComorbidityCharlson">    
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityCharlson.ch1" isReadOnly="true" isMandatory="false"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityCharlson.ch2" isReadOnly="true" isMandatory="false"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityCharlson.ch3" isReadOnly="true" isMandatory="false"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityCharlson.ch4" isReadOnly="true" isMandatory="false"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityCharlson.ch5" isReadOnly="true" isMandatory="false"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityCharlson.ch6" isReadOnly="true" isMandatory="false"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityCharlson.ch7" isReadOnly="true" isMandatory="false"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityCharlson.ch8" isReadOnly="true" isMandatory="false"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityCharlson.ch9" isReadOnly="true" isMandatory="false"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityCharlson.ch10" isReadOnly="true" isMandatory="false"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityCharlson.ch11" isReadOnly="true" isMandatory="false"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityCharlson.ch12" isReadOnly="true" isMandatory="false"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityCharlson.ch13" isReadOnly="true" isMandatory="false"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityCharlson.ch14" isReadOnly="true" isMandatory="false"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityCharlson.ch15" isReadOnly="true" isMandatory="false"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityCharlson.ch16" isReadOnly="true" isMandatory="false"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityCharlson.ch17" isReadOnly="true" isMandatory="false"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityCharlson.ch18" isReadOnly="true" isMandatory="false"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityCharlson.ch19" isReadOnly="true" isMandatory="false"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityCharlson.ch20" isReadOnly="true" isMandatory="false"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityCharlson.ch21" isReadOnly="true" isMandatory="false"/>
+	<!-- STAGEDEFINITION: CaseEvaluation -->		
+		<StageDefinition id="LCS2_CaseEvaluation" description="Evaluació del cas" isMandatory="true" repeatable="ONCE">
+		 
+			<SentryDefinition>
+				<precondition processDefinitionId="LCS2_CaseIdentification"/>
+			</SentryDefinition> 
+			
+			<!-- Va al final de la lista; enfermera y clinician -->
+		    <HumanTaskDefinition id="LCS2_SelectPatient2" description="Evaluació" ownerPath="LCS2_Owner" isMandatory="true" repeatable="ONCE">
+				<TaskParamDefinition path="LCS2_PrimaryCareClinicians" isReadOnly="false" isMandatory="true"/> 
+				<TaskParamDefinition path="LCS2_Nurse" isReadOnly="false" isMandatory="true"/>
+            </HumanTaskDefinition>		
+			
+			<!-- Infermera  -->				
+			<HumanTaskDefinition id="LCS2_ComorbidityCharlsonEvaluation" description="Estat comòrbid - Índex de comorbilitat de Charlson" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE">		
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch1" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch2" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch3" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch4" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch5" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch6" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch7" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch8" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch9" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch10" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch11" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch12" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch13" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch14" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch15" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch16" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch17" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch18" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch19" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch20" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_ComorbidityCharlson.ch21" isReadOnly="true" isMandatory="false"/>
             </HumanTaskDefinition>
-      
-      <!-- Infermera  -->       
-      <HumanTaskDefinition id="LCS2_GMA" description="Estat comòrbid - GMA" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_GMA" entityAttachPath="LCS2_Evaluation.LCS2_GMA">
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_GMA.gma" isReadOnly="true" isMandatory="false"/>
-            </HumanTaskDefinition>            
+			
+			<!-- Infermera  -->				
+			<HumanTaskDefinition id="LCS2_GMAEvaluation" description="Estat comòrbid - GMA" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE">
+              <TaskParamDefinition path="LCS2_GMA.gma" isReadOnly="true" isMandatory="false"/>
+            </HumanTaskDefinition>						
 
-      <!-- Infermera; Test LCS2_PrimaryCareClinicians -->       
-      <HumanTaskDefinition id="LCS2_AnthropometricVariables" description="Diagnòstic - Variables antropomètriques" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_AnthropometricVariables" entityAttachPath="LCS2_Evaluation.LCS2_AnthropometricVariables">
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariables.AnWeigh" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariables.AnHeight" isReadOnly="false" isMandatory="false"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariables.Anthropometric3" isReadOnly="false" isMandatory="false"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariables.Anthropometric4" isReadOnly="true" isMandatory="false"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariables.Anthropometric5" isReadOnly="false" isMandatory="true"/>
-            </HumanTaskDefinition>      
+			<!-- Infermera; Test LCS2_PrimaryCareClinicians -->				
+			<HumanTaskDefinition id="LCS2_AnthropometricVariables" description="Diagnòstic - Variables antropomètriques" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_AnthropometricVariables" entityAttachPath="LCS2_AnthropometricVariables">
+              <TaskParamDefinition path="LCS2_AnthropometricVariables.AnWeigh" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_AnthropometricVariables.AnHeight" isReadOnly="false" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_AnthropometricVariables.Anthropometric3" isReadOnly="false" isMandatory="false"/>
+			  <TaskParamDefinition path="LCS2_AnthropometricVariables.Anthropometric4" isReadOnly="true" isMandatory="false"/>
+			  <TaskParamDefinition path="LCS2_AnthropometricVariables.Anthropometric5" isReadOnly="false" isMandatory="true"/>
+            </HumanTaskDefinition>		  
 
-      <!-- PDT Cirurgiá/Anestesista  -->    
-            <HumanTaskDefinition id="LCS2_DiagnosisSmokingAndAlcohol" description="Diagnòstic - Consum de tabac i alcohol" ownerPath="LCS2_AnesClinic" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_DiagnosisSmokingAndAlcohol" entityAttachPath="LCS2_Evaluation.LCS2_DiagnosisSmokingAndAlcohol">
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisSmokingAndAlcohol.smalc1" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisSmokingAndAlcohol.smalc2" isReadOnly="false" isMandatory="true"/>
+			<!-- PDT Cirurgiá/Anestesista  -->		
+            <HumanTaskDefinition id="LCS2_DiagnosisSmokingAndAlcohol" description="Diagnòstic - Consum de tabac i alcohol" ownerPath="LCS2_AnesClinic" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_DiagnosisSmokingAndAlcohol" entityAttachPath="LCS2_DiagnosisSmokingAndAlcohol">
+              <TaskParamDefinition path="LCS2_DiagnosisSmokingAndAlcohol.smalc1" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_DiagnosisSmokingAndAlcohol.smalc2" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>
-      
-      <!-- Anestesista  -->       
-      <HumanTaskDefinition id="LCS2_DiagnosisNutrition" description="Diagnòstic - Nutrició (proteínes)" ownerPath="LCS2_Anesthesiologist" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_DiagnosisNutrition" entityAttachPath="LCS2_Evaluation.LCS2_DiagnosisNutrition">
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisNutrition.nutrition1" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisNutrition.nutrition2" isReadOnly="false" isMandatory="true"/>
-            </HumanTaskDefinition>      
-      
-      <!-- Infermera  -->       
-            <HumanTaskDefinition id="LCS2_ComorbidityPfeiffer" description="Estat cognitiu/mental - Pfeiffer" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_ComorbidityPfeiffer" entityAttachPath="LCS2_Evaluation.LCS2_ComorbidityPfeiffer">
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityPfeiffer.pfeiffer1" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityPfeiffer.pfeiffer2" isReadOnly="true" isMandatory="false"/>
-            </HumanTaskDefinition>        
+			
+			<!-- Anestesista  -->				
+			<HumanTaskDefinition id="LCS2_DiagnosisNutrition" description="Diagnòstic - Nutrició (proteínes)" ownerPath="LCS2_Anesthesiologist" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_DiagnosisNutrition" entityAttachPath="LCS2_DiagnosisNutrition">
+              <TaskParamDefinition path="LCS2_DiagnosisNutrition.nutrition1" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_DiagnosisNutrition.nutrition2" isReadOnly="false" isMandatory="true"/>
+            </HumanTaskDefinition>			
+			
+			<!-- Infermera  -->				
+            <HumanTaskDefinition id="LCS2_ComorbidityPfeiffer" description="Estat cognitiu/mental - Pfeiffer" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_ComorbidityPfeiffer" entityAttachPath="LCS2_ComorbidityPfeiffer">
+              <TaskParamDefinition path="LCS2_ComorbidityPfeiffer.pfeiffer1" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_ComorbidityPfeiffer.pfeiffer2" isReadOnly="true" isMandatory="false"/>
+            </HumanTaskDefinition>			  
 
-      <!-- Infermera  -->       
-            <HumanTaskDefinition id="LCS2_HospitalAnxietyAndDepressionScale" description="Estat cognitiu/mental - Escala d'ansietat i depressió hospitalària (HAD)" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_HospitalAnxietyAndDepressionScale" entityAttachPath="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale">
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadA1" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadD1" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadA2" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadD2" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadA3" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadD3" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadA4" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadD4" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadA5" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadD5" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadA6" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadD6" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadA7" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadD7" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadA8" isReadOnly="true" isMandatory="false"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadD8" isReadOnly="true" isMandatory="false"/>        
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadFinal" isReadOnly="true" isMandatory="false"/>
+			<!-- Infermera  -->				
+            <HumanTaskDefinition id="LCS2_HospitalAnxietyAndDepressionScale" description="Estat cognitiu/mental - Escala d'ansietat i depressió hospitalària (HAD)" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_HospitalAnxietyAndDepressionScale" entityAttachPath="LCS2_HospitalAnxietyAndDepressionScale">
+              <TaskParamDefinition path="LCS2_HospitalAnxietyAndDepressionScale.hadA1" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_HospitalAnxietyAndDepressionScale.hadD1" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_HospitalAnxietyAndDepressionScale.hadA2" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_HospitalAnxietyAndDepressionScale.hadD2" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_HospitalAnxietyAndDepressionScale.hadA3" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_HospitalAnxietyAndDepressionScale.hadD3" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_HospitalAnxietyAndDepressionScale.hadA4" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_HospitalAnxietyAndDepressionScale.hadD4" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_HospitalAnxietyAndDepressionScale.hadA5" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_HospitalAnxietyAndDepressionScale.hadD5" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_HospitalAnxietyAndDepressionScale.hadA6" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_HospitalAnxietyAndDepressionScale.hadD6" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_HospitalAnxietyAndDepressionScale.hadA7" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_HospitalAnxietyAndDepressionScale.hadD7" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_HospitalAnxietyAndDepressionScale.hadA8" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_HospitalAnxietyAndDepressionScale.hadD8" isReadOnly="true" isMandatory="false"/>			  
+              <TaskParamDefinition path="LCS2_HospitalAnxietyAndDepressionScale.hadFinal" isReadOnly="true" isMandatory="false"/>
             </HumanTaskDefinition>
-      
-      <!-- Infermera  -->     
-            <HumanTaskDefinition id="LCS2_Barthel" description="Estat funcional - Barthel" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_Barthel" entityAttachPath="LCS2_Evaluation.LCS2_Barthel">
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_Barthel.barthel1" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_Barthel.barthel2" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_Barthel.barthel3" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_Barthel.barthel4" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_Barthel.barthel5" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_Barthel.barthel6" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_Barthel.barthel7" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_Barthel.barthel8" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_Barthel.barthel9" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_Barthel.barthel10" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_Barthel.barthel11" isReadOnly="true" isMandatory="false"/>
-            </HumanTaskDefinition>
-
-      <!-- Infermera  -->     
-      <HumanTaskDefinition id="LCS2_DiagnosisCommunication" description="Estat funcional - Communicació" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_DiagnosisCommunication" entityAttachPath="LCS2_Evaluation.LCS2_DiagnosisCommunication">
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisCommunication.comm1" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisCommunication.comm2" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisCommunication.comm3" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisCommunication.comm4" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisCommunication.comm5" isReadOnly="false" isMandatory="true"/>
+			
+			<!-- Infermera  -->			
+            <HumanTaskDefinition id="LCS2_Barthel" description="Estat funcional - Barthel" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_Barthel" entityAttachPath="LCS2_Barthel">
+              <TaskParamDefinition path="LCS2_Barthel.barthel1" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_Barthel.barthel2" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_Barthel.barthel3" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_Barthel.barthel4" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_Barthel.barthel5" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_Barthel.barthel6" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_Barthel.barthel7" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_Barthel.barthel8" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_Barthel.barthel9" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_Barthel.barthel10" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_Barthel.barthel11" isReadOnly="true" isMandatory="false"/>
             </HumanTaskDefinition>
 
-      <!-- Infermera  -->     
-      <HumanTaskDefinition id="LCS2_Sleeping" description="Estat funcional - Avaluació del son" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_Sleeping" entityAttachPath="LCS2_Evaluation.LCS2_Sleeping">                
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_Sleeping.sleeping1" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_Sleeping.sleeping2" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_Sleeping.sleeping3" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_Sleeping.sleeping4" isReadOnly="false" isMandatory="true"/>
-      </HumanTaskDefinition>  
-            
-      <!-- Infermera  --> 
-      <HumanTaskDefinition id="LCS2_ProblemsManagingMoney" description="Estat funcional - Problemes fent servir diners" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_ProblemsManagingMoney" entityAttachPath="LCS2_Evaluation.LCS2_ProblemsManagingMoney">
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_ProblemsManagingMoney.money" isReadOnly="false" isMandatory="true"/>
-            </HumanTaskDefinition>      
-                          
-      <!-- PDT Cirurgiá/Anestesista  -->    
-      <HumanTaskDefinition id="LCS2_ASAPhysicalStatusClassificationSystemEvaluation" description="Diagnòstic - Sistema de classificació d'estat físic (ASA)" ownerPath="LCS2_AnesClinic" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_ComplexityRisk" entityAttachPath="LCS2_Evaluation.LCS2_ComplexityRisk">
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_ComplexityRisk.ASA" isReadOnly="true" isMandatory="false"/>       
-            </HumanTaskDefinition>      
-            
-      <!-- Clínic  -->      
-      <HumanTaskDefinition id="LCS2_WOMAC" description="Diagnòstic - WOMAC (Abans cirurgia)" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_WOMAC" entityAttachPath="LCS2_Evaluation.LCS2_WOMAC">
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac1" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac2" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac3" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac4" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac5" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac6" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac7" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac8" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac9" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac10" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac11" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac12" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac13" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac14" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac15" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac16" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac17" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac18" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac19" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac20" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac21" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac22" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac23" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac24" isReadOnly="false" isMandatory="true"/>        
-            </HumanTaskDefinition>  
-      
-      <!-- Infermera  -->     
-            <HumanTaskDefinition id="LCS2_EVA" description="Diagnòstic dolor – EVA (Abans cirurgia)" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_EVA" entityAttachPath="LCS2_Evaluation.LCS2_EVA">
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_EVA.eva1" isReadOnly="false" isMandatory="true"/>
-            </HumanTaskDefinition>              
-
-      <!-- Anesthesiologist  -->      
-            <HumanTaskDefinition id="LCS2_SLANSS" description="Diagnòstic dolor – S-LANSS" ownerPath="LCS2_Anesthesiologist" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_SLANSS" entityAttachPath="LCS2_Evaluation.LCS2_SLANSS">
-      <TaskParamDefinition path="LCS2_Evaluation.LCS2_SLANSS.slanssExec1" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS2_Evaluation.LCS2_SLANSS.slanssExec2" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS2_Evaluation.LCS2_SLANSS.slanssExec3" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS2_Evaluation.LCS2_SLANSS.slanssExec4" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS2_Evaluation.LCS2_SLANSS.slanssExec5" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS2_Evaluation.LCS2_SLANSS.slanssExec6" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS2_Evaluation.LCS2_SLANSS.slanssExec7" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS2_Evaluation.LCS2_SLANSS.slanssExec8" isReadOnly="true" isMandatory="false"/>
+			<!-- Infermera  -->			
+			<HumanTaskDefinition id="LCS2_DiagnosisCommunication" description="Estat funcional - Communicació" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_DiagnosisCommunication" entityAttachPath="LCS2_DiagnosisCommunication">
+			  <TaskParamDefinition path="LCS2_DiagnosisCommunication.comm1" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_DiagnosisCommunication.comm2" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_DiagnosisCommunication.comm3" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_DiagnosisCommunication.comm4" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_DiagnosisCommunication.comm5" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>
-            
-      <!-- Infermera  -->     
-      <HumanTaskDefinition id="LCS2_SF12" externalId="6C20EE57-C5F7-4F4C-A7AE-BEAC4F8C3C3A" description="Diagnòstic - SF-12" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_SF12" entityAttachPath="LCS2_Evaluation.LCS2_SF12">                
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12.sf12-1" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12.sf12-2" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12.sf12-3" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12.sf12-4" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12.sf12-5" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12.sf12-6" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12.sf12-7" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12.sf12-8" isReadOnly="false" isMandatory="true"/>    
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12.sf12-9" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12.sf12-10" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12.sf12-11" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12.sf12-12" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12.sf12-13" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12.sf12-14" isReadOnly="false" isMandatory="true"/>     
-      </HumanTaskDefinition>
+
+			<!-- Infermera  -->			
+			<HumanTaskDefinition id="LCS2_Sleeping" description="Estat funcional - Avaluació del son" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_Sleeping" entityAttachPath="LCS2_Sleeping">                
+				<TaskParamDefinition path="LCS2_Sleeping.sleeping1" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_Sleeping.sleeping2" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_Sleeping.sleeping3" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_Sleeping.sleeping4" isReadOnly="false" isMandatory="true"/>
+			</HumanTaskDefinition>	
+						
+			<!-- Infermera  -->	
+			<HumanTaskDefinition id="LCS2_ProblemsManagingMoney" description="Estat funcional - Problemes fent servir diners" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_ProblemsManagingMoney" entityAttachPath="LCS2_ProblemsManagingMoney">
+              <TaskParamDefinition path="LCS2_ProblemsManagingMoney.money" isReadOnly="false" isMandatory="true"/>
+            </HumanTaskDefinition>			
+													
+			<!-- PDT Cirurgiá/Anestesista  -->		
+			<HumanTaskDefinition id="LCS2_ASAPhysicalStatusClassificationSystemEvaluation" description="Diagnòstic - Sistema de classificació d'estat físic (ASA)" ownerPath="LCS2_AnesClinic" isMandatory="true" repeatable="ONCE">
+              <TaskParamDefinition path="LCS2_ComplexityRisk.ASA" isReadOnly="true" isMandatory="false"/>			  
+            </HumanTaskDefinition>			
+						
+			<!-- Clínic  -->			
+			<HumanTaskDefinition id="LCS2_WOMAC" description="Diagnòstic - WOMAC (Abans cirurgia)" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_WOMAC" entityAttachPath="LCS2_WOMAC">
+              <TaskParamDefinition path="LCS2_WOMAC.Womac1" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_WOMAC.Womac2" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_WOMAC.Womac3" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_WOMAC.Womac4" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_WOMAC.Womac5" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_WOMAC.Womac6" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_WOMAC.Womac7" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_WOMAC.Womac8" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_WOMAC.Womac9" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_WOMAC.Womac10" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_WOMAC.Womac11" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_WOMAC.Womac12" isReadOnly="false" isMandatory="true"/>
+			  <TaskParamDefinition path="LCS2_WOMAC.Womac13" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_WOMAC.Womac14" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_WOMAC.Womac15" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_WOMAC.Womac16" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_WOMAC.Womac17" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_WOMAC.Womac18" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_WOMAC.Womac19" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_WOMAC.Womac20" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_WOMAC.Womac21" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_WOMAC.Womac22" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_WOMAC.Womac23" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_WOMAC.Womac24" isReadOnly="false" isMandatory="true"/>			  
+            </HumanTaskDefinition>	
+			
+			<!-- Infermera  -->			
+            <HumanTaskDefinition id="LCS2_EVA" description="Diagnòstic dolor – EVA (Abans cirurgia)" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_EVA" entityAttachPath="LCS2_EVA">
+              <TaskParamDefinition path="LCS2_EVA.eva1" isReadOnly="false" isMandatory="true"/>
+            </HumanTaskDefinition>			  			
+
+			<!-- Anesthesiologist  -->			
+            <HumanTaskDefinition id="LCS2_SLANSS" description="Diagnòstic dolor – S-LANSS" ownerPath="LCS2_Anesthesiologist" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_SLANSS" entityAttachPath="LCS2_SLANSS">
+			<TaskParamDefinition path="LCS2_SLANSS.slanssExec1" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SLANSS.slanssExec2" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SLANSS.slanssExec3" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SLANSS.slanssExec4" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SLANSS.slanssExec5" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SLANSS.slanssExec6" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SLANSS.slanssExec7" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SLANSS.slanssExec8" isReadOnly="true" isMandatory="false"/>
+            </HumanTaskDefinition>
+						
+			<!-- Infermera  -->			
+			<HumanTaskDefinition id="LCS2_SF12" externalId="6C20EE57-C5F7-4F4C-A7AE-BEAC4F8C3C3A" description="Diagnòstic - SF-12" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_SF12" entityAttachPath="LCS2_SF12">                
+				<TaskParamDefinition path="LCS2_SF12.sf12-1" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_SF12.sf12-2" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_SF12.sf12-3" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_SF12.sf12-4" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_SF12.sf12-5" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_SF12.sf12-6" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_SF12.sf12-7" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_SF12.sf12-8" isReadOnly="false" isMandatory="true"/>		
+				<TaskParamDefinition path="LCS2_SF12.sf12-9" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_SF12.sf12-10" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_SF12.sf12-11" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_SF12.sf12-12" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_SF12.sf12-13" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_SF12.sf12-14" isReadOnly="false" isMandatory="true"/>			
+			</HumanTaskDefinition>
 
 
 			
-      <!-- PDT Cirurgiá/Anestesista  -->
-      <HumanTaskDefinition id="LCS2_MedicationFollowing" description="Barreres - Dades farmàcia Compliment" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_MedicationFollowing" entityAttachPath="LCS2_Evaluation.LCS2_MedicationFollowing">                
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_MedicationFollowing.medication1" isReadOnly="false" isMandatory="true"/>
-      </HumanTaskDefinition>
+			<!-- PDT Cirurgiá/Anestesista  -->
+			<HumanTaskDefinition id="LCS2_MedicationFollowing" description="Barreres - Dades farmàcia Compliment" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_MedicationFollowing" entityAttachPath="LCS2_MedicationFollowing">                
+				<TaskParamDefinition path="LCS2_MedicationFollowing.medication1" isReadOnly="false" isMandatory="true"/>
+			</HumanTaskDefinition>
 
-      <!-- Infermera  -->       
-      <HumanTaskDefinition id="LCS2_Medication" description="Barreres - Tractament: Compliment/Complexitat/Habilitat per executar-lo" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_Medication" entityAttachPath="LCS2_Evaluation.LCS2_Medication">                
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_Medication.Medication1" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_Medication.Medication2" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_Medication.Medication3" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_Medication.Medication4" isReadOnly="false" isMandatory="true"/>
-      </HumanTaskDefinition>              
+			<!-- Infermera  -->				
+			<HumanTaskDefinition id="LCS2_Medication" description="Barreres - Tractament: Compliment/Complexitat/Habilitat per executar-lo" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_Medication" entityAttachPath="LCS2_Medication">                
+				<TaskParamDefinition path="LCS2_Medication.Medication1" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_Medication.Medication2" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_Medication.Medication3" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_Medication.Medication4" isReadOnly="false" isMandatory="true"/>
+			</HumanTaskDefinition> 							
 
-      <!-- Pacient/Infermera  -->     
-      <HumanTaskDefinition id="LCS2_SelfCareAuto" description="Barreres - Selfcare scale/surgical patients Lleida" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_SelfCareAuto" entityAttachPath="LCS2_Evaluation.LCS2_SelfCareAuto">
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_SelfCareAuto.sca1" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_SelfCareAuto.sca2" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_SelfCareAuto.sca3" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_SelfCareAuto.sca4" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SelfCareAuto.sca5" isReadOnly="true" isMandatory="false"/>
+			<!-- Pacient/Infermera  -->			
+			<HumanTaskDefinition id="LCS2_SelfCareAuto" description="Barreres - Selfcare scale/surgical patients Lleida" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_SelfCareAuto" entityAttachPath="LCS2_SelfCareAuto">
+              <TaskParamDefinition path="LCS2_SelfCareAuto.sca1" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SelfCareAuto.sca2" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SelfCareAuto.sca3" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SelfCareAuto.sca4" isReadOnly="false" isMandatory="true"/>
+			  <TaskParamDefinition path="LCS2_SelfCareAuto.sca5" isReadOnly="true" isMandatory="false"/>
             </HumanTaskDefinition>
 
-      <!-- PDT Cirugia/ infermera/ Treballador social  -->    
-            <HumanTaskDefinition id="LCS2_SocialDwelling" description="Barreres - Habitatge social" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_SocialDwelling" entityAttachPath="LCS2_Evaluation.LCS2_SocialDwelling">
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_SocialDwelling.dwelling1" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_SocialDwelling.dwelling2" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_SocialDwelling.dwelling3" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_SocialDwelling.dwelling4" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SocialDwelling.dwelling5" isReadOnly="true" isMandatory="false"/>
+			<!-- PDT Cirugia/ infermera/ Treballador social  -->		
+            <HumanTaskDefinition id="LCS2_SocialDwelling" description="Barreres - Habitatge social" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_SocialDwelling" entityAttachPath="LCS2_SocialDwelling">
+              <TaskParamDefinition path="LCS2_SocialDwelling.dwelling1" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SocialDwelling.dwelling2" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SocialDwelling.dwelling3" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SocialDwelling.dwelling4" isReadOnly="false" isMandatory="true"/>
+			  <TaskParamDefinition path="LCS2_SocialDwelling.dwelling5" isReadOnly="true" isMandatory="false"/>
             </HumanTaskDefinition>
-      
-      <!-- PDT Infermera/ Treballador social  -->
-            <HumanTaskDefinition id="LCS2_SocialSelfCareCareerAbility" description="Barreres - Capacitat del cuidador" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_SocialSelfCareCareerAbility" entityAttachPath="LCS2_Evaluation.LCS2_SocialSelfCareCareerAbility">
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_SocialSelfCareCareerAbility.career1" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_SocialSelfCareCareerAbility.career2" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_SocialSelfCareCareerAbility.career3" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_SocialSelfCareCareerAbility.career4" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_SocialSelfCareCareerAbility.career5" isReadOnly="true" isMandatory="false"/>
-            </HumanTaskDefinition>  		
+			
+			<!-- PDT Infermera/ Treballador social  -->
+            <HumanTaskDefinition id="LCS2_SocialSelfCareCareerAbility" description="Barreres - Capacitat del cuidador" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_SocialSelfCareCareerAbility" entityAttachPath="LCS2_SocialSelfCareCareerAbility">
+              <TaskParamDefinition path="LCS2_SocialSelfCareCareerAbility.career1" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SocialSelfCareCareerAbility.career2" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SocialSelfCareCareerAbility.career3" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SocialSelfCareCareerAbility.career4" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SocialSelfCareCareerAbility.career5" isReadOnly="true" isMandatory="false"/>
+            </HumanTaskDefinition>			
 
 			<!-- Infermera  
             <HumanTaskDefinition id="LCS2_SocialComplexityOfThePatient" description="Barreres - Complexitat social del pacient" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_SocialComplexityOfThePatient" entityAttachPath="LCS2_SocialComplexityOfThePatient">
@@ -1934,36 +1981,263 @@
               <TaskParamDefinition path="LCS2_FamilySupport.family2" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>-->	
 					
+			<!-- TO BE DELETED
+            <HumanTaskDefinition id="LCS2_SelfCareAutoTest" description="Barreres - Autocontrol Auto-test" ownerPath="LCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_SelfCareAutoTest" entityAttachPath="LCS2_SelfCareAutoTest">
+              <TaskParamDefinition path="LCS2_SelfCareAutoTest.scat_epoc1" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SelfCareAutoTest.scat_epoc2" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SelfCareAutoTest.scat_epoc3" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SelfCareAutoTest.scat_epoc4" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SelfCareAutoTest.scat_epoc5" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SelfCareAutoTest.scat_epoc6" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SelfCareAutoTest.scat_epoc7" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SelfCareAutoTest.scat_epoc8" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SelfCareAutoTest.scat_epoc9" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SelfCareAutoTest.scat_epoc10" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SelfCareAutoTest.scat_epoc11" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SelfCareAutoTest.scat_epoc12" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SelfCareAutoTest.scat_epocTotal" isReadOnly="true" isMandatory="false"/>
+              <TaskParamDefinition path="LCS2_SelfCareAutoTest.scat_ic1" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SelfCareAutoTest.scat_ic2" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SelfCareAutoTest.scat_ic3" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SelfCareAutoTest.scat_ic4" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SelfCareAutoTest.scat_ic5" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SelfCareAutoTest.scat_ic6" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SelfCareAutoTest.scat_ic7" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SelfCareAutoTest.scat_ic8" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_SelfCareAutoTest.scat_icTotal" isReadOnly="true" isMandatory="false"/>
+          </HumanTaskDefinition> -->
+		  
+		<!-- TO BE DELETED    
+		<HumanTaskDefinition id="LCS2_SelfCareAutoTestEPOC" description="Barreres - Capacitat d'autocura (MPOC)" ownerPath="LCS2_Nurse" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS2_SelfCareAutoTestEPOC" entityAttachPath="LCS2_SelfCareAutoTestEPOC">                
+            <TaskParamDefinition path="LCS2_SelfCareAutoTestEPOC.scat_epoc1" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SelfCareAutoTestEPOC.scat_epoc2" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SelfCareAutoTestEPOC.scat_epoc3" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SelfCareAutoTestEPOC.scat_epoc4" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SelfCareAutoTestEPOC.scat_epoc5" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SelfCareAutoTestEPOC.scat_epoc6" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SelfCareAutoTestEPOC.scat_epoc7" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SelfCareAutoTestEPOC.scat_epoc8" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SelfCareAutoTestEPOC.scat_epoc9" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SelfCareAutoTestEPOC.scat_epoc10" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SelfCareAutoTestEPOC.scat_epoc11" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SelfCareAutoTestEPOC.scat_epoc12" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SelfCareAutoTestEPOC.scat_epocTotal" isReadOnly="true" isMandatory="false"/>            
+		</HumanTaskDefinition>       
+		
+		<HumanTaskDefinition id="LCS2_SelfCareAutoTestHF" description="Barreres - Capacitat d'autocura (IC)" ownerPath="LCS2_Nurse" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS2_SelfCareAutoTestHF" entityAttachPath="LCS2_SelfCareAutoTestHF">                			
+            <TaskParamDefinition path="LCS2_SelfCareAutoTestHF.scat_ic1" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SelfCareAutoTestHF.scat_ic2" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SelfCareAutoTestHF.scat_ic3" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SelfCareAutoTestHF.scat_ic4" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SelfCareAutoTestHF.scat_ic5" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SelfCareAutoTestHF.scat_ic6" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SelfCareAutoTestHF.scat_ic7" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SelfCareAutoTestHF.scat_ic8" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SelfCareAutoTestHF.scat_icTotal" isReadOnly="true" isMandatory="false"/>
+        </HumanTaskDefinition> 
+		-->		
 						
 		</StageDefinition>
 
+		
+	<!-- STAGEDEFINITION: WorkplanDefinition -->					
+        <StageDefinition id="LCS2_WorkplanDefinition" description="Pla de treball" isMandatory="true" repeatable="ONCE">
+		
+          <SentryDefinition>
+            <precondition processDefinitionId="LCS2_CaseEvaluation"/>
+          </SentryDefinition>
+
+		  <!--
+          <HumanTaskDefinition id="LCS2_DuringHospitalizationPhysicalActivityPrescription"  description="Durant hospitalització - Monitorització d’activitat física – Prescripció" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_DuringHospitalizationPhysicalActivityPrescription" entityAttachPath="LCS2_DuringHospitalizationPhysicalActivityPrescription">
+            <TaskParamDefinition path="LCS2_DuringHospitalizationPhysicalActivityPrescription.dh-phactp-1" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_DuringHospitalizationPhysicalActivityPrescription.dh-phactp-2" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_DuringHospitalizationPhysicalActivityPrescription.dh-phactp-3" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_DuringHospitalizationPhysicalActivityPrescription.dh-phactp-4" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_DuringHospitalizationPhysicalActivityPrescription.dh-phactp-5" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_DuringHospitalizationPhysicalActivityPrescription.dh-phactp-6" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_DuringHospitalizationPhysicalActivityPrescription.dh-phactp-7" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_DuringHospitalizationPhysicalActivityPrescription.dh-phactp-x" isReadOnly="false" isMandatory="true"/>
+          </HumanTaskDefinition> 
+
+          <HumanTaskDefinition id="LCS2_PostHospitalizationPhysicalActivityPrescription" description="Desprès hospitalització - Monitorització d’activitat física – Prescripció" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_PostHospitalizationPhysicalActivityPrescription" entityAttachPath="LCS2_PostHospitalizationPhysicalActivityPrescription">
+            <TaskParamDefinition path="LCS2_PostHospitalizationPhysicalActivityPrescription.ph-phactp-1" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationPhysicalActivityPrescription.ph-phactp-2" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationPhysicalActivityPrescription.ph-phactp-3" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationPhysicalActivityPrescription.ph-phactp-4" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationPhysicalActivityPrescription.ph-phactp-5" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationPhysicalActivityPrescription.ph-phactp-6" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationPhysicalActivityPrescription.ph-phactp-7" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationPhysicalActivityPrescription.ph-phactp-x" isReadOnly="false" isMandatory="true"/>
+          </HumanTaskDefinition>
+
+          <HumanTaskDefinition id="LCS2_PostHospitalizationAutocheckHealthStatusPrescription" description="Desprès hospitalització - Comprovació automàtica - Prescripció" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_PostHospitalizationAutocheckHealthStatusPrescription" entityAttachPath="LCS2_PostHospitalizationAutocheckHealthStatusPrescription">
+            <TaskParamDefinition path="LCS2_PostHospitalizationAutocheckHealthStatusPrescription.ah_autocheckP1" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationAutocheckHealthStatusPrescription.ah_autocheckP2" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationAutocheckHealthStatusPrescription.ah_autocheckP3" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationAutocheckHealthStatusPrescription.ah_autocheckP4" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationAutocheckHealthStatusPrescription.ah_autocheckP5" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationAutocheckHealthStatusPrescription.ah_autocheckPExec" isReadOnly="false" isMandatory="true"/>
+          </HumanTaskDefinition>
+
+          <HumanTaskDefinition id="LCS2_PostHospitalizationRehabilitationPrescription" description="Desprès hospitalització - Rehabilitació - Prescripció" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_PostHospitalizationRehabilitationPrescription" entityAttachPath="LCS2_PostHospitalizationRehabilitationPrescription">
+            <TaskParamDefinition path="LCS2_PostHospitalizationRehabilitationPrescription.ah_rehabPresc1" isReadOnly="false" isMandatory="true"/>			
+            <TaskParamDefinition path="LCS2_PostHospitalizationRehabilitationPrescription.ah_rehabPresc2" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationRehabilitationPrescription.ah_rehabPresc3" isReadOnly="false" isMandatory="true"/>
+          </HumanTaskDefinition>
+
+          <HumanTaskDefinition id="LCS2_PostHospitalizationPrescriptionVitalSignsMonitoring" description="Desprès hospitalització - Monitoratge de senyals vitals - Prescripció" ownerPath="LCS2_CaseManager" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_PostHospitalizationPrescriptionVitalSignsMonitoring" entityAttachPath="LCS2_PostHospitalizationPrescriptionVitalSignsMonitoring">
+            <TaskParamDefinition path="LCS2_PostHospitalizationPrescriptionVitalSignsMonitoring.ah_vsm1" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationPrescriptionVitalSignsMonitoring.ah_vsm2" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationPrescriptionVitalSignsMonitoring.ah_vsm3" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationPrescriptionVitalSignsMonitoring.ah_vsm4" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationPrescriptionVitalSignsMonitoring.ah_vsm5" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationPrescriptionVitalSignsMonitoring.ah_vsm6" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationPrescriptionVitalSignsMonitoring.ah_vsm7" isReadOnly="false" isMandatory="true"/>
+          </HumanTaskDefinition>
+		  
+
+          <HumanTaskDefinition id="LCS2_SocialIntervention" description="Intervenció social" ownerPath="LCS2_SocialCareer" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_SocialIntervention" entityAttachPath="LCS2_SocialIntervention">
+            <TaskParamDefinition path="LCS2_SocialIntervention.social1" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SocialIntervention.social2" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SocialIntervention.social3" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SocialIntervention.social4" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_SocialIntervention.social5" isReadOnly="false" isMandatory="true"/>
+          </HumanTaskDefinition>
+		-->
+		  
+		  <!-- 
+          <HumanTaskDefinition id="LCS2_Agreement" description="Acord" ownerPath="LCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_Agreement" entityAttachPath="LCS2_Agreement">
+            <TaskParamDefinition path="LCS2_Agreement.wp_agreement1" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_Agreement.wp_agreement2" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_Agreement.wp_agreement3" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_Agreement.wp_agreement4" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_Agreement.wp_agreement5" isReadOnly="false" isMandatory="true"/>
+          </HumanTaskDefinition> -->
+
+        </StageDefinition>				
+		
+		<!-- STAGEDEFINITION: WorkplanExecution -->			
+
+        <StageDefinition id="LCS2_WorkplanExecution" description="Monitorització d’activitat física – Execució" isMandatory="true" repeatable="ONCE">
+		
+		<SentryDefinition>
+            <precondition processDefinitionId="LCS2_WorkplanDefinition"/>
+          </SentryDefinition> 
+		
+          <HumanTaskDefinition id="LCS2_PreHospitalizationAnaemiaAssessmentAndManagement" description="Abans hospitalització - Avaluació i gestió de l'anèmia – Prescripció" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_PreHospitalizationAnaemiaAssessmentAndManagement" entityAttachPath="LCS2_PreHospitalizationAnaemiaAssessmentAndManagement">
+            <TaskParamDefinition path="LCS2_PreHospitalizationAnaemiaAssessmentAndManagement.bhanemiaExec1" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PreHospitalizationAnaemiaAssessmentAndManagement.bhanemiaExec2" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PreHospitalizationAnaemiaAssessmentAndManagement.bhanemiaExec3" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PreHospitalizationAnaemiaAssessmentAndManagement.bhanemiaExec4" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PreHospitalizationAnaemiaAssessmentAndManagement.bhanemiaExec5" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PreHospitalizationAnaemiaAssessmentAndManagement.bhanemiaExec6" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PreHospitalizationAnaemiaAssessmentAndManagement.bhanemiaExec7" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PreHospitalizationAnaemiaAssessmentAndManagement.bhanemiaExec8" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PreHospitalizationAnaemiaAssessmentAndManagement.bhanemiaExec9" isReadOnly="false" isMandatory="true"/>
+          </HumanTaskDefinition>
+
+          <HumanTaskDefinition id="LCS2_PreHospitalizatioBloodPressureControl" description="Abans hospitalització - Control Pressió de sang" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_PreHospitalizatioBloodPressureControl" entityAttachPath="LCS2_PreHospitalizatioBloodPressureControl">
+            <TaskParamDefinition path="LCS2_PreHospitalizatioBloodPressureControl.bloodPControl1" isReadOnly="false" isMandatory="true"/>
+          </HumanTaskDefinition>
+		
+		
+		  <HumanTaskDefinition id="LCS2_PreHospitalizationDiabetesControl" description="Abans hospitalització - Control de la diabetis" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_PreHospitalizationDiabetesControl" entityAttachPath="LCS2_PreHospitalizationDiabetesControl">
+            <TaskParamDefinition path="LCS2_PreHospitalizationDiabetesControl.DiabetisControl1" isReadOnly="false" isMandatory="true"/>
+          </HumanTaskDefinition>
+
+          <HumanTaskDefinition id="LCS2_PreHospitalizationVerbalNumericalRatingScale" description="Abans hospitalització- Escala de qualificació numèrica verbal" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_PreHospitalizationVerbalNumericalRatingScale" entityAttachPath="LCS2_PreHospitalizationVerbalNumericalRatingScale">
+            <TaskParamDefinition path="LCS2_PreHospitalizationVerbalNumericalRatingScale.BHVNRSExec1" isReadOnly="false" isMandatory="true"/>
+          </HumanTaskDefinition>
+
+		  
+          <HumanTaskDefinition id="LCS2_PreHospitalizationSLANSS" description="Abans hospitalització - S-LANSS" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_PreHospitalizationSLANSS" entityAttachPath="LCS2_PreHospitalizationSLANSS">
+            <TaskParamDefinition path="LCS2_PreHospitalizationSLANSS.slanssExec1" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PreHospitalizationSLANSS.slanssExec2" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PreHospitalizationSLANSS.slanssExec3" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PreHospitalizationSLANSS.slanssExec4" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PreHospitalizationSLANSS.slanssExec5" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PreHospitalizationSLANSS.slanssExec6" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PreHospitalizationSLANSS.slanssExec7" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PreHospitalizationSLANSS.slanssExec8" isReadOnly="true" isMandatory="false"/>
+          </HumanTaskDefinition>
+
+          <HumanTaskDefinition id="LCS2_NutritionalEducation" description="Durant hospitalització - Educació nutricional" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_NutritionalEducation" entityAttachPath="LCS2_NutritionalEducation">
+            <TaskParamDefinition path="LCS2_NutritionalEducation.Dh_neducaExec1" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_NutritionalEducation.Dh_neducaExec2" isReadOnly="false" isMandatory="true"/>
+          </HumanTaskDefinition>
+
+          <HumanTaskDefinition id="LCS2_DuringHospitalizationVerbalNumericalRatingScale" description="Durant hospitalització - Escala de qualificació numèrica verbal" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_DuringHospitalizationVerbalNumericalRatingScale" entityAttachPath="LCS2_DuringHospitalizationVerbalNumericalRatingScale">
+            <TaskParamDefinition path="LCS2_DuringHospitalizationVerbalNumericalRatingScale.dh_BHVNRSExec1" isReadOnly="false" isMandatory="true"/>
+          </HumanTaskDefinition>
+
+          <HumanTaskDefinition id="LCS2_DuringHospitalizationSLANSS" description="Durant hospitalització - S-LANSS" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_DuringHospitalizationSLANSS" entityAttachPath="LCS2_DuringHospitalizationSLANSS">
+            <TaskParamDefinition path="LCS2_DuringHospitalizationSLANSS.dh_slanssExec1" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_DuringHospitalizationSLANSS.dh_slanssExec2" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_DuringHospitalizationSLANSS.dh_slanssExec3" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_DuringHospitalizationSLANSS.dh_slanssExec4" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_DuringHospitalizationSLANSS.dh_slanssExec5" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_DuringHospitalizationSLANSS.dh_slanssExec6" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_DuringHospitalizationSLANSS.dh_slanssExec7" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_DuringHospitalizationSLANSS.dh_slanssExec8" isReadOnly="true" isMandatory="false"/>
+          </HumanTaskDefinition>
+
+          <HumanTaskDefinition id="LCS2_PostHospitalizationRehabilitation" description="Desprès hospitalització - Rehabilitació" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_PostHospitalizationRehabilitation" entityAttachPath="LCS2_PostHospitalizationRehabilitation">
+            <TaskParamDefinition path="LCS2_PostHospitalizationRehabilitation.ph_rehabExec1" isReadOnly="false" isMandatory="true"/>
+          </HumanTaskDefinition>
+
+          <HumanTaskDefinition id="LCS2_PostHospitalizationVerbalNumericalRatingScale" description="Desprès hospitalització - Verbal Numerical Rating Scale" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_PostHospitalizationVerbalNumericalRatingScale" entityAttachPath="LCS2_PostHospitalizationVerbalNumericalRatingScale">
+            <TaskParamDefinition path="LCS2_PostHospitalizationVerbalNumericalRatingScale.ph_BHVNRSExec1" isReadOnly="false" isMandatory="true"/>
+          </HumanTaskDefinition>
+
+          <HumanTaskDefinition id="LCS2_PostHospitalizationSLANSS" description="Desprès hospitalització - S-LANSS" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_PostHospitalizationSLANSS" entityAttachPath="LCS2_PostHospitalizationSLANSS">
+            <TaskParamDefinition path="LCS2_PostHospitalizationSLANSS.ph_slanssExec1" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationSLANSS.ph_slanssExec2" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationSLANSS.ph_slanssExec3" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationSLANSS.ph_slanssExec4" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationSLANSS.ph_slanssExec5" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationSLANSS.ph_slanssExec6" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationSLANSS.ph_slanssExec7" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationSLANSS.ph_slanssExec8" isReadOnly="true" isMandatory="false"/>
+          </HumanTaskDefinition>
+
+          <HumanTaskDefinition id="LCS2_PostHospitalizationAnswerAutocheckHealthStatus" description="Desprès hospitalització - Comprovació automàtica de l'estat de salut" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_PostHospitalizationAnswerAutocheckHealthStatus" entityAttachPath="LCS2_PostHospitalizationAnswerAutocheckHealthStatus">
+            <TaskParamDefinition path="LCS2_PostHospitalizationAnswerAutocheckHealthStatus.Ph_autocheck1" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationAnswerAutocheckHealthStatus.Ph_autocheck2" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationAnswerAutocheckHealthStatus.Ph_autocheck3" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationAnswerAutocheckHealthStatus.Ph_autocheck4" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationAnswerAutocheckHealthStatus.Ph_autocheck5" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationAnswerAutocheckHealthStatus.Ph_autocheck6" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationAnswerAutocheckHealthStatus.Ph_autocheck7" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationAnswerAutocheckHealthStatus.Ph_autocheck8" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationAnswerAutocheckHealthStatus.Ph_autocheck9" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationAnswerAutocheckHealthStatus.Ph_autocheck10" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationAnswerAutocheckHealthStatus.Ph_autocheck11" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationAnswerAutocheckHealthStatus.Ph_autocheck12" isReadOnly="false" isMandatory="true"/>
+          </HumanTaskDefinition>
+
+          <HumanTaskDefinition id="LCS2_PostHospitalizationPatientEducationAndTrainingToTheCaregiver" description="Desprès hospitalització - Educació i formació pel cuidador" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_PostHospitalizationPatientEducationAndTrainingToTheCaregiver" entityAttachPath="LCS2_PostHospitalizationPatientEducationAndTrainingToTheCaregiver">
+            <TaskParamDefinition path="LCS2_PostHospitalizationPatientEducationAndTrainingToTheCaregiver.educaExec1" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationPatientEducationAndTrainingToTheCaregiver.educaExec2" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="LCS2_PostHospitalizationPatientEducationAndTrainingToTheCaregiver.educaExec3" isReadOnly="false" isMandatory="true"/>
+          </HumanTaskDefinition>
+		  
+        </StageDefinition>
+		
+		<!-- Discharge -->					
+		<StageDefinition id="LCS2_DischargeProces" description="Alta del procés" isMandatory="true" repeatable="ONCE">  			
+		<SentryDefinition>
+            <precondition processDefinitionId="LCS2_WorkplanExecution"/>
+          </SentryDefinition> 	
+          <HumanTaskDefinition id="LCS2_Discharge" description="Alta del procés" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_Discharge" entityAttachPath="LCS2_Discharge">
+            <TaskParamDefinition path="LCS2_Discharge.discharge1" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS2_Discharge.discharge2" isReadOnly="false" isMandatory="true"/>		
+			<TaskParamDefinition path="LCS2_Discharge.discharge3" isReadOnly="false" isMandatory="true"/>			
+          </HumanTaskDefinition>
+		</StageDefinition>
+	
+	
     </CaseDefinition>
 	
   </Workspace>
-
-    <Execution>
-
-    	<!-- Case Identification -->
-        <Action id="CompleteHumanTask" processId="LCS2_SelectPatient">
-            <TaskParam path="LCS2_Patient" userValue="davidsonj"/>
-            <TaskParam path="LCS2_Clinician" userValue="castrot"/>
-            <TaskParam path="LCS2_Nurse" userValue="noahs"/>
-            <TaskParam path="LCS2_CaseManager" userValue="werners"/>
-            <TaskParam path="LCS2_SocialCareer" userValue="kuhnl"/>
-            <TaskParam path="LCS2_Anesthesiologist" userValue="drudisr"/>
-            <TaskParam path="LCS2_Physiotherapist" userValue="bigordaa"/>
-        </Action>
-
-        <!--
-        <Action id="CompleteHumanTask" processId="LCS2_TechnologicalTest">
-        	<TaskParam path="LCS2_Identification.LCS2_TechnologicalTest.tech1"  values="['0']"/>
-        	<TaskParam path="LCS2_Identification.LCS2_TechnologicalTest.tech2"  values="['0']"/>
-        	<TaskParam path="LCS2_Identification.LCS2_TechnologicalTest.tech3"  values="['0']"/>
-        	<TaskParam path="LCS2_Identification.LCS2_TechnologicalTest.tech4"  values="['0']"/>
-        </Action>
-   		-->
-
-
-    </Execution>
   
 </SACMDefinition>
