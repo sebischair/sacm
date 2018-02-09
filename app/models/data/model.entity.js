@@ -23,7 +23,6 @@ export default class Entity extends Model{
   }
 
   static printEntityWithDeepLinks(entity){
-    console.log(entity);
     console.log('--BEGIN-------------------------');
     try{
       console.log(this.entityWithDeepLinksToString(entity, ''));
@@ -38,25 +37,28 @@ export default class Entity extends Model{
     entity.attributes.forEach((attr, i) => {
       const isLast = entity.attributes.length-1 == i
       if(attr.attributeType == 'link' && attr.attributeTypeConstraints.resourceType == 'entities'){
-        s += this.lineToString(prefix, this.simpleSymbol(isLast), attr.description, '');
+        s += this.lineToString(prefix, isLast, attr.description, '');
         if(attr.values != null)
           attr.values.forEach((value, i)=>{
-            //const isLast = attr.values.length-1 == i;
             const icon = isLast ? '  ' : '│ ';
             s += this.entityWithDeepLinksToString(value, prefix+icon);
-          })          
+          });          
       }else if(attr.attributeType == 'link' && attr.attributeTypeConstraints.resourceType == 'users'){
-        s += this.lineToString(prefix, this.simpleSymbol(isLast), attr.description, attr.values[0].name);
+        s += this.lineToString(prefix, isLast, attr.description, attr.values[0].name);
       }else if(attr.attributeType == 'json'){
         let value = ''
         if(attr.values != null);
           value = JSON.stringify(attr.values);
-        s += this.lineToString(prefix, this.simpleSymbol(isLast), attr.description, value);
+        s += this.lineToString(prefix, isLast, attr.description, value);
       }else{
-        s += this.lineToString(prefix, this.simpleSymbol(isLast), attr.description, attr.values.toString());
+        s += this.lineToString(prefix, isLast, attr.description, attr.values.toString());
       }
     });
     return s;
+  }
+
+  static lineToString(prefix, isLast, name, value){
+    return colors.gray(prefix + this.simpleSymbol(isLast) + name +': ')+colors.green(value)+' \n'
   }
 
   static simpleSymbol(isLast){
@@ -66,13 +68,6 @@ export default class Entity extends Model{
       return '├─';
   }
 
-
-
-
-
-  static lineToString(prefix, icon, name, value){
-    return colors.gray(prefix+icon + name +': ')+colors.green(value)+' \n'
-  }
   
 
 }
