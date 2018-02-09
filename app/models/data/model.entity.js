@@ -34,6 +34,8 @@ export default class Entity extends Model{
 
   static entityWithDeepLinksToString(entity, prefix){
     let s = '';
+    if(prefix == '')
+      s += colors.red('CaseEntity '+entity.id+'\n');
     entity.attributes.forEach((attr, i) => {
       const isLast = entity.attributes.length-1 == i
       if(attr.attributeType == 'link' && attr.attributeTypeConstraints.resourceType == 'entities'){
@@ -51,7 +53,13 @@ export default class Entity extends Model{
           value = JSON.stringify(attr.values);
         s += this.lineToString(prefix, isLast, attr.description, value);
       }else{
-        s += this.lineToString(prefix, isLast, attr.description, attr.values.toString());
+        let description = '';
+        if(attr.values != null)
+          attr.values.forEach((value, i)=>{
+            let sep = attr.values.length-1 == i ? '' : ', ';
+            description += value+ sep;
+          });
+        s += this.lineToString(prefix, isLast, attr.description, description);
       }
     });
     return s;
