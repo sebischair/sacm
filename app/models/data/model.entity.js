@@ -25,27 +25,35 @@ export default class Entity extends Model{
   static printEntityWithDeepLinks(entity){
     console.log(entity);
     console.log('--BEGIN-------------------------');
-    console.log(this.entityWithDeepLinksToString(entity, 0));
+    try{
+      console.log(this.entityWithDeepLinksToString(entity, ''));
+    }catch(e){
+      console.error(e);
+    };
     console.log('--END---------------------------');
   }
 
-  static entityWithDeepLinksToString(entity, level){
+  static entityWithDeepLinksToString(entity, prefix){
     let s = '';
     entity.attributes.forEach((attr, i) => {
       const isLast = entity.attributes.length-1 == i
       if(attr.attributeType == 'link' && attr.attributeTypeConstraints.resourceType == 'entities'){
-        s += this.lineToString(level, this.simpleSymbol(isLast), attr.description, '');
-        if(attr.values[0] != null)
-          s += this.entityWithDeepLinksToString(attr.values[0], level+1);
+        s += this.lineToString(prefix, this.simpleSymbol(isLast), attr.description, '');
+        if(attr.values != null)
+          attr.values.forEach((value, i)=>{
+            //const isLast = attr.values.length-1 == i;
+            const icon = isLast ? '  ' : '│ ';
+            s += this.entityWithDeepLinksToString(value, prefix+icon);
+          })          
       }else if(attr.attributeType == 'link' && attr.attributeTypeConstraints.resourceType == 'users'){
-        s += this.lineToString(level, this.simpleSymbol(isLast), attr.description, attr.values[0].name);
+        s += this.lineToString(prefix, this.simpleSymbol(isLast), attr.description, attr.values[0].name);
       }else if(attr.attributeType == 'json'){
         let value = ''
         if(attr.values != null);
           value = JSON.stringify(attr.values);
-        s += this.lineToString(level, this.simpleSymbol(isLast), attr.description, value);
+        s += this.lineToString(prefix, this.simpleSymbol(isLast), attr.description, value);
       }else{
-        s += this.lineToString(level, this.simpleSymbol(isLast), attr.description, attr.values.toString());
+        s += this.lineToString(prefix, this.simpleSymbol(isLast), attr.description, attr.values.toString());
       }
     });
     return s;
@@ -62,11 +70,8 @@ export default class Entity extends Model{
 
 
 
-  static lineToString(level, icon, name, value){
-    let spaces = '';
-    for(let i=0; i<level; i++)
-      spaces += '  ';
-    return spaces+colors.gray(icon + name +': ')+colors.green(value)+' \n'
+  static lineToString(prefix, icon, name, value){
+    return colors.gray(prefix+icon + name +': ')+colors.green(value)+' \n'
   }
   
 
