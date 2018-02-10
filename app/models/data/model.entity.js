@@ -23,19 +23,17 @@ export default class Entity extends Model{
   }
 
   static printEntityWithDeepLinks(entity){
-    console.log('--BEGIN-------------------------');
     try{
-      console.log(this.entityWithDeepLinksToString(entity, ''));
+      console.log('\n'+this.entityWithDeepLinksToString(entity, ''));
     }catch(e){
       console.error(e);
     };
-    console.log('--END---------------------------');
   }
 
   static entityWithDeepLinksToString(entity, prefix){
     let s = '';
     if(prefix == '')
-      s += colors.green('CaseEntity '+entity.id+'\n');
+      s += colors.bgWhite.gray('CaseEntity '+entity.id)+'\n';
     entity.attributes.forEach((attr, i) => {
       const isLast = entity.attributes.length-1 == i
       if(attr.attributeType == 'link' && attr.attributeTypeConstraints.resourceType == 'entities'){
