@@ -125,7 +125,7 @@
                 <EnumerationOption value="3" description="לשניהם אין"/>
             </AttributeDefinition>   
 
-            <AttributeDefinition id="TechAbility" type="enumeration" multiplicity="maximalOne" description="האם למטפל העיקרי/למטופל יש ידע בסיסי בשימוש באפליקציות?">
+            <AttributeDefinition id="TechAbility" type="enumeration" multiplicity="maximalOne" description="האם למטופל או למטפל העיקרי יש ידע בסיסי בשימוש באפליקציות?">
                 <EnumerationOption value="0" description="לשניהם יש"/>
                 <EnumerationOption value="1" description="למטופל בלבד יש"/>
                 <EnumerationOption value="2" description="למטפל העיקרי בלבד יש"/>
@@ -171,7 +171,7 @@
         </EntityDefinition>
 
 
-        <EntityDefinition id="ICS2_PatientsData" description="פרטים דמוגרפיים של המטופל">
+        <EntityDefinition id="ICS2_PatientsData" description="פרטים דמוגרפיים">
             <AttributeDefinition id="Birthcountry" type="enumeration" multiplicity="maximalOne" description="ארץ לידה">
                  <EnumerationOption value="0" description="ישראל"/>
 				 <EnumerationOption value="1" description="ברית המועצות לשעבר"/>
@@ -244,8 +244,8 @@
 
 
        <EntityDefinition id="ICS2_NutritionalData" description="מצב תזונה"> 
-            <AttributeDefinition id="Height" type="number" multiplicity="maximalOne" description="גובה"/>
-            <AttributeDefinition id="Weight" type="number" multiplicity="maximalOne" description="משקל"/>
+            <AttributeDefinition id="Height" type="number" multiplicity="maximalOne" description="גובה - בסנטימטרים"/>
+            <AttributeDefinition id="Weight" type="number" multiplicity="maximalOne" description="משקל - בקילוגרם"/>
             <DerivedAttributeDefinition id="Bmi" expression="round((Weight / ((Height/100) * (Height/100))), 2)" description="BMI"/> <!-- DIVISION BY 0 POSSIBLE!! -->
             <AttributeDefinition id="Albumin" type="number" multiplicity="maximalOne" description="Albumin"/>
             <AttributeDefinition id="Hemoglobin" type="number" multiplicity="maximalOne" description="Hemoglobin"/>
@@ -344,54 +344,54 @@
 
         <EntityDefinition id="ICS2_ADLBarthel" description="ברטל">
             <AttributeDefinition id="BarthelFeeding" type="enumeration" multiplicity="maximalOne" description="ברטל- אכילה">
-                <EnumerationOption value="0" description="זקוק לעזרה מלאה בחיתוך המזון (0)"/>
-                <EnumerationOption value="5" description="זקוק לעזרה בחיתוך המזון (5)"/>
-                <EnumerationOption value="10" description="עצמאי, אוכל בזמן סביר, מסתדר עם סכו'ם (10)"/>
+                <EnumerationOption value="0" description="זקוק לעזרה מלאה בחיתוך המזון "/>
+                <EnumerationOption value="5" description="זקוק לעזרה בחיתוך המזון "/>
+                <EnumerationOption value="10" description="עצמאי, אוכל בזמן סביר, מסתדר עם סכו'ם "/>
             </AttributeDefinition>        
             <AttributeDefinition id="BarthelBathing" type="enumeration" multiplicity="maximalOne" description="ברטל- רחצה">
-                <EnumerationOption value="0" description="זקוק לעזרה (0)"/>
-                <EnumerationOption value="5" description="עצמאי ללא עזרה (5)"/>
+                <EnumerationOption value="0" description="זקוק לעזרה "/>
+                <EnumerationOption value="5" description="עצמאי ללא עזרה "/>
             </AttributeDefinition>   
             <AttributeDefinition id="BarthelGrooming" type="enumeration" multiplicity="maximalOne" description="ברטל- היגיינה אישית">
-                <EnumerationOption value="0" description="זקוק לעזרה (0)"/>
-                <EnumerationOption value="5" description="עצמאי ברחיצת פנים, סירוק, צחצוח שיניים וגילוח (5)"/>
+                <EnumerationOption value="0" description="זקוק לעזרה "/>
+                <EnumerationOption value="5" description="עצמאי ברחיצת פנים, סירוק, צחצוח שיניים וגילוח "/>
             </AttributeDefinition>   
             <AttributeDefinition id="BarthelDressing" type="enumeration" multiplicity="maximalOne" description="ברטל- לבוש">
-                <EnumerationOption value="0" description="זקוק לעזרה מלאה (0)"/>
-                <EnumerationOption value="5" description="זקוק לעזרה אך מבצע חלק מהמשימות בעצמו (5)"/>
-                <EnumerationOption value="10" description="עצמאי, כולל שריכת שרוכים וכפתור כפתורים (10)"/>
+                <EnumerationOption value="0" description="זקוק לעזרה מלאה "/>
+                <EnumerationOption value="5" description="זקוק לעזרה אך מבצע חלק מהמשימות בעצמו "/>
+                <EnumerationOption value="10" description="עצמאי, כולל שריכת שרוכים וכפתור כפתורים "/>
             </AttributeDefinition>   
             <AttributeDefinition id="BarthelBOWELS" type="enumeration" multiplicity="maximalOne" description="ברטל- פעולות מעיים">
-                <EnumerationOption value="0" description="חוסר שליטה (0)"/>
-                <EnumerationOption value="5" description="מאבד לפעמים, או זקוק לחוקנים (5)"/>
-                <EnumerationOption value="10" description="שולט שליטה מלאה (10)"/>
+                <EnumerationOption value="0" description="חוסר שליטה "/>
+                <EnumerationOption value="5" description="מאבד לפעמים, או זקוק לחוקנים "/>
+                <EnumerationOption value="10" description="שולט שליטה מלאה "/>
             </AttributeDefinition>   
             <AttributeDefinition id="BarthelBLADDER" type="enumeration" multiplicity="maximalOne" description="ברטל- סוגר השתן">
-                <EnumerationOption value="0" description="חוסר שליטה (0)"/>
-                <EnumerationOption value="5" description="מאבד לפעמים, או זקוק לאביזר עזר (5)"/>
-                <EnumerationOption value="10" description="שולט שליטה מלאה (10)"/>
+                <EnumerationOption value="0" description="חוסר שליטה "/>
+                <EnumerationOption value="5" description="מאבד לפעמים, או זקוק לאביזר עזר "/>
+                <EnumerationOption value="10" description="שולט שליטה מלאה "/>
             </AttributeDefinition>   
             <AttributeDefinition id="BarthelToiletHygiene" type="enumeration" multiplicity="maximalOne" description="ברטל- שימוש בשירותים">
-                <EnumerationOption value="0" description="זקוק לעזרה מלאה (0)"/>
-                <EnumerationOption value="5" description="זקוק לעזרה אך עצמאי בחלק מהמרכיבים (5)"/>            
-                <EnumerationOption value="10" description="עצמאי בישיבה וקימה מהאסלה, מסתדר עם הלבוש, הניגוב והורדת המים (10)"/>
+                <EnumerationOption value="0" description="זקוק לעזרה מלאה "/>
+                <EnumerationOption value="5" description="זקוק לעזרה אך עצמאי בחלק מהמרכיבים "/>            
+                <EnumerationOption value="10" description="עצמאי בישיבה וקימה מהאסלה, מסתדר עם הלבוש, הניגוב והורדת המים "/>
             </AttributeDefinition>   
             <AttributeDefinition id="BarthelTRANSFERS" type="enumeration" multiplicity="maximalOne" description="ברטל- העברות">
-                <EnumerationOption value="0" description="אינו מסוגל לשבת ולעבור ממיטה לכסא (0)"/>
-                <EnumerationOption value="5" description="זקוק לעזרה רבה בהעברות (5)"/>
-                <EnumerationOption value="10" description="עובר בתמיכה מינימלית (10)"/>
-                <EnumerationOption value="15" description="עצמאי בהעברה מכסא למיטה (15)"/>
+                <EnumerationOption value="0" description="אינו מסוגל לשבת ולעבור ממיטה לכסא"/>
+                <EnumerationOption value="5" description="זקוק לעזרה רבה בהעברות "/>
+                <EnumerationOption value="10" description="עובר בתמיכה מינימלית "/>
+                <EnumerationOption value="15" description="עצמאי בהעברה מכסא למיטה "/>
             </AttributeDefinition>   
             <AttributeDefinition id="BarthelMobility" type="enumeration" multiplicity="maximalOne" description="ברטל- הליכה במישור">
-                <EnumerationOption value="0" description="זקוק לעזרה בכסא גלגלים (0)"/>
-                <EnumerationOption value="5" description="עצמאי בכסא גלגלים למרחק 50 מ' (5)"/>
-                <EnumerationOption value="10" description="הולך בעזרת אדם למרחק 50 מ' (10)"/>
-                <EnumerationOption value="15" description="עצמאי בהליכה למרחק 50 מ' (גם אם משתמש במקל, הליכון) (15)"/>
+                <EnumerationOption value="0" description="זקוק לעזרה בכסא גלגלים "/>
+                <EnumerationOption value="5" description="עצמאי בכסא גלגלים למרחק 50 מ' "/>
+                <EnumerationOption value="10" description="הולך בעזרת אדם למרחק 50 מ' "/>
+                <EnumerationOption value="15" description="עצמאי בהליכה למרחק 50 מ' (גם אם משתמש במקל, הליכון) "/>
             </AttributeDefinition>   
             <AttributeDefinition id="BarthelStairs" type="enumeration" multiplicity="maximalOne" description="ברטל- מדרגות">
-                <EnumerationOption value="0" description="אינו מסוגל לעלות מדרגות (0)"/>
-                <EnumerationOption value="5" description="זקוק לעזרה או תמיכה של אדם (5)"/>
-                <EnumerationOption value="10" description="עצמאי גם אם משתמש באביזרי עזר (10)"/>
+                <EnumerationOption value="0" description="אינו מסוגל לעלות מדרגות "/>
+                <EnumerationOption value="5" description="זקוק לעזרה או תמיכה של אדם "/>
+                <EnumerationOption value="10" description="עצמאי גם אם משתמש באביזרי עזר "/>
             </AttributeDefinition>   
             <DerivedAttributeDefinition id="BarthelScore" expression="number(BarthelFeeding,0)+number(BarthelBathing,0)+number(BarthelGrooming,0)+number(BarthelDressing,0)+number(BarthelBOWELS,0)+number(BarthelBLADDER,0)+number(BarthelToiletHygiene ,0)+number(BarthelTRANSFERS,0)+number(BarthelMobility,0)+number(BarthelStairs,0)" description="ברטל- תוצאה סופית"/>  
         </EntityDefinition>
@@ -405,8 +405,9 @@
                 <EnumerationOption value="3" description="משתמש בטלפון מרים ומחייג"/>
             </AttributeDefinition>  
             <AttributeDefinition id="LawtonShopping" type="enumeration" multiplicity="maximalOne" description="יכולת ביצוע קניות">
-                <EnumerationOption value="1" description="לא מסוגל לערוך קניות"/>
-                <EnumerationOption value="2" description="נזקק לליווי בכל יציאה לערוך קניות"/>
+                <EnumerationOption value="0" description="לא מסוגל לערוך קניות"/>
+                <EnumerationOption value="1" description="נזקק לליווי בכל יציאה לערוך קניות"/>
+				<EnumerationOption value="2" description="עורך קניות של מצרכים קטנים באופן עצמאי"/>
                 <EnumerationOption value="3" description="דואג לכל צורכי הקניות באופן עצמאי"/>
             </AttributeDefinition>  
             <AttributeDefinition id="LawtonFoodPreparation" type="enumeration" multiplicity="maximalOne" description="יכולת הכנת אוכל">
@@ -428,14 +429,16 @@
                 <EnumerationOption value="2" description="מכבס באופן עצמאי לחלוטין כולל תלייה, גיהוץ וקיפול"/>
             </AttributeDefinition>             
             <AttributeDefinition id="LawtonTransportation" type="enumeration" multiplicity="maximalOne" description="ניידות מחוץ לבית">
-                <EnumerationOption value="1" description="לא נוסע כלל"/>
-                <EnumerationOption value="2" description="מוגבל לנסיעה במונית או במכונית פרטית רק בליווי"/>
+                <EnumerationOption value="0" description="לא נוסע כלל"/>
+                <EnumerationOption value="1" description="מוגבל לנסיעה במונית או במכונית פרטית רק בליווי"/>
+				<EnumerationOption value="2" description="נוסע בתחבורה ציבורית רק עם ליווי"/>
                 <EnumerationOption value="3" description="מזמין לעצמו מונית אולם לא מסוגל ליסוע בתחבורה ציבורית אחרת"/>
                 <EnumerationOption value="4" description="נוסע באופן עצמאי בתחבורה ציבורית או נוהג במכוניתו"/>
             </AttributeDefinition> 
             <AttributeDefinition id="LawtonMedications" type="enumeration" multiplicity="maximalOne" description="יכולת הכנה ונטילת תרופות">
-                <EnumerationOption value="1" description="אחראי בלקיחת תרופותיו במידה והן מוכנות עבורו"/>
-                <EnumerationOption value="2" description="עצמאי בלקיחת תרופותיו במינון הנכון ובזמן הנכון"/>
+               <EnumerationOption value="0" description="אינו מסוגל ליטול תרופותיו באופן עצמאי"/>
+			   <EnumerationOption value="1" description="אחראי בלקיחת תרופותיו במידה והן מוכנות עבורו"/>
+               <EnumerationOption value="2" description="עצמאי בלקיחת תרופותיו במינון הנכון ובזמן הנכון"/>
             </AttributeDefinition>  
             <AttributeDefinition id="LawtonFinances" type="enumeration" multiplicity="maximalOne" description="יכולת להשתמש בכסף">
                 <EnumerationOption value="0" description="אינו מסוגל להשתמש בכסף"/>
@@ -526,13 +529,13 @@
 
 
         <EntityDefinition id="ICS2_HADS" description="HADS"> 
-            <AttributeDefinition id="HADS1" type="enumeration" multiplicity="maximalOne" description="אני מרגיש מתוח:">
+            <AttributeDefinition id="HADS1" type="enumeration" multiplicity="maximalOne" description="אני מרגיש מתוח">
                 <EnumerationOption value="3" description="רוב הזמן "/>
                 <EnumerationOption value="2" description="הרבה מהזמן "/>
                 <EnumerationOption value="1" description="מעת לעת, מדי פעם "/>
                 <EnumerationOption value="0" description="בכלל לא "/>
             </AttributeDefinition>  
-            <AttributeDefinition id="HADS2" type="enumeration" multiplicity="maximalOne" description="אני עדין נהנה מדברים שנהניתי מהם בעבר:">
+            <AttributeDefinition id="HADS2" type="enumeration" multiplicity="maximalOne" description="אני עדין נהנה מדברים שנהניתי מהם בעבר">
                 <EnumerationOption value="0" description="בהחלט כן "/>
                 <EnumerationOption value="1" description="לא בדיוק כמו בעבר "/>
                 <EnumerationOption value="2" description="רק במקצת"/>
@@ -544,67 +547,67 @@
                 <EnumerationOption value="1" description="קצת לפעמים, אבל זה לא מדאיג אותי "/>
                 <EnumerationOption value="0" description="בכלל לא "/>
             </AttributeDefinition>             
-            <AttributeDefinition id="HADS4" type="enumeration" multiplicity="maximalOne" description="אני יכול לצחוק ולראות את הצד המצחיק של הדברים:">
+            <AttributeDefinition id="HADS4" type="enumeration" multiplicity="maximalOne" description="אני יכול לצחוק ולראות את הצד המצחיק של הדברים">
                 <EnumerationOption value="0" description="ברמה כמו שתמיד יכולתי "/>
                 <EnumerationOption value="1" description="פחות מבעבר"/>
                 <EnumerationOption value="2" description="בצורה משמעותית פחות מבעבר"/>
                 <EnumerationOption value="3" description="בכלל לא "/>
             </AttributeDefinition>  
-            <AttributeDefinition id="HADS5" type="enumeration" multiplicity="maximalOne" description="מחשבות מטרידות עוברות בראשי:">
+            <AttributeDefinition id="HADS5" type="enumeration" multiplicity="maximalOne" description="מחשבות מטרידות עוברות בראשי">
                 <EnumerationOption value="3" description="רוב הזמן "/>
                 <EnumerationOption value="2" description="הרבה מהזמן "/>
                 <EnumerationOption value="1" description="מעת לעת, אך לא בתדירות גבוהה "/>
                 <EnumerationOption value="0" description="לעיתים רחוקות "/>
             </AttributeDefinition> 
-            <AttributeDefinition id="HADS6" type="enumeration" multiplicity="maximalOne" description="אני מרגיש שמח:">
+            <AttributeDefinition id="HADS6" type="enumeration" multiplicity="maximalOne" description="אני מרגיש שמח">
                 <EnumerationOption value="3" description="בכלל לא "/>
                 <EnumerationOption value="2" description="לעיתים רחוקות "/>
                 <EnumerationOption value="1" description="לפעמים "/>
                 <EnumerationOption value="0" description="רוב הזמן  "/>
             </AttributeDefinition> 
-            <AttributeDefinition id="HADS7" type="enumeration" multiplicity="maximalOne" description="אני יכול לשבת בנוחות ולהרגיש רגוע:">
+            <AttributeDefinition id="HADS7" type="enumeration" multiplicity="maximalOne" description="אני יכול לשבת בנוחות ולהרגיש רגוע">
                 <EnumerationOption value="0" description="בהחלט כן "/>
                 <EnumerationOption value="1" description="בדרך כלל"/>
                 <EnumerationOption value="2" description="לעיתים רחוקות "/>
                 <EnumerationOption value="3" description="בכלל לא "/>
             </AttributeDefinition>  
-            <AttributeDefinition id="HADS8" type="enumeration" multiplicity="maximalOne" description="אני מרגיש שהפכתי לאיטי יותר:">
+            <AttributeDefinition id="HADS8" type="enumeration" multiplicity="maximalOne" description="אני מרגיש שהפכתי לאיטי יותר">
                 <EnumerationOption value="3" description="כמעט כל הזמן "/>
                 <EnumerationOption value="2" description="לעיתים קרובות "/>
                 <EnumerationOption value="1" description="לפעמים"/>
                 <EnumerationOption value="0" description="בכלל לא"/>
             </AttributeDefinition>  
-            <AttributeDefinition id="HADS9" type="enumeration" multiplicity="maximalOne" description="אני מקבל תחושות פחד כמו 'פרפרים' בבטן:">
+            <AttributeDefinition id="HADS9" type="enumeration" multiplicity="maximalOne" description="אני מקבל תחושות פחד כמו 'פרפרים' בבטן">
                 <EnumerationOption value="0" description="בכלל לא"/>
                 <EnumerationOption value="1" description="לפעמים "/>
                 <EnumerationOption value="2" description="לעיתים קרובות"/>
                 <EnumerationOption value="3" description="רוב הזמן "/>
             </AttributeDefinition>  
-            <AttributeDefinition id="HADS10" type="enumeration" multiplicity="maximalOne" description="איבדתי עניין בהופעה שלי (איך שאני נראה):">
+            <AttributeDefinition id="HADS10" type="enumeration" multiplicity="maximalOne" description="איבדתי עניין בהופעה שלי (איך שאני נראה)">
                 <EnumerationOption value="3" description="בהחלט כן"/>
                 <EnumerationOption value="2" description="אני לא מעוניין מספיק ברמה שאני אמור להיות"/>
                 <EnumerationOption value="1" description="יכול להיות שהזנחתי קצת"/>
                 <EnumerationOption value="0" description="אני מעוניין באותה רמה שתמיד הייתי"/>
             </AttributeDefinition>  
-            <AttributeDefinition id="HADS11" type="enumeration" multiplicity="maximalOne" description="אני מרגישה חסר מנוחה וחייב להיות בתזוזה:">
+            <AttributeDefinition id="HADS11" type="enumeration" multiplicity="maximalOne" description="אני מרגישה חסר מנוחה וחייב להיות בתזוזה">
                 <EnumerationOption value="3" description="בהחלט כן "/>
                 <EnumerationOption value="2" description="די הרבה "/>
                 <EnumerationOption value="1" description="לא יותר מדי "/>
                 <EnumerationOption value="0" description="בכלל לא "/>
             </AttributeDefinition>  
-            <AttributeDefinition id="HADS12" type="enumeration" multiplicity="maximalOne" description="אני מצפה לדברים בעתיד בתחושת הנאה:">
+            <AttributeDefinition id="HADS12" type="enumeration" multiplicity="maximalOne" description="אני מצפה לדברים בעתיד בתחושת הנאה">
                 <EnumerationOption value="0" description="כמו שנהגתי בעבר "/>
                 <EnumerationOption value="1" description="פחות מבעבר "/>
                 <EnumerationOption value="2" description="משמעותית פחות מבעבר"/>
                 <EnumerationOption value="3" description="בכלל לא "/>
             </AttributeDefinition>  
-            <AttributeDefinition id="HADS13" type="enumeration" multiplicity="maximalOne" description="אני מקבל תחושת פאניקה פתאומית:">
+            <AttributeDefinition id="HADS13" type="enumeration" multiplicity="maximalOne" description="אני מקבל תחושת פאניקה פתאומית">
                 <EnumerationOption value="3" description="לעיתים קרובות "/>
                 <EnumerationOption value="2" description="לפעמים"/>
                 <EnumerationOption value="1" description="לעיתים רחוקות "/>
                 <EnumerationOption value="0" description="כלל לא "/>
             </AttributeDefinition>  
-            <AttributeDefinition id="HADS14" type="enumeration" multiplicity="maximalOne" description="אני נהנה מספר טוב, תכניות רדיו או תכנית טלוויזיה:">
+            <AttributeDefinition id="HADS14" type="enumeration" multiplicity="maximalOne" description="אני נהנה מספר טוב, תכניות רדיו או תכנית טלוויזיה">
                 <EnumerationOption value="0" description="לעיתים קרובות "/>
                 <EnumerationOption value="1" description="לפעמים "/>
                 <EnumerationOption value="2" description="לעיתים רחוקות"/>
@@ -652,7 +655,7 @@
 				<EnumerationOption value="4" description="אני חרד או מדוכא באופן חמור"/>
 			    <EnumerationOption value="5" description="אני חרד או מדוכא באופן קיצוני"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="EQ5DHealthToday" type="number" multiplicity="maximalOne" description="לפי דעתך, בסקלאה של 0 עד 100 מה מצב בריאותך הים (100- מצב טוב מאוד)?"/>  
+            <AttributeDefinition id="EQ5DHealthToday" type="number" multiplicity="maximalOne" description="לפי דעתך, מה מצב בריאותך כיום (100 פירושו הבריאות הטובה ביותר שיכולת לדמיין)?"/>  
 			
 			<DerivedAttributeDefinition id="EQ5Dscore" expression="number(EQ5DMobility,0)+number(EQ5DSelfCare,0)+number(EQ5DUsualActivities,0)+number(EQ5DPainDiscomfort,0)+number(EQ5DAnxietyDepression,0)" description="תוצאה סופית- EQ5D"/> 
 			
@@ -695,7 +698,7 @@
 
             <DerivedAttributeDefinition id="Sweet16_Sum1_8" expression="number(Sweet16_1,0)+number(Sweet16_2,0)+number(Sweet16_3,0)+number(Sweet16_4,0)+number(Sweet16_5,0)+number(Sweet16_6,0)+number(Sweet16_7,0)+number(Sweet16_8,0)" description="ציון לחלק ההתמצאות"/> 
 
-            <AttributeDefinition id="Sweet16_9" type="enumeration" multiplicity="maximalOne" description="זכרון מיידי: כעת אומר לך 3 חפצים. חזור אחרי ונסה לזכור, כי אשאל אותך אחר כך">
+            <AttributeDefinition id="Sweet16_9" type="enumeration" multiplicity="maximalOne" description="זכרון מיידי" additionalDescription="כעת אומר לך 3 חפצים. חזור אחרי ונסה לזכור, כי אשאל אותך אחר כך:  תפוח, שולחן, שקל">
                 <EnumerationOption value="0" description="לא זכר/ה כלל "/>
                 <EnumerationOption value="1" description="זכר/ה אחד "/>
                 <EnumerationOption value="2" description="זכר/ה שניים "/>
@@ -1021,7 +1024,7 @@
         </HumanTaskDefinition>
 
 
-        <HumanTaskDefinition id="ICS2_InclusionCriteria" description="Inclusion" ownerPath="ICS2_CaseManager" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_InclusionCriteria" entityAttachPath="ICS2_Identification.ICS2_InclusionCriteria">     
+        <HumanTaskDefinition id="ICS2_InclusionCriteria" description="קריטריוני הכללה" ownerPath="ICS2_CaseManager" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_InclusionCriteria" entityAttachPath="ICS2_Identification.ICS2_InclusionCriteria">     
             <TaskParamDefinition path="ICS2_Identification.ICS2_InclusionCriteria.BasicAge" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_Identification.ICS2_InclusionCriteria.BasicResidantual" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_Identification.ICS2_InclusionCriteria.Basicoperation" isReadOnly="false" isMandatory="true"/>
@@ -1048,11 +1051,11 @@
         </HumanTaskDefinition>
     </StageDefinition>
 
-    <StageDefinition id="ICS2_CaseEvaluation" description="הערכת המטופל" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Evaluation" entityAttachPath="ICS2_Evaluation">  
+    <StageDefinition id="ICS2_CaseEvaluation" description="הערכת    המטופל" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Evaluation" entityAttachPath="ICS2_Evaluation">  
         <SentryDefinition>
           <precondition processDefinitionId="ICS2_CaseIdentification"/>
         </SentryDefinition>        
-        <HumanTaskDefinition id="ICS2_PatientsData" description="פרטים דמוגרפיים של המטופל" ownerPath="ICS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PatientsData" entityAttachPath="ICS2_Evaluation.ICS2_PatientsData">                
+        <HumanTaskDefinition id="ICS2_PatientsData" description="פרטים דמוגרפיים" ownerPath="ICS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PatientsData" entityAttachPath="ICS2_Evaluation.ICS2_PatientsData">                
             <TaskParamDefinition path="ICS2_Evaluation.ICS2_PatientsData.Birthcountry" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_Evaluation.ICS2_PatientsData.ImmigrationYear" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_Evaluation.ICS2_PatientsData.KidsNum" isReadOnly="false" isMandatory="true"/>
@@ -1082,10 +1085,10 @@
             <TaskParamDefinition path="ICS2_Evaluation.ICS2_NutritionalData.Height" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_Evaluation.ICS2_NutritionalData.Weight" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_Evaluation.ICS2_NutritionalData.Bmi" isReadOnly="true" isMandatory="false"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_NutritionalData.Albumin" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_NutritionalData.Hemoglobin" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_NutritionalData.Electrolytes" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_NutritionalData.Proteins" isReadOnly="false" isMandatory="true"/>
+            <TaskParamDefinition path="ICS2_Evaluation.ICS2_NutritionalData.Albumin" isReadOnly="false" isMandatory="false"/>
+            <TaskParamDefinition path="ICS2_Evaluation.ICS2_NutritionalData.Hemoglobin" isReadOnly="false" isMandatory="false"/>
+            <TaskParamDefinition path="ICS2_Evaluation.ICS2_NutritionalData.Electrolytes" isReadOnly="false" isMandatory="false"/>
+            <TaskParamDefinition path="ICS2_Evaluation.ICS2_NutritionalData.Proteins" isReadOnly="false" isMandatory="false"/>
         </HumanTaskDefinition>
 
 
