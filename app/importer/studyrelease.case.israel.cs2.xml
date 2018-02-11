@@ -32,6 +32,8 @@
             <AttributeDefinition id="ICS2_CaseManager" type="Link.Users(AssutaProfessionals)" description="מנהל הטיפול"/> <!-- AssutaCaseManagers to AssutaProfessionals -->
             <AttributeDefinition id="ICS2_EvaluationDueDate" type="date.after(TODAY)" description="תאריך סיום לביצוע הערכה"/>
             <AttributeDefinition id="ICS2_WorkplanDueDate" type="date.after(TODAY)" description="תאריך סיום לתוכנית הטיפול"/>
+			<AttributeDefinition id="ICS2_CaseData1" type="string" multiplicity="maximalOne" description="אבחנה ראשית" />
+			<AttributeDefinition id="ICS2_CaseData2" type="string" multiplicity="maximalOne" description="סיבת האשפוז" />
 
             <AttributeDefinition id="ICS2_Clinician" type="Link.Users(AssutaClinicians)" description="Clinician"/>
             <AttributeDefinition id="ICS2_Nurse" type="Link.Users(AssutaNurses)" description="Nurse"/>
@@ -1028,7 +1030,10 @@
             <TaskParamDefinition path="ICS2_Patient" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_CaseManager" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_EvaluationDueDate" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_WorkplanDueDate" isReadOnly="false" isMandatory="true"/>  
+            <TaskParamDefinition path="ICS2_WorkplanDueDate" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="ICS2_CaseData1" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="ICS2_CaseData2" isReadOnly="false" isMandatory="true"/>
+			
         </HumanTaskDefinition>
 
 
@@ -1195,6 +1200,7 @@
             <TaskParamDefinition path="ICS2_Evaluation.ICS2_EQ5D.EQ5DPainDiscomfort" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_Evaluation.ICS2_EQ5D.EQ5DAnxietyDepression" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_Evaluation.ICS2_EQ5D.EQ5DHealthToday" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="ICS2_Evaluation.ICS2_EQ5D.EQ5Dscore" isReadOnly="true" isMandatory="false"/>
         </HumanTaskDefinition>
 
         <HumanTaskDefinition id="ICS2_Sweet16" description="Sweet16" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Sweet16" entityAttachPath="ICS2_Evaluation.ICS2_Sweet16">                
@@ -1346,6 +1352,8 @@
             <TaskParam path="ICS2_CaseManager"  userValue="millerc"/>
             <TaskParam path="ICS2_EvaluationDueDate" values="['2018-05-26T00:00:00.000']"/>
             <TaskParam path="ICS2_WorkplanDueDate" values="['2019-12-28T00:00:00.000']"/>
+			<TaskParam path="ICS2_CaseData1" values="['1']"/>
+			<TaskParam path="ICS2_CaseData2" values="['1']"/>
         </Action>
 
         <Action id="CompleteHumanTask" processId="ICS2_InclusionCriteria">
