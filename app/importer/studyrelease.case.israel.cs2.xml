@@ -29,9 +29,9 @@
 
         <EntityDefinition id="ICS2_CaseData" description="Case Data">
             <AttributeDefinition id="ICS2_Patient" type="Link.Users(AssutaPatients)" description="Patient"/>
-            <AttributeDefinition id="ICS2_CaseManager" type="Link.Users(AssutaProfessionals)" description="Case Manager"/> <!-- AssutaCaseManagers to AssutaProfessionals -->
-            <AttributeDefinition id="ICS2_EvaluationDueDate" type="date.after(TODAY)" description="Evaluation default due date"/>
-            <AttributeDefinition id="ICS2_WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date"/>
+            <AttributeDefinition id="ICS2_CaseManager" type="Link.Users(AssutaProfessionals)" description="מנהל הטיפול"/> <!-- AssutaCaseManagers to AssutaProfessionals -->
+            <AttributeDefinition id="ICS2_EvaluationDueDate" type="date.after(TODAY)" description="תאריך סיום לביצוע הערכה"/>
+            <AttributeDefinition id="ICS2_WorkplanDueDate" type="date.after(TODAY)" description="תאריך סיום לתוכנית הטיפול"/>
 
             <AttributeDefinition id="ICS2_Clinician" type="Link.Users(AssutaClinicians)" description="Clinician"/>
             <AttributeDefinition id="ICS2_Nurse" type="Link.Users(AssutaNurses)" description="Nurse"/>
@@ -1010,10 +1010,10 @@
 
 <CaseDefinition id="ICS2_Assuta" description="CS2 Assuta" ownerPath="ICS2_CaseManager" clientPath="ICS2_Patient" entityDefinitionId="ICS2_CaseData">
 
-    <StageDefinition id="ICS2_CaseIdentification" description="Case Identification" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Identification" entityAttachPath="ICS2_Identification">
+    <StageDefinition id="ICS2_CaseIdentification" description="זיהוי המטופל" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Identification" entityAttachPath="ICS2_Identification">
 
 
-        <HumanTaskDefinition id="ICS2_SelectPatient" description="Select Patient" ownerPath="ICS2_CaseManager" isMandatory="true" repeatable="ONCE"> 
+        <HumanTaskDefinition id="ICS2_SelectPatient" description="בחירת מטופל" ownerPath="ICS2_CaseManager" isMandatory="true" repeatable="ONCE"> 
             <TaskParamDefinition path="ICS2_Patient" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_CaseManager" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_EvaluationDueDate" isReadOnly="false" isMandatory="true"/>
@@ -1048,7 +1048,7 @@
         </HumanTaskDefinition>
     </StageDefinition>
 
-    <StageDefinition id="ICS2_CaseEvaluation" description="Case Evaluation" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Evaluation" entityAttachPath="ICS2_Evaluation">  
+    <StageDefinition id="ICS2_CaseEvaluation" description="הערכת המטופל" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Evaluation" entityAttachPath="ICS2_Evaluation">  
         <SentryDefinition>
           <precondition processDefinitionId="ICS2_CaseIdentification"/>
         </SentryDefinition>        
@@ -1273,7 +1273,7 @@
     </StageDefinition>    
 
     <!-- new -->
-    <StageDefinition id="ICS2_PhysiotherapistEvaluation" description="Physiotherapist Evaluation" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluation" entityAttachPath="ICS2_PhysiotherapistEvaluation"> 
+    <StageDefinition id="ICS2_PhysiotherapistEvaluation" description="הערכת פיזיוטרפיסט" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluation" entityAttachPath="ICS2_PhysiotherapistEvaluation"> 
 
         <SentryDefinition>
           <precondition processDefinitionId="ICS2_CaseEvaluation"/>
