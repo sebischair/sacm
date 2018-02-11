@@ -655,7 +655,7 @@
 				<EnumerationOption value="4" description="אני חרד או מדוכא באופן חמור"/>
 			    <EnumerationOption value="5" description="אני חרד או מדוכא באופן קיצוני"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="EQ5DHealthToday" type="number" multiplicity="maximalOne" description="לפי דעתך, מה מצב בריאותך כיום בין אפס למאה?"  additionalDescription="מאה פירושו הבריאות הטובה ביותר שיכולת לדמיין"/>  
+            <AttributeDefinition id="EQ5DHealthToday" type="number" multiplicity="maximalOne" description="לפי דעתך, מה מצב בריאותך כיום (100 פירושו הבריאות הטובה ביותר שיכולת לדמיין)?"/>  
 			
 			<DerivedAttributeDefinition id="EQ5Dscore" expression="number(EQ5DMobility,0)+number(EQ5DSelfCare,0)+number(EQ5DUsualActivities,0)+number(EQ5DPainDiscomfort,0)+number(EQ5DAnxietyDepression,0)" description="תוצאה סופית- EQ5D"/> 
 			
@@ -705,7 +705,7 @@
                 <EnumerationOption value="3" description="זכר/ה שלושה "/>
             </AttributeDefinition> 
 
-            <AttributeDefinition id="Sweet16_10" type="enumeration" multiplicity="maximalOne" description="קשב" additionalDescription="אומר לך כמה מספרים, חזור אחרי:    9,4,2 ; 7,2,5,8    כעת אומר לך עוד מספרים, אך אבקש ממך להגיד אותם מהסוף להתחלה:  5,1,4 ;  9,7,2,3">
+            <AttributeDefinition id="Sweet16_10" type="enumeration" multiplicity="maximalOne" description="קשב: אומר לך כמה מספרים, חזור אחרי">
                 <EnumerationOption value="0" description="לא הצליח/ה כלל "/>
                 <EnumerationOption value="1" description="הצליח/ה אחד "/>
                 <EnumerationOption value="2" description="הצליח/ה שניים"/>
@@ -713,7 +713,7 @@
 
             <!-- Sweet16_11 missing here? -->
 
-            <AttributeDefinition id="Sweet16_12" type="enumeration" multiplicity="maximalOne" description="זכרון קצר טווח: מהם 3 החפצים שביקשתי ממך לזכור" >
+            <AttributeDefinition id="Sweet16_12" type="enumeration" multiplicity="maximalOne" description="זכרון קצר טווח: מהם 3 החפצים שביקשתי ממך לזכור">
                 <EnumerationOption value="0" description="לא זכר/ה כלל"/>
                 <EnumerationOption value="1" description="זכר/ה אחד "/>
                 <EnumerationOption value="2" description="זכר/ה שניים "/>
@@ -836,31 +836,15 @@
                 <EnumerationOption value="0" description="לא "/>
                 <EnumerationOption value="1" description="כן "/>
             </AttributeDefinition>  
-            <AttributeDefinition id="Downton2" type="enumeration" multiplicity="maximalOne" description="האם נוטל תרופות הרגעה">
-              	<EnumerationOption value="0" description="לא "/>
-				<EnumerationOption value="1" description="כן "/>
-			</AttributeDefinition> 
-			 <AttributeDefinition id="Downton6" type="enumeration" multiplicity="maximalOne" description="האם נוטל משתנים">
-			  	<EnumerationOption value="0" description="לא "/>
-				<EnumerationOption value="1" description="כן "/>
-			  </AttributeDefinition> 
-			   <AttributeDefinition id="Downton7" type="enumeration" multiplicity="maximalOne" description="האם נוטל תרופות להורדת לחץ דם">
-			  	<EnumerationOption value="0" description="לא "/>
-				<EnumerationOption value="1" description="כן "/>
-			  </AttributeDefinition>
-			  <AttributeDefinition id="Downton8" type="enumeration" multiplicity="maximalOne" description="האם נוטל תרופות לטיפול בפרקינסון">
-			  	<EnumerationOption value="0" description="לא "/>
-				<EnumerationOption value="1" description="כן "/>
-			  </AttributeDefinition>
-			  <AttributeDefinition id="Downton9" type="enumeration" multiplicity="maximalOne" description="האם נוטל תרופות אנטי דכאון">
-			  	<EnumerationOption value="0" description="לא "/>
-				<EnumerationOption value="1" description="כן "/>
-			  </AttributeDefinition>
-			  <AttributeDefinition id="Downton10" type="enumeration" multiplicity="maximalOne" description="האם נוטל תרופות אחרות">
-			  	<EnumerationOption value="0" description="לא "/>
-				<EnumerationOption value="1" description="כן "/>
-			  </AttributeDefinition>
-			
+            <AttributeDefinition id="Downton2" type="enumeration" multiplicity="maximalOne" description="סוגי תרופות רשומות">
+                <EnumerationOption value="0" description="ללא "/>
+                <EnumerationOption value="1.0001" description="תרופות הרגעה"/>
+                <EnumerationOption value="1.0002" description="משתנים "/>
+                <EnumerationOption value="1.0003" description="להורדת לחץ דם "/>
+                <EnumerationOption value="1.0004" description="לטיפול בפרקינסון "/>
+                <EnumerationOption value="1.0005" description="תרופות אנטי דכאון "/>
+                <EnumerationOption value="1.0006" description="תרופות אחרות"/>
+            </AttributeDefinition> 
             <AttributeDefinition id="Downton3" type="enumeration" multiplicity="maximalOne" description="בעיות חושיות">
                 <EnumerationOption value="0" description="ללא בעיות חושיות "/>
                 <EnumerationOption value="1.0001" description="בעיית ראייה בינונית או חמורה או עיוורת"/>
@@ -871,6 +855,7 @@
                 <EnumerationOption value="0" description="ללא אורנטצייה "/>
                 <EnumerationOption value="1" description="בעל אורנטצייה "/>
             </AttributeDefinition>   
+
             <AttributeDefinition id="Downton5" type="enumeration" multiplicity="maximalOne" description="יכולת הליכה">
                 <EnumerationOption value="0" description="הליכה בטוחה עם או בלי עזרי הליכה "/>
                 <EnumerationOption value="1.0001" description="הליכה בטוחה עם או בלי עזרי הליכה "/>
@@ -878,7 +863,7 @@
                 <EnumerationOption value="1.0003" description="יכולת הליכה אינה אפשרית "/>
             </AttributeDefinition> 
 
-            <DerivedAttributeDefinition id="DowntonSum" expression="round(number(Downton1, 0)) + round(number(Downton2, 0)) + round(number(Downton3, 0)) + round(number(Downton4, 0)) + round(number(Downton5, 0))+ round(number(Downton6, 0))+ round(number(Downton7, 0))+ round(number(Downton8, 0))+ round(number(Downton9, 0))+ round(number(Downton10, 0))" description="ציון אינדקס דוונטון"/>          
+            <DerivedAttributeDefinition id="DowntonSum" expression="round(number(Downton1, 0)) + round(number(Downton2, 0)) + round(number(Downton3, 0)) + round(number(Downton4, 0)) + round(number(Downton5, 0))" description="ציון אינדקס דוונטון"/>          
         </EntityDefinition>
 
 
@@ -933,8 +918,14 @@
             </AttributeDefinition>   
 
 
-            <AttributeDefinition id="CDHealthAss6" type="string" multiplicity="maximalOne" description="אילו הפניות?" additionalDescription"לדוגמא: רופא מומחה, פיזיוטרפיסט, תזונאי, בדיקות אבחון, אחר"/>
-           
+            <AttributeDefinition id="CDHealthAss6" type="enumeration" multiplicity="maximalOne" description="אילו הפניות?">
+                <EnumerationOption value="0" description="רופא מומחה"/>
+                <EnumerationOption value="1" description="פזיוטרפיסט"/>
+                <EnumerationOption value="2" description="תזונאי"/>
+                <EnumerationOption value="3" description="טרפיסט תעסוקתי"/>
+                <EnumerationOption value="4" description="בדיקות אבחון (מעבדה, הדמיה, א.ק.ג.)"/>
+                <EnumerationOption value="5" description="אחר"/>
+            </AttributeDefinition>   
 
             <AttributeDefinition id="CDHealthAss7" type="string" multiplicity="maximalOne" description="מידע חשוב נוסף"/>      
 
@@ -1253,11 +1244,6 @@
             <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton3" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton4" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton5" isReadOnly="false" isMandatory="true"/>
-			<TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton6" isReadOnly="false" isMandatory="true"/>
-			<TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton7" isReadOnly="false" isMandatory="true"/>
-			<TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton8" isReadOnly="false" isMandatory="true"/>
-			<TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton9" isReadOnly="false" isMandatory="true"/>
-		    <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton10" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.DowntonSum" isReadOnly="true" isMandatory="false"/>
         </HumanTaskDefinition>
 
@@ -1551,12 +1537,6 @@
             <TaskParam path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton3" values="['0']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton4" values="['0']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton5" values="['0']"/>
-			<TaskParam path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton6" values="['0']"/>
-			<TaskParam path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton7" values="['0']"/>
-			<TaskParam path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton8" values="['0']"/>
-			<TaskParam path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton9" values="['0']"/>
-			<TaskParam path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton10" values="['0']"/>
-			
         </Action>
 
 
@@ -1624,4 +1604,4 @@
  
     </Execution>
 
-</SACMDefinition>n>
+</SACMDefinition>
