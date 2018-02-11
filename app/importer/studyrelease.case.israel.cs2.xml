@@ -836,15 +836,30 @@
                 <EnumerationOption value="0" description="לא "/>
                 <EnumerationOption value="1" description="כן "/>
             </AttributeDefinition>  
-            <AttributeDefinition id="Downton2" type="enumeration" multiplicity="maximalOne" description="סוגי תרופות רשומות">
-                <EnumerationOption value="0" description="ללא "/>
-                <EnumerationOption value="1.0001" description="תרופות הרגעה"/>
-                <EnumerationOption value="1.0002" description="משתנים "/>
-                <EnumerationOption value="1.0003" description="להורדת לחץ דם "/>
-                <EnumerationOption value="1.0004" description="לטיפול בפרקינסון "/>
-                <EnumerationOption value="1.0005" description="תרופות אנטי דכאון "/>
-                <EnumerationOption value="1.0006" description="תרופות אחרות"/>
+            <AttributeDefinition id="Downton2" type="enumeration" multiplicity="maximalOne" description="האם נוטל תרופות הרגעה">
+                <EnumerationOption value="0" description="לא "/>
+                <EnumerationOption value="1" description="כן"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="Downton6" type="enumeration" multiplicity="maximalOne" description="האם נוטל משתנים">
+                <EnumerationOption value="0" description="לא "/>
+                <EnumerationOption value="1" description="כן "/>
             </AttributeDefinition> 
+			<AttributeDefinition id="Downton7" type="enumeration" multiplicity="maximalOne" description="האם נוטל תרופות להורדת לחץ דם">
+                <EnumerationOption value="0" description="לא "/>
+                <EnumerationOption value="1" description="כן "/>
+            </AttributeDefinition> 
+			<AttributeDefinition id="Downton8" type="enumeration" multiplicity="maximalOne" description="האם נוטל תרופות לטיפול בפרקינסון">
+                <EnumerationOption value="0" description="לא "/>
+                <EnumerationOption value="1" description="כן "/>
+            </AttributeDefinition> 
+			<AttributeDefinition id="Downton9" type="enumeration" multiplicity="maximalOne" description="האם נוטל תרופות אנטי דכאון">
+                <EnumerationOption value="0" description="לא "/>
+                <EnumerationOption value="1" description="כן "/>
+            </AttributeDefinition> 
+			<AttributeDefinition id="Downton10" type="enumeration" multiplicity="maximalOne" description="האם נוטל תרופות אחרות">
+                <EnumerationOption value="0" description="לא "/>
+                <EnumerationOption value="1" description="כן "/>
+            </AttributeDefinition> 	
             <AttributeDefinition id="Downton3" type="enumeration" multiplicity="maximalOne" description="בעיות חושיות">
                 <EnumerationOption value="0" description="ללא בעיות חושיות "/>
                 <EnumerationOption value="1.0001" description="בעיית ראייה בינונית או חמורה או עיוורת"/>
@@ -863,7 +878,7 @@
                 <EnumerationOption value="1.0003" description="יכולת הליכה אינה אפשרית "/>
             </AttributeDefinition> 
 
-            <DerivedAttributeDefinition id="DowntonSum" expression="round(number(Downton1, 0)) + round(number(Downton2, 0)) + round(number(Downton3, 0)) + round(number(Downton4, 0)) + round(number(Downton5, 0))" description="ציון אינדקס דוונטון"/>          
+            <DerivedAttributeDefinition id="DowntonSum" expression="round(number(Downton1, 0)) + round(number(Downton2, 0)) + round(number(Downton3, 0)) + round(number(Downton4, 0)) + round(number(Downton5, 0))+ round(number(Downton6, 0))+ round(number(Downton7, 0))+ round(number(Downton8, 0))+ round(number(Downton9, 0))+ round(number(Downton10, 0))" description="ציון אינדקס דוונטון"/>          
         </EntityDefinition>
 
 
@@ -1241,9 +1256,17 @@
         <HumanTaskDefinition id="ICS2_RiskOfFallsDowntonIndex" description="סיכון לנפילות - מדד דוטון" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_RiskOfFallsDowntonIndex" entityAttachPath="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex">                
             <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton1" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton2" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton6" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton7" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton8" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton9" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton10" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton3" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton4" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton5" isReadOnly="false" isMandatory="true"/>
+		    
+			
+			
             <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.DowntonSum" isReadOnly="true" isMandatory="false"/>
         </HumanTaskDefinition>
 
@@ -1534,9 +1557,16 @@
         <Action id="CompleteHumanTask" processId="ICS2_RiskOfFallsDowntonIndex">
             <TaskParam path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton1" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton2" values="['0']"/>
+			<TaskParam path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton6" values="['0']"/>
+			<TaskParam path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton7" values="['0']"/>
+			<TaskParam path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton8" values="['0']"/>
+			<TaskParam path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton9" values="['0']"/>
+			<TaskParam path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton10" values="['0']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton3" values="['0']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton4" values="['0']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton5" values="['0']"/>
+			
+			
         </Action>
 
 
