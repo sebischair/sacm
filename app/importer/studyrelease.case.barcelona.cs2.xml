@@ -120,6 +120,8 @@
             <AttributeDefinition id="BCS2_FunctionalCapacity6MWT" type="Link.EntityDefinition.BCS2_FunctionalCapacity6MWT" multiplicity="maximalOne" description="Capacidad Funcional 6MWT"/> 
 
             <AttributeDefinition id="BCS2_FunctionalCapacityYPA" type="Link.EntityDefinition.BCS2_FunctionalCapacityYPA" multiplicity="maximalOne" description="Capacidad Funcional YPA"/> 
+            <AttributeDefinition id="BCS2_AdherenceCapacityESES" type="Link.EntityDefinition.BCS2_AdherenceCapacityESES" multiplicity="maximalOne" description="Evaluación de adherencia ESES"/> 
+            <AttributeDefinition id="BCS2_HospitalAnxietyAndDepressionScale" type="Link.EntityDefinition.BCS2_HospitalAnxietyAndDepressionScale" multiplicity="maximalOne" description="Hospital Anxiety and Depression Scale"/> 
         </EntityDefinition>
 
         <EntityDefinition id="BCS2_SelectedProfessionals" description="Selección inicial de profesionales">
@@ -385,7 +387,7 @@
         <EntityDefinition id="BCS2_PhysicalExamination" description="Examinación física">
             <AttributeDefinition id="Height" type="number" multiplicity="maximalOne" description="Altura (cm)"/>
             <AttributeDefinition id="Weight" type="number" multiplicity="maximalOne" description="Peso (Kg)"/>
-            <DerivedAttributeDefinition id="Bmi" expression="(Weight / ((Height/100) * (Height/100)))" sdescription="Bmi"/>
+            <DerivedAttributeDefinition id="Bmi" expression="round((Weight / ((Height/100) * (Height/100))))" sdescription="Bmi"/>
             <AttributeDefinition id="BloodPressSist" type="number" multiplicity="maximalOne" description="Presión Arterial Sistólica (mmHg)"/>
             <AttributeDefinition id="BloodPressDiast" type="number" multiplicity="maximalOne" description="Presión Arterial Diastólica (mmHg)"/>
             <AttributeDefinition id="HeartRate" type="number" multiplicity="maximalOne" description="Freq. Cardíaca (bps)"/>
@@ -525,7 +527,7 @@
         </EntityDefinition>
 
 
-        <EntityDefinition id="BCS2_FunctionalCapacity6MWT" option="Capacidad Funcional 6MWT">
+        <EntityDefinition id="BCS2_FunctionalCapacity6MWT" description="Capacidad Funcional 6MWT">
             <AttributeDefinition id="6MWTmeters" type="number" description="Distancia (meters)"/>
             <AttributeDefinition id="6MWTinitialFC" type="number" description="Frecuencia cardiaca inicial (bps)"/>
             <AttributeDefinition id="6MWTfinalFC" type="number" description="Frecuencia cardiaca final (bps)"/>
@@ -543,7 +545,7 @@
         </EntityDefinition>
 
 
-        <EntityDefinition id="BCS2_FunctionalCapacityYPA" option="Capacidad Funcional YPA">
+        <EntityDefinition id="BCS2_FunctionalCapacityYPA" description="Capacidad Funcional YPA">
             <AttributeDefinition id="YPASdipme" type="enumeration" description="¿Aproximadamente cuantas veces durante el ultimo mes ha participado en actividades intensas que duraron al menos 10 minutos, y provocaron importantes aumentos en su respiracion, pulso, cansancio de piernas o le hacían sudar?">
                 <EnumerationOption value="0" description="nunca"/>
                 <EnumerationOption value="1" description="1-3 veces por mes"/>
@@ -627,12 +629,220 @@
 
             <DerivedAttributeDefinition id="YPASsindre" expression="YPASspas+YPASstiemov+YPASstisen" multiplicity="maximalOne" description="INIDICE RESUMEN DE ACTIVIDAD FISICA"/>
 
-
         </EntityDefinition>
+
+
+        <EntityDefinition id="BCS2_AdherenceCapacityESES" description="Evaluación de adherencia ESES">
+            <AttributeDefinition id="eses1" type="enumeration" description="I am confident that I could always overcome barriers and challenges with regards to exercise if I try hard enough">
+                <EnumerationOption value="1" description="Not at all true"/>
+                <EnumerationOption value="2" description="Hardly true"/>
+                <EnumerationOption value="3" description="Moderately true"/>
+                <EnumerationOption value="4" description="Exactly true"/>
+            </AttributeDefinition>
+
+            <AttributeDefinition id="eses2" type="enumeration" description="I am confident that I could find the means and ways to exercise and be physically active">
+                <EnumerationOption value="1" description="Not at all true"/>
+                <EnumerationOption value="2" description="Hardly true"/>
+                <EnumerationOption value="3" description="Moderately true"/>
+                <EnumerationOption value="4" description="Exactly true"/>
+            </AttributeDefinition>
+
+            <AttributeDefinition id="eses3" type="enumeration" description="I am confident that it is easy for me to accomplish my activity and exercise goals">
+                <EnumerationOption value="1" description="Not at all true"/>
+                <EnumerationOption value="2" description="Hardly true"/>
+                <EnumerationOption value="3" description="Moderately true"/>
+                <EnumerationOption value="4" description="Exactly true"/>
+            </AttributeDefinition>
+
+            <AttributeDefinition id="eses4" type="enumeration" description="I am confident that when I am confronted with a barrier to exercise I could usually find several solutions to overcome this barrier">
+                <EnumerationOption value="1" description="Not at all true"/>
+                <EnumerationOption value="2" description="Hardly true"/>
+                <EnumerationOption value="3" description="Moderately true"/>
+                <EnumerationOption value="4" description="Exactly true"/>
+            </AttributeDefinition>
+
+            <AttributeDefinition id="eses5" type="enumeration" description="I am confident I could exercise even when I am tired">
+                <EnumerationOption value="1" description="Not at all true"/>
+                <EnumerationOption value="2" description="Hardly true"/>
+                <EnumerationOption value="3" description="Moderately true"/>
+                <EnumerationOption value="4" description="Exactly true"/>
+            </AttributeDefinition>
+
+            <AttributeDefinition id="eses6" type="enumeration" description="I am confident I could exercise even when I am feeling depressed">
+                <EnumerationOption value="1" description="Not at all true"/>
+                <EnumerationOption value="2" description="Hardly true"/>
+                <EnumerationOption value="3" description="Moderately true"/>
+                <EnumerationOption value="4" description="Exactly true"/>
+            </AttributeDefinition>
+
+            <AttributeDefinition id="eses7" type="enumeration" description="I am confident that I could exercise even without the support of my family or friends">
+                <EnumerationOption value="1" description="Not at all true"/>
+                <EnumerationOption value="2" description="Hardly true"/>
+                <EnumerationOption value="3" description="Moderately true"/>
+                <EnumerationOption value="4" description="Exactly true"/>
+            </AttributeDefinition>
+
+            <AttributeDefinition id="eses8" type="enumeration" description="I am confident that I could exercise without the help of an exercise therapist">
+                <EnumerationOption value="1" description="Not at all true"/>
+                <EnumerationOption value="2" description="Hardly true"/>
+                <EnumerationOption value="3" description="Moderately true"/>
+                <EnumerationOption value="4" description="Exactly true"/>
+            </AttributeDefinition>
+
+            <AttributeDefinition id="eses9" type="enumeration" description="I am confident that I could be physically active despite my spinal cord injury">
+                <EnumerationOption value="1" description="Not at all true"/>
+                <EnumerationOption value="2" description="Hardly true"/>
+                <EnumerationOption value="3" description="Moderately true"/>
+                <EnumerationOption value="4" description="Exactly true"/>
+            </AttributeDefinition>
+
+            <AttributeDefinition id="eses10" type="enumeration" description="I am confident that I could exercise even if I had no access to a gym or training facility">
+                <EnumerationOption value="1" description="Not at all true"/>
+                <EnumerationOption value="2" description="Hardly true"/>
+                <EnumerationOption value="3" description="Moderately true"/>
+                <EnumerationOption value="4" description="Exactly true"/>
+            </AttributeDefinition>
+
+            <DerivedAttributeDefinition id="esesScore" expression="number(eses1,0)+number(eses2,0)+number(eses3,0)+number(eses4,0)+number(eses5,0)+number(eses6,0)+number(eses7,0)+number(eses8,0)+number(eses9,0)+number(eses10,0)" multiplicity="maximalOne" description="INIDICE RESUMEN DE SELF-EFFICACY"/>
+        </EntityDefinition>
+
+
+        <EntityDefinition id="BCS2_HospitalAnxietyAndDepressionScale" description="Hospital Anxiety and Depression Scale">
+            <AttributeDefinition id="hadA1" type="enumeration" multiplicity="maximalOne" description="Me siento tenso o nervioso."> 
+                <EnumerationOption value="0" description="Nunca"/>
+                <EnumerationOption value="1" description="A veces"/>
+                <EnumerationOption value="2" description="Muchas veces"/>
+                <EnumerationOption value="3" description="Todos los dias"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadD1" type="enumeration" multiplicity="maximalOne" description="Todavia disfruto con lo que antes me gustaba."> 
+                <EnumerationOption value="0" description="Como siempre"/>
+                <EnumerationOption value="1" description="No lo bastante"/>
+                <EnumerationOption value="2" description="Solo un poco"/>
+                <EnumerationOption value="3" description="Nada"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadA2" type="enumeration" multiplicity="maximalOne" description="Tengo una sensacion de miedo, como si algo horrible me fuera a suceder."> 
+                <EnumerationOption value="0" description="Nada"/>
+                <EnumerationOption value="1" description="Un poco, pero no me preocupa"/>
+                <EnumerationOption value="2" description="Si, pero no es muy fuerte"/>
+                <EnumerationOption value="3" description="Definitivamente y es muy fuerte"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadD2" type="enumeration" multiplicity="maximalOne" description="Puedo reirme y ver el lado divertido de las cosas."> 
+                <EnumerationOption value="0" description="Al igual que siempre lo hice"/>
+                <EnumerationOption value="1" description="No tanto ahora"/>
+                <EnumerationOption value="2" description="Casi nunca"/>
+                <EnumerationOption value="3" description="Nunca"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadA3" type="enumeration" multiplicity="maximalOne" description="Tengo mi mente llena de preocupaciones."> 
+                <EnumerationOption value="0" description="Solo en ocasiones"/>
+                <EnumerationOption value="1" description="A veces, aunque no muy a menudo"/>
+                <EnumerationOption value="2" description="Con bastante frecuencia"/>
+                <EnumerationOption value="3" description="La mayoria de las veces"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadD3" type="enumeration" multiplicity="maximalOne" description="Me siento alegre."> 
+                <EnumerationOption value="0" description="Casi siempre"/>
+                <EnumerationOption value="1" description="A veces"/>
+                <EnumerationOption value="2" description="No muy a menudo"/>
+                <EnumerationOption value="3" description="Nunca"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadA4" type="enumeration" multiplicity="maximalOne" description="Puedo estar sentado confortablemente y sentirme relajado."> 
+                <EnumerationOption value="0" description="Siempre"/>
+                <EnumerationOption value="1" description="Por lo general"/>
+                <EnumerationOption value="2" description="No muy a menudo"/>
+                <EnumerationOption value="3" description="Nunca"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadD4" type="enumeration" multiplicity="maximalOne" description="Me siento como si cada dia estuviera mas lento."> 
+                <EnumerationOption value="0" description="Nunca"/>
+                <EnumerationOption value="1" description="A veces"/>
+                <EnumerationOption value="2" description="Muy a menudo"/>
+                <EnumerationOption value="3" description="Por lo general, en todo momento"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadA5" type="enumeration" multiplicity="maximalOne" description="Tengo una sensacion extrana, como si tuviera mariposasen el estomago."> 
+                <EnumerationOption value="0" description="El Nunca"/>
+                <EnumerationOption value="1" description="En ciertas ocasiones"/>
+                <EnumerationOption value="2" description="Con bastante frecuencia"/>
+                <EnumerationOption value="3" description="Muy a menudo"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadD5" type="enumeration" multiplicity="maximalOne" description="He perdido interes en mi aspecto personal."> 
+                <EnumerationOption value="0" description="Me preocupo al igual que siempre"/>
+                <EnumerationOption value="1" description="Podria tener un poco mas de cuidado"/>
+                <EnumerationOption value="2" description="No me preocupeo tanto como debiera"/>
+                <EnumerationOption value="3" description="Totalmente"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadA6" type="enumeration" multiplicity="maximalOne" description="Me siento inquieto, como si no pudiera parar demoverme."> 
+                <EnumerationOption value="0" description="Nada"/>
+                <EnumerationOption value="1" description="No mucho"/>
+                <EnumerationOption value="2" description="Bastante"/>
+                <EnumerationOption value="3" description="Mucho"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadD6" type="enumeration" multiplicity="maximalOne" description="Me siento optimista respecto al futuro."> 
+                <EnumerationOption value="0" description="Igual que siempre"/>
+                <EnumerationOption value="1" description="Menos de lo que acostumbraba"/>
+                <EnumerationOption value="2" description="Mucho menos de lo que acostumbraba"/>
+                <EnumerationOption value="3" description="Nada"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadA7" type="enumeration" multiplicity="maximalOne" description="Me asaltan sentimientos repentinos de panico."> 
+                <EnumerationOption value="0" description="Rara vez"/>
+                <EnumerationOption value="1" description="No muy a menudo"/>
+                <EnumerationOption value="2" description="Bastante a menudo"/>
+                <EnumerationOption value="3" description="Muy frecuentemente"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadD7" type="enumeration" multiplicity="maximalOne" description="Me divierto con un buen libro, la radio, o un programa de television."> 
+                <EnumerationOption value="0" description="Menudo"/>
+                <EnumerationOption value="1" description="A veces"/>
+                <EnumerationOption value="2" description="No muy a menudo"/>
+                <EnumerationOption value="3" description="Rara vez"/>
+            </AttributeDefinition>
+
+             <DerivedAttributeDefinition id="hadA8" expression="number(hadA1,0)+number(hadA2,0)+number(hadA3,0)+number(hadA4,0)+number(hadA5,0)+number(hadA6,0)+number(hadA7,0)" description="HAD Anxiety"/> 
+             <DerivedAttributeDefinition id="hadD8" expression="number(hadD1,0)+number(hadD2,0)+number(hadD3,0)+number(hadD4,0)+number(hadD5,0)+number(hadD6,0)+number(hadD7,0)" description="HAD Depression"/> 
+             <DerivedAttributeDefinition id="hadFinal" expression="hadD8+hadA8" description="HAD Total Score"/> 
+        </EntityDefinition>
+
 
 
         <!-- Case Definition -->
         <CaseDefinition id="BCS2_Barcelona" description="CS2 Barcelona" ownerPath="BCS2_Owner" clientPath="BCS2_Patient" entityDefinitionId="BCS2_CaseData">
+
+            <!-- ### Summary Page ### -->
+            <SummarySectionDefinition id="BCS2_ClinicalInformation" description="Clinical Information" position="LEFT">    
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.SociodemoAge"/>
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.SociodemoSex"/>
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.DiagnosisInfo"/>
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.SurgeryInfo"/>
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_Charlson.ch21"/>
+            </SummarySectionDefinition>
+
+            <SummarySectionDefinition id="BCS2_PhysicalExamination" description="Physical Examination" position="LEFT">    
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_PhysicalExamination.Height"/>
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_PhysicalExamination.Weight"/>
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_PhysicalExamination.Bmi"/>
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_PhysicalExamination.FerroTherapy"/>
+            </SummarySectionDefinition>
+
+            <SummarySectionDefinition id="BCS2_NutritionalInformation" description="Nutritional Information" position="CENTER">    
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_NutritionalInformationMUST.MustScore"/>
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_NutritionalInformationSGA.SgaScore"/>
+                <!-- Check with Isaac what nutritional therapy means -->
+            </SummarySectionDefinition>
+
+            <SummarySectionDefinition id="BCS2_FunctionalCapacity" description="Functional Capacity" position="CENTER">    
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE.DukeScore"/>
+                <SummaryParamDefinition path="BCS2_FunctionalCapacity6MWT"/> <!-- Check with Isaac -->
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASsindre"/> <!-- Check with Isaac -->
+            </SummarySectionDefinition>
+
+            <SummarySectionDefinition id="BCS2_AdherenceCapacityESES" description="Adherence Capacity" position="RIGHT">    
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.esesScore"/>
+            </SummarySectionDefinition>
+
+            <SummarySectionDefinition id="BCS2_HospitalAnxietyAndDepressionScale" description="Psychological Evaluation" position="RIGHT">    
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadFinal"/>
+                <!-- Check with Isaac what psychological therapy means -->
+            </SummarySectionDefinition>
+
+
+
+
 
             <StageDefinition id="BCS2_CaseIdentification" description="Case Identification" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_Identification" entityAttachPath="BCS2_Identification">
 
@@ -815,8 +1025,44 @@
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPAStisen" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASstisen" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASsindre" isReadOnly="true" isMandatory="false"/>
-
                 </HumanTaskDefinition>
+
+
+                <HumanTaskDefinition id="BCS2_AdherenceCapacityESES" description="Evaluación de adherencia ESES" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_AdherenceCapacityESES" entityAttachPath="BCS2_Evaluation.BCS2_AdherenceCapacityESES">
+                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.esesScore" isReadOnly="true" isMandatory="false"/>
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="BCS2_HospitalAnxietyAndDepressionScale" description="Hospital Anxiety and Depression Scale" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE"  entityDefinitionId="BCS2_HospitalAnxietyAndDepressionScale" entityAttachPath="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale">
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA1" isReadOnly="false" isMandatory="true"/>
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD1" isReadOnly="false" isMandatory="true"/>
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA2" isReadOnly="false" isMandatory="true"/>
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD2" isReadOnly="false" isMandatory="true"/>
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA3" isReadOnly="false" isMandatory="true"/>
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD3" isReadOnly="false" isMandatory="true"/>
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA4" isReadOnly="false" isMandatory="true"/>
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD4" isReadOnly="false" isMandatory="true"/>
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA5" isReadOnly="false" isMandatory="true"/>
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD5" isReadOnly="false" isMandatory="true"/>
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA6" isReadOnly="false" isMandatory="true"/>
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD6" isReadOnly="false" isMandatory="true"/>
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA7" isReadOnly="false" isMandatory="true"/>
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD7" isReadOnly="false" isMandatory="true"/>
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA8" isReadOnly="true" isMandatory="false"/>
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD8" isReadOnly="true" isMandatory="false"/>            
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadFinal" isReadOnly="true" isMandatory="false"/>
+                </HumanTaskDefinition>
+
+
             </StageDefinition>
         </CaseDefinition>
     </Workspace>
@@ -966,6 +1212,38 @@
             <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASpdipme" values="['4']"/>
             <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASesdep" values="['3']"/>
             <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPAStisen" values="['5']"/>
+        </Action>
+
+        <Action id="CompleteHumanTask" processId="BCS2_AdherenceCapacityESES">
+            <TaskParam path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses1" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses2" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses3" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses4" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses5" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses6" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses7" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses8" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses9" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses10" values="['1']"/>
+        </Action>
+
+        <Action id="CompleteHumanTask" processId="BCS2_HospitalAnxietyAndDepressionScale">
+            <TaskParam path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA1" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA2" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA3" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA4" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA5" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA6" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA7" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA8" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD1" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD2" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD3" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD4" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD5" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD6" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD7" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD8" values="['1']"/>
         </Action>
   
     </Execution>
