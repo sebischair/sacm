@@ -539,7 +539,8 @@
             </SummarySectionDefinition>
 
             <StageDefinition id="GCS2_CaseIdentification" description="Case Identification" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_Identification" entityAttachPath="GCS2_Identification">        
-                <HumanTaskDefinition id="GCS2_SelectPatient" description="Select Patient" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE">                
+                <HumanTaskDefinition id="GCS2_SelectPatient" externalId="SelectPatient" description="Select Patient" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE">                
+                    <HttpHookDefinition on="COMPLETE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/tbd" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition path="GCS2_Patient" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Owner" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_EvaluationDueDate" isReadOnly="false" isMandatory="true"/>
@@ -841,7 +842,7 @@
 
         <Action id="ActivateDualTask" processId="GCS2_SimpleTask" breakpoint="true"/>
         <Action id="CompleteDualTaskHumanPart" processId="GCS2_SimpleTask" breakpoint="true">
-            <TaskParam path="GCS2_Workplan.GCS2_SimpleTask.type"  values="['RAISEYOURHANDS']"/>
+            <TaskParam path="GCS2_Workplan.GCS2_SimpleTask.type"  values="['OTHER']"/>
             <TaskParam path="GCS2_Workplan.GCS2_SimpleTask.freq"  values="[5]"/>
             <TaskParam path="GCS2_Workplan.GCS2_SimpleTask.freqqunit"  values="['WEEKS']"/>
             <TaskParam path="GCS2_Workplan.GCS2_SimpleTask.maxdelay"  values="[100]"/>
