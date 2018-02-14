@@ -44,6 +44,9 @@
             <AttributeDefinition id="ICS2_Evaluation" type="Link.EntityDefinition.ICS2_Evaluation" description="Evaluation"/>
             <AttributeDefinition id="ICS2_PhysiotherapistEvaluation" type="Link.EntityDefinition.ICS2_PhysiotherapistEvaluation" description="Physiotherapist evaluation"/>
 
+            <AttributeDefinition id="ICS2_Workplan" type="Link.EntityDefinition.ICS2_Workplan" description="Workplan"/>
+            <AttributeDefinition id="ICS2_Discharge" type="Link.EntityDefinition.ICS2_Discharge" description="Discharge"/> 
+
             <!--
             <AttributeDefinition id="ICS2_InclusionCriteria" type="Link.EntityDefinition.ICS2_InclusionCriteria" description="קריטריוני הכללה"/>  
             <AttributeDefinition id="ICS2_ThechTest" type="Link.EntityDefinition.ICS2_ThechTest" description="יכולות טכנולוגיות"/>  
@@ -973,7 +976,7 @@
         <EntityDefinition id="ICS2_PhysiotherapistEvaluationDataBeforeTest" description="הערכת פיזיותרפיסט - נתוני התחלה"> 
             <AttributeDefinition id="PulseRest" type="number" multiplicity="maximalOne" description="דופק במנוחה"/>
             <AttributeDefinition id="Age" type="number" multiplicity="maximalOne" description="גיל המטופל היום"/>
-            <DerivedAttributeDefinition id="MaxPulse" expression="(0.8 * (220 - Age) - PulseRest) + PulseRest" description="דופק מקסימאלי להפסקת בדיקה"/>
+            <DerivedAttributeDefinition id="MaxPulse" expression="round((0.8 * (220 - Age) - PulseRest) + PulseRest)" description="דופק מקסימאלי להפסקת בדיקה"/>
             <AttributeDefinition id="PhysioRemarks" type="string" multiplicity="maximalOne" description="הערות"/>
         </EntityDefinition>
 
@@ -1017,11 +1020,153 @@
         </EntityDefinition>
 
 
-        <!-- 1337 -->
+        <!-- Workplan Entity Definitions -->
+        <EntityDefinition id="ICS2_Workplan" description="Workplan">
+            <AttributeDefinition id="ICS2_PhysicalActivity" type="Link.EntityDefinition.ICS2_PhysicalActivity" description="Physical Activity"/>
+            <AttributeDefinition id="ICS2_MonitoringPrescription" type="Link.EntityDefinition.ICS2_MonitoringPrescription" description="Monitoring Prescription"/> 
+            <AttributeDefinition id="ICS2_SimpleTask" type="Link.EntityDefinition.ICS2_SimpleTask" description="Simple Task"/>
+        </EntityDefinition>
+
+        <EntityDefinition id="ICS2_PhysicalActivity" description="Physical Activity">
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="maximalOne" description="Start date"/>
+            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="maximalOne" description="End date"/>       
+            <AttributeDefinition id="dailysteps" type="number.min(0).max(100000)" defaultValues="[10000]" multiplicity="maximalOne" description="Number of steps daily"/>       
+            <AttributeDefinition id="dailylowlevel" type="number.min(0).max(1440)" defaultValues="[60]" multiplicity="maximalOne" description="Minutes of low level activity daily"/>       
+            <AttributeDefinition id="dailymediumlevel" type="number.min(0).max(1440)" defaultValues="[40]" multiplicity="maximalOne" description="Minutes of medium level activity daily"/>       
+            <AttributeDefinition id="dailyhighlevel" type="number.min(0).max(1440)" defaultValues="[20]" multiplicity="maximalOne" description="Minutes of high level activity daily"/> 
+            <AttributeDefinition id="dailynoactivity" type="number.min(0).max(1440)" defaultValues="[240]" multiplicity="maximalOne" description="Max minutes without activity allowed daily"/>   
+            <!--{stepsFollowing: [{date: '2017-06-09 14:54:53.0', value: 12}], lowFollowing:[], mediumFollowing:[], highFollowing:[], noActivityFollowing:[]}-->
+            <!--Collected Data e.g. {stepsFollowing: [{date: '2017-06-09 14:54:53.0', value: 12}], lowFollowing:[], mediumFollowing:[], highFollowing:[], noActivityFollowing:[]}"-->
+            <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Measurement"/>                 
+        </EntityDefinition>
+        
+        <EntityDefinition id="ICS2_MonitoringPrescription" description="Patient Monitory">
+            <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Measure type" additionalDescription="Select measure type for patient monitory.">
+                <EnumerationOption value="DIASTOLICBLOODPRESSURE" description="Diastolic Blood Pressure"/>
+                <EnumerationOption value="SYSTOLICBLOODPRESSURE" description="Systolic Blood Pressure"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="alertmin" type="number.min(0)" multiplicity="exactlyOne" description="Min value allowed" additionalDescription="Minimum value for this measuremnt greather than 0"/>       
+            <AttributeDefinition id="alertmax" type="number.min(0)" multiplicity="exactlyOne" description="Max value allowed" additionalDescription="Maximum value for this measuremnt greather than 0"/>      
+            <AttributeDefinition id="alertfreq" type="number" defaultValues="[1]" multiplicity="exactlyOne" description="Alert Frecuency Value"/>       
+            <AttributeDefinition id="alertfrequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Alert Frecuency Unit">     
+                <EnumerationOption value="DAYS" description="Days"/>
+                <EnumerationOption value="WEEKS" description="Weeks"/>
+                <EnumerationOption value="MONTHS" description="Months"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="freq" type="number.min(0)" defaultValues="[1]" multiplicity="exactlyOne" description="Measurement Frecuency"/> 
+            <AttributeDefinition id="frequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Measurement Frecuency Unit">     
+                <EnumerationOption value="DAYS" description="Days"/>
+                <EnumerationOption value="WEEKS" description="Weeks"/>
+                <EnumerationOption value="MONTHS" description="Months"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="maximalOne" description="Max delay in minutes" additionalDescription="Maximum delay to fullfill the prescription by the patient"/> 
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Start date"/> 
+            <AttributeDefinition id="enddate" type="date.after(tartdate)" multiplicity="exactlyOne" description="End date"/> 
+            <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="Slots to take the measurements" additionalDescription="Multiple slots can be selected, at least one slot need to be selected">     
+                <EnumerationOption value="BREAKFAST" description="Breakfast"/>
+                <EnumerationOption value="LUNCH" description="Lunch"/>
+                <EnumerationOption value="AFTERNOONSNACK" description="Afternoon Snack"/>
+                <EnumerationOption value="DINNER" description="Dinner"/>
+                <EnumerationOption value="BEFORESLEEP" description="Before Sleep"/>
+                <EnumerationOption value="ANYTIMEDURINGDAY" description="Any time a day" additionalDescription="Please select this option when the timeslot of a day doesn't matter."/>
+            </AttributeDefinition>
+            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comments" additionalDescription="Please provide additional hints for the patient."/>   
+            <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Measurement"/>                      
+        </EntityDefinition>
+
+        <EntityDefinition id="ICS2_SimpleTask" description="Simple Task">
+            <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Activity Type" additionalDescription="Select simple task type.">     
+                <EnumerationOption value="STRAIGHTENING_AND_BENDING_KNEE_LYING_ON_BACK" description="יישור וכיפוף ברך בשכיבה על הגב"/>
+                <EnumerationOption value="LEG_AWAY_FROM_BODY_TO_THE_SIDE_LYING_ON_BACK" description="הרחקת הרגל מהגוף הצידה בשכיבה על הגב"/>
+                <EnumerationOption value="LIFTING_PELVIS_LYING_ON_BACK_WITH_BENT_LEGS" description="הרמת אגן בשכיבה על הגב עם רגליים כפופות"/>
+                <EnumerationOption value="LIFTING_LEG_UPRIGHT_LYING_ON_SIDE" description="הרמת רגל ישרה בשכיבה על הצד"/>
+                <EnumerationOption value="PUNCTUATION_LEGS_WITH_RUBBERBAND_AROUND_KNEES_SITTING" description="פיסוק רגליים בישיבה עם גומייה מסביב לברכיים"/>
+                <EnumerationOption value="BEND_KNEE_AND_BRING_TO_STOMACH_LYING_ON_BACK" description="כיפוף הברך והבאתה לכיוון הבטן בשכיבה על הגב"/>
+                <EnumerationOption value="KNEE_BENDING_WHILE_SITTING" description="כיפוף הברך בישיבה"/>
+                <EnumerationOption value="BENDING_KNEES_STANDING_BACK_TO_WALL" description="כיפוף ברכיים בעמידה עם הגב לקיר"/>
+                <EnumerationOption value="STRAIGHTENING_AND_BENDING_KNEE_SITTING" description="יישור וכיפוף הברך בישיבה"/>
+                <EnumerationOption value="GET_UP_FROM_THE_CHAIR_AND_SIT_BACK" description="קימה מהכיסא וישיבה חזרה"/>
+                <EnumerationOption value="WALKING_OUTSIDE_MODERATE_SPEED" description="הליכה בחוץ במהירות מתונה"/>
+                <EnumerationOption value="UP_AND_DOWN_STAIRS_ONE_FLOOR" description="עלייה וירידה במדרגות- קומה 1"/>
+                <EnumerationOption value="STRENGTHENING_THIGH_EXERCISES_OKC" description="תרגילי חיזוק לירך (OKC)"/>
+                <EnumerationOption value="STRENGTHENING_KNEE_EXERCISES_OKC" description="תרגילי חיזוק לברך (OKC)"/>
+                <EnumerationOption value="STRENGTHENING_SHOULDER_EXERCISES_OKC" description="תרגילי חיזוק לכתף (OKC)"/>
+                <EnumerationOption value="STRENGTHENING_THE_ELBOW_HANDS_AND_FINGERS_EXERCISES" description="תרגילי חיזוק למרפק, שכ'י ואצבעות"/>
+                <EnumerationOption value="STRENGTHENING_GENERAL_EXERCISES" description="תרגילי חיזוק כלליים"/>
+                <EnumerationOption value="SUPERVISED_PHYSICAL_THERAPY_TRAINING" description="תור לאימון פיזיותרפיה"/>
+                <EnumerationOption value="TAKE_MEDICINE" description="לקיחת תרופה"/>
+                <EnumerationOption value="DRINK_GLASS_OF_LIQUID" description="שתיית כוס  משקה"/>
+                <EnumerationOption value="EAT_MEAL_FRUIT_SNACK" description="אכילה (ארוחה או פרי או חטיף)"/>
+                <EnumerationOption value="READ_BOOK_NEWSPAPER" description="קריאה (עיתון או ספר)"/>
+                <EnumerationOption value="COGNITIVE_GAMES" description="תרגול קוגנטיבי (משחקי קוגניציה)"/>
+                <EnumerationOption value="VISIT_NURSE_AT_CLINIC" description="ביקור אצל אחות במרפאה"/>
+                <EnumerationOption value="VISIT_DOCTOR_AT_CLINIC" description="ביקור אצל הופא במרפאה"/>
+                <EnumerationOption value="OTHER" description="Other"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="freq" type="number" multiplicity="exactlyOne" description="Frecuency" additionalDescription="Repetitions during the day"/> 
+            <AttributeDefinition id="freqqunit" type="enumeration" multiplicity="exactlyOne" description="Frecuency Unit, the posible values are">     
+                <EnumerationOption value="DAYS" description="Days"/>
+                <EnumerationOption value="WEEKS" description="Weeks"/>
+                <EnumerationOption value="MONTHS" description="Months"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="maximalOne" description="Max delay in minutes" additionalDescription="Maximum delay to fullfill the prescription by the patient"/> 
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Start date"/> 
+            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="End date"/> 
+            <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="Part del dia per prendre les mesures, els possibles valors són:">     
+                <EnumerationOption value="REPETITIONSET" description="Repeat during the day"/>
+                <EnumerationOption value="BREAKFAST" description="Esmorzar"/>
+                <EnumerationOption value="LUNCH" description="Dinar"/>
+                <EnumerationOption value="AFTERNOONSNACK" description="Berenar"/>
+                <EnumerationOption value="DINNER" description="Sopar"/>
+                <EnumerationOption value="BEFORESLEEP" description="Abans d'anar a dormir"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="repetitionseachday" type="number" description="Repetitions each day"/>
+            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comments" additionalDescription="Please provide additional hints for the patient."/>   
+            <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Measurement"/>      
+        </EntityDefinition>
+
+
+        <!-- Discharge Entity Definitions -->
+        <EntityDefinition id="ICS2_Discharge" description="ICS2_Discharge">
+            <AttributeDefinition id="ICS2_DischargeForm" type="Link.EntityDefinition.ICS2_DischargeForm" description="Discharge From"/> 
+        </EntityDefinition>
+
+        <EntityDefinition id="ICS2_DischargeForm" description="Discharge From">
+            <AttributeDefinition id="comment" type="longtext" multiplicity="maximalOne" description="Comment"/>                             
+        </EntityDefinition>
 
 
 
 <CaseDefinition id="ICS2_Assuta" description="CS2 Assuta" ownerPath="ICS2_CaseManager" clientPath="ICS2_Patient" entityDefinitionId="ICS2_CaseData">
+
+
+    <SummarySectionDefinition id="ICS2_Summary1" description="מצב תחלואה ותזונה" position="LEFT">    
+        <SummaryParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch21"/>
+        <SummaryParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_Score"/>
+        <SummaryParamDefinition path="ICS2_Evaluation.ICS2_NutritionalData.Bmi"/>
+        <SummaryParamDefinition path="ICS2_Evaluation.ICS2_MUST.MustScore"/>
+    </SummarySectionDefinition>
+    <SummarySectionDefinition id="ICS2_Summary2" description="מצב תחלואה ותזונה" position="LEFT">  
+        <SummaryParamDefinition path="ICS2_CaseData1"/>          
+        <SummaryParamDefinition path="ICS2_CaseData2"/>
+        <SummaryParamDefinition path="ICS2_Identification.ICS2_InclusionCriteria.Basicoperation"/>
+    </SummarySectionDefinition>
+    <SummarySectionDefinition id="ICS2_Summary3" description="הערכת פיזיותרפיסט (רק ב CS2)" position="CENTER">   
+        <SummaryParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.PulseRest"/>
+        <SummaryParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.MaxPulse"/>
+        <SummaryParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUG2"/>
+        <SummaryParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT5"/>
+        <SummaryParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS5"/>
+    </SummarySectionDefinition>
+    <SummarySectionDefinition id="ICS2_Summary3" description="מצב תפקודי, חרדה ודיכאון" position="RIGHT">
+        <SummaryParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelScore"/>
+        <SummaryParamDefinition path="ICS2_Evaluation.ICS2_iADLLawton.LawtonScore"/>
+        <SummaryParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.DowntonSum"/>
+        <SummaryParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADSDepressionScore"/>
+        <SummaryParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADSAnxietyScore"/>
+    </SummarySectionDefinition>
+
+
 
     <StageDefinition id="ICS2_CaseIdentification" description="זיהוי המטופל" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Identification" entityAttachPath="ICS2_Identification">
 
@@ -1338,6 +1483,69 @@
         </HumanTaskDefinition>
 
     </StageDefinition>
+
+            <StageDefinition id="ICS2_Workplan" description="Workplan" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Workplan" entityAttachPath="ICS2_Workplan">
+                <SentryDefinition>
+                    <precondition processDefinitionId="ICS2_PhysiotherapistEvaluation"/>
+                </SentryDefinition>
+
+                <DualTaskDefinition id="ICS2_PhysicalActivity" externalId="PhysicalActivity" description="Physical Activity" ownerPath="ICS2_CaseManager" dueDatePath="ICS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" isManualActivation="true" entityDefinitionId="ICS2_PhysicalActivity" entityAttachPath="ICS2_Workplan.ICS2_PhysicalActivity">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_PhysicalActivity.startdate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_PhysicalActivity.enddate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_PhysicalActivity.dailysteps" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_PhysicalActivity.dailylowlevel" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_PhysicalActivity.dailymediumlevel" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_PhysicalActivity.dailyhighlevel" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_PhysicalActivity.dailynoactivity" isReadOnly="false" isMandatory="true"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="ICS2_Workplan.ICS2_PhysicalActivity.measurement" isReadOnly="false" isMandatory="true"/>
+                </DualTaskDefinition>
+
+                <DualTaskDefinition id="ICS2_MonitoringPrescription" externalId="MonitoringPrescription" description="Monitoring Prescription" dynamicDescriptionPath="ICS2_Workplan.ICS2_MonitoringPrescription.type" ownerPath="ICS2_CaseManager" dueDatePath="ICS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" isManualActivation="true" entityDefinitionId="ICS2_MonitoringPrescription" entityAttachPath="ICS2_Workplan.ICS2_MonitoringPrescription">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_MonitoringPrescription.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_MonitoringPrescription.alertmin" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_MonitoringPrescription.alertmax" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_MonitoringPrescription.alertfreq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_MonitoringPrescription.alertfrequnit" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_MonitoringPrescription.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_MonitoringPrescription.frequnit" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_MonitoringPrescription.maxdelay" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_MonitoringPrescription.startdate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_MonitoringPrescription.enddate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_MonitoringPrescription.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_MonitoringPrescription.comments" isReadOnly="false" isMandatory="true"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="ICS2_Workplan.ICS2_MonitoringPrescription.measurement" isReadOnly="false" isMandatory="true"/>
+                </DualTaskDefinition>
+
+                <!-- isreal -->
+                <DualTaskDefinition id="ICS2_SimpleTask" externalId="SimpleTask" description="Simple Task" dynamicDescriptionPath="ICS2_Workplan.ICS2_SimpleTask.type" ownerPath="ICS2_CaseManager" dueDatePath="ICS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" isManualActivation="true" entityDefinitionId="ICS2_SimpleTask" entityAttachPath="ICS2_Workplan.ICS2_SimpleTask">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/simpletask" method="POST" failureMessage="Could not create prescription on Self-Management System!"></HttpHookDefinition>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/simpletask/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"></HttpHookDefinition>
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_SimpleTask.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_SimpleTask.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_SimpleTask.freqqunit" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_SimpleTask.maxdelay" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_SimpleTask.startdate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_SimpleTask.enddate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_SimpleTask.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_SimpleTask.repetitionseachday" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_SimpleTask.comments" isReadOnly="false" isMandatory="true"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="ICS2_Workplan.ICS2_SimpleTask.measurement" isReadOnly="false" isMandatory="true"/>
+                </DualTaskDefinition>
+                
+            </StageDefinition>
+            
+            <StageDefinition id="ICS2_Discharge" description="Discharge" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Discharge" entityAttachPath="ICS2_Discharge">
+                <SentryDefinition>
+                    <precondition processDefinitionId="ICS2_Workplan"/>
+                </SentryDefinition>
+                <HumanTaskDefinition id="ICS2_DischargeForm" description="Discharge Form" ownerPath="ICS2_CaseManager" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_DischargeForm" entityAttachPath="ICS2_Discharge.ICS2_DischargeForm">
+                    <TaskParamDefinition path="ICS2_Discharge.ICS2_DischargeForm.comment" isReadOnly="false" isMandatory="true"/>                  
+                </HumanTaskDefinition>
+            </StageDefinition>
     
 </CaseDefinition>
 </Workspace>
@@ -1593,7 +1801,7 @@
         <Action id="CompleteHumanTask" processId="ICS2_MUST">
             <TaskParam path="ICS2_Evaluation.ICS2_MUST.BmiCat" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_MUST.WeightLoss" values="['1']"/>
-            <TaskParam path="ICS2_Evaluation.ICS2_MUST.RecentAcuteDisease" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_MUST.RecentAcuteDisease" values="['0']"/>
         </Action>
 
 
@@ -1630,7 +1838,56 @@
             <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTSRemarks" values="['1']"/>
         </Action>
 
-         
+
+       <Action id="ActivateDualTask" processId="ICS2_PhysicalActivity" breakpoint="true"/>
+        <Action id="CompleteDualTaskHumanPart" processId="ICS2_PhysicalActivity" breakpoint="true">
+            <TaskParam path="ICS2_Workplan.ICS2_PhysicalActivity.startdate"  values="['2017-09-26T00:00:00.000']"/>
+            <TaskParam path="ICS2_Workplan.ICS2_PhysicalActivity.enddate"  values="['2018-09-27T00:00:00.000']"/>
+            <TaskParam path="ICS2_Workplan.ICS2_PhysicalActivity.dailysteps"  values="[10000]"/>
+            <TaskParam path="ICS2_Workplan.ICS2_PhysicalActivity.dailylowlevel"  values="[15]"/>
+            <TaskParam path="ICS2_Workplan.ICS2_PhysicalActivity.dailymediumlevel"  values="[5]"/>
+            <TaskParam path="ICS2_Workplan.ICS2_PhysicalActivity.dailyhighlevel"  values="[10]"/>
+            <TaskParam path="ICS2_Workplan.ICS2_PhysicalActivity.dailynoactivity"  values="[30]"/>
+        </Action>
+        <Action id="CompleteDualTaskAutomatedPart" processId="ICS2_PhysicalActivity">
+            <TaskParam path="ICS2_Workplan.ICS2_PhysicalActivity.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
+        </Action>
+
+        <Action id="ActivateDualTask" processId="ICS2_MonitoringPrescription" breakpoint="true"/>
+        <Action id="CompleteDualTaskHumanPart" processId="ICS2_MonitoringPrescription" breakpoint="true">
+            <TaskParam path="ICS2_Workplan.ICS2_MonitoringPrescription.type"  values="['DIASTOLICBLOODPRESSURE']"/>
+            <TaskParam path="ICS2_Workplan.ICS2_MonitoringPrescription.alertmin"  values="[50]"/>
+            <TaskParam path="ICS2_Workplan.ICS2_MonitoringPrescription.alertmax"  values="[150]"/>
+            <TaskParam path="ICS2_Workplan.ICS2_MonitoringPrescription.alertfreq"  values="[2]"/>
+            <TaskParam path="ICS2_Workplan.ICS2_MonitoringPrescription.alertfrequnit"  values="['DAYS']"/>
+            <TaskParam path="ICS2_Workplan.ICS2_MonitoringPrescription.comments"  values="['Some random comment']"/>
+            <TaskParam path="ICS2_Workplan.ICS2_MonitoringPrescription.freq"  values="[5]"/>
+            <TaskParam path="ICS2_Workplan.ICS2_MonitoringPrescription.freqqunit"  values="['WEEKS']"/>
+            <TaskParam path="ICS2_Workplan.ICS2_MonitoringPrescription.maxdelay"  values="[100]"/>
+            <TaskParam path="ICS2_Workplan.ICS2_MonitoringPrescription.startdate"  values="['2017-06-09T00:00:00.0']"/>
+            <TaskParam path="ICS2_Workplan.ICS2_MonitoringPrescription.enddate"  values="['2019-06-09T00:00:00.0']"/>
+            <TaskParam path="ICS2_Workplan.ICS2_MonitoringPrescription.timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
+        </Action>
+        <Action id="CompleteDualTaskAutomatedPart" processId="ICS2_MonitoringPrescription">
+            <TaskParam path="ICS2_Workplan.ICS2_MonitoringPrescription.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
+        </Action>
+
+        <Action id="ActivateDualTask" processId="ICS2_SimpleTask" breakpoint="true"/>
+        <Action id="CompleteDualTaskHumanPart" processId="ICS2_SimpleTask" breakpoint="true">
+            <TaskParam path="ICS2_Workplan.ICS2_SimpleTask.type"  values="['OTHER']"/>
+            <TaskParam path="ICS2_Workplan.ICS2_SimpleTask.freq"  values="[5]"/>
+            <TaskParam path="ICS2_Workplan.ICS2_SimpleTask.freqqunit"  values="['WEEKS']"/>
+            <TaskParam path="ICS2_Workplan.ICS2_SimpleTask.maxdelay"  values="[100]"/>
+            <TaskParam path="ICS2_Workplan.ICS2_SimpleTask.startdate"  values="['2017-06-09T00:00:00.0']"/>
+            <TaskParam path="ICS2_Workplan.ICS2_SimpleTask.enddate"  values="['2019-06-09T00:00:00.0']"/>
+            <TaskParam path="ICS2_Workplan.ICS2_SimpleTask.timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
+            <TaskParam path="ICS2_Workplan.ICS2_SimpleTask.repetitionseachday"  values="[5]"/>            
+            <TaskParam path="ICS2_Workplan.ICS2_SimpleTask.comments"  values="['Some random comment']"/>
+        </Action>
+        <Action id="CompleteDualTaskAutomatedPart" processId="ICS2_SimpleTask">
+            <TaskParam path="ICS2_Workplan.ICS2_SimpleTask.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
+        </Action>
+
 
  
     </Execution>
