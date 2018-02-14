@@ -6,7 +6,7 @@ import Model from '../model';
 export default class User extends Model{
 
   static create(jwt, data) {
-    return http.post(jwt, '/users', data)
+    return http.post(jwt, '/users', this.addCheckTypeConstraint(data));
   }
 
   static verify(jwt, userId, email, magic){
@@ -42,7 +42,7 @@ export default class User extends Model{
   }
 
   static updateById(jwt, data) {
-    return http.put(jwt, '/users/'+data.id, data);
+    return http.put(jwt, '/users/'+data.id, this.addCheckTypeConstraint(data));
   }
 
   static deleteById(jwt, userId) {
