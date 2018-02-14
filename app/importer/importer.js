@@ -344,6 +344,9 @@ module.exports = class Importer {
       const userDefinition = this.json.UserDefinition[0];
       let persistedUserDefinitionId = null;
       return UserDefinition.find(this.jwt)
+        .then(persistedUserDef => {
+          return EntityDefinition.update(this.jwt, {id: persistedUserDef.id, allowFreeAttributes: false})
+        })
         .then(persistedUserDef =>{
           persistedUserDefinitionId = persistedUserDef.id;
           return this.createUserDefinitionAttributeDefinitions(userDefinition, persistedUserDefinitionId);
