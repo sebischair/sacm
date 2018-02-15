@@ -210,21 +210,9 @@
 		
 		<EntityDefinition id="LCS2_WorkplanDuringHospitalization">
 			<AttributeDefinition id="LCS2_PhysicalActivityDH" type="Link.EntityDefinition.LCS2_PhysicalActivityDH" />						
-			<AttributeDefinition id="LCS2_NutritionalEducationDH" type="Link.EntityDefinition.LCS2_NutritionalEducationDH"/>
 			<AttributeDefinition id="LCS2_EVADH" type="Link.EntityDefinition.LCS2_EVADH"/> 
 		    <AttributeDefinition id="LCS2_SLANSSDH" type="Link.EntityDefinition.LCS2_SLANSSDH"/>			
 		</EntityDefinition>
-
-        <EntityDefinition id="LCS2_NutritionalEducationDH">
-            <AttributeDefinition id="neducaExec1" type="enumeration" multiplicity="maximalOne" description="El pacient ha rebut formació nutricional den el curs de la hospitalització?">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="neducaExec2" type="enumeration" multiplicity="maximalOne" description="El cuidador ha rebut formació nutricional en el curs de la hospitalització?">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
-            </AttributeDefinition>
-        </EntityDefinition>
 		
         <EntityDefinition id="LCS2_EVADH">
               <AttributeDefinition id="eva1" type="enumeration" multiplicity="maximalOne" description="Escala numerada: On 0 és sense dolor i 10 és el dolor màxim. Seleccioni el número que millor avalua la intensitat del símptoma">
@@ -518,11 +506,6 @@
 				<TaskParamDefinition path="LCS2_WorkplanDuringHospitalization.LCS2_EVADH.eva1" isReadOnly="false" isMandatory="true"/>
 			</HumanTaskDefinition>						
 		  
-          <HumanTaskDefinition id="LCS2_NutritionalEducationWPDH" description="Educació nutricional" ownerPath="LCS2_Nurse" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_NutritionalEducationDH" entityAttachPath="LCS2_WorkplanDuringHospitalization.LCS2_NutritionalEducationDH">
-            <TaskParamDefinition path="LCS2_WorkplanDuringHospitalization.LCS2_NutritionalEducationDH.neducaExec1" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS2_WorkplanDuringHospitalization.LCS2_NutritionalEducationDH.neducaExec2" isReadOnly="false" isMandatory="true"/>
-          </HumanTaskDefinition>
-
           <HumanTaskDefinition id="LCS2_SLANSSWPDH" description="S-LANSS" ownerPath="LCS2_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_SLANSSDH" entityAttachPath="LCS2_WorkplanDuringHospitalization.LCS2_SLANSSDH">
             <TaskParamDefinition path="LCS2_WorkplanDuringHospitalization.LCS2_SLANSSDH.slanssExec1" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="LCS2_WorkplanDuringHospitalization.LCS2_SLANSSDH.slanssExec2" isReadOnly="false" isMandatory="true"/>
@@ -571,7 +554,7 @@
 		<!-- STAGEDEFINITION: WorkplanAfterHospitalization -->    
 		<StageDefinition id="LCS2_WorkplanAfterHospitalization" description="Pla de treball (Post)" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_WorkplanAfterHospitalization" entityAttachPath="LCS2_WorkplanAfterHospitalization">
 		
-		  <HumanTaskDefinition id="LCS2_RehabilitationWPAH" description="Rehabilitació" ownerPath="LCS2_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_RehabilitationAH" entityAttachPath="LCS2_WorkplanAfterHospitalization.LCS2_RehabilitationAH">
+		  <HumanTaskDefinition id="LCS2_RehabilitationWPAH" description="Rehabilitació" ownerPath="LCS2_Physiotherapist" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_RehabilitationAH" entityAttachPath="LCS2_WorkplanAfterHospitalization.LCS2_RehabilitationAH">
             <TaskParamDefinition path="LCS2_WorkplanAfterHospitalization.LCS2_RehabilitationAH.rehabExec1" isReadOnly="false" isMandatory="true"/>
           </HumanTaskDefinition>
 
