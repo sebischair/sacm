@@ -60,11 +60,12 @@
 		<EntityDefinition id="LCS2_WorkplanBeforeHospitalization">
 			<AttributeDefinition id="LCS2_PhysicalActivityBH" type="Link.EntityDefinition.LCS2_PhysicalActivityBH"/>
 			<AttributeDefinition id="LCS2_MonitoringPrescription" type="Link.EntityDefinition.LCS2_MonitoringPrescription"/> 
+			<AttributeDefinition id="LCS2_Comment" type="Link.EntityDefinition.LCS2_Comment"/> 
 			<AttributeDefinition id="LCS2_AnaemiaAssessmentAndManagementBH" type="Link.EntityDefinition.LCS2_AnaemiaAssessmentAndManagementBH"/>
 		    <AttributeDefinition id="LCS2_BloodPressureControlBH" type="Link.EntityDefinition.LCS2_BloodPressureControlBH"/>		  
 		    <AttributeDefinition id="LCS2_DiabetesControlBH" type="Link.EntityDefinition.LCS2_DiabetesControlBH"/>
 			<AttributeDefinition id="LCS2_EVABH" type="Link.EntityDefinition.LCS2_EVABH"/> 
-		    <AttributeDefinition id="LCS2_SLANSSBH" type="Link.EntityDefinition.LCS2_SLANSSBH"/>
+		    <AttributeDefinition id="LCS2_SLANSSBH" type="Link.EntityDefinition.LCS2_SLANSSBH"/>			
 		</EntityDefinition>
 		
 		<EntityDefinition id="LCS2_PhysicalActivityBH">
@@ -200,6 +201,10 @@
             <DerivedAttributeDefinition id="slanssExec8" expression="number(slanssExec1,0)+number(slanssExec2,0)+number(slanssExec3,0)+number(slanssExec4,0)+number(slanssExec5,0)+number(slanssExec6,0)+number(slanssExec7,0)" description="Puntuació"/>
         </EntityDefinition>
 
+		<EntityDefinition id="LCS2_Comment">
+		     <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comentaris" additionalDescription="Proporcioneu suggeriments addicionals"/>   
+		</EntityDefinition>
+		
 		
 		<!-- WORKSPACE: WorkplanDuringHospitalization -->	
 		
@@ -458,16 +463,20 @@
 				<TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_DiabetesControlBH.DiabetisControl1" isReadOnly="false" isMandatory="true"/>
 			</HumanTaskDefinition>
 
-          <HumanTaskDefinition id="LCS2_SLANSSWPBH" description="S-LANSS" ownerPath="LCS2_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_SLANSSBH" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_SLANSSBH">
-            <TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_SLANSSBH.slanssExec1" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_SLANSSBH.slanssExec2" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_SLANSSBH.slanssExec3" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_SLANSSBH.slanssExec4" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_SLANSSBH.slanssExec5" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_SLANSSBH.slanssExec6" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_SLANSSBH.slanssExec7" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_SLANSSBH.slanssExec8" isReadOnly="true" isMandatory="false"/>
-          </HumanTaskDefinition>
+			  <HumanTaskDefinition id="LCS2_SLANSSWPBH" description="S-LANSS" ownerPath="LCS2_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_SLANSSBH" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_SLANSSBH">
+				<TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_SLANSSBH.slanssExec1" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_SLANSSBH.slanssExec2" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_SLANSSBH.slanssExec3" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_SLANSSBH.slanssExec4" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_SLANSSBH.slanssExec5" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_SLANSSBH.slanssExec6" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_SLANSSBH.slanssExec7" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_SLANSSBH.slanssExec8" isReadOnly="true" isMandatory="false"/>
+			  </HumanTaskDefinition>									
+
+			<HumanTaskDefinition id="LCS2_CommentWPBH" description="Comentaris" ownerPath="LCS2_Clinician" isMandatory="false" isRepeatable="false" entityDefinitionId="LCS2_Comment" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_Comment">									
+				<TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_Comment.comments" isReadOnly="false" isMandatory="true"/>                    
+			</HumanTaskDefinition>
 									
 			<DualTaskDefinition id="LCS2_PhysicalActivityWPBH" externalId="PhysicalActivity" description="Prescripció de l'activitat física - Abans l'hospitalització" ownerPath="LCS2_Owner" dueDatePath="LCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" isManualActivation="true" entityDefinitionId="LCS2_PhysicalActivityBH" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_PhysicalActivityBH">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
@@ -550,7 +559,11 @@
                     <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescription.timeslot" isReadOnly="false" isMandatory="true"/> 
                     <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescription.comments" isReadOnly="false" isMandatory="true"/>                    
                     <TaskParamDefinition part="AUTOMATED" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescription.measurement" isReadOnly="false" isMandatory="true"/>
-            </DualTaskDefinition>			 
+            </DualTaskDefinition>			
+
+			<HumanTaskDefinition id="LCS2_CommentWPDH" description="Comentaris" ownerPath="LCS2_Clinician" isMandatory="false" isRepeatable="false" entityDefinitionId="LCS2_Comment" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_Comment">									
+				<TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_Comment.comments" isReadOnly="false" isMandatory="true"/>                    
+			</HumanTaskDefinition>
 			 
 		</StageDefinition>
 
@@ -625,6 +638,10 @@
                     <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescription.comments" isReadOnly="false" isMandatory="true"/>                    
                     <TaskParamDefinition part="AUTOMATED" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescription.measurement" isReadOnly="false" isMandatory="true"/>
             </DualTaskDefinition>	
+		
+			<HumanTaskDefinition id="LCS2_CommentWPAH" description="Comentaris" ownerPath="LCS2_Clinician" isMandatory="false" isRepeatable="false" entityDefinitionId="LCS2_Comment" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_Comment">									
+				<TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_Comment.comments" isReadOnly="false" isMandatory="true"/>                    
+			</HumanTaskDefinition>					
 		
 		</StageDefinition>
 		
