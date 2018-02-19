@@ -29,7 +29,7 @@
 
     <Workspace staticId="2c9480885d1737ef015d74deed260006" id="Umcg">
         <EntityDefinition id="GCS2_CaseData" description="Case Data">
-            <AttributeDefinition id="GCS2_Patient" type="Link.Users(UmcgPatients)" description="Patient" additionalDescription="some hint here"/>
+            <AttributeDefinition id="GCS2_Patient" type="Link.Users(UmcgPatients)" description="Patient" additionalDescription="Patient that is assigned to this case."/>
             <AttributeDefinition id="GCS2_Owner" type="Link.Users(UmcgProfessionals)" description="Owner"/>
             <AttributeDefinition id="GCS2_EvaluationDueDate" type="date.after(TODAY)" description="Evaluation default due date"/>
             <AttributeDefinition id="GCS2_WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date"/>
@@ -563,7 +563,7 @@
             </AttributeDefinition> 
             <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="maximalOne" description="Max delay in minutes" additionalDescription="Maximum delay to fullfill the prescription by the patient"/> 
             <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Start date"/> 
-            <AttributeDefinition id="enddate" type="date.after(tartdate)" multiplicity="exactlyOne" description="End date"/> 
+            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="End date"/> 
             <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="Slots to take the measurements" additionalDescription="Multiple slots can be selected, at least one slot need to be selected">     
                 <EnumerationOption value="BREAKFAST" description="Breakfast"/>
                 <EnumerationOption value="LUNCH" description="Lunch"/>
@@ -676,7 +676,7 @@
                 </HumanTaskDefinition>
 
                 
-                <HumanTaskDefinition id="GCS2_PatientsConsent" description="Patient's Consent" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_PatientsConsent" entityAttachPath="GCS2_Identification.GCS2_PatientsConsent">              
+                <HumanTaskDefinition id="GCS2_PatientsConsent" description="Patient's Consent" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_PatientsConsent" entityAttachPath="GCS2_Identification.GCS2_PatientsConsent"> 
                     <SentryDefinition>
                         <precondition processDefinitionId="GCS2_SelectPatient"/>
                     </SentryDefinition>
@@ -703,10 +703,13 @@
                 </HumanTaskDefinition>
                 
             </StageDefinition>
-            <StageDefinition id="GCS2_CaseEvaluation" description="Case Evaluation" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_Evaluation" entityAttachPath="GCS2_Evaluation">  
+            <StageDefinition id="GCS2_CaseEvaluation" description="Case Evaluation" isMandatory="true" repeatable="SERIAL" entityDefinitionId="GCS2_Evaluation" entityAttachPath="GCS2_Evaluation">  
                 <SentryDefinition>
                     <precondition processDefinitionId="GCS2_CaseIdentification"/>
-                </SentryDefinition>        
+                </SentryDefinition>   
+                <SentryDefinition>
+                    <precondition processDefinitionId="GCS2_CaseEvaluation"/>
+                </SentryDefinition>       
                 <HumanTaskDefinition id="GCS2_Charlson" description="Charlson" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_Charlson" entityAttachPath="GCS2_Evaluation.GCS2_Charlson">
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch2" isReadOnly="false" isMandatory="true"/>
