@@ -412,7 +412,6 @@
             </AttributeDefinition>
             <AttributeDefinition id="mnasf6" type="number" multiplicity="maximalOne" description="Weight in kilograms"/>
             <AttributeDefinition id="mnasf7" type="number" multiplicity="maximalOne" description="Length in centimetres"/>
-
             <DerivedAttributeDefinition id="mnasf8" expression="round((mnasf6 / ((mnasf7/100) * (mnasf7/100))), 2)" description="BMI raw"/>  
             <DerivedAttributeDefinition id="mnasf9" expression="if mnasf8 < 19 then 0 else if mnasf8 >= 19 and mnasf8 < 21 then 1 else if mnasf8 >= 21 and mnasf8 < 23 then 2 else 3" description="BMI range indicator" uiReference="colors(14>=green>=12>orange>=8>red>=0)"/>  
 
@@ -514,7 +513,6 @@
                 <EnumerationOption value="2" description="Not often"/>
                 <EnumerationOption value="3" description="Very seldom"/>
             </AttributeDefinition>
-
              <DerivedAttributeDefinition id="hadA8" expression="number(hadA1,0)+number(hadA2,0)+number(hadA3,0)+number(hadA4,0)+number(hadA5,0)+number(hadA6,0)+number(hadA7,0)" description="Anxiety Score"/> 
              <DerivedAttributeDefinition id="hadD8" expression="number(hadD1,0)+number(hadD2,0)+number(hadD3,0)+number(hadD4,0)+number(hadD5,0)+number(hadD6,0)+number(hadD7,0)" description="Depression Score"/> 
              <DerivedAttributeDefinition id="hadA9" expression='if hadA8 < 8 then "Normal" else if hadA8 > 7 and hadA8 < 11 then "Borderline abnormal" else "Abnormal case"' description="Anxiety Result"/> 
@@ -674,7 +672,6 @@
                     <TaskParamDefinition path="GCS2_EvaluationDueDate" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_WorkplanDueDate" isReadOnly="false" isMandatory="true"/>                    
                 </HumanTaskDefinition>
-
                 
                 <HumanTaskDefinition id="GCS2_PatientsConsent" description="Patient's Consent" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_PatientsConsent" entityAttachPath="GCS2_Identification.GCS2_PatientsConsent"> 
                     <SentryDefinition>
@@ -682,7 +679,6 @@
                     </SentryDefinition>
                     <TaskParamDefinition path="GCS2_Identification.GCS2_PatientsConsent.pConsent1" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
-
 
                 <HumanTaskDefinition id="GCS2_ThechTest" description="Technological Test" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_ThechTest" entityAttachPath="GCS2_Identification.GCS2_ThechTest">               
                     <SentryDefinition>
@@ -694,15 +690,14 @@
                     <TaskParamDefinition path="GCS2_Identification.GCS2_ThechTest.tech4" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
 
-
                 <HumanTaskDefinition id="GCS2_ASA" description="ASA" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_ASA" entityAttachPath="GCS2_Identification.GCS2_ASA">                
                     <SentryDefinition>
                         <precondition processDefinitionId="GCS2_SelectPatient"/>
                     </SentryDefinition>
                     <TaskParamDefinition path="GCS2_Identification.GCS2_ASA.asa" isReadOnly="false" isMandatory="true"/>
-                </HumanTaskDefinition>
-                
+                </HumanTaskDefinition>                
             </StageDefinition>
+
             <StageDefinition id="GCS2_CaseEvaluation" description="Case Evaluation" isMandatory="true" repeatable="SERIAL" activation="EXPRESSION" manualActivationExpression="GCS2_Evaluation.count()>0" entityDefinitionId="GCS2_Evaluation" entityAttachPath="GCS2_Evaluation">
                 <SentryDefinition>
                     <precondition processDefinitionId="GCS2_CaseIdentification"/>
@@ -795,27 +790,26 @@
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf10" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
 
-            <HumanTaskDefinition id="GCS2_HospitalAnxietyAndDepressionScale" description="Hospital Anxiety and Depression Scale (HADS) " ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE"  entityDefinitionId="GCS2_HospitalAnxietyAndDepressionScale" entityAttachPath="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale">
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA1" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD1" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA2" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD2" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA3" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD3" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA4" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD4" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA5" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD5" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA6" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD6" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA7" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD7" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA8" isReadOnly="true" isMandatory="false"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD8" isReadOnly="true" isMandatory="false"/>        
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA9" isReadOnly="true" isMandatory="false"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD9" isReadOnly="true" isMandatory="false"/>
-            </HumanTaskDefinition>
-
+                <HumanTaskDefinition id="GCS2_HospitalAnxietyAndDepressionScale" description="Hospital Anxiety and Depression Scale (HADS) " ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE"  entityDefinitionId="GCS2_HospitalAnxietyAndDepressionScale" entityAttachPath="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale">
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA8" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD8" isReadOnly="true" isMandatory="false"/>        
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA9" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD9" isReadOnly="true" isMandatory="false"/>
+                </HumanTaskDefinition>
             </StageDefinition>
 
             <StageDefinition id="GCS2_Workplan" description="Workplan" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_Workplan" entityAttachPath="GCS2_Workplan">
@@ -854,7 +848,7 @@
                     <TaskParamDefinition part="AUTOMATED" path="GCS2_Workplan.GCS2_MonitoringPrescription.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>
 
-                <!-- isreal -->
+                <!-- TODO needs to be removed after testing -->
                 <DualTaskDefinition id="GCS2_SimpleTask" externalId="SimpleTask" description="Simple Task" dynamicDescriptionPath="GCS2_Workplan.GCS2_SimpleTask.type" ownerPath="GCS2_Owner" dueDatePath="GCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="GCS2_SimpleTask" entityAttachPath="GCS2_Workplan.GCS2_SimpleTask">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/simpletask" method="POST" failureMessage="Could not create prescription on Self-Management System!"></HttpHookDefinition>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/simpletask/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"></HttpHookDefinition>
@@ -868,8 +862,7 @@
                     <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_SimpleTask.repetitionseachday" isReadOnly="false" isMandatory="true"/> 
                     <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_SimpleTask.comments" isReadOnly="false" isMandatory="true"/>                    
                     <TaskParamDefinition part="AUTOMATED" path="GCS2_Workplan.GCS2_SimpleTask.measurement" isReadOnly="false" isMandatory="true"/>
-                </DualTaskDefinition>
-                
+                </DualTaskDefinition>                
             </StageDefinition>
             
             <StageDefinition id="GCS2_Discharge" description="Discharge" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_Discharge" entityAttachPath="GCS2_Discharge">
@@ -896,21 +889,17 @@
             <TaskParam path="GCS2_EvaluationDueDate" values="['2017-12-26T00:00:00.000']"/>
             <TaskParam path="GCS2_WorkplanDueDate" values="['2017-12-28T00:00:00.000']"/>
         </Action>
-
         <Action id="CompleteHumanTask" processId="GCS2_ASA">
             <TaskParam path="GCS2_Identification.GCS2_ASA.asa" values="['2']"/>
         </Action>
-
         <Action id="CompleteHumanTask" processId="GCS2_PatientsConsent">
             <TaskParam path="GCS2_Identification.GCS2_PatientsConsent.pConsent1" values="['1']"/>
         </Action>
-
         <Action id="CompleteHumanTask" processId="GCS2_ThechTest">
             <TaskParam path="GCS2_Identification.GCS2_ThechTest.tech1" values="['1']"/>
             <TaskParam path="GCS2_Identification.GCS2_ThechTest.tech2" values="['1']"/>
             <TaskParam path="GCS2_Identification.GCS2_ThechTest.tech3" values="['1']"/>
         </Action>
-
         <Action id="CompleteHumanTask" processId="GCS2_Charlson">
             <TaskParam path="GCS2_Evaluation.GCS2_Charlson.ch1"  values="['0']"/>
             <TaskParam path="GCS2_Evaluation.GCS2_Charlson.ch2"  values="['1']"/>
@@ -1005,8 +994,6 @@
             <TaskParam path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD6" values="['1']"/>
             <TaskParam path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD7" values="['1']"/>
         </Action>
-
-
         <!--
         <Action id="CreateAlert" 
             processId="GCS2_SF12" 
