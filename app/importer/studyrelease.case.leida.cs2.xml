@@ -1306,7 +1306,8 @@
 		<!-- STAGEDEFINITION: CaseIdentification -->	  
         <StageDefinition id="LCS2_CaseIdentification" description="Identificació del cas" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_Identification" entityAttachPath="LCS2_Identification">
            
-		    <HumanTaskDefinition id="LCS2_SelectPatient" description="Inclusió" ownerPath="LCS2_Owner" isMandatory="true" repeatable="ONCE">
+		    <HumanTaskDefinition id="LCS2_SelectPatient" externalId="SelectPatient" description="Inclusió" ownerPath="LCS2_Owner" isMandatory="true" repeatable="ONCE">
+                <HttpHookDefinition on="COMPLETE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/case/patient/inclusion" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                 <TaskParamDefinition path="LCS2_Patient" isReadOnly="false" isMandatory="true"/>                
 				<TaskParamDefinition path="LCS2_Clinician" isReadOnly="false" isMandatory="true"/>
 				<TaskParamDefinition path="LCS2_Nurse" isReadOnly="false" isMandatory="true"/>
