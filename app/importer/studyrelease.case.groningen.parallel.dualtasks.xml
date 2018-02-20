@@ -65,7 +65,7 @@
                     <precondition processDefinitionId="GCS2PDT_CaseIdentification"/>
                 </SentryDefinition>
                 
-                <DualTaskDefinition id="GCS2PDT_PhysicalActivity" description="Physical Activity" ownerPath="GCS2PDT_Owner" dueDatePath="GCS2PDT_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" isManualActivation="true" entityDefinitionId="GCS2PDT_PhysicalActivity" entityAttachPath="GCS2PDT_PhysicalActivity">
+                <DualTaskDefinition id="GCS2PDT_PhysicalActivity" description="Physical Activity" ownerPath="GCS2PDT_Owner" dueDatePath="GCS2PDT_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="GCS2PDT_PhysicalActivity" entityAttachPath="GCS2PDT_PhysicalActivity">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System"></HttpHookDefinition>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not create Terminate Hook"></HttpHookDefinition>
                     <TaskParamDefinition part="HUMAN" path="GCS2PDT_PhysicalActivity.phactp1" isReadOnly="false" isMandatory="true"/>
@@ -78,17 +78,17 @@
                     <TaskParamDefinition part="AUTOMATED" path="GCS2PDT_PhysicalActivity.phactpx" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>
 
-                <HumanTaskDefinition id="GCS2PDT_ChangeDueDates" description="Change Workplan Dates" ownerPath="GCS2PDT_Owner" isMandatory="false" isManualActivation="true" repeatable="ONCE">                
+                <HumanTaskDefinition id="GCS2PDT_ChangeDueDates" description="Change Workplan Dates" ownerPath="GCS2PDT_Owner" isMandatory="false" activation="MANUAL" repeatable="ONCE">                
                     <TaskParamDefinition path="GCS2PDT_WorkplanDueDate" isReadOnly="false" isMandatory="true"/>                    
                 </HumanTaskDefinition>
 
-                <AutomatedTaskDefinition id="GCS2PDT_ChangeDueDates2" description="Change Workplan Dates Automated" ownerPath="GCS2PDT_Owner" isMandatory="false" isManualActivation="true" repeatable="ONCE">                
+                <AutomatedTaskDefinition id="GCS2PDT_ChangeDueDates2" description="Change Workplan Dates Automated" ownerPath="GCS2PDT_Owner" isMandatory="false" activation="MANUAL" repeatable="ONCE">                
                     <TaskParamDefinition path="GCS2PDT_WorkplanDueDate" isReadOnly="false" isMandatory="true"/>                    
                 </AutomatedTaskDefinition>
               
             </StageDefinition>
 
-            <StageDefinition id="GCS2PDT_Discharge" description="Case Discharge" isMandatory="false" isManualActivation="true" repeatable="SERIAL">        
+            <StageDefinition id="GCS2PDT_Discharge" description="Case Discharge" isMandatory="false" activation="MANUAL" repeatable="SERIAL">        
                 <!--<HumanTaskDefinition id="GCS2PDT_ChangeDueDates" description="Change Workplan Dates" ownerPath="GCS2PDT_Owner" isMandatory="true" repeatable="ONCE">                
                     <TaskParamDefinition path="GCS2PDT_WorkplanDueDate" isReadOnly="false" isMandatory="true"/>                    
                 </HumanTaskDefinition>-->

@@ -1489,7 +1489,7 @@
                     <precondition processDefinitionId="ICS2_PhysiotherapistEvaluation"/>
                 </SentryDefinition>
 
-                <DualTaskDefinition id="ICS2_PhysicalActivity" externalId="PhysicalActivity" description="Physical Activity" ownerPath="ICS2_CaseManager" dueDatePath="ICS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" isManualActivation="true" entityDefinitionId="ICS2_PhysicalActivity" entityAttachPath="ICS2_Workplan.ICS2_PhysicalActivity">
+                <DualTaskDefinition id="ICS2_PhysicalActivity" externalId="PhysicalActivity" description="Physical Activity" ownerPath="ICS2_CaseManager" dueDatePath="ICS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="ICS2_PhysicalActivity" entityAttachPath="ICS2_Workplan.ICS2_PhysicalActivity">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_PhysicalActivity.startdate" isReadOnly="false" isMandatory="true"/>
@@ -1502,7 +1502,7 @@
                     <TaskParamDefinition part="AUTOMATED" path="ICS2_Workplan.ICS2_PhysicalActivity.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>
 
-                <DualTaskDefinition id="ICS2_MonitoringPrescription" externalId="MonitoringPrescription" description="Monitoring Prescription" dynamicDescriptionPath="ICS2_Workplan.ICS2_MonitoringPrescription.type" ownerPath="ICS2_CaseManager" dueDatePath="ICS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" isManualActivation="true" entityDefinitionId="ICS2_MonitoringPrescription" entityAttachPath="ICS2_Workplan.ICS2_MonitoringPrescription">
+                <DualTaskDefinition id="ICS2_MonitoringPrescription" externalId="MonitoringPrescription" description="Monitoring Prescription" dynamicDescriptionPath="ICS2_Workplan.ICS2_MonitoringPrescription.type" ownerPath="ICS2_CaseManager" dueDatePath="ICS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="ICS2_MonitoringPrescription" entityAttachPath="ICS2_Workplan.ICS2_MonitoringPrescription">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_MonitoringPrescription.type" isReadOnly="false" isMandatory="true"/>
@@ -1521,7 +1521,7 @@
                 </DualTaskDefinition>
 
                 <!-- isreal -->
-                <DualTaskDefinition id="ICS2_SimpleTask" externalId="SimpleTask" description="Simple Task" dynamicDescriptionPath="ICS2_Workplan.ICS2_SimpleTask.type" ownerPath="ICS2_CaseManager" dueDatePath="ICS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" isManualActivation="true" entityDefinitionId="ICS2_SimpleTask" entityAttachPath="ICS2_Workplan.ICS2_SimpleTask">
+                <DualTaskDefinition id="ICS2_SimpleTask" externalId="SimpleTask" description="Simple Task" dynamicDescriptionPath="ICS2_Workplan.ICS2_SimpleTask.type" ownerPath="ICS2_CaseManager" dueDatePath="ICS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="ICS2_SimpleTask" entityAttachPath="ICS2_Workplan.ICS2_SimpleTask">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/simpletask" method="POST" failureMessage="Could not create prescription on Self-Management System!"></HttpHookDefinition>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/simpletask/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"></HttpHookDefinition>
                     <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_SimpleTask.type" isReadOnly="false" isMandatory="true"/>
