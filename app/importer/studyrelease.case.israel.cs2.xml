@@ -1112,10 +1112,13 @@
                 </HumanTaskDefinition>
             </StageDefinition>
 
-            <StageDefinition id="ICS2_CaseEvaluation" description="הערכת    המטופל" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Evaluation" entityAttachPath="ICS2_Evaluation">  
+            <StageDefinition id="ICS2_CaseEvaluation" description="הערכת    המטופל" isMandatory="true" repeatable="SERIAL" activation="EXPRESSION" manualActivationExpression="ICS2_Evaluation.count()>0" entityDefinitionId="ICS2_Evaluation" entityAttachPath="ICS2_Evaluation">  
                 <SentryDefinition>
-                <precondition processDefinitionId="ICS2_CaseIdentification"/>
-                </SentryDefinition>        
+                    <precondition processDefinitionId="ICS2_CaseIdentification"/>
+                </SentryDefinition>      
+                <SentryDefinition>
+                    <precondition processDefinitionId="ICS2_CaseEvaluation"/>
+                </SentryDefinition>   
                 <HumanTaskDefinition id="ICS2_PatientsData" description="פרטים דמוגרפיים" ownerPath="ICS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PatientsData" entityAttachPath="ICS2_Evaluation.ICS2_PatientsData">                
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_PatientsData.Birthcountry" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_PatientsData.ImmigrationYear" isReadOnly="false" isMandatory="true"/>
