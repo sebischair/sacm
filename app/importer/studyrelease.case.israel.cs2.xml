@@ -1171,7 +1171,8 @@
     <StageDefinition id="ICS2_CaseIdentification" description="זיהוי המטופל" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Identification" entityAttachPath="ICS2_Identification">
 
 
-        <HumanTaskDefinition id="ICS2_SelectPatient" description="בחירת מטופל" ownerPath="ICS2_CaseManager" isMandatory="true" repeatable="ONCE"> 
+        <HumanTaskDefinition id="ICS2_SelectPatient" externalId="SelectPatient" description="בחירת מטופל" ownerPath="ICS2_CaseManager" isMandatory="true" repeatable="ONCE"> 
+            <HttpHookDefinition on="COMPLETE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/case/patient/inclusion" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
             <TaskParamDefinition path="ICS2_Patient" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_CaseManager" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="ICS2_EvaluationDueDate" isReadOnly="false" isMandatory="true"/>

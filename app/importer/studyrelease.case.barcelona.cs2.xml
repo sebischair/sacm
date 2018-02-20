@@ -971,7 +971,8 @@
 
             <StageDefinition id="BCS2_CaseIdentification" description="Case Identification" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_Identification" entityAttachPath="BCS2_Identification">
 
-                <HumanTaskDefinition id="BCS2_SelectPatient" description="Select Patient" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE"> 
+                <HumanTaskDefinition id="BCS2_SelectPatient" externalId="SelectPatient" description="Assign Patient" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE"> 
+                    <HttpHookDefinition on="COMPLETE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/case/patient/inclusion" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition path="BCS2_Patient" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_Owner" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_EvaluationDueDate" isReadOnly="false" isMandatory="true"/>
