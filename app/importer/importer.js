@@ -1061,7 +1061,11 @@ module.exports = class Importer {
       //console.log(JSON.stringify(actions,null,2))
       console.log('Execute following actions: ')
       actions.forEach(action=>{
-        console.log(action.$.id+'('+action.$.processId+')');
+        if(action.$.id != 'Delay'){
+          console.log(action.$.id+'('+action.$.processId+')');
+        }else{
+          console.log(action.$.id+'('+action.$.ms+')');
+        }
       });
       return Promise.each(actions, action=>{
         let p = Promise.resolve();
@@ -1095,6 +1099,9 @@ module.exports = class Importer {
 
           }else if(action.$.id == "CreateAlert"){
             return this.createAlert(caseId, action.$.processId, action)        
+
+          }else if(action.$.id == "Delay"){
+            return Promise.delay(200);  
 
           }else{
             return Promise.resolve('Action "'+action.$.id+'" not defined!');
