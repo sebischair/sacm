@@ -23,7 +23,12 @@
 
     <User staticId="2c940c085e765068015e76f92c3a00f0" id="coled"/>
     <User staticId="2c940c085e765068015e76ff40800100" id="aguilara"/>
-	<User staticId="2c940c085e765068015e770238860110" id="romeroe"/>
+    <User staticId="2c940c085e765068015e770238860110" id="romeroe"/>
+
+    <User staticId="f854153e05b111e8941d0242ac140002" id="wilsong"/>
+    <User staticId="26be3a3605b011e8941d0242ac140002" id="parkerw"/>
+    <User staticId="f0cbee0505b011e8941d0242ac140002" id="velardem"/>
+	<User staticId="c073767705b111e8941d0242ac140002" id="arpl"/>
 
     <Workspace staticId="2c9480885d1737ef015d74deecbf0004" id="Idibaps">
 
@@ -35,6 +40,8 @@
 
             <AttributeDefinition id="BCS2_Identification" type="Link.EntityDefinition.BCS2_Identification" description="Identification"/>
             <AttributeDefinition id="BCS2_Evaluation" type="Link.EntityDefinition.BCS2_Evaluation" description="Evaluation"/>
+            <AttributeDefinition id="BCS2_Workplan" type="Link.EntityDefinition.BCS2_Workplan" description="Workplan"/> 
+            <AttributeDefinition id="BCS2_Discharge" type="Link.EntityDefinition.BCS2_Discharge" description="Discharge"/>    
 
             <!--
             <AttributeDefinition id="BCS2_SelectedProfessionals" type="Link.EntityDefinition.BCS2_SelectedProfessionals" description="Inclusion form"/>
@@ -120,6 +127,8 @@
             <AttributeDefinition id="BCS2_FunctionalCapacity6MWT" type="Link.EntityDefinition.BCS2_FunctionalCapacity6MWT" multiplicity="maximalOne" description="Capacidad Funcional 6MWT"/> 
 
             <AttributeDefinition id="BCS2_FunctionalCapacityYPA" type="Link.EntityDefinition.BCS2_FunctionalCapacityYPA" multiplicity="maximalOne" description="Capacidad Funcional YPA"/> 
+            <AttributeDefinition id="BCS2_AdherenceCapacityESES" type="Link.EntityDefinition.BCS2_AdherenceCapacityESES" multiplicity="maximalOne" description="Evaluación de adherencia ESES"/> 
+            <AttributeDefinition id="BCS2_HospitalAnxietyAndDepressionScale" type="Link.EntityDefinition.BCS2_HospitalAnxietyAndDepressionScale" multiplicity="maximalOne" description="Hospital Anxiety and Depression Scale"/> 
         </EntityDefinition>
 
         <EntityDefinition id="BCS2_SelectedProfessionals" description="Selección inicial de profesionales">
@@ -385,7 +394,7 @@
         <EntityDefinition id="BCS2_PhysicalExamination" description="Examinación física">
             <AttributeDefinition id="Height" type="number" multiplicity="maximalOne" description="Altura (cm)"/>
             <AttributeDefinition id="Weight" type="number" multiplicity="maximalOne" description="Peso (Kg)"/>
-            <DerivedAttributeDefinition id="Bmi" expression="(Weight / ((Height/100) * (Height/100)))" sdescription="Bmi"/>
+            <DerivedAttributeDefinition id="Bmi" expression="round((Weight / ((Height/100) * (Height/100))))" description="Bmi"/>
             <AttributeDefinition id="BloodPressSist" type="number" multiplicity="maximalOne" description="Presión Arterial Sistólica (mmHg)"/>
             <AttributeDefinition id="BloodPressDiast" type="number" multiplicity="maximalOne" description="Presión Arterial Diastólica (mmHg)"/>
             <AttributeDefinition id="HeartRate" type="number" multiplicity="maximalOne" description="Freq. Cardíaca (bps)"/>
@@ -525,7 +534,7 @@
         </EntityDefinition>
 
 
-        <EntityDefinition id="BCS2_FunctionalCapacity6MWT" option="Capacidad Funcional 6MWT">
+        <EntityDefinition id="BCS2_FunctionalCapacity6MWT" description="Capacidad Funcional 6MWT">
             <AttributeDefinition id="6MWTmeters" type="number" description="Distancia (meters)"/>
             <AttributeDefinition id="6MWTinitialFC" type="number" description="Frecuencia cardiaca inicial (bps)"/>
             <AttributeDefinition id="6MWTfinalFC" type="number" description="Frecuencia cardiaca final (bps)"/>
@@ -543,7 +552,7 @@
         </EntityDefinition>
 
 
-        <EntityDefinition id="BCS2_FunctionalCapacityYPA" option="Capacidad Funcional YPA">
+        <EntityDefinition id="BCS2_FunctionalCapacityYPA" description="Capacidad Funcional YPA">
             <AttributeDefinition id="YPASdipme" type="enumeration" description="¿Aproximadamente cuantas veces durante el ultimo mes ha participado en actividades intensas que duraron al menos 10 minutos, y provocaron importantes aumentos en su respiracion, pulso, cansancio de piernas o le hacían sudar?">
                 <EnumerationOption value="0" description="nunca"/>
                 <EnumerationOption value="1" description="1-3 veces por mes"/>
@@ -627,12 +636,338 @@
 
             <DerivedAttributeDefinition id="YPASsindre" expression="YPASspas+YPASstiemov+YPASstisen" multiplicity="maximalOne" description="INIDICE RESUMEN DE ACTIVIDAD FISICA"/>
 
-
         </EntityDefinition>
+
+
+        <EntityDefinition id="BCS2_AdherenceCapacityESES" description="Evaluación de adherencia ESES">
+            <AttributeDefinition id="eses1" type="enumeration" description="I am confident that I could always overcome barriers and challenges with regards to exercise if I try hard enough">
+                <EnumerationOption value="1" description="Not at all true"/>
+                <EnumerationOption value="2" description="Hardly true"/>
+                <EnumerationOption value="3" description="Moderately true"/>
+                <EnumerationOption value="4" description="Exactly true"/>
+            </AttributeDefinition>
+
+            <AttributeDefinition id="eses2" type="enumeration" description="I am confident that I could find the means and ways to exercise and be physically active">
+                <EnumerationOption value="1" description="Not at all true"/>
+                <EnumerationOption value="2" description="Hardly true"/>
+                <EnumerationOption value="3" description="Moderately true"/>
+                <EnumerationOption value="4" description="Exactly true"/>
+            </AttributeDefinition>
+
+            <AttributeDefinition id="eses3" type="enumeration" description="I am confident that it is easy for me to accomplish my activity and exercise goals">
+                <EnumerationOption value="1" description="Not at all true"/>
+                <EnumerationOption value="2" description="Hardly true"/>
+                <EnumerationOption value="3" description="Moderately true"/>
+                <EnumerationOption value="4" description="Exactly true"/>
+            </AttributeDefinition>
+
+            <AttributeDefinition id="eses4" type="enumeration" description="I am confident that when I am confronted with a barrier to exercise I could usually find several solutions to overcome this barrier">
+                <EnumerationOption value="1" description="Not at all true"/>
+                <EnumerationOption value="2" description="Hardly true"/>
+                <EnumerationOption value="3" description="Moderately true"/>
+                <EnumerationOption value="4" description="Exactly true"/>
+            </AttributeDefinition>
+
+            <AttributeDefinition id="eses5" type="enumeration" description="I am confident I could exercise even when I am tired">
+                <EnumerationOption value="1" description="Not at all true"/>
+                <EnumerationOption value="2" description="Hardly true"/>
+                <EnumerationOption value="3" description="Moderately true"/>
+                <EnumerationOption value="4" description="Exactly true"/>
+            </AttributeDefinition>
+
+            <AttributeDefinition id="eses6" type="enumeration" description="I am confident I could exercise even when I am feeling depressed">
+                <EnumerationOption value="1" description="Not at all true"/>
+                <EnumerationOption value="2" description="Hardly true"/>
+                <EnumerationOption value="3" description="Moderately true"/>
+                <EnumerationOption value="4" description="Exactly true"/>
+            </AttributeDefinition>
+
+            <AttributeDefinition id="eses7" type="enumeration" description="I am confident that I could exercise even without the support of my family or friends">
+                <EnumerationOption value="1" description="Not at all true"/>
+                <EnumerationOption value="2" description="Hardly true"/>
+                <EnumerationOption value="3" description="Moderately true"/>
+                <EnumerationOption value="4" description="Exactly true"/>
+            </AttributeDefinition>
+
+            <AttributeDefinition id="eses8" type="enumeration" description="I am confident that I could exercise without the help of an exercise therapist">
+                <EnumerationOption value="1" description="Not at all true"/>
+                <EnumerationOption value="2" description="Hardly true"/>
+                <EnumerationOption value="3" description="Moderately true"/>
+                <EnumerationOption value="4" description="Exactly true"/>
+            </AttributeDefinition>
+
+            <AttributeDefinition id="eses9" type="enumeration" description="I am confident that I could be physically active despite my spinal cord injury">
+                <EnumerationOption value="1" description="Not at all true"/>
+                <EnumerationOption value="2" description="Hardly true"/>
+                <EnumerationOption value="3" description="Moderately true"/>
+                <EnumerationOption value="4" description="Exactly true"/>
+            </AttributeDefinition>
+
+            <AttributeDefinition id="eses10" type="enumeration" description="I am confident that I could exercise even if I had no access to a gym or training facility">
+                <EnumerationOption value="1" description="Not at all true"/>
+                <EnumerationOption value="2" description="Hardly true"/>
+                <EnumerationOption value="3" description="Moderately true"/>
+                <EnumerationOption value="4" description="Exactly true"/>
+            </AttributeDefinition>
+
+            <DerivedAttributeDefinition id="esesScore" expression="number(eses1,0)+number(eses2,0)+number(eses3,0)+number(eses4,0)+number(eses5,0)+number(eses6,0)+number(eses7,0)+number(eses8,0)+number(eses9,0)+number(eses10,0)" multiplicity="maximalOne" description="INIDICE RESUMEN DE SELF-EFFICACY"/>
+        </EntityDefinition>
+
+
+        <EntityDefinition id="BCS2_HospitalAnxietyAndDepressionScale" description="Hospital Anxiety and Depression Scale">
+            <AttributeDefinition id="hadA1" type="enumeration" multiplicity="maximalOne" description="Me siento tenso o nervioso."> 
+                <EnumerationOption value="0" description="Nunca"/>
+                <EnumerationOption value="1" description="A veces"/>
+                <EnumerationOption value="2" description="Muchas veces"/>
+                <EnumerationOption value="3" description="Todos los dias"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadD1" type="enumeration" multiplicity="maximalOne" description="Todavia disfruto con lo que antes me gustaba."> 
+                <EnumerationOption value="0" description="Como siempre"/>
+                <EnumerationOption value="1" description="No lo bastante"/>
+                <EnumerationOption value="2" description="Solo un poco"/>
+                <EnumerationOption value="3" description="Nada"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadA2" type="enumeration" multiplicity="maximalOne" description="Tengo una sensacion de miedo, como si algo horrible me fuera a suceder."> 
+                <EnumerationOption value="0" description="Nada"/>
+                <EnumerationOption value="1" description="Un poco, pero no me preocupa"/>
+                <EnumerationOption value="2" description="Si, pero no es muy fuerte"/>
+                <EnumerationOption value="3" description="Definitivamente y es muy fuerte"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadD2" type="enumeration" multiplicity="maximalOne" description="Puedo reirme y ver el lado divertido de las cosas."> 
+                <EnumerationOption value="0" description="Al igual que siempre lo hice"/>
+                <EnumerationOption value="1" description="No tanto ahora"/>
+                <EnumerationOption value="2" description="Casi nunca"/>
+                <EnumerationOption value="3" description="Nunca"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadA3" type="enumeration" multiplicity="maximalOne" description="Tengo mi mente llena de preocupaciones."> 
+                <EnumerationOption value="0" description="Solo en ocasiones"/>
+                <EnumerationOption value="1" description="A veces, aunque no muy a menudo"/>
+                <EnumerationOption value="2" description="Con bastante frecuencia"/>
+                <EnumerationOption value="3" description="La mayoria de las veces"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadD3" type="enumeration" multiplicity="maximalOne" description="Me siento alegre."> 
+                <EnumerationOption value="0" description="Casi siempre"/>
+                <EnumerationOption value="1" description="A veces"/>
+                <EnumerationOption value="2" description="No muy a menudo"/>
+                <EnumerationOption value="3" description="Nunca"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadA4" type="enumeration" multiplicity="maximalOne" description="Puedo estar sentado confortablemente y sentirme relajado."> 
+                <EnumerationOption value="0" description="Siempre"/>
+                <EnumerationOption value="1" description="Por lo general"/>
+                <EnumerationOption value="2" description="No muy a menudo"/>
+                <EnumerationOption value="3" description="Nunca"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadD4" type="enumeration" multiplicity="maximalOne" description="Me siento como si cada dia estuviera mas lento."> 
+                <EnumerationOption value="0" description="Nunca"/>
+                <EnumerationOption value="1" description="A veces"/>
+                <EnumerationOption value="2" description="Muy a menudo"/>
+                <EnumerationOption value="3" description="Por lo general, en todo momento"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadA5" type="enumeration" multiplicity="maximalOne" description="Tengo una sensacion extrana, como si tuviera mariposasen el estomago."> 
+                <EnumerationOption value="0" description="El Nunca"/>
+                <EnumerationOption value="1" description="En ciertas ocasiones"/>
+                <EnumerationOption value="2" description="Con bastante frecuencia"/>
+                <EnumerationOption value="3" description="Muy a menudo"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadD5" type="enumeration" multiplicity="maximalOne" description="He perdido interes en mi aspecto personal."> 
+                <EnumerationOption value="0" description="Me preocupo al igual que siempre"/>
+                <EnumerationOption value="1" description="Podria tener un poco mas de cuidado"/>
+                <EnumerationOption value="2" description="No me preocupeo tanto como debiera"/>
+                <EnumerationOption value="3" description="Totalmente"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadA6" type="enumeration" multiplicity="maximalOne" description="Me siento inquieto, como si no pudiera parar demoverme."> 
+                <EnumerationOption value="0" description="Nada"/>
+                <EnumerationOption value="1" description="No mucho"/>
+                <EnumerationOption value="2" description="Bastante"/>
+                <EnumerationOption value="3" description="Mucho"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadD6" type="enumeration" multiplicity="maximalOne" description="Me siento optimista respecto al futuro."> 
+                <EnumerationOption value="0" description="Igual que siempre"/>
+                <EnumerationOption value="1" description="Menos de lo que acostumbraba"/>
+                <EnumerationOption value="2" description="Mucho menos de lo que acostumbraba"/>
+                <EnumerationOption value="3" description="Nada"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadA7" type="enumeration" multiplicity="maximalOne" description="Me asaltan sentimientos repentinos de panico."> 
+                <EnumerationOption value="0" description="Rara vez"/>
+                <EnumerationOption value="1" description="No muy a menudo"/>
+                <EnumerationOption value="2" description="Bastante a menudo"/>
+                <EnumerationOption value="3" description="Muy frecuentemente"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadD7" type="enumeration" multiplicity="maximalOne" description="Me divierto con un buen libro, la radio, o un programa de television."> 
+                <EnumerationOption value="0" description="Menudo"/>
+                <EnumerationOption value="1" description="A veces"/>
+                <EnumerationOption value="2" description="No muy a menudo"/>
+                <EnumerationOption value="3" description="Rara vez"/>
+            </AttributeDefinition>
+
+             <DerivedAttributeDefinition id="hadA8" expression="number(hadA1,0)+number(hadA2,0)+number(hadA3,0)+number(hadA4,0)+number(hadA5,0)+number(hadA6,0)+number(hadA7,0)" description="HAD Anxiety"/> 
+             <DerivedAttributeDefinition id="hadD8" expression="number(hadD1,0)+number(hadD2,0)+number(hadD3,0)+number(hadD4,0)+number(hadD5,0)+number(hadD6,0)+number(hadD7,0)" description="HAD Depression"/> 
+             <DerivedAttributeDefinition id="hadFinal" expression="hadD8+hadA8" description="HAD Total Score"/> 
+        </EntityDefinition>
+
+
+        <!-- Workplan Entity Definitions -->
+        <EntityDefinition id="BCS2_Workplan" description="Workplan">
+            <AttributeDefinition id="BCS2_PhysicalActivity" type="Link.EntityDefinition.BCS2_PhysicalActivity" description="Physical Activity"/>
+            <AttributeDefinition id="BCS2_MonitoringPrescription" type="Link.EntityDefinition.BCS2_MonitoringPrescription" description="Monitoring Prescription"/> 
+            <AttributeDefinition id="BCS2_SimpleTask" type="Link.EntityDefinition.BCS2_SimpleTask" description="Simple Task"/>
+        </EntityDefinition>
+
+        <EntityDefinition id="BCS2_PhysicalActivity" description="Physical Activity">
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="maximalOne" description="Start date"/>
+            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="maximalOne" description="End date"/>       
+            <AttributeDefinition id="dailysteps" type="number.min(0).max(100000)" defaultValues="[10000]" multiplicity="maximalOne" description="Number of steps daily"/>       
+            <AttributeDefinition id="dailylowlevel" type="number.min(0).max(1440)" defaultValues="[60]" multiplicity="maximalOne" description="Minutes of low level activity daily"/>       
+            <AttributeDefinition id="dailymediumlevel" type="number.min(0).max(1440)" defaultValues="[40]" multiplicity="maximalOne" description="Minutes of medium level activity daily"/>       
+            <AttributeDefinition id="dailyhighlevel" type="number.min(0).max(1440)" defaultValues="[20]" multiplicity="maximalOne" description="Minutes of high level activity daily"/> 
+            <AttributeDefinition id="dailynoactivity" type="number.min(0).max(1440)" defaultValues="[240]" multiplicity="maximalOne" description="Max minutes without activity allowed daily"/>   
+            <!--{stepsFollowing: [{date: '2017-06-09 14:54:53.0', value: 12}], lowFollowing:[], mediumFollowing:[], highFollowing:[], noActivityFollowing:[]}-->
+            <!--Collected Data e.g. {stepsFollowing: [{date: '2017-06-09 14:54:53.0', value: 12}], lowFollowing:[], mediumFollowing:[], highFollowing:[], noActivityFollowing:[]}"-->
+            <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Measurement"/>                 
+        </EntityDefinition>
+        
+        <EntityDefinition id="BCS2_MonitoringPrescription" description="Patient Monitory">
+            <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Measure type" additionalDescription="Select measure type for patient monitory.">
+                <EnumerationOption value="DIASTOLICBLOODPRESSURE" description="Diastolic Blood Pressure"/>
+                <EnumerationOption value="SYSTOLICBLOODPRESSURE" description="Systolic Blood Pressure"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="alertmin" type="number.min(0)" multiplicity="exactlyOne" description="Min value allowed" additionalDescription="Minimum value for this measuremnt greather than 0"/>       
+            <AttributeDefinition id="alertmax" type="number.min(0)" multiplicity="exactlyOne" description="Max value allowed" additionalDescription="Maximum value for this measuremnt greather than 0"/>      
+            <AttributeDefinition id="alertfreq" type="number" defaultValues="[1]" multiplicity="exactlyOne" description="Alert Frecuency Value"/>       
+            <AttributeDefinition id="alertfrequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Alert Frecuency Unit">     
+                <EnumerationOption value="DAYS" description="Days"/>
+                <EnumerationOption value="WEEKS" description="Weeks"/>
+                <EnumerationOption value="MONTHS" description="Months"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="freq" type="number.min(0)" defaultValues="[1]" multiplicity="exactlyOne" description="Measurement Frecuency"/> 
+            <AttributeDefinition id="frequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Measurement Frecuency Unit">     
+                <EnumerationOption value="DAYS" description="Days"/>
+                <EnumerationOption value="WEEKS" description="Weeks"/>
+                <EnumerationOption value="MONTHS" description="Months"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="maximalOne" description="Max delay in minutes" additionalDescription="Maximum delay to fullfill the prescription by the patient"/> 
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Start date"/> 
+            <AttributeDefinition id="enddate" type="date.after(tartdate)" multiplicity="exactlyOne" description="End date"/> 
+            <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="Slots to take the measurements" additionalDescription="Multiple slots can be selected, at least one slot need to be selected">     
+                <EnumerationOption value="BREAKFAST" description="Breakfast"/>
+                <EnumerationOption value="LUNCH" description="Lunch"/>
+                <EnumerationOption value="AFTERNOONSNACK" description="Afternoon Snack"/>
+                <EnumerationOption value="DINNER" description="Dinner"/>
+                <EnumerationOption value="BEFORESLEEP" description="Before Sleep"/>
+                <EnumerationOption value="ANYTIMEDURINGDAY" description="Any time a day" additionalDescription="Please select this option when the timeslot of a day doesn't matter."/>
+            </AttributeDefinition>
+            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comments" additionalDescription="Please provide additional hints for the patient."/>   
+            <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Measurement"/>                      
+        </EntityDefinition>
+
+        <EntityDefinition id="BCS2_SimpleTask" description="Simple Task">
+            <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Activity Type" additionalDescription="Select simple task type.">     
+                <EnumerationOption value="STRAIGHTENING_AND_BENDING_KNEE_LYING_ON_BACK" description="יישור וכיפוף ברך בשכיבה על הגב"/>
+                <EnumerationOption value="LEG_AWAY_FROM_BODY_TO_THE_SIDE_LYING_ON_BACK" description="הרחקת הרגל מהגוף הצידה בשכיבה על הגב"/>
+                <EnumerationOption value="LIFTING_PELVIS_LYING_ON_BACK_WITH_BENT_LEGS" description="הרמת אגן בשכיבה על הגב עם רגליים כפופות"/>
+                <EnumerationOption value="LIFTING_LEG_UPRIGHT_LYING_ON_SIDE" description="הרמת רגל ישרה בשכיבה על הצד"/>
+                <EnumerationOption value="PUNCTUATION_LEGS_WITH_RUBBERBAND_AROUND_KNEES_SITTING" description="פיסוק רגליים בישיבה עם גומייה מסביב לברכיים"/>
+                <EnumerationOption value="BEND_KNEE_AND_BRING_TO_STOMACH_LYING_ON_BACK" description="כיפוף הברך והבאתה לכיוון הבטן בשכיבה על הגב"/>
+                <EnumerationOption value="KNEE_BENDING_WHILE_SITTING" description="כיפוף הברך בישיבה"/>
+                <EnumerationOption value="BENDING_KNEES_STANDING_BACK_TO_WALL" description="כיפוף ברכיים בעמידה עם הגב לקיר"/>
+                <EnumerationOption value="STRAIGHTENING_AND_BENDING_KNEE_SITTING" description="יישור וכיפוף הברך בישיבה"/>
+                <EnumerationOption value="GET_UP_FROM_THE_CHAIR_AND_SIT_BACK" description="קימה מהכיסא וישיבה חזרה"/>
+                <EnumerationOption value="WALKING_OUTSIDE_MODERATE_SPEED" description="הליכה בחוץ במהירות מתונה"/>
+                <EnumerationOption value="UP_AND_DOWN_STAIRS_ONE_FLOOR" description="עלייה וירידה במדרגות- קומה 1"/>
+                <EnumerationOption value="STRENGTHENING_THIGH_EXERCISES_OKC" description="תרגילי חיזוק לירך (OKC)"/>
+                <EnumerationOption value="STRENGTHENING_KNEE_EXERCISES_OKC" description="תרגילי חיזוק לברך (OKC)"/>
+                <EnumerationOption value="STRENGTHENING_SHOULDER_EXERCISES_OKC" description="תרגילי חיזוק לכתף (OKC)"/>
+                <EnumerationOption value="STRENGTHENING_THE_ELBOW_HANDS_AND_FINGERS_EXERCISES" description="תרגילי חיזוק למרפק, שכ'י ואצבעות"/>
+                <EnumerationOption value="STRENGTHENING_GENERAL_EXERCISES" description="תרגילי חיזוק כלליים"/>
+                <EnumerationOption value="SUPERVISED_PHYSICAL_THERAPY_TRAINING" description="תור לאימון פיזיותרפיה"/>
+                <EnumerationOption value="TAKE_MEDICINE" description="לקיחת תרופה"/>
+                <EnumerationOption value="DRINK_GLASS_OF_LIQUID" description="שתיית כוס  משקה"/>
+                <EnumerationOption value="EAT_MEAL_FRUIT_SNACK" description="אכילה (ארוחה או פרי או חטיף)"/>
+                <EnumerationOption value="READ_BOOK_NEWSPAPER" description="קריאה (עיתון או ספר)"/>
+                <EnumerationOption value="COGNITIVE_GAMES" description="תרגול קוגנטיבי (משחקי קוגניציה)"/>
+                <EnumerationOption value="VISIT_NURSE_AT_CLINIC" description="ביקור אצל אחות במרפאה"/>
+                <EnumerationOption value="VISIT_DOCTOR_AT_CLINIC" description="ביקור אצל הופא במרפאה"/>
+                <EnumerationOption value="OTHER" description="Other"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="freq" type="number" multiplicity="exactlyOne" description="Frecuency" additionalDescription="Repetitions during the day"/> 
+            <AttributeDefinition id="freqqunit" type="enumeration" multiplicity="exactlyOne" description="Frecuency Unit, the posible values are">     
+                <EnumerationOption value="DAYS" description="Days"/>
+                <EnumerationOption value="WEEKS" description="Weeks"/>
+                <EnumerationOption value="MONTHS" description="Months"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="maximalOne" description="Max delay in minutes" additionalDescription="Maximum delay to fullfill the prescription by the patient"/> 
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Start date"/> 
+            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="End date"/> 
+            <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="Part del dia per prendre les mesures, els possibles valors són:">     
+                <EnumerationOption value="REPETITIONSET" description="Repeat during the day"/>
+                <EnumerationOption value="BREAKFAST" description="Esmorzar"/>
+                <EnumerationOption value="LUNCH" description="Dinar"/>
+                <EnumerationOption value="AFTERNOONSNACK" description="Berenar"/>
+                <EnumerationOption value="DINNER" description="Sopar"/>
+                <EnumerationOption value="BEFORESLEEP" description="Abans d'anar a dormir"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="repetitionseachday" type="number" description="Repetitions each day"/>
+            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comments" additionalDescription="Please provide additional hints for the patient."/>   
+            <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Measurement"/>      
+        </EntityDefinition>
+
+
+        <!-- Discharge Entity Definitions -->
+        <EntityDefinition id="BCS2_Discharge" description="BCS2_Discharge">
+            <AttributeDefinition id="BCS2_DischargeForm" type="Link.EntityDefinition.BCS2_DischargeForm" description="Discharge From"/> 
+        </EntityDefinition>
+
+        <EntityDefinition id="BCS2_DischargeForm" description="Discharge From">
+            <AttributeDefinition id="comment" type="longtext" multiplicity="maximalOne" description="Comment"/>                             
+        </EntityDefinition>
+
 
 
         <!-- Case Definition -->
         <CaseDefinition id="BCS2_Barcelona" description="CS2 Barcelona" ownerPath="BCS2_Owner" clientPath="BCS2_Patient" entityDefinitionId="BCS2_CaseData">
+
+            <!-- ### Summary Page ### -->
+            <SummarySectionDefinition id="BCS2_ClinicalInformation" description="Clinical Information" position="LEFT">    
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.SociodemoAge"/>
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.SociodemoSex"/>
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.DiagnosisInfo"/>
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.SurgeryInfo"/>
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_Charlson.ch21"/>
+            </SummarySectionDefinition>
+
+            <SummarySectionDefinition id="BCS2_PhysicalExamination" description="Physical Examination" position="LEFT">    
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_PhysicalExamination.Height"/>
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_PhysicalExamination.Weight"/>
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_PhysicalExamination.Bmi"/>
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_PhysicalExamination.FerroTherapy"/>
+            </SummarySectionDefinition>
+
+            <SummarySectionDefinition id="BCS2_NutritionalInformation" description="Nutritional Information" position="CENTER">    
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_NutritionalInformationMUST.MustScore"/>
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_NutritionalInformationSGA.SgaScore"/>
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_NutritionalSupport.MustNutritionFollowup"/>
+            </SummarySectionDefinition>
+
+            <SummarySectionDefinition id="BCS2_FunctionalCapacity" description="Functional Capacity" position="CENTER">    
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE.DukeScore"/>
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTHRR1"/> 
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTstop"/> 
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASsindre"/> 
+            </SummarySectionDefinition>
+
+            <SummarySectionDefinition id="BCS2_AdherenceCapacityESES" description="Adherence Capacity" position="RIGHT">    
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.esesScore"/>
+            </SummarySectionDefinition>
+
+            <SummarySectionDefinition id="BCS2_HospitalAnxietyAndDepressionScale" description="Psychological Evaluation" position="RIGHT">    
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA8"/>
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD8"/>
+                <SummaryParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadFinal"/>
+            </SummarySectionDefinition>
+
+
+
+
 
             <StageDefinition id="BCS2_CaseIdentification" description="Case Identification" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_Identification" entityAttachPath="BCS2_Identification">
 
@@ -815,9 +1150,109 @@
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPAStisen" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASstisen" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASsindre" isReadOnly="true" isMandatory="false"/>
+                </HumanTaskDefinition>
 
+
+                <HumanTaskDefinition id="BCS2_AdherenceCapacityESES" description="Evaluación de adherencia ESES" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_AdherenceCapacityESES" entityAttachPath="BCS2_Evaluation.BCS2_AdherenceCapacityESES">
+                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.esesScore" isReadOnly="true" isMandatory="false"/>
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="BCS2_HospitalAnxietyAndDepressionScale" description="Hospital Anxiety and Depression Scale" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE"  entityDefinitionId="BCS2_HospitalAnxietyAndDepressionScale" entityAttachPath="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale">
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA1" isReadOnly="false" isMandatory="true"/>
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD1" isReadOnly="false" isMandatory="true"/>
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA2" isReadOnly="false" isMandatory="true"/>
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD2" isReadOnly="false" isMandatory="true"/>
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA3" isReadOnly="false" isMandatory="true"/>
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD3" isReadOnly="false" isMandatory="true"/>
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA4" isReadOnly="false" isMandatory="true"/>
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD4" isReadOnly="false" isMandatory="true"/>
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA5" isReadOnly="false" isMandatory="true"/>
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD5" isReadOnly="false" isMandatory="true"/>
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA6" isReadOnly="false" isMandatory="true"/>
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD6" isReadOnly="false" isMandatory="true"/>
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA7" isReadOnly="false" isMandatory="true"/>
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD7" isReadOnly="false" isMandatory="true"/>
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA8" isReadOnly="true" isMandatory="false"/>
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD8" isReadOnly="true" isMandatory="false"/>            
+                  <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadFinal" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
             </StageDefinition>
+
+
+            <StageDefinition id="BCS2_Workplan" description="Workplan" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_Workplan" entityAttachPath="BCS2_Workplan">
+                 <SentryDefinition>
+                    <precondition processDefinitionId="BCS2_CaseEvaluation"/>
+                </SentryDefinition>
+
+                <DualTaskDefinition id="BCS2_PhysicalActivity" externalId="PhysicalActivity" description="Physical Activity" ownerPath="BCS2_Owner" dueDatePath="BCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="BCS2_PhysicalActivity" entityAttachPath="BCS2_Workplan.BCS2_PhysicalActivity">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_PhysicalActivity.startdate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_PhysicalActivity.enddate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_PhysicalActivity.dailysteps" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_PhysicalActivity.dailylowlevel" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_PhysicalActivity.dailymediumlevel" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_PhysicalActivity.dailyhighlevel" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_PhysicalActivity.dailynoactivity" isReadOnly="false" isMandatory="true"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="BCS2_Workplan.BCS2_PhysicalActivity.measurement" isReadOnly="false" isMandatory="true"/>
+                </DualTaskDefinition>
+
+                <DualTaskDefinition id="BCS2_MonitoringPrescription" externalId="MonitoringPrescription" description="Monitoring Prescription" dynamicDescriptionPath="BCS2_Workplan.BCS2_MonitoringPrescription.type" ownerPath="BCS2_Owner" dueDatePath="BCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="BCS2_MonitoringPrescription" entityAttachPath="BCS2_Workplan.BCS2_MonitoringPrescription">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_MonitoringPrescription.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_MonitoringPrescription.alertmin" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_MonitoringPrescription.alertmax" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_MonitoringPrescription.alertfreq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_MonitoringPrescription.alertfrequnit" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_MonitoringPrescription.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_MonitoringPrescription.frequnit" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_MonitoringPrescription.maxdelay" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_MonitoringPrescription.startdate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_MonitoringPrescription.enddate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_MonitoringPrescription.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_MonitoringPrescription.comments" isReadOnly="false" isMandatory="true"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="BCS2_Workplan.BCS2_MonitoringPrescription.measurement" isReadOnly="false" isMandatory="true"/>
+                </DualTaskDefinition>
+
+                <!-- isreal -->
+                <DualTaskDefinition id="BCS2_SimpleTask" externalId="SimpleTask" description="Simple Task" dynamicDescriptionPath="BCS2_Workplan.BCS2_SimpleTask.type" ownerPath="BCS2_Owner" dueDatePath="BCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="BCS2_SimpleTask" entityAttachPath="BCS2_Workplan.BCS2_SimpleTask">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/simpletask" method="POST" failureMessage="Could not create prescription on Self-Management System!"></HttpHookDefinition>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/simpletask/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"></HttpHookDefinition>
+                    <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_SimpleTask.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_SimpleTask.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_SimpleTask.freqqunit" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_SimpleTask.maxdelay" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_SimpleTask.startdate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_SimpleTask.enddate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_SimpleTask.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_SimpleTask.repetitionseachday" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_SimpleTask.comments" isReadOnly="false" isMandatory="true"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="BCS2_Workplan.BCS2_SimpleTask.measurement" isReadOnly="false" isMandatory="true"/>
+                </DualTaskDefinition>
+                
+            </StageDefinition>
+            
+            <StageDefinition id="BCS2_Discharge" description="Discharge" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_Discharge" entityAttachPath="BCS2_Discharge">
+                <SentryDefinition>
+                    <precondition processDefinitionId="BCS2_Workplan"/>
+                </SentryDefinition>
+                <HumanTaskDefinition id="BCS2_DischargeForm" description="Discharge Form" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_DischargeForm" entityAttachPath="BCS2_Discharge.BCS2_DischargeForm">
+                    <TaskParamDefinition path="BCS2_Discharge.BCS2_DischargeForm.comment" isReadOnly="false" isMandatory="true"/>                  
+                </HumanTaskDefinition>
+            </StageDefinition>
+
+
         </CaseDefinition>
     </Workspace>
 
@@ -847,7 +1282,15 @@
             <TaskParam path="BCS2_Identification.BCS2_Inclusion.IdentificacionComments" values="['Almost dead']"/>
         </Action>
 
-    
+        <Action id="CompleteHumanTask" processId="BCS2_SelectedProfessionals">
+            <TaskParam path="BCS2_Evaluation.BCS2_SelectedProfessionals.SelectOwnerAnesthesia" userValue="velardem"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_SelectedProfessionals.SelectOwnerNurse" userValue="wilsong"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_SelectedProfessionals.SelectOwnerNutri" userValue="parkerw"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_SelectedProfessionals.SelectOwnerPsico" userValue="parkerw"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_SelectedProfessionals.SelectOwnerFisio" userValue="arpl"/>
+        </Action>
+
+  
         <Action id="CompleteHumanTask" processId="BCS2_ASATest">
             <TaskParam path="BCS2_Evaluation.BCS2_ASATest.AsaCalculator" values="['4390']"/>
         </Action>
@@ -912,6 +1355,10 @@
             <TaskParam path="BCS2_Evaluation.BCS2_NutritionalInformationMUST.WeightLoss" values="['1']"/>
             <TaskParam path="BCS2_Evaluation.BCS2_NutritionalInformationMUST.RecentAcuteDisease" values="['0']"/>
         </Action>
+        <Action id="CompleteHumanTask" processId="BCS2_NutritionalInformationSGA">
+            <TaskParam path="BCS2_Evaluation.BCS2_NutritionalInformationSGA.Sga" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_NutritionalInformationSGA.SgaScore" values="['1']"/>
+        </Action>
         <Action id="CompleteHumanTask" processId="BCS2_NutritionalSupport">
             <TaskParam path="BCS2_Evaluation.BCS2_NutritionalSupport.MustNutritionFollowup" values="['1']"/>
             <TaskParam path="BCS2_Evaluation.BCS2_NutritionalSupport.MustNutritionGroup" values="['1']"/>
@@ -966,6 +1413,86 @@
             <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASpdipme" values="['4']"/>
             <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASesdep" values="['3']"/>
             <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPAStisen" values="['5']"/>
+        </Action>
+
+        <Action id="CompleteHumanTask" processId="BCS2_AdherenceCapacityESES">
+            <TaskParam path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses1" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses2" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses3" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses4" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses5" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses6" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses7" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses8" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses9" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses10" values="['1']"/>
+        </Action>
+
+        <Action id="CompleteHumanTask" processId="BCS2_HospitalAnxietyAndDepressionScale">
+            <TaskParam path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA1" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA2" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA3" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA4" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA5" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA6" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA7" values="['1']"/>
+
+            <TaskParam path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD1" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD2" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD3" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD4" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD5" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD6" values="['1']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD7" values="['1']"/>
+        </Action>
+
+       <Action id="ActivateDualTask" processId="BCS2_PhysicalActivity" breakpoint="true"/>
+        <Action id="CompleteDualTaskHumanPart" processId="BCS2_PhysicalActivity" breakpoint="true">
+            <TaskParam path="BCS2_Workplan.BCS2_PhysicalActivity.startdate"  values="['2017-09-26T00:00:00.000']"/>
+            <TaskParam path="BCS2_Workplan.BCS2_PhysicalActivity.enddate"  values="['2018-09-27T00:00:00.000']"/>
+            <TaskParam path="BCS2_Workplan.BCS2_PhysicalActivity.dailysteps"  values="[10000]"/>
+            <TaskParam path="BCS2_Workplan.BCS2_PhysicalActivity.dailylowlevel"  values="[15]"/>
+            <TaskParam path="BCS2_Workplan.BCS2_PhysicalActivity.dailymediumlevel"  values="[5]"/>
+            <TaskParam path="BCS2_Workplan.BCS2_PhysicalActivity.dailyhighlevel"  values="[10]"/>
+            <TaskParam path="BCS2_Workplan.BCS2_PhysicalActivity.dailynoactivity"  values="[30]"/>
+        </Action>
+        <Action id="CompleteDualTaskAutomatedPart" processId="BCS2_PhysicalActivity">
+            <TaskParam path="BCS2_Workplan.BCS2_PhysicalActivity.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
+        </Action>
+
+        <Action id="ActivateDualTask" processId="BCS2_MonitoringPrescription" breakpoint="true"/>
+        <Action id="CompleteDualTaskHumanPart" processId="BCS2_MonitoringPrescription" breakpoint="true">
+            <TaskParam path="BCS2_Workplan.BCS2_MonitoringPrescription.type"  values="['DIASTOLICBLOODPRESSURE']"/>
+            <TaskParam path="BCS2_Workplan.BCS2_MonitoringPrescription.alertmin"  values="[50]"/>
+            <TaskParam path="BCS2_Workplan.BCS2_MonitoringPrescription.alertmax"  values="[150]"/>
+            <TaskParam path="BCS2_Workplan.BCS2_MonitoringPrescription.alertfreq"  values="[2]"/>
+            <TaskParam path="BCS2_Workplan.BCS2_MonitoringPrescription.alertfrequnit"  values="['DAYS']"/>
+            <TaskParam path="BCS2_Workplan.BCS2_MonitoringPrescription.comments"  values="['Some random comment']"/>
+            <TaskParam path="BCS2_Workplan.BCS2_MonitoringPrescription.freq"  values="[5]"/>
+            <TaskParam path="BCS2_Workplan.BCS2_MonitoringPrescription.freqqunit"  values="['WEEKS']"/>
+            <TaskParam path="BCS2_Workplan.BCS2_MonitoringPrescription.maxdelay"  values="[100]"/>
+            <TaskParam path="BCS2_Workplan.BCS2_MonitoringPrescription.startdate"  values="['2017-06-09T00:00:00.0']"/>
+            <TaskParam path="BCS2_Workplan.BCS2_MonitoringPrescription.enddate"  values="['2019-06-09T00:00:00.0']"/>
+            <TaskParam path="BCS2_Workplan.BCS2_MonitoringPrescription.timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
+        </Action>
+        <Action id="CompleteDualTaskAutomatedPart" processId="BCS2_MonitoringPrescription">
+            <TaskParam path="BCS2_Workplan.BCS2_MonitoringPrescription.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
+        </Action>
+
+        <Action id="ActivateDualTask" processId="BCS2_SimpleTask" breakpoint="true"/>
+        <Action id="CompleteDualTaskHumanPart" processId="BCS2_SimpleTask" breakpoint="true">
+            <TaskParam path="BCS2_Workplan.BCS2_SimpleTask.type"  values="['OTHER']"/>
+            <TaskParam path="BCS2_Workplan.BCS2_SimpleTask.freq"  values="[5]"/>
+            <TaskParam path="BCS2_Workplan.BCS2_SimpleTask.freqqunit"  values="['WEEKS']"/>
+            <TaskParam path="BCS2_Workplan.BCS2_SimpleTask.maxdelay"  values="[100]"/>
+            <TaskParam path="BCS2_Workplan.BCS2_SimpleTask.startdate"  values="['2017-06-09T00:00:00.0']"/>
+            <TaskParam path="BCS2_Workplan.BCS2_SimpleTask.enddate"  values="['2019-06-09T00:00:00.0']"/>
+            <TaskParam path="BCS2_Workplan.BCS2_SimpleTask.timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
+            <TaskParam path="BCS2_Workplan.BCS2_SimpleTask.repetitionseachday"  values="[5]"/>            
+            <TaskParam path="BCS2_Workplan.BCS2_SimpleTask.comments"  values="['Some random comment']"/>
+        </Action>
+        <Action id="CompleteDualTaskAutomatedPart" processId="BCS2_SimpleTask">
+            <TaskParam path="BCS2_Workplan.BCS2_SimpleTask.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
         </Action>
   
     </Execution>

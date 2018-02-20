@@ -9,6 +9,10 @@ export default class EntityDefinition extends Model{
     return http.post(jwt, '/workspaces/'+data.workspace+'/entityDefinitions', data);
   }
 
+  static update(jwt, data){
+    return http.put(jwt, '/entityDefinitions/'+data.id, data);
+  }
+
   static findByWorkspaceId(jwt, workspaceId){
     return http.get(jwt, '/workspaces/'+workspaceId+'/entityDefinitions/');
   }

@@ -344,6 +344,9 @@ module.exports = class Importer {
       const userDefinition = this.json.UserDefinition[0];
       let persistedUserDefinitionId = null;
       return UserDefinition.find(this.jwt)
+        .then(persistedUserDef => {
+          return EntityDefinition.update(this.jwt, {id: persistedUserDef.id, allowFreeAttributes: false})
+        })
         .then(persistedUserDef =>{
           persistedUserDefinitionId = persistedUserDef.id;
           return this.createUserDefinitionAttributeDefinitions(userDefinition, persistedUserDefinitionId);
@@ -805,7 +808,8 @@ module.exports = class Importer {
               ownerPath: sd.$.ownerPath,
               repeatable: sd.$.repeatable,
               isMandatory: sd.$.isMandatory,
-              isManualActivation: sd.$.isManualActivation,
+              activation: sd.$.activation,
+              manualActivationExpression: sd.$.manualActivationExpression,
               caseDefinition: caseDefId,
               parentStageDefinition: parentStageDefId,              
               newEntityDefinition: entityDefinitionId,
@@ -879,7 +883,8 @@ module.exports = class Importer {
               ownerPath: td.$.ownerPath,
               repeatable: td.$.repeatable,
               isMandatory: td.$.isMandatory,              
-              isManualActivation: td.$.isManualActivation,
+              activation: td.$.activation,
+              manualActivationExpression: td.$.manualActivationExpression,
               caseDefinition: caseDefId,          
               parentStageDefinition: parentStageDefId,                  
               newEntityDefinition: entityDefinitionId,

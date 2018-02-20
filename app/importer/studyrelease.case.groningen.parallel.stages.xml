@@ -65,7 +65,7 @@
                     <precondition processDefinitionId="GCS2PS_CaseIdentification"/>
                 </SentryDefinition>
                 
-                <DualTaskDefinition id="GCS2PS_PhysicalActivity" description="Physical Activity" ownerPath="GCS2PS_Owner" dueDatePath="GCS2PS_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" isManualActivation="true" entityDefinitionId="GCS2PS_PhysicalActivity" entityAttachPath="GCS2PS_PhysicalActivity">
+                <DualTaskDefinition id="GCS2PS_PhysicalActivity" description="Physical Activity" ownerPath="GCS2PS_Owner" dueDatePath="GCS2PS_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="GCS2PS_PhysicalActivity" entityAttachPath="GCS2PS_PhysicalActivity">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System"></HttpHookDefinition>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not create Terminate Hook"></HttpHookDefinition>
                     <TaskParamDefinition part="HUMAN" path="GCS2PS_PhysicalActivity.phactp1" isReadOnly="false" isMandatory="true"/>
@@ -79,7 +79,7 @@
                 </DualTaskDefinition>
 
                 <!--
-                <StageDefinition id="GCS2PS_PhysicalActivityPrescriptionStage" description="Physical Activity Prescription Stage" isMandatory="false" repeatable="PARALLEL" isManualActivation="true" entityDefinitionId="GCS2PS_PhysicalActivity" entityAttachPath="GCS2PS_PhysicalActivity">
+                <StageDefinition id="GCS2PS_PhysicalActivityPrescriptionStage" description="Physical Activity Prescription Stage" isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="GCS2PS_PhysicalActivity" entityAttachPath="GCS2PS_PhysicalActivity">
                     <HumanTaskDefinition id="GCS2PS_PhysicalActivityPrescription" description="Physical Activity Prescription" ownerPath="GCS2PS_Owner" dueDatePath="GCS2PS_WorkplanDueDate"  isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2PS_PhysicalActivity" entityAttachPath="GCS2PS_PhysicalActivity">
                         <TaskParamDefinition path="GCS2PS_PhysicalActivity.phactp1" isReadOnly="false" isMandatory="true"/>
                         <TaskParamDefinition path="GCS2PS_PhysicalActivity.phactp2" isReadOnly="false" isMandatory="true"/>
