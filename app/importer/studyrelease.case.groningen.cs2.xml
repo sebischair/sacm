@@ -27,16 +27,23 @@
 	<User staticId="2c940c085e765068015e770b710b0140" id="williamst"/>
     <User staticId="2c9480845bee03e7015bfcad7d0e0011" id="vargiue"/>
 
+
     <Workspace staticId="2c9480885d1737ef015d74deed260006" id="Umcg">
+
         <EntityDefinition id="GCS2_CaseData" description="Case Data">
-            <AttributeDefinition id="GCS2_Patient" type="Link.Users(UmcgPatients)" description="Patient" additionalDescription="Patient that is assigned to this case."/>
-            <AttributeDefinition id="GCS2_Owner" type="Link.Users(UmcgProfessionals)" description="Owner"/>
-            <AttributeDefinition id="GCS2_EvaluationDueDate" type="date.after(TODAY)" description="Evaluation default due date"/>
-            <AttributeDefinition id="GCS2_WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date"/>
+            <AttributeDefinition id="GCS2_Settings" type="Link.EntityDefinition.GCS2_Settings" description="Settings"/>  
             <AttributeDefinition id="GCS2_Identification" type="Link.EntityDefinition.GCS2_Identification" description="Identification"/>    
             <AttributeDefinition id="GCS2_Evaluation" type="Link.EntityDefinition.GCS2_Evaluation" description="Evaluation" multiplicity="any"/>            
             <AttributeDefinition id="GCS2_Workplan" type="Link.EntityDefinition.GCS2_Workplan" description="Workplan"/> 
             <AttributeDefinition id="GCS2_Discharge" type="Link.EntityDefinition.GCS2_Discharge" description="Discharge"/>                        
+        </EntityDefinition>
+
+        <!-- Settings Entity Definitions -->
+        <EntityDefinition id="GCS2_Settings" description="Settings">
+            <AttributeDefinition id="GCS2_Patient" type="Link.Users(UmcgPatients)" description="Patient" additionalDescription="Patient that is assigned to this case."/>
+            <AttributeDefinition id="GCS2_Owner" type="Link.Users(UmcgProfessionals)" description="Owner"/>
+            <AttributeDefinition id="GCS2_EvaluationDueDate" type="date.after(TODAY)" description="Evaluation default due date"/>
+            <AttributeDefinition id="GCS2_WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date"/>
         </EntityDefinition>
 
         <!-- Identification Entity Definitions -->
@@ -637,7 +644,7 @@
 
 
         <!-- Case Definition -->
-        <CaseDefinition id="GCS2" description="Groningen CS2" ownerPath="GCS2_Owner" clientPath="GCS2_Patient" entityDefinitionId="GCS2_CaseData">
+        <CaseDefinition id="GCS2" description="Groningen CS2" ownerPath="GCS2_Settings.GCS2_Owner" clientPath="GCS2_Settings.GCS2_Patient" entityDefinitionId="GCS2_CaseData">
            
             <SummarySectionDefinition id="GCS2_Nutritional" description="Nutritional" position="LEFT">    
                 <SummaryParamDefinition path="GCS2_Evaluation.GCS2_NRS.nrs8"/>
@@ -665,22 +672,22 @@
             </SummarySectionDefinition>
 
             <StageDefinition id="GCS2_CaseIdentification" description="Case Identification" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_Identification" entityAttachPath="GCS2_Identification">        
-                <HumanTaskDefinition id="GCS2_SelectPatient" externalId="SelectPatient" description="Assign Patient" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE">                
+                <HumanTaskDefinition id="GCS2_SelectPatient" externalId="SelectPatient" description="Assign Patient" ownerPath="GCS2_Settings.GCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_Settings" entityAttachPath="GCS2_Settings">                
                     <HttpHookDefinition on="COMPLETE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/case/patient/inclusion" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition path="GCS2_Patient" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_Owner" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_EvaluationDueDate" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_WorkplanDueDate" isReadOnly="false" isMandatory="true"/>                    
+                    <TaskParamDefinition path="GCS2_Settings.GCS2_Patient" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Settings.GCS2_Owner" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Settings.GCS2_EvaluationDueDate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Settings.GCS2_WorkplanDueDate" isReadOnly="false" isMandatory="true"/>                    
                 </HumanTaskDefinition>
                 
-                <HumanTaskDefinition id="GCS2_PatientsConsent" description="Patient's Consent" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_PatientsConsent" entityAttachPath="GCS2_Identification.GCS2_PatientsConsent"> 
+                <HumanTaskDefinition id="GCS2_PatientsConsent" description="Patient's Consent" ownerPath="GCS2_Settings.GCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_PatientsConsent" entityAttachPath="GCS2_Identification.GCS2_PatientsConsent"> 
                     <SentryDefinition>
                         <precondition processDefinitionId="GCS2_SelectPatient"/>
                     </SentryDefinition>
                     <TaskParamDefinition path="GCS2_Identification.GCS2_PatientsConsent.pConsent1" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="GCS2_ThechTest" description="Technological Test" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_ThechTest" entityAttachPath="GCS2_Identification.GCS2_ThechTest">               
+                <HumanTaskDefinition id="GCS2_ThechTest" description="Technological Test" ownerPath="GCS2_Settings.GCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_ThechTest" entityAttachPath="GCS2_Identification.GCS2_ThechTest">               
                     <SentryDefinition>
                         <precondition processDefinitionId="GCS2_SelectPatient"/>
                     </SentryDefinition>
@@ -690,7 +697,7 @@
                     <TaskParamDefinition path="GCS2_Identification.GCS2_ThechTest.tech4" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="GCS2_ASA" description="ASA" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_ASA" entityAttachPath="GCS2_Identification.GCS2_ASA">                
+                <HumanTaskDefinition id="GCS2_ASA" description="ASA" ownerPath="GCS2_Settings.GCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_ASA" entityAttachPath="GCS2_Identification.GCS2_ASA">                
                     <SentryDefinition>
                         <precondition processDefinitionId="GCS2_SelectPatient"/>
                     </SentryDefinition>
@@ -705,7 +712,7 @@
                 <SentryDefinition>
                     <precondition processDefinitionId="GCS2_CaseEvaluation"/>
                 </SentryDefinition>       
-                <HumanTaskDefinition id="GCS2_Charlson" description="Charlson" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_Charlson" entityAttachPath="GCS2_Evaluation.GCS2_Charlson">
+                <HumanTaskDefinition id="GCS2_Charlson" description="Charlson" ownerPath="GCS2_Settings.GCS2_Owner" dueDatePath="GCS2_Settings.GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_Charlson" entityAttachPath="GCS2_Evaluation.GCS2_Charlson">
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch3" isReadOnly="false" isMandatory="true"/>
@@ -729,7 +736,7 @@
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch21" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch22" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>                
-                <HumanTaskDefinition id="GCS2_GFI" description="Groningen Frailty Indicator (GFI)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_GFI" entityAttachPath="GCS2_Evaluation.GCS2_GFI">
+                <HumanTaskDefinition id="GCS2_GFI" description="Groningen Frailty Indicator (GFI)" ownerPath="GCS2_Settings.GCS2_Owner" dueDatePath="GCS2_Settings.GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_GFI" entityAttachPath="GCS2_Evaluation.GCS2_GFI">
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_GFI.gfi1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_GFI.gfi2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_GFI.gfi3" isReadOnly="false" isMandatory="true"/>
@@ -747,7 +754,7 @@
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_GFI.gfi15" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_GFI.gfi16" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>                
-                <HumanTaskDefinition id="GCS2_ADL" description="Activities of Daily Living (ADL)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_ADL" entityAttachPath="GCS2_Evaluation.GCS2_ADL">
+                <HumanTaskDefinition id="GCS2_ADL" description="Activities of Daily Living (ADL)" ownerPath="GCS2_Settings.GCS2_Owner" dueDatePath="GCS2_Settings.GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_ADL" entityAttachPath="GCS2_Evaluation.GCS2_ADL">
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_ADL.adl1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_ADL.adl2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_ADL.adl3" isReadOnly="false" isMandatory="true"/>
@@ -756,7 +763,7 @@
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_ADL.adl6" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_ADL.adl7" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
-                <HumanTaskDefinition id="GCS2_iADL" description="Instrumental Activities of Daily Living (iADL)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_iADL" entityAttachPath="GCS2_Evaluation.GCS2_iADL">
+                <HumanTaskDefinition id="GCS2_iADL" description="Instrumental Activities of Daily Living (iADL)" ownerPath="GCS2_Settings.GCS2_Owner" dueDatePath="GCS2_Settings.GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_iADL" entityAttachPath="GCS2_Evaluation.GCS2_iADL">
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_iADL.iadl1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_iADL.iadl2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_iADL.iadl3" isReadOnly="false" isMandatory="true"/>
@@ -767,7 +774,7 @@
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_iADL.iadl8" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_iADL.iadl9" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
-                <HumanTaskDefinition id="GCS2_NRS" description="Nutritional Risk Screening (NRS)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_NRS" entityAttachPath="GCS2_Evaluation.GCS2_NRS">
+                <HumanTaskDefinition id="GCS2_NRS" description="Nutritional Risk Screening (NRS)" ownerPath="GCS2_Settings.GCS2_Owner" dueDatePath="GCS2_Settings.GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_NRS" entityAttachPath="GCS2_Evaluation.GCS2_NRS">
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_NRS.nrs1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_NRS.nrs2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_NRS.nrs3" isReadOnly="false" isMandatory="true"/>
@@ -777,7 +784,7 @@
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_NRS.nrs7" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_NRS.nrs8" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
-                <HumanTaskDefinition id="GCS2_MNASF" description="Mini Nutritional Assesment (MNA-SF®)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_MNASF" entityAttachPath="GCS2_Evaluation.GCS2_MNASF">
+                <HumanTaskDefinition id="GCS2_MNASF" description="Mini Nutritional Assesment (MNA-SF®)" ownerPath="GCS2_Settings.GCS2_Owner" dueDatePath="GCS2_Settings.GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_MNASF" entityAttachPath="GCS2_Evaluation.GCS2_MNASF">
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf3" isReadOnly="false" isMandatory="true"/>
@@ -790,7 +797,7 @@
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf10" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="GCS2_HospitalAnxietyAndDepressionScale" description="Hospital Anxiety and Depression Scale (HADS) " ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE"  entityDefinitionId="GCS2_HospitalAnxietyAndDepressionScale" entityAttachPath="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale">
+                <HumanTaskDefinition id="GCS2_HospitalAnxietyAndDepressionScale" description="Hospital Anxiety and Depression Scale (HADS) " ownerPath="GCS2_Settings.GCS2_Owner" isMandatory="true" repeatable="ONCE"  entityDefinitionId="GCS2_HospitalAnxietyAndDepressionScale" entityAttachPath="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale">
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA2" isReadOnly="false" isMandatory="true"/>
@@ -817,7 +824,7 @@
                     <precondition processDefinitionId="GCS2_CaseEvaluation"/>
                 </SentryDefinition>
 
-                <DualTaskDefinition id="GCS2_PhysicalActivity" externalId="PhysicalActivity" description="Physical Activity" ownerPath="GCS2_Owner" dueDatePath="GCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="GCS2_PhysicalActivity" entityAttachPath="GCS2_Workplan.GCS2_PhysicalActivity">
+                <DualTaskDefinition id="GCS2_PhysicalActivity" externalId="PhysicalActivity" description="Physical Activity" ownerPath="GCS2_Settings.GCS2_Owner" dueDatePath="GCS2_Settings.GCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="GCS2_PhysicalActivity" entityAttachPath="GCS2_Workplan.GCS2_PhysicalActivity">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_PhysicalActivity.startdate" isReadOnly="false" isMandatory="true"/>
@@ -830,7 +837,7 @@
                     <TaskParamDefinition part="AUTOMATED" path="GCS2_Workplan.GCS2_PhysicalActivity.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>
 
-                <DualTaskDefinition id="GCS2_MonitoringPrescription" externalId="MonitoringPrescription" description="Monitoring Prescription" dynamicDescriptionPath="GCS2_Workplan.GCS2_MonitoringPrescription.type" ownerPath="GCS2_Owner" dueDatePath="GCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="GCS2_MonitoringPrescription" entityAttachPath="GCS2_Workplan.GCS2_MonitoringPrescription">
+                <DualTaskDefinition id="GCS2_MonitoringPrescription" externalId="MonitoringPrescription" description="Monitoring Prescription" dynamicDescriptionPath="GCS2_Workplan.GCS2_MonitoringPrescription.type" ownerPath="GCS2_Settings.GCS2_Owner" dueDatePath="GCS2_Settings.GCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="GCS2_MonitoringPrescription" entityAttachPath="GCS2_Workplan.GCS2_MonitoringPrescription">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_MonitoringPrescription.type" isReadOnly="false" isMandatory="true"/>
@@ -849,7 +856,7 @@
                 </DualTaskDefinition>
 
                 <!-- TODO needs to be removed after testing -->
-                <DualTaskDefinition id="GCS2_SimpleTask" externalId="SimpleTask" description="Simple Task" dynamicDescriptionPath="GCS2_Workplan.GCS2_SimpleTask.type" ownerPath="GCS2_Owner" dueDatePath="GCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="GCS2_SimpleTask" entityAttachPath="GCS2_Workplan.GCS2_SimpleTask">
+                <DualTaskDefinition id="GCS2_SimpleTask" externalId="SimpleTask" description="Simple Task" dynamicDescriptionPath="GCS2_Workplan.GCS2_SimpleTask.type" ownerPath="GCS2_Settings.GCS2_Owner" dueDatePath="GCS2_Settings.GCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="GCS2_SimpleTask" entityAttachPath="GCS2_Workplan.GCS2_SimpleTask">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/simpletask" method="POST" failureMessage="Could not create prescription on Self-Management System!"></HttpHookDefinition>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/simpletask/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"></HttpHookDefinition>
                     <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_SimpleTask.type" isReadOnly="false" isMandatory="true"/>
@@ -869,7 +876,7 @@
                 <SentryDefinition>
                     <precondition processDefinitionId="GCS2_Workplan"/>
                 </SentryDefinition>
-                <HumanTaskDefinition id="GCS2_DischargeForm" description="Discharge Form" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_DischargeForm" entityAttachPath="GCS2_Discharge.GCS2_DischargeForm">
+                <HumanTaskDefinition id="GCS2_DischargeForm" description="Discharge Form" ownerPath="GCS2_Settings.GCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_DischargeForm" entityAttachPath="GCS2_Discharge.GCS2_DischargeForm">
                     <TaskParamDefinition path="GCS2_Discharge.GCS2_DischargeForm.comment" isReadOnly="false" isMandatory="true"/>                  
                 </HumanTaskDefinition>
             </StageDefinition>
@@ -884,10 +891,10 @@
 
     <Execution>        
         <Action id="CompleteHumanTask" processId="GCS2_SelectPatient">
-            <TaskParam path="GCS2_Patient"  userValue="vargiue"/>
-            <TaskParam path="GCS2_Owner"  userValue="michelf"/>
-            <TaskParam path="GCS2_EvaluationDueDate" values="['2017-12-26T00:00:00.000']"/>
-            <TaskParam path="GCS2_WorkplanDueDate" values="['2017-12-28T00:00:00.000']"/>
+            <TaskParam path="GCS2_Settings.GCS2_Patient"  userValue="vargiue"/>
+            <TaskParam path="GCS2_Settings.GCS2_Owner"  userValue="michelf"/>
+            <TaskParam path="GCS2_Settings.GCS2_EvaluationDueDate" values="['2017-12-26T00:00:00.000']"/>
+            <TaskParam path="GCS2_Settings.GCS2_WorkplanDueDate" values="['2017-12-28T00:00:00.000']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="GCS2_ASA">
             <TaskParam path="GCS2_Identification.GCS2_ASA.asa" values="['2']"/>
