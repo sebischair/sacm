@@ -263,11 +263,13 @@
 			<AttributeDefinition id="LCS2_DiagnosisNutritionEvaluation" type="Link.EntityDefinition.LCS2_DiagnosisNutritionDef" multiplicity="maximalOne" description="Diagnosis nutrition"/> 			
 			<!-- ASA linkat al Case Identification 
             <AttributeDefinition id="LCS2_WOMAC" type="Link.EntityDefinition.LCS2_WOMAC" multiplicity="maximalOne" description="WOMAC"/> 
-            <AttributeDefinition id="LCS2_EVA" type="Link.EntityDefinition.LCS2_EVA" multiplicity="maximalOne" description="EVA"/> 
 			-->
+			
+            <AttributeDefinition id="LCS2_EVAECNDEvaluation" type="Link.EntityDefinition.LCS2_EVAECNDDef" multiplicity="maximalOne" description="Escala de Qualificació Numèrica del Dolor"/> 
+			
             <AttributeDefinition id="LCS2_SLANSSEvaluation" type="Link.EntityDefinition.LCS2_SLANSSDef" multiplicity="maximalOne" description="SLANSS"/> 			
-            <!--<AttributeDefinition id="LCS2_SF12" type="Link.EntityDefinition.LCS2_SF12" multiplicity="maximalOne" description="SF12"/> 			
-			-->
+            <AttributeDefinition id="LCS2_SF12Evaluation" type="Link.EntityDefinition.LCS2_SF12Def" multiplicity="maximalOne" description="SF12"/> 			
+			
 			<AttributeDefinition id="LCS2_ComplexityRisk" type="Link.EntityDefinition.LCS2_ComplexityRisk" multiplicity="maximalOne" description="Complexity risk"/>
 
 			<!-- Barreres -->
@@ -709,10 +711,10 @@
                 <EnumerationOption value="3" description="Molt"/>
                 <EnumerationOption value="4" description="Moltíssim"/>
             </AttributeDefinition>
-        </EntityDefinition>
+        </EntityDefinition> -->
 				
-		<EntityDefinition id="LCS2_EVA">
-            <AttributeDefinition id="eva1" type="enumeration" multiplicity="maximalOne" description="Escala numerada: On 0 és sense dolor i 10 és el dolor màxim. Seleccioni el número que millor avalua la intensitat del símptoma">
+		<EntityDefinition id="LCS2_EVAECNDDef">
+            <AttributeDefinition id="eva1" type="enumeration" multiplicity="maximalOne" description="En repòs; Escala numerada: On 0 és sense dolor i 10 és el dolor màxim. Seleccioni el número que millor avalua la intensitat del símptoma">
                 <EnumerationOption value="0" description="0"/>
                 <EnumerationOption value="1" description="1"/>
                 <EnumerationOption value="2" description="2"/>
@@ -725,8 +727,22 @@
                 <EnumerationOption value="9" description="9"/>
                 <EnumerationOption value="10" description="10"/>
             </AttributeDefinition>
+            <AttributeDefinition id="eva2" type="enumeration" multiplicity="maximalOne" description="En Moviment; Escala numerada: On 0 és sense dolor i 10 és el dolor màxim. Seleccioni el número que millor avalua la intensitat del símptoma">
+                <EnumerationOption value="0" description="0"/>
+                <EnumerationOption value="1" description="1"/>
+                <EnumerationOption value="2" description="2"/>
+                <EnumerationOption value="3" description="3"/>
+                <EnumerationOption value="4" description="4"/>
+                <EnumerationOption value="5" description="5"/>
+                <EnumerationOption value="6" description="6"/>
+                <EnumerationOption value="7" description="7"/>
+                <EnumerationOption value="8" description="8"/>
+                <EnumerationOption value="9" description="9"/>
+                <EnumerationOption value="10" description="10"/>
+            </AttributeDefinition>
+			
         </EntityDefinition>		
-		-->
+		
 		
         <EntityDefinition id="LCS2_SLANSSDef">
             <AttributeDefinition id="slanssExec1" type="enumeration" multiplicity="maximalOne" description="1. En el área a on té el dolor, Té també sensació de “punxades” o sensació de gratera o formigeig?">
@@ -760,8 +776,8 @@
             <DerivedAttributeDefinition id="slanssExec8" expression="number(slanssExec1,0)+number(slanssExec2,0)+number(slanssExec3,0)+number(slanssExec4,0)+number(slanssExec5,0)+number(slanssExec6,0)+number(slanssExec7,0)" description="Puntuació"/>
         </EntityDefinition>
 		
-	<!--
-        <EntityDefinition id="LCS2_SF12">
+	
+        <EntityDefinition id="LCS2_SF12Def">
             <AttributeDefinition id="sf12-1" externalId="79851563-0932-4cfc-a9a4-0272ca350d01" type="enumeration" multiplicity="maximalOne" description="1. En general, vostè diria que la seva salut és:">
                 <EnumerationOption value="1" externalId="f328de67-6a94-4e5a-bca3-e60d78498e05" description="Excel·lent"/>
                 <EnumerationOption value="2" externalId="40114fd7-e7d4-43d2-9dce-574b3bc2fbb3" description="Molt bona"/>
@@ -848,7 +864,7 @@
                 <EnumerationOption value="2" description="No s'han de fer"/>
                 <EnumerationOption value="3" description="4 cops al dia"/>
             </AttributeDefinition>     						                  
-        </EntityDefinition> -->
+        </EntityDefinition> 
 		
 		<!-- Barreres -->		
 		<EntityDefinition id="LCS2_MedicationFollowing"> 
@@ -952,13 +968,14 @@
 		
 		<!-- WORKSPACE: WorkplanBeforeHospitalization -->			
 		<EntityDefinition id="LCS2_WorkplanBeforeHospitalization">
-			<!--<AttributeDefinition id="LCS2_PhysicalActivityBH" type="Link.EntityDefinition.LCS2_PhysicalActivityBH" multiplicity="maximalOne" />-->
+			<AttributeDefinition id="LCS2_MonitoringHospitalizationMeasureDH" type="Link.EntityDefinition.LCS2_MonitoringHospitalizationMeasureDef"/> 		
+		<!--<AttributeDefinition id="LCS2_PhysicalActivityBH" type="Link.EntityDefinition.LCS2_PhysicalActivityBH" multiplicity="maximalOne" />-->
 			<AttributeDefinition id="LCS2_MonitoringPrescription" type="Link.EntityDefinition.LCS2_MonitoringPrescription" multiplicity="maximalOne" /> 
 			<AttributeDefinition id="LCS2_CommentBH" type="Link.EntityDefinition.LCS2_Comment" multiplicity="maximalOne" /> 			
 			<AttributeDefinition id="LCS2_AnaemiaAssessmentAndManagementNutritionBH" type="Link.EntityDefinition.LCS2_AnaemiaAssessmentAndManagementNutritionDef" multiplicity="maximalOne" />					    
 			<AttributeDefinition id="LCS2_BloodPressureControlBH" type="Link.EntityDefinition.LCS2_BloodPressureControlBH" multiplicity="maximalOne" />		  
 		    <AttributeDefinition id="LCS2_DiabetesControlBH" type="Link.EntityDefinition.LCS2_DiabetesControlBH" multiplicity="maximalOne" />
-			<AttributeDefinition id="LCS2_EVABH" type="Link.EntityDefinition.LCS2_EVABH" multiplicity="maximalOne" /> 
+			<AttributeDefinition id="LCS2_EVAECNDBH" type="Link.EntityDefinition.LCS2_EVAECNDDef" multiplicity="maximalOne" /> 
 		    <AttributeDefinition id="LCS2_SLANSSBH" type="Link.EntityDefinition.LCS2_SLANSSDef" multiplicity="maximalOne" />			
 		</EntityDefinition>
 		
@@ -1042,7 +1059,8 @@
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>
         </EntityDefinition>
-				
+
+		<!-- to be deleted
         <EntityDefinition id="LCS2_EVABH">
               <AttributeDefinition id="eva1" type="enumeration" multiplicity="maximalOne" description="Escala numerada: On 0 és sense dolor i 10 és el dolor màxim. Seleccioni el número que millor avalua la intensitat del símptoma">
                 <EnumerationOption value="0" description="0"/>
@@ -1057,7 +1075,7 @@
                 <EnumerationOption value="9" description="9"/>
                 <EnumerationOption value="10" description="10"/>
             </AttributeDefinition>
-        </EntityDefinition>
+        </EntityDefinition> -->
 		
 		<!-- testkitiara
         <EntityDefinition id="LCS2_SLANSSBH">
@@ -1095,16 +1113,29 @@
 		<EntityDefinition id="LCS2_Comment">
 		     <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comentaris" additionalDescription="Proporcioneu suggeriments addicionals"/>   
 		</EntityDefinition>
-		
-		
-		<!-- WORKSPACE: WorkplanDuringHospitalization -->	
-		
+						
+		<EntityDefinition id="LCS2_MonitoringHospitalizationMeasureDef">
+			<AttributeDefinition id="monitoringhospmeasure1" type="date" multiplicity="exactlyOne" description="Data"/> 
+            <AttributeDefinition id="monitoringhospmeasure2" type="enumeration" multiplicity="exactlyOne" description="Quan">     
+                <EnumerationOption value="0" description="Matí"/>
+                <EnumerationOption value="1" description="Tarda"/>
+                <EnumerationOption value="2" description="Nit"/>
+            </AttributeDefinition> 
+			<AttributeDefinition id="monitoringhospmeasure3" type="number.min(0).max(200)" defaultValues="[0.0]" multiplicity="maximalOne" description="Valor de la pressió arterial diastòlica (mmHg)"/>					
+			<AttributeDefinition id="monitoringhospmeasure4" type="number.min(0).max(250)" defaultValues="[0.0]" multiplicity="maximalOne" description="Valor de la pressió arterial sistòlica (mmHg)"/>		
+			<AttributeDefinition id="monitoringhospmeasure5" type="number.min(27).max(45)" defaultValues="[0.0]" multiplicity="maximalOne" description="Valor de la temperatura (·C)"/>								
+            <AttributeDefinition id="monitoringhospmeasure6" type="longtext" multiplicity="maximalOne" description="Comentaris"/>               
+        </EntityDefinition>
+				
+				
+		<!-- WORKSPACE: WorkplanDuringHospitalization -->			
 		<EntityDefinition id="LCS2_WorkplanDuringHospitalization">
-			<AttributeDefinition id="LCS2_EVADH" type="Link.EntityDefinition.LCS2_EVADH"/> 
+			<AttributeDefinition id="LCS2_EVAECNDDH" type="Link.EntityDefinition.LCS2_EVAECNDDef"/> 
 			<AttributeDefinition id="LCS2_SLANSSDH" type="Link.EntityDefinition.LCS2_SLANSSDef"/>
 			<AttributeDefinition id="LCS2_CommentDH" type="Link.EntityDefinition.LCS2_Comment" multiplicity="maximalOne" /> 			
 		</EntityDefinition>
 		
+		<!-- to be deleted
         <EntityDefinition id="LCS2_EVADH">
               <AttributeDefinition id="eva1" type="enumeration" multiplicity="maximalOne" description="Escala numerada: On 0 és sense dolor i 10 és el dolor màxim. Seleccioni el número que millor avalua la intensitat del símptoma">
                 <EnumerationOption value="0" description="0"/>
@@ -1119,7 +1150,7 @@
                 <EnumerationOption value="9" description="9"/>
                 <EnumerationOption value="10" description="10"/>
             </AttributeDefinition>
-        </EntityDefinition>		
+        </EntityDefinition>	-->
 		
 		<!--
         <EntityDefinition id="LCS2_SLANSSDH">
@@ -1287,9 +1318,49 @@
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>
         </EntityDefinition>
+
+		<EntityDefinition id="LCS2_EQ-5DDef">
+			<AttributeDefinition id="EQ-5D-1" type="enumeration" multiplicity="maximalOne" description="MOBILITAT">
+				<EnumerationOption value="1"  description="No tinc problemes per caminar "/>
+				<EnumerationOption value="2"  description="Tinc problemes lleugers per caminar"/>
+				<EnumerationOption value="3"  description="Tinc problemes moderats per caminar"/>
+				<EnumerationOption value="4"  description="Tinc problemes greus per caminar"/>
+				<EnumerationOption value="5"  description="No puc seguir caminant"/>
+			</AttributeDefinition>     
+			<AttributeDefinition id="EQ-5D-2" type="enumeration" multiplicity="maximalOne" description="AUTOCURA">
+				<EnumerationOption value="1"  description="No tinc problemes per rentar-me ni vestir-me "/>
+				<EnumerationOption value="2"  description="Tinc problemes lleugers per rentar-me o vestir-me"/>
+				<EnumerationOption value="3"  description="Tinc problemes moderats per rentar-me o vestir-me"/>
+				<EnumerationOption value="4"  description="Tinc problemes greus per rentar-me o vestir-me"/>
+				<EnumerationOption value="5"  description="No sóc capaç de rentar-me ni vestir-me"/>
+			</AttributeDefinition>      
+			<AttributeDefinition id="EQ-5D-3"  type="enumeration" multiplicity="maximalOne" description="ACTIVITATS USUALS (p. Ex. Treball, estudi, tasques domèstiques, activitats familiars o de lleure)">
+				<EnumerationOption value="1"  description="No tinc problemes per fer les meves activitats habituals "/>
+				<EnumerationOption value="2"  description="Tinc problemes lleugers fent les meves activitats habituals"/>
+				<EnumerationOption value="3"  description="Tinc problemes moderats fent les meves activitats habituals"/>
+				<EnumerationOption value="4"  description="Tinc problemes greus fent les meves activitats habituals"/>
+				<EnumerationOption value="5"  description="No puc fer les meves activitats habituals "/>
+			</AttributeDefinition>      
+			<AttributeDefinition id="EQ-5D-4"  type="enumeration" multiplicity="maximalOne" description="DOLOR / MOLESTIES">
+				<EnumerationOption value="1"  description="No tinc dolor ni molèstia "/>
+				<EnumerationOption value="2"  description="Tinc dolor o molèsties lleus"/>
+				<EnumerationOption value="3"  description="Tinc dolor moderat o incomoditat"/>
+				<EnumerationOption value="4"  description="Tinc dolor greu o incomoditat "/>
+				<EnumerationOption value="5"  description="Tinc dolor extrem o incomoditat"/>
+			</AttributeDefinition>      
+			<AttributeDefinition id="EQ-5D-5"  type="enumeration" multiplicity="maximalOne" description="ANSIETAT / DEPRESSIÓ">
+				<EnumerationOption value="1"  description="No estic ansiós o deprimit "/>
+				<EnumerationOption value="2"  description="Estic lleument ansiós o deprimit "/>
+				<EnumerationOption value="3"  description="Estic moderat ansiós o deprimit"/>
+				<EnumerationOption value="4"  description="Estic molt ansiós o deprimit "/>
+				<EnumerationOption value="5"  description="Estic extremedament ansiós o deprimit"/>
+			</AttributeDefinition>       
+		</EntityDefinition>
 		
 		<EntityDefinition id="LCS2_Discharge">
-			<AttributeDefinition id="LCS2_DischargeTest" type="Link.EntityDefinition.LCS2_DischargeTest" />									
+			<AttributeDefinition id="LCS2_DischargeTest" type="Link.EntityDefinition.LCS2_DischargeTest"/>									
+			<AttributeDefinition id="LCS2_SF12Discharge" type="Link.EntityDefinition.LCS2_SF12Def"/> 			
+			<AttributeDefinition id="LCS2_EQ-5DDischarge" type="Link.EntityDefinition.LCS2_EQ-5DDef"/> 						
 		</EntityDefinition>
 
 		<!-- ENTITY DEFINITION: Discharge -->	
@@ -1548,12 +1619,12 @@
               <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac22" isReadOnly="false" isMandatory="true"/>
               <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac23" isReadOnly="false" isMandatory="true"/>
               <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac24" isReadOnly="false" isMandatory="true"/>        
-            </HumanTaskDefinition>  
+            </HumanTaskDefinition>      -->                
       
-
-            <HumanTaskDefinition id="LCS2_EVA" description="*Diagnòstic dolor – EVA (Abans cirurgia)" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_EVA" entityAttachPath="LCS2_Evaluation.LCS2_EVA">
-              <TaskParamDefinition path="LCS2_Evaluation.LCS2_EVA.eva1" isReadOnly="false" isMandatory="true"/>
-            </HumanTaskDefinition>     -->              
+            <HumanTaskDefinition id="LCS2_EVAECNDEvaluationHT" description="*Diagnòstic dolor – Escala de Calificació Numérica del Dolor (Abans cirurgia)" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_EVAECNDDef" entityAttachPath="LCS2_Evaluation.LCS2_EVAECNDEvaluation">
+              <TaskParamDefinition path="LCS2_Evaluation.LCS2_EVAECNDEvaluation.eva1" isReadOnly="false" isMandatory="true"/>
+			  <TaskParamDefinition path="LCS2_Evaluation.LCS2_EVAECNDEvaluation.eva2" isReadOnly="false" isMandatory="true"/>
+            </HumanTaskDefinition>
 
       <!-- Anesthesiologist  -->      
             <HumanTaskDefinition id="LCS2_SLANSSEvaluationHT" description="*Diagnòstic dolor – S-LANSS" ownerPath="LCS2_Anesthesiologist" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_SLANSSDef" entityAttachPath="LCS2_Evaluation.LCS2_SLANSSEvaluation">
@@ -1567,23 +1638,23 @@
 				<TaskParamDefinition path="LCS2_Evaluation.LCS2_SLANSSEvaluation.slanssExec8" isReadOnly="true" isMandatory="false"/>
             </HumanTaskDefinition>
             
-      <!-- 
-      <HumanTaskDefinition id="LCS2_SF12" externalId="6C20EE57-C5F7-4F4C-A7AE-BEAC4F8C3C3A" description="*Diagnòstic - SF-12" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_SF12" entityAttachPath="LCS2_Evaluation.LCS2_SF12">                
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12.sf12-1" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12.sf12-2" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12.sf12-3" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12.sf12-4" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12.sf12-5" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12.sf12-6" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12.sf12-7" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12.sf12-8" isReadOnly="false" isMandatory="true"/>    
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12.sf12-9" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12.sf12-10" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12.sf12-11" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12.sf12-12" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12.sf12-13" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12.sf12-14" isReadOnly="false" isMandatory="true"/>     
-      </HumanTaskDefinition> -->
+      
+		  <HumanTaskDefinition id="LCS2_SF12EvaluationHT" externalId="6C20EE57-C5F7-4F4C-A7AE-BEAC4F8C3C3A" description="*Diagnòstic - SF-12" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_SF12Def" entityAttachPath="LCS2_Evaluation.LCS2_SF12Evaluation">                
+			<TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12Evaluation.sf12-1" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12Evaluation.sf12-2" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12Evaluation.sf12-3" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12Evaluation.sf12-4" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12Evaluation.sf12-5" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12Evaluation.sf12-6" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12Evaluation.sf12-7" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12Evaluation.sf12-8" isReadOnly="false" isMandatory="true"/>    
+			<TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12Evaluation.sf12-9" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12Evaluation.sf12-10" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12Evaluation.sf12-11" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12Evaluation.sf12-12" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12Evaluation.sf12-13" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12Evaluation.sf12-14" isReadOnly="false" isMandatory="true"/>     
+		  </HumanTaskDefinition> 
 
 			
       <!-- PDT Cirurgiá/Anestesista  -->
@@ -1614,7 +1685,7 @@
               <TaskParamDefinition path="LCS2_Evaluation.LCS2_SocialDwelling.dwelling2" isReadOnly="false" isMandatory="true"/>
               <TaskParamDefinition path="LCS2_Evaluation.LCS2_SocialDwelling.dwelling3" isReadOnly="false" isMandatory="true"/>
               <TaskParamDefinition path="LCS2_Evaluation.LCS2_SocialDwelling.dwelling4" isReadOnly="false" isMandatory="true"/>
-        <TaskParamDefinition path="LCS2_Evaluation.LCS2_SocialDwelling.dwelling5" isReadOnly="true" isMandatory="false"/>
+			  <TaskParamDefinition path="LCS2_Evaluation.LCS2_SocialDwelling.dwelling5" isReadOnly="true" isMandatory="false"/>
             </HumanTaskDefinition>
       
       <!-- PDT Infermera/ Treballador social  -->
@@ -1631,9 +1702,8 @@
 				<TaskParamDefinition path="LCS2_PrimaryCareClinicians" isReadOnly="false" isMandatory="true"/> 
 				<TaskParamDefinition path="LCS2_Nurse" isReadOnly="false" isMandatory="true"/>
 			</HumanTaskDefinition>    
-						
-		</StageDefinition>			
-		
+			
+		</StageDefinition>					
 		
 		<!-- STAGEDEFINITION: Workplan -->    
 		<StageDefinition id="LCS2_WorkplanBeforeHospitalization" description="Pla de treball (Pre)" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_WorkplanBeforeHospitalization" entityAttachPath="LCS2_WorkplanBeforeHospitalization">
@@ -1641,11 +1711,21 @@
 			<SentryDefinition>
 				<precondition processDefinitionId="LCS2_CaseEvaluation"/>
 			</SentryDefinition> 
-			
-			<HumanTaskDefinition id="LCS2_EVAWPBH" description="*Diagnòstic dolor – EVA" ownerPath="LCS2_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_EVABH" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_EVABH">
-				<TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_EVABH.eva1" isReadOnly="false" isMandatory="true"/>
+						
+			<HumanTaskDefinition id="LCS2_EVAECNDBHHT" description="*Diagnòstic dolor – Escala de Calificació Numérica del Dolor (EQND)" ownerPath="LCS2_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_EVAECNDDef" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_EVAECNDBH">
+				<TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_EVAECNDBH.eva1" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_EVAECNDBH.eva2" isReadOnly="false" isMandatory="true"/>
 			</HumanTaskDefinition>						
-		
+
+			<HumanTaskDefinition id="LCS2_MonitoringHospitalizationMeasureDHHT" description="Seguimient de constants vitals" ownerPath="LCS2_Owner" isMandatory="false" repeatable="PARALLEL" isManualActivation="true" entityDefinitionId="LCS2_MonitoringHospitalizationMeasureDef" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringHospitalizationMeasureDH">			
+        		<TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringHospitalizationMeasureDH.monitoringhospmeasure1" isReadOnly="false" isMandatory="true"/>			
+				<TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringHospitalizationMeasureDH.monitoringhospmeasure2" isReadOnly="false" isMandatory="true"/>				
+				<TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringHospitalizationMeasureDH.monitoringhospmeasure3" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringHospitalizationMeasureDH.monitoringhospmeasure4" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringHospitalizationMeasureDH.monitoringhospmeasure5" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringHospitalizationMeasureDH.monitoringhospmeasure6" isReadOnly="false" isMandatory="false"/>
+			</HumanTaskDefinition>  
+			
 			<HumanTaskDefinition id="LCS2_AnaemiaAssessmentAndManagementNutritionBHHT" description="Nutrició, proteínes (Avaluació del Cas)" ownerPath="LCS2_AnesClinic" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS2_AnaemiaAssessmentAndManagementNutritionDef" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_AnaemiaAssessmentAndManagementNutritionBH">
 
 			<!-- Test Felix - KitiaraJuanma
@@ -1697,7 +1777,7 @@
 			<DualTaskDefinition id="LCS2_PhysicalActivityWPBH" externalId="PhysicalActivity" description="Prescripció de l'activitat física - Abans l'hospitalització" ownerPath="LCS2_Owner" dueDatePath="LCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" isManualActivation="true" entityDefinitionId="LCS2_PhysicalActivityBH" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_PhysicalActivityBH">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_PhysicalActivityBH.startdate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2f_WorkplanBeforeHospitalization.LCS2_PhysicalActivityBH.startdate" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_PhysicalActivityBH.enddate" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_PhysicalActivityBH.dailysteps" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_PhysicalActivityBH.dailylowlevel" isReadOnly="false" isMandatory="true"/>
@@ -1707,7 +1787,7 @@
                     <TaskParamDefinition part="AUTOMATED" path="LCS2_WorkplanBeforeHospitalization.LCS2_PhysicalActivityBH.measurement" isReadOnly="false" isMandatory="true"/>
              </DualTaskDefinition> -->
 
-             <DualTaskDefinition id="LCS2_MonitoringPrescriptionWPBH" externalId="MonitoringPrescription" description="Prescripció de la monitorització - Abans d'hospitalització" dynamicDescriptionPath="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescription.type" ownerPath="LCS2_Owner" dueDatePath="LCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" isManualActivation="false" entityDefinitionId="LCS2_MonitoringPrescription" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescription">
+             <DualTaskDefinition id="LCS2_MonitoringPrescriptionWPBH" externalId="MonitoringPrescription" description="Prescripció de la monitorització - Abans d'hospitalització" dynamicDescriptionPath="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescription.type" ownerPath="LCS2_Owner" dueDatePath="LCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" isManualActivation="true" entityDefinitionId="LCS2_MonitoringPrescription" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescription">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescription.type" isReadOnly="false" isMandatory="true"/>
@@ -1734,8 +1814,9 @@
 				<precondition processDefinitionId="LCS2_WorkplanBeforeHospitalization"/>								
 			</SentryDefinition>  
 			
-			<HumanTaskDefinition id="LCS2_EVAWPDH" description="*Diagnòstic dolor – EVA" ownerPath="LCS2_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_EVADH" entityAttachPath="LCS2_WorkplanDuringHospitalization.LCS2_EVADH">
-				<TaskParamDefinition path="LCS2_WorkplanDuringHospitalization.LCS2_EVADH.eva1" isReadOnly="false" isMandatory="true"/>
+			<HumanTaskDefinition id="LCS2_EVAECNDDHHT" description="*Diagnòstic dolor – Escala de Qualificació Numèrica del Dolor (EQND)" ownerPath="LCS2_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_EVAECNDDef" entityAttachPath="LCS2_WorkplanDuringHospitalization.LCS2_EVAECNDDH">
+				<TaskParamDefinition path="LCS2_WorkplanDuringHospitalization.LCS2_EVAECNDDH.eva1" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_WorkplanDuringHospitalization.LCS2_EVAECNDDH.eva2" isReadOnly="false" isMandatory="true"/>
 			</HumanTaskDefinition>								  
 		
 			<!-- TEST -->
@@ -1864,6 +1945,32 @@
 				<TaskParamDefinition part="HUMAN" path="LCS2_Discharge.LCS2_DischargeTest.discharge2" isReadOnly="false" isMandatory="true"/>                    
 				<TaskParamDefinition part="HUMAN" path="LCS2_Discharge.LCS2_DischargeTest.discharge3" isReadOnly="false" isMandatory="true"/>                    
 			</HumanTaskDefinition>		
+						
+		  <HumanTaskDefinition id="LCS2_SF12DischargeHT" externalId="6C20EE57-C5F7-4F4C-A7AE-BEAC4F8C3C3A" description="*SF-12" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_SF12Def" entityAttachPath="LCS2_Discharge.LCS2_SF12Discharge">                
+			<TaskParamDefinition path="LCS2_Discharge.LCS2_SF12Discharge.sf12-1" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS2_Discharge.LCS2_SF12Discharge.sf12-2" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS2_Discharge.LCS2_SF12Discharge.sf12-3" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS2_Discharge.LCS2_SF12Discharge.sf12-4" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS2_Discharge.LCS2_SF12Discharge.sf12-5" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS2_Discharge.LCS2_SF12Discharge.sf12-6" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS2_Discharge.LCS2_SF12Discharge.sf12-7" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS2_Discharge.LCS2_SF12Discharge.sf12-8" isReadOnly="false" isMandatory="true"/>    
+			<TaskParamDefinition path="LCS2_Discharge.LCS2_SF12Discharge.sf12-9" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS2_Discharge.LCS2_SF12Discharge.sf12-10" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS2_Discharge.LCS2_SF12Discharge.sf12-11" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS2_Discharge.LCS2_SF12Discharge.sf12-12" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS2_Discharge.LCS2_SF12Discharge.sf12-13" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS2_Discharge.LCS2_SF12Discharge.sf12-14" isReadOnly="false" isMandatory="true"/>     
+		  </HumanTaskDefinition> 		
+
+          <HumanTaskDefinition id="LCS2_EQ-5DDischargeHT" description="*EQ-D5" ownerPath="LCS2_Clinician" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_EQ-5DDef" entityAttachPath="LCS2_Discharge.LCS2_EQ-5DDischarge">
+              <TaskParamDefinition path="LCS2_Discharge.LCS2_EQ-5DDischarge.EQ-5D-1" isReadOnly="false" isMandatory="true"/>
+			  <TaskParamDefinition path="LCS2_Discharge.LCS2_EQ-5DDischarge.EQ-5D-2" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_Discharge.LCS2_EQ-5DDischarge.EQ-5D-3" isReadOnly="false" isMandatory="true"/>
+              <TaskParamDefinition path="LCS2_Discharge.LCS2_EQ-5DDischarge.EQ-5D-4" isReadOnly="false" isMandatory="true"/>
+			  <TaskParamDefinition path="LCS2_Discharge.LCS2_EQ-5DDischarge.EQ-5D-5" isReadOnly="false" isMandatory="true"/>              
+           </HumanTaskDefinition>			
+			
 		</StageDefinition>
 		
     </CaseDefinition>
