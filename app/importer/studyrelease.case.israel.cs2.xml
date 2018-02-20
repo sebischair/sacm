@@ -42,7 +42,6 @@
 
             <AttributeDefinition id="ICS2_Identification" type="Link.EntityDefinition.ICS2_Identification" description="Identification"/>
             <AttributeDefinition id="ICS2_Evaluation" type="Link.EntityDefinition.ICS2_Evaluation" description="Evaluation"/>
-            <AttributeDefinition id="ICS2_PhysiotherapistEvaluation" type="Link.EntityDefinition.ICS2_PhysiotherapistEvaluation" description="Physiotherapist evaluation"/>
             <AttributeDefinition id="ICS2_Workplan" type="Link.EntityDefinition.ICS2_Workplan" description="Workplan"/>
             <AttributeDefinition id="ICS2_Discharge" type="Link.EntityDefinition.ICS2_Discharge" description="Discharge"/>       
         </EntityDefinition>
@@ -135,6 +134,10 @@
             <AttributeDefinition id="ICS2_Sleeping" type="Link.EntityDefinition.ICS2_Sleeping" multiplicity="maximalOne" description="איכות שינה"/> 
             <AttributeDefinition id="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist" type="Link.EntityDefinition.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist" multiplicity="maximalOne" description="הערכה רפואית של מחלקת הכירורגיה או המרדים"/> 
             <AttributeDefinition id="ICS2_MUST" type="Link.EntityDefinition.ICS2_MUST" multiplicity="maximalOne" description="MUST Score"/> 
+            <AttributeDefinition id="ICS2_PhysiotherapistEvaluationDataBeforeTest" type="Link.EntityDefinition.ICS2_PhysiotherapistEvaluationDataBeforeTest" description="הערכת פיזיותרפיסט - נתוני התחלה"/>  
+            <AttributeDefinition id="ICS2_PhysiotherapistEvaluationTimedUp" type="Link.EntityDefinition.ICS2_PhysiotherapistEvaluationTimedUp" description="הערכת פיזיותרפיסט - Timed up and go"/>  
+            <AttributeDefinition id="ICS2_PhysiotherapistEvaluation6MWT" type="Link.EntityDefinition.ICS2_PhysiotherapistEvaluation6MWT" description="הערכת פיזיותרפיסט - 6MWT"/>  
+            <AttributeDefinition id="ICS2_PhysiotherapistEvaluation30SSTS" type="Link.EntityDefinition.ICS2_PhysiotherapistEvaluation30SSTS" description="הערכת פיזיותרפיסט - 30sSTS"/>  
         </EntityDefinition>
 
         <EntityDefinition id="ICS2_PatientsData" description="פרטים דמוגרפיים">
@@ -877,12 +880,7 @@
         </EntityDefinition>
 
 
-        <EntityDefinition id="ICS2_PhysiotherapistEvaluation" description="Physiotherapist evaluation">
-            <AttributeDefinition id="ICS2_PhysiotherapistEvaluationDataBeforeTest" type="Link.EntityDefinition.ICS2_PhysiotherapistEvaluationDataBeforeTest" description="הערכת פיזיותרפיסט - נתוני התחלה"/>  
-            <AttributeDefinition id="ICS2_PhysiotherapistEvaluationTimedUp" type="Link.EntityDefinition.ICS2_PhysiotherapistEvaluationTimedUp" description="הערכת פיזיותרפיסט - Timed up and go"/>  
-            <AttributeDefinition id="ICS2_PhysiotherapistEvaluation6MWT" type="Link.EntityDefinition.ICS2_PhysiotherapistEvaluation6MWT" description="הערכת פיזיותרפיסט - 6MWT"/>  
-            <AttributeDefinition id="ICS2_PhysiotherapistEvaluation30SSTS" type="Link.EntityDefinition.ICS2_PhysiotherapistEvaluation30SSTS" description="הערכת פיזיותרפיסט - 30sSTS"/>  
-        </EntityDefinition>
+
 
         <EntityDefinition id="ICS2_PhysiotherapistEvaluationDataBeforeTest" description="הערכת פיזיותרפיסט - נתוני התחלה"> 
             <AttributeDefinition id="PulseRest" type="number" multiplicity="maximalOne" description="דופק במנוחה"/>
@@ -1333,50 +1331,44 @@
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_MUST.RecentAcuteDisease" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_MUST.MustScore" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
-            </StageDefinition>    
-
-            <StageDefinition id="ICS2_PhysiotherapistEvaluation" description="הערכת פיזיוטרפיסט" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluation" entityAttachPath="ICS2_PhysiotherapistEvaluation"> 
-                <SentryDefinition>
-                    <precondition processDefinitionId="ICS2_CaseEvaluation"/>
-                </SentryDefinition> 
-
-                <HumanTaskDefinition id="ICS2_PhysiotherapistEvaluationDataBeforeTest" description="נתונים התחלתיים" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluationDataBeforeTest" entityAttachPath="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest">                
-                    <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.PulseRest" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.Age" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.MaxPulse" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.PhysioRemarks" isReadOnly="false" isMandatory="false"/>
+      
+                <HumanTaskDefinition id="ICS2_PhysiotherapistEvaluationDataBeforeTest" description="נתונים התחלתיים" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluationDataBeforeTest" entityAttachPath="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest">                
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.PulseRest" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.Age" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.MaxPulse" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.PhysioRemarks" isReadOnly="false" isMandatory="false"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="ICS2_PhysiotherapistEvaluationTimedUp" description="Time up and go" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluationTimedUp" entityAttachPath="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationTimedUp">                
-                    <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUG1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUG2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUGRemarks" isReadOnly="false" isMandatory="false"/>
+                <HumanTaskDefinition id="ICS2_PhysiotherapistEvaluationTimedUp" description="Time up and go" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluationTimedUp" entityAttachPath="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationTimedUp">                
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUG1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUG2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUGRemarks" isReadOnly="false" isMandatory="false"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="ICS2_PhysiotherapistEvaluation6MWT" description="6MWT" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluation6MWT" entityAttachPath="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT">                
-                    <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT6" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWTRemarks" isReadOnly="false" isMandatory="false"/>
+                <HumanTaskDefinition id="ICS2_PhysiotherapistEvaluation6MWT" description="6MWT" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluation6MWT" entityAttachPath="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT">                
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWTRemarks" isReadOnly="false" isMandatory="false"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="ICS2_PhysiotherapistEvaluation30SSTS" description="30s STS" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluation30SSTS" entityAttachPath="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS">                
-                    <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS6" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTSRemarks" isReadOnly="false" isMandatory="false"/>
+                <HumanTaskDefinition id="ICS2_PhysiotherapistEvaluation30SSTS" description="30s STS" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluation30SSTS" entityAttachPath="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS">                
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTSRemarks" isReadOnly="false" isMandatory="false"/>
                 </HumanTaskDefinition>
             </StageDefinition>
 
             <StageDefinition id="ICS2_Workplan" description="Workplan" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Workplan" entityAttachPath="ICS2_Workplan">
                 <SentryDefinition>
-                    <precondition processDefinitionId="ICS2_PhysiotherapistEvaluation"/>
+                    <precondition processDefinitionId="ICS2_CaseEvaluation"/>
                 </SentryDefinition>
 
                 <DualTaskDefinition id="ICS2_PhysicalActivity" externalId="PhysicalActivity" description="Physical Activity" ownerPath="ICS2_CaseManager" dueDatePath="ICS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="ICS2_PhysicalActivity" entityAttachPath="ICS2_Workplan.ICS2_PhysicalActivity">
@@ -1651,32 +1643,32 @@
             <TaskParam path="ICS2_Evaluation.ICS2_MUST.RecentAcuteDisease" values="['0']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="ICS2_PhysiotherapistEvaluationDataBeforeTest">
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.PulseRest" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.Age" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.PhysioRemarks" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.PulseRest" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.Age" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.PhysioRemarks" values="['1']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="ICS2_PhysiotherapistEvaluationTimedUp">
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUG1" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUG2" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUGRemarks" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUG1" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUG2" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUGRemarks" values="['1']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="ICS2_PhysiotherapistEvaluation6MWT">
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT1" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT2" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT3" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT4" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT5" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT6" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWTRemarks" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT1" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT2" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT3" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT4" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT5" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT6" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWTRemarks" values="['1']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="ICS2_PhysiotherapistEvaluation30SSTS">
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS1" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS2" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS3" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS4" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS5" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS6" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTSRemarks" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS1" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS2" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS3" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS4" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS5" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS6" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTSRemarks" values="['1']"/>
         </Action>
         <Action id="ActivateDualTask" processId="ICS2_PhysicalActivity" breakpoint="true"/>
         <Action id="CompleteDualTaskHumanPart" processId="ICS2_PhysicalActivity" breakpoint="true">
