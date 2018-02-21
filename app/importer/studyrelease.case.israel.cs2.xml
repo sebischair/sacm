@@ -1079,6 +1079,8 @@
                     <HttpHookDefinition on="COMPLETE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/case/patient/inclusion" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition path="ICS2_Patient" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_CaseManager" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Clinician" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Nurse" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_EvaluationDueDate" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_WorkplanDueDate" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_CaseData1" isReadOnly="false" isMandatory="true"/>
@@ -1664,6 +1666,8 @@
             <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT6" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWTRemarks" values="['1']"/>
         </Action>
+
+        <Action id="Delay" ms="200"/>
         <Action id="CompleteHumanTask" processId="ICS2_PhysiotherapistEvaluation30SSTS">
             <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS1" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS2" values="['1']"/>
@@ -1673,6 +1677,7 @@
             <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS6" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTSRemarks" values="['1']"/>
         </Action>
+        
         <Action id="ActivateDualTask" processId="ICS2_PhysicalActivity" breakpoint="true"/>
         <Action id="CompleteDualTaskHumanPart" processId="ICS2_PhysicalActivity" breakpoint="true">
             <TaskParam path="ICS2_Workplan.ICS2_PhysicalActivity.startdate"  values="['2017-09-26T00:00:00.000']"/>
