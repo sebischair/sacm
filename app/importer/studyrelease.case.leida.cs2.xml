@@ -993,8 +993,8 @@
 		
 		<EntityDefinition id="LCS2_MonitoringPrescription">
             <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Tipus de mesura" additionalDescription="Seleccioneu el tipus de mesura per a la supervisió del pacient">
-                <EnumerationOption value="DIASTOLICBLOODPRESSURE" description="Pressió arterial diastòlica"/>
                 <EnumerationOption value="SYSTOLICBLOODPRESSURE" description="Pressió arterial sistòlica"/>
+				<EnumerationOption value="DIASTOLICBLOODPRESSURE" description="Pressió arterial diastòlica"/>
 				<EnumerationOption value="BODYTEMPERATURE" description="Temperatura"/>
             </AttributeDefinition>   
             <AttributeDefinition id="alertmin" type="number.min(0)" multiplicity="exactlyOne" description="Valor mínim permès" additionalDescription="Valor mínim per a aquesta mesura, ha de ser superior a 0"/>       
@@ -1043,8 +1043,8 @@
 		</EntityDefinition>		
 		
         <EntityDefinition id="LCS2_BloodPressureControlBH">		
+			<AttributeDefinition id="bloodPControlmax" type="number.min(0).max(250)" defaultValues="[0]" multiplicity="maximalOne" description="Pressió arterial sistòlica - pressió màxima (mmHg)"/>       		
 		    <AttributeDefinition id="bloodPControlmin" type="number.min(0).max(250)" defaultValues="[0]" multiplicity="maximalOne" description="Pressió arterial diastòlica - pressió mínima (mmHg)"/>       
-            <AttributeDefinition id="bloodPControlmax" type="number.min(0).max(250)" defaultValues="[0]" multiplicity="maximalOne" description="Pressió arterial sistòlica - pressió màxima (mmHg)"/>       		
             <AttributeDefinition id="bloodPControl1" type="enumeration" multiplicity="maximalOne" description="Pressió de la sang dintre dels valors correctes">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
@@ -1119,8 +1119,8 @@
                 <EnumerationOption value="1" description="Tarda"/>
                 <EnumerationOption value="2" description="Nit"/>
             </AttributeDefinition> 
-			<AttributeDefinition id="monitoringhospmeasure3" type="number.min(0).max(200)" defaultValues="[0.0]" multiplicity="maximalOne" description="Valor de la pressió arterial diastòlica (mmHg)"/>					
-			<AttributeDefinition id="monitoringhospmeasure4" type="number.min(0).max(250)" defaultValues="[0.0]" multiplicity="maximalOne" description="Valor de la pressió arterial sistòlica (mmHg)"/>		
+		    <AttributeDefinition id="monitoringhospmeasure3" type="number.min(0).max(250)" defaultValues="[0.0]" multiplicity="maximalOne" description="Valor de la pressió arterial sistòlica (mmHg)"/>		
+			<AttributeDefinition id="monitoringhospmeasure4" type="number.min(0).max(200)" defaultValues="[0.0]" multiplicity="maximalOne" description="Valor de la pressió arterial diastòlica (mmHg)"/>					
 			<AttributeDefinition id="monitoringhospmeasure5" type="number.min(27).max(45)" defaultValues="[0.0]" multiplicity="maximalOne" description="Valor de la temperatura (·C)"/>								
             <AttributeDefinition id="monitoringhospmeasure6" type="longtext" multiplicity="maximalOne" description="Comentaris"/>               
         </EntityDefinition>
@@ -1745,8 +1745,8 @@
 			</HumanTaskDefinition>  
 			
 			<HumanTaskDefinition id="LCS2_BloodPressureControlWPBH" description="Control Pressió de sang" ownerPath="LCS2_Anesthesiologist" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_BloodPressureControlBH" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_BloodPressureControlBH">
-				<TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_BloodPressureControlBH.bloodPControlmin" isReadOnly="false" isMandatory="true"/>
 				<TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_BloodPressureControlBH.bloodPControlmax" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_BloodPressureControlBH.bloodPControlmin" isReadOnly="false" isMandatory="true"/>
 				<TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_BloodPressureControlBH.bloodPControl1" isReadOnly="false" isMandatory="true"/>
 			</HumanTaskDefinition>
 
