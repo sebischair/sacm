@@ -714,6 +714,11 @@
         </EntityDefinition> -->
 				
 		<EntityDefinition id="LCS2_EVAECNDDef">
+		    <AttributeDefinition id="eva0" type="enumeration" multiplicity="exactlyOne" description="Quan">     
+                <EnumerationOption value="0" description="Matí"/>
+                <EnumerationOption value="1" description="Tarda"/>
+                <EnumerationOption value="2" description="Nit"/>
+            </AttributeDefinition> 				
             <AttributeDefinition id="eva1" type="enumeration" multiplicity="maximalOne" description="En repòs; Escala numerada: On 0 és sense dolor i 10 és el dolor màxim. Seleccioni el número que millor avalua la intensitat del símptoma">
                 <EnumerationOption value="0" description="0"/>
                 <EnumerationOption value="1" description="1"/>
@@ -1057,23 +1062,6 @@
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>
         </EntityDefinition>
-
-		<!-- to be deleted
-        <EntityDefinition id="LCS2_EVABH">
-              <AttributeDefinition id="eva1" type="enumeration" multiplicity="maximalOne" description="Escala numerada: On 0 és sense dolor i 10 és el dolor màxim. Seleccioni el número que millor avalua la intensitat del símptoma">
-                <EnumerationOption value="0" description="0"/>
-                <EnumerationOption value="1" description="1"/>
-                <EnumerationOption value="2" description="2"/>
-                <EnumerationOption value="3" description="3"/>
-                <EnumerationOption value="4" description="4"/>
-                <EnumerationOption value="5" description="5"/>
-                <EnumerationOption value="6" description="6"/>
-                <EnumerationOption value="7" description="7"/>
-                <EnumerationOption value="8" description="8"/>
-                <EnumerationOption value="9" description="9"/>
-                <EnumerationOption value="10" description="10"/>
-            </AttributeDefinition>
-        </EntityDefinition> -->
 		
 		<!-- testkitiara
         <EntityDefinition id="LCS2_SLANSSBH">
@@ -1715,9 +1703,9 @@
 				<precondition processDefinitionId="LCS2_CaseEvaluation"/>
 			</SentryDefinition> 
 						
-			<HumanTaskDefinition id="LCS2_EVAECNDBHHT" description="*Diagnòstic dolor – Escala de Qualificació Numérica del Dolor (EQND)" ownerPath="LCS2_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_EVAECNDDef" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_EVAECNDBH">
-				<TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_EVAECNDBH.eva1" isReadOnly="false" isMandatory="true"/>
-				<TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_EVAECNDBH.eva2" isReadOnly="false" isMandatory="true"/>
+			<HumanTaskDefinition id="LCS2_EVAECNDBHHT" description="*Diagnòstic dolor – Escala de Qualificació Numérica del Dolor (EQND) - (Avaluació del Cas)" ownerPath="LCS2_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_EVAECNDDef" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_EVAECNDBH">
+				<TaskParamDefinition path="LCS2_Evaluation.LCS2_EVAECNDEvaluation.eva1" isReadOnly="true" isMandatory="false"/>
+				<TaskParamDefinition path="LCS2_Evaluation.LCS2_EVAECNDEvaluation.eva2" isReadOnly="true" isMandatory="false"/>
 			</HumanTaskDefinition>						
 
 			<HumanTaskDefinition id="LCS2_MonitoringHospitalizationMeasureDHHT" description="Seguimient de constants vitals" ownerPath="LCS2_Owner" isMandatory="false" repeatable="PARALLEL" isManualActivation="true" entityDefinitionId="LCS2_MonitoringHospitalizationMeasureDef" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringHospitalizationMeasureDH">			
@@ -1815,7 +1803,8 @@
 				<precondition processDefinitionId="LCS2_WorkplanBeforeHospitalization"/>								
 			</SentryDefinition>  
 			
-			<HumanTaskDefinition id="LCS2_EVAECNDDHHT" description="*Diagnòstic dolor – Escala de Qualificació Numèrica del Dolor (EQND)" ownerPath="LCS2_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_EVAECNDDef" entityAttachPath="LCS2_WorkplanDuringHospitalization.LCS2_EVAECNDDH">
+			<HumanTaskDefinition id="LCS2_EVAECNDDHHT" description="*Diagnòstic dolor – Escala de Qualificació Numèrica del Dolor (EQND)" ownerPath="LCS2_Clinician" isMandatory="false" repeatable="PARALLEL" isManualActivation="true" entityDefinitionId="LCS2_EVAECNDDef" entityAttachPath="LCS2_WorkplanDuringHospitalization.LCS2_EVAECNDDH">
+				<TaskParamDefinition path="LCS2_WorkplanDuringHospitalization.LCS2_EVAECNDDH.eva0" isReadOnly="false" isMandatory="true"/>
 				<TaskParamDefinition path="LCS2_WorkplanDuringHospitalization.LCS2_EVAECNDDH.eva1" isReadOnly="false" isMandatory="true"/>
 				<TaskParamDefinition path="LCS2_WorkplanDuringHospitalization.LCS2_EVAECNDDH.eva2" isReadOnly="false" isMandatory="true"/>
 			</HumanTaskDefinition>								  
