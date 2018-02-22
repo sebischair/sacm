@@ -897,7 +897,8 @@ module.exports = class Importer {
               newEntityDefinition: entityDefinitionId,
               newEntityAttachPath: td.$.entityAttachPath,
               externalId: td.$.externalId,
-              dynamicDescriptionPath: td.$.dynamicDescriptionPath
+              dynamicDescriptionPath: td.$.dynamicDescriptionPath,
+              footnote: td.$.footnote
             }
             if(isHumanTaskDefinition){   
               data.dueDatePath = td.$.dueDatePath;
