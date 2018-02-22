@@ -1205,10 +1205,15 @@
         </EntityDefinition> 
 		
         <EntityDefinition id="LCS2_RehabilitationAH">
+            <AttributeDefinition id="rehabExec0" type="enumeration" multiplicity="exactlyOne" description="Quan">     
+                <EnumerationOption value="0" description="Matí"/>
+                <EnumerationOption value="1" description="Tarda"/>
+            </AttributeDefinition> 				
             <AttributeDefinition id="rehabExec1" type="enumeration" multiplicity="maximalOne" description="Ha fet el pacient els exercicis de rehabilitació?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>
+			<AttributeDefinition id="rehabExec2" type="longtext" multiplicity="maximalOne" description="Comentaris"/>   
         </EntityDefinition>
 
 		<!--
@@ -1619,7 +1624,7 @@
               <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac24" isReadOnly="false" isMandatory="true"/>        
             </HumanTaskDefinition>      -->                
       
-            <HumanTaskDefinition id="LCS2_EVAECNDEvaluationHT" description="*Diagnòstic dolor – Escala de Calificació Numérica del Dolor (Abans cirurgia)" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_EVAECNDDef" entityAttachPath="LCS2_Evaluation.LCS2_EVAECNDEvaluation">
+            <HumanTaskDefinition id="LCS2_EVAECNDEvaluationHT" description="*Diagnòstic dolor – Escala de Qualificació Numérica del Dolor(EQND) - (Abans cirurgia)" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_EVAECNDDef" entityAttachPath="LCS2_Evaluation.LCS2_EVAECNDEvaluation">
               <TaskParamDefinition path="LCS2_Evaluation.LCS2_EVAECNDEvaluation.eva1" isReadOnly="false" isMandatory="true"/>
 			  <TaskParamDefinition path="LCS2_Evaluation.LCS2_EVAECNDEvaluation.eva2" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>
@@ -1710,7 +1715,7 @@
 				<precondition processDefinitionId="LCS2_CaseEvaluation"/>
 			</SentryDefinition> 
 						
-			<HumanTaskDefinition id="LCS2_EVAECNDBHHT" description="*Diagnòstic dolor – Escala de Calificació Numérica del Dolor (EQND)" ownerPath="LCS2_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_EVAECNDDef" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_EVAECNDBH">
+			<HumanTaskDefinition id="LCS2_EVAECNDBHHT" description="*Diagnòstic dolor – Escala de Qualificació Numérica del Dolor (EQND)" ownerPath="LCS2_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_EVAECNDDef" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_EVAECNDBH">
 				<TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_EVAECNDBH.eva1" isReadOnly="false" isMandatory="true"/>
 				<TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_EVAECNDBH.eva2" isReadOnly="false" isMandatory="true"/>
 			</HumanTaskDefinition>						
@@ -1860,15 +1865,18 @@
 		
 		<!-- STAGEDEFINITION: WorkplanAfterHospitalization -->    
 		<StageDefinition id="LCS2_WorkplanAfterHospitalization" description="Pla de treball (Post)" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_WorkplanAfterHospitalization" entityAttachPath="LCS2_WorkplanAfterHospitalization">
-		<!-- TEST -->
+		<!-- TEST 		
 		    <SentryDefinition>
 				<precondition processDefinitionId="LCS2_WorkplanDuringHospitalization"/>								
-			</SentryDefinition> 
+			</SentryDefinition> -->
 		
-		  <HumanTaskDefinition id="LCS2_RehabilitationWPAH" description="Rehabilitació" ownerPath="LCS2_Physiotherapist" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_RehabilitationAH" entityAttachPath="LCS2_WorkplanAfterHospitalization.LCS2_RehabilitationAH">
-            <TaskParamDefinition path="LCS2_WorkplanAfterHospitalization.LCS2_RehabilitationAH.rehabExec1" isReadOnly="false" isMandatory="true"/>
+		  <HumanTaskDefinition id="LCS2_RehabilitationWPAH" description="Rehabilitació" ownerPath="LCS2_Physiotherapist" isMandatory="true" repeatable="PARALLEL" isManualActivation="true" entityDefinitionId="LCS2_RehabilitationAH" entityAttachPath="LCS2_WorkplanAfterHospitalization.LCS2_RehabilitationAH">
+            <TaskParamDefinition path="LCS2_WorkplanAfterHospitalization.LCS2_RehabilitationAH.rehabExec0" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS2_WorkplanAfterHospitalization.LCS2_RehabilitationAH.rehabExec1" isReadOnly="false" isMandatory="true"/>
+			<TaskParamDefinition path="LCS2_WorkplanAfterHospitalization.LCS2_RehabilitationAH.rehabExec2" isReadOnly="false" isMandatory="false"/>
           </HumanTaskDefinition>
 
+		  <!--
           <HumanTaskDefinition id="LCS2_SLANSSWPAHHT" description="*S-LANSS" ownerPath="LCS2_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_SLANSSDef" entityAttachPath="LCS2_WorkplanAfterHospitalization.LCS2_SLANSSAH">
             <TaskParamDefinition path="LCS2_WorkplanAfterHospitalization.LCS2_SLANSSAH.slanssExec1" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="LCS2_WorkplanAfterHospitalization.LCS2_SLANSSAH.slanssExec2" isReadOnly="false" isMandatory="true"/>
@@ -1879,6 +1887,7 @@
             <TaskParamDefinition path="LCS2_WorkplanAfterHospitalization.LCS2_SLANSSAH.slanssExec7" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="LCS2_WorkplanAfterHospitalization.LCS2_SLANSSAH.slanssExec8" isReadOnly="true" isMandatory="false"/>
           </HumanTaskDefinition> 
+		  -->
 
           <HumanTaskDefinition id="LCS2_AnswerAutocheckHealthStatusWPAH" description="Comprovació automàtica de l'estat de salut" ownerPath="LCS2_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_AnswerAutocheckHealthStatusAH" entityAttachPath="LCS2_WorkplanAfterHospitalization.LCS2_AnswerAutocheckHealthStatusAH">
             <TaskParamDefinition path="LCS2_WorkplanAfterHospitalization.LCS2_AnswerAutocheckHealthStatusAH.autocheck1" isReadOnly="false" isMandatory="true"/>
@@ -1934,6 +1943,7 @@
 				<TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_CommentAH.comments" isReadOnly="false" isMandatory="true"/>                    
 			</HumanTaskDefinition>								
 		</StageDefinition>
+		
 
 		<StageDefinition id="LCS2_Discharge" description="Discharge - Alta del pacient" isMandatory="false" repeatable="SERIAL" entityDefinitionId="LCS2_Discharge" entityAttachPath="LCS2_Discharge">
 			<HumanTaskDefinition id="LCS2_DischargeTestHT" description="Alta del pacient" ownerPath="LCS2_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_DischargeTest" entityAttachPath="LCS2_Discharge.LCS2_DischargeTest">									
