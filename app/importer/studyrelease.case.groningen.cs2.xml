@@ -41,6 +41,7 @@
         <!-- Settings Entity Definitions -->
         <EntityDefinition id="GCS2_Settings" description="Settings">
             <AttributeDefinition id="GCS2_Patient" type="Link.Users(UmcgPatients)" description="Patient" additionalDescription="Patient that is assigned to this case."/>
+            <AttributeDefinition id="GCS2_CaseOwner" type="Link.Users(UmcgProfessionals)" description="Case Owner"/>
             <AttributeDefinition id="GCS2_Owner" type="Link.Users(UmcgProfessionals)" description="Owner"/>
             <AttributeDefinition id="GCS2_EvaluationDueDate" type="date.after(TODAY)" description="Evaluation default due date"/>
             <AttributeDefinition id="GCS2_WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date"/>
@@ -640,7 +641,7 @@
 
 
         <!-- Case Definition -->
-        <CaseDefinition id="GCS2" description="Groningen CS2" ownerPath="GCS2_Settings.GCS2_Owner" clientPath="GCS2_Settings.GCS2_Patient" entityDefinitionId="GCS2_CaseData" newEntityDefinitionId="GCS2_Settings" newEntityAttachPath="GCS2_Settings">
+        <CaseDefinition id="GCS2" description="Groningen CS2" ownerPath="GCS2_Settings.GCS2_CaseOwner" clientPath="GCS2_Settings.GCS2_Patient" entityDefinitionId="GCS2_CaseData" newEntityDefinitionId="GCS2_Settings" newEntityAttachPath="GCS2_Settings">
            
             <SummarySectionDefinition id="GCS2_Nutritional" description="Nutritional" position="LEFT">    
                 <SummaryParamDefinition path="GCS2_Evaluation.GCS2_NRS.nrs8"/>
