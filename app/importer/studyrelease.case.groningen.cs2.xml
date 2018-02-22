@@ -644,7 +644,7 @@
 
 
         <!-- Case Definition -->
-        <CaseDefinition id="GCS2" description="Groningen CS2" ownerPath="GCS2_Settings.GCS2_Owner" clientPath="GCS2_Settings.GCS2_Patient" entityDefinitionId="GCS2_CaseData">
+        <CaseDefinition id="GCS2" description="Groningen CS2" ownerPath="GCS2_Settings.GCS2_Owner" clientPath="GCS2_Settings.GCS2_Patient" entityDefinitionId="GCS2_CaseData" newEntityDefinitionId="GCS2_Settings" newEntityAttachPath="GCS2_Settings">
            
             <SummarySectionDefinition id="GCS2_Nutritional" description="Nutritional" position="LEFT">    
                 <SummaryParamDefinition path="GCS2_Evaluation.GCS2_NRS.nrs8"/>
@@ -672,7 +672,7 @@
             </SummarySectionDefinition>
 
             <StageDefinition id="GCS2_CaseIdentification" description="Case Identification" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_Identification" entityAttachPath="GCS2_Identification">        
-                <HumanTaskDefinition id="GCS2_SelectPatient" externalId="SelectPatient" description="Assign Patient" ownerPath="GCS2_Settings.GCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_Settings" entityAttachPath="GCS2_Settings">                
+                <HumanTaskDefinition id="GCS2_SelectPatient" externalId="SelectPatient" description="Assign Patient" ownerPath="GCS2_Settings.GCS2_Owner" isMandatory="true" repeatable="ONCE">                
                     <HttpHookDefinition on="COMPLETE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/case/patient/inclusion" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition path="GCS2_Settings.GCS2_Patient" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Settings.GCS2_Owner" isReadOnly="false" isMandatory="true"/>
@@ -1001,6 +1001,7 @@
             <TaskParam path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD6" values="['1']"/>
             <TaskParam path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD7" values="['1']"/>
         </Action>
+        <Action id="Delay" ms="200"/>
         <!--
         <Action id="CreateAlert" 
             processId="GCS2_SF12" 

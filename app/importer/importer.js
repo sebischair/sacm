@@ -737,8 +737,13 @@ module.exports = class Importer {
       if(Workspace.CaseDefinition == null)
         return Promise.resolve();
       return Promise.each(Workspace.CaseDefinition, cd=>{
+        let entityDefinitionId = null;
         return this.getEntityDefinitionIdByXMLId(cd.$.entityDefinitionId)
-          .then(entityDefinitionId=>{            
+          .then(entityDefinitionIdPersisted=>{    
+            entityDefinitionId = entityDefinitionIdPersisted;
+            return this.getEntityDefinitionIdByXMLId(cd.$.newEntityDefinitionId);
+          })
+          .then(newEntityDefinitionIdPersisted=>{     
             const data = {
               name: cd.$.id,
               description: cd.$.description,
@@ -746,6 +751,8 @@ module.exports = class Importer {
               ownerPath: cd.$.ownerPath,
               clientPath: cd.$.clientPath,
               entityDefinition: entityDefinitionId,
+              newEntityDefinition: newEntityDefinitionIdPersisted,
+              newEntityAttachPath: cd.$.newEntityAttachPath,
               version: this.version
             };
             return CaseDefinition.create(this.jwt, data)
