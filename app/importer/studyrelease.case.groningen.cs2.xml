@@ -392,45 +392,41 @@
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_MNASF" description="Mini Nutritional Assesment (MNA-SF®)">
-            <AttributeDefinition id="mnasf1" type="enumeration" multiplicity="maximalOne" description="Has food intake declined over the past 3 months due to loss of appetite, digestive problems, chewing or swallowingen difficulties?">
+            <AttributeDefinition id="mnasf1" type="enumeration" multiplicity="maximalOne" description="Has food intake declined over the past 3 months due to loss of appetite, digestive problems, chewing or swallowingen difficulties?" additionalDescription="0 = Severe decrease in food intake | 1 = Moderate decrease in food intake | 2 = no decrease in food intake">
                 <EnumerationOption value="0" description="Severe decrease in food intake"/>	
                 <EnumerationOption value="1" description="Moderate decrease in food intake"/>
                 <EnumerationOption value="2" description="no decrease in food intake"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="mnasf2" type="enumeration" multiplicity="maximalOne" description="Weight loss during the last 3 months">
+            </AttributeDefinition> 
+            <AttributeDefinition id="mnasf2" type="enumeration" multiplicity="maximalOne" description="Weight loss during the last 3 months" additionalDescription="0 = Weight loss greater than 3 kg | 1 = Does not know | 2 = Weight loss between 1 and 3 kg | 3 = No weight loss">
                 <EnumerationOption value="0" description="Weight loss greater than 3 kg"/>
                 <EnumerationOption value="1" description="Does not know"/>
                 <EnumerationOption value="2" description="Weight loss between 1 and 3 kg"/>
-                <EnumerationOption value="3" description="No weight loss	"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="mnasf3" type="enumeration" multiplicity="maximalOne" description="Mobility">
+                <EnumerationOption value="3" description="No weight loss"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="mnasf3" type="enumeration" multiplicity="maximalOne" description="Mobility" additionalDescription="0 = Bed or chair bound | 1 = Able to get out of bed / chair but does not go out | 2 = Goes out">
                 <EnumerationOption value="0" description="Bed or chair bound"/>	
                 <EnumerationOption value="1" description="Able to get out of bed / chair but does not go out"/>
-                <EnumerationOption value="2" description="Goes out"/>
+                <EnumerationOption value="2" description=" Goes out"/>
             </AttributeDefinition>
-            <AttributeDefinition id="mnasf4" type="enumeration" multiplicity="maximalOne" description="Has suffered psychological stress or acute disease in the past 3 months">
+            <AttributeDefinition id="mnasf4" type="enumeration" multiplicity="maximalOne" description="Has suffered psychological stress or acute disease in the past 3 months" additionalDescription="0 = Yes | 2 = No">
                 <EnumerationOption value="0" description="Yes"/>
                 <EnumerationOption value="2" description="No"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="mnasf5" type="enumeration" multiplicity="maximalOne" description="Neuropsychological problems">
+            </AttributeDefinition> 
+            <AttributeDefinition id="mnasf5" type="enumeration" multiplicity="maximalOne" description="Neuropsychological problems" additionalDescription="0 = Severe dementia or depression | 1 = Mild dementia | 2 = No psychological problems">
                 <EnumerationOption value="0" description="Severe dementia or depression"/>	
                 <EnumerationOption value="1" description="Mild dementia"/>
                 <EnumerationOption value="2" description="No psychological problems"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="mnasf6" type="number" multiplicity="maximalOne" description="Weight in kilograms"/>
-            <AttributeDefinition id="mnasf7" type="number" multiplicity="maximalOne" description="Length in centimetres"/>
-            <DerivedAttributeDefinition id="mnasf8" expression="round((mnasf6 / ((mnasf7/100) * (mnasf7/100))), 2)" description="BMI raw"/>  
-            <DerivedAttributeDefinition id="mnasf9" expression="if mnasf8 < 19 then 0 else if mnasf8 >= 19 and mnasf8 < 21 then 1 else if mnasf8 >= 21 and mnasf8 < 23 then 2 else 3" description="BMI range indicator" uiReference="colors(14>=green>=12>orange>=8>red>=0)"/>  
-
-            <!--
-            <AttributeDefinition id="mnasf8" type="enumeration" multiplicity="maximalOne" description="BMI">
-                <EnumerationOption value="0" description="BMI less than 19"/>	
-                <EnumerationOption value="1" description="BMI 19 to less than 21"/>
-                <EnumerationOption value="2" description="BMI 21 to less than 23"/>
-                <EnumerationOption value="3" description="BMI 23 or greater"/>
             </AttributeDefinition> 
-            -->          
-            <DerivedAttributeDefinition id="mnasf10" expression="number(mnasf1,0) + number(mnasf2,0) + number(mnasf3,0) + number(mnasf4,0) + mnasf9" description="MNA-SF Score"/>            
+            <AttributeDefinition id="mnasf6" type="number" multiplicity="maximalOne" description="Weight in kg"/>
+            <AttributeDefinition id="mnasf7" type="number" multiplicity="maximalOne" description="Length in cm"/>
+            <DerivedAttributeDefinition id="mnasf8" expression="round((mnasf6 / ((mnasf7/100) * (mnasf7/100))), 2)" description="BMI raw"/>  
+            <DerivedAttributeDefinition id="mnasf9" expression="if mnasf8 < 19 then 0 else if mnasf8 >= 19 and mnasf8 < 21 then 1 else if mnasf8 >= 21 and mnasf8 < 23 then 2 else 3" description="BMI range indicator" additionalDescription="0 = BMI less than 19 | 1 = BMI 19 to less than 21 | 2 = BMI 21 to less than 23 | 3 = BMI 23 or greater" uiReference="colors(14>=green>=12>orange>=8>red>=0)"/>  
+            <AttributeDefinition id="mnasf10" type="enumeration" multiplicity="maximalOne" description="Calf circumference (CC) in cm " additionalDescription="ANSWER ONLY IF BMI IS NOT AVAILABLE">
+                <EnumerationOption value="0.0001" description="No Answer"/>
+                <EnumerationOption value="0" description="CC less than 31"/>	
+                <EnumerationOption value="3" description="CC 31 or greater"/>
+            </AttributeDefinition>       
+            <DerivedAttributeDefinition id="mnasf11" expression="number(mnasf1,0) + number(mnasf2,0) + number(mnasf3,0) + number(mnasf4,0) + mnasf9 + round(number(mnasf10,0))" description="MNA-SF Score" additionalDescription="12-14 Normal nutritional status | 8-11 At risk of malnutrition | 0-7 Malnourished"/>            
         </EntityDefinition>
 
 
@@ -784,7 +780,8 @@
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_NRS.nrs7" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_NRS.nrs8" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
-                <HumanTaskDefinition id="GCS2_MNASF" description="Mini Nutritional Assesment (MNA-SF®)" ownerPath="GCS2_Settings.GCS2_Owner" dueDatePath="GCS2_Settings.GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_MNASF" entityAttachPath="GCS2_Evaluation.GCS2_MNASF">
+                <HumanTaskDefinition id="GCS2_MNASF" description="Mini Nutritional Assesment (MNA-SF®)" ownerPath="GCS2_Settings.GCS2_Owner" dueDatePath="GCS2_Settings.GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_MNASF" entityAttachPath="GCS2_Evaluation.GCS2_MNASF" 
+                    footnote="Vellas B, Villars H, Abellan G, et al. Overview of the MNA® - Its History and Challenges. J Nutr Health Aging 2006;10:456-465. Rubenstein LZ, Harker JO, Salva A, Guigoz Y, Vellas B. Screening for Undernutrition in Geriatric Practice: Developing the Short-Form MiniNutritional Assessment (MNA-SF). J. Geront 2001;56A: M366-377. Guigoz Y. The Mini-Nutritional Assessment (MNA®) Review of the Literature - What does it tell us? J Nutr Health Aging 2006; 10:466-487. Kaiser MJ, Bauer JM, Ramsch C, et al. Validation of the Mini Nutritional Assessment Short-Form (MNA®-SF): A practical tool for identification of nutritional status. J Nutr Health Aging 2009; 13:782-788. ® Société des Produits Nestlé, S.A., Vevey, Switzerland, Trademark Owners © Nestlé, 1994, Revision 2009. N67200 12/99 10M For more information: www.mna-elderly.com">
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf3" isReadOnly="false" isMandatory="true"/>
@@ -794,7 +791,8 @@
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf7" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf8" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf9" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf10" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf11" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
 
                 <HumanTaskDefinition id="GCS2_HospitalAnxietyAndDepressionScale" description="Hospital Anxiety and Depression Scale (HADS) " ownerPath="GCS2_Settings.GCS2_Owner" isMandatory="true" repeatable="ONCE"  entityDefinitionId="GCS2_HospitalAnxietyAndDepressionScale" entityAttachPath="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale">
@@ -981,6 +979,7 @@
             <TaskParam path="GCS2_Evaluation.GCS2_MNASF.mnasf5"  values="['1']"/>
             <TaskParam path="GCS2_Evaluation.GCS2_MNASF.mnasf6"  values="[70]"/>
             <TaskParam path="GCS2_Evaluation.GCS2_MNASF.mnasf7"  values="[180]"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_MNASF.mnasf10"  values="['0.0001']"/>
         </Action>
 
         <Action id="Delay" ms="200"/>
