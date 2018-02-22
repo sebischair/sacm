@@ -1335,6 +1335,7 @@
 		<!-- ENTITY DEFINITION: RepeatedTasksTest -->	
 		<EntityDefinition id="LCS2_RepeatedTasksTest">
 			<AttributeDefinition id="LCS2_MonitoringPrescriptionBH" type="Link.EntityDefinition.LCS2_MonitoringPrescription" multiplicity="any" /> 
+			<AttributeDefinition id="LCS2_MonitoringPrescriptionAH" type="Link.EntityDefinition.LCS2_MonitoringPrescription" multiplicity="any" /> 
 		</EntityDefinition>
 			
 			
@@ -1968,8 +1969,8 @@
 		
 		
 		<StageDefinition id="LCS2_RepeatedTasksTest" description="Test de repetició de tasques" isMandatory="false" repeatable="SERIAL" entityDefinitionId="LCS2_RepeatedTasksTest" entityAttachPath="LCS2_RepeatedTasksTest">
-			<!-- LCS2_WorkplanBeforeHospitalization -->
-			<DualTaskDefinition id="LCS2_MonitoringPrescriptionBHWP" externalId="MonitoringPrescription" description="[PRE] Prescripció de la monitorització - Abans d'hospitalització" dynamicDescriptionPath="LCS2_RepeatedTasksTest.LCS2_MonitoringPrescriptionBH.type" ownerPath="LCS2_Owner" dueDatePath="LCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_MonitoringPrescription" entityAttachPath="LCS2_RepeatedTasksTest.LCS2_MonitoringPrescriptionBH">
+			<!-- LCS2_WorkplanBeforeHospitalization; BEFORE -->
+			<DualTaskDefinition id="LCS2_MonitoringPrescriptionBHWP" externalId="MonitoringPrescription" description="[PRE] Prescripció de la monitorització - Abans d'hospitalització" dynamicDescriptionPath="LCS2_RepeatedTasksTest.LCS2_MonitoringPrescriptionBH.type" ownerPath="LCS2_Clinician" dueDatePath="LCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_MonitoringPrescription" entityAttachPath="LCS2_RepeatedTasksTest.LCS2_MonitoringPrescriptionBH">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="LCS2_RepeatedTasksTest.LCS2_MonitoringPrescriptionBH.type" isReadOnly="false" isMandatory="true"/>
@@ -1987,8 +1988,29 @@
                     <TaskParamDefinition part="AUTOMATED" path="LCS2_RepeatedTasksTest.LCS2_MonitoringPrescriptionBH.measurement" isReadOnly="false" isMandatory="true"/>
             </DualTaskDefinition>					
 	
-		
-				
+	
+			<!-- LCS2_WorkplanPostHospitalization; AFTER -->
+			<DualTaskDefinition id="LCS2_MonitoringPrescriptionAHWP" externalId="MonitoringPrescription" description="[POST] Prescripció de monitorització - Desprès l'hospitalització" dynamicDescriptionPath="LCS2_RepeatedTasksTest.LCS2_MonitoringPrescriptionAH.type" ownerPath="LCS2_PrimaryCareClinicians" dueDatePath="LCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_MonitoringPrescription" entityAttachPath="LCS2_RepeatedTasksTest.LCS2_MonitoringPrescriptionAH">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_RepeatedTasksTest.LCS2_MonitoringPrescriptionAH.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_RepeatedTasksTest.LCS2_MonitoringPrescriptionAH.alertmin" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_RepeatedTasksTest.LCS2_MonitoringPrescriptionAH.alertmax" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_RepeatedTasksTest.LCS2_MonitoringPrescriptionAH.alertfreq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_RepeatedTasksTest.LCS2_MonitoringPrescriptionAH.alertfrequnit" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_RepeatedTasksTest.LCS2_MonitoringPrescriptionAH.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_RepeatedTasksTest.LCS2_MonitoringPrescriptionAH.frequnit" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition part="HUMAN" path="LCS2_RepeatedTasksTest.LCS2_MonitoringPrescriptionAH.maxdelay" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS2_RepeatedTasksTest.LCS2_MonitoringPrescriptionAH.startdate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS2_RepeatedTasksTest.LCS2_MonitoringPrescriptionAH.enddate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS2_RepeatedTasksTest.LCS2_MonitoringPrescriptionAH.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS2_RepeatedTasksTest.LCS2_MonitoringPrescriptionAH.comments" isReadOnly="false" isMandatory="true"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="LCS2_RepeatedTasksTest.LCS2_MonitoringPrescriptionAH.measurement" isReadOnly="false" isMandatory="true"/>
+            </DualTaskDefinition>	
+	
+	
+	
+
 		</StageDefinition>
 		
 		
