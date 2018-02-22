@@ -1,4 +1,5 @@
 import express from 'express';
+import Model from './../../models/model';
 import Case from './../../models/case/model.case';
 import Process from './../../models/case/model.process';
 import Stage from './../../models/case/model.stage';
@@ -396,12 +397,15 @@ router.get('/me', (req, res, next)=>{
 router.get('/:id/tree', (req, res, next)=>{
   Case.findTreeById(req.jwt, req.params.id, {})
     .then(c=>{
+      if(req.query.lean)
+        c = Model.cleanObject(c);
       res.status(200).send(c);
     })
     .catch(err=>{
       res.status(500).send(err);
     });
 });
+
 
 
 
