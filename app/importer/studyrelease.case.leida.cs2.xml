@@ -1142,8 +1142,7 @@
 
 		<!-- WORKSPACE: WorkplanAfterHospitalization -->	
 		
-		<EntityDefinition id="LCS2_WorkplanAfterHospitalization">
-			<AttributeDefinition id="LCS2_PhysicalActivityAH" type="Link.EntityDefinition.LCS2_PhysicalActivityAH" />						
+		<EntityDefinition id="LCS2_WorkplanAfterHospitalization">				
 			<AttributeDefinition id="LCS2_RehabilitationAH" type="Link.EntityDefinition.LCS2_RehabilitationAH"/>
 		    <AttributeDefinition id="LCS2_SLANSSAH" type="Link.EntityDefinition.LCS2_SLANSSDef"/> 			
 			<AttributeDefinition id="LCS2_AnswerAutocheckHealthStatusAH" type="Link.EntityDefinition.LCS2_AnswerAutocheckHealthStatusAH"/>			
@@ -1151,14 +1150,6 @@
 			<AttributeDefinition id="LCS2_CommentAH" type="Link.EntityDefinition.LCS2_Comment" multiplicity="maximalOne" /> 	
 		</EntityDefinition>
 				
-		<EntityDefinition id="LCS2_PhysicalActivityAH">
-            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="maximalOne" description="Data d'inici"/>
-            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="maximalOne" description="Data de fi"/>       
-            <AttributeDefinition id="dailysteps" type="number.min(0).max(100000)" defaultValues="[10000]" multiplicity="maximalOne" description="Número de passos a fer durant el dia"/>       
-            <AttributeDefinition id="dailylowlevel" type="number.min(0).max(1440)" defaultValues="[60]" multiplicity="maximalOne" description="Mínim de minuts d'intensitat baixa a fer durant el dia (caminar, bicicleta, nadar)"/>       
-            <AttributeDefinition id="dailymediumlevel" type="number.min(0).max(1440)" defaultValues="[40]" multiplicity="maximalOne" description="Mínim de minuts d'intensitat intermitja a fer durant el dia (caminar pas ràpid, tasques domèstiques lleugeres, jugar amb nens, passejar mascotes)"/>       			
-            <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Mesures"/>                 
-        </EntityDefinition> 
 		
         <EntityDefinition id="LCS2_RehabilitationAH">
             <AttributeDefinition id="rehabExec0" type="enumeration" multiplicity="exactlyOne" description="Quan">     
@@ -1331,13 +1322,12 @@
         </EntityDefinition>
 		
 		
-		
 		<!-- ENTITY DEFINITION: RepeatedTasksTest -->	
 		<EntityDefinition id="LCS2_RepeatedTasksTest">
 			<AttributeDefinition id="LCS2_MonitoringPrescriptionBH" type="Link.EntityDefinition.LCS2_MonitoringPrescription" multiplicity="any" /> 
 			<AttributeDefinition id="LCS2_MonitoringPrescriptionAH" type="Link.EntityDefinition.LCS2_MonitoringPrescription" multiplicity="any" /> 
+			<AttributeDefinition id="LCS2_PhysicalActivityAH" type="Link.EntityDefinition.LCS2_PhysicalActivityAH" multiplicity="any" />	
 		</EntityDefinition>
-			
 			
 		<EntityDefinition id="LCS2_MonitoringPrescription">
             <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Tipus de mesura" additionalDescription="Seleccioneu el tipus de mesura per a la supervisió del pacient">
@@ -1373,8 +1363,16 @@
             <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comentaris" additionalDescription="Proporcioneu suggeriments addicionals pel pacient"/>   
             <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Mesures"/>                      
         </EntityDefinition>
+	
+		<EntityDefinition id="LCS2_PhysicalActivityAH">
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="maximalOne" description="Data d'inici"/>
+            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="maximalOne" description="Data de fi"/>       
+            <AttributeDefinition id="dailysteps" type="number.min(0).max(100000)" defaultValues="[10000]" multiplicity="maximalOne" description="Número de passos a fer durant el dia"/>       
+            <AttributeDefinition id="dailylowlevel" type="number.min(0).max(1440)" defaultValues="[60]" multiplicity="maximalOne" description="Mínim de minuts d'intensitat baixa a fer durant el dia (caminar, bicicleta, nadar)"/>       
+            <AttributeDefinition id="dailymediumlevel" type="number.min(0).max(1440)" defaultValues="[40]" multiplicity="maximalOne" description="Mínim de minuts d'intensitat intermitja a fer durant el dia (caminar pas ràpid, tasques domèstiques lleugeres, jugar amb nens, passejar mascotes)"/>       			
+            <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Mesures"/>                 
+        </EntityDefinition> 
 
-			
 		
 	<!-- CASE DEFINITION -->				  
 		<CaseDefinition id="LCS2_Leida" description="CS2 Lleida - Testing version - Demo 23 Febrer" ownerPath="LCS2_Owner" clientPath="LCS2_Patient" entityDefinitionId="LCS2_CaseData">	  
@@ -1895,37 +1893,6 @@
             <TaskParamDefinition path="LCS2_WorkplanAfterHospitalization.LCS2_PatientEducationAndTrainingToTheCaregiverAH.educaExec2" isReadOnly="false" isMandatory="true"/>
             <TaskParamDefinition path="LCS2_WorkplanAfterHospitalization.LCS2_PatientEducationAndTrainingToTheCaregiverAH.educaExec3" isReadOnly="false" isMandatory="true"/>
           </HumanTaskDefinition>
-
-			<DualTaskDefinition id="LCS2_PhysicalActivityWPAH" externalId="PhysicalActivity" description="Activitat física - Desprès d'hospitalització" ownerPath="LCS2_Owner" dueDatePath="LCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" isManualActivation="true" entityDefinitionId="LCS2_PhysicalActivityAH" entityAttachPath="LCS2_WorkplanAfterHospitalization.LCS2_PhysicalActivityAH">
-                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
-                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_PhysicalActivityAH.startdate" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_PhysicalActivityAH.enddate" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_PhysicalActivityAH.dailysteps" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_PhysicalActivityAH.dailylowlevel" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_PhysicalActivityAH.dailymediumlevel" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="AUTOMATED" path="LCS2_WorkplanAfterHospitalization.LCS2_PhysicalActivityAH.measurement" isReadOnly="false" isMandatory="true"/>
-            </DualTaskDefinition>
-			
-			<!-- PENDING TO ADD
-			<DualTaskDefinition id="LCS2_MonitoringPrescriptionWPAH" externalId="MonitoringPrescription" description="Prescripció de monitorització - Desprès l'hospitalització" dynamicDescriptionPath="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescription.type" ownerPath="LCS2_Owner" dueDatePath="LCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" isManualActivation="true" entityDefinitionId="LCS2_MonitoringPrescription" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescription">
-                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
-                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescription.type" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescription.alertmin" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescription.alertmax" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescription.alertfreq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescription.alertfrequnit" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescription.freq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescription.frequnit" isReadOnly="false" isMandatory="true"/>   
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescription.maxdelay" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescription.startdate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescription.enddate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescription.timeslot" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescription.comments" isReadOnly="false" isMandatory="true"/>                    
-                    <TaskParamDefinition part="AUTOMATED" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescription.measurement" isReadOnly="false" isMandatory="true"/>
-            </DualTaskDefinition>	
-			-->
 		
 			<HumanTaskDefinition id="LCS2_CommentWPAH" description="Comentaris" ownerPath="LCS2_Clinician" isMandatory="false" isRepeatable="false" entityDefinitionId="LCS2_Comment" entityAttachPath="LCS2_WorkplanAfterHospitalization.LCS2_CommentAH">									
 				<TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_CommentAH.comments" isReadOnly="false" isMandatory="true"/>                    
@@ -1988,7 +1955,6 @@
                     <TaskParamDefinition part="AUTOMATED" path="LCS2_RepeatedTasksTest.LCS2_MonitoringPrescriptionBH.measurement" isReadOnly="false" isMandatory="true"/>
             </DualTaskDefinition>					
 	
-	
 			<!-- LCS2_WorkplanPostHospitalization; AFTER -->
 			<DualTaskDefinition id="LCS2_MonitoringPrescriptionAHWP" externalId="MonitoringPrescription" description="[POST] Prescripció de monitorització - Desprès l'hospitalització" dynamicDescriptionPath="LCS2_RepeatedTasksTest.LCS2_MonitoringPrescriptionAH.type" ownerPath="LCS2_PrimaryCareClinicians" dueDatePath="LCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_MonitoringPrescription" entityAttachPath="LCS2_RepeatedTasksTest.LCS2_MonitoringPrescriptionAH">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
@@ -2008,7 +1974,19 @@
                     <TaskParamDefinition part="AUTOMATED" path="LCS2_RepeatedTasksTest.LCS2_MonitoringPrescriptionAH.measurement" isReadOnly="false" isMandatory="true"/>
             </DualTaskDefinition>	
 	
-	
+			<DualTaskDefinition id="LCS2_PhysicalActivityAHWP" externalId="PhysicalActivity" description="[POST] Activitat física - Desprès d'hospitalització" ownerPath="LCS2_Physiotherapist" dueDatePath="LCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_PhysicalActivityAH" entityAttachPath="LCS2_RepeatedTasksTest.LCS2_PhysicalActivityAH">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_RepeatedTasksTest.LCS2_PhysicalActivityAH.startdate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_RepeatedTasksTest.LCS2_PhysicalActivityAH.enddate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_RepeatedTasksTest.LCS2_PhysicalActivityAH.dailysteps" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_RepeatedTasksTest.LCS2_PhysicalActivityAH.dailylowlevel" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_RepeatedTasksTest.LCS2_PhysicalActivityAH.dailymediumlevel" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="AUTOMATED" path="LCS2_RepeatedTasksTest.LCS2_PhysicalActivityAH.measurement" isReadOnly="false" isMandatory="true"/>
+            </DualTaskDefinition>
+
+			
+			
 	
 
 		</StageDefinition>
