@@ -135,7 +135,7 @@
             <AttributeDefinition id="ICS2_Communication" type="Link.EntityDefinition.ICS2_Communication" multiplicity="maximalOne" description="תקשורת"/> 
             <AttributeDefinition id="ICS2_SmokingAlcohol" type="Link.EntityDefinition.ICS2_SmokingAlcohol" multiplicity="maximalOne" description="עישון ואלכוהול"/> 
             <AttributeDefinition id="ICS2_Medication" type="Link.EntityDefinition.ICS2_Medication" multiplicity="maximalOne" description="טיפול תרופתי"/> 
-            <AttributeDefinition id="ICS2_RiskOfFallsDowntonIndex" type="Link.EntityDefinition.ICS2_RiskOfFallsDowntonIndex" multiplicity="maximalOne" description="סיכון לנפילות - מדד דוטון"/> 
+            <AttributeDefinition id="ICS2_RiskOfFallsDowntonIndex" type="Link.EntityDefinition.ICS2_RiskOfFallsDowntonIndex" multiplicity="maximalOne" description="Downton Fall Index"/> 
             <AttributeDefinition id="ICS2_Sleeping" type="Link.EntityDefinition.ICS2_Sleeping" multiplicity="maximalOne" description="איכות שינה"/> 
             <AttributeDefinition id="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist" type="Link.EntityDefinition.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist" multiplicity="maximalOne" description="הערכה רפואית של מחלקת הכירורגיה או המרדים"/> 
             <AttributeDefinition id="ICS2_MUST" type="Link.EntityDefinition.ICS2_MUST" multiplicity="maximalOne" description="MUST Score"/> 
@@ -362,7 +362,7 @@
                 <EnumerationOption value="5" description="זקוק לעזרה או תמיכה של אדם "/>
                 <EnumerationOption value="10" description="עצמאי גם אם משתמש באביזרי עזר "/>
             </AttributeDefinition>   
-            <DerivedAttributeDefinition id="BarthelScore" expression="number(BarthelFeeding,0)+number(BarthelBathing,0)+number(BarthelGrooming,0)+number(BarthelDressing,0)+number(BarthelBOWELS,0)+number(BarthelBLADDER,0)+number(BarthelToiletHygiene ,0)+number(BarthelTRANSFERS,0)+number(BarthelMobility,0)+number(BarthelStairs,0)" description="ברטל- תוצאה סופית" additionalDescription="ציון מקסימלי 100 = עצמאות מלאה,   ציון 91-99= תלות קלה,  ציון 61-90 = תלות בינונית,   ציון 21-60 = תלות קשה,  ציון 0-20  = תלות מלאה" />  
+            <DerivedAttributeDefinition id="BarthelScore" expression="number(BarthelFeeding,0)+number(BarthelBathing,0)+number(BarthelGrooming,0)+number(BarthelDressing,0)+number(BarthelBOWELS,0)+number(BarthelBLADDER,0)+number(BarthelToiletHygiene ,0)+number(BarthelTRANSFERS,0)+number(BarthelMobility,0)+number(BarthelStairs,0)" description="ברטל- תוצאה סופית" additionalDescription="ציון מקסימלי 100 = עצמאות מלאה,   ציון 91-99= תלות קלה,  ציון 61-90 = תלות בינונית,   ציון 21-60 = תלות קשה,  ציון 0-20  = תלות מלאה" /> 			
         </EntityDefinition>
 		
 
@@ -419,75 +419,75 @@
 
         <EntityDefinition id="ICS2_SF12" description="SF-12"> 
             <AttributeDefinition id="SF121" type="enumeration" multiplicity="maximalOne" description="באופן כללי, איך היית מגדיר את מצבך הבריאותי?">
-                <EnumerationOption value="1" description="מצוין "/>
-                <EnumerationOption value="2" description="טוב מאוד "/>
-                <EnumerationOption value="3" description="טוב"/>
-                <EnumerationOption value="4" description="סביר "/>
-                <EnumerationOption value="5" description="גרוע"/>
+                <EnumerationOption value="100" description="מצוין "/>
+                <EnumerationOption value="75" description="טוב מאוד "/>
+                <EnumerationOption value="50" description="טוב"/>
+                <EnumerationOption value="25" description="סביר "/>
+                <EnumerationOption value="0" description="גרוע"/>
             </AttributeDefinition>  
             <AttributeDefinition id="SF122" type="enumeration" multiplicity="maximalOne" description="ביום טיפוסי, באיזו מידה מגביל אותך מצב בריאותך בביצוע הפעולות הבאות: פעולות מתונות. כמו הזזת שולחן, שאיבת אבק, באולינג או משחק גולף">
-                <EnumerationOption value="1" description="מגביל מאוד"/>
-                <EnumerationOption value="2" description="מגביל מעט"/>
-                <EnumerationOption value="3" description="לא מגביל כלל"/>
+                <EnumerationOption value="0" description="מגביל מאוד"/>
+                <EnumerationOption value="50" description="מגביל מעט"/>
+                <EnumerationOption value="100" description="לא מגביל כלל"/>
             </AttributeDefinition>  
             <AttributeDefinition id="SF123" type="enumeration" multiplicity="maximalOne" description="ביום טיפוסי, באיזו מידה מגביל אותך מצב בריאותך בביצוע הפעולות הבאות: עליה של מספר קומות במדרגות">
-			    <EnumerationOption value="1" description="מגביל מאוד"/>
-                <EnumerationOption value="2" description="מגביל מעט"/>
-                <EnumerationOption value="3" description="לא מגביל כלל"/>
+			    <EnumerationOption value="0" description="מגביל מאוד"/>
+                <EnumerationOption value="50" description="מגביל מעט"/>
+                <EnumerationOption value="100" description="לא מגביל כלל"/>
             </AttributeDefinition>  
             <AttributeDefinition id="SF124" type="enumeration" multiplicity="maximalOne" description="בחודש האחרון במסגרת עבודתך או בפעילות יום יומית אחרת כתוצאה ממצב בריאותך הפיזי האם הספקת פחות משהיית רוצה?">
-                <EnumerationOption value="1" description="כן"/>
-                <EnumerationOption value="2" description="לא"/>
+                <EnumerationOption value="0" description="כן"/>
+                <EnumerationOption value="100" description="לא"/>
             </AttributeDefinition>  
             <AttributeDefinition id="SF125" type="enumeration" multiplicity="maximalOne" description="בחודש האחרון במסגרת עבודתך או בפעילות יום יומית אחרת כתוצאה ממצב בריאותך הפיזי האם היית מוגבל בכל סוג של עבודה או פעולה אחרת?">
-                <EnumerationOption value="1" description="כן"/>
-                <EnumerationOption value="2" description="לא"/>
+                <EnumerationOption value="0" description="כן"/>
+                <EnumerationOption value="100" description="לא"/>
             </AttributeDefinition>             
             <AttributeDefinition id="SF126" type="enumeration" multiplicity="maximalOne" description="בחודש האחרון במסגרת עבודתך או בפעילות יום יומית אחרת כתוצאה מבעיות רגשיות כלשהן האם הספקת פחות משהיית רוצה?">
-                <EnumerationOption value="1" description="כן"/>
-                <EnumerationOption value="2" description="לא"/>
+                <EnumerationOption value="0" description="כן"/>
+                <EnumerationOption value="100" description="לא"/>
             </AttributeDefinition> 
             <AttributeDefinition id="SF127" type="enumeration" multiplicity="maximalOne" description="בחודש האחרון במסגרת עבודתך או בפעילות יום יומית אחרת כתוצאה מבעיות רגשיות כלשהן האם ביצעת פעולות פחות בזהירות מבדרך כלל">
-                <EnumerationOption value="1" description="כן"/>
-                <EnumerationOption value="2" description="לא"/>
+                <EnumerationOption value="0" description="כן"/>
+                <EnumerationOption value="100" description="לא"/>
             </AttributeDefinition>  
             <AttributeDefinition id="SF128" type="enumeration" multiplicity="maximalOne" description="בחודש האחרון, עד כמה הפריעו לך כאבים בביצוע עבודתך או פעולות היום-יום שלך?">
-                <EnumerationOption value="1" description="כלל לא "/>
-                <EnumerationOption value="2" description="מעט "/>
-                <EnumerationOption value="3" description="במידה מתונה"/>
-                <EnumerationOption value="4" description="די הרבה "/>
-				<EnumerationOption value="5" description="הרבה מאוד "/>
+                <EnumerationOption value="100" description="כלל לא "/>
+                <EnumerationOption value="75" description="מעט "/>
+                <EnumerationOption value="50" description="במידה מתונה"/>
+                <EnumerationOption value="25" description="די הרבה "/>
+				<EnumerationOption value="0" description="הרבה מאוד "/>
             </AttributeDefinition> 
             <AttributeDefinition id="SF129" type="enumeration" multiplicity="maximalOne" description="במשך החודש האחרון כמה מהזמן הרגשת רגוע/ה ושליו/ה?">
-                <EnumerationOption value="1" description="כל הזמן"/>
-                <EnumerationOption value="2" description="רוב הזמן"/>
-                <EnumerationOption value="3" description="חלק ניכר מהזמן"/>
-                <EnumerationOption value="4" description="חלק מהזמן"/>
-                <EnumerationOption value="5" description="מעט מהזמן"/>
-                <EnumerationOption value="6" description="כלל לא"/>
+                <EnumerationOption value="100" description="כל הזמן"/>
+                <EnumerationOption value="80" description="רוב הזמן"/>
+                <EnumerationOption value="60" description="חלק ניכר מהזמן"/>
+                <EnumerationOption value="40" description="חלק מהזמן"/>
+                <EnumerationOption value="20" description="מעט מהזמן"/>
+                <EnumerationOption value="0" description="כלל לא"/>
             </AttributeDefinition> 
             <AttributeDefinition id="SF1210" type="enumeration" multiplicity="maximalOne" description="במשך החודש האחרון כמה מהזמן היית מלא/ה אנרגיה?">
-                <EnumerationOption value="1" description="כל הזמן"/>
-                <EnumerationOption value="2" description="רוב הזמן"/>
-                <EnumerationOption value="3" description="חלק ניכר מהזמן"/>
-                <EnumerationOption value="4" description="חלק מהזמן"/>
-                <EnumerationOption value="5" description="מעט מהזמן"/>
-                <EnumerationOption value="6" description="כלל לא"/>
+                <EnumerationOption value="100" description="כל הזמן"/>
+                <EnumerationOption value="80" description="רוב הזמן"/>
+                <EnumerationOption value="60" description="חלק ניכר מהזמן"/>
+                <EnumerationOption value="40" description="חלק מהזמן"/>
+                <EnumerationOption value="20" description="מעט מהזמן"/>
+                <EnumerationOption value="0" description="כלל לא"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="SF1211" type="enumeration" multiplicity="maximalOne" description="במשך החודש האחרון כמה מהזמן הרגשת מדוכא/. ועצוב/ה?">
-                <EnumerationOption value="1" description="כל הזמן"/>
-                <EnumerationOption value="2" description="רוב הזמן"/>
-                <EnumerationOption value="3" description="חלק ניכר מהזמן"/>
-                <EnumerationOption value="4" description="חלק מהזמן"/>
-                <EnumerationOption value="5" description="מעט מהזמן"/>
-                <EnumerationOption value="6" description="כלל לא"/>
+            <AttributeDefinition id="SF1211" type="enumeration" multiplicity="maximalOne" description="במשך החודש האחרון כמה מהזמן הרגשת מדוכא/ת ועצוב/ה?">
+                <EnumerationOption value="0" description="כל הזמן"/>
+                <EnumerationOption value="20" description="רוב הזמן"/>
+                <EnumerationOption value="40" description="חלק ניכר מהזמן"/>
+                <EnumerationOption value="60" description="חלק מהזמן"/>
+                <EnumerationOption value="80" description="מעט מהזמן"/>
+                <EnumerationOption value="100" description="כלל לא"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="SF1212" type="enumeration" multiplicity="maximalOne" description="במשך החודש האחרון, עד כמה הפריעו מצס בריאותך הפיזי אן בעיותך הרגשיות לפעיליות חברתיות (כמו לבקר חברים או קרובים)?">
-                <EnumerationOption value="1" description="כל הזמן "/>
-                <EnumerationOption value="2" description="רוב הזמן "/>
-                <EnumerationOption value="3" description="חלק מהזמן "/>
-                <EnumerationOption value="4" description="מעט מהזמן "/>
-                <EnumerationOption value="5" description="כלל לא "/>
+            <AttributeDefinition id="SF1212" type="enumeration" multiplicity="maximalOne" description="בחודש האחרון עד כמה הפריעו מצב בריאותך הפיזי או בעיותך הרגשיות לפעילויותך החברתיות (כמו לבקר חברים או קרובים)?">
+                <EnumerationOption value="0" description="כל הזמן "/>
+                <EnumerationOption value="25" description="רוב הזמן "/>
+                <EnumerationOption value="50" description="חלק מהזמן "/>
+                <EnumerationOption value="75" description="מעט מהזמן "/>
+                <EnumerationOption value="100" description="כלל לא "/>
             </AttributeDefinition> 
             <DerivedAttributeDefinition id="SF12Score" expression="number(SF121,0)+number(SF122,0)+number(SF123,0)+number(SF124,0)+number(SF125,0)+number(SF126,0)+number(SF127 ,0)+number(SF128,0)+number(SF129,0)+number(SF1210,0)+number(SF1211,0)+number(SF1212,0)" description="תוצאה סופית- SF-12"/>  
         </EntityDefinition>
@@ -554,7 +554,7 @@
                 <EnumerationOption value="1" description="יכול להיות שהזנחתי קצת"/>
                 <EnumerationOption value="0" description="אני מעוניין באותה רמה שתמיד הייתי"/>
             </AttributeDefinition>  
-            <AttributeDefinition id="HADS11" type="enumeration" multiplicity="maximalOne" description="אני מרגישה חסר מנוחה וחייב להיות בתזוזה">
+            <AttributeDefinition id="HADS11" type="enumeration" multiplicity="maximalOne" description="אני מרגיש חסר מנוחה וחייב להיות בתזוזה">
                 <EnumerationOption value="3" description="בהחלט כן "/>
                 <EnumerationOption value="2" description="די הרבה "/>
                 <EnumerationOption value="1" description="לא יותר מדי "/>
@@ -619,7 +619,7 @@
 			    <EnumerationOption value="5" description="אני חרד או מדוכא באופן קיצוני"/>
             </AttributeDefinition> 
             <AttributeDefinition id="EQ5DHealthToday" type="number" multiplicity="maximalOne" description="לפי דעתך, מה מצב בריאותך כיום בין אפס למאה?" additionalDescription="מאה פירושו הבריאות הטובה ביותר שיכולת לדמיין" />
-			<DerivedAttributeDefinition id="EQ5Dscore" expression="number(EQ5DMobility,0)+number(EQ5DSelfCare,0)+number(EQ5DUsualActivities,0)+number(EQ5DPainDiscomfort,0)+number(EQ5DAnxietyDepression,0)" description="תוצאה סופית- EQ5D"/> 
+			
         </EntityDefinition>
 
         <EntityDefinition id="ICS2_Sweet16" description="Sweet16"> 
@@ -742,9 +742,9 @@
             <AttributeDefinition id="CommExpression" type="enumeration" multiplicity="maximalOne" description="יכולת ביטוי עצמי">
                 <EnumerationOption value="0" description="מובן לעיתים נדירות או כלל לא"/>
                 <EnumerationOption value="1" description="מובן לפעמים - מסוגל לבטא דרישות מוחשיות לגבי צרכים בסיסיים"/>
-                <EnumerationOption value="1" description="מובן לעיתים קרובות - קושי במציאת מילים מתאימות או קושי לסיים מחשבות ונדרש לסיוע"/>
-                <EnumerationOption value="1" description="בדרך כלל מובן - קושי במציאת מילים מתאימות או קושי לסיים מחשבות אך אם ניתן זמן מסתדר לבד"/>
-                <EnumerationOption value="1" description="מובן - מבטא רעיונות ללא קושי"/>
+                <EnumerationOption value="2" description="מובן לעיתים קרובות - קושי במציאת מילים מתאימות או קושי לסיים מחשבות ונדרש לסיוע"/>
+                <EnumerationOption value="3" description="בדרך כלל מובן - קושי במציאת מילים מתאימות או קושי לסיים מחשבות אך אם ניתן זמן מסתדר לבד"/>
+                <EnumerationOption value="4" description="מובן - מבטא רעיונות ללא קושי"/>
             </AttributeDefinition> 
         </EntityDefinition>
 
@@ -754,7 +754,7 @@
                 <EnumerationOption value="2" description="מעשן לשעבר"/>
                 <EnumerationOption value="3" description="לעולם לא עישן"/>
             </AttributeDefinition>  
-            <AttributeDefinition id="Alcohol" type="enumeration" multiplicity="maximalOne" description="צריכת אלכוהול יותר משתי מנות ליום (10 גרם)">
+            <AttributeDefinition id="Alcohol" type="enumeration" multiplicity="maximalOne" description="צריכת אלכוהול (מנה =10 גרם)">
                 <EnumerationOption value="1" description="יותר משתי מנות ליום"/>
                 <EnumerationOption value="2" description="פחות מ 2 מנות ליום"/>
             </AttributeDefinition> 
@@ -775,8 +775,8 @@
             </AttributeDefinition> 
         </EntityDefinition> 
 
-        <EntityDefinition id="ICS2_RiskOfFallsDowntonIndex" description="סיכון לנפילות - מדד דוטון"> 
-            <AttributeDefinition id="Downton1" type="enumeration" multiplicity="maximalOne" description="נפילות בשנה האחרונה">
+        <EntityDefinition id="ICS2_RiskOfFallsDowntonIndex" description="Downton Fall Index "> 
+            <AttributeDefinition id="Downton1" type="enumeration" multiplicity="maximalOne" description="נפילות בעבר">
                 <EnumerationOption value="0" description="לא "/>
                 <EnumerationOption value="1" description="כן "/>
             </AttributeDefinition>  
@@ -809,18 +809,20 @@
                 <EnumerationOption value="1.0001" description="בעיית ראייה בינונית או חמורה או עיוורת"/>
                 <EnumerationOption value="1.0002" description="בעיית שמיעה או חירשות "/>
                 <EnumerationOption value="1.0003" description="מיומנויות מוטוריות מופחתות או נכות "/>
+				<EnumerationOption value="2" description="שניים מתוך שלושת הבעיות הנל "/>
+				<EnumerationOption value="3" description="שלושת הבעיות הנל "/>
             </AttributeDefinition> 
-            <AttributeDefinition id="Downton4" type="enumeration" multiplicity="maximalOne" description="מצב קוגנטיבי"> 
+            <AttributeDefinition id="Downton4" type="enumeration" multiplicity="maximalOne" description="מצב מנטלי"> 
                 <EnumerationOption value="0" description="ללא אורנטצייה "/>
                 <EnumerationOption value="1" description="בעל אורנטצייה "/>
             </AttributeDefinition>
             <AttributeDefinition id="Downton5" type="enumeration" multiplicity="maximalOne" description="יכולת הליכה">
-                <EnumerationOption value="0" description="הליכה בטוחה עם או בלי עזרי הליכה "/>
+                <EnumerationOption value="0" description="הליכה נורמלית "/>
                 <EnumerationOption value="1.0001" description="הליכה בטוחה עם או בלי עזרי הליכה "/>
                 <EnumerationOption value="1.0002" description="הליכה לא בטוחה עם או ללא עזרה "/>
                 <EnumerationOption value="1.0003" description="יכולת הליכה אינה אפשרית "/>
             </AttributeDefinition> 
-            <DerivedAttributeDefinition id="DowntonSum" expression="round(number(Downton1, 0)) + round(number(Downton2, 0)) + round(number(Downton3, 0)) + round(number(Downton4, 0)) + round(number(Downton5, 0))+ round(number(Downton6, 0))+ round(number(Downton7, 0))+ round(number(Downton8, 0))+ round(number(Downton9, 0))+ round(number(Downton10, 0))" description="ציון אינדקס דוונטון"/>          
+            <DerivedAttributeDefinition id="DowntonSum" expression="round(number(Downton1, 0)) + round(number(Downton2, 0)) + round(number(Downton3, 0)) + round(number(Downton4, 0)) + round(number(Downton5, 0))+ round(number(Downton6, 0))+ round(number(Downton7, 0))+ round(number(Downton8, 0))+ round(number(Downton9, 0))+ round(number(Downton10, 0))" description="ציון סופי - ציון גבוה מ 2 מהווה סיכון לנפילות"/>          
         </EntityDefinition>
 
         <EntityDefinition id="ICS2_Sleeping" description="איכות שינה"> 
@@ -858,7 +860,7 @@
                 <EnumerationOption value="0" description="לא"/>
                 <EnumerationOption value="1" description="כן"/>
             </AttributeDefinition> 			
-		    <AttributeDefinition id="CDHealthAss8" type="string" multiplicity="maximalOne" description="מרשמי התרופות החדשים המלאים" />
+		    <AttributeDefinition id="CDHealthAss8" type="string" multiplicity="maximalOne" description="מרשמי התרופות החדשים" />
             <AttributeDefinition id="CDHealthAss5" type="enumeration" multiplicity="maximalOne" description="האם נתנו הפניות להערכה או טיפול על ידי צוות רפואי אחר">
                 <EnumerationOption value="0" description="לא"/>
                 <EnumerationOption value="1" description="כן"/>
@@ -869,12 +871,12 @@
 
         <EntityDefinition id="ICS2_MUST" description="הערכת סיום לתת תזונה - MUST"> 
             <AttributeDefinition id="BmiCat" type="enumeration" multiplicity="maximalOne" description="BMI">
-                <EnumerationOption value="0" description="גדול מעשרים "/>
+                <EnumerationOption value="0" description="גבוה מעשרים "/>
                 <EnumerationOption value="1" description="בין 18 וחצי לעשרים"/>
-                <EnumerationOption value="2" description="קטן משמונה עשרה וחצי"/>
+                <EnumerationOption value="2" description="נמוך משמונה עשרה וחצי"/>
             </AttributeDefinition>  
             <AttributeDefinition id="WeightLoss" type="enumeration" multiplicity="maximalOne" description="איבוד משקל לא מתוכנן בחצי השנה האחרונה">
-                <EnumerationOption value="0" description="מעל 5% ממסת הגוף"/>
+                <EnumerationOption value="0" description="פחות מ 5% ממסת הגוף"/>
                 <EnumerationOption value="1" description="5% - 10%"/>
                 <EnumerationOption value="2" description="מעל 10% ממסת הגוף"/>
             </AttributeDefinition> 
@@ -936,19 +938,19 @@
 
         <!-- Workplan Entity Definitions -->
         <EntityDefinition id="ICS2_Workplan" description="Workplan">
-            <AttributeDefinition id="ICS2_PhysicalActivity" type="Link.EntityDefinition.ICS2_PhysicalActivity" description="Physical Activity"/>
-            <AttributeDefinition id="ICS2_MonitoringPrescription" type="Link.EntityDefinition.ICS2_MonitoringPrescription" description="Monitoring Prescription"/> 
-            <AttributeDefinition id="ICS2_SimpleTask" type="Link.EntityDefinition.ICS2_SimpleTask" description="Simple Task"/>
+            <AttributeDefinition id="ICS2_PhysicalActivity" type="Link.EntityDefinition.ICS2_PhysicalActivity" description="הנחיות הליכה"/>
+            <AttributeDefinition id="ICS2_MonitoringPrescription" type="Link.EntityDefinition.ICS2_MonitoringPrescription" description="הנחיות למדידות רפואיות"/> 
+            <AttributeDefinition id="ICS2_SimpleTask" type="Link.EntityDefinition.ICS2_SimpleTask" description="משימות לביצוע"/>
         </EntityDefinition>
 
-        <EntityDefinition id="ICS2_PhysicalActivity" description="Physical Activity">
-            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="maximalOne" description="Start date"/>
-            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="maximalOne" description="End date"/>       
-            <AttributeDefinition id="dailysteps" type="number.min(0).max(100000)" defaultValues="[10000]" multiplicity="maximalOne" description="Number of steps daily"/>       
-            <AttributeDefinition id="dailylowlevel" type="number.min(0).max(1440)" defaultValues="[60]" multiplicity="maximalOne" description="Minutes of low level activity daily"/>       
-            <AttributeDefinition id="dailymediumlevel" type="number.min(0).max(1440)" defaultValues="[40]" multiplicity="maximalOne" description="Minutes of medium level activity daily"/>       
-            <AttributeDefinition id="dailyhighlevel" type="number.min(0).max(1440)" defaultValues="[20]" multiplicity="maximalOne" description="Minutes of high level activity daily"/> 
-            <AttributeDefinition id="dailynoactivity" type="number.min(0).max(1440)" defaultValues="[240]" multiplicity="maximalOne" description="Max minutes without activity allowed daily"/>   
+        <EntityDefinition id="ICS2_PhysicalActivity" description="הנחיות הליכה">
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="maximalOne" description="תאריך התחלה"/>
+            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="maximalOne" description="תאריך סיום"/>       
+            <AttributeDefinition id="dailysteps" type="number.min(0).max(100000)" defaultValues="[10000]" multiplicity="maximalOne" description="מספר צעדים ליום"/>       
+            <AttributeDefinition id="dailylowlevel" type="number.min(0).max(1440)" defaultValues="[60]" multiplicity="maximalOne" description="מספר דקות לפעילות בעצימות נמוכה ליום"/>       
+            <AttributeDefinition id="dailymediumlevel" type="number.min(0).max(1440)" defaultValues="[40]" multiplicity="maximalOne" description="מספר דקות לפעילות בעצימות בינונית ליום"/>       
+            <AttributeDefinition id="dailyhighlevel" type="number.min(0).max(1440)" defaultValues="[20]" multiplicity="maximalOne" description="מספר דקות לפעילות בעצימות גבוהה ליום"/> 
+            <AttributeDefinition id="dailynoactivity" type="number.min(0).max(1440)" defaultValues="[240]" multiplicity="maximalOne" description="מספר דקות מקסימלי ללא פעילות ליום"/>   
             <!--{stepsFollowing: [{date: '2017-06-09 14:54:53.0', value: 12}], lowFollowing:[], mediumFollowing:[], highFollowing:[], noActivityFollowing:[]}-->
             <!--Collected Data e.g. {stepsFollowing: [{date: '2017-06-09 14:54:53.0', value: 12}], lowFollowing:[], mediumFollowing:[], highFollowing:[], noActivityFollowing:[]}"-->
             <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Measurement"/>                 
@@ -1255,7 +1257,6 @@
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_EQ5D.EQ5DPainDiscomfort" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_EQ5D.EQ5DAnxietyDepression" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_EQ5D.EQ5DHealthToday" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_EQ5D.EQ5Dscore" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
 
                 <HumanTaskDefinition id="ICS2_Sweet16" description="Sweet16" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Sweet16" entityAttachPath="ICS2_Evaluation.ICS2_Sweet16">                
@@ -1305,7 +1306,7 @@
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_Medication.Medication3" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="ICS2_RiskOfFallsDowntonIndex" description="סיכון לנפילות - מדד דוטון" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_RiskOfFallsDowntonIndex" entityAttachPath="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex">                
+                <HumanTaskDefinition id="ICS2_RiskOfFallsDowntonIndex" description="Downton Fall Index" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_RiskOfFallsDowntonIndex" entityAttachPath="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex">                
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton6" isReadOnly="false" isMandatory="true"/>
@@ -1332,9 +1333,9 @@
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss3" isReadOnly="false" isMandatory="true"/>
                     <!--  <TaskParamDefinition path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss4" isReadOnly="false" isMandatory="true"/> -->
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss6" isReadOnly="false" isMandatory="false"/>
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss7" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss8" isReadOnly="false" isMandatory="false"/>
                 </HumanTaskDefinition>
 
                 <HumanTaskDefinition id="ICS2_MUST" description="MUST" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_MUST" entityAttachPath="ICS2_Evaluation.ICS2_MUST">                
