@@ -33,7 +33,11 @@
             <AttributeDefinition id="ICS2_EvaluationDueDate" type="date.after(TODAY)" description="תאריך סיום לביצוע הערכה"/>
             <AttributeDefinition id="ICS2_WorkplanDueDate" type="date.after(TODAY)" description="תאריך סיום לתוכנית הטיפול"/>
 			<AttributeDefinition id="ICS2_CaseData1" type="string" multiplicity="maximalOne" description="אבחנה ראשית" />
-			<AttributeDefinition id="ICS2_CaseData2" type="string" multiplicity="maximalOne" description="סיבת האשפוז" />
+			<AttributeDefinition id="ICS2_CaseData2" type="enumeration" multiplicity="maximalOne" description="סיבת האשפוז" >
+			  <EnumerationOption value="0" description="ניתוח אלקטיבי"/>
+              <EnumerationOption value="1" description="החמרת מחלה"/>
+			  <EnumerationOption value="2" description="ארוע אקוטי"/>
+            </AttributeDefinition>   
 
             <AttributeDefinition id="ICS2_Clinician" type="Link.Users(AssutaClinicians)" description="Clinician"/>
             <AttributeDefinition id="ICS2_Nurse" type="Link.Users(AssutaNurses)" description="Nurse"/>
@@ -64,12 +68,13 @@
                 <EnumerationOption value="1" description="כן"/>
             </AttributeDefinition> 
             <AttributeDefinition id="Basicoperation" type="enumeration" multiplicity="maximalOne" description="לאיזה ניתוח מועמד המטופל?">
-                <EnumerationOption value="0" description="החלפת פרק ירך"/>
-                <EnumerationOption value="1" description="החלפת ברך"/>
+                <EnumerationOption value="1" description="ניתוח אורתופדי"/>
 				<EnumerationOption value="2" description="ניתוח גניקולוגי"/>
 				<EnumerationOption value="3" description="ניתוח אורולוגי"/>
 				<EnumerationOption value="4" description="כירורגיה כללית"/>
-            </AttributeDefinition> 
+            </AttributeDefinition>
+			<AttributeDefinition id="OpName" type="string" multiplicity="maximalOne" description="שם הניתוח" />
+			
             <AttributeDefinition id="BasicASA" type="enumeration" multiplicity="maximalOne" description="מהו ציון ASA של המטופל?">
                 <EnumerationOption value="0" description="I"/>
                 <EnumerationOption value="1" description="II"/>
@@ -307,58 +312,59 @@
         </EntityDefinition>
 
         <EntityDefinition id="ICS2_ADLBarthel" description="Barthel">
-            <AttributeDefinition id="BarthelFeeding" type="enumeration" multiplicity="maximalOne" description="ברטל- אכילה">
+            <AttributeDefinition id="BarthelFeeding" type="enumeration" multiplicity="maximalOne" description="אכילה ">
                 <EnumerationOption value="0" description="זקוק לעזרה מלאה בחיתוך המזון "/>
                 <EnumerationOption value="5" description="זקוק לעזרה בחיתוך המזון "/>
                 <EnumerationOption value="10" description="עצמאי, אוכל בזמן סביר, מסתדר עם סכו'ם "/>
             </AttributeDefinition>        
-            <AttributeDefinition id="BarthelBathing" type="enumeration" multiplicity="maximalOne" description="ברטל- רחצה">
+            <AttributeDefinition id="BarthelBathing" type="enumeration" multiplicity="maximalOne" description="רחצה">
                 <EnumerationOption value="0" description="זקוק לעזרה "/>
                 <EnumerationOption value="5" description="עצמאי ללא עזרה "/>
             </AttributeDefinition>   
-            <AttributeDefinition id="BarthelGrooming" type="enumeration" multiplicity="maximalOne" description="ברטל- היגיינה אישית">
+            <AttributeDefinition id="BarthelGrooming" type="enumeration" multiplicity="maximalOne" description="היגיינה אישית">
                 <EnumerationOption value="0" description="זקוק לעזרה "/>
                 <EnumerationOption value="5" description="עצמאי ברחיצת פנים, סירוק, צחצוח שיניים וגילוח "/>
             </AttributeDefinition>   
-            <AttributeDefinition id="BarthelDressing" type="enumeration" multiplicity="maximalOne" description="ברטל- לבוש">
+            <AttributeDefinition id="BarthelDressing" type="enumeration" multiplicity="maximalOne" description="לבוש">
                 <EnumerationOption value="0" description="זקוק לעזרה מלאה "/>
                 <EnumerationOption value="5" description="זקוק לעזרה אך מבצע חלק מהמשימות בעצמו "/>
                 <EnumerationOption value="10" description="עצמאי, כולל שריכת שרוכים וכפתור כפתורים "/>
             </AttributeDefinition>   
-            <AttributeDefinition id="BarthelBOWELS" type="enumeration" multiplicity="maximalOne" description="ברטל- פעולות מעיים">
+            <AttributeDefinition id="BarthelBOWELS" type="enumeration" multiplicity="maximalOne" description="פעולות מעיים">
                 <EnumerationOption value="0" description="חוסר שליטה "/>
                 <EnumerationOption value="5" description="מאבד לפעמים, או זקוק לחוקנים "/>
                 <EnumerationOption value="10" description="שולט שליטה מלאה "/>
             </AttributeDefinition>   
-            <AttributeDefinition id="BarthelBLADDER" type="enumeration" multiplicity="maximalOne" description="ברטל- סוגר השתן">
+            <AttributeDefinition id="BarthelBLADDER" type="enumeration" multiplicity="maximalOne" description="סוגר השתן">
                 <EnumerationOption value="0" description="חוסר שליטה "/>
                 <EnumerationOption value="5" description="מאבד לפעמים, או זקוק לאביזר עזר "/>
                 <EnumerationOption value="10" description="שולט שליטה מלאה "/>
             </AttributeDefinition>   
-            <AttributeDefinition id="BarthelToiletHygiene" type="enumeration" multiplicity="maximalOne" description="ברטל- שימוש בשירותים">
+            <AttributeDefinition id="BarthelToiletHygiene" type="enumeration" multiplicity="maximalOne" description="שימוש בשירותים">
                 <EnumerationOption value="0" description="זקוק לעזרה מלאה "/>
                 <EnumerationOption value="5" description="זקוק לעזרה אך עצמאי בחלק מהמרכיבים "/>            
                 <EnumerationOption value="10" description="עצמאי בישיבה וקימה מהאסלה, מסתדר עם הלבוש, הניגוב והורדת המים "/>
             </AttributeDefinition>   
-            <AttributeDefinition id="BarthelTRANSFERS" type="enumeration" multiplicity="maximalOne" description="ברטל- העברות">
+            <AttributeDefinition id="BarthelTRANSFERS" type="enumeration" multiplicity="maximalOne" description="העברות">
                 <EnumerationOption value="0" description="אינו מסוגל לשבת ולעבור ממיטה לכסא"/>
                 <EnumerationOption value="5" description="זקוק לעזרה רבה בהעברות "/>
                 <EnumerationOption value="10" description="עובר בתמיכה מינימלית "/>
                 <EnumerationOption value="15" description="עצמאי בהעברה מכסא למיטה "/>
             </AttributeDefinition>   
-            <AttributeDefinition id="BarthelMobility" type="enumeration" multiplicity="maximalOne" description="ברטל- הליכה במישור">
+            <AttributeDefinition id="BarthelMobility" type="enumeration" multiplicity="maximalOne" description="הליכה במישור">
                 <EnumerationOption value="0" description="זקוק לעזרה בכסא גלגלים "/>
                 <EnumerationOption value="5" description="עצמאי בכסא גלגלים למרחק 50 מ' "/>
                 <EnumerationOption value="10" description="הולך בעזרת אדם למרחק 50 מ' "/>
                 <EnumerationOption value="15" description="עצמאי בהליכה למרחק 50 מ' (גם אם משתמש במקל, הליכון) "/>
             </AttributeDefinition>   
-            <AttributeDefinition id="BarthelStairs" type="enumeration" multiplicity="maximalOne" description="ברטל- מדרגות">
+            <AttributeDefinition id="BarthelStairs" type="enumeration" multiplicity="maximalOne" description="מדרגות">
                 <EnumerationOption value="0" description="אינו מסוגל לעלות מדרגות "/>
                 <EnumerationOption value="5" description="זקוק לעזרה או תמיכה של אדם "/>
                 <EnumerationOption value="10" description="עצמאי גם אם משתמש באביזרי עזר "/>
             </AttributeDefinition>   
-            <DerivedAttributeDefinition id="BarthelScore" expression="number(BarthelFeeding,0)+number(BarthelBathing,0)+number(BarthelGrooming,0)+number(BarthelDressing,0)+number(BarthelBOWELS,0)+number(BarthelBLADDER,0)+number(BarthelToiletHygiene ,0)+number(BarthelTRANSFERS,0)+number(BarthelMobility,0)+number(BarthelStairs,0)" description="ברטל- תוצאה סופית"/>  
+            <DerivedAttributeDefinition id="BarthelScore" expression="number(BarthelFeeding,0)+number(BarthelBathing,0)+number(BarthelGrooming,0)+number(BarthelDressing,0)+number(BarthelBOWELS,0)+number(BarthelBLADDER,0)+number(BarthelToiletHygiene ,0)+number(BarthelTRANSFERS,0)+number(BarthelMobility,0)+number(BarthelStairs,0)" description="ברטל- תוצאה סופית" additionalDescription="ציון מקסימלי 100 = עצמאות מלאה,   ציון 91-99= תלות קלה,  ציון 61-90 = תלות בינונית,   ציון 21-60 = תלות קשה,  ציון 0-20  = תלות מלאה" />  
         </EntityDefinition>
+		
 
        <EntityDefinition id="ICS2_iADLLawton" description="Lawton"> 
             <AttributeDefinition id="LawtonTelephone" type="enumeration" multiplicity="maximalOne" description="יכולת שימוש בטלפון">
@@ -408,7 +414,7 @@
                 <EnumerationOption value="1" description="מנהל את הוצאותיו היומיומיות אך זקוק לעזרה בכל הקשור לבנק או הוצאות גדולות"/>
                 <EnumerationOption value="2" description="מנהל את ענייניו הכספיים באופן עצמאי ועוקב אחר הכנסותיו והשקעותיו"/>
             </AttributeDefinition> 
-            <DerivedAttributeDefinition id="LawtonScore" expression="number(LawtonTelephone,0)+number(LawtonShopping,0)+number(LawtonFoodPreparation,0)+number(LawtonHousekeeping,0)+number(LawtonLaundry,0)+number(LawtonTransportation,0)+number(LawtonMedications ,0)+number(LawtonMedications,0)+number(LawtonFinances,0)" description="תוצאת Lawton"/>  
+            <DerivedAttributeDefinition id="LawtonScore" expression="number(LawtonTelephone,0)+number(LawtonShopping,0)+number(LawtonFoodPreparation,0)+number(LawtonHousekeeping,0)+number(LawtonLaundry,0)+number(LawtonTransportation,0)+number(LawtonMedications ,0)+number(LawtonFinances,0)" description="תוצאת Lawton" additionalDescription="טווח הציונים הסופי נע בין 0-23, כאשר ציון גבוה יותר מעיד על מידת עצמאות גבוהה יותר."/>  
         </EntityDefinition>
 
         <EntityDefinition id="ICS2_SF12" description="SF-12"> 
@@ -1091,6 +1097,7 @@
                     <TaskParamDefinition path="ICS2_Identification.ICS2_InclusionCriteria.BasicAge" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Identification.ICS2_InclusionCriteria.BasicResidantual" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Identification.ICS2_InclusionCriteria.Basicoperation" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="ICS2_Identification.ICS2_InclusionCriteria.OpName" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Identification.ICS2_InclusionCriteria.BasicASA" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Identification.ICS2_InclusionCriteria.BasicCronical" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Identification.ICS2_InclusionCriteria.BasicLanguegue" isReadOnly="false" isMandatory="true"/>
@@ -1183,12 +1190,12 @@
                 <HumanTaskDefinition id="ICS2_ADLBarthel" description="Barthel" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_ADLBarthel" entityAttachPath="ICS2_Evaluation.ICS2_ADLBarthel">                
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelFeeding" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelBathing" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelGrooming" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelGrooming" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelDressing" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelBOWELS" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelBLADDER" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelTRANSFERS" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelToiletHygiene" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelTRANSFERS" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelMobility" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelStairs" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelScore" isReadOnly="true" isMandatory="false"/>
@@ -1450,6 +1457,7 @@
             <TaskParam path="ICS2_Identification.ICS2_InclusionCriteria.BasicAge"  values="['0']"/>
             <TaskParam path="ICS2_Identification.ICS2_InclusionCriteria.BasicResidantual"  values="['1']"/>
             <TaskParam path="ICS2_Identification.ICS2_InclusionCriteria.Basicoperation" values="['1']"/>
+			 <TaskParam path="ICS2_Identification.ICS2_InclusionCriteria.OpName" values="['0']"/>
             <TaskParam path="ICS2_Identification.ICS2_InclusionCriteria.BasicASA" values="['0']"/>
             <TaskParam path="ICS2_Identification.ICS2_InclusionCriteria.BasicCronical" values="['1']"/>
             <TaskParam path="ICS2_Identification.ICS2_InclusionCriteria.BasicLanguegue" values="['0']"/>
