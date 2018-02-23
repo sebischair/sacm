@@ -413,9 +413,9 @@ function addUiVisibility(children, isParentVisible){
       if(iteration.isManualActivation === true){
         let state = iteration.state;
         let wasActive = iteration.stateTransitions.ACTIVE.DATE !== null
-        iteration.uiVisibility = state === 'ACTIVE' || state === 'COMPLETED' || (wasActive && state === 'TERMINATED');
+        iteration.uiVisibility = isParentVisible && (state === 'ACTIVE' || state === 'COMPLETED' || (wasActive && state === 'TERMINATED'));
       }else{
-        iteration.uiVisibility = true;
+        iteration.uiVisibility = isParentVisible;
       }
       if(iteration.children)
         addUiVisibility(iteration.children, iteration.uiVisibility);
