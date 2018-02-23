@@ -398,8 +398,17 @@ router.get('/:id/tree', (req, res, next)=>{
   Case.findTreeById(req.jwt, req.params.id, {})
     .then(c=>{
       //addUiVisibility(c.children, true)
-      if(req.query.lean)    
-        c = Model.cleanObject(c);        
+      let lean = req.query.lean;
+      if(lean && lean.toLowerCase() !== 'true'){
+        let deleteAttrs = lean.split(',');
+        let cleanDelAttrs = [];
+        deleteAttrs.forEach(value=>{
+          cleanDelAttrs.push(value.trim());
+        });
+        c = Model.cleanObject(c, cleanDelAttrs); 
+      }else if(lean && lean.toLowerCase() === 'true'){
+        c = Model.cleanObject(c);    
+      }
       res.status(200).send(c);
     })
     .catch(err=>{

@@ -10,24 +10,23 @@ export default class Model{
     return data;
   }
 
-  static cleanObject(json){
-    let deleteAttrs = ['stateTransitions', 'client', 'owner', 'ownerConstraint', 'externalId', 'mayEdit', 'processDefinition', 'parentStage', 'case', 'nrAlerts', 'nrLogs', 'prev', 'next', 'dueDate'];
+  static cleanObject(json, deleteAttrs = ['stateTransitions', 'client', 'owner', 'ownerConstraint', 'externalId', 'mayEdit', 'processDefinition', 'parentStage', 'case', 'nrAlerts', 'nrLogs', 'prev', 'next', 'dueDate']){
     for(let i=0; i<deleteAttrs.length; i++)
       delete json[deleteAttrs[i]];
     let keys = Object.keys(json);
     keys.forEach(key=>{
       if(json[key] instanceof  Array)
-        json[key] = this.cleanArray(json[key]);
+        json[key] = this.cleanArray(json[key], deleteAttrs);
     });
     return json;
   }
 
-  static cleanArray(jsonArray){
+  static cleanArray(jsonArray, deleteAttrs){
     for(let i=0; i<jsonArray.length; i++){
       if(jsonArray[i] instanceof Array){
-        jsonArray[i] = this.cleanArray(jsonArray[i]);
+        jsonArray[i] = this.cleanArray(jsonArray[i], deleteAttrs);
       }else{
-        jsonArray[i] = this.cleanObject(jsonArray[i]);
+        jsonArray[i] = this.cleanObject(jsonArray[i], deleteAttrs);
       }
     } 
     return jsonArray;
