@@ -1025,6 +1025,7 @@
         </EntityDefinition>
 
         <EntityDefinition id="LCS2_DiabetesControlBH">
+			<AttributeDefinition id="DiabetisControl0" type="number.min(0).max(20)" defaultValues="[0.0]" multiplicity="maximalOne" description="Hemoglobina glicosilada (gr/dl)"/>    
             <AttributeDefinition id="DiabetisControl1" type="enumeration" multiplicity="maximalOne" description="Valors de control de la diabetis dintre dels limits correctes">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
@@ -1634,6 +1635,7 @@
 			</HumanTaskDefinition>
 
 			<HumanTaskDefinition id="LCS2_DiabetesControlWPBH" description="Control de la diabetis" ownerPath="LCS2_Clinician" isMandatory="false" isRepeatable="false" entityDefinitionId="LCS2_DiabetesControlBH" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_DiabetesControlBH">
+				<TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_DiabetesControlBH.DiabetisControl0" isReadOnly="false" isMandatory="true"/>
 				<TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_DiabetesControlBH.DiabetisControl1" isReadOnly="false" isMandatory="true"/>
 			</HumanTaskDefinition>
 
