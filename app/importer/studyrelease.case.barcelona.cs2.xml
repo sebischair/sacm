@@ -38,7 +38,7 @@
             <AttributeDefinition id="BCS2_EvaluationDueDate" type="date.after(TODAY)" description="Evaluation default due date"/>
             <AttributeDefinition id="BCS2_WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date"/>   
             <AttributeDefinition id="BCS2_Identification" type="Link.EntityDefinition.BCS2_Identification" description="Identification"/>
-            <AttributeDefinition id="BCS2_Evaluation" type="Link.EntityDefinition.BCS2_Evaluation" description="Evaluation"/>
+            <AttributeDefinition id="BCS2_Evaluation" type="Link.EntityDefinition.BCS2_Evaluation" description="Evaluation" multiplicity="any"/>
             <AttributeDefinition id="BCS2_Workplan" type="Link.EntityDefinition.BCS2_Workplan" description="Workplan"/> 
             <AttributeDefinition id="BCS2_Discharge" type="Link.EntityDefinition.BCS2_Discharge" description="Discharge"/>    
         </EntityDefinition>
@@ -837,10 +837,14 @@
                 </HumanTaskDefinition>
             </StageDefinition>
 
-            <StageDefinition id="BCS2_CaseEvaluation" description="Case Evaluation" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_Evaluation" entityAttachPath="BCS2_Evaluation">
+            <StageDefinition id="BCS2_CaseEvaluation" description="Case Evaluation" isMandatory="true" repeatable="SERIAL" activation="EXPRESSION" manualActivationExpression="BCS2_Evaluation.count()>0" entityDefinitionId="BCS2_Evaluation" entityAttachPath="BCS2_Evaluation">
                 <SentryDefinition>
                     <precondition processDefinitionId="BCS2_CaseIdentification"/>
                 </SentryDefinition>
+                <SentryDefinition>
+                    <precondition processDefinitionId="BCS2_CaseEvaluation"/>
+                </SentryDefinition>   
+
                 
                 <HumanTaskDefinition id="BCS2_SelectedProfessionals" description="Select Professional" ownerPath="BCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_SelectedProfessionals" entityAttachPath="BCS2_Evaluation.BCS2_SelectedProfessionals">
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_SelectedProfessionals.SelectOwnerAnesthesia" isReadOnly="false" isMandatory="true"/>
