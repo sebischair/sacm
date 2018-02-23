@@ -1143,25 +1143,11 @@
 		<!-- WORKSPACE: WorkplanAfterHospitalization -->	
 		
 		<EntityDefinition id="LCS2_WorkplanAfterHospitalization">				
-			<AttributeDefinition id="LCS2_RehabilitationAH" type="Link.EntityDefinition.LCS2_RehabilitationAH"/>
 		    <AttributeDefinition id="LCS2_SLANSSAH" type="Link.EntityDefinition.LCS2_SLANSSDef"/> 			
 			<AttributeDefinition id="LCS2_AnswerAutocheckHealthStatusAH" type="Link.EntityDefinition.LCS2_AnswerAutocheckHealthStatusAH"/>			
 			<AttributeDefinition id="LCS2_PatientEducationAndTrainingToTheCaregiverAH" type="Link.EntityDefinition.LCS2_PatientEducationAndTrainingToTheCaregiverAH"/>			
 			<AttributeDefinition id="LCS2_CommentAH" type="Link.EntityDefinition.LCS2_Comment" multiplicity="maximalOne" /> 	
 		</EntityDefinition>
-				
-		
-        <EntityDefinition id="LCS2_RehabilitationAH">
-            <AttributeDefinition id="rehabExec0" type="enumeration" multiplicity="exactlyOne" description="Quan">     
-                <EnumerationOption value="0" description="Matí"/>
-                <EnumerationOption value="1" description="Tarda"/>
-            </AttributeDefinition> 				
-            <AttributeDefinition id="rehabExec1" type="enumeration" multiplicity="maximalOne" description="Ha fet el pacient els exercicis de rehabilitació?">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
-            </AttributeDefinition>
-			<AttributeDefinition id="rehabExec2" type="longtext" multiplicity="maximalOne" description="Comentaris"/>   
-        </EntityDefinition>
 
 		<!--
         <EntityDefinition id="LCS2_SLANSSAH">
@@ -1327,6 +1313,7 @@
 			<AttributeDefinition id="LCS2_MonitoringPrescriptionBH" type="Link.EntityDefinition.LCS2_MonitoringPrescription" multiplicity="any" /> 
 			<AttributeDefinition id="LCS2_MonitoringPrescriptionAH" type="Link.EntityDefinition.LCS2_MonitoringPrescription" multiplicity="any" /> 
 			<AttributeDefinition id="LCS2_PhysicalActivityAH" type="Link.EntityDefinition.LCS2_PhysicalActivityAH" multiplicity="any" />	
+			<AttributeDefinition id="LCS2_RehabilitationAH" type="Link.EntityDefinition.LCS2_RehabilitationAH" multiplicity="any" />
 		</EntityDefinition>
 			
 		<EntityDefinition id="LCS2_MonitoringPrescription">
@@ -1372,6 +1359,18 @@
             <AttributeDefinition id="dailymediumlevel" type="number.min(0).max(1440)" defaultValues="[40]" multiplicity="maximalOne" description="Mínim de minuts d'intensitat intermitja a fer durant el dia (caminar pas ràpid, tasques domèstiques lleugeres, jugar amb nens, passejar mascotes)"/>       			
             <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Mesures"/>                 
         </EntityDefinition> 
+		
+        <EntityDefinition id="LCS2_RehabilitationAH">
+            <AttributeDefinition id="rehabExec0" type="enumeration" multiplicity="exactlyOne" description="Quan">     
+                <EnumerationOption value="0" description="Matí"/>
+                <EnumerationOption value="1" description="Tarda"/>
+            </AttributeDefinition> 				
+            <AttributeDefinition id="rehabExec1" type="enumeration" multiplicity="maximalOne" description="Ha fet el pacient els exercicis de rehabilitació?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Sí"/>
+            </AttributeDefinition>
+			<AttributeDefinition id="rehabExec2" type="longtext" multiplicity="maximalOne" description="Comentaris"/>   
+        </EntityDefinition>
 
 		
 	<!-- CASE DEFINITION -->				  
@@ -1854,12 +1853,6 @@
 				<precondition processDefinitionId="LCS2_WorkplanDuringHospitalization"/>								
 			</SentryDefinition> -->
 		
-		  <HumanTaskDefinition id="LCS2_RehabilitationWPAH" description="Rehabilitació" ownerPath="LCS2_Physiotherapist" isMandatory="true" repeatable="PARALLEL" isManualActivation="true" entityDefinitionId="LCS2_RehabilitationAH" entityAttachPath="LCS2_WorkplanAfterHospitalization.LCS2_RehabilitationAH">
-            <TaskParamDefinition path="LCS2_WorkplanAfterHospitalization.LCS2_RehabilitationAH.rehabExec0" isReadOnly="false" isMandatory="true"/>
-			<TaskParamDefinition path="LCS2_WorkplanAfterHospitalization.LCS2_RehabilitationAH.rehabExec1" isReadOnly="false" isMandatory="true"/>
-			<TaskParamDefinition path="LCS2_WorkplanAfterHospitalization.LCS2_RehabilitationAH.rehabExec2" isReadOnly="false" isMandatory="false"/>
-          </HumanTaskDefinition>
-
 		  <!--
           <HumanTaskDefinition id="LCS2_SLANSSWPAHHT" description="*S-LANSS" ownerPath="LCS2_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_SLANSSDef" entityAttachPath="LCS2_WorkplanAfterHospitalization.LCS2_SLANSSAH">
             <TaskParamDefinition path="LCS2_WorkplanAfterHospitalization.LCS2_SLANSSAH.slanssExec1" isReadOnly="false" isMandatory="true"/>
@@ -1985,10 +1978,12 @@
                     <TaskParamDefinition part="AUTOMATED" path="LCS2_RepeatedTasksTest.LCS2_PhysicalActivityAH.measurement" isReadOnly="false" isMandatory="true"/>
             </DualTaskDefinition>
 
+			<HumanTaskDefinition id="LCS2_RehabilitationAHWP" description="[POST] Rehabilitació" ownerPath="LCS2_Physiotherapist" isMandatory="true" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_RehabilitationAH" entityAttachPath="LCS2_RepeatedTasksTest.LCS2_RehabilitationAH">
+				<TaskParamDefinition path="LCS2_RepeatedTasksTest.LCS2_RehabilitationAH.rehabExec0" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_RepeatedTasksTest.LCS2_RehabilitationAH.rehabExec1" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_RepeatedTasksTest.LCS2_RehabilitationAH.rehabExec2" isReadOnly="false" isMandatory="false"/>
+			</HumanTaskDefinition>
 			
-			
-	
-
 		</StageDefinition>
 		
 		
