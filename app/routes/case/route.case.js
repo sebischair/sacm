@@ -1,5 +1,4 @@
 import express from 'express';
-import Model from './../../models/model';
 import Case from './../../models/case/model.case';
 import Process from './../../models/case/model.process';
 import Stage from './../../models/case/model.stage';
@@ -397,7 +396,7 @@ router.get('/me', (req, res, next)=>{
 router.get('/:id/tree', (req, res, next)=>{
   Case.findTreeById(req.jwt, req.params.id, {})
     .then(c=>{
-      //addUiVisibility(c.children, true)
+      //Case.addUiVisibility(c.children, true)
       let lean = req.query.lean;
       if(lean && lean.toLowerCase() !== 'true'){
         let deleteAttrs = lean.split(',');
@@ -405,9 +404,9 @@ router.get('/:id/tree', (req, res, next)=>{
         deleteAttrs.forEach(value=>{
           cleanDelAttrs.push(value.trim());
         });
-        c = Model.cleanObject(c, cleanDelAttrs); 
+        c = Case.cleanObject(c, cleanDelAttrs); 
       }else if(lean && lean.toLowerCase() === 'true'){
-        c = Model.cleanObject(c);    
+        c = Case.cleanObject(c);    
       }
       res.status(200).send(c);
     })
@@ -416,21 +415,7 @@ router.get('/:id/tree', (req, res, next)=>{
     });
 });
 
-function addUiVisibility(children, isParentVisible){
-  children.forEach(child => {
-    child.forEach(iteration => {
-      if(iteration.isManualActivation === true){
-        let state = iteration.state;
-        let wasActive = iteration.stateTransitions.ACTIVE.DATE !== null
-        iteration.uiVisibility = isParentVisible && (state === 'ACTIVE' || state === 'COMPLETED' || (wasActive && state === 'TERMINATED'));
-      }else{
-        iteration.uiVisibility = isParentVisible;
-      }
-      if(iteration.children)
-        addUiVisibility(iteration.children, iteration.uiVisibility);
-    });
-  });
-}
+
 
 
 
