@@ -397,14 +397,31 @@ router.get('/me', (req, res, next)=>{
 router.get('/:id/tree', (req, res, next)=>{
   Case.findTreeById(req.jwt, req.params.id, {})
     .then(c=>{
-      if(req.query.lean)
-        c = Model.cleanObject(c);
+      //addUiVisibility(c.children, true)
+      if(req.query.lean)    
+        c = Model.cleanObject(c);        
       res.status(200).send(c);
     })
     .catch(err=>{
       res.status(500).send(err);
     });
 });
+
+function addUiVisibility(children, isParentVisible){
+  children.forEach(child => {
+    child.forEach(iteration => {
+      if(iteration.isManualActivation === true){
+        let state = iteration.state;
+        let wasActive = iteration.stateTransitions.ACTIVE.DATE !== null
+        iteration.uiVisibility = state === 'ACTIVE' || state === 'COMPLETED' || (wasActive && state === 'TERMINATED');
+      }else{
+        iteration.uiVisibility = true;
+      }
+      if(iteration.children)
+        addUiVisibility(iteration.children, iteration.uiVisibility);
+    });
+  });
+}
 
 
 
