@@ -1084,7 +1084,6 @@
 				
 		<!-- WORKSPACE: WorkplanDuringHospitalization -->			
 		<EntityDefinition id="LCS2_WorkplanDuringHospitalization">
-			<AttributeDefinition id="LCS2_EVAECNDDH" type="Link.EntityDefinition.LCS2_EVAECNDDef"/> 
 			<AttributeDefinition id="LCS2_SLANSSDH" type="Link.EntityDefinition.LCS2_SLANSSDef"/>
 			<AttributeDefinition id="LCS2_CommentDH" type="Link.EntityDefinition.LCS2_Comment" multiplicity="maximalOne" /> 			
 		</EntityDefinition>
@@ -1311,6 +1310,7 @@
 		<!-- ENTITY DEFINITION: RepeatedTasksTest -->	
 		<EntityDefinition id="LCS2_RepeatedTasksTest">
 			<AttributeDefinition id="LCS2_MonitoringPrescriptionBH" type="Link.EntityDefinition.LCS2_MonitoringPrescription" multiplicity="any" /> 
+			<AttributeDefinition id="LCS2_EVAECNDDH" type="Link.EntityDefinition.LCS2_EVAECNDDef" multiplicity="any" /> 
 			<AttributeDefinition id="LCS2_MonitoringPrescriptionAH" type="Link.EntityDefinition.LCS2_MonitoringPrescription" multiplicity="any" /> 
 			<AttributeDefinition id="LCS2_PhysicalActivityAH" type="Link.EntityDefinition.LCS2_PhysicalActivityAH" multiplicity="any" />	
 			<AttributeDefinition id="LCS2_RehabilitationAH" type="Link.EntityDefinition.LCS2_RehabilitationAH" multiplicity="any" />
@@ -1796,13 +1796,7 @@
 		    <SentryDefinition>
 				<precondition processDefinitionId="LCS2_WorkplanBeforeHospitalization"/>								
 			</SentryDefinition>  
-			
-			<HumanTaskDefinition id="LCS2_EVAECNDDHHT" description="*Diagnòstic dolor – Escala de Qualificació Numèrica del Dolor (EQND)" ownerPath="LCS2_Clinician" isMandatory="false" repeatable="PARALLEL" isManualActivation="true" entityDefinitionId="LCS2_EVAECNDDef" entityAttachPath="LCS2_WorkplanDuringHospitalization.LCS2_EVAECNDDH">
-				<TaskParamDefinition path="LCS2_WorkplanDuringHospitalization.LCS2_EVAECNDDH.eva0" isReadOnly="false" isMandatory="true"/>
-				<TaskParamDefinition path="LCS2_WorkplanDuringHospitalization.LCS2_EVAECNDDH.eva1" isReadOnly="false" isMandatory="true"/>
-				<TaskParamDefinition path="LCS2_WorkplanDuringHospitalization.LCS2_EVAECNDDH.eva2" isReadOnly="false" isMandatory="true"/>
-			</HumanTaskDefinition>								  
-		
+					
 			<!-- TEST -->
 			<HumanTaskDefinition id="LCS2_SLANSSWPDHHT" description="*S-LANSS (Pre-Hospitalització)" ownerPath="LCS2_Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_SLANSSDef" entityAttachPath="LCS2_WorkplanDuringHospitalization.LCS2_SLANSSDH">
 				<!--
@@ -1946,7 +1940,17 @@
                     <TaskParamDefinition part="HUMAN" path="LCS2_RepeatedTasksTest.LCS2_MonitoringPrescriptionBH.timeslot" isReadOnly="false" isMandatory="true"/> 
                     <TaskParamDefinition part="HUMAN" path="LCS2_RepeatedTasksTest.LCS2_MonitoringPrescriptionBH.comments" isReadOnly="false" isMandatory="true"/>                    
                     <TaskParamDefinition part="AUTOMATED" path="LCS2_RepeatedTasksTest.LCS2_MonitoringPrescriptionBH.measurement" isReadOnly="false" isMandatory="true"/>
-            </DualTaskDefinition>					
+            </DualTaskDefinition>				
+
+			
+			<!-- LCS2_WorkplanDuringHospitalization; DURANT -->
+
+			<HumanTaskDefinition id="LCS2_EVAECNDDHHT" description="[DURING] *Diagnòstic dolor – Escala de Qualificació Numèrica del Dolor (EQND)" ownerPath="LCS2_Clinician" isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_EVAECNDDef" entityAttachPath="LCS2_RepeatedTasksTest.LCS2_EVAECNDDH">
+				<TaskParamDefinition path="LCS2_RepeatedTasksTest.LCS2_EVAECNDDH.eva0" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_RepeatedTasksTest.LCS2_EVAECNDDH.eva1" isReadOnly="false" isMandatory="true"/>
+				<TaskParamDefinition path="LCS2_RepeatedTasksTest.LCS2_EVAECNDDH.eva2" isReadOnly="false" isMandatory="true"/>
+			</HumanTaskDefinition>								  
+	
 	
 			<!-- LCS2_WorkplanPostHospitalization; AFTER -->
 			<DualTaskDefinition id="LCS2_MonitoringPrescriptionAHWP" externalId="MonitoringPrescription" description="[POST] Prescripció de monitorització - Desprès l'hospitalització" dynamicDescriptionPath="LCS2_RepeatedTasksTest.LCS2_MonitoringPrescriptionAH.type" ownerPath="LCS2_PrimaryCareClinicians" dueDatePath="LCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_MonitoringPrescription" entityAttachPath="LCS2_RepeatedTasksTest.LCS2_MonitoringPrescriptionAH">
