@@ -19,9 +19,7 @@
     <Group staticId="6c6864f0922811e7bd0c0242ac120002" id="AssutaPatients"/>
 
     <User staticId="2c940c085e7644c5015e7647d4270000" id="millerc"/>
-    <User staticId="2c940c085e76225c015e762a46cf0030" id="evansn"/>    
-    <User staticId="2c940c085e7644c5015e764TMPID1" id="rothmanm"/>
-    <User staticId="2c940c085e7644c5015e764TMPID2" id="pelzerd"/>
+    <User staticId="2c940c085e76225c015e762a46cf0030" id="evansn"/>
     <User staticId="2c940c085e765068015e768f0e940090" id="alexanderc"/>
     <User staticId="2c940c085e765068015e76cf985600a0" id="carlsonc"/>
     <User staticId="2c940c085e765068015e76d7676100b0" id="morrisonk"/>
@@ -47,7 +45,7 @@
             <AttributeDefinition id="ICS2_Professional" type="Link.Users(AssutaProfessionals)" description="Professional"/>
 
             <AttributeDefinition id="ICS2_Identification" type="Link.EntityDefinition.ICS2_Identification" description="Identification"/>
-            <AttributeDefinition id="ICS2_Evaluation" type="Link.EntityDefinition.ICS2_Evaluation" description="Evaluation" multiplicity="any"/>
+            <AttributeDefinition id="ICS2_Evaluation" type="Link.EntityDefinition.ICS2_Evaluation" description="Evaluation"/>
             <AttributeDefinition id="ICS2_Workplan" type="Link.EntityDefinition.ICS2_Workplan" description="Workplan"/>
             <AttributeDefinition id="ICS2_Discharge" type="Link.EntityDefinition.ICS2_Discharge" description="Discharge"/>       
         </EntityDefinition>
@@ -491,7 +489,7 @@
                 <EnumerationOption value="75" description="מעט מהזמן "/>
                 <EnumerationOption value="100" description="כלל לא "/>
             </AttributeDefinition> 
-            <DerivedAttributeDefinition id="SF12Score" expression="number(SF121,0)+number(SF122,0)+number(SF123,0)+number(SF124,0)+number(SF125,0)+number(SF126,0)+number(SF127 ,0)+number(SF128,0)+number(SF129,0)+number(SF1210,0)+number(SF1211,0)+number(SF1212,0)" description="תוצאה סופית- SF-12"/>  
+            <DerivedAttributeDefinition id="SF12Score" expression="(number(SF121,0)+number(SF122,0)+number(SF123,0)+number(SF124,0)+number(SF125,0)+number(SF126,0)+number(SF127 ,0)+number(SF128,0)+number(SF129,0)+number(SF1210,0)+number(SF1211,0)+number(SF1212,0))/12" description="תוצאה סופית- SF-12"/>  
         </EntityDefinition>
 
 
@@ -939,7 +937,7 @@
 
 
         <!-- Workplan Entity Definitions -->
-        <EntityDefinition id="ICS2_Workplan" description="Workplan">
+        <EntityDefinition id="ICS2_Workplan" description=" תוכנית הטיפול">
             <AttributeDefinition id="ICS2_PhysicalActivity" type="Link.EntityDefinition.ICS2_PhysicalActivity" description="הנחיות הליכה"/>
             <AttributeDefinition id="ICS2_MonitoringPrescription" type="Link.EntityDefinition.ICS2_MonitoringPrescription" description="הנחיות למדידות רפואיות"/> 
             <AttributeDefinition id="ICS2_SimpleTask" type="Link.EntityDefinition.ICS2_SimpleTask" description="משימות לביצוע"/>
@@ -959,41 +957,41 @@
         </EntityDefinition>
         
         <EntityDefinition id="ICS2_MonitoringPrescription" description="Patient Monitory">
-            <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Measure type" additionalDescription="Select measure type for patient monitory.">
-                <EnumerationOption value="DIASTOLICBLOODPRESSURE" description="Diastolic Blood Pressure"/>
-                <EnumerationOption value="SYSTOLICBLOODPRESSURE" description="Systolic Blood Pressure"/>
+            <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="סוג המדידה" additionalDescription="בחר מדד">
+                <EnumerationOption value="DIASTOLICBLOODPRESSURE" description="לחץ דם דיאסטולי"/>
+                <EnumerationOption value="SYSTOLICBLOODPRESSURE" description="לחץ דם סיסטולי"/>
             </AttributeDefinition>   
-            <AttributeDefinition id="alertmin" type="number.min(0)" multiplicity="exactlyOne" description="Min value allowed" additionalDescription="Minimum value for this measuremnt greather than 0"/>       
-            <AttributeDefinition id="alertmax" type="number.min(0)" multiplicity="exactlyOne" description="Max value allowed" additionalDescription="Maximum value for this measuremnt greather than 0"/>      
+            <AttributeDefinition id="alertmin" type="number.min(0)" multiplicity="exactlyOne" description="ערך מינימלאי מותר" additionalDescription="Minimum value for this measuremnt greather than 0"/>       
+            <AttributeDefinition id="alertmax" type="number.min(0)" multiplicity="exactlyOne" description="ערך מקסימלי מותר" additionalDescription="Maximum value for this measuremnt greather than 0"/>      
             <AttributeDefinition id="alertfreq" type="number" defaultValues="[1]" multiplicity="exactlyOne" description="Alert Frecuency Value"/>       
             <AttributeDefinition id="alertfrequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Alert Frecuency Unit">     
-                <EnumerationOption value="DAYS" description="Days"/>
-                <EnumerationOption value="WEEKS" description="Weeks"/>
-                <EnumerationOption value="MONTHS" description="Months"/>
+                <EnumerationOption value="DAYS" description="ימים"/>
+                <EnumerationOption value="WEEKS" description="שבועות"/>
+                <EnumerationOption value="MONTHS" description="חודשים"/>
             </AttributeDefinition>
             <AttributeDefinition id="freq" type="number.min(0)" defaultValues="[1]" multiplicity="exactlyOne" description="Measurement Frecuency"/> 
             <AttributeDefinition id="frequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Measurement Frecuency Unit">     
-                <EnumerationOption value="DAYS" description="Days"/>
-                <EnumerationOption value="WEEKS" description="Weeks"/>
-                <EnumerationOption value="MONTHS" description="Months"/>
+                <EnumerationOption value="DAYS" description="ימים"/>
+                <EnumerationOption value="WEEKS" description="שבועות"/>
+                <EnumerationOption value="MONTHS" description="חודשים"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="maximalOne" description="Max delay in minutes" additionalDescription="Maximum delay to fullfill the prescription by the patient"/> 
-            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Start date"/> 
-            <AttributeDefinition id="enddate" type="date.after(tartdate)" multiplicity="exactlyOne" description="End date"/> 
-            <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="Slots to take the measurements" additionalDescription="Multiple slots can be selected, at least one slot need to be selected">     
-                <EnumerationOption value="BREAKFAST" description="Breakfast"/>
-                <EnumerationOption value="LUNCH" description="Lunch"/>
-                <EnumerationOption value="AFTERNOONSNACK" description="Afternoon Snack"/>
-                <EnumerationOption value="DINNER" description="Dinner"/>
-                <EnumerationOption value="BEFORESLEEP" description="Before Sleep"/>
-                <EnumerationOption value="ANYTIMEDURINGDAY" description="Any time a day" additionalDescription="Please select this option when the timeslot of a day doesn't matter."/>
+            <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="maximalOne" description="זמן דחייה מקסימלי בדקות" additionalDescription="הזמן שיותר למטופל לדחות את המשימה"/> 
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="תאריך התחלה"/> 
+            <AttributeDefinition id="enddate" type="date.after(tartdate)" multiplicity="exactlyOne" description="תאריך סיום"/> 
+            <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="זמנים ללקיחת המדד" additionalDescription="ניתן לבחור יותר מאחד">     
+                <EnumerationOption value="BREAKFAST" description="ארוחת בוקר"/>
+                <EnumerationOption value="LUNCH" description="ארוחת צהריים"/>
+                <EnumerationOption value="AFTERNOONSNACK" description="ארוחת ארבע"/>
+                <EnumerationOption value="DINNER" description="ארוחת ערב"/>
+                <EnumerationOption value="BEFORESLEEP" description="לפני השינה"/>
+                <EnumerationOption value="ANYTIMEDURINGDAY" description="בכל שעה ביום" additionalDescription="במידה ואין חשיבות לזמן המדידה יש לבחור אפשרות זו"/>
             </AttributeDefinition>
-            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comments" additionalDescription="Please provide additional hints for the patient."/>   
+            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="הערות" additionalDescription="הערות חשובות למטופל"/>   
             <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Measurement"/>                      
         </EntityDefinition>
 
-        <EntityDefinition id="ICS2_SimpleTask" description="Simple Task">
-            <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Activity Type" additionalDescription="Select simple task type.">     
+        <EntityDefinition id="ICS2_SimpleTask" description="משימות לביצוע">
+            <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="סוג משימה" additionalDescription="בחר משימה לביצוע">     
                 <EnumerationOption value="STRAIGHTENING_AND_BENDING_KNEE_LYING_ON_BACK" description="יישור וכיפוף ברך בשכיבה על הגב"/>
                 <EnumerationOption value="LEG_AWAY_FROM_BODY_TO_THE_SIDE_LYING_ON_BACK" description="הרחקת הרגל מהגוף הצידה בשכיבה על הגב"/>
                 <EnumerationOption value="LIFTING_PELVIS_LYING_ON_BACK_WITH_BENT_LEGS" description="הרמת אגן בשכיבה על הגב עם רגליים כפופות"/>
@@ -1021,36 +1019,36 @@
                 <EnumerationOption value="VISIT_DOCTOR_AT_CLINIC" description="ביקור אצל הופא במרפאה"/>
                 <EnumerationOption value="OTHER" description="Other"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="freq" type="number" multiplicity="exactlyOne" description="Frecuency" additionalDescription="Repetitions during the day"/> 
-            <AttributeDefinition id="freqqunit" type="enumeration" multiplicity="exactlyOne" description="Frecuency Unit, the posible values are">     
-                <EnumerationOption value="DAYS" description="Days"/>
-                <EnumerationOption value="WEEKS" description="Weeks"/>
-                <EnumerationOption value="MONTHS" description="Months"/>
+            <AttributeDefinition id="freq" type="number" multiplicity="exactlyOne" description="תדירות לביצוע" additionalDescription="מספר חזרות ביום/שבוע/חודש"/> 
+            <AttributeDefinition id="freqqunit" type="enumeration" multiplicity="exactlyOne" description="יחידות תדירות">     
+                <EnumerationOption value="DAYS" description="ימים"/>
+                <EnumerationOption value="WEEKS" description="שבועות"/>
+                <EnumerationOption value="MONTHS" description="חודשים"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="maximalOne" description="Max delay in minutes" additionalDescription="Maximum delay to fullfill the prescription by the patient"/> 
-            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Start date"/> 
-            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="End date"/> 
-            <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="Part del dia per prendre les mesures, els possibles valors són:">     
-                <EnumerationOption value="REPETITIONSET" description="Repeat during the day"/>
-                <EnumerationOption value="BREAKFAST" description="Esmorzar"/>
-                <EnumerationOption value="LUNCH" description="Dinar"/>
-                <EnumerationOption value="AFTERNOONSNACK" description="Berenar"/>
-                <EnumerationOption value="DINNER" description="Sopar"/>
-                <EnumerationOption value="BEFORESLEEP" description="Abans d'anar a dormir"/>
+            <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="maximalOne" description="זמן דחייה מקסימלי" additionalDescription=" זמן דחייה מקסימלי אפשרי על ידי המטופל"/> 
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="תאריך התחלה"/> 
+            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="תאריך סיום"/> 
+            <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="זמנים לביצוע המשימה">     
+                <EnumerationOption value="REPETITIONSET" description="בוקר"/>
+                <EnumerationOption value="BREAKFAST" description="צהריים"/>
+                <EnumerationOption value="LUNCH" description="אחר צהריים"/>
+                <EnumerationOption value="AFTERNOONSNACK" description="ערב"/>
+                <EnumerationOption value="DINNER" description="לפני השינה"/>
+                <EnumerationOption value="BEFORESLEEP" description="אין חשיבות לזמן"/>
             </AttributeDefinition>
-            <AttributeDefinition id="repetitionseachday" type="number" description="Repetitions each day"/>
-            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comments" additionalDescription="Please provide additional hints for the patient."/>   
+            <AttributeDefinition id="repetitionseachday" type="number" description="מספר חזרות בכל פעם"/>
+            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="הערות" additionalDescription="הערות חשובות למטופל"/>   
             <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Measurement"/>      
         </EntityDefinition>
 
 
         <!-- Discharge Entity Definitions -->
         <EntityDefinition id="ICS2_Discharge" description="ICS2_Discharge">
-            <AttributeDefinition id="ICS2_DischargeForm" type="Link.EntityDefinition.ICS2_DischargeForm" description="Discharge From"/> 
+            <AttributeDefinition id="ICS2_DischargeForm" type="Link.EntityDefinition.ICS2_DischargeForm" description="שחרור המטופל"/> 
         </EntityDefinition>
 
         <EntityDefinition id="ICS2_DischargeForm" description="Discharge From">
-            <AttributeDefinition id="comment" type="longtext" multiplicity="maximalOne" description="Comment"/>                             
+            <AttributeDefinition id="comment" type="longtext" multiplicity="maximalOne" description="הערות"/>                             
         </EntityDefinition>
 
 
@@ -1069,11 +1067,11 @@
                 <SummaryParamDefinition path="ICS2_Identification.ICS2_InclusionCriteria.Basicoperation"/>
             </SummarySectionDefinition>
             <SummarySectionDefinition id="ICS2_Summary3" description="הערכת פיזיותרפיסט (רק ב CS2)" position="CENTER">   
-                <SummaryParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.PulseRest"/>
-                <SummaryParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.MaxPulse"/>
-                <SummaryParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUG2"/>
-                <SummaryParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT5"/>
-                <SummaryParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS5"/>
+                <SummaryParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.PulseRest"/>
+                <SummaryParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.MaxPulse"/>
+                <SummaryParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUG2"/>
+                <SummaryParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT5"/>
+                <SummaryParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS5"/>
             </SummarySectionDefinition>
             <SummarySectionDefinition id="ICS2_Summary3" description="מצב תפקודי, חרדה ודיכאון" position="RIGHT">
                 <SummaryParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelScore"/>
@@ -1381,12 +1379,12 @@
                 </HumanTaskDefinition>
             </StageDefinition>
 
-            <StageDefinition id="ICS2_Workplan" description="Workplan" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Workplan" entityAttachPath="ICS2_Workplan">
+            <StageDefinition id="ICS2_Workplan" description="תוכנית הטיפול" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Workplan" entityAttachPath="ICS2_Workplan">
                 <SentryDefinition>
                     <precondition processDefinitionId="ICS2_CaseEvaluation"/>
                 </SentryDefinition>
 
-                <DualTaskDefinition id="ICS2_PhysicalActivity" externalId="PhysicalActivity" description="Physical Activity" ownerPath="ICS2_CaseManager" dueDatePath="ICS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="ICS2_PhysicalActivity" entityAttachPath="ICS2_Workplan.ICS2_PhysicalActivity">
+                <DualTaskDefinition id="ICS2_PhysicalActivity" externalId="PhysicalActivity" description="הנחיות הליכה" ownerPath="ICS2_CaseManager" dueDatePath="ICS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="ICS2_PhysicalActivity" entityAttachPath="ICS2_Workplan.ICS2_PhysicalActivity">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_PhysicalActivity.startdate" isReadOnly="false" isMandatory="true"/>
@@ -1399,7 +1397,7 @@
                     <TaskParamDefinition part="AUTOMATED" path="ICS2_Workplan.ICS2_PhysicalActivity.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>
 
-                <DualTaskDefinition id="ICS2_MonitoringPrescription" externalId="MonitoringPrescription" description="Monitoring Prescription" dynamicDescriptionPath="ICS2_Workplan.ICS2_MonitoringPrescription.type" ownerPath="ICS2_CaseManager" dueDatePath="ICS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="ICS2_MonitoringPrescription" entityAttachPath="ICS2_Workplan.ICS2_MonitoringPrescription">
+                <DualTaskDefinition id="ICS2_MonitoringPrescription" externalId="MonitoringPrescription" description="הנחיות למדידות רפואיות" dynamicDescriptionPath="ICS2_Workplan.ICS2_MonitoringPrescription.type" ownerPath="ICS2_CaseManager" dueDatePath="ICS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="ICS2_MonitoringPrescription" entityAttachPath="ICS2_Workplan.ICS2_MonitoringPrescription">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_MonitoringPrescription.type" isReadOnly="false" isMandatory="true"/>
@@ -1433,7 +1431,7 @@
                 </DualTaskDefinition>                
             </StageDefinition>
     
-            <StageDefinition id="ICS2_Discharge" description="Discharge" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Discharge" entityAttachPath="ICS2_Discharge">
+            <StageDefinition id="ICS2_Discharge" description="יציאה מהמחקר" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Discharge" entityAttachPath="ICS2_Discharge">
                 <SentryDefinition>
                     <precondition processDefinitionId="ICS2_Workplan"/>
                 </SentryDefinition>
