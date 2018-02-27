@@ -58,6 +58,8 @@ app.use(function(req, res, next) {
   /** Encode XML bodies */
   if(req.is('application/json')){
     console.log(req.headers);
+    req.headers['Content-Type'] = 'application/json; charset=utf-8';
+    req.headers['content-type'] = 'application/json; charset=utf-8';
     next();
   }else{
     var data = new Buffer('');
