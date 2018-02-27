@@ -57,6 +57,7 @@ app.use(function(req, res, next) {
 
   /** Encode XML bodies */
   if(req.is('application/json')){
+    console.log(req.headers);
     next();
   }else{
     var data = new Buffer('');
