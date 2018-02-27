@@ -396,12 +396,27 @@ router.get('/me', (req, res, next)=>{
 router.get('/:id/tree', (req, res, next)=>{
   Case.findTreeById(req.jwt, req.params.id, {})
     .then(c=>{
+      //Case.addUiVisibility(c.children, true)
+      let lean = req.query.lean;
+      if(lean && lean.toLowerCase() !== 'true'){
+        let deleteAttrs = lean.split(',');
+        let cleanDelAttrs = [];
+        deleteAttrs.forEach(value=>{
+          cleanDelAttrs.push(value.trim());
+        });
+        c = Case.cleanObject(c, cleanDelAttrs); 
+      }else if(lean && lean.toLowerCase() === 'true'){
+        c = Case.cleanObject(c);    
+      }
       res.status(200).send(c);
     })
     .catch(err=>{
       res.status(500).send(err);
     });
 });
+
+
+
 
 
 

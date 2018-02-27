@@ -737,8 +737,13 @@ module.exports = class Importer {
       if(Workspace.CaseDefinition == null)
         return Promise.resolve();
       return Promise.each(Workspace.CaseDefinition, cd=>{
+        let entityDefinitionId = null;
         return this.getEntityDefinitionIdByXMLId(cd.$.entityDefinitionId)
-          .then(entityDefinitionId=>{            
+          .then(entityDefinitionIdPersisted=>{    
+            entityDefinitionId = entityDefinitionIdPersisted;
+            return this.getEntityDefinitionIdByXMLId(cd.$.newEntityDefinitionId);
+          })
+          .then(newEntityDefinitionIdPersisted=>{     
             const data = {
               name: cd.$.id,
               description: cd.$.description,
@@ -746,6 +751,8 @@ module.exports = class Importer {
               ownerPath: cd.$.ownerPath,
               clientPath: cd.$.clientPath,
               entityDefinition: entityDefinitionId,
+              newEntityDefinition: newEntityDefinitionIdPersisted,
+              newEntityAttachPath: cd.$.newEntityAttachPath,
               version: this.version
             };
             return CaseDefinition.create(this.jwt, data)
@@ -890,7 +897,8 @@ module.exports = class Importer {
               newEntityDefinition: entityDefinitionId,
               newEntityAttachPath: td.$.entityAttachPath,
               externalId: td.$.externalId,
-              dynamicDescriptionPath: td.$.dynamicDescriptionPath
+              dynamicDescriptionPath: td.$.dynamicDescriptionPath,
+              footnote: td.$.footnote
             }
             if(isHumanTaskDefinition){   
               data.dueDatePath = td.$.dueDatePath;
@@ -1061,7 +1069,11 @@ module.exports = class Importer {
       //console.log(JSON.stringify(actions,null,2))
       console.log('Execute following actions: ')
       actions.forEach(action=>{
-        console.log(action.$.id+'('+action.$.processId+')');
+        if(action.$.id != 'Delay'){
+          console.log(action.$.id+'('+action.$.processId+')');
+        }else{
+          console.log(action.$.id+'('+action.$.ms+')');
+        }
       });
       return Promise.each(actions, action=>{
         let p = Promise.resolve();
@@ -1095,6 +1107,9 @@ module.exports = class Importer {
 
           }else if(action.$.id == "CreateAlert"){
             return this.createAlert(caseId, action.$.processId, action)        
+
+          }else if(action.$.id == "Delay"){
+            return Promise.delay(200);  
 
           }else{
             return Promise.resolve('Action "'+action.$.id+'" not defined!');

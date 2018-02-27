@@ -33,7 +33,11 @@
             <AttributeDefinition id="ICS2_EvaluationDueDate" type="date.after(TODAY)" description="תאריך סיום לביצוע הערכה"/>
             <AttributeDefinition id="ICS2_WorkplanDueDate" type="date.after(TODAY)" description="תאריך סיום לתוכנית הטיפול"/>
 			<AttributeDefinition id="ICS2_CaseData1" type="string" multiplicity="maximalOne" description="אבחנה ראשית" />
-			<AttributeDefinition id="ICS2_CaseData2" type="string" multiplicity="maximalOne" description="סיבת האשפוז" />
+			<AttributeDefinition id="ICS2_CaseData2" type="enumeration" multiplicity="maximalOne" description="סיבת האשפוז" >
+			  <EnumerationOption value="0" description="ניתוח אלקטיבי"/>
+              <EnumerationOption value="1" description="החמרת מחלה"/>
+			  <EnumerationOption value="2" description="ארוע אקוטי"/>
+            </AttributeDefinition>   
 
             <AttributeDefinition id="ICS2_Clinician" type="Link.Users(AssutaClinicians)" description="Clinician"/>
             <AttributeDefinition id="ICS2_Nurse" type="Link.Users(AssutaNurses)" description="Nurse"/>
@@ -42,43 +46,10 @@
 
             <AttributeDefinition id="ICS2_Identification" type="Link.EntityDefinition.ICS2_Identification" description="Identification"/>
             <AttributeDefinition id="ICS2_Evaluation" type="Link.EntityDefinition.ICS2_Evaluation" description="Evaluation"/>
-            <AttributeDefinition id="ICS2_PhysiotherapistEvaluation" type="Link.EntityDefinition.ICS2_PhysiotherapistEvaluation" description="Physiotherapist evaluation"/>
-
             <AttributeDefinition id="ICS2_Workplan" type="Link.EntityDefinition.ICS2_Workplan" description="Workplan"/>
-            <AttributeDefinition id="ICS2_Discharge" type="Link.EntityDefinition.ICS2_Discharge" description="Discharge"/> 
-
-            <!--
-            <AttributeDefinition id="ICS2_InclusionCriteria" type="Link.EntityDefinition.ICS2_InclusionCriteria" description="קריטריוני הכללה"/>  
-            <AttributeDefinition id="ICS2_ThechTest" type="Link.EntityDefinition.ICS2_ThechTest" description="יכולות טכנולוגיות"/>  
-            <AttributeDefinition id="ICS2_PatientsConsent" type="Link.EntityDefinition.ICS2_PatientsConsent" description="הסכמת המטופל"/>  
-            <AttributeDefinition id="ICS2_PatientsData" type="Link.EntityDefinition.ICS2_PatientsData" description="פרטים דמוגרפיים של המטופל"/>  
-            <AttributeDefinition id="ICS2_ClinicalData" type="Link.EntityDefinition.ICS2_ClinicalData" description="מידע רפוא"/>  
-            <AttributeDefinition id="ICS2_NutritionalData" type="Link.EntityDefinition.ICS2_NutritionalData" description="מצב תזונה"/>  
-            <AttributeDefinition id="ICS2_Charlson" type="Link.EntityDefinition.ICS2_Charlson" description="Charlson"/>  
-            <AttributeDefinition id="ICS2_ADLBarthel" type="Link.EntityDefinition.ICS2_ADLBarthel" description="Barthel"/>  
-            <AttributeDefinition id="ICS2_iADLLawton" type="Link.EntityDefinition.ICS2_iADLLawton" description="Lawton"/>  
-            <AttributeDefinition id="ICS2_SF12" type="Link.EntityDefinition.ICS2_SF12" description="SF-12"/>  
-            <AttributeDefinition id="ICS2_HADS" type="Link.EntityDefinition.ICS2_HADS" description="HADS"/>  
-            <AttributeDefinition id="ICS2_EQ5D" type="Link.EntityDefinition.ICS2_EQ5D" description="EQ5D"/>  
-            <AttributeDefinition id="ICS2_Sweet16" type="Link.EntityDefinition.ICS2_Sweet16" description="Sweet16"/>  
-            <AttributeDefinition id="ICS2_ResidenceSituationOfDwelling" type="Link.EntityDefinition.ICS2_ResidenceSituationOfDwelling" description="מגורים / מצב הבית"/>  
-            <AttributeDefinition id="ICS2_Communication" type="Link.EntityDefinition.ICS2_Communication" description="תקשורת"/>  
-            <AttributeDefinition id="ICS2_SmokingAlcohol" type="Link.EntityDefinition.ICS2_SmokingAlcohol" description="עישון ואלכוהול"/>  
-            <AttributeDefinition id="ICS2_Medication" type="Link.EntityDefinition.ICS2_Medication" description="טיפול תרופתי"/>  
-            <AttributeDefinition id="ICS2_RiskOfFallsDowntonIndex" type="Link.EntityDefinition.ICS2_RiskOfFallsDowntonIndex" description="סיכון לנפילות - מדד דוטון"/>  
-            <AttributeDefinition id="ICS2_Sleeping" type="Link.EntityDefinition.ICS2_Medication" description="איכות שינה"/>  
-            <AttributeDefinition id="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist" type="Link.EntityDefinition.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist" description="הערכה רפואית של מחלקת הכירורגיה או המרדים"/>  
-          
-
-          
-            <AttributeDefinition id="ICS2_MUST" type="Link.EntityDefinition.ICS2_MUST" description="הערכת סיום לתת תזונה - MUST"/>  
-            <AttributeDefinition id="ICS2_PhysiotherapistEvaluationDataBeforeTest" type="Link.EntityDefinition.ICS2_PhysiotherapistEvaluationDataBeforeTest" description="הערכת פיזיותרפיסט - נתוני התחלה"/>  
-            <AttributeDefinition id="ICS2_PhysiotherapistEvaluationTimedUp" type="Link.EntityDefinition.ICS2_PhysiotherapistEvaluationTimedUp" description="הערכת פיזיותרפיסט - Timed up and go"/>  
-            <AttributeDefinition id="ICS2_PhysiotherapistEvaluation6MWT" type="Link.EntityDefinition.ICS2_PhysiotherapistEvaluation6MWT" description="הערכת פיזיותרפיסט - 6MWT"/>  
-            <AttributeDefinition id="ICS2_PhysiotherapistEvaluation30SSTS" type="Link.EntityDefinition.ICS2_PhysiotherapistEvaluation30SSTS" description="הערכת פיזיותרפיסט - 30sSTS"/>  
-              -->
-
+            <AttributeDefinition id="ICS2_Discharge" type="Link.EntityDefinition.ICS2_Discharge" description="Discharge"/>       
         </EntityDefinition>
+
 
         <!-- Identification Entity Definitions -->
         <EntityDefinition id="ICS2_Identification" description="Identification">
@@ -86,7 +57,6 @@
             <AttributeDefinition id="ICS2_ThechTest" type="Link.EntityDefinition.ICS2_ThechTest" multiplicity="maximalOne" description="יכולות טכנולוגיות"/> 
             <AttributeDefinition id="ICS2_PatientsConsent" type="Link.EntityDefinition.ICS2_PatientsConsent" multiplicity="maximalOne" description="Inclusion"/> 
         </EntityDefinition>
-
 
         <EntityDefinition id="ICS2_InclusionCriteria" description="קריטריוני הכללה">
             <AttributeDefinition id="BasicAge" type="enumeration" multiplicity="maximalOne" description="גיל מעל 65?">
@@ -98,18 +68,18 @@
                 <EnumerationOption value="1" description="כן"/>
             </AttributeDefinition> 
             <AttributeDefinition id="Basicoperation" type="enumeration" multiplicity="maximalOne" description="לאיזה ניתוח מועמד המטופל?">
-                <EnumerationOption value="0" description="החלפת פרק ירך"/>
-                <EnumerationOption value="1" description="החלפת ברך"/>
+                <EnumerationOption value="1" description="ניתוח אורתופדי"/>
 				<EnumerationOption value="2" description="ניתוח גניקולוגי"/>
 				<EnumerationOption value="3" description="ניתוח אורולוגי"/>
 				<EnumerationOption value="4" description="כירורגיה כללית"/>
-            </AttributeDefinition> 
+            </AttributeDefinition>
+			<AttributeDefinition id="OpName" type="string" multiplicity="maximalOne" description="שם הניתוח" />
+			
             <AttributeDefinition id="BasicASA" type="enumeration" multiplicity="maximalOne" description="מהו ציון ASA של המטופל?">
                 <EnumerationOption value="0" description="I"/>
                 <EnumerationOption value="1" description="II"/>
 				<EnumerationOption value="2" description="III"/>
-				<EnumerationOption value="3" description="IV"/>
-				
+				<EnumerationOption value="3" description="IV"/>				
             </AttributeDefinition> 
             <AttributeDefinition id="BasicCronical" type="enumeration" multiplicity="maximalOne" description="האם למטופל אבחנה של לפחות מחלה כרונית אחת?">
                 <EnumerationOption value="0" description="לא"/>
@@ -119,8 +89,7 @@
                 <EnumerationOption value="0" description="לא"/>
                 <EnumerationOption value="1" description="כן"/>
             </AttributeDefinition>            
-        </EntityDefinition>
-        
+        </EntityDefinition>        
 
         <EntityDefinition id="ICS2_ThechTest" description="יכולות טכנולוגיות">
             <AttributeDefinition id="TechPassword" type="enumeration" multiplicity="maximalOne" description="האם יש למטופל או למטפל העיקרי סיסמה לאתר Maccabi Online?">
@@ -129,20 +98,17 @@
                 <EnumerationOption value="2" description="למטפל העיקרי בלבד יש"/>
                 <EnumerationOption value="3" description="לשניהם אין"/>
             </AttributeDefinition>   
-
             <AttributeDefinition id="TechAbility" type="enumeration" multiplicity="maximalOne" description="האם למטופל או למטפל העיקרי יש ידע בסיסי בשימוש באפליקציות?">
                 <EnumerationOption value="0" description="לשניהם יש"/>
                 <EnumerationOption value="1" description="למטופל בלבד יש"/>
                 <EnumerationOption value="2" description="למטפל העיקרי בלבד יש"/>
                 <EnumerationOption value="3" description="לשניהם אין"/>
             </AttributeDefinition>  
-
             <AttributeDefinition id="TechInternet" type="enumeration" multiplicity="maximalOne" description="האם בביתו של המטופל קיימת גישה לאינטרנט אלחוטי?"> 
                 <EnumerationOption value="0" description="לא"/>
                 <EnumerationOption value="1" description="כן"/>
             </AttributeDefinition>  
         </EntityDefinition>
-
 
         <EntityDefinition id="ICS2_PatientsConsent" description="הסכמת המטופל">
             <AttributeDefinition id="ConsentYN" type="enumeration" multiplicity="maximalOne" description="המטופל נתן את הסכמתו להשתתפות במחקר?">
@@ -169,12 +135,15 @@
             <AttributeDefinition id="ICS2_Communication" type="Link.EntityDefinition.ICS2_Communication" multiplicity="maximalOne" description="תקשורת"/> 
             <AttributeDefinition id="ICS2_SmokingAlcohol" type="Link.EntityDefinition.ICS2_SmokingAlcohol" multiplicity="maximalOne" description="עישון ואלכוהול"/> 
             <AttributeDefinition id="ICS2_Medication" type="Link.EntityDefinition.ICS2_Medication" multiplicity="maximalOne" description="טיפול תרופתי"/> 
-            <AttributeDefinition id="ICS2_RiskOfFallsDowntonIndex" type="Link.EntityDefinition.ICS2_RiskOfFallsDowntonIndex" multiplicity="maximalOne" description="סיכון לנפילות - מדד דוטון"/> 
+            <AttributeDefinition id="ICS2_RiskOfFallsDowntonIndex" type="Link.EntityDefinition.ICS2_RiskOfFallsDowntonIndex" multiplicity="maximalOne" description="Downton Fall Index"/> 
             <AttributeDefinition id="ICS2_Sleeping" type="Link.EntityDefinition.ICS2_Sleeping" multiplicity="maximalOne" description="איכות שינה"/> 
             <AttributeDefinition id="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist" type="Link.EntityDefinition.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist" multiplicity="maximalOne" description="הערכה רפואית של מחלקת הכירורגיה או המרדים"/> 
             <AttributeDefinition id="ICS2_MUST" type="Link.EntityDefinition.ICS2_MUST" multiplicity="maximalOne" description="MUST Score"/> 
+            <AttributeDefinition id="ICS2_PhysiotherapistEvaluationDataBeforeTest" type="Link.EntityDefinition.ICS2_PhysiotherapistEvaluationDataBeforeTest" description="הערכת פיזיותרפיסט - נתוני התחלה"/>  
+            <AttributeDefinition id="ICS2_PhysiotherapistEvaluationTimedUp" type="Link.EntityDefinition.ICS2_PhysiotherapistEvaluationTimedUp" description="הערכת פיזיותרפיסט - Timed up and go"/>  
+            <AttributeDefinition id="ICS2_PhysiotherapistEvaluation6MWT" type="Link.EntityDefinition.ICS2_PhysiotherapistEvaluation6MWT" description="הערכת פיזיותרפיסט - 6MWT"/>  
+            <AttributeDefinition id="ICS2_PhysiotherapistEvaluation30SSTS" type="Link.EntityDefinition.ICS2_PhysiotherapistEvaluation30SSTS" description="הערכת פיזיותרפיסט - 30sSTS"/>  
         </EntityDefinition>
-
 
         <EntityDefinition id="ICS2_PatientsData" description="פרטים דמוגרפיים">
             <AttributeDefinition id="Birthcountry" type="enumeration" multiplicity="maximalOne" description="ארץ לידה">
@@ -182,8 +151,7 @@
 				 <EnumerationOption value="1" description="ברית המועצות לשעבר"/>
 				 <EnumerationOption value="2" description="צרפת"/>
 				 <EnumerationOption value="3" description="ארצות הברית"/>
-				 <EnumerationOption value="4" description="אחר"/>
-				 
+				 <EnumerationOption value="4" description="אחר"/>				 
             </AttributeDefinition>  
             <AttributeDefinition id="ImmigrationYear" type="enumeration" multiplicity="maximalOne" description="שנת עליה">
                 <EnumerationOption value="0" description="יליד הארץ"/>
@@ -191,8 +159,7 @@
 				<EnumerationOption value="2" description="בין 1940 לבין 1960"/>
 				<EnumerationOption value="3" description="בין 1961 ל1980"/>
 				<EnumerationOption value="4" description="בין 1980 לבין שנת 2000"/>
-				<EnumerationOption value="5" description="אחרי שנת 2000"/>
-				
+				<EnumerationOption value="5" description="אחרי שנת 2000"/>				
             </AttributeDefinition>  
             <AttributeDefinition id="KidsNum" type="number" multiplicity="maximalOne" description="מספר ילדים"/>
             <AttributeDefinition id="Nation" type="enumeration" multiplicity="maximalOne" description="איך אתה מגדיר את הלאום שלך?">
@@ -247,7 +214,6 @@
             <AttributeDefinition id="OxygenSat" type="number" multiplicity="maximalOne" description="סטורציה בדם" />
         </EntityDefinition>
 
-
        <EntityDefinition id="ICS2_NutritionalData" description="מצב תזונה"> 
             <AttributeDefinition id="Height" type="number" multiplicity="maximalOne" description="גובה - בסנטימטרים"/>
             <AttributeDefinition id="Weight" type="number" multiplicity="maximalOne" description="משקל - בקילוגרם"/>
@@ -257,7 +223,6 @@
             <AttributeDefinition id="Electrolytes" type="number" multiplicity="maximalOne" description="Electrolytes"/>
             <AttributeDefinition id="Proteins" type="number" multiplicity="maximalOne" description="Proteins"/>
         </EntityDefinition>
-
 
         <EntityDefinition id="ICS2_Charlson" description="Charlson">
             <AttributeDefinition id="ch1" type="enumeration" multiplicity="maximalOne" description="אוטם שריר הלב-Myocardial infarct">
@@ -346,61 +311,60 @@
             <DerivedAttributeDefinition id="ch21" expression="number(ch1,0) + number(ch2,0) + number(ch3,0) + number(ch4,0) + number(ch5,0) + number(ch6,0) + number(ch7,0) + number(ch8,0) + number(ch9,0) + number(ch10,0) + number(ch11,0)*2 + number(ch12,0)*2 + number(ch13,0)*2 + number(ch14,0)*2 + number(ch15,0)*2 + number(ch16,0)*2 + number(ch17,0)*3 + number(ch18,0)*6 + number(ch19,0)*6 + number(ch20,0)" description="מדד תחלואה של צ'רלסון"/>     
         </EntityDefinition>
 
-
         <EntityDefinition id="ICS2_ADLBarthel" description="Barthel">
-            <AttributeDefinition id="BarthelFeeding" type="enumeration" multiplicity="maximalOne" description="ברטל- אכילה">
+            <AttributeDefinition id="BarthelFeeding" type="enumeration" multiplicity="maximalOne" description="אכילה ">
                 <EnumerationOption value="0" description="זקוק לעזרה מלאה בחיתוך המזון "/>
                 <EnumerationOption value="5" description="זקוק לעזרה בחיתוך המזון "/>
                 <EnumerationOption value="10" description="עצמאי, אוכל בזמן סביר, מסתדר עם סכו'ם "/>
             </AttributeDefinition>        
-            <AttributeDefinition id="BarthelBathing" type="enumeration" multiplicity="maximalOne" description="ברטל- רחצה">
+            <AttributeDefinition id="BarthelBathing" type="enumeration" multiplicity="maximalOne" description="רחצה">
                 <EnumerationOption value="0" description="זקוק לעזרה "/>
                 <EnumerationOption value="5" description="עצמאי ללא עזרה "/>
             </AttributeDefinition>   
-            <AttributeDefinition id="BarthelGrooming" type="enumeration" multiplicity="maximalOne" description="ברטל- היגיינה אישית">
+            <AttributeDefinition id="BarthelGrooming" type="enumeration" multiplicity="maximalOne" description="היגיינה אישית">
                 <EnumerationOption value="0" description="זקוק לעזרה "/>
                 <EnumerationOption value="5" description="עצמאי ברחיצת פנים, סירוק, צחצוח שיניים וגילוח "/>
             </AttributeDefinition>   
-            <AttributeDefinition id="BarthelDressing" type="enumeration" multiplicity="maximalOne" description="ברטל- לבוש">
+            <AttributeDefinition id="BarthelDressing" type="enumeration" multiplicity="maximalOne" description="לבוש">
                 <EnumerationOption value="0" description="זקוק לעזרה מלאה "/>
                 <EnumerationOption value="5" description="זקוק לעזרה אך מבצע חלק מהמשימות בעצמו "/>
                 <EnumerationOption value="10" description="עצמאי, כולל שריכת שרוכים וכפתור כפתורים "/>
             </AttributeDefinition>   
-            <AttributeDefinition id="BarthelBOWELS" type="enumeration" multiplicity="maximalOne" description="ברטל- פעולות מעיים">
+            <AttributeDefinition id="BarthelBOWELS" type="enumeration" multiplicity="maximalOne" description="פעולות מעיים">
                 <EnumerationOption value="0" description="חוסר שליטה "/>
                 <EnumerationOption value="5" description="מאבד לפעמים, או זקוק לחוקנים "/>
                 <EnumerationOption value="10" description="שולט שליטה מלאה "/>
             </AttributeDefinition>   
-            <AttributeDefinition id="BarthelBLADDER" type="enumeration" multiplicity="maximalOne" description="ברטל- סוגר השתן">
+            <AttributeDefinition id="BarthelBLADDER" type="enumeration" multiplicity="maximalOne" description="סוגר השתן">
                 <EnumerationOption value="0" description="חוסר שליטה "/>
                 <EnumerationOption value="5" description="מאבד לפעמים, או זקוק לאביזר עזר "/>
                 <EnumerationOption value="10" description="שולט שליטה מלאה "/>
             </AttributeDefinition>   
-            <AttributeDefinition id="BarthelToiletHygiene" type="enumeration" multiplicity="maximalOne" description="ברטל- שימוש בשירותים">
+            <AttributeDefinition id="BarthelToiletHygiene" type="enumeration" multiplicity="maximalOne" description="שימוש בשירותים">
                 <EnumerationOption value="0" description="זקוק לעזרה מלאה "/>
                 <EnumerationOption value="5" description="זקוק לעזרה אך עצמאי בחלק מהמרכיבים "/>            
                 <EnumerationOption value="10" description="עצמאי בישיבה וקימה מהאסלה, מסתדר עם הלבוש, הניגוב והורדת המים "/>
             </AttributeDefinition>   
-            <AttributeDefinition id="BarthelTRANSFERS" type="enumeration" multiplicity="maximalOne" description="ברטל- העברות">
+            <AttributeDefinition id="BarthelTRANSFERS" type="enumeration" multiplicity="maximalOne" description="העברות">
                 <EnumerationOption value="0" description="אינו מסוגל לשבת ולעבור ממיטה לכסא"/>
                 <EnumerationOption value="5" description="זקוק לעזרה רבה בהעברות "/>
                 <EnumerationOption value="10" description="עובר בתמיכה מינימלית "/>
                 <EnumerationOption value="15" description="עצמאי בהעברה מכסא למיטה "/>
             </AttributeDefinition>   
-            <AttributeDefinition id="BarthelMobility" type="enumeration" multiplicity="maximalOne" description="ברטל- הליכה במישור">
+            <AttributeDefinition id="BarthelMobility" type="enumeration" multiplicity="maximalOne" description="הליכה במישור">
                 <EnumerationOption value="0" description="זקוק לעזרה בכסא גלגלים "/>
                 <EnumerationOption value="5" description="עצמאי בכסא גלגלים למרחק 50 מ' "/>
                 <EnumerationOption value="10" description="הולך בעזרת אדם למרחק 50 מ' "/>
                 <EnumerationOption value="15" description="עצמאי בהליכה למרחק 50 מ' (גם אם משתמש במקל, הליכון) "/>
             </AttributeDefinition>   
-            <AttributeDefinition id="BarthelStairs" type="enumeration" multiplicity="maximalOne" description="ברטל- מדרגות">
+            <AttributeDefinition id="BarthelStairs" type="enumeration" multiplicity="maximalOne" description="מדרגות">
                 <EnumerationOption value="0" description="אינו מסוגל לעלות מדרגות "/>
                 <EnumerationOption value="5" description="זקוק לעזרה או תמיכה של אדם "/>
                 <EnumerationOption value="10" description="עצמאי גם אם משתמש באביזרי עזר "/>
             </AttributeDefinition>   
-            <DerivedAttributeDefinition id="BarthelScore" expression="number(BarthelFeeding,0)+number(BarthelBathing,0)+number(BarthelGrooming,0)+number(BarthelDressing,0)+number(BarthelBOWELS,0)+number(BarthelBLADDER,0)+number(BarthelToiletHygiene ,0)+number(BarthelTRANSFERS,0)+number(BarthelMobility,0)+number(BarthelStairs,0)" description="ברטל- תוצאה סופית"/>  
+            <DerivedAttributeDefinition id="BarthelScore" expression="number(BarthelFeeding,0)+number(BarthelBathing,0)+number(BarthelGrooming,0)+number(BarthelDressing,0)+number(BarthelBOWELS,0)+number(BarthelBLADDER,0)+number(BarthelToiletHygiene ,0)+number(BarthelTRANSFERS,0)+number(BarthelMobility,0)+number(BarthelStairs,0)" description="ברטל- תוצאה סופית" additionalDescription="ציון מקסימלי 100 = עצמאות מלאה,   ציון 91-99= תלות קלה,  ציון 61-90 = תלות בינונית,   ציון 21-60 = תלות קשה,  ציון 0-20  = תלות מלאה" /> 			
         </EntityDefinition>
-
+		
 
        <EntityDefinition id="ICS2_iADLLawton" description="Lawton"> 
             <AttributeDefinition id="LawtonTelephone" type="enumeration" multiplicity="maximalOne" description="יכולת שימוש בטלפון">
@@ -450,86 +414,82 @@
                 <EnumerationOption value="1" description="מנהל את הוצאותיו היומיומיות אך זקוק לעזרה בכל הקשור לבנק או הוצאות גדולות"/>
                 <EnumerationOption value="2" description="מנהל את ענייניו הכספיים באופן עצמאי ועוקב אחר הכנסותיו והשקעותיו"/>
             </AttributeDefinition> 
-            <DerivedAttributeDefinition id="LawtonScore" expression="number(LawtonTelephone,0)+number(LawtonShopping,0)+number(LawtonFoodPreparation,0)+number(LawtonHousekeeping,0)+number(LawtonLaundry,0)+number(LawtonTransportation,0)+number(LawtonMedications ,0)+number(LawtonMedications,0)+number(LawtonFinances,0)" description="תוצאת Lawton"/>  
+            <DerivedAttributeDefinition id="LawtonScore" expression="number(LawtonTelephone,0)+number(LawtonShopping,0)+number(LawtonFoodPreparation,0)+number(LawtonHousekeeping,0)+number(LawtonLaundry,0)+number(LawtonTransportation,0)+number(LawtonMedications ,0)+number(LawtonFinances,0)" description="תוצאת Lawton" additionalDescription="טווח הציונים הסופי נע בין 0-23, כאשר ציון גבוה יותר מעיד על מידת עצמאות גבוהה יותר."/>  
         </EntityDefinition>
 
         <EntityDefinition id="ICS2_SF12" description="SF-12"> 
             <AttributeDefinition id="SF121" type="enumeration" multiplicity="maximalOne" description="באופן כללי, איך היית מגדיר את מצבך הבריאותי?">
-                <EnumerationOption value="1" description="מצוין "/>
-                <EnumerationOption value="2" description="טוב מאוד "/>
-                <EnumerationOption value="3" description="טוב"/>
-                <EnumerationOption value="4" description="סביר "/>
-                <EnumerationOption value="5" description="גרוע"/>
+                <EnumerationOption value="100" description="מצוין "/>
+                <EnumerationOption value="75" description="טוב מאוד "/>
+                <EnumerationOption value="50" description="טוב"/>
+                <EnumerationOption value="25" description="סביר "/>
+                <EnumerationOption value="0" description="גרוע"/>
             </AttributeDefinition>  
             <AttributeDefinition id="SF122" type="enumeration" multiplicity="maximalOne" description="ביום טיפוסי, באיזו מידה מגביל אותך מצב בריאותך בביצוע הפעולות הבאות: פעולות מתונות. כמו הזזת שולחן, שאיבת אבק, באולינג או משחק גולף">
-                <EnumerationOption value="1" description="מגביל מאוד"/>
-                <EnumerationOption value="2" description="מגביל מעט"/>
-                <EnumerationOption value="3" description="לא מגביל כלל"/>
+                <EnumerationOption value="0" description="מגביל מאוד"/>
+                <EnumerationOption value="50" description="מגביל מעט"/>
+                <EnumerationOption value="100" description="לא מגביל כלל"/>
             </AttributeDefinition>  
             <AttributeDefinition id="SF123" type="enumeration" multiplicity="maximalOne" description="ביום טיפוסי, באיזו מידה מגביל אותך מצב בריאותך בביצוע הפעולות הבאות: עליה של מספר קומות במדרגות">
-			    <EnumerationOption value="1" description="מגביל מאוד"/>
-                <EnumerationOption value="2" description="מגביל מעט"/>
-                <EnumerationOption value="3" description="לא מגביל כלל"/>
+			    <EnumerationOption value="0" description="מגביל מאוד"/>
+                <EnumerationOption value="50" description="מגביל מעט"/>
+                <EnumerationOption value="100" description="לא מגביל כלל"/>
             </AttributeDefinition>  
             <AttributeDefinition id="SF124" type="enumeration" multiplicity="maximalOne" description="בחודש האחרון במסגרת עבודתך או בפעילות יום יומית אחרת כתוצאה ממצב בריאותך הפיזי האם הספקת פחות משהיית רוצה?">
-                <EnumerationOption value="1" description="כן"/>
-                <EnumerationOption value="2" description="לא"/>
+                <EnumerationOption value="0" description="כן"/>
+                <EnumerationOption value="100" description="לא"/>
             </AttributeDefinition>  
             <AttributeDefinition id="SF125" type="enumeration" multiplicity="maximalOne" description="בחודש האחרון במסגרת עבודתך או בפעילות יום יומית אחרת כתוצאה ממצב בריאותך הפיזי האם היית מוגבל בכל סוג של עבודה או פעולה אחרת?">
-                <EnumerationOption value="1" description="כן"/>
-                <EnumerationOption value="2" description="לא"/>
+                <EnumerationOption value="0" description="כן"/>
+                <EnumerationOption value="100" description="לא"/>
             </AttributeDefinition>             
             <AttributeDefinition id="SF126" type="enumeration" multiplicity="maximalOne" description="בחודש האחרון במסגרת עבודתך או בפעילות יום יומית אחרת כתוצאה מבעיות רגשיות כלשהן האם הספקת פחות משהיית רוצה?">
-                <EnumerationOption value="1" description="כן"/>
-                <EnumerationOption value="2" description="לא"/>
+                <EnumerationOption value="0" description="כן"/>
+                <EnumerationOption value="100" description="לא"/>
             </AttributeDefinition> 
             <AttributeDefinition id="SF127" type="enumeration" multiplicity="maximalOne" description="בחודש האחרון במסגרת עבודתך או בפעילות יום יומית אחרת כתוצאה מבעיות רגשיות כלשהן האם ביצעת פעולות פחות בזהירות מבדרך כלל">
-                <EnumerationOption value="1" description="כן"/>
-                <EnumerationOption value="2" description="לא"/>
+                <EnumerationOption value="0" description="כן"/>
+                <EnumerationOption value="100" description="לא"/>
             </AttributeDefinition>  
             <AttributeDefinition id="SF128" type="enumeration" multiplicity="maximalOne" description="בחודש האחרון, עד כמה הפריעו לך כאבים בביצוע עבודתך או פעולות היום-יום שלך?">
-                <EnumerationOption value="1" description="כלל לא "/>
-                <EnumerationOption value="2" description="מעט "/>
-                <EnumerationOption value="3" description="במידה מתונה"/>
-                <EnumerationOption value="4" description="די הרבה "/>
-				<EnumerationOption value="5" description="הרבה מאוד "/>
+                <EnumerationOption value="100" description="כלל לא "/>
+                <EnumerationOption value="75" description="מעט "/>
+                <EnumerationOption value="50" description="במידה מתונה"/>
+                <EnumerationOption value="25" description="די הרבה "/>
+				<EnumerationOption value="0" description="הרבה מאוד "/>
             </AttributeDefinition> 
             <AttributeDefinition id="SF129" type="enumeration" multiplicity="maximalOne" description="במשך החודש האחרון כמה מהזמן הרגשת רגוע/ה ושליו/ה?">
-                <EnumerationOption value="1" description="כל הזמן"/>
-                <EnumerationOption value="2" description="רוב הזמן"/>
-                <EnumerationOption value="3" description="חלק ניכר מהזמן"/>
-                <EnumerationOption value="4" description="חלק מהזמן"/>
-                <EnumerationOption value="5" description="מעט מהזמן"/>
-                <EnumerationOption value="6" description="כלל לא"/>
+                <EnumerationOption value="100" description="כל הזמן"/>
+                <EnumerationOption value="80" description="רוב הזמן"/>
+                <EnumerationOption value="60" description="חלק ניכר מהזמן"/>
+                <EnumerationOption value="40" description="חלק מהזמן"/>
+                <EnumerationOption value="20" description="מעט מהזמן"/>
+                <EnumerationOption value="0" description="כלל לא"/>
             </AttributeDefinition> 
-
             <AttributeDefinition id="SF1210" type="enumeration" multiplicity="maximalOne" description="במשך החודש האחרון כמה מהזמן היית מלא/ה אנרגיה?">
-                <EnumerationOption value="1" description="כל הזמן"/>
-                <EnumerationOption value="2" description="רוב הזמן"/>
-                <EnumerationOption value="3" description="חלק ניכר מהזמן"/>
-                <EnumerationOption value="4" description="חלק מהזמן"/>
-                <EnumerationOption value="5" description="מעט מהזמן"/>
-                <EnumerationOption value="6" description="כלל לא"/>
+                <EnumerationOption value="100" description="כל הזמן"/>
+                <EnumerationOption value="80" description="רוב הזמן"/>
+                <EnumerationOption value="60" description="חלק ניכר מהזמן"/>
+                <EnumerationOption value="40" description="חלק מהזמן"/>
+                <EnumerationOption value="20" description="מעט מהזמן"/>
+                <EnumerationOption value="0" description="כלל לא"/>
             </AttributeDefinition> 
-
-            <AttributeDefinition id="SF1211" type="enumeration" multiplicity="maximalOne" description="במשך החודש האחרון כמה מהזמן הרגשת מדוכא/. ועצוב/ה?">
-                <EnumerationOption value="1" description="כל הזמן"/>
-                <EnumerationOption value="2" description="רוב הזמן"/>
-                <EnumerationOption value="3" description="חלק ניכר מהזמן"/>
-                <EnumerationOption value="4" description="חלק מהזמן"/>
-                <EnumerationOption value="5" description="מעט מהזמן"/>
-                <EnumerationOption value="6" description="כלל לא"/>
+            <AttributeDefinition id="SF1211" type="enumeration" multiplicity="maximalOne" description="במשך החודש האחרון כמה מהזמן הרגשת מדוכא/ת ועצוב/ה?">
+                <EnumerationOption value="0" description="כל הזמן"/>
+                <EnumerationOption value="20" description="רוב הזמן"/>
+                <EnumerationOption value="40" description="חלק ניכר מהזמן"/>
+                <EnumerationOption value="60" description="חלק מהזמן"/>
+                <EnumerationOption value="80" description="מעט מהזמן"/>
+                <EnumerationOption value="100" description="כלל לא"/>
             </AttributeDefinition> 
-
-            <AttributeDefinition id="SF1212" type="enumeration" multiplicity="maximalOne" description="במשך החודש האחרון, עד כמה הפריעו מצס בריאותך הפיזי אן בעיותך הרגשיות לפעיליות חברתיות (כמו לבקר חברים או קרובים)?">
-                <EnumerationOption value="1" description="כל הזמן "/>
-                <EnumerationOption value="2" description="רוב הזמן "/>
-                <EnumerationOption value="3" description="חלק מהזמן "/>
-                <EnumerationOption value="4" description="מעט מהזמן "/>
-                <EnumerationOption value="5" description="כלל לא "/>
+            <AttributeDefinition id="SF1212" type="enumeration" multiplicity="maximalOne" description="בחודש האחרון עד כמה הפריעו מצב בריאותך הפיזי או בעיותך הרגשיות לפעילויותך החברתיות (כמו לבקר חברים או קרובים)?">
+                <EnumerationOption value="0" description="כל הזמן "/>
+                <EnumerationOption value="25" description="רוב הזמן "/>
+                <EnumerationOption value="50" description="חלק מהזמן "/>
+                <EnumerationOption value="75" description="מעט מהזמן "/>
+                <EnumerationOption value="100" description="כלל לא "/>
             </AttributeDefinition> 
-
-            <DerivedAttributeDefinition id="SF12Score" expression="number(SF121,0)+number(SF122,0)+number(SF123,0)+number(SF124,0)+number(SF125,0)+number(SF126,0)+number(SF127 ,0)+number(SF128,0)+number(SF129,0)+number(SF1210,0)+number(SF1211,0)+number(SF1212,0)" description="תוצאה סופית- SF-12"/>  
+            <DerivedAttributeDefinition id="SF12Score" expression="(number(SF121,0)+number(SF122,0)+number(SF123,0)+number(SF124,0)+number(SF125,0)+number(SF126,0)+number(SF127 ,0)+number(SF128,0)+number(SF129,0)+number(SF1210,0)+number(SF1211,0)+number(SF1212,0))/12" description="תוצאה סופית- SF-12"/>  
         </EntityDefinition>
 
 
@@ -594,7 +554,7 @@
                 <EnumerationOption value="1" description="יכול להיות שהזנחתי קצת"/>
                 <EnumerationOption value="0" description="אני מעוניין באותה רמה שתמיד הייתי"/>
             </AttributeDefinition>  
-            <AttributeDefinition id="HADS11" type="enumeration" multiplicity="maximalOne" description="אני מרגישה חסר מנוחה וחייב להיות בתזוזה">
+            <AttributeDefinition id="HADS11" type="enumeration" multiplicity="maximalOne" description="אני מרגיש חסר מנוחה וחייב להיות בתזוזה">
                 <EnumerationOption value="3" description="בהחלט כן "/>
                 <EnumerationOption value="2" description="די הרבה "/>
                 <EnumerationOption value="1" description="לא יותר מדי "/>
@@ -618,9 +578,7 @@
                 <EnumerationOption value="2" description="לעיתים רחוקות"/>
                 <EnumerationOption value="3" description="לעיתים רחוקות מאוד "/>
             </AttributeDefinition>  
-
             <DerivedAttributeDefinition id="HADSDepressionScore" expression="number(HADS2,0)+number(HADS4,0)+number(HADS6,0)+number(HADS8,0)+number(HADS10,0)+number(HADS12,0)+number(HADS14 ,0)" description="מדד סופי דיכאון"/>  
-
             <DerivedAttributeDefinition id="HADSAnxietyScore" expression="number(HADS1,0)+number(HADS3,0)+number(HADS5,0)+number(HADS7,0)+number(HADS9,0)+number(HADS11,0)+number(HADS13,0)" description="מדד סופי חרדה"/>
         </EntityDefinition>   
 
@@ -660,12 +618,9 @@
 				<EnumerationOption value="4" description="אני חרד או מדוכא באופן חמור"/>
 			    <EnumerationOption value="5" description="אני חרד או מדוכא באופן קיצוני"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="EQ5DHealthToday" type="number" multiplicity="maximalOne" description="לפי דעתך, מה מצב בריאותך כיום בין אפס למאה?" additionalDescription="מאה פירושו הבריאות הטובה ביותר שיכולת לדמיין" />  
-			
-			<DerivedAttributeDefinition id="EQ5Dscore" expression="number(EQ5DMobility,0)+number(EQ5DSelfCare,0)+number(EQ5DUsualActivities,0)+number(EQ5DPainDiscomfort,0)+number(EQ5DAnxietyDepression,0)" description="תוצאה סופית- EQ5D"/> 
+            <AttributeDefinition id="EQ5DHealthToday" type="number" multiplicity="maximalOne" description="לפי דעתך, מה מצב בריאותך כיום בין אפס למאה?" additionalDescription="מאה פירושו הבריאות הטובה ביותר שיכולת לדמיין" />
 			
         </EntityDefinition>
-
 
         <EntityDefinition id="ICS2_Sweet16" description="Sweet16"> 
             <AttributeDefinition id="Sweet16_1" type="enumeration" multiplicity="maximalOne" description="באיזו שנה אנחנו?">
@@ -700,38 +655,28 @@
                 <EnumerationOption value="1" description="תשובה נכונה "/>
                 <EnumerationOption value="0" description="תשובה שגויה "/>
             </AttributeDefinition>  
-
             <DerivedAttributeDefinition id="Sweet16_Sum1_8" expression="number(Sweet16_1,0)+number(Sweet16_2,0)+number(Sweet16_3,0)+number(Sweet16_4,0)+number(Sweet16_5,0)+number(Sweet16_6,0)+number(Sweet16_7,0)+number(Sweet16_8,0)" description="ציון לחלק ההתמצאות"/> 
-
             <AttributeDefinition id="Sweet16_9" type="enumeration" multiplicity="maximalOne" description="זכרון מיידי" additionalDescription="כעת אומר לך 3 חפצים. חזור אחרי ונסה לזכור, כי אשאל אותך אחר כך:  תפוח, שולחן, שקל">
                 <EnumerationOption value="0" description="לא זכר/ה כלל "/>
                 <EnumerationOption value="1" description="זכר/ה אחד "/>
                 <EnumerationOption value="2" description="זכר/ה שניים "/>
                 <EnumerationOption value="3" description="זכר/ה שלושה "/>
             </AttributeDefinition> 
-
             <AttributeDefinition id="Sweet16_10" type="enumeration" multiplicity="maximalOne" description="קשב" additionalDescription="אומר לך כמה מספרים, חזור אחרי:    9,4,2 - 7,2,5,8    כעת אומר לך עוד מספרים, אך אבקש ממך להגיד אותם מהסוף להתחלה:  5,1,4 -  9,7,2,3" >
                 <EnumerationOption value="0" description="לא הצליח/ה כלל "/>
                 <EnumerationOption value="1" description="הצליח/ה אחד "/>
                 <EnumerationOption value="2" description="הצליח/ה שניים"/>
             </AttributeDefinition> 
-
             <!-- Sweet16_11 missing here? -->
-
             <AttributeDefinition id="Sweet16_12" type="enumeration" multiplicity="maximalOne" description="זכרון קצר טווח: מהם 3 החפצים שביקשתי ממך לזכור">
                 <EnumerationOption value="0" description="לא זכר/ה כלל"/>
                 <EnumerationOption value="1" description="זכר/ה אחד "/>
                 <EnumerationOption value="2" description="זכר/ה שניים "/>
                 <EnumerationOption value="3" description="זכר/ה שלושה "/>
             </AttributeDefinition> 
-
             <DerivedAttributeDefinition id="Sweet16_Sum9_12" expression="number(Sweet16_9,0)+number(Sweet16_10,0)+number(Sweet16_12,0)" description="ציון לחלק הזכרון"/> 
-
-
-             <DerivedAttributeDefinition id="Sweet16_Score" expression="number(Sweet16_1,0)+number(Sweet16_2,0)+number(Sweet16_3,0)+number(Sweet16_4,0)+number(Sweet16_5,0)+number(Sweet16_6,0)+number(Sweet16_7,0)+number(Sweet16_8,0)+number(Sweet16_9,0)+number(Sweet16_10,0)+number(Sweet16_12,0)" description="ציון כללי לשאלון Sweet 16"/> 
-
+            <DerivedAttributeDefinition id="Sweet16_Score" expression="number(Sweet16_1,0)+number(Sweet16_2,0)+number(Sweet16_3,0)+number(Sweet16_4,0)+number(Sweet16_5,0)+number(Sweet16_6,0)+number(Sweet16_7,0)+number(Sweet16_8,0)+number(Sweet16_9,0)+number(Sweet16_10,0)+number(Sweet16_12,0)" description="ציון כללי לשאלון Sweet 16"/> 
         </EntityDefinition>
-
 
         <EntityDefinition id="ICS2_ResidenceSituationOfDwelling" description="מגורים / מצב הבית"> 
             <AttributeDefinition id="ResidenceType" type="enumeration" multiplicity="maximalOne" description="סוג מגורים">
@@ -758,23 +703,18 @@
                 <EnumerationOption value="3" description="רע"/>
                 <EnumerationOption value="4" description="לא ידוע"/>
             </AttributeDefinition>  
-
             <AttributeDefinition id="ResidenceSupport" type="enumeration" multiplicity="maximalOne" description="דעת המטופל בנוגע לטיב התמיכה שהוא מקבל"> 
                 <EnumerationOption value="1" description="נאות"/>
                 <EnumerationOption value="2" description="לא נאות"/>
             </AttributeDefinition>
-
             <AttributeDefinition id="ResidenceSupportType" type="enumeration" multiplicity="maximalOne" description="סוג התמיכה שמקבל המטופל">
                 <EnumerationOption value="0" description="תמיכה חלקית בתדירות שבועית"/>
                 <EnumerationOption value="1" description="תמיכה חלקית בתדירות יום-יומית"/>
                 <EnumerationOption value="1" description="תמיכה מלאה 24 שעות"/>
             </AttributeDefinition>
-
             <AttributeDefinition id="ResidenceAbuse" type="string" multiplicity="maximalOne" description="הערת טקסט לגבי חשש להתעללות פיזית או מילולית:"/>
-        
-		<DerivedAttributeDefinition id="ResidenceSituationOfDwelling_Score" expression="number(ResidenceType,0)+number(ResidenceArrangements,0)+number(ResidenceAccessibility,0)+number(ResidenceTidiness,0)+number(ResidenceSupport,0)+number(ResidenceSupportType,0)" description="ציון כללי לשאלון מגורים"/> 
+            <DerivedAttributeDefinition id="ResidenceSituationOfDwelling_Score" expression="number(ResidenceType,0)+number(ResidenceArrangements,0)+number(ResidenceAccessibility,0)+number(ResidenceTidiness,0)+number(ResidenceSupport,0)+number(ResidenceSupportType,0)" description="ציון כללי לשאלון מגורים"/> 
 		</EntityDefinition>
-
 
         <EntityDefinition id="ICS2_Communication" description="תקשורת"> 
             <AttributeDefinition id="CommHearing" type="enumeration" multiplicity="maximalOne" description="יכולת שמיעה (עם אביזרי עזר)">
@@ -802,9 +742,9 @@
             <AttributeDefinition id="CommExpression" type="enumeration" multiplicity="maximalOne" description="יכולת ביטוי עצמי">
                 <EnumerationOption value="0" description="מובן לעיתים נדירות או כלל לא"/>
                 <EnumerationOption value="1" description="מובן לפעמים - מסוגל לבטא דרישות מוחשיות לגבי צרכים בסיסיים"/>
-                <EnumerationOption value="1" description="מובן לעיתים קרובות - קושי במציאת מילים מתאימות או קושי לסיים מחשבות ונדרש לסיוע"/>
-                <EnumerationOption value="1" description="בדרך כלל מובן - קושי במציאת מילים מתאימות או קושי לסיים מחשבות אך אם ניתן זמן מסתדר לבד"/>
-                <EnumerationOption value="1" description="מובן - מבטא רעיונות ללא קושי"/>
+                <EnumerationOption value="2" description="מובן לעיתים קרובות - קושי במציאת מילים מתאימות או קושי לסיים מחשבות ונדרש לסיוע"/>
+                <EnumerationOption value="3" description="בדרך כלל מובן - קושי במציאת מילים מתאימות או קושי לסיים מחשבות אך אם ניתן זמן מסתדר לבד"/>
+                <EnumerationOption value="4" description="מובן - מבטא רעיונות ללא קושי"/>
             </AttributeDefinition> 
         </EntityDefinition>
 
@@ -814,7 +754,7 @@
                 <EnumerationOption value="2" description="מעשן לשעבר"/>
                 <EnumerationOption value="3" description="לעולם לא עישן"/>
             </AttributeDefinition>  
-            <AttributeDefinition id="Alcohol" type="enumeration" multiplicity="maximalOne" description="צריכת אלכוהול יותר משתי מנות ליום (10 גרם)">
+            <AttributeDefinition id="Alcohol" type="enumeration" multiplicity="maximalOne" description="צריכת אלכוהול (מנה =10 גרם)">
                 <EnumerationOption value="1" description="יותר משתי מנות ליום"/>
                 <EnumerationOption value="2" description="פחות מ 2 מנות ליום"/>
             </AttributeDefinition> 
@@ -833,11 +773,10 @@
                 <EnumerationOption value="0" description="לא"/>
                 <EnumerationOption value="1" description="כן"/>
             </AttributeDefinition> 
-        </EntityDefinition>
- 
+        </EntityDefinition> 
 
-        <EntityDefinition id="ICS2_RiskOfFallsDowntonIndex" description="סיכון לנפילות - מדד דוטון"> 
-            <AttributeDefinition id="Downton1" type="enumeration" multiplicity="maximalOne" description="נפילות בשנה האחרונה">
+        <EntityDefinition id="ICS2_RiskOfFallsDowntonIndex" description="Downton Fall Index "> 
+            <AttributeDefinition id="Downton1" type="enumeration" multiplicity="maximalOne" description="נפילות בעבר">
                 <EnumerationOption value="0" description="לא "/>
                 <EnumerationOption value="1" description="כן "/>
             </AttributeDefinition>  
@@ -870,25 +809,21 @@
                 <EnumerationOption value="1.0001" description="בעיית ראייה בינונית או חמורה או עיוורת"/>
                 <EnumerationOption value="1.0002" description="בעיית שמיעה או חירשות "/>
                 <EnumerationOption value="1.0003" description="מיומנויות מוטוריות מופחתות או נכות "/>
+				<EnumerationOption value="2" description="שניים מתוך שלושת הבעיות הנל "/>
+				<EnumerationOption value="3" description="שלושת הבעיות הנל "/>
             </AttributeDefinition> 
-            <AttributeDefinition id="Downton4" type="enumeration" multiplicity="maximalOne" description="מצב קוגנטיבי"> <!-- Check this :: L162 -->
+            <AttributeDefinition id="Downton4" type="enumeration" multiplicity="maximalOne" description="מצב מנטלי"> 
                 <EnumerationOption value="0" description="ללא אורנטצייה "/>
                 <EnumerationOption value="1" description="בעל אורנטצייה "/>
-            </AttributeDefinition>   
-
+            </AttributeDefinition>
             <AttributeDefinition id="Downton5" type="enumeration" multiplicity="maximalOne" description="יכולת הליכה">
-                <EnumerationOption value="0" description="הליכה בטוחה עם או בלי עזרי הליכה "/>
+                <EnumerationOption value="0" description="הליכה נורמלית "/>
                 <EnumerationOption value="1.0001" description="הליכה בטוחה עם או בלי עזרי הליכה "/>
                 <EnumerationOption value="1.0002" description="הליכה לא בטוחה עם או ללא עזרה "/>
                 <EnumerationOption value="1.0003" description="יכולת הליכה אינה אפשרית "/>
             </AttributeDefinition> 
-
-            <DerivedAttributeDefinition id="DowntonSum" expression="round(number(Downton1, 0)) + round(number(Downton2, 0)) + round(number(Downton3, 0)) + round(number(Downton4, 0)) + round(number(Downton5, 0))+ round(number(Downton6, 0))+ round(number(Downton7, 0))+ round(number(Downton8, 0))+ round(number(Downton9, 0))+ round(number(Downton10, 0))" description="ציון אינדקס דוונטון"/>          
+            <DerivedAttributeDefinition id="DowntonSum" expression="round(number(Downton1, 0)) + round(number(Downton2, 0)) + round(number(Downton3, 0)) + round(number(Downton4, 0)) + round(number(Downton5, 0))+ round(number(Downton6, 0))+ round(number(Downton7, 0))+ round(number(Downton8, 0))+ round(number(Downton9, 0))+ round(number(Downton10, 0))" description="ציון סופי - ציון גבוה מ 2 מהווה סיכון לנפילות"/>          
         </EntityDefinition>
-
-
-
-        <!-- Check this :: L180-185 -->
 
         <EntityDefinition id="ICS2_Sleeping" description="איכות שינה"> 
             <AttributeDefinition id="sleeping1" type="enumeration" multiplicity="maximalOne" description="קושי הרדמות או הפרעות שינה - יקיצות מוקדמות, חוסר מנוחה">
@@ -915,8 +850,6 @@
             </AttributeDefinition> 
         </EntityDefinition>
 
-
-
         <EntityDefinition id="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist" description="הערכה רפואית של מחלקת הכירורגיה או המרדים"> 
             <AttributeDefinition id="CDHealthAss1" type="date" multiplicity="maximalOne" description="תאריך ביצוע ההערכה"/>
             <AttributeDefinition id="CDHealthAss2" type="enumeration" multiplicity="maximalOne" description="האם המטופל יכול לעבור את הניתוח?">
@@ -926,34 +859,24 @@
             <AttributeDefinition id="CDHealthAss3" type="enumeration" multiplicity="maximalOne" description="האם ישנו שינוי במרשמי התרופות טרם הניתוח?">
                 <EnumerationOption value="0" description="לא"/>
                 <EnumerationOption value="1" description="כן"/>
-            </AttributeDefinition> 
-			
-		<AttributeDefinition id="CDHealthAss8" type="string" multiplicity="maximalOne" description="מרשמי התרופות החדשים המלאים" />
-
-            <!-- Check this :: L174 -->
-
+            </AttributeDefinition> 			
+		    <AttributeDefinition id="CDHealthAss8" type="string" multiplicity="maximalOne" description="מרשמי התרופות החדשים" />
             <AttributeDefinition id="CDHealthAss5" type="enumeration" multiplicity="maximalOne" description="האם נתנו הפניות להערכה או טיפול על ידי צוות רפואי אחר">
                 <EnumerationOption value="0" description="לא"/>
                 <EnumerationOption value="1" description="כן"/>
             </AttributeDefinition>   
-
-
             <AttributeDefinition id="CDHealthAss6" type="string" multiplicity="maximalOne" description="אילו הפניות?" additionalDescription="לדוגמא: רופא מומחה, פיזיוטרפיסט, תזונאי, ריפוי בעיסוק, בדיקות אבחון, מעבדה וכו"/> 
-
-            <AttributeDefinition id="CDHealthAss7" type="string" multiplicity="maximalOne" description="מידע חשוב נוסף"/>      
-
+            <AttributeDefinition id="CDHealthAss7" type="string" multiplicity="maximalOne" description="מידע חשוב נוסף"/>     
         </EntityDefinition>
-
-        <!-- new -->
 
         <EntityDefinition id="ICS2_MUST" description="הערכת סיום לתת תזונה - MUST"> 
             <AttributeDefinition id="BmiCat" type="enumeration" multiplicity="maximalOne" description="BMI">
-                <EnumerationOption value="0" description="גדול מעשרים "/>
+                <EnumerationOption value="0" description="גבוה מעשרים "/>
                 <EnumerationOption value="1" description="בין 18 וחצי לעשרים"/>
-                <EnumerationOption value="2" description="קטן משמונה עשרה וחצי"/>
+                <EnumerationOption value="2" description="נמוך משמונה עשרה וחצי"/>
             </AttributeDefinition>  
             <AttributeDefinition id="WeightLoss" type="enumeration" multiplicity="maximalOne" description="איבוד משקל לא מתוכנן בחצי השנה האחרונה">
-                <EnumerationOption value="0" description="מעל 5% ממסת הגוף"/>
+                <EnumerationOption value="0" description="פחות מ 5% ממסת הגוף"/>
                 <EnumerationOption value="1" description="5% - 10%"/>
                 <EnumerationOption value="2" description="מעל 10% ממסת הגוף"/>
             </AttributeDefinition> 
@@ -965,12 +888,6 @@
         </EntityDefinition>
 
 
-        <EntityDefinition id="ICS2_PhysiotherapistEvaluation" description="Physiotherapist evaluation">
-            <AttributeDefinition id="ICS2_PhysiotherapistEvaluationDataBeforeTest" type="Link.EntityDefinition.ICS2_PhysiotherapistEvaluationDataBeforeTest" description="הערכת פיזיותרפיסט - נתוני התחלה"/>  
-            <AttributeDefinition id="ICS2_PhysiotherapistEvaluationTimedUp" type="Link.EntityDefinition.ICS2_PhysiotherapistEvaluationTimedUp" description="הערכת פיזיותרפיסט - Timed up and go"/>  
-            <AttributeDefinition id="ICS2_PhysiotherapistEvaluation6MWT" type="Link.EntityDefinition.ICS2_PhysiotherapistEvaluation6MWT" description="הערכת פיזיותרפיסט - 6MWT"/>  
-            <AttributeDefinition id="ICS2_PhysiotherapistEvaluation30SSTS" type="Link.EntityDefinition.ICS2_PhysiotherapistEvaluation30SSTS" description="הערכת פיזיותרפיסט - 30sSTS"/>  
-        </EntityDefinition>
 
 
         <EntityDefinition id="ICS2_PhysiotherapistEvaluationDataBeforeTest" description="הערכת פיזיותרפיסט - נתוני התחלה"> 
@@ -985,7 +902,6 @@
             <AttributeDefinition id="TUG2" type="number" multiplicity="maximalOne" description="מס' צעדים ממוצע"/>
             <AttributeDefinition id="TUGRemarks" type="string" multiplicity="maximalOne" description="הערות"/>
         </EntityDefinition>
-
 
         <EntityDefinition id="ICS2_PhysiotherapistEvaluation6MWT" description="הערכת פיזיותרפיסט - 6 MWT"> 
             <AttributeDefinition id="6MWT1" type="number" multiplicity="maximalOne" description="דופק התחלתי"/>
@@ -1021,61 +937,61 @@
 
 
         <!-- Workplan Entity Definitions -->
-        <EntityDefinition id="ICS2_Workplan" description="Workplan">
-            <AttributeDefinition id="ICS2_PhysicalActivity" type="Link.EntityDefinition.ICS2_PhysicalActivity" description="Physical Activity"/>
-            <AttributeDefinition id="ICS2_MonitoringPrescription" type="Link.EntityDefinition.ICS2_MonitoringPrescription" description="Monitoring Prescription"/> 
-            <AttributeDefinition id="ICS2_SimpleTask" type="Link.EntityDefinition.ICS2_SimpleTask" description="Simple Task"/>
+        <EntityDefinition id="ICS2_Workplan" description=" תוכנית הטיפול">
+            <AttributeDefinition id="ICS2_PhysicalActivity" type="Link.EntityDefinition.ICS2_PhysicalActivity" description="הנחיות הליכה"/>
+            <AttributeDefinition id="ICS2_MonitoringPrescription" type="Link.EntityDefinition.ICS2_MonitoringPrescription" description="הנחיות למדידות רפואיות"/> 
+            <AttributeDefinition id="ICS2_SimpleTask" type="Link.EntityDefinition.ICS2_SimpleTask" description="משימות לביצוע"/>
         </EntityDefinition>
 
-        <EntityDefinition id="ICS2_PhysicalActivity" description="Physical Activity">
-            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="maximalOne" description="Start date"/>
-            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="maximalOne" description="End date"/>       
-            <AttributeDefinition id="dailysteps" type="number.min(0).max(100000)" defaultValues="[10000]" multiplicity="maximalOne" description="Number of steps daily"/>       
-            <AttributeDefinition id="dailylowlevel" type="number.min(0).max(1440)" defaultValues="[60]" multiplicity="maximalOne" description="Minutes of low level activity daily"/>       
-            <AttributeDefinition id="dailymediumlevel" type="number.min(0).max(1440)" defaultValues="[40]" multiplicity="maximalOne" description="Minutes of medium level activity daily"/>       
-            <AttributeDefinition id="dailyhighlevel" type="number.min(0).max(1440)" defaultValues="[20]" multiplicity="maximalOne" description="Minutes of high level activity daily"/> 
-            <AttributeDefinition id="dailynoactivity" type="number.min(0).max(1440)" defaultValues="[240]" multiplicity="maximalOne" description="Max minutes without activity allowed daily"/>   
+        <EntityDefinition id="ICS2_PhysicalActivity" description="הנחיות הליכה">
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="maximalOne" description="תאריך התחלה"/>
+            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="maximalOne" description="תאריך סיום"/>       
+            <AttributeDefinition id="dailysteps" type="number.min(0).max(100000)" defaultValues="[10000]" multiplicity="maximalOne" description="מספר צעדים ליום"/>       
+            <AttributeDefinition id="dailylowlevel" type="number.min(0).max(1440)" defaultValues="[60]" multiplicity="maximalOne" description="מספר דקות לפעילות בעצימות נמוכה ליום"/>       
+            <AttributeDefinition id="dailymediumlevel" type="number.min(0).max(1440)" defaultValues="[40]" multiplicity="maximalOne" description="מספר דקות לפעילות בעצימות בינונית ליום"/>       
+            <AttributeDefinition id="dailyhighlevel" type="number.min(0).max(1440)" defaultValues="[20]" multiplicity="maximalOne" description="מספר דקות לפעילות בעצימות גבוהה ליום"/> 
+            <AttributeDefinition id="dailynoactivity" type="number.min(0).max(1440)" defaultValues="[240]" multiplicity="maximalOne" description="מספר דקות מקסימלי ללא פעילות ליום"/>   
             <!--{stepsFollowing: [{date: '2017-06-09 14:54:53.0', value: 12}], lowFollowing:[], mediumFollowing:[], highFollowing:[], noActivityFollowing:[]}-->
             <!--Collected Data e.g. {stepsFollowing: [{date: '2017-06-09 14:54:53.0', value: 12}], lowFollowing:[], mediumFollowing:[], highFollowing:[], noActivityFollowing:[]}"-->
             <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Measurement"/>                 
         </EntityDefinition>
         
         <EntityDefinition id="ICS2_MonitoringPrescription" description="Patient Monitory">
-            <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Measure type" additionalDescription="Select measure type for patient monitory.">
-                <EnumerationOption value="DIASTOLICBLOODPRESSURE" description="Diastolic Blood Pressure"/>
-                <EnumerationOption value="SYSTOLICBLOODPRESSURE" description="Systolic Blood Pressure"/>
+            <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="סוג המדידה" additionalDescription="בחר מדד">
+                <EnumerationOption value="DIASTOLICBLOODPRESSURE" description="לחץ דם דיאסטולי"/>
+                <EnumerationOption value="SYSTOLICBLOODPRESSURE" description="לחץ דם סיסטולי"/>
             </AttributeDefinition>   
-            <AttributeDefinition id="alertmin" type="number.min(0)" multiplicity="exactlyOne" description="Min value allowed" additionalDescription="Minimum value for this measuremnt greather than 0"/>       
-            <AttributeDefinition id="alertmax" type="number.min(0)" multiplicity="exactlyOne" description="Max value allowed" additionalDescription="Maximum value for this measuremnt greather than 0"/>      
+            <AttributeDefinition id="alertmin" type="number.min(0)" multiplicity="exactlyOne" description="ערך מינימלאי מותר" additionalDescription="Minimum value for this measuremnt greather than 0"/>       
+            <AttributeDefinition id="alertmax" type="number.min(0)" multiplicity="exactlyOne" description="ערך מקסימלי מותר" additionalDescription="Maximum value for this measuremnt greather than 0"/>      
             <AttributeDefinition id="alertfreq" type="number" defaultValues="[1]" multiplicity="exactlyOne" description="Alert Frecuency Value"/>       
             <AttributeDefinition id="alertfrequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Alert Frecuency Unit">     
-                <EnumerationOption value="DAYS" description="Days"/>
-                <EnumerationOption value="WEEKS" description="Weeks"/>
-                <EnumerationOption value="MONTHS" description="Months"/>
+                <EnumerationOption value="DAYS" description="ימים"/>
+                <EnumerationOption value="WEEKS" description="שבועות"/>
+                <EnumerationOption value="MONTHS" description="חודשים"/>
             </AttributeDefinition>
             <AttributeDefinition id="freq" type="number.min(0)" defaultValues="[1]" multiplicity="exactlyOne" description="Measurement Frecuency"/> 
             <AttributeDefinition id="frequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Measurement Frecuency Unit">     
-                <EnumerationOption value="DAYS" description="Days"/>
-                <EnumerationOption value="WEEKS" description="Weeks"/>
-                <EnumerationOption value="MONTHS" description="Months"/>
+                <EnumerationOption value="DAYS" description="ימים"/>
+                <EnumerationOption value="WEEKS" description="שבועות"/>
+                <EnumerationOption value="MONTHS" description="חודשים"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="maximalOne" description="Max delay in minutes" additionalDescription="Maximum delay to fullfill the prescription by the patient"/> 
-            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Start date"/> 
-            <AttributeDefinition id="enddate" type="date.after(tartdate)" multiplicity="exactlyOne" description="End date"/> 
-            <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="Slots to take the measurements" additionalDescription="Multiple slots can be selected, at least one slot need to be selected">     
-                <EnumerationOption value="BREAKFAST" description="Breakfast"/>
-                <EnumerationOption value="LUNCH" description="Lunch"/>
-                <EnumerationOption value="AFTERNOONSNACK" description="Afternoon Snack"/>
-                <EnumerationOption value="DINNER" description="Dinner"/>
-                <EnumerationOption value="BEFORESLEEP" description="Before Sleep"/>
-                <EnumerationOption value="ANYTIMEDURINGDAY" description="Any time a day" additionalDescription="Please select this option when the timeslot of a day doesn't matter."/>
+            <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="maximalOne" description="זמן דחייה מקסימלי בדקות" additionalDescription="הזמן שיותר למטופל לדחות את המשימה"/> 
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="תאריך התחלה"/> 
+            <AttributeDefinition id="enddate" type="date.after(tartdate)" multiplicity="exactlyOne" description="תאריך סיום"/> 
+            <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="זמנים ללקיחת המדד" additionalDescription="ניתן לבחור יותר מאחד">     
+                <EnumerationOption value="BREAKFAST" description="ארוחת בוקר"/>
+                <EnumerationOption value="LUNCH" description="ארוחת צהריים"/>
+                <EnumerationOption value="AFTERNOONSNACK" description="ארוחת ארבע"/>
+                <EnumerationOption value="DINNER" description="ארוחת ערב"/>
+                <EnumerationOption value="BEFORESLEEP" description="לפני השינה"/>
+                <EnumerationOption value="ANYTIMEDURINGDAY" description="בכל שעה ביום" additionalDescription="במידה ואין חשיבות לזמן המדידה יש לבחור אפשרות זו"/>
             </AttributeDefinition>
-            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comments" additionalDescription="Please provide additional hints for the patient."/>   
+            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="הערות" additionalDescription="הערות חשובות למטופל"/>   
             <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Measurement"/>                      
         </EntityDefinition>
 
-        <EntityDefinition id="ICS2_SimpleTask" description="Simple Task">
-            <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Activity Type" additionalDescription="Select simple task type.">     
+        <EntityDefinition id="ICS2_SimpleTask" description="משימות לביצוע">
+            <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="סוג משימה" additionalDescription="בחר משימה לביצוע">     
                 <EnumerationOption value="STRAIGHTENING_AND_BENDING_KNEE_LYING_ON_BACK" description="יישור וכיפוף ברך בשכיבה על הגב"/>
                 <EnumerationOption value="LEG_AWAY_FROM_BODY_TO_THE_SIDE_LYING_ON_BACK" description="הרחקת הרגל מהגוף הצידה בשכיבה על הגב"/>
                 <EnumerationOption value="LIFTING_PELVIS_LYING_ON_BACK_WITH_BENT_LEGS" description="הרמת אגן בשכיבה על הגב עם רגליים כפופות"/>
@@ -1103,393 +1019,372 @@
                 <EnumerationOption value="VISIT_DOCTOR_AT_CLINIC" description="ביקור אצל הופא במרפאה"/>
                 <EnumerationOption value="OTHER" description="Other"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="freq" type="number" multiplicity="exactlyOne" description="Frecuency" additionalDescription="Repetitions during the day"/> 
-            <AttributeDefinition id="freqqunit" type="enumeration" multiplicity="exactlyOne" description="Frecuency Unit, the posible values are">     
-                <EnumerationOption value="DAYS" description="Days"/>
-                <EnumerationOption value="WEEKS" description="Weeks"/>
-                <EnumerationOption value="MONTHS" description="Months"/>
+            <AttributeDefinition id="freq" type="number" multiplicity="exactlyOne" description="תדירות לביצוע" additionalDescription="מספר חזרות ביום/שבוע/חודש"/> 
+            <AttributeDefinition id="freqqunit" type="enumeration" multiplicity="exactlyOne" description="יחידות תדירות">     
+                <EnumerationOption value="DAYS" description="ימים"/>
+                <EnumerationOption value="WEEKS" description="שבועות"/>
+                <EnumerationOption value="MONTHS" description="חודשים"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="maximalOne" description="Max delay in minutes" additionalDescription="Maximum delay to fullfill the prescription by the patient"/> 
-            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Start date"/> 
-            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="End date"/> 
-            <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="Part del dia per prendre les mesures, els possibles valors són:">     
-                <EnumerationOption value="REPETITIONSET" description="Repeat during the day"/>
-                <EnumerationOption value="BREAKFAST" description="Esmorzar"/>
-                <EnumerationOption value="LUNCH" description="Dinar"/>
-                <EnumerationOption value="AFTERNOONSNACK" description="Berenar"/>
-                <EnumerationOption value="DINNER" description="Sopar"/>
-                <EnumerationOption value="BEFORESLEEP" description="Abans d'anar a dormir"/>
+            <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="maximalOne" description="זמן דחייה מקסימלי" additionalDescription=" זמן דחייה מקסימלי אפשרי על ידי המטופל"/> 
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="תאריך התחלה"/> 
+            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="תאריך סיום"/> 
+            <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="זמנים לביצוע המשימה">     
+                <EnumerationOption value="REPETITIONSET" description="בוקר"/>
+                <EnumerationOption value="BREAKFAST" description="צהריים"/>
+                <EnumerationOption value="LUNCH" description="אחר צהריים"/>
+                <EnumerationOption value="AFTERNOONSNACK" description="ערב"/>
+                <EnumerationOption value="DINNER" description="לפני השינה"/>
+                <EnumerationOption value="BEFORESLEEP" description="אין חשיבות לזמן"/>
             </AttributeDefinition>
-            <AttributeDefinition id="repetitionseachday" type="number" description="Repetitions each day"/>
-            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comments" additionalDescription="Please provide additional hints for the patient."/>   
+            <AttributeDefinition id="repetitionseachday" type="number" description="מספר חזרות בכל פעם"/>
+            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="הערות" additionalDescription="הערות חשובות למטופל"/>   
             <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Measurement"/>      
         </EntityDefinition>
 
 
         <!-- Discharge Entity Definitions -->
         <EntityDefinition id="ICS2_Discharge" description="ICS2_Discharge">
-            <AttributeDefinition id="ICS2_DischargeForm" type="Link.EntityDefinition.ICS2_DischargeForm" description="Discharge From"/> 
+            <AttributeDefinition id="ICS2_DischargeForm" type="Link.EntityDefinition.ICS2_DischargeForm" description="שחרור המטופל"/> 
         </EntityDefinition>
 
         <EntityDefinition id="ICS2_DischargeForm" description="Discharge From">
-            <AttributeDefinition id="comment" type="longtext" multiplicity="maximalOne" description="Comment"/>                             
+            <AttributeDefinition id="comment" type="longtext" multiplicity="maximalOne" description="הערות"/>                             
         </EntityDefinition>
 
 
 
-<CaseDefinition id="ICS2_Assuta" description="CS2 Assuta" ownerPath="ICS2_CaseManager" clientPath="ICS2_Patient" entityDefinitionId="ICS2_CaseData">
+        <CaseDefinition id="ICS2_Assuta" description="CS2 Assuta" ownerPath="ICS2_CaseManager" clientPath="ICS2_Patient" entityDefinitionId="ICS2_CaseData">
+
+            <SummarySectionDefinition id="ICS2_Summary1" description="מצב תחלואה ותזונה" position="LEFT">    
+                <SummaryParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch21"/>
+                <SummaryParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_Score"/>
+                <SummaryParamDefinition path="ICS2_Evaluation.ICS2_NutritionalData.Bmi"/>
+                <SummaryParamDefinition path="ICS2_Evaluation.ICS2_MUST.MustScore"/>
+            </SummarySectionDefinition>
+            <SummarySectionDefinition id="ICS2_Summary2" description="מצב תחלואה ותזונה" position="LEFT">  
+                <SummaryParamDefinition path="ICS2_CaseData1"/>          
+                <SummaryParamDefinition path="ICS2_CaseData2"/>
+                <SummaryParamDefinition path="ICS2_Identification.ICS2_InclusionCriteria.Basicoperation"/>
+            </SummarySectionDefinition>
+            <SummarySectionDefinition id="ICS2_Summary3" description="הערכת פיזיותרפיסט (רק ב CS2)" position="CENTER">   
+                <SummaryParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.PulseRest"/>
+                <SummaryParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.MaxPulse"/>
+                <SummaryParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUG2"/>
+                <SummaryParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT5"/>
+                <SummaryParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS5"/>
+            </SummarySectionDefinition>
+            <SummarySectionDefinition id="ICS2_Summary3" description="מצב תפקודי, חרדה ודיכאון" position="RIGHT">
+                <SummaryParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelScore"/>
+                <SummaryParamDefinition path="ICS2_Evaluation.ICS2_iADLLawton.LawtonScore"/>
+                <SummaryParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.DowntonSum"/>
+                <SummaryParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADSDepressionScore"/>
+                <SummaryParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADSAnxietyScore"/>
+            </SummarySectionDefinition>
 
 
-    <SummarySectionDefinition id="ICS2_Summary1" description="מצב תחלואה ותזונה" position="LEFT">    
-        <SummaryParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch21"/>
-        <SummaryParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_Score"/>
-        <SummaryParamDefinition path="ICS2_Evaluation.ICS2_NutritionalData.Bmi"/>
-        <SummaryParamDefinition path="ICS2_Evaluation.ICS2_MUST.MustScore"/>
-    </SummarySectionDefinition>
-    <SummarySectionDefinition id="ICS2_Summary2" description="מצב תחלואה ותזונה" position="LEFT">  
-        <SummaryParamDefinition path="ICS2_CaseData1"/>          
-        <SummaryParamDefinition path="ICS2_CaseData2"/>
-        <SummaryParamDefinition path="ICS2_Identification.ICS2_InclusionCriteria.Basicoperation"/>
-    </SummarySectionDefinition>
-    <SummarySectionDefinition id="ICS2_Summary3" description="הערכת פיזיותרפיסט (רק ב CS2)" position="CENTER">   
-        <SummaryParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.PulseRest"/>
-        <SummaryParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.MaxPulse"/>
-        <SummaryParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUG2"/>
-        <SummaryParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT5"/>
-        <SummaryParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS5"/>
-    </SummarySectionDefinition>
-    <SummarySectionDefinition id="ICS2_Summary3" description="מצב תפקודי, חרדה ודיכאון" position="RIGHT">
-        <SummaryParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelScore"/>
-        <SummaryParamDefinition path="ICS2_Evaluation.ICS2_iADLLawton.LawtonScore"/>
-        <SummaryParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.DowntonSum"/>
-        <SummaryParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADSDepressionScore"/>
-        <SummaryParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADSAnxietyScore"/>
-    </SummarySectionDefinition>
+            <StageDefinition id="ICS2_CaseIdentification" description="זיהוי המטופל" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Identification" entityAttachPath="ICS2_Identification">
+                <HumanTaskDefinition id="ICS2_SelectPatient" externalId="SelectPatient" description="בחירת מטופל" ownerPath="ICS2_CaseManager" isMandatory="true" repeatable="ONCE"> 
+                    <HttpHookDefinition on="COMPLETE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/case/patient/inclusion" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition path="ICS2_Patient" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_CaseManager" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Clinician" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Nurse" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_EvaluationDueDate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_WorkplanDueDate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_CaseData1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_CaseData2" isReadOnly="false" isMandatory="true"/>			
+                </HumanTaskDefinition>
 
+                <HumanTaskDefinition id="ICS2_InclusionCriteria" description="קריטריוני הכללה" ownerPath="ICS2_CaseManager" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_InclusionCriteria" entityAttachPath="ICS2_Identification.ICS2_InclusionCriteria">     
+                    <TaskParamDefinition path="ICS2_Identification.ICS2_InclusionCriteria.BasicAge" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Identification.ICS2_InclusionCriteria.BasicResidantual" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Identification.ICS2_InclusionCriteria.Basicoperation" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="ICS2_Identification.ICS2_InclusionCriteria.OpName" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Identification.ICS2_InclusionCriteria.BasicASA" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Identification.ICS2_InclusionCriteria.BasicCronical" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Identification.ICS2_InclusionCriteria.BasicLanguegue" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>   
 
+                <HumanTaskDefinition id="ICS2_ThechTest" description="יכולות טכנולוגיות" ownerPath="ICS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_ThechTest" entityAttachPath="ICS2_Identification.ICS2_ThechTest">                
+                    <SentryDefinition>
+                        <precondition processDefinitionId="ICS2_InclusionCriteria"/>
+                    </SentryDefinition>
+                    <TaskParamDefinition path="ICS2_Identification.ICS2_ThechTest.TechPassword" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Identification.ICS2_ThechTest.TechAbility" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Identification.ICS2_ThechTest.TechInternet" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>
 
-    <StageDefinition id="ICS2_CaseIdentification" description="זיהוי המטופל" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Identification" entityAttachPath="ICS2_Identification">
+                <HumanTaskDefinition id="ICS2_PatientsConsent" description="הסכמת המטופל" ownerPath="ICS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PatientsConsent" entityAttachPath="ICS2_Identification.ICS2_PatientsConsent">                
+                    <SentryDefinition>
+                        <precondition processDefinitionId="ICS2_InclusionCriteria"/>
+                    </SentryDefinition>
+                    <TaskParamDefinition path="ICS2_Identification.ICS2_PatientsConsent.ConsentYN" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Identification.ICS2_PatientsConsent.ConsentDate" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>
+            </StageDefinition>
 
-
-        <HumanTaskDefinition id="ICS2_SelectPatient" description="בחירת מטופל" ownerPath="ICS2_CaseManager" isMandatory="true" repeatable="ONCE"> 
-            <TaskParamDefinition path="ICS2_Patient" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_CaseManager" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_EvaluationDueDate" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_WorkplanDueDate" isReadOnly="false" isMandatory="true"/>
-			<TaskParamDefinition path="ICS2_CaseData1" isReadOnly="false" isMandatory="true"/>
-			<TaskParamDefinition path="ICS2_CaseData2" isReadOnly="false" isMandatory="true"/>
-			
-        </HumanTaskDefinition>
-
-
-        <HumanTaskDefinition id="ICS2_InclusionCriteria" description="קריטריוני הכללה" ownerPath="ICS2_CaseManager" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_InclusionCriteria" entityAttachPath="ICS2_Identification.ICS2_InclusionCriteria">     
-            <TaskParamDefinition path="ICS2_Identification.ICS2_InclusionCriteria.BasicAge" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Identification.ICS2_InclusionCriteria.BasicResidantual" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Identification.ICS2_InclusionCriteria.Basicoperation" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Identification.ICS2_InclusionCriteria.BasicASA" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Identification.ICS2_InclusionCriteria.BasicCronical" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Identification.ICS2_InclusionCriteria.BasicLanguegue" isReadOnly="false" isMandatory="true"/>
-        </HumanTaskDefinition>   
-
-        <HumanTaskDefinition id="ICS2_ThechTest" description="יכולות טכנולוגיות" ownerPath="ICS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_ThechTest" entityAttachPath="ICS2_Identification.ICS2_ThechTest">                
-            <SentryDefinition>
-              <precondition processDefinitionId="ICS2_InclusionCriteria"/>
-            </SentryDefinition>
-            <TaskParamDefinition path="ICS2_Identification.ICS2_ThechTest.TechPassword" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Identification.ICS2_ThechTest.TechAbility" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Identification.ICS2_ThechTest.TechInternet" isReadOnly="false" isMandatory="true"/>
-        </HumanTaskDefinition>
-
-        <HumanTaskDefinition id="ICS2_PatientsConsent" description="הסכמת המטופל" ownerPath="ICS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PatientsConsent" entityAttachPath="ICS2_Identification.ICS2_PatientsConsent">                
-            <SentryDefinition>
-              <precondition processDefinitionId="ICS2_InclusionCriteria"/>
-            </SentryDefinition>
-            <TaskParamDefinition path="ICS2_Identification.ICS2_PatientsConsent.ConsentYN" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Identification.ICS2_PatientsConsent.ConsentDate" isReadOnly="false" isMandatory="true"/>
-        </HumanTaskDefinition>
-    </StageDefinition>
-
-    <StageDefinition id="ICS2_CaseEvaluation" description="הערכת    המטופל" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Evaluation" entityAttachPath="ICS2_Evaluation">  
-        <SentryDefinition>
-          <precondition processDefinitionId="ICS2_CaseIdentification"/>
-        </SentryDefinition>        
-        <HumanTaskDefinition id="ICS2_PatientsData" description="פרטים דמוגרפיים" ownerPath="ICS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PatientsData" entityAttachPath="ICS2_Evaluation.ICS2_PatientsData">                
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_PatientsData.Birthcountry" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_PatientsData.ImmigrationYear" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_PatientsData.KidsNum" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_PatientsData.Nation" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_PatientsData.Religiousness" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_PatientsData.Education" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_PatientsData.WorkStatus" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_PatientsData.OldAgeSubsidy" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_PatientsData.IncomeSupplementSubsidy" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_PatientsData.OtherSocialSecuritySubsidies" isReadOnly="false" isMandatory="true"/>
-        </HumanTaskDefinition>
-
-        <HumanTaskDefinition id="ICS2_ClinicalData" description="מידע רפואי" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_ClinicalData" entityAttachPath="ICS2_Evaluation.ICS2_ClinicalData">                
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_ClinicalData.NameAndContactOfPrimaryPhysicianInTheCommunity" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_ClinicalData.Diagnosis" isReadOnly="false" isMandatory="false"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_ClinicalData.Medications" isReadOnly="false" isMandatory="false"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_ClinicalData.Allergies" isReadOnly="false" isMandatory="false"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_ClinicalData.ClinicInfoComment" isReadOnly="false" isMandatory="false"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_ClinicalData.BloodPressSist" isReadOnly="false" isMandatory="false"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_ClinicalData.BloodPressDiast" isReadOnly="false" isMandatory="false"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_ClinicalData.HeartRate" isReadOnly="false" isMandatory="false"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_ClinicalData.OxygenSat" isReadOnly="false" isMandatory="false"/>
-        </HumanTaskDefinition>
-
-
-        <HumanTaskDefinition id="ICS2_NutritionalData" description="מצב תזונה" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_NutritionalData" entityAttachPath="ICS2_Evaluation.ICS2_NutritionalData">                
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_NutritionalData.Height" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_NutritionalData.Weight" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_NutritionalData.Bmi" isReadOnly="true" isMandatory="false"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_NutritionalData.Albumin" isReadOnly="false" isMandatory="false"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_NutritionalData.Hemoglobin" isReadOnly="false" isMandatory="false"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_NutritionalData.Electrolytes" isReadOnly="false" isMandatory="false"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_NutritionalData.Proteins" isReadOnly="false" isMandatory="false"/>
-        </HumanTaskDefinition>
-
-
-        <HumanTaskDefinition id="ICS2_Charlson" description="Charlson" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Charlson" entityAttachPath="ICS2_Evaluation.ICS2_Charlson">                
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch1" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch2" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch3" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch4" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch5" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch6" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch7" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch8" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch9" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch10" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch11" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch12" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch13" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch14" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch15" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch16" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch17" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch18" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch19" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch20" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch21" isReadOnly="true" isMandatory="false"/>
-        </HumanTaskDefinition>
-
-
-        <HumanTaskDefinition id="ICS2_ADLBarthel" description="Barthel" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_ADLBarthel" entityAttachPath="ICS2_Evaluation.ICS2_ADLBarthel">                
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelFeeding" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelBathing" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelGrooming" isReadOnly="true" isMandatory="false"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelDressing" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelBOWELS" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelBLADDER" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelTRANSFERS" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelToiletHygiene" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelMobility" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelStairs" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelScore" isReadOnly="true" isMandatory="false"/>
-        </HumanTaskDefinition>
-
-
-        <HumanTaskDefinition id="ICS2_iADLLawton" description="Lawton" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_iADLLawton" entityAttachPath="ICS2_Evaluation.ICS2_iADLLawton">                
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_iADLLawton.LawtonTelephone" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_iADLLawton.LawtonShopping" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_iADLLawton.LawtonFoodPreparation" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_iADLLawton.LawtonHousekeeping" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_iADLLawton.LawtonLaundry" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_iADLLawton.LawtonTransportation" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_iADLLawton.LawtonMedications" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_iADLLawton.LawtonFinances" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_iADLLawton.LawtonScore" isReadOnly="true" isMandatory="false"/>
-        </HumanTaskDefinition>
-
-
-        <HumanTaskDefinition id="ICS2_SF12" description="SF-12" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_SF12" entityAttachPath="ICS2_Evaluation.ICS2_SF12">                
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_SF12.SF121" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_SF12.SF122" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_SF12.SF123" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_SF12.SF124" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_SF12.SF125" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_SF12.SF126" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_SF12.SF127" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_SF12.SF128" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_SF12.SF129" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_SF12.SF1210" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_SF12.SF1211" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_SF12.SF1212" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_SF12.SF12Score" isReadOnly="true" isMandatory="false"/>
-        </HumanTaskDefinition>
-
-        <HumanTaskDefinition id="ICS2_HADS" description="HADS" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_HADS" entityAttachPath="ICS2_Evaluation.ICS2_HADS">                
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADS1" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADS2" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADS3" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADS4" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADS5" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADS6" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADS7" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADS8" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADS9" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADS10" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADS11" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADS12" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADS13" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADS14" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADSDepressionScore" isReadOnly="true" isMandatory="false"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADSAnxietyScore" isReadOnly="true" isMandatory="false"/>
-        </HumanTaskDefinition>
-
-        <HumanTaskDefinition id="ICS2_EQ5D" description="EQ5D" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_EQ5D" entityAttachPath="ICS2_Evaluation.ICS2_EQ5D">                
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_EQ5D.EQ5DMobility" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_EQ5D.EQ5DSelfCare" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_EQ5D.EQ5DUsualActivities" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_EQ5D.EQ5DPainDiscomfort" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_EQ5D.EQ5DAnxietyDepression" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_EQ5D.EQ5DHealthToday" isReadOnly="false" isMandatory="true"/>
-			<TaskParamDefinition path="ICS2_Evaluation.ICS2_EQ5D.EQ5Dscore" isReadOnly="true" isMandatory="false"/>
-        </HumanTaskDefinition>
-
-        <HumanTaskDefinition id="ICS2_Sweet16" description="Sweet16" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Sweet16" entityAttachPath="ICS2_Evaluation.ICS2_Sweet16">                
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_1" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_2" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_3" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_4" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_5" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_6" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_7" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_8" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_Sum1_8" isReadOnly="true" isMandatory="false"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_9" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_10" isReadOnly="false" isMandatory="true"/>
-            <!--<TaskParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_11" isReadOnly="false" isMandatory="true"/>-->
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_12" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_Sum9_12" isReadOnly="true" isMandatory="false"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_Score" isReadOnly="true" isMandatory="false"/>
-        </HumanTaskDefinition>
-
-        <HumanTaskDefinition id="ICS2_ResidenceSituationOfDwelling" description="מגורים / מצב הבית" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_ResidenceSituationOfDwelling" entityAttachPath="ICS2_Evaluation.ICS2_ResidenceSituationOfDwelling">                
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_ResidenceSituationOfDwelling.ResidenceType" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_ResidenceSituationOfDwelling.ResidenceArrangements" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_ResidenceSituationOfDwelling.ResidenceAccessibility" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_ResidenceSituationOfDwelling.ResidenceTidiness" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_ResidenceSituationOfDwelling.ResidenceSupport" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_ResidenceSituationOfDwelling.ResidenceSupportType" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_ResidenceSituationOfDwelling.ResidenceAbuse" isReadOnly="false" isMandatory="true"/>
-        </HumanTaskDefinition>
-
-        <HumanTaskDefinition id="ICS2_Communication" description="תקשורת" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Communication" entityAttachPath="ICS2_Evaluation.ICS2_Communication">                
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Communication.CommHearing" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Communication.CommHearingAid" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Communication.CommVision" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Communication.CommVisualAid" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Communication.CommExpression" isReadOnly="false" isMandatory="true"/>
-        </HumanTaskDefinition>
-
-
-        <HumanTaskDefinition id="ICS2_SmokingAlcohol" description="עישון ואלכוהול" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_SmokingAlcohol" entityAttachPath="ICS2_Evaluation.ICS2_SmokingAlcohol">                
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_SmokingAlcohol.Smoking" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_SmokingAlcohol.Alcohol" isReadOnly="false" isMandatory="true"/>
-        </HumanTaskDefinition>
-
-        <HumanTaskDefinition id="ICS2_Medication" description="טיפול תרופתי" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Medication" entityAttachPath="ICS2_Evaluation.ICS2_Medication">                
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Medication.Medication1" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Medication.Medication2" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Medication.Medication3" isReadOnly="false" isMandatory="true"/>
-        </HumanTaskDefinition>
-
-
-        <HumanTaskDefinition id="ICS2_RiskOfFallsDowntonIndex" description="סיכון לנפילות - מדד דוטון" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_RiskOfFallsDowntonIndex" entityAttachPath="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex">                
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton1" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton2" isReadOnly="false" isMandatory="true"/>
-			<TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton6" isReadOnly="false" isMandatory="true"/>
-			<TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton7" isReadOnly="false" isMandatory="true"/>
-			<TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton8" isReadOnly="false" isMandatory="true"/>
-			<TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton9" isReadOnly="false" isMandatory="true"/>
-			<TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton10" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton3" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton4" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton5" isReadOnly="false" isMandatory="true"/>
-		    
-			
-			
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.DowntonSum" isReadOnly="true" isMandatory="false"/>
-        </HumanTaskDefinition>
-
-        <HumanTaskDefinition id="ICS2_Sleeping" description="איכות שינה" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Sleeping" entityAttachPath="ICS2_Evaluation.ICS2_Sleeping">                
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sleeping.sleeping1" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sleeping.sleeping2" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sleeping.sleeping3" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sleeping.sleeping4" isReadOnly="false" isMandatory="true"/>
-        </HumanTaskDefinition>
-
-        <HumanTaskDefinition id="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist" description="הערכה רפואית של מחלקת הכירורגיה או המרדים" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist" entityAttachPath="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist">                
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss1" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss2" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss3" isReadOnly="false" isMandatory="true"/>
-          <!--  <TaskParamDefinition path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss4" isReadOnly="false" isMandatory="true"/> -->
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss5" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss6" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss7" isReadOnly="false" isMandatory="false"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss8" isReadOnly="false" isMandatory="true"/>
-        </HumanTaskDefinition>
-
-        <HumanTaskDefinition id="ICS2_MUST" description="MUST" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_MUST" entityAttachPath="ICS2_Evaluation.ICS2_MUST">                
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_MUST.BMICat" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_MUST.WeightLoss" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_MUST.RecentAcuteDisease" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_Evaluation.ICS2_MUST.MustScore" isReadOnly="true" isMandatory="false"/>
-        </HumanTaskDefinition>
-
-        
-    </StageDefinition>    
-
-    <!-- new -->
-    <StageDefinition id="ICS2_PhysiotherapistEvaluation" description="הערכת פיזיוטרפיסט" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluation" entityAttachPath="ICS2_PhysiotherapistEvaluation"> 
-
-        <SentryDefinition>
-          <precondition processDefinitionId="ICS2_CaseEvaluation"/>
-        </SentryDefinition> 
-
-        <HumanTaskDefinition id="ICS2_PhysiotherapistEvaluationDataBeforeTest" description="נתונים התחלתיים" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluationDataBeforeTest" entityAttachPath="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest">                
-            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.PulseRest" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.Age" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.MaxPulse" isReadOnly="true" isMandatory="false"/>
-            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.PhysioRemarks" isReadOnly="false" isMandatory="false"/>
-        </HumanTaskDefinition>
-
-        <HumanTaskDefinition id="ICS2_PhysiotherapistEvaluationTimedUp" description="Time up and go" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluationTimedUp" entityAttachPath="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationTimedUp">                
-            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUG1" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUG2" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUGRemarks" isReadOnly="false" isMandatory="false"/>
-        </HumanTaskDefinition>
-
-        <HumanTaskDefinition id="ICS2_PhysiotherapistEvaluation6MWT" description="6MWT" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluation6MWT" entityAttachPath="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT">                
-            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT1" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT2" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT3" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT4" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT5" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT6" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWTRemarks" isReadOnly="false" isMandatory="false"/>
-        </HumanTaskDefinition>
-
-        <HumanTaskDefinition id="ICS2_PhysiotherapistEvaluation30SSTS" description="30s STS" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluation30SSTS" entityAttachPath="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS">                
-            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS1" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS2" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS3" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS4" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS5" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS6" isReadOnly="false" isMandatory="true"/>
-            <TaskParamDefinition path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTSRemarks" isReadOnly="false" isMandatory="false"/>
-        </HumanTaskDefinition>
-
-    </StageDefinition>
-
-            <StageDefinition id="ICS2_Workplan" description="Workplan" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Workplan" entityAttachPath="ICS2_Workplan">
+            <StageDefinition id="ICS2_CaseEvaluation" description="הערכת    המטופל" isMandatory="true" repeatable="SERIAL" activation="EXPRESSION" manualActivationExpression="ICS2_Evaluation.count()>0" entityDefinitionId="ICS2_Evaluation" entityAttachPath="ICS2_Evaluation">  
                 <SentryDefinition>
-                    <precondition processDefinitionId="ICS2_PhysiotherapistEvaluation"/>
+                    <precondition processDefinitionId="ICS2_CaseIdentification"/>
+                </SentryDefinition>      
+                <SentryDefinition>
+                    <precondition processDefinitionId="ICS2_CaseEvaluation"/>
+                </SentryDefinition>   
+                <HumanTaskDefinition id="ICS2_PatientsData" description="פרטים דמוגרפיים" ownerPath="ICS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PatientsData" entityAttachPath="ICS2_Evaluation.ICS2_PatientsData">                
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PatientsData.Birthcountry" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PatientsData.ImmigrationYear" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PatientsData.KidsNum" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PatientsData.Nation" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PatientsData.Religiousness" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PatientsData.Education" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PatientsData.WorkStatus" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PatientsData.OldAgeSubsidy" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PatientsData.IncomeSupplementSubsidy" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PatientsData.OtherSocialSecuritySubsidies" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="ICS2_ClinicalData" description="מידע רפואי" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_ClinicalData" entityAttachPath="ICS2_Evaluation.ICS2_ClinicalData">                
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_ClinicalData.NameAndContactOfPrimaryPhysicianInTheCommunity" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_ClinicalData.Diagnosis" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_ClinicalData.Medications" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_ClinicalData.Allergies" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_ClinicalData.ClinicInfoComment" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_ClinicalData.BloodPressSist" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_ClinicalData.BloodPressDiast" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_ClinicalData.HeartRate" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_ClinicalData.OxygenSat" isReadOnly="false" isMandatory="false"/>
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="ICS2_NutritionalData" description="מצב תזונה" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_NutritionalData" entityAttachPath="ICS2_Evaluation.ICS2_NutritionalData">                
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_NutritionalData.Height" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_NutritionalData.Weight" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_NutritionalData.Bmi" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_NutritionalData.Albumin" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_NutritionalData.Hemoglobin" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_NutritionalData.Electrolytes" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_NutritionalData.Proteins" isReadOnly="false" isMandatory="false"/>
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="ICS2_Charlson" description="Charlson" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Charlson" entityAttachPath="ICS2_Evaluation.ICS2_Charlson">                
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch11" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch12" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch13" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch14" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch15" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch16" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch17" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch18" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch19" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch20" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Charlson.ch21" isReadOnly="true" isMandatory="false"/>
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="ICS2_ADLBarthel" description="Barthel" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_ADLBarthel" entityAttachPath="ICS2_Evaluation.ICS2_ADLBarthel">                
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelFeeding" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelBathing" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelGrooming" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelDressing" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelBOWELS" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelBLADDER" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelToiletHygiene" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelTRANSFERS" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelMobility" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelStairs" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelScore" isReadOnly="true" isMandatory="false"/>
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="ICS2_iADLLawton" description="Lawton" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_iADLLawton" entityAttachPath="ICS2_Evaluation.ICS2_iADLLawton">                
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_iADLLawton.LawtonTelephone" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_iADLLawton.LawtonShopping" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_iADLLawton.LawtonFoodPreparation" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_iADLLawton.LawtonHousekeeping" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_iADLLawton.LawtonLaundry" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_iADLLawton.LawtonTransportation" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_iADLLawton.LawtonMedications" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_iADLLawton.LawtonFinances" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_iADLLawton.LawtonScore" isReadOnly="true" isMandatory="false"/>
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="ICS2_SF12" description="SF-12" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_SF12" entityAttachPath="ICS2_Evaluation.ICS2_SF12">                
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_SF12.SF121" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_SF12.SF122" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_SF12.SF123" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_SF12.SF124" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_SF12.SF125" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_SF12.SF126" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_SF12.SF127" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_SF12.SF128" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_SF12.SF129" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_SF12.SF1210" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_SF12.SF1211" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_SF12.SF1212" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_SF12.SF12Score" isReadOnly="true" isMandatory="false"/>
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="ICS2_HADS" description="HADS" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_HADS" entityAttachPath="ICS2_Evaluation.ICS2_HADS">                
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADS1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADS2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADS3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADS4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADS5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADS6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADS7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADS8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADS9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADS10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADS11" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADS12" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADS13" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADS14" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADSDepressionScore" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_HADS.HADSAnxietyScore" isReadOnly="true" isMandatory="false"/>
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="ICS2_EQ5D" description="EQ5D" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_EQ5D" entityAttachPath="ICS2_Evaluation.ICS2_EQ5D">                
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_EQ5D.EQ5DMobility" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_EQ5D.EQ5DSelfCare" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_EQ5D.EQ5DUsualActivities" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_EQ5D.EQ5DPainDiscomfort" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_EQ5D.EQ5DAnxietyDepression" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_EQ5D.EQ5DHealthToday" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="ICS2_Sweet16" description="Sweet16" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Sweet16" entityAttachPath="ICS2_Evaluation.ICS2_Sweet16">                
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_Sum1_8" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_10" isReadOnly="false" isMandatory="true"/>
+                    <!--<TaskParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_11" isReadOnly="false" isMandatory="true"/>-->
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_12" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_Sum9_12" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_Score" isReadOnly="true" isMandatory="false"/>
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="ICS2_ResidenceSituationOfDwelling" description="מגורים / מצב הבית" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_ResidenceSituationOfDwelling" entityAttachPath="ICS2_Evaluation.ICS2_ResidenceSituationOfDwelling">                
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_ResidenceSituationOfDwelling.ResidenceType" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_ResidenceSituationOfDwelling.ResidenceArrangements" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_ResidenceSituationOfDwelling.ResidenceAccessibility" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_ResidenceSituationOfDwelling.ResidenceTidiness" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_ResidenceSituationOfDwelling.ResidenceSupport" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_ResidenceSituationOfDwelling.ResidenceSupportType" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_ResidenceSituationOfDwelling.ResidenceAbuse" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="ICS2_Communication" description="תקשורת" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Communication" entityAttachPath="ICS2_Evaluation.ICS2_Communication">                
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Communication.CommHearing" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Communication.CommHearingAid" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Communication.CommVision" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Communication.CommVisualAid" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Communication.CommExpression" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="ICS2_SmokingAlcohol" description="עישון ואלכוהול" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_SmokingAlcohol" entityAttachPath="ICS2_Evaluation.ICS2_SmokingAlcohol">                
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_SmokingAlcohol.Smoking" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_SmokingAlcohol.Alcohol" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="ICS2_Medication" description="טיפול תרופתי" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Medication" entityAttachPath="ICS2_Evaluation.ICS2_Medication">                
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Medication.Medication1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Medication.Medication2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Medication.Medication3" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="ICS2_RiskOfFallsDowntonIndex" description="Downton Fall Index" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_RiskOfFallsDowntonIndex" entityAttachPath="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex">                
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton5" isReadOnly="false" isMandatory="true"/>    
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.DowntonSum" isReadOnly="true" isMandatory="false"/>
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="ICS2_Sleeping" description="איכות שינה" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Sleeping" entityAttachPath="ICS2_Evaluation.ICS2_Sleeping">                
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sleeping.sleeping1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sleeping.sleeping2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sleeping.sleeping3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sleeping.sleeping4" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist" description="הערכה רפואית של מחלקת הכירורגיה או המרדים" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist" entityAttachPath="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist">                
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss3" isReadOnly="false" isMandatory="true"/>
+                    <!--  <TaskParamDefinition path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss4" isReadOnly="false" isMandatory="true"/> -->
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss6" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss7" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss8" isReadOnly="false" isMandatory="false"/>
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="ICS2_MUST" description="MUST" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_MUST" entityAttachPath="ICS2_Evaluation.ICS2_MUST">                
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_MUST.BMICat" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_MUST.WeightLoss" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_MUST.RecentAcuteDisease" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_MUST.MustScore" isReadOnly="true" isMandatory="false"/>
+                </HumanTaskDefinition>
+      
+                <HumanTaskDefinition id="ICS2_PhysiotherapistEvaluationDataBeforeTest" description="נתונים התחלתיים" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluationDataBeforeTest" entityAttachPath="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest">                
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.PulseRest" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.Age" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.MaxPulse" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.PhysioRemarks" isReadOnly="false" isMandatory="false"/>
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="ICS2_PhysiotherapistEvaluationTimedUp" description="Time up and go" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluationTimedUp" entityAttachPath="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationTimedUp">                
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUG1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUG2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUGRemarks" isReadOnly="false" isMandatory="false"/>
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="ICS2_PhysiotherapistEvaluation6MWT" description="6MWT" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluation6MWT" entityAttachPath="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT">                
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWTRemarks" isReadOnly="false" isMandatory="false"/>
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="ICS2_PhysiotherapistEvaluation30SSTS" description="30s STS" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluation30SSTS" entityAttachPath="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS">                
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTSRemarks" isReadOnly="false" isMandatory="false"/>
+                </HumanTaskDefinition>
+            </StageDefinition>
+
+            <StageDefinition id="ICS2_Workplan" description="תוכנית הטיפול" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Workplan" entityAttachPath="ICS2_Workplan">
+                <SentryDefinition>
+                    <precondition processDefinitionId="ICS2_CaseEvaluation"/>
                 </SentryDefinition>
 
-                <DualTaskDefinition id="ICS2_PhysicalActivity" externalId="PhysicalActivity" description="Physical Activity" ownerPath="ICS2_CaseManager" dueDatePath="ICS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="ICS2_PhysicalActivity" entityAttachPath="ICS2_Workplan.ICS2_PhysicalActivity">
+                <DualTaskDefinition id="ICS2_PhysicalActivity" externalId="PhysicalActivity" description="הנחיות הליכה" ownerPath="ICS2_CaseManager" dueDatePath="ICS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="ICS2_PhysicalActivity" entityAttachPath="ICS2_Workplan.ICS2_PhysicalActivity">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_PhysicalActivity.startdate" isReadOnly="false" isMandatory="true"/>
@@ -1502,7 +1397,7 @@
                     <TaskParamDefinition part="AUTOMATED" path="ICS2_Workplan.ICS2_PhysicalActivity.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>
 
-                <DualTaskDefinition id="ICS2_MonitoringPrescription" externalId="MonitoringPrescription" description="Monitoring Prescription" dynamicDescriptionPath="ICS2_Workplan.ICS2_MonitoringPrescription.type" ownerPath="ICS2_CaseManager" dueDatePath="ICS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="ICS2_MonitoringPrescription" entityAttachPath="ICS2_Workplan.ICS2_MonitoringPrescription">
+                <DualTaskDefinition id="ICS2_MonitoringPrescription" externalId="MonitoringPrescription" description="הנחיות למדידות רפואיות" dynamicDescriptionPath="ICS2_Workplan.ICS2_MonitoringPrescription.type" ownerPath="ICS2_CaseManager" dueDatePath="ICS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="ICS2_MonitoringPrescription" entityAttachPath="ICS2_Workplan.ICS2_MonitoringPrescription">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_MonitoringPrescription.type" isReadOnly="false" isMandatory="true"/>
@@ -1520,7 +1415,6 @@
                     <TaskParamDefinition part="AUTOMATED" path="ICS2_Workplan.ICS2_MonitoringPrescription.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>
 
-                <!-- isreal -->
                 <DualTaskDefinition id="ICS2_SimpleTask" externalId="SimpleTask" description="Simple Task" dynamicDescriptionPath="ICS2_Workplan.ICS2_SimpleTask.type" ownerPath="ICS2_CaseManager" dueDatePath="ICS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="ICS2_SimpleTask" entityAttachPath="ICS2_Workplan.ICS2_SimpleTask">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/simpletask" method="POST" failureMessage="Could not create prescription on Self-Management System!"></HttpHookDefinition>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/simpletask/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"></HttpHookDefinition>
@@ -1534,11 +1428,10 @@
                     <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_SimpleTask.repetitionseachday" isReadOnly="false" isMandatory="true"/> 
                     <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_SimpleTask.comments" isReadOnly="false" isMandatory="true"/>                    
                     <TaskParamDefinition part="AUTOMATED" path="ICS2_Workplan.ICS2_SimpleTask.measurement" isReadOnly="false" isMandatory="true"/>
-                </DualTaskDefinition>
-                
+                </DualTaskDefinition>                
             </StageDefinition>
-            
-            <StageDefinition id="ICS2_Discharge" description="Discharge" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Discharge" entityAttachPath="ICS2_Discharge">
+    
+            <StageDefinition id="ICS2_Discharge" description="יציאה מהמחקר" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Discharge" entityAttachPath="ICS2_Discharge">
                 <SentryDefinition>
                     <precondition processDefinitionId="ICS2_Workplan"/>
                 </SentryDefinition>
@@ -1546,15 +1439,13 @@
                     <TaskParamDefinition path="ICS2_Discharge.ICS2_DischargeForm.comment" isReadOnly="false" isMandatory="true"/>                  
                 </HumanTaskDefinition>
             </StageDefinition>
-    
-</CaseDefinition>
-</Workspace>
+
+        </CaseDefinition>
+    </Workspace>
 
 
 
     <Execution>
-
-
         <Action id="CompleteHumanTask" processId="ICS2_SelectPatient">
             <TaskParam path="ICS2_Patient"  userValue="carlsonc"/>
             <TaskParam path="ICS2_CaseManager"  userValue="millerc"/>
@@ -1563,27 +1454,24 @@
 			<TaskParam path="ICS2_CaseData1" values="['1']"/>
 			<TaskParam path="ICS2_CaseData2" values="['1']"/>
         </Action>
-
         <Action id="CompleteHumanTask" processId="ICS2_InclusionCriteria">
             <TaskParam path="ICS2_Identification.ICS2_InclusionCriteria.BasicAge"  values="['0']"/>
             <TaskParam path="ICS2_Identification.ICS2_InclusionCriteria.BasicResidantual"  values="['1']"/>
             <TaskParam path="ICS2_Identification.ICS2_InclusionCriteria.Basicoperation" values="['1']"/>
+			 <TaskParam path="ICS2_Identification.ICS2_InclusionCriteria.OpName" values="['0']"/>
             <TaskParam path="ICS2_Identification.ICS2_InclusionCriteria.BasicASA" values="['0']"/>
             <TaskParam path="ICS2_Identification.ICS2_InclusionCriteria.BasicCronical" values="['1']"/>
             <TaskParam path="ICS2_Identification.ICS2_InclusionCriteria.BasicLanguegue" values="['0']"/>
         </Action>
-
         <Action id="CompleteHumanTask" processId="ICS2_ThechTest">
             <TaskParam path="ICS2_Identification.ICS2_ThechTest.TechPassword"  values="['0']"/>
             <TaskParam path="ICS2_Identification.ICS2_ThechTest.TechAbility"  values="['1']"/>
             <TaskParam path="ICS2_Identification.ICS2_ThechTest.TechInternet" values="['0']"/>
         </Action>
-
         <Action id="CompleteHumanTask" processId="ICS2_PatientsConsent">
             <TaskParam path="ICS2_Identification.ICS2_PatientsConsent.ConsentYN" values="['1']"/>
             <TaskParam path="ICS2_Identification.ICS2_PatientsConsent.ConsentDate" values="['2018-05-26T00:00:00.000']"/>
         </Action>
-
         <Action id="CompleteHumanTask" processId="ICS2_PatientsData">
             <TaskParam path="ICS2_Evaluation.ICS2_PatientsData.Birthcountry" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_PatientsData.ImmigrationYear" values="['1']"/>
@@ -1595,8 +1483,7 @@
             <TaskParam path="ICS2_Evaluation.ICS2_PatientsData.OldAgeSubsidy" values="['0']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_PatientsData.IncomeSupplementSubsidy" values="['0']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_PatientsData.OtherSocialSecuritySubsidies" values="['0']"/>
-        </Action>           
-
+        </Action>
         <Action id="CompleteHumanTask" processId="ICS2_ClinicalData">
             <TaskParam path="ICS2_Evaluation.ICS2_ClinicalData.NameAndContactOfPrimaryPhysicianInTheCommunity" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_ClinicalData.Diagnosis" values="['1']"/>
@@ -1608,7 +1495,6 @@
             <TaskParam path="ICS2_Evaluation.ICS2_ClinicalData.HeartRate" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_ClinicalData.OxygenSat" values="['1']"/>
         </Action>
-
         <Action id="CompleteHumanTask" processId="ICS2_NutritionalData">
             <TaskParam path="ICS2_Evaluation.ICS2_NutritionalData.Height" values="['180']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_NutritionalData.Weight" values="['80']"/>
@@ -1617,7 +1503,6 @@
             <TaskParam path="ICS2_Evaluation.ICS2_NutritionalData.Electrolytes" values="['80']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_NutritionalData.Proteins" values="['80']"/>
         </Action>
-
         <Action id="CompleteHumanTask" processId="ICS2_Charlson">
             <TaskParam path="ICS2_Evaluation.ICS2_Charlson.ch1" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_Charlson.ch2" values="['1']"/>
@@ -1640,7 +1525,6 @@
             <TaskParam path="ICS2_Evaluation.ICS2_Charlson.ch19" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_Charlson.ch20" values="['1']"/>
         </Action>
-
         <Action id="CompleteHumanTask" processId="ICS2_ADLBarthel">
             <TaskParam path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelFeeding" values="['0']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelBathing" values="['0']"/>
@@ -1653,7 +1537,6 @@
             <TaskParam path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelMobility" values="['5']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_ADLBarthel.BarthelStairs" values="['5']"/>
         </Action>
-
         <Action id="CompleteHumanTask" processId="ICS2_iADLLawton">
             <TaskParam path="ICS2_Evaluation.ICS2_iADLLawton.LawtonTelephone" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_iADLLawton.LawtonShopping" values="['1']"/>
@@ -1664,7 +1547,6 @@
             <TaskParam path="ICS2_Evaluation.ICS2_iADLLawton.LawtonMedications" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_iADLLawton.LawtonFinances" values="['1']"/>
         </Action>
-
         <Action id="CompleteHumanTask" processId="ICS2_SF12">
             <TaskParam path="ICS2_Evaluation.ICS2_SF12.SF121" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_SF12.SF122" values="['1']"/>
@@ -1679,7 +1561,6 @@
             <TaskParam path="ICS2_Evaluation.ICS2_SF12.SF1211" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_SF12.SF1212" values="['1']"/>
         </Action>
-
         <Action id="CompleteHumanTask" processId="ICS2_HADS">
             <TaskParam path="ICS2_Evaluation.ICS2_HADS.HADS1" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_HADS.HADS2" values="['1']"/>
@@ -1696,9 +1577,6 @@
             <TaskParam path="ICS2_Evaluation.ICS2_HADS.HADS13" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_HADS.HADS14" values="['1']"/>
         </Action>
-
-
-
         <Action id="CompleteHumanTask" processId="ICS2_EQ5D">
             <TaskParam path="ICS2_Evaluation.ICS2_EQ5D.EQ5DMobility" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_EQ5D.EQ5DSelfCare" values="['1']"/>
@@ -1707,9 +1585,6 @@
             <TaskParam path="ICS2_Evaluation.ICS2_EQ5D.EQ5DAnxietyDepression" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_EQ5D.EQ5DHealthToday" values="['1']"/>
         </Action>
-
-        
-
         <Action id="CompleteHumanTask" processId="ICS2_Sweet16">
             <TaskParam path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_1" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_2" values="['1']"/>
@@ -1724,7 +1599,6 @@
             <TaskParam path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_11" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_Sweet16.Sweet16_12" values="['1']"/>
         </Action>
-
         <Action id="CompleteHumanTask" processId="ICS2_ResidenceSituationOfDwelling">
             <TaskParam path="ICS2_Evaluation.ICS2_ResidenceSituationOfDwelling.ResidenceType" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_ResidenceSituationOfDwelling.ResidenceArrangements" values="['1']"/>
@@ -1734,9 +1608,6 @@
             <TaskParam path="ICS2_Evaluation.ICS2_ResidenceSituationOfDwelling.ResidenceSupportType" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_ResidenceSituationOfDwelling.ResidenceAbuse" values="['1']"/>
         </Action>
-
-
-
         <Action id="CompleteHumanTask" processId="ICS2_Communication">
             <TaskParam path="ICS2_Evaluation.ICS2_Communication.CommHearing" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_Communication.CommHearingAid" values="['1']"/>
@@ -1744,25 +1615,15 @@
             <TaskParam path="ICS2_Evaluation.ICS2_Communication.CommVisualAid" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_Communication.CommExpression" values="['1']"/>
         </Action>
-
-
-
         <Action id="CompleteHumanTask" processId="ICS2_SmokingAlcohol">
             <TaskParam path="ICS2_Evaluation.ICS2_SmokingAlcohol.Smoking" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_SmokingAlcohol.Alcohol" values="['1']"/>
         </Action>
-
-        
-
-
         <Action id="CompleteHumanTask" processId="ICS2_Medication">
             <TaskParam path="ICS2_Evaluation.ICS2_Medication.Medication1" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_Medication.Medication2" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_Medication.Medication3" values="['1']"/>
         </Action>
-
-
-
         <Action id="CompleteHumanTask" processId="ICS2_RiskOfFallsDowntonIndex">
             <TaskParam path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton1" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton2" values="['0']"/>
@@ -1773,20 +1634,14 @@
 			<TaskParam path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton10" values="['0']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton3" values="['0']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton4" values="['0']"/>
-            <TaskParam path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton5" values="['0']"/>
-			
-			
+            <TaskParam path="ICS2_Evaluation.ICS2_RiskOfFallsDowntonIndex.Downton5" values="['0']"/>		
         </Action>
-
-
-
         <Action id="CompleteHumanTask" processId="ICS2_Sleeping">
             <TaskParam path="ICS2_Evaluation.ICS2_Sleeping.sleeping1" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_Sleeping.sleeping2" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_Sleeping.sleeping3" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_Sleeping.sleeping4" values="['1']"/>
         </Action>
-
         <Action id="CompleteHumanTask" processId="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist">
             <TaskParam path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss1" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss2" values="['1']"/>
@@ -1796,50 +1651,43 @@
             <TaskParam path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss7" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss8" values="['1']"/>
         </Action>
-
-
         <Action id="CompleteHumanTask" processId="ICS2_MUST">
             <TaskParam path="ICS2_Evaluation.ICS2_MUST.BmiCat" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_MUST.WeightLoss" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_MUST.RecentAcuteDisease" values="['0']"/>
         </Action>
-
-
-
         <Action id="CompleteHumanTask" processId="ICS2_PhysiotherapistEvaluationDataBeforeTest">
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.PulseRest" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.Age" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.PhysioRemarks" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.PulseRest" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.Age" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.PhysioRemarks" values="['1']"/>
         </Action>
-
         <Action id="CompleteHumanTask" processId="ICS2_PhysiotherapistEvaluationTimedUp">
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUG1" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUG2" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUGRemarks" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUG1" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUG2" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUGRemarks" values="['1']"/>
         </Action>
-
         <Action id="CompleteHumanTask" processId="ICS2_PhysiotherapistEvaluation6MWT">
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT1" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT2" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT3" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT4" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT5" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT6" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWTRemarks" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT1" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT2" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT3" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT4" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT5" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT6" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWTRemarks" values="['1']"/>
         </Action>
 
+        <Action id="Delay" ms="200"/>
         <Action id="CompleteHumanTask" processId="ICS2_PhysiotherapistEvaluation30SSTS">
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS1" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS2" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS3" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS4" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS5" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS6" values="['1']"/>
-            <TaskParam path="ICS2_PhysiotherapistEvaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTSRemarks" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS1" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS2" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS3" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS4" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS5" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS6" values="['1']"/>
+            <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTSRemarks" values="['1']"/>
         </Action>
-
-
-       <Action id="ActivateDualTask" processId="ICS2_PhysicalActivity" breakpoint="true"/>
+        
+        <Action id="ActivateDualTask" processId="ICS2_PhysicalActivity" breakpoint="true"/>
         <Action id="CompleteDualTaskHumanPart" processId="ICS2_PhysicalActivity" breakpoint="true">
             <TaskParam path="ICS2_Workplan.ICS2_PhysicalActivity.startdate"  values="['2017-09-26T00:00:00.000']"/>
             <TaskParam path="ICS2_Workplan.ICS2_PhysicalActivity.enddate"  values="['2018-09-27T00:00:00.000']"/>
@@ -1852,7 +1700,6 @@
         <Action id="CompleteDualTaskAutomatedPart" processId="ICS2_PhysicalActivity">
             <TaskParam path="ICS2_Workplan.ICS2_PhysicalActivity.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
         </Action>
-
         <Action id="ActivateDualTask" processId="ICS2_MonitoringPrescription" breakpoint="true"/>
         <Action id="CompleteDualTaskHumanPart" processId="ICS2_MonitoringPrescription" breakpoint="true">
             <TaskParam path="ICS2_Workplan.ICS2_MonitoringPrescription.type"  values="['DIASTOLICBLOODPRESSURE']"/>
@@ -1871,7 +1718,6 @@
         <Action id="CompleteDualTaskAutomatedPart" processId="ICS2_MonitoringPrescription">
             <TaskParam path="ICS2_Workplan.ICS2_MonitoringPrescription.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
         </Action>
-
         <Action id="ActivateDualTask" processId="ICS2_SimpleTask" breakpoint="true"/>
         <Action id="CompleteDualTaskHumanPart" processId="ICS2_SimpleTask" breakpoint="true">
             <TaskParam path="ICS2_Workplan.ICS2_SimpleTask.type"  values="['OTHER']"/>
@@ -1886,10 +1732,7 @@
         </Action>
         <Action id="CompleteDualTaskAutomatedPart" processId="ICS2_SimpleTask">
             <TaskParam path="ICS2_Workplan.ICS2_SimpleTask.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
-        </Action>
-
-
- 
+        </Action> 
     </Execution>
 
 </SACMDefinition>

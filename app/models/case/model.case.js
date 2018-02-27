@@ -92,4 +92,20 @@ export default class Case extends Model{
   static findClientCasesByWorkspace(jwt, workspaceId, query){
     return http.get(jwt, '/workspaces/'+workspaceId+'/cases/client/search?query='+query);
   }
+
+  static addUiVisibility(children, isParentVisible){
+    children.forEach(child => {
+      child.forEach(iteration => {
+        if(iteration.isManualActivation === true){
+          let state = iteration.state;
+          let wasActive = iteration.stateTransitions.ACTIVE.DATE !== null
+          iteration.uiVisibility = isParentVisible && (state === 'ACTIVE' || state === 'COMPLETED' || (wasActive && state === 'TERMINATED'));
+        }else{
+          iteration.uiVisibility = isParentVisible;
+        }
+        if(iteration.children)
+          this.addUiVisibility(iteration.children, iteration.uiVisibility);
+      });
+    });
+  }
 }

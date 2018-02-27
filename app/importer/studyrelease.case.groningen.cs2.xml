@@ -27,16 +27,24 @@
 	<User staticId="2c940c085e765068015e770b710b0140" id="williamst"/>
     <User staticId="2c9480845bee03e7015bfcad7d0e0011" id="vargiue"/>
 
+
     <Workspace staticId="2c9480885d1737ef015d74deed260006" id="Umcg">
+
         <EntityDefinition id="GCS2_CaseData" description="Case Data">
-            <AttributeDefinition id="GCS2_Patient" type="Link.Users(UmcgPatients)" description="Patient" additionalDescription="Patient that is assigned to this case."/>
-            <AttributeDefinition id="GCS2_Owner" type="Link.Users(UmcgProfessionals)" description="Owner"/>
-            <AttributeDefinition id="GCS2_EvaluationDueDate" type="date.after(TODAY)" description="Evaluation default due date"/>
-            <AttributeDefinition id="GCS2_WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date"/>
+            <AttributeDefinition id="GCS2_Settings" type="Link.EntityDefinition.GCS2_Settings" description="Settings"/>  
             <AttributeDefinition id="GCS2_Identification" type="Link.EntityDefinition.GCS2_Identification" description="Identification"/>    
             <AttributeDefinition id="GCS2_Evaluation" type="Link.EntityDefinition.GCS2_Evaluation" description="Evaluation" multiplicity="any"/>            
             <AttributeDefinition id="GCS2_Workplan" type="Link.EntityDefinition.GCS2_Workplan" description="Workplan"/> 
             <AttributeDefinition id="GCS2_Discharge" type="Link.EntityDefinition.GCS2_Discharge" description="Discharge"/>                        
+        </EntityDefinition>
+
+        <!-- Settings Entity Definitions -->
+        <EntityDefinition id="GCS2_Settings" description="Settings">
+            <AttributeDefinition id="GCS2_Patient" type="Link.Users(UmcgPatients)" description="Patient" additionalDescription="Patient that is assigned to this case."/>
+            <AttributeDefinition id="GCS2_CaseOwner" type="Link.Users(UmcgProfessionals)" description="Case Owner"/>
+            <AttributeDefinition id="GCS2_Clinician" type="Link.Users(UmcgProfessionals)" description="Clinican"/>
+            <AttributeDefinition id="GCS2_EvaluationDueDate" type="date.after(TODAY)" description="Evaluation default due date"/>
+            <AttributeDefinition id="GCS2_WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date"/>
         </EntityDefinition>
 
         <!-- Identification Entity Definitions -->
@@ -384,47 +392,42 @@
             <DerivedAttributeDefinition id="nrs8" expression="number(nrs5,0) + number(nrs6,0) + number(nrs7,0)" description="NRS Score" uiReference="colors(0<=green<=10<orange<=20<red<30)"/>            
         </EntityDefinition>
 
-        <EntityDefinition id="GCS2_MNASF" description="Mini Nutritional Assesment (MNA-SF)">
-            <AttributeDefinition id="mnasf1" type="enumeration" multiplicity="maximalOne" description="Has food intake declined over the past 3 months due to loss of appetite, digestive problems, chewing or swallowingen difficulties?">
+        <EntityDefinition id="GCS2_MNASF" description="Mini Nutritional Assesment (MNA-SF®)">
+            <AttributeDefinition id="mnasf1" type="enumeration" multiplicity="maximalOne" description="Has food intake declined over the past 3 months due to loss of appetite, digestive problems, chewing or swallowingen difficulties?" additionalDescription="0 = Severe decrease in food intake | 1 = Moderate decrease in food intake | 2 = no decrease in food intake">
                 <EnumerationOption value="0" description="Severe decrease in food intake"/>	
                 <EnumerationOption value="1" description="Moderate decrease in food intake"/>
                 <EnumerationOption value="2" description="no decrease in food intake"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="mnasf2" type="enumeration" multiplicity="maximalOne" description="Weight loss during the last 3 months">
+            </AttributeDefinition> 
+            <AttributeDefinition id="mnasf2" type="enumeration" multiplicity="maximalOne" description="Weight loss during the last 3 months" additionalDescription="0 = Weight loss greater than 3 kg | 1 = Does not know | 2 = Weight loss between 1 and 3 kg | 3 = No weight loss">
                 <EnumerationOption value="0" description="Weight loss greater than 3 kg"/>
                 <EnumerationOption value="1" description="Does not know"/>
                 <EnumerationOption value="2" description="Weight loss between 1 and 3 kg"/>
-                <EnumerationOption value="3" description="No weight loss	"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="mnasf3" type="enumeration" multiplicity="maximalOne" description="Mobility">
+                <EnumerationOption value="3" description="No weight loss"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="mnasf3" type="enumeration" multiplicity="maximalOne" description="Mobility" additionalDescription="0 = Bed or chair bound | 1 = Able to get out of bed / chair but does not go out | 2 = Goes out">
                 <EnumerationOption value="0" description="Bed or chair bound"/>	
                 <EnumerationOption value="1" description="Able to get out of bed / chair but does not go out"/>
-                <EnumerationOption value="2" description="Goes out"/>
+                <EnumerationOption value="2" description=" Goes out"/>
             </AttributeDefinition>
-            <AttributeDefinition id="mnasf4" type="enumeration" multiplicity="maximalOne" description="Has suffered psychological stress or acute disease in the past 3 months">
+            <AttributeDefinition id="mnasf4" type="enumeration" multiplicity="maximalOne" description="Has suffered psychological stress or acute disease in the past 3 months" additionalDescription="0 = Yes | 2 = No">
                 <EnumerationOption value="0" description="Yes"/>
                 <EnumerationOption value="2" description="No"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="mnasf5" type="enumeration" multiplicity="maximalOne" description="Neuropsychological problems">
+            </AttributeDefinition> 
+            <AttributeDefinition id="mnasf5" type="enumeration" multiplicity="maximalOne" description="Neuropsychological problems" additionalDescription="0 = Severe dementia or depression | 1 = Mild dementia | 2 = No psychological problems">
                 <EnumerationOption value="0" description="Severe dementia or depression"/>	
                 <EnumerationOption value="1" description="Mild dementia"/>
                 <EnumerationOption value="2" description="No psychological problems"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="mnasf6" type="number" multiplicity="maximalOne" description="Weight in kilograms"/>
-            <AttributeDefinition id="mnasf7" type="number" multiplicity="maximalOne" description="Length in centimetres"/>
-
-            <DerivedAttributeDefinition id="mnasf8" expression="round((mnasf6 / ((mnasf7/100) * (mnasf7/100))), 2)" description="BMI raw"/>  
-            <DerivedAttributeDefinition id="mnasf9" expression="if mnasf8 < 19 then 0 else if mnasf8 >= 19 and mnasf8 < 21 then 1 else if mnasf8 >= 21 and mnasf8 < 23 then 2 else 3" description="BMI range indicator" uiReference="colors(14>=green>=12>orange>=8>red>=0)"/>  
-
-            <!--
-            <AttributeDefinition id="mnasf8" type="enumeration" multiplicity="maximalOne" description="BMI">
-                <EnumerationOption value="0" description="BMI less than 19"/>	
-                <EnumerationOption value="1" description="BMI 19 to less than 21"/>
-                <EnumerationOption value="2" description="BMI 21 to less than 23"/>
-                <EnumerationOption value="3" description="BMI 23 or greater"/>
             </AttributeDefinition> 
-            -->          
-            <DerivedAttributeDefinition id="mnasf10" expression="number(mnasf1,0) + number(mnasf2,0) + number(mnasf3,0) + number(mnasf4,0) + mnasf9" description="MNA-SF Score"/>            
+            <AttributeDefinition id="mnasf6" type="number" multiplicity="maximalOne" description="Weight in kg"/>
+            <AttributeDefinition id="mnasf7" type="number" multiplicity="maximalOne" description="Length in cm"/>
+            <DerivedAttributeDefinition id="mnasf8" expression="round((mnasf6 / ((mnasf7/100) * (mnasf7/100))), 2)" description="BMI raw"/>  
+            <DerivedAttributeDefinition id="mnasf9" expression="if mnasf8 < 19 then 0 else if mnasf8 >= 19 and mnasf8 < 21 then 1 else if mnasf8 >= 21 and mnasf8 < 23 then 2 else 3" description="BMI range indicator" additionalDescription="0 = BMI less than 19 | 1 = BMI 19 to less than 21 | 2 = BMI 21 to less than 23 | 3 = BMI 23 or greater" uiReference="colors(14>=green>=12>orange>=8>red>=0)"/>  
+            <AttributeDefinition id="mnasf10" type="enumeration" multiplicity="maximalOne" description="Calf circumference (CC) in cm " additionalDescription="ANSWER ONLY IF BMI IS NOT AVAILABLE">
+                <EnumerationOption value="0.0001" description="No Answer"/>
+                <EnumerationOption value="0" description="CC less than 31"/>	
+                <EnumerationOption value="3" description="CC 31 or greater"/>
+            </AttributeDefinition>       
+            <DerivedAttributeDefinition id="mnasf11" expression="number(mnasf1,0) + number(mnasf2,0) + number(mnasf3,0) + number(mnasf4,0) + mnasf9 + round(number(mnasf10,0))" description="MNA-SF Score" additionalDescription="12-14 Normal nutritional status | 8-11 At risk of malnutrition | 0-7 Malnourished"/>            
         </EntityDefinition>
 
 
@@ -514,7 +517,6 @@
                 <EnumerationOption value="2" description="Not often"/>
                 <EnumerationOption value="3" description="Very seldom"/>
             </AttributeDefinition>
-
              <DerivedAttributeDefinition id="hadA8" expression="number(hadA1,0)+number(hadA2,0)+number(hadA3,0)+number(hadA4,0)+number(hadA5,0)+number(hadA6,0)+number(hadA7,0)" description="Anxiety Score"/> 
              <DerivedAttributeDefinition id="hadD8" expression="number(hadD1,0)+number(hadD2,0)+number(hadD3,0)+number(hadD4,0)+number(hadD5,0)+number(hadD6,0)+number(hadD7,0)" description="Depression Score"/> 
              <DerivedAttributeDefinition id="hadA9" expression='if hadA8 < 8 then "Normal" else if hadA8 > 7 and hadA8 < 11 then "Borderline abnormal" else "Abnormal case"' description="Anxiety Result"/> 
@@ -639,7 +641,7 @@
 
 
         <!-- Case Definition -->
-        <CaseDefinition id="GCS2" description="Groningen CS2" ownerPath="GCS2_Owner" clientPath="GCS2_Patient" entityDefinitionId="GCS2_CaseData">
+        <CaseDefinition id="GCS2" description="Groningen CS2" ownerPath="GCS2_Settings.GCS2_CaseOwner" clientPath="GCS2_Settings.GCS2_Patient" entityDefinitionId="GCS2_CaseData" newEntityDefinitionId="GCS2_Settings" newEntityAttachPath="GCS2_Settings">
            
             <SummarySectionDefinition id="GCS2_Nutritional" description="Nutritional" position="LEFT">    
                 <SummaryParamDefinition path="GCS2_Evaluation.GCS2_NRS.nrs8"/>
@@ -647,7 +649,7 @@
             </SummarySectionDefinition>
             <SummarySectionDefinition id="GCS2_Frailty" description="Frailty" position="LEFT">  
                 <SummaryParamDefinition path="GCS2_Evaluation.GCS2_GFI.gfi16"/>          
-                <SummaryParamDefinition path="GCS2_Evaluation.GCS2_ASA.asa"/>
+                <SummaryParamDefinition path="GCS2_Identification.GCS2_ASA.asa"/>
                 <SummaryParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch21"/>
                 <SummaryParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch22"/>
             </SummarySectionDefinition>
@@ -658,33 +660,33 @@
             <SummarySectionDefinition id="GCS2_Cognitive" description="Cognitive" position="RIGHT">    
                 
             </SummarySectionDefinition>
-            <SummarySectionDefinition id="GCS2_QOL" description="QOL" position="RIGHT">    
+                <SummarySectionDefinition id="GCS2_QOL" description="QOL" position="RIGHT">    
             </SummarySectionDefinition>
+            <!---
             <SummarySectionDefinition id="GCS2_PhysicalActivity" description="Physical Activity" position="STRETCHED">
                 <SummaryParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.startdate"/>
                 <SummaryParamDefinition path="GCS2_Workplan.GCS2_PhysicalActivity.enddate"/>
                 <SummaryParamDefinition path="GCS2_Workplan.measurement"/>
             </SummarySectionDefinition>
+            -->
 
             <StageDefinition id="GCS2_CaseIdentification" description="Case Identification" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_Identification" entityAttachPath="GCS2_Identification">        
-                <HumanTaskDefinition id="GCS2_SelectPatient" externalId="SelectPatient" description="Assign Patient" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE">                
+                <HumanTaskDefinition id="GCS2_SelectPatient" externalId="SelectPatient" description="Assign Patient" ownerPath="GCS2_Settings.GCS2_Clinician" isMandatory="true" repeatable="ONCE">                
                     <HttpHookDefinition on="COMPLETE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/case/patient/inclusion" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition path="GCS2_Patient" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_Owner" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_EvaluationDueDate" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS2_WorkplanDueDate" isReadOnly="false" isMandatory="true"/>                    
+                    <TaskParamDefinition path="GCS2_Settings.GCS2_Patient" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Settings.GCS2_Clinician" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Settings.GCS2_EvaluationDueDate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Settings.GCS2_WorkplanDueDate" isReadOnly="false" isMandatory="true"/>                    
                 </HumanTaskDefinition>
-
                 
-                <HumanTaskDefinition id="GCS2_PatientsConsent" description="Patient's Consent" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_PatientsConsent" entityAttachPath="GCS2_Identification.GCS2_PatientsConsent"> 
+                <HumanTaskDefinition id="GCS2_PatientsConsent" description="Patient's Consent" ownerPath="GCS2_Settings.GCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_PatientsConsent" entityAttachPath="GCS2_Identification.GCS2_PatientsConsent"> 
                     <SentryDefinition>
                         <precondition processDefinitionId="GCS2_SelectPatient"/>
                     </SentryDefinition>
                     <TaskParamDefinition path="GCS2_Identification.GCS2_PatientsConsent.pConsent1" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
 
-
-                <HumanTaskDefinition id="GCS2_ThechTest" description="Technological Test" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_ThechTest" entityAttachPath="GCS2_Identification.GCS2_ThechTest">               
+                <HumanTaskDefinition id="GCS2_ThechTest" description="Technological Test" ownerPath="GCS2_Settings.GCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_ThechTest" entityAttachPath="GCS2_Identification.GCS2_ThechTest">               
                     <SentryDefinition>
                         <precondition processDefinitionId="GCS2_SelectPatient"/>
                     </SentryDefinition>
@@ -694,15 +696,14 @@
                     <TaskParamDefinition path="GCS2_Identification.GCS2_ThechTest.tech4" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
 
-
-                <HumanTaskDefinition id="GCS2_ASA" description="ASA" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_ASA" entityAttachPath="GCS2_Identification.GCS2_ASA">                
+                <HumanTaskDefinition id="GCS2_ASA" description="ASA" ownerPath="GCS2_Settings.GCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_ASA" entityAttachPath="GCS2_Identification.GCS2_ASA">                
                     <SentryDefinition>
                         <precondition processDefinitionId="GCS2_SelectPatient"/>
                     </SentryDefinition>
                     <TaskParamDefinition path="GCS2_Identification.GCS2_ASA.asa" isReadOnly="false" isMandatory="true"/>
-                </HumanTaskDefinition>
-                
+                </HumanTaskDefinition>                
             </StageDefinition>
+
             <StageDefinition id="GCS2_CaseEvaluation" description="Case Evaluation" isMandatory="true" repeatable="SERIAL" activation="EXPRESSION" manualActivationExpression="GCS2_Evaluation.count()>0" entityDefinitionId="GCS2_Evaluation" entityAttachPath="GCS2_Evaluation">
                 <SentryDefinition>
                     <precondition processDefinitionId="GCS2_CaseIdentification"/>
@@ -710,7 +711,7 @@
                 <SentryDefinition>
                     <precondition processDefinitionId="GCS2_CaseEvaluation"/>
                 </SentryDefinition>       
-                <HumanTaskDefinition id="GCS2_Charlson" description="Charlson" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_Charlson" entityAttachPath="GCS2_Evaluation.GCS2_Charlson">
+                <HumanTaskDefinition id="GCS2_Charlson" description="Charlson" ownerPath="GCS2_Settings.GCS2_Clinician" dueDatePath="GCS2_Settings.GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_Charlson" entityAttachPath="GCS2_Evaluation.GCS2_Charlson">
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch3" isReadOnly="false" isMandatory="true"/>
@@ -734,7 +735,7 @@
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch21" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_Charlson.ch22" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>                
-                <HumanTaskDefinition id="GCS2_GFI" description="Groningen Frailty Indicator (GFI)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_GFI" entityAttachPath="GCS2_Evaluation.GCS2_GFI">
+                <HumanTaskDefinition id="GCS2_GFI" description="Groningen Frailty Indicator (GFI)" ownerPath="GCS2_Settings.GCS2_Clinician" dueDatePath="GCS2_Settings.GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_GFI" entityAttachPath="GCS2_Evaluation.GCS2_GFI">
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_GFI.gfi1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_GFI.gfi2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_GFI.gfi3" isReadOnly="false" isMandatory="true"/>
@@ -752,7 +753,7 @@
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_GFI.gfi15" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_GFI.gfi16" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>                
-                <HumanTaskDefinition id="GCS2_ADL" description="Activities of Daily Living (ADL)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_ADL" entityAttachPath="GCS2_Evaluation.GCS2_ADL">
+                <HumanTaskDefinition id="GCS2_ADL" description="Activities of Daily Living (ADL)" ownerPath="GCS2_Settings.GCS2_Clinician" dueDatePath="GCS2_Settings.GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_ADL" entityAttachPath="GCS2_Evaluation.GCS2_ADL">
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_ADL.adl1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_ADL.adl2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_ADL.adl3" isReadOnly="false" isMandatory="true"/>
@@ -761,7 +762,7 @@
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_ADL.adl6" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_ADL.adl7" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
-                <HumanTaskDefinition id="GCS2_iADL" description="Instrumental Activities of Daily Living (iADL)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_iADL" entityAttachPath="GCS2_Evaluation.GCS2_iADL">
+                <HumanTaskDefinition id="GCS2_iADL" description="Instrumental Activities of Daily Living (iADL)" ownerPath="GCS2_Settings.GCS2_Clinician" dueDatePath="GCS2_Settings.GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_iADL" entityAttachPath="GCS2_Evaluation.GCS2_iADL">
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_iADL.iadl1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_iADL.iadl2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_iADL.iadl3" isReadOnly="false" isMandatory="true"/>
@@ -772,7 +773,7 @@
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_iADL.iadl8" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_iADL.iadl9" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
-                <HumanTaskDefinition id="GCS2_NRS" description="Nutritional Risk Screening (NRS)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_NRS" entityAttachPath="GCS2_Evaluation.GCS2_NRS">
+                <HumanTaskDefinition id="GCS2_NRS" description="Nutritional Risk Screening (NRS)" ownerPath="GCS2_Settings.GCS2_Clinician" dueDatePath="GCS2_Settings.GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_NRS" entityAttachPath="GCS2_Evaluation.GCS2_NRS">
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_NRS.nrs1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_NRS.nrs2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_NRS.nrs3" isReadOnly="false" isMandatory="true"/>
@@ -782,7 +783,8 @@
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_NRS.nrs7" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_NRS.nrs8" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
-                <HumanTaskDefinition id="GCS2_MNASF" description="Mini Nutritional Assesment (MNA-SF)" ownerPath="GCS2_Owner" dueDatePath="GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_MNASF" entityAttachPath="GCS2_Evaluation.GCS2_MNASF">
+                <HumanTaskDefinition id="GCS2_MNASF" description="Mini Nutritional Assesment (MNA-SF®)" ownerPath="GCS2_Settings.GCS2_Clinician" dueDatePath="GCS2_Settings.GCS2_EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_MNASF" entityAttachPath="GCS2_Evaluation.GCS2_MNASF" 
+                    footnote="Vellas B, Villars H, Abellan G, et al. Overview of the MNA® - Its History and Challenges. J Nutr Health Aging 2006;10:456-465. Rubenstein LZ, Harker JO, Salva A, Guigoz Y, Vellas B. Screening for Undernutrition in Geriatric Practice: Developing the Short-Form MiniNutritional Assessment (MNA-SF). J. Geront 2001;56A: M366-377. Guigoz Y. The Mini-Nutritional Assessment (MNA®) Review of the Literature - What does it tell us? J Nutr Health Aging 2006; 10:466-487. Kaiser MJ, Bauer JM, Ramsch C, et al. Validation of the Mini Nutritional Assessment Short-Form (MNA®-SF): A practical tool for identification of nutritional status. J Nutr Health Aging 2009; 13:782-788. ® Société des Produits Nestlé, S.A., Vevey, Switzerland, Trademark Owners © Nestlé, 1994, Revision 2009. N67200 12/99 10M For more information: www.mna-elderly.com">
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf3" isReadOnly="false" isMandatory="true"/>
@@ -792,30 +794,30 @@
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf7" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf8" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf9" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf10" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_MNASF.mnasf11" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
 
-            <HumanTaskDefinition id="GCS2_HospitalAnxietyAndDepressionScale" description="Hospital Anxiety and Depression Scale (HADS) " ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE"  entityDefinitionId="GCS2_HospitalAnxietyAndDepressionScale" entityAttachPath="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale">
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA1" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD1" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA2" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD2" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA3" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD3" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA4" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD4" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA5" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD5" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA6" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD6" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA7" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD7" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA8" isReadOnly="true" isMandatory="false"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD8" isReadOnly="true" isMandatory="false"/>        
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA9" isReadOnly="true" isMandatory="false"/>
-              <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD9" isReadOnly="true" isMandatory="false"/>
-            </HumanTaskDefinition>
-
+                <HumanTaskDefinition id="GCS2_HospitalAnxietyAndDepressionScale" description="Hospital Anxiety and Depression Scale (HADS)" ownerPath="GCS2_Settings.GCS2_Clinician" isMandatory="true" repeatable="ONCE"  entityDefinitionId="GCS2_HospitalAnxietyAndDepressionScale" entityAttachPath="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale">
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA8" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD8" isReadOnly="true" isMandatory="false"/>        
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA9" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD9" isReadOnly="true" isMandatory="false"/>
+                </HumanTaskDefinition>
             </StageDefinition>
 
             <StageDefinition id="GCS2_Workplan" description="Workplan" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_Workplan" entityAttachPath="GCS2_Workplan">
@@ -823,7 +825,7 @@
                     <precondition processDefinitionId="GCS2_CaseEvaluation"/>
                 </SentryDefinition>
 
-                <DualTaskDefinition id="GCS2_PhysicalActivity" externalId="PhysicalActivity" description="Physical Activity" ownerPath="GCS2_Owner" dueDatePath="GCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="GCS2_PhysicalActivity" entityAttachPath="GCS2_Workplan.GCS2_PhysicalActivity">
+                <DualTaskDefinition id="GCS2_PhysicalActivity" externalId="PhysicalActivity" description="Physical Activity" ownerPath="GCS2_Settings.GCS2_Clinician" dueDatePath="GCS2_Settings.GCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="GCS2_PhysicalActivity" entityAttachPath="GCS2_Workplan.GCS2_PhysicalActivity">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_PhysicalActivity.startdate" isReadOnly="false" isMandatory="true"/>
@@ -836,7 +838,7 @@
                     <TaskParamDefinition part="AUTOMATED" path="GCS2_Workplan.GCS2_PhysicalActivity.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>
 
-                <DualTaskDefinition id="GCS2_MonitoringPrescription" externalId="MonitoringPrescription" description="Monitoring Prescription" dynamicDescriptionPath="GCS2_Workplan.GCS2_MonitoringPrescription.type" ownerPath="GCS2_Owner" dueDatePath="GCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="GCS2_MonitoringPrescription" entityAttachPath="GCS2_Workplan.GCS2_MonitoringPrescription">
+                <DualTaskDefinition id="GCS2_MonitoringPrescription" externalId="MonitoringPrescription" description="Monitoring Prescription" dynamicDescriptionPath="GCS2_Workplan.GCS2_MonitoringPrescription.type" ownerPath="GCS2_Settings.GCS2_Clinician" dueDatePath="GCS2_Settings.GCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="GCS2_MonitoringPrescription" entityAttachPath="GCS2_Workplan.GCS2_MonitoringPrescription">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_MonitoringPrescription.type" isReadOnly="false" isMandatory="true"/>
@@ -854,8 +856,8 @@
                     <TaskParamDefinition part="AUTOMATED" path="GCS2_Workplan.GCS2_MonitoringPrescription.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>
 
-                <!-- isreal -->
-                <DualTaskDefinition id="GCS2_SimpleTask" externalId="SimpleTask" description="Simple Task" dynamicDescriptionPath="GCS2_Workplan.GCS2_SimpleTask.type" ownerPath="GCS2_Owner" dueDatePath="GCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="GCS2_SimpleTask" entityAttachPath="GCS2_Workplan.GCS2_SimpleTask">
+                <!-- TODO needs to be removed after testing -->
+                <DualTaskDefinition id="GCS2_SimpleTask" externalId="SimpleTask" description="Simple Task" dynamicDescriptionPath="GCS2_Workplan.GCS2_SimpleTask.type" ownerPath="GCS2_Settings.GCS2_Clinician" dueDatePath="GCS2_Settings.GCS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="GCS2_SimpleTask" entityAttachPath="GCS2_Workplan.GCS2_SimpleTask">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/simpletask" method="POST" failureMessage="Could not create prescription on Self-Management System!"></HttpHookDefinition>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/simpletask/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"></HttpHookDefinition>
                     <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_SimpleTask.type" isReadOnly="false" isMandatory="true"/>
@@ -868,15 +870,14 @@
                     <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_SimpleTask.repetitionseachday" isReadOnly="false" isMandatory="true"/> 
                     <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_SimpleTask.comments" isReadOnly="false" isMandatory="true"/>                    
                     <TaskParamDefinition part="AUTOMATED" path="GCS2_Workplan.GCS2_SimpleTask.measurement" isReadOnly="false" isMandatory="true"/>
-                </DualTaskDefinition>
-                
+                </DualTaskDefinition>                
             </StageDefinition>
             
             <StageDefinition id="GCS2_Discharge" description="Discharge" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_Discharge" entityAttachPath="GCS2_Discharge">
                 <SentryDefinition>
                     <precondition processDefinitionId="GCS2_Workplan"/>
                 </SentryDefinition>
-                <HumanTaskDefinition id="GCS2_DischargeForm" description="Discharge Form" ownerPath="GCS2_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_DischargeForm" entityAttachPath="GCS2_Discharge.GCS2_DischargeForm">
+                <HumanTaskDefinition id="GCS2_DischargeForm" description="Discharge Form" ownerPath="GCS2_Settings.GCS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_DischargeForm" entityAttachPath="GCS2_Discharge.GCS2_DischargeForm">
                     <TaskParamDefinition path="GCS2_Discharge.GCS2_DischargeForm.comment" isReadOnly="false" isMandatory="true"/>                  
                 </HumanTaskDefinition>
             </StageDefinition>
@@ -891,26 +892,22 @@
 
     <Execution>        
         <Action id="CompleteHumanTask" processId="GCS2_SelectPatient">
-            <TaskParam path="GCS2_Patient"  userValue="vargiue"/>
-            <TaskParam path="GCS2_Owner"  userValue="michelf"/>
-            <TaskParam path="GCS2_EvaluationDueDate" values="['2017-12-26T00:00:00.000']"/>
-            <TaskParam path="GCS2_WorkplanDueDate" values="['2017-12-28T00:00:00.000']"/>
+            <TaskParam path="GCS2_Settings.GCS2_Patient"  userValue="vargiue"/>
+            <TaskParam path="GCS2_Settings.GCS2_Clinician"  userValue="michelf"/>
+            <TaskParam path="GCS2_Settings.GCS2_EvaluationDueDate" values="['2017-12-26T00:00:00.000']"/>
+            <TaskParam path="GCS2_Settings.GCS2_WorkplanDueDate" values="['2017-12-28T00:00:00.000']"/>
         </Action>
-
         <Action id="CompleteHumanTask" processId="GCS2_ASA">
             <TaskParam path="GCS2_Identification.GCS2_ASA.asa" values="['2']"/>
         </Action>
-
         <Action id="CompleteHumanTask" processId="GCS2_PatientsConsent">
             <TaskParam path="GCS2_Identification.GCS2_PatientsConsent.pConsent1" values="['1']"/>
         </Action>
-
         <Action id="CompleteHumanTask" processId="GCS2_ThechTest">
             <TaskParam path="GCS2_Identification.GCS2_ThechTest.tech1" values="['1']"/>
             <TaskParam path="GCS2_Identification.GCS2_ThechTest.tech2" values="['1']"/>
             <TaskParam path="GCS2_Identification.GCS2_ThechTest.tech3" values="['1']"/>
         </Action>
-
         <Action id="CompleteHumanTask" processId="GCS2_Charlson">
             <TaskParam path="GCS2_Evaluation.GCS2_Charlson.ch1"  values="['0']"/>
             <TaskParam path="GCS2_Evaluation.GCS2_Charlson.ch2"  values="['1']"/>
@@ -985,10 +982,9 @@
             <TaskParam path="GCS2_Evaluation.GCS2_MNASF.mnasf5"  values="['1']"/>
             <TaskParam path="GCS2_Evaluation.GCS2_MNASF.mnasf6"  values="[70]"/>
             <TaskParam path="GCS2_Evaluation.GCS2_MNASF.mnasf7"  values="[180]"/>
+            <TaskParam path="GCS2_Evaluation.GCS2_MNASF.mnasf10"  values="['0.0001']"/>
         </Action>
-
-
-        <Action id="CompleteHumanTask" processId="GCS2_HospitalAnxietyAndDepressionScale">
+        <Action id="CompleteHumanTask" processId="GCS2_HospitalAnxietyAndDepressionScale" breakpoint="true">
             <TaskParam path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA1" values="['1']"/>
             <TaskParam path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA2" values="['1']"/>
             <TaskParam path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadA3" values="['1']"/>
@@ -1005,8 +1001,6 @@
             <TaskParam path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD6" values="['1']"/>
             <TaskParam path="GCS2_Evaluation.GCS2_HospitalAnxietyAndDepressionScale.hadD7" values="['1']"/>
         </Action>
-
-
         <!--
         <Action id="CreateAlert" 
             processId="GCS2_SF12" 
@@ -1044,7 +1038,7 @@
             <TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescription.enddate"  values="['2019-06-09T00:00:00.0']"/>
             <TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescription.timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
         </Action>
-        <Action id="CompleteDualTaskAutomatedPart" processId="GCS2_MonitoringPrescription">
+        <Action id="CompleteDualTaskAutomatedPart" processId="GCS2_MonitoringPrescription" breakpoint="true">
             <TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescription.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
         </Action>
 
