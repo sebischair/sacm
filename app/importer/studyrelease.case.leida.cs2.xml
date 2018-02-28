@@ -299,7 +299,7 @@
                 <EnumerationOption value="9" description="9"/>
                 <EnumerationOption value="10" description="10"/>
             </AttributeDefinition>
-            <DerivedAttributeDefinition id="pfeiffer2" expression="number(pfeiffer1,0)" description="Pfeiffer" uiReference="colors(0<=green<=3<orange<=4<red<10)"/>
+            <DerivedAttributeDefinition id="pfeiffer2" expression="number(pfeiffer1,0)" additionalDescription="De 3 a 4 pot tenir deteriorament cognitiu; De 4 a 10 és analfabet" description="Pfeiffer" uiReference="colors(0<=green<=3<orange<=4<red<10)"/>			
         </EntityDefinition>
 	  	  
 		<EntityDefinition id="LCS2_HospitalAnxietyAndDepressionScale">
@@ -387,10 +387,10 @@
                 <EnumerationOption value="2" description="Poques vegades"/>
                 <EnumerationOption value="3" description="Molt poques vegades"/>
             </AttributeDefinition>
-
+			
              <DerivedAttributeDefinition id="hadA8" expression="number(hadA1,0)+number(hadA2,0)+number(hadA3,0)+number(hadA4,0)+number(hadA5,0)+number(hadA6,0)+number(hadA7,0)" description="Puntuació total ansietat"/> 
-             <DerivedAttributeDefinition id="hadD8" expression="number(hadD1,0)+number(hadD2,0)+number(hadD3,0)+number(hadD4,0)+number(hadD5,0)+number(hadD6,0)+number(hadD7,0)" description="Puntuació total depresió"/> 
-             <DerivedAttributeDefinition id="hadFinal" expression="hadD8+hadA8" description="HAD"/> 
+             <DerivedAttributeDefinition id="hadD8" expression="number(hadD1,0)+number(hadD2,0)+number(hadD3,0)+number(hadD4,0)+number(hadD5,0)+number(hadD6,0)+number(hadD7,0)" description="Puntuació total depresió"/>              
+			 <DerivedAttributeDefinition id="hadFinal" expression="hadD8+hadA8" description="HAD"/> 			 			 
         </EntityDefinition> 
 		
 		<!-- Estat funcional --> 
@@ -449,36 +449,44 @@
         </EntityDefinition>
 
         <EntityDefinition id="LCS2_DiagnosisCommunication">
-            <AttributeDefinition id="comm1" type="enumeration" multiplicity="maximalOne" description="Audició">
-                <EnumerationOption value="1" description="Sense audició"/>
-                <EnumerationOption value="2" description="Dificultat severa :: Dificultat a totes les situacions"/>
-                <EnumerationOption value="3" description="Dificultat moderada :: Problemes escoltant una conversa normal, requereix un entorn silenciós per a escoltar correctament"/>
-                <EnumerationOption value="4" description="Dificultat mínima :: Dificultat en alguns entorns | incapacitat, "/>
-                <EnumerationOption value="5" description="Adequat :: Sense dificultats en situacions normals, interacció social y TV"/>
+            <AttributeDefinition id="comm1" type="enumeration" multiplicity="maximalOne" description="Audició" >
+                <EnumerationOption value="0" description="Sense audició"/>
+                <EnumerationOption value="0.001" description="Dificultat severa: Dificultat a totes les situacions"/>
+                <EnumerationOption value="0.0001" description="Dificultat moderada: Problemes escoltant una conversa normal, requereix un entorn silenciós per a escoltar correctament"/>
+                <EnumerationOption value="1.001" description="Dificultat mínima: Dificultat en alguns entorns | incapacitat, "/>
+                <EnumerationOption value="1.0001" description="Adequat: Sense dificultats en situacions normals, interacció social y TV"/>
             </AttributeDefinition>
             <AttributeDefinition id="comm2" type="enumeration" multiplicity="maximalOne" description="Ajut auditiu | aparell auditifon de manera habitual">
-                <EnumerationOption value="1" description="Sí"/>
-                <EnumerationOption value="2" description="No"/>
+                <EnumerationOption value="0" description="Sí"/>
+                <EnumerationOption value="1" description="No"/>
             </AttributeDefinition>
+			<!-- Resultado final; 0 = Rojo; 1 = Naranja; 2 = Verde -->
             <AttributeDefinition id="comm3" type="enumeration" multiplicity="maximalOne" description="Visió">
-                <EnumerationOption value="1" description="Sense visió"/>
-                <EnumerationOption value="2" description="Dificultat severa :: Pot veure només llums, colors o ombres"/>
-                <EnumerationOption value="3" description="Dificultat moderada :: visió limitada, no pot veure els titulars del diaris però pot identificar objectes"/>
-                <EnumerationOption value="4" description="Dificultat mínima :: Pot veure lletres grans, però no de mida normal en diaris o llibres"/>
-                <EnumerationOption value="5" description="Adequat :: Pot veure detalls, incloent lletres de mida normal a diaris i llibres "/>
+                <EnumerationOption value="0" description="Sense visió"/>
+                <EnumerationOption value="0.001" description="Dificultat severa :: Pot veure només llums, colors o ombres"/>
+                <EnumerationOption value="0.0001" description="Dificultat moderada :: visió limitada, no pot veure els titulars del diaris però pot identificar objectes"/>
+                <EnumerationOption value="1.001" description="Dificultat mínima :: Pot veure lletres grans, però no de mida normal en diaris o llibres"/>
+                <EnumerationOption value="1" description="Adequat :: Pot veure detalls, incloent lletres de mida normal a diaris i llibres "/>
             </AttributeDefinition>
             <AttributeDefinition id="comm4" type="enumeration" multiplicity="maximalOne" description="Aparell de visió utilitzat | ulleres o un altre aparell de visió que es fa servir normalment">
-                <EnumerationOption value="1" description="Sí"/>
-                <EnumerationOption value="2" description="No"/>
+                <EnumerationOption value="0" description="Sí"/>
+                <EnumerationOption value="1" description="No"/>
             </AttributeDefinition>
+			<!-- Resultado final; 0 = Rojo; 1 = Naranja; 2 = Verde -->
             <AttributeDefinition id="comm5" type="enumeration" multiplicity="maximalOne" description="Capacitat per expressar-se | Expressa el contingut d'informació verbal y no verbal correctament">
-                <EnumerationOption value="1" description="Rarament o mai compren" />
-                <EnumerationOption value="2" description="De vegades es fa entendre :: La capacitat es limita a fer sol·licituds concretes "/>
-                <EnumerationOption value="3" description="Sovint es fa entendre :: dificultat per trobar paraules o acabar pensaments i és necessari donar-li peu habitualment"/>
-                <EnumerationOption value="4" description="Habitualment es fa entendre :: Dificultat en trobar les paraules o acabar els pensament però donant-li temps no es necessària donar-li peu o la necessària és molt petita "/>
-                <EnumerationOption value="5" description="Es fa entendre :: Expressa idees sense dificultat "/>
+                <EnumerationOption value="0" description="Rarament o mai compren" />
+                <EnumerationOption value="0.01" description="De vegades es fa entendre: La capacitat es limita a fer sol·licituds concretes "/>
+                <EnumerationOption value="1.001" description="Sovint es fa entendre: dificultat per trobar paraules o acabar pensaments i és necessari donar-li peu habitualment"/>
+                <EnumerationOption value="1.0001" description="Habitualment es fa entendre: Dificultat en trobar les paraules o acabar els pensament però donant-li temps no es necessària donar-li peu o la necessària és molt petita "/>
+                <EnumerationOption value="1.001" description="Es fa entendre: Expressa idees sense dificultat "/>
             </AttributeDefinition>
-        </EntityDefinition>
+			
+			<!-- Resultado final; 0 = Rojo; 1 =   Verde colors(0<=green<=3<orange<=4<red<10) --> 
+			<DerivedAttributeDefinition id="audiciototal" description="Audició" expression="round(number(comm1,0)) + round(number(comm2,0))" uiReference="colors(0<=red<1orange<2green<3)"/>
+			<DerivedAttributeDefinition id="visiototal" description="Visió" expression="round(number(comm3,0)) + round(number(comm4,0))" uiReference="colors(0<=red<1orange<2green<3)"/>
+			<DerivedAttributeDefinition id="capacitattotal" description="Capacitat per expressar-se" expression="round(number(comm5,0))" uiReference="colors(0<=red<1green<2)"/>
+
+	 </EntityDefinition>
 		
 		<EntityDefinition id="LCS2_Sleeping">
 			<AttributeDefinition id="sleeping1" type="enumeration" multiplicity="maximalOne" description="Dificultat per adormir o quedar-se adormida; es despertar massa aviat; inquietud; somni no reparador">
@@ -1369,6 +1377,7 @@
 		<SummarySectionDefinition id="LCS2_PatientStatus" description="Patient Status" position="LEFT">    
                 <SummaryParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch21"/>
 				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadFinal"/>												
+				<!--<SummaryParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityPfeiffer.pfeiffer1"/>-->
 				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityPfeiffer.pfeiffer2"/>
 				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariables.Anthropometric4"/>
         </SummarySectionDefinition>
@@ -1376,8 +1385,13 @@
 		<SummarySectionDefinition id="LCS2_Barriers" description="Barriers" position="RIGHT">   
 				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_SocialDwelling.dwelling5"/>								
 		</SummarySectionDefinition>
-	
 		
+		<SummarySectionDefinition id="LCS2_Others" description="Altres" position="CENTER">   
+				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisCommunication.audiciototal"/>
+				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisCommunication.visiototal"/>
+				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisCommunication.capacitattotal"/>				
+		</SummarySectionDefinition>		
+	
 		
 		<!-- STAGEDEFINITION: CaseIdentification -->	  
         <StageDefinition id="LCS2_CaseIdentification" description="Identificació del cas" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_Identification" entityAttachPath="LCS2_Identification">
@@ -1541,7 +1555,7 @@
               <TaskParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadD8" isReadOnly="true" isMandatory="false"/>        
               <TaskParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadFinal" isReadOnly="true" isMandatory="false"/>
             </HumanTaskDefinition>
-      
+			
 
             <HumanTaskDefinition id="LCS2_Barthel" description="Estat funcional - Barthel" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_Barthel" entityAttachPath="LCS2_Evaluation.LCS2_Barthel">
               <TaskParamDefinition path="LCS2_Evaluation.LCS2_Barthel.barthel1" isReadOnly="false" isMandatory="true"/>
@@ -1558,14 +1572,16 @@
             </HumanTaskDefinition>
 
 
-      <HumanTaskDefinition id="LCS2_DiagnosisCommunication" description="Estat funcional - Communicació" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_DiagnosisCommunication" entityAttachPath="LCS2_Evaluation.LCS2_DiagnosisCommunication">
+      <HumanTaskDefinition id="LCS2_DiagnosisCommunicationHT" description="Estat funcional - Communicació" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_DiagnosisCommunication" entityAttachPath="LCS2_Evaluation.LCS2_DiagnosisCommunication">
         <TaskParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisCommunication.comm1" isReadOnly="false" isMandatory="true"/>
               <TaskParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisCommunication.comm2" isReadOnly="false" isMandatory="true"/>
               <TaskParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisCommunication.comm3" isReadOnly="false" isMandatory="true"/>
               <TaskParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisCommunication.comm4" isReadOnly="false" isMandatory="true"/>
               <TaskParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisCommunication.comm5" isReadOnly="false" isMandatory="true"/>
+			  <TaskParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisCommunication.audiciototal" isReadOnly="true" isMandatory="false"/>
+			  <TaskParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisCommunication.visiototal" isReadOnly="true" isMandatory="false"/>			  
+			  <TaskParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisCommunication.capacitattotal" isReadOnly="true" isMandatory="false"/>			  
             </HumanTaskDefinition>
-
 
 		<HumanTaskDefinition id="LCS2_Sleeping" description="Estat funcional - Avaluació del son" ownerPath="LCS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_Sleeping" entityAttachPath="LCS2_Evaluation.LCS2_Sleeping">                
 			<TaskParamDefinition path="LCS2_Evaluation.LCS2_Sleeping.sleeping1" isReadOnly="false" isMandatory="true"/>
