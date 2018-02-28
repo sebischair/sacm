@@ -100,6 +100,10 @@ LogSchema.statics.log = (req, isSimulateUser, userId, email, workspaceId)=>{
     application = applications.POSTMAN;
   if(req.headers['application'] == applications.SACMFRONTEND.toLowerCase())
     application = applications.SACMFRONTEND;
+  if(req.headers['application'] == applications.UIM.toLowerCase())
+    application = applications.UIM;
+  if(req.headers['application'] == applications.SMS.toLowerCase())
+    application = applications.SMS;
 
   let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
