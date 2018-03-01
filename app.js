@@ -20,7 +20,7 @@ import maxmind from 'maxmind';
 const secret = fs.readFileSync('public.key.pem')+'';
 
 if(config.logging.isEnabled){
-  global.cityLookup = maxmind.openSync( __dirname + '/app/logging/db');
+  global.cityLookup = maxmind.openSync( __dirname + '/app/logging/db', {cache: {max: 500}});
   mongoose.Promise = Promise;
   mongoose.connect(config.logging.mongoUrl, {useMongoClient: true});
   mongoose.connection.on('error', () => {
