@@ -15,10 +15,12 @@ import config from './config';
 import mongoose from 'mongoose';
 import Log from './app/logging/log.model';
 import uuid from 'uuid/v1';
+import maxmind from 'maxmind';
 
 const secret = fs.readFileSync('public.key.pem')+'';
 
 if(config.logging.isEnabled){
+  global.cityLookup = maxmind.openSync( __dirname + '/app/logging/db.js');
   mongoose.Promise = Promise;
   mongoose.connect(config.logging.mongoUrl, {useMongoClient: true});
   mongoose.connection.on('error', () => {

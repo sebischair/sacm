@@ -74,38 +74,33 @@ function initCityLookup(){
 }
 
 function ip2Location(ip){
-  return initCityLookup()
-  .then(cityLookup=>{
-    var l = cityLookup.get(ip);      
-    let r = {
-      countryCode: null,
-      country: null,
-      city: null,    
-      zip: null,  
-      latitude: null,
-      longitude: null,
-      accuracy: null      
-    }
-    //console.log(JSON.stringify(l,null,2))
-    if(l && l.city && l.city.names)
-      r.city = l.city.names.en;
-    if(l && l.country && l.country.names)
-      r.country = l.country.names.en;
-    if(l && l.location && l.location){
-      r.latitude = l.location.latitude;
-      r.longitude = l.location.longitude;
-      r.accuracy = l.location.accuracy_radius;
-    }
-    if(l && l.postal)
-      r.zip = l.postal.code;
-    if(l && l.country)
-      r.countryCode = l.country.iso_code;
+  var l = cityLookup.get(ip);      
+  let r = {
+    countryCode: null,
+    country: null,
+    city: null,    
+    zip: null,  
+    latitude: null,
+    longitude: null,
+    accuracy: null      
+  }
+  //console.log(JSON.stringify(l,null,2))
+  if(l && l.city && l.city.names)
+    r.city = l.city.names.en;
+  if(l && l.country && l.country.names)
+    r.country = l.country.names.en;
+  if(l && l.location && l.location){
+    r.latitude = l.location.latitude;
+    r.longitude = l.location.longitude;
+    r.accuracy = l.location.accuracy_radius;
+  }
+  if(l && l.postal)
+    r.zip = l.postal.code;
+  if(l && l.country)
+    r.countryCode = l.country.iso_code;
 
-    console.log(ip+" "+r.country+" ("+r.countryCode+") "+r.zip+" "+r.city+" "+r.latitude+" "+r.longitude+" "+r.accuracy)
-    return Promise.resolve(r);
-  })
-  
-  
+  console.log(ip+" "+r.country+" ("+r.countryCode+") "+r.zip+" "+r.city+" "+r.latitude+" "+r.longitude+" "+r.accuracy)
+  return r; 
 }
 
 const LogSchema = new mongoose.Schema({  
@@ -172,28 +167,25 @@ LogSchema.statics.log = (req, isSimulateUser, userId, email, workspaceId)=>{
   if (userAgent != null && /Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(userAgent))
     isMobile = true;
   
-  return ip2Location(ip)
-  .then(location=>{
-    return Log.create({
-      application: application,
-      ip: ip,
-      userAgent: userAgent,
-      isMobile: isMobile,
-      method: req.method,
-      url: req.url,
-      urlPattern: extractUrlPattern(req.url),
-      resource: extractResource(req.url),
-      isGzip: isGzip,
-      acceptLanguage: req.headers['accept-language'],
-      isSimulateUser: isSimulateUser,
-      userId: userId,
-      email: email,
-      workspaceId: workspaceId,
-      reqBody: req.body,
-      uuid: req.uuid,
-      location: location
-    });
-  });  
+  Log.create({
+    application: application,
+    ip: ip,
+    userAgent: userAgent,
+    isMobile: isMobile,
+    method: req.method,
+    url: req.url,
+    urlPattern: extractUrlPattern(req.url),
+    resource: extractResource(req.url),
+    isGzip: isGzip,
+    acceptLanguage: req.headers['accept-language'],
+    isSimulateUser: isSimulateUser,
+    userId: userId,
+    email: email,
+    workspaceId: workspaceId,
+    reqBody: req.body,
+    uuid: req.uuid,
+    location: ip2Location(ip)
+  });
 }
 
 LogSchema.statics.setStatus = (uuid, status, duration, resBody)=>{
