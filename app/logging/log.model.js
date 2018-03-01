@@ -1,9 +1,11 @@
 import mongoose from 'mongoose';
 import Promise from 'bluebird';
+import maxmind from 'maxmind';
 import config from './../../config';
 
 const ObjectId = mongoose.Schema.Types.ObjectId;
 const Mixed = mongoose.Schema.Types.Mixed;
+const cityLookup = maxmind.openSync('db.js');
 
 const methods = {
   GET: 'GET',
@@ -61,11 +63,11 @@ function extractResource(urlPattern){
 }
 
 function ip2Location(ip){
-  if(!process.env.cityLookup){
+  if(!cityLookup){
     console.log('Logger location lookup failed!')
     return {};
   }
-  var l = process.env.cityLookup.get(ip);      
+  var l = cityLookup.get(ip);      
   let r = {
     countryCode: null,
     country: null,
