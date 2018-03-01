@@ -14,11 +14,16 @@ import Promise from 'bluebird';
 import config from './config';
 import mongoose from 'mongoose';
 import Log from './app/logging/log.model';
+import maxmind from 'maxmind';
 import uuid from 'uuid/v1';
 
 const secret = fs.readFileSync('public.key.pem')+'';
 
 if(config.logging.isEnabled){
+  maxmind.open( __dirname + '/app/logging/db.js', (err, cityLookup) => {
+    if(err) throw new Error('unable to connect to ip db: '+err);
+    else { process.env.cityLookup = cityLookup;}
+  });
   mongoose.Promise = Promise;
   mongoose.connect(config.logging.mongoUrl, {useMongoClient: true});
   mongoose.connection.on('error', () => {

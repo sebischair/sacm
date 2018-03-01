@@ -60,6 +60,39 @@ function extractResource(urlPattern){
   return null;
 }
 
+function ip2Location(ip){
+  if(!process.env.cityLookup){
+    console.log('Logger location lookup failed!')
+    return {};
+  }
+  var l = process.env.cityLookup.get(ip);      
+  let r = {
+    countryCode: null,
+    country: null,
+    city: null,    
+    zip: null,  
+    latitude: null,
+    longitude: null,
+    accuracy: null      
+  }
+  //console.log(JSON.stringify(l,null,2))
+  if(l && l.city && l.city.names)
+    r.city = l.city.names.en;
+  if(l && l.country && l.country.names)
+    r.country = l.country.names.en;
+  if(l && l.location && l.location){
+    r.latitude = l.location.latitude;
+    r.longitude = l.location.longitude;
+    r.accuracy = l.location.accuracy_radius;
+  }
+  if(l && l.postal)
+    r.zip = l.postal.code;
+  if(l && l.country)
+    r.countryCode = l.country.iso_code;
+  console.log(ip+" "+r.country+" ("+r.countryCode+") "+r.zip+" "+r.city+" "+r.latitude+" "+r.longitude+" "+r.accuracy)
+  return r;
+}
+
 const LogSchema = new mongoose.Schema({  
   application: {type: String, enum: allApplications(), index: true},
   ip: {type: String, index: true},
@@ -80,7 +113,16 @@ const LogSchema = new mongoose.Schema({
   uuid: {type: String, index: true},
   duration: {type: Number, index: true},
   reqBody: Mixed,
-  resBody: Mixed
+  resBody: Mixed,
+  location: {
+    countryCode: {type: String, index: true},
+    country: {type: String, index: true},
+    city: {type: String, index: true},    
+    zip: {type: String, index: true},  
+    latitude: {type: Number, index: true},
+    longitude: {type: Number, index: true},
+    accuracy: {type: Number, index: true}   
+  }
 },{timestamps: true});
 
 LogSchema.statics.jwtUserLog = (req, userId, workspaceId)=>{
@@ -132,7 +174,8 @@ LogSchema.statics.log = (req, isSimulateUser, userId, email, workspaceId)=>{
     email: email,
     workspaceId: workspaceId,
     reqBody: req.body,
-    uuid: req.uuid
+    uuid: req.uuid,
+    location: ip2Location(ip)
   });
 }
 
@@ -143,6 +186,7 @@ LogSchema.statics.setStatus = (uuid, status, duration, resBody)=>{
       console.log(err);    
   });
 }
+
 
 
 let Log = mongoose.model('Log', LogSchema);
