@@ -61,20 +61,8 @@ function extractResource(urlPattern){
   return null;
 }
 
-function initCityLookup(){
-  return new Promise((resolve,reject)=>{
-    maxmind.open( __dirname + '/db.js', (err, cityLookup) => {            
-      if(err){ 
-        console.log('unable to connect to ip db: '+err)
-        return reject('unable to connect to ip db: '+err); 
-      }else
-        return resolve(cityLookup);
-    }); 
-  })
-}
-
 function ip2Location(ip){
-  var l = cityLookup.get(ip);      
+  var l = cityLookup.get(ip);    
   let r = {
     countryCode: null,
     country: null,
@@ -98,8 +86,7 @@ function ip2Location(ip){
     r.zip = l.postal.code;
   if(l && l.country)
     r.countryCode = l.country.iso_code;
-
-  console.log(ip+" "+r.country+" ("+r.countryCode+") "+r.zip+" "+r.city+" "+r.latitude+" "+r.longitude+" "+r.accuracy)
+  //console.log(ip+" "+r.country+" ("+r.countryCode+") "+r.zip+" "+r.city+" "+r.latitude+" "+r.longitude+" "+r.accuracy)
   return r; 
 }
 
