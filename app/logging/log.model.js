@@ -5,7 +5,7 @@ import config from './../../config';
 
 const ObjectId = mongoose.Schema.Types.ObjectId;
 const Mixed = mongoose.Schema.Types.Mixed;
-const cityLookup = maxmind.openSync('db.js');
+const cityLookup = maxmind.openSync(__dirname+'/db.js');
 
 const methods = {
   GET: 'GET',
