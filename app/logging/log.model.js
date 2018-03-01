@@ -72,7 +72,6 @@ function ip2Location(ip){
     longitude: null,
     accuracy: null      
   }
-  //console.log(JSON.stringify(l,null,2))
   if(l && l.city && l.city.names)
     r.city = l.city.names.en;
   if(l && l.country && l.country.names)
