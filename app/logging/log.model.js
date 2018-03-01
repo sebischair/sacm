@@ -62,7 +62,7 @@ function extractResource(urlPattern){
 }
 
 function initCityLookup(){
-  maxmind.open( __dirname + '/app/logging/db.js', (err, cityLookup) => { 
+  maxmind.open( __dirname + '/db.js', (err, cityLookup) => { 
     if(err) 
       return Promise.reject('unable to connect to ip db: '+err); 
     else{}
