@@ -62,13 +62,17 @@ function extractResource(urlPattern){
 }
 
 function initCityLookup(){
-  maxmind.open( __dirname + '/db.js', (err, cityLookup) => { 
-    if(err) 
-      return Promise.reject('unable to connect to ip db: '+err); 
-    else{}
-      return Promise.resolve(cityLookup);
-  }); 
+  return new Promise((resolve,reject)=>{
+    maxmind.open( __dirname + '/db.js', (err, cityLookup) => {            
+      if(err){ 
+        console.log('unable to connect to ip db: '+err)
+        return reject('unable to connect to ip db: '+err); 
+      }else
+        return resolve(cityLookup);
+    }); 
+  })
 }
+
 function ip2Location(ip){
   return initCityLookup()
   .then(cityLookup=>{
@@ -147,7 +151,6 @@ LogSchema.statics.simulateUserLog = (req, email)=>{
 LogSchema.statics.log = (req, isSimulateUser, userId, email, workspaceId)=>{
   if(!config.logging.isEnabled)
     return;
-
   let application = applications.NA;
   if(req.headers['postman-token'] != null)
     application = applications.POSTMAN;
