@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import Promise from 'bluebird';
+import maxmind from 'maxmind';
 import config from './../../config';
 
 const ObjectId = mongoose.Schema.Types.ObjectId;
@@ -60,6 +61,34 @@ function extractResource(urlPattern){
   return null;
 }
 
+function ip2Location(ip){
+  var l = cityLookup.get(ip);    
+  let r = {
+    countryCode: null,
+    country: null,
+    city: null,    
+    zip: null,  
+    latitude: null,
+    longitude: null,
+    accuracy: null      
+  }
+  if(l && l.city && l.city.names)
+    r.city = l.city.names.en;
+  if(l && l.country && l.country.names)
+    r.country = l.country.names.en;
+  if(l && l.location && l.location){
+    r.latitude = l.location.latitude;
+    r.longitude = l.location.longitude;
+    r.accuracy = l.location.accuracy_radius;
+  }
+  if(l && l.postal)
+    r.zip = l.postal.code;
+  if(l && l.country)
+    r.countryCode = l.country.iso_code;
+  //console.log(ip+" "+r.country+" ("+r.countryCode+") "+r.zip+" "+r.city+" "+r.latitude+" "+r.longitude+" "+r.accuracy)
+  return r; 
+}
+
 const LogSchema = new mongoose.Schema({  
   application: {type: String, enum: allApplications(), index: true},
   ip: {type: String, index: true},
@@ -80,7 +109,16 @@ const LogSchema = new mongoose.Schema({
   uuid: {type: String, index: true},
   duration: {type: Number, index: true},
   reqBody: Mixed,
-  resBody: Mixed
+  resBody: Mixed,
+  location: {
+    countryCode: {type: String, index: true},
+    country: {type: String, index: true},
+    city: {type: String, index: true},    
+    zip: {type: String, index: true},  
+    latitude: {type: Number, index: true},
+    longitude: {type: Number, index: true},
+    accuracy: {type: Number, index: true}   
+  }
 },{timestamps: true});
 
 LogSchema.statics.jwtUserLog = (req, userId, workspaceId)=>{
@@ -94,12 +132,15 @@ LogSchema.statics.simulateUserLog = (req, email)=>{
 LogSchema.statics.log = (req, isSimulateUser, userId, email, workspaceId)=>{
   if(!config.logging.isEnabled)
     return;
-
   let application = applications.NA;
   if(req.headers['postman-token'] != null)
     application = applications.POSTMAN;
   if(req.headers['application'] == applications.SACMFRONTEND.toLowerCase())
     application = applications.SACMFRONTEND;
+  if(req.headers['application'] == applications.UIM.toLowerCase())
+    application = applications.UIM;
+  if(req.headers['application'] == applications.SMS.toLowerCase())
+    application = applications.SMS;
 
   let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
@@ -111,7 +152,7 @@ LogSchema.statics.log = (req, isSimulateUser, userId, email, workspaceId)=>{
   let isMobile = false;
   if (userAgent != null && /Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(userAgent))
     isMobile = true;
-
+  
   Log.create({
     application: application,
     ip: ip,
@@ -128,7 +169,8 @@ LogSchema.statics.log = (req, isSimulateUser, userId, email, workspaceId)=>{
     email: email,
     workspaceId: workspaceId,
     reqBody: req.body,
-    uuid: req.uuid
+    uuid: req.uuid,
+    location: ip2Location(ip)
   });
 }
 
@@ -139,6 +181,7 @@ LogSchema.statics.setStatus = (uuid, status, duration, resBody)=>{
       console.log(err);    
   });
 }
+
 
 
 let Log = mongoose.model('Log', LogSchema);

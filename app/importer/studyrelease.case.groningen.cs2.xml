@@ -44,7 +44,7 @@
             <AttributeDefinition id="GCS2_CaseOwner" type="Link.Users(UmcgProfessionals)" description="Case Owner"/>
             <AttributeDefinition id="GCS2_Clinician" type="Link.Users(UmcgProfessionals)" description="Clinican"/>
             <AttributeDefinition id="GCS2_EvaluationDueDate" type="date.after(TODAY)" description="Evaluation default due date"/>
-            <AttributeDefinition id="GCS2_WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date"/>
+            <AttributeDefinition id="GCS2_WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date" multiplicity="exactlyOne"/>
         </EntityDefinition>
 
         <!-- Identification Entity Definitions -->
@@ -66,22 +66,19 @@
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>  
-
             <AttributeDefinition id="tech2" type="enumeration" multiplicity="maximalOne" description="Do you use:">
                 <EnumerationOption value="0" description="Smartphone (not only to call)"/>
                 <EnumerationOption value="1" description="Tablet"/>
                 <EnumerationOption value="2" description="Personal Computer"/>
                 <EnumerationOption value="3" description="None of the above"/>
-            </AttributeDefinition>    
-
+            </AttributeDefinition>   
             <AttributeDefinition id="tech3" type="enumeration" multiplicity="maximalOne" description="Does your primary caregiver use:">
                 <EnumerationOption value="0" description="Smartphone (not only to call)"/>
                 <EnumerationOption value="1" description="Tablet"/>
                 <EnumerationOption value="2" description="Personal Computer"/>
                 <EnumerationOption value="3" description="None of the above"/>
             </AttributeDefinition> 
-
-            <DerivedAttributeDefinition id="tech4" expression='if (number(tech1, 0) + number(tech2, 0) + number(tech3,0)) = 0 then "No Apte" else "Apte"' description="Technological test result"/>
+            <DerivedAttributeDefinition id="tech4" expression='if (number(tech1, 0) + number(tech2, 0) + number(tech3,0)) = 0 then "Not Approved" else "Approved"' description="Technological test result"/>
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_ASA" description="ASA">
@@ -493,7 +490,7 @@
                 <EnumerationOption value="2" description="I don't take as much care as I should"/>
                 <EnumerationOption value="3" description="Definitely"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadA6" type="enumeration" multiplicity="maximalOne" description="I have lost interest in my appearance:"> 
+            <AttributeDefinition id="hadA6" type="enumeration" multiplicity="maximalOne" description="I feel restless as I have to be on the move:"> 
                 <EnumerationOption value="0" description="Not at all"/>
                 <EnumerationOption value="1" description="Quite a lot"/>
                 <EnumerationOption value="2" description="Not very much"/>
