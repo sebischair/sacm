@@ -520,13 +520,20 @@
         <EntityDefinition id="LCS3TEST_AnthropometricVariables">
             <AttributeDefinition id="AnWeigh" type="number" multiplicity="maximalOne" description="Pes (kg)"/>
 			<AttributeDefinition id="AnHeight" type="number" multiplicity="maximalOne" description="Alçada(cm)"/>
-            <AttributeDefinition id="Anthropometric3" type="number" multiplicity="maximalOne" description="Distancia entre genoll i turmell (cm)"/>
-			<DerivedAttributeDefinition id="Anthropometric4" type="number" multiplicity="maximalOne" description="IMC (kg/m2)" expression="round(AnWeigh/(AnHeight/100*AnHeight/100),2)"/> 
-            <AttributeDefinition id="Anthropometric5" type="enumeration" multiplicity="exactlyOne" description="IMC >= 30 kg/m2">
+			<DerivedAttributeDefinition id="Anthropometric4" type="number" multiplicity="maximalOne" description="IMC (kg/m2) amb pes i alçada" expression="round(AnWeigh/(AnHeight/100*AnHeight/100),2)"/> 
+            <AttributeDefinition id="Anthropometric6" type="number" multiplicity="maximalOne" description="Distància entre genoll i turmell (cm)"/>
+            <AttributeDefinition id="Anthropometric7" type="enumeration" multiplicity="exactlyOne" description="Gènere">
+                <EnumerationOption value="0" description="Home"/>
+                <EnumerationOption value="1" description="Dona"/>
+            </AttributeDefinition>
+			<AttributeDefinition id="Anthropometric8" type="number" multiplicity="maximalOne" description="Edat"/>			
+			<DerivedAttributeDefinition id="Anthropometric9" description="IMC (kg/m2) amb pes i distància entre genoll i turmell - Homes" additionalDescription="Home sobrepès > 27.8 | Obesitat => 30 " expression="((2.03*Anthropometric6)-(0.04*Anthropometric8)+64.19)"/> 			
+			<DerivedAttributeDefinition id="Anthropometric10" description="IMC (kg/m2) amb pes i distància entre genoll i turmell - Dones" additionalDescription="Dona sobrepès 27.3 | Obesitat => 30 " expression="((1.83*Anthropometric6)-(0.24*Anthropometric8)+84.88)"/> 			            
+			<AttributeDefinition id="Anthropometric5" type="enumeration" multiplicity="exactlyOne" description="IMC >= 30 kg/m2">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
-            </AttributeDefinition>
-        </EntityDefinition>
+            </AttributeDefinition>					
+		</EntityDefinition>
 		
         <EntityDefinition id="LCS3TEST_DiagnosisSmokingAndAlcohol"> 
             <AttributeDefinition id="smalc1" type="enumeration" multiplicity="exactlyOne" description="Consum de tabac">
@@ -1376,14 +1383,18 @@
 				<SummaryParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_HospitalAnxietyAndDepressionScale.hadFinal"/>												
 				<!--<SummaryParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_ComorbidityPfeiffer.pfeiffer1"/>-->
 				<SummaryParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_ComorbidityPfeiffer.pfeiffer2"/>
-				<SummaryParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.Anthropometric4"/>
+				<SummaryParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.Anthropometric4"/>				
+				<SummaryParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.Anthropometric9"/>				
+				<SummaryParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.Anthropometric10"/>				
         </SummarySectionDefinition>
 								
 		<SummarySectionDefinition id="LCS3TEST_Barriers" description="Barriers" position="RIGHT">   
 				<SummaryParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_SocialDwelling.dwelling5"/>								
+				
 				<SummaryParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_DiagnosisCommunication.audiciototal"/>
 				<SummaryParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_DiagnosisCommunication.visiototal"/>
 				<SummaryParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_DiagnosisCommunication.capacitattotal"/>		
+				
 				<SummaryParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_DiagnosisNutritionEvaluation.nutrition1"/>		
 				<SummaryParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_DiagnosisNutritionEvaluation.nutrition2"/>		
 				<SummaryParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_ProblemsManagingMoney.money2"/>					
@@ -1597,10 +1608,15 @@
 		<!-- Infermera; Test LCS3TEST_PrimaryCareClinicians     -->  
 		<HumanTaskDefinition id="LCS3TEST_AnthropometricVariables" description="Diagnòstic - Variables antropomètriques" ownerPath="LCS3TEST_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS3TEST_AnthropometricVariables" entityAttachPath="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables">
               <TaskParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.AnWeigh" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.AnHeight" isReadOnly="false" isMandatory="false"/>
-              <TaskParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.Anthropometric3" isReadOnly="false" isMandatory="false"/>
+              <TaskParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.AnHeight" isReadOnly="false" isMandatory="false"/>              
 			  <TaskParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.Anthropometric4" isReadOnly="true" isMandatory="false"/>
-			  <TaskParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.Anthropometric5" isReadOnly="false" isMandatory="true"/>
+			  <TaskParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.Anthropometric5" isReadOnly="false" isMandatory="true"/>			  
+			  
+			  <TaskParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.Anthropometric6" isReadOnly="true" isMandatory="false"/>
+			  <TaskParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.Anthropometric7" isReadOnly="false" isMandatory="true"/>			  
+			  <TaskParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.Anthropometric8" isReadOnly="true" isMandatory="false"/>
+			  <TaskParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.Anthropometric9" isReadOnly="true" isMandatory="false"/>
+			  <TaskParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.Anthropometric10" isReadOnly="true" isMandatory="false"/>
 			</HumanTaskDefinition>    
 
       <!-- PDT Cirurgiá/Anestesista -->      
