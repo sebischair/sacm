@@ -49,7 +49,6 @@
 		    <AttributeDefinition id="LCS2_Clinician" type="Link.Users(IrbllClinicians)" description="Cirurgià" multiplicity="maximalOne"/> <!-- Metge -->
 		    <AttributeDefinition id="LCS2_Nurse" type="Link.Users(IrbllNurses)" description="Infermera" multiplicity="maximalOne"/>
 		    <AttributeDefinition id="LCS2_SocialCareer" type="Link.Users(IrbllSocialCareers)" description="Treballador social" multiplicity="maximalOne"/>
-		    <AttributeDefinition id="LCS2_Owner" type="Link.Users(IrbllProfessionals)" description="Owner" multiplicity="maximalOne"/>
 		    <AttributeDefinition id="LCS2_AnesClinic" type="Link.Users(IrbllAnesthesiologists, IrbllClinicians)" description="Anestesiòleg o Cirurgià" multiplicity="maximalOne"/>            		  		  
 		    <AttributeDefinition id="LCS2_PrimaryCareClinicians" type="Link.Users(IrbllPrimaryCareClinicians)" description="Atenció Primària" multiplicity="maximalOne"/>	 
 		    <AttributeDefinition id="LCS2_WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date"/>
@@ -1272,7 +1271,7 @@
 
 		
         <!-- CASE DEFINITION -->				  
-        <CaseDefinition id="LCS2_Leida" description="CS2 Lleida - Versió OK" ownerPath="LCS2_Settings.LCS2_Owner" clientPath="LCS2_Settings.LCS2_Patient" entityDefinitionId="LCS2_CaseData" newEntityDefinitionId="LCS2_Settings" newEntityAttachPath="LCS2_Settings">	  
+        <CaseDefinition id="LCS2_Leida" description="CS2 Lleida - Versió OK" ownerPath="LCS2_Settings.LCS2_CaseManager" clientPath="LCS2_Settings.LCS2_Patient" entityDefinitionId="LCS2_CaseData" newEntityDefinitionId="LCS2_Settings" newEntityAttachPath="LCS2_Settings">	  
             
             <SummarySectionDefinition id="LCS2_PatientStatus" description="Patient Status" position="LEFT">    
                 <SummaryParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch21"/>
@@ -1298,7 +1297,7 @@
             <!-- STAGEDEFINITION: CaseIdentification -->	  
             <StageDefinition id="LCS2_CaseIdentification" description="Identificació del cas" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_Identification" entityAttachPath="LCS2_Identification">
             
-                <HumanTaskDefinition id="LCS2_SelectPatient" externalId="SelectPatient" description="Inclusió" ownerPath="LCS2_Settings.LCS2_Owner" isMandatory="true" repeatable="ONCE">
+                <HumanTaskDefinition id="LCS2_SelectPatient" externalId="SelectPatient" description="Inclusió" ownerPath="LCS2_Settings.LCS2_CaseManager" isMandatory="true" repeatable="ONCE">
                     <HttpHookDefinition on="COMPLETE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/case/patient/inclusion" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition path="LCS2_Settings.LCS2_Patient" isReadOnly="false" isMandatory="true"/>                
                     <TaskParamDefinition path="LCS2_Settings.LCS2_Clinician" isReadOnly="false" isMandatory="true"/>
