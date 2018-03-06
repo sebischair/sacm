@@ -31,13 +31,13 @@
     <Workspace staticId="2c9480885d1737ef015d74deec7f0002" id="Irbll">
 	
 		<EntityDefinition id="LCS2_CaseData" description="Case Data">
-            <AttributeDefinition id="LCS2_Settings" type="Link.EntityDefinition.LCS2_Settings" multiplicity="maximalOne"/> 
-		    <AttributeDefinition id="LCS2_Identification" type="Link.EntityDefinition.LCS2_Identification" multiplicity="maximalOne"/>  		 	
-		  	<AttributeDefinition id="LCS2_Evaluation" type="Link.EntityDefinition.LCS2_Evaluation" multiplicity="maximalOne"/> 		  		  
-		  	<AttributeDefinition id="LCS2_WorkplanBeforeHospitalization" type="Link.EntityDefinition.LCS2_WorkplanBeforeHospitalization" multiplicity="maximalOne"/> 
-		  	<AttributeDefinition id="LCS2_WorkplanDuringHospitalization" type="Link.EntityDefinition.LCS2_WorkplanDuringHospitalization" multiplicity="maximalOne"/> 						
-		  	<AttributeDefinition id="LCS2_WorkplanAfterHospitalization" type="Link.EntityDefinition.LCS2_WorkplanAfterHospitalization" multiplicity="maximalOne"/> 						
-		  	<AttributeDefinition id="LCS2_Discharge" type="Link.EntityDefinition.LCS2_Discharge" multiplicity="maximalOne"/> 					
+            <AttributeDefinition id="LCS2_Settings" type="Link.EntityDefinition.LCS2_Settings" multiplicity="any"/> 
+		    <AttributeDefinition id="LCS2_Identification" type="Link.EntityDefinition.LCS2_Identification" multiplicity="any"/>  		 	
+		  	<AttributeDefinition id="LCS2_Evaluation" type="Link.EntityDefinition.LCS2_Evaluation" multiplicity="any"/> 		  		  
+		  	<AttributeDefinition id="LCS2_WorkplanBeforeHospitalization" type="Link.EntityDefinition.LCS2_WorkplanBeforeHospitalization" multiplicity="any"/> 
+		  	<AttributeDefinition id="LCS2_WorkplanDuringHospitalization" type="Link.EntityDefinition.LCS2_WorkplanDuringHospitalization" multiplicity="any"/> 						
+		  	<AttributeDefinition id="LCS2_WorkplanAfterHospitalization" type="Link.EntityDefinition.LCS2_WorkplanAfterHospitalization" multiplicity="any"/> 						
+		  	<AttributeDefinition id="LCS2_Discharge" type="Link.EntityDefinition.LCS2_Discharge" multiplicity="any"/> 					
 		</EntityDefinition>		
 	  
 		<!-- Settings Entity Definitions -->
@@ -51,16 +51,16 @@
 		    <AttributeDefinition id="SocialCareer" type="Link.Users(IrbllSocialCareers)" description="Treballador social" multiplicity="maximalOne"/>
 		    <AttributeDefinition id="AnesClinic" type="Link.Users(IrbllAnesthesiologists, IrbllClinicians)" description="Anestesiòleg o Cirurgià" multiplicity="maximalOne"/>            		  		  
 		    <AttributeDefinition id="PrimaryCareClinicians" type="Link.Users(IrbllPrimaryCareClinicians)" description="Atenció Primària" multiplicity="maximalOne"/>	 
-		    <AttributeDefinition id="WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date"/>
+		    <AttributeDefinition id="WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date" multiplicity="maximalOne"/>
         </EntityDefinition>
 
 		<!-- Identification Entity Definitions -->
         <EntityDefinition id="LCS2_Identification" description="Identification">
-            <AttributeDefinition id="LCS2_TechnologicalTest" type="Link.EntityDefinition.LCS2_TechnologicalTest" multiplicity="maximalOne" description="Technological test"/> 
-            <AttributeDefinition id="LCS2_ComorbidityCharlsonIdentification" type="Link.EntityDefinition.LCS2_ComorbidityCharlsonDef" multiplicity="maximalOne" description="Comorbidity Charlson"/> 
-            <AttributeDefinition id="LCS2_GMAIdentification" type="Link.EntityDefinition.LCS2_GMADef" multiplicity="maximalOne" description="GMA"/> 
-            <AttributeDefinition id="LCS2_ComplexityRisk" type="Link.EntityDefinition.LCS2_ComplexityRisk" multiplicity="maximalOne" description="Complexity risk"/> 
-            <AttributeDefinition id="LCS2_PatientsConsent" type="Link.EntityDefinition.LCS2_PatientsConsent" multiplicity="maximalOne" description="Patients consent"/> 			
+            <AttributeDefinition id="LCS2_TechnologicalTest" type="Link.EntityDefinition.LCS2_TechnologicalTest" multiplicity="any" description="Technological test"/> 
+            <AttributeDefinition id="LCS2_ComorbidityCharlsonIdentification" type="Link.EntityDefinition.LCS2_ComorbidityCharlsonDef" multiplicity="any" description="Comorbidity Charlson"/> 
+            <AttributeDefinition id="LCS2_GMAIdentification" type="Link.EntityDefinition.LCS2_GMADef" multiplicity="any" description="GMA"/> 
+            <AttributeDefinition id="LCS2_ComplexityRisk" type="Link.EntityDefinition.LCS2_ComplexityRisk" multiplicity="any" description="Complexity risk"/> 
+            <AttributeDefinition id="LCS2_PatientsConsent" type="Link.EntityDefinition.LCS2_PatientsConsent" multiplicity="any" description="Patients consent"/> 			
         </EntityDefinition>				
 
 		<EntityDefinition id="LCS2_TechnologicalTest" >
@@ -183,8 +183,8 @@
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>	
-            <AttributeDefinition id="admissions1" type="number" multiplicity="maximalOne" description="Hospitalitzacions no programades el pacient durant el darrer any?"/>       
-            <AttributeDefinition id="admissions2" type="number" multiplicity="maximalOne" description="Visites a urgències durant l´ultim any(incloses  urgències de primària)"/>       
+            <AttributeDefinition id="admissions1" type="number" multiplicity="exactlyOne" description="Hospitalitzacions no programades el pacient durant el darrer any?"/>       
+            <AttributeDefinition id="admissions2" type="number" multiplicity="exactlyOne" description="Visites a urgències durant l´ultim any(incloses  urgències de primària)"/>       
             <AttributeDefinition id="ASA" type="enumeration" multiplicity="exactlyOne" description="Sistema de classificació d'estat físic - ASA de tipus:">
                 <EnumerationOption value="1.0001" description="II"/>
                 <EnumerationOption value="1" description="III"/>
@@ -219,37 +219,37 @@
 		<!-- Case Evaluation Entity Definitions -->		
         <EntityDefinition id="LCS2_Evaluation" description="Case evaluation">
 			<!-- Comorbidity -->
-            <AttributeDefinition id="LCS2_ComorbidityCharlsonEvaluation" type="Link.EntityDefinition.LCS2_ComorbidityCharlsonDef" multiplicity="maximalOne" description="Comorbidity Charlson"/> 
-            <AttributeDefinition id="LCS2_GMAEvaluation" type="Link.EntityDefinition.LCS2_GMADef" multiplicity="maximalOne" description="GMA"/> 
+            <AttributeDefinition id="LCS2_ComorbidityCharlsonEvaluation" type="Link.EntityDefinition.LCS2_ComorbidityCharlsonDef" multiplicity="any" description="Comorbidity Charlson"/> 
+            <AttributeDefinition id="LCS2_GMAEvaluation" type="Link.EntityDefinition.LCS2_GMADef" multiplicity="any" description="GMA"/> 
 			
             <!-- Estat cognitiu -->
-            <AttributeDefinition id="LCS2_ComorbidityPfeiffer" type="Link.EntityDefinition.LCS2_ComorbidityPfeiffer" multiplicity="maximalOne" description="Comorbidity Pfeiffer"/>             
-			<AttributeDefinition id="LCS2_HospitalAnxietyAndDepressionScale" type="Link.EntityDefinition.LCS2_HospitalAnxietyAndDepressionScale" multiplicity="maximalOne" description="Hospital anxiety and depression scale"/> 
+            <AttributeDefinition id="LCS2_ComorbidityPfeiffer" type="Link.EntityDefinition.LCS2_ComorbidityPfeiffer" multiplicity="any" description="Comorbidity Pfeiffer"/>             
+			<AttributeDefinition id="LCS2_HospitalAnxietyAndDepressionScale" type="Link.EntityDefinition.LCS2_HospitalAnxietyAndDepressionScale" multiplicity="any" description="Hospital anxiety and depression scale"/> 
 		    
             <!-- Estat funcional -->
-			<AttributeDefinition id="LCS2_Barthel" type="Link.EntityDefinition.LCS2_Barthel" multiplicity="maximalOne" description="Barthel"/> 
-            <AttributeDefinition id="LCS2_DiagnosisCommunication" type="Link.EntityDefinition.LCS2_DiagnosisCommunication" multiplicity="maximalOne" description="Diagnosis Communication"/> 
-            <AttributeDefinition id="LCS2_Sleeping" type="Link.EntityDefinition.LCS2_Sleeping" multiplicity="maximalOne" description="Sleeping"/> 
-            <AttributeDefinition id="LCS2_ProblemsManagingMoney" type="Link.EntityDefinition.LCS2_ProblemsManagingMoney" multiplicity="maximalOne" description="Problems managing money"/> 
+			<AttributeDefinition id="LCS2_Barthel" type="Link.EntityDefinition.LCS2_Barthel" multiplicity="any" description="Barthel"/> 
+            <AttributeDefinition id="LCS2_DiagnosisCommunication" type="Link.EntityDefinition.LCS2_DiagnosisCommunication" multiplicity="any" description="Diagnosis Communication"/> 
+            <AttributeDefinition id="LCS2_Sleeping" type="Link.EntityDefinition.LCS2_Sleeping" multiplicity="any" description="Sleeping"/> 
+            <AttributeDefinition id="LCS2_ProblemsManagingMoney" type="Link.EntityDefinition.LCS2_ProblemsManagingMoney" multiplicity="any" description="Problems managing money"/> 
 			
             <!-- Diagonòstic -->
-            <AttributeDefinition id="LCS2_AnthropometricVariables" type="Link.EntityDefinition.LCS2_AnthropometricVariables" multiplicity="maximalOne" description="Anthropometric variables"/> 
-			<AttributeDefinition id="LCS2_DiagnosisSmokingAndAlcohol" type="Link.EntityDefinition.LCS2_DiagnosisSmokingAndAlcohol" multiplicity="maximalOne" description="Diagnosis smoking and alcohol"/> 			            
-			<AttributeDefinition id="LCS2_DiagnosisNutritionEvaluation" type="Link.EntityDefinition.LCS2_DiagnosisNutritionDef" multiplicity="maximalOne" description="Diagnosis nutrition"/> 			
+            <AttributeDefinition id="LCS2_AnthropometricVariables" type="Link.EntityDefinition.LCS2_AnthropometricVariables" multiplicity="any" description="Anthropometric variables"/> 
+			<AttributeDefinition id="LCS2_DiagnosisSmokingAndAlcohol" type="Link.EntityDefinition.LCS2_DiagnosisSmokingAndAlcohol" multiplicity="any" description="Diagnosis smoking and alcohol"/> 			            
+			<AttributeDefinition id="LCS2_DiagnosisNutritionEvaluation" type="Link.EntityDefinition.LCS2_DiagnosisNutritionDef" multiplicity="any" description="Diagnosis nutrition"/> 			
 		    
             <!-- ASA linkat al Case Identification -->
-            <AttributeDefinition id="LCS2_WOMAC" type="Link.EntityDefinition.LCS2_WOMAC" multiplicity="maximalOne" description="WOMAC" /> 						
-			<AttributeDefinition id="LCS2_EVAECNDEvaluation" type="Link.EntityDefinition.LCS2_EVAECNDDef" multiplicity="maximalOne" /> 						
-            <AttributeDefinition id="LCS2_SLANSSEvaluation" type="Link.EntityDefinition.LCS2_SLANSSDef" multiplicity="maximalOne" description="SLANSS"/> 			
-            <AttributeDefinition id="LCS2_SF12Evaluation" type="Link.EntityDefinition.LCS2_SF12Def" multiplicity="maximalOne" description="SF12"/> 						
-			<AttributeDefinition id="LCS2_ComplexityRisk" type="Link.EntityDefinition.LCS2_ComplexityRisk" multiplicity="maximalOne" description="Complexity risk"/>		
+            <AttributeDefinition id="LCS2_WOMAC" type="Link.EntityDefinition.LCS2_WOMAC" multiplicity="any" description="WOMAC" /> 						
+			<AttributeDefinition id="LCS2_EVAECNDEvaluation" type="Link.EntityDefinition.LCS2_EVAECNDDef" multiplicity="any" /> 						
+            <AttributeDefinition id="LCS2_SLANSSEvaluation" type="Link.EntityDefinition.LCS2_SLANSSDef" multiplicity="any" description="SLANSS"/> 			
+            <AttributeDefinition id="LCS2_SF12Evaluation" type="Link.EntityDefinition.LCS2_SF12Def" multiplicity="any" description="SF12"/> 						
+			<AttributeDefinition id="LCS2_ComplexityRisk" type="Link.EntityDefinition.LCS2_ComplexityRisk" multiplicity="any" description="Complexity risk"/>		
 			
             <!-- Barreres -->
-            <AttributeDefinition id="LCS2_MedicationFollowing" type="Link.EntityDefinition.LCS2_MedicationFollowing" multiplicity="maximalOne" description="Medication following"/> 
-            <AttributeDefinition id="LCS2_Medication" type="Link.EntityDefinition.LCS2_Medication" multiplicity="maximalOne" description="Medication"/> 
-            <AttributeDefinition id="LCS2_SelfCareAuto" type="Link.EntityDefinition.LCS2_SelfCareAuto" multiplicity="maximalOne" description="Self care auto"/> 
-            <AttributeDefinition id="LCS2_SocialDwelling" type="Link.EntityDefinition.LCS2_SocialDwelling" multiplicity="maximalOne" description="Social dwelling"/> 
-            <AttributeDefinition id="LCS2_SocialSelfCareCareerAbility" type="Link.EntityDefinition.LCS2_SocialSelfCareCareerAbility" multiplicity="maximalOne" description="Social self career ability"/>            						
+            <AttributeDefinition id="LCS2_MedicationFollowing" type="Link.EntityDefinition.LCS2_MedicationFollowing" multiplicity="any" description="Medication following"/> 
+            <AttributeDefinition id="LCS2_Medication" type="Link.EntityDefinition.LCS2_Medication" multiplicity="any" description="Medication"/> 
+            <AttributeDefinition id="LCS2_SelfCareAuto" type="Link.EntityDefinition.LCS2_SelfCareAuto" multiplicity="any" description="Self care auto"/> 
+            <AttributeDefinition id="LCS2_SocialDwelling" type="Link.EntityDefinition.LCS2_SocialDwelling" multiplicity="any" description="Social dwelling"/> 
+            <AttributeDefinition id="LCS2_SocialSelfCareCareerAbility" type="Link.EntityDefinition.LCS2_SocialSelfCareCareerAbility" multiplicity="any" description="Social self career ability"/>            						
         </EntityDefinition>
 		
 		<!-- Estat cognitiu Índex de Pfeiffer -->
@@ -961,36 +961,36 @@
 		<!-- Workplan Before Hospitalization Entity Definitions -->			
 		<EntityDefinition id="LCS2_WorkplanBeforeHospitalization">
 			<!--<AttributeDefinition id="LCS2_MonitoringHospitalizationMeasureDH" type="Link.EntityDefinition.LCS2_MonitoringHospitalizationMeasureDef"/> -->		
-			<AttributeDefinition id="LCS2_CommentBH" type="Link.EntityDefinition.LCS2_Comment" /> 			
-			<AttributeDefinition id="LCS2_AnaemiaAssessmentAndManagementNutritionBH" type="Link.EntityDefinition.LCS2_AnaemiaAssessmentAndManagementNutritionDef"  />					    
-			<AttributeDefinition id="LCS2_BloodPressureControlBH" type="Link.EntityDefinition.LCS2_BloodPressureControlBH"  />		  
-		    <AttributeDefinition id="LCS2_DiabetesControlBH" type="Link.EntityDefinition.LCS2_DiabetesControlBH"  />
-			<AttributeDefinition id="LCS2_EVAECNDBH" type="Link.EntityDefinition.LCS2_EVAECNDDef"  /> 
-		    <AttributeDefinition id="LCS2_SLANSSBH" type="Link.EntityDefinition.LCS2_SLANSSDef"  />				
+			<AttributeDefinition id="LCS2_CommentBH" type="Link.EntityDefinition.LCS2_Comment" multiplicity="any"/> 			
+			<AttributeDefinition id="LCS2_AnaemiaAssessmentAndManagementNutritionBH" type="Link.EntityDefinition.LCS2_AnaemiaAssessmentAndManagementNutritionDef" multiplicity="any"/>					    
+			<AttributeDefinition id="LCS2_BloodPressureControlBH" type="Link.EntityDefinition.LCS2_BloodPressureControlBH" multiplicity="any"/>		  
+		    <AttributeDefinition id="LCS2_DiabetesControlBH" type="Link.EntityDefinition.LCS2_DiabetesControlBH" multiplicity="any"/>
+			<AttributeDefinition id="LCS2_EVAECNDBH" type="Link.EntityDefinition.LCS2_EVAECNDDef" multiplicity="any"/> 
+		    <AttributeDefinition id="LCS2_SLANSSBH" type="Link.EntityDefinition.LCS2_SLANSSDef" multiplicity="any"/>				
 			<AttributeDefinition id="LCS2_MonitoringPrescriptionBHSystolic" type="Link.EntityDefinition.LCS2_MonitoringPrescriptionSystolic" multiplicity="any" /> 
 			<AttributeDefinition id="LCS2_MonitoringPrescriptionBHDiastolic" type="Link.EntityDefinition.LCS2_MonitoringPrescriptionDiastolic" multiplicity="any" /> 
 			<AttributeDefinition id="LCS2_MonitoringPrescriptionBHBodyTemperature" type="Link.EntityDefinition.LCS2_MonitoringPrescriptionBodyTemperature" multiplicity="any" /> 			
 		</EntityDefinition>
 			
 		<EntityDefinition id="LCS2_AnaemiaAssessmentAndManagementNutritionDef" > 		
-			<AttributeDefinition id="nut0" type="number.min(0).max(1500)" defaultValues="[0.0]" multiplicity="maximalOne" description="Valor de la Ferritina (ng/mL)"/>
-			<AttributeDefinition id="nut1" type="number" multiplicity="maximalOne" description="Hemoglobina (gr/dl)"/>       
-			<AttributeDefinition id="nut2" type="number" multiplicity="maximalOne" description="Proteínes (gr/dl)"/>   
+			<AttributeDefinition id="nut0" type="number.min(0).max(1500)" defaultValues="[0.0]" multiplicity="exactlyOne" description="Valor de la Ferritina (ng/mL)"/>
+			<AttributeDefinition id="nut1" type="number" multiplicity="exactlyOne" description="Hemoglobina (gr/dl)"/>       
+			<AttributeDefinition id="nut2" type="number" multiplicity="exactlyOne" description="Proteínes (gr/dl)"/>   
 			<AttributeDefinition id="nut3" type="enumeration" multiplicity="exactlyOne" description="El pacient forma part del programa de estalvi de sang">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>
-			<AttributeDefinition id="nut4" type="date" multiplicity="maximalOne" description="Data de inici si el tractament és oral"/>
-            <AttributeDefinition id="nut5" type="date" multiplicity="maximalOne" description="Data de fi si el tractament és oral"/>			
-			<AttributeDefinition id="nut6" type="number.min(0).max(40)" defaultValues="[0]" multiplicity="maximalOne" description="Número de comprimits al Matí" additionalDescription="Número de comprimits que s'ha de prendre el pacient al matí"/> 
-			<AttributeDefinition id="nut7" type="number.min(0).max(40)" defaultValues="[0]" multiplicity="maximalOne" description="Número de comprimits al Migdia" additionalDescription="Número de comprimits que s'ha de prendre el pacient al migdia"/> 
-			<AttributeDefinition id="nut8" type="number.min(0).max(40)" defaultValues="[0]" multiplicity="maximalOne" description="Número de comprimits a la Nit" additionalDescription="Número de comprimits que s'ha de prendre el pacient a la nit"/> 
-			<AttributeDefinition id="nut9" type="longtext" multiplicity="maximalOne" description="Comentaris"/>   						
+			<AttributeDefinition id="nut4" type="date" multiplicity="exactlyOne" description="Data de inici si el tractament és oral"/>
+            <AttributeDefinition id="nut5" type="date" multiplicity="exactlyOne" description="Data de fi si el tractament és oral"/>			
+			<AttributeDefinition id="nut6" type="number.min(0).max(40)" defaultValues="[0]" multiplicity="exactlyOne" description="Número de comprimits al Matí" additionalDescription="Número de comprimits que s'ha de prendre el pacient al matí"/> 
+			<AttributeDefinition id="nut7" type="number.min(0).max(40)" defaultValues="[0]" multiplicity="exactlyOne" description="Número de comprimits al Migdia" additionalDescription="Número de comprimits que s'ha de prendre el pacient al migdia"/> 
+			<AttributeDefinition id="nut8" type="number.min(0).max(40)" defaultValues="[0]" multiplicity="exactlyOne" description="Número de comprimits a la Nit" additionalDescription="Número de comprimits que s'ha de prendre el pacient a la nit"/> 
+			<AttributeDefinition id="nut9" type="longtext" multiplicity="exactlyOne" description="Comentaris"/>   						
 		</EntityDefinition>		
 		
         <EntityDefinition id="LCS2_BloodPressureControlBH">		
-			<AttributeDefinition id="bloodPControlmax" type="number.min(0).max(250)" defaultValues="[0]" multiplicity="maximalOne" description="Pressió arterial sistòlica - pressió màxima (mmHg)"/>       		
-		    <AttributeDefinition id="bloodPControlmin" type="number.min(0).max(250)" defaultValues="[0]" multiplicity="maximalOne" description="Pressió arterial diastòlica - pressió mínima (mmHg)"/>       
+			<AttributeDefinition id="bloodPControlmax" type="number.min(0).max(250)" defaultValues="[0]" multiplicity="exactlyOne" description="Pressió arterial sistòlica - pressió màxima (mmHg)"/>       		
+		    <AttributeDefinition id="bloodPControlmin" type="number.min(0).max(250)" defaultValues="[0]" multiplicity="exactlyOne" description="Pressió arterial diastòlica - pressió mínima (mmHg)"/>       
             <AttributeDefinition id="bloodPControl1" type="enumeration" multiplicity="exactlyOne" description="Pressió de la sang dintre dels valors correctes">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
@@ -998,7 +998,7 @@
         </EntityDefinition>
 
         <EntityDefinition id="LCS2_DiabetesControlBH">
-			<AttributeDefinition id="DiabetisControl0" type="number.min(0).max(20)" defaultValues="[0.0]" multiplicity="maximalOne" description="Hemoglobina glicosilada (gr/dl)"/>    
+			<AttributeDefinition id="DiabetisControl0" type="number.min(0).max(20)" defaultValues="[0.0]" multiplicity="exactlyOne" description="Hemoglobina glicosilada (gr/dl)"/>    
             <AttributeDefinition id="DiabetisControl1" type="enumeration" multiplicity="exactlyOne" description="Valors de control de la diabetis dintre dels limits correctes">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
@@ -1011,18 +1011,18 @@
 		
         <!-- Workplan During Hospitalization Entity Definitions -->			
 		<EntityDefinition id="LCS2_WorkplanDuringHospitalization">
-			<AttributeDefinition id="LCS2_SLANSSDH" type="Link.EntityDefinition.LCS2_SLANSSDef"/>
-			<AttributeDefinition id="LCS2_EVAECNDDH" type="Link.EntityDefinition.LCS2_EVAECNDDef"/> 
-			<AttributeDefinition id="LCS2_CommentDH" type="Link.EntityDefinition.LCS2_Comment"/> 			
+			<AttributeDefinition id="LCS2_SLANSSDH" type="Link.EntityDefinition.LCS2_SLANSSDef" multiplicity="any"/>
+			<AttributeDefinition id="LCS2_EVAECNDDH" type="Link.EntityDefinition.LCS2_EVAECNDDef" multiplicity="any"/> 
+			<AttributeDefinition id="LCS2_CommentDH" type="Link.EntityDefinition.LCS2_Comment" multiplicity="any"/> 			
 		</EntityDefinition>
 		
 	
 		<!-- Workplan After Hospitalization Entity Definitions -->		
 		<EntityDefinition id="LCS2_WorkplanAfterHospitalization">				
-		    <AttributeDefinition id="LCS2_SLANSSAH" type="Link.EntityDefinition.LCS2_SLANSSDef"/> 			
-			<AttributeDefinition id="LCS2_AnswerAutocheckHealthStatusAH" type="Link.EntityDefinition.LCS2_AnswerAutocheckHealthStatusAH"/>			
-			<AttributeDefinition id="LCS2_PatientEducationAndTrainingToTheCaregiverAH" type="Link.EntityDefinition.LCS2_PatientEducationAndTrainingToTheCaregiverAH"/>			
-			<AttributeDefinition id="LCS2_CommentAH" type="Link.EntityDefinition.LCS2_Comment"  /> 	
+		    <AttributeDefinition id="LCS2_SLANSSAH" type="Link.EntityDefinition.LCS2_SLANSSDef" multiplicity="any"/> 			
+			<AttributeDefinition id="LCS2_AnswerAutocheckHealthStatusAH" type="Link.EntityDefinition.LCS2_AnswerAutocheckHealthStatusAH" multiplicity="any"/>			
+			<AttributeDefinition id="LCS2_PatientEducationAndTrainingToTheCaregiverAH" type="Link.EntityDefinition.LCS2_PatientEducationAndTrainingToTheCaregiverAH" multiplicity="any"/>			
+			<AttributeDefinition id="LCS2_CommentAH" type="Link.EntityDefinition.LCS2_Comment" multiplicity="any"/> 	
 			<AttributeDefinition id="LCS2_MonitoringPrescriptionAHSystolic" type="Link.EntityDefinition.LCS2_MonitoringPrescriptionSystolic" multiplicity="any" /> 			
 			<AttributeDefinition id="LCS2_MonitoringPrescriptionAHDiastolic" type="Link.EntityDefinition.LCS2_MonitoringPrescriptionDiastolic" multiplicity="any" /> 
 			<AttributeDefinition id="LCS2_MonitoringPrescriptionAHBodyTemperature" type="Link.EntityDefinition.LCS2_MonitoringPrescriptionBodyTemperature" multiplicity="any" /> 			
@@ -1136,15 +1136,15 @@
 		
         <!-- Discharge Definitions -->		
 		<EntityDefinition id="LCS2_Discharge">
-			<AttributeDefinition id="LCS2_DischargeTest" type="Link.EntityDefinition.LCS2_DischargeTest"/>									
-			<AttributeDefinition id="LCS2_SF12Discharge" type="Link.EntityDefinition.LCS2_SF12Def"/> 			
-			<AttributeDefinition id="LCS2_EQ-5DDischarge" type="Link.EntityDefinition.LCS2_EQ-5DDef"/> 						
+			<AttributeDefinition id="LCS2_DischargeTest" type="Link.EntityDefinition.LCS2_DischargeTest" multiplicity="any"/>									
+			<AttributeDefinition id="LCS2_SF12Discharge" type="Link.EntityDefinition.LCS2_SF12Def" multiplicity="any"/> 			
+			<AttributeDefinition id="LCS2_EQ-5DDischarge" type="Link.EntityDefinition.LCS2_EQ-5DDef" multiplicity="any"/> 						
 		</EntityDefinition>
 		
 		<EntityDefinition id="LCS2_DischargeTest"> 
-			<AttributeDefinition id="discharge1" type="longtext"  description="Com ens ha anat?"/> 
-			<AttributeDefinition id="discharge2" type="longtext"  description="Estat actual del pacient"/> 
-			<AttributeDefinition id="discharge3" type="longtext"  description="Pronostic (funcional, assistencial i social)"/> 
+			<AttributeDefinition id="discharge1" type="longtext" description="Com ens ha anat?" multiplicity="maximalOne" /> 
+			<AttributeDefinition id="discharge2" type="longtext" description="Estat actual del pacient" multiplicity="maximalOne"/> 
+			<AttributeDefinition id="discharge3" type="longtext" description="Pronostic (funcional, assistencial i social)" multiplicity="maximalOne"/> 
         </EntityDefinition>
 
 			
@@ -1300,9 +1300,9 @@
                 <HumanTaskDefinition id="LCS2_SelectPatient" externalId="SelectPatient" description="Inclusió" ownerPath="LCS2_Settings.CaseManager" isMandatory="true" repeatable="ONCE">
                     <HttpHookDefinition on="COMPLETE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/case/patient/inclusion" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition path="LCS2_Settings.Patient" isReadOnly="false" isMandatory="true"/>                
+                    <TaskParamDefinition path="LCS2_Settings.CaseManager" isReadOnly="false" isMandatory="true"/> 
                     <TaskParamDefinition path="LCS2_Settings.Clinician" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS2_Settings.Nurse" isReadOnly="false" isMandatory="true"/>
-                    <!--<TaskParamDefinition path="LCS2_Settings.CaseManager" isReadOnly="false" isMandatory="true"/>-->            
+                    <TaskParamDefinition path="LCS2_Settings.Nurse" isReadOnly="false" isMandatory="true"/>                              
                     <TaskParamDefinition path="LCS2_Settings.SocialCareer" isReadOnly="false" isMandatory="true"/>            
                     <TaskParamDefinition path="LCS2_Settings.Anesthesiologist" isReadOnly="false" isMandatory="true"/> 
                     <TaskParamDefinition path="LCS2_Settings.Physiotherapist" isReadOnly="false" isMandatory="true"/> 
