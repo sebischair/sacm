@@ -61,10 +61,7 @@
 
 		  <!-- WORKSPACE: Discharge -->	
 		  	<AttributeDefinition id="LCS3TEST_Discharge" type="Link.EntityDefinition.LCS3TEST_Discharge"/> 
-			
-		  <!-- WORKSPACE: Repeated tasks 
-		  	<AttributeDefinition id="LCS3TEST_RepeatedTasksTest" type="Link.EntityDefinition.LCS3TEST_RepeatedTasksTest"/> -->	
-			
+					
 		</EntityDefinition>		
 	  
 		
@@ -85,20 +82,19 @@
 			</AttributeDefinition>
 
 			<AttributeDefinition id="tech2" type="enumeration" multiplicity="exactlyOne" description="Vosté fa anar:">
-				<EnumerationOption value="1" description="Telèfon mòvil no tan sols per trucar."/>
-				<EnumerationOption value="0.0001" description="Tablet"/>
-				<EnumerationOption value="0.0002" description="Ordinador personal."/>
-				<EnumerationOption value="0" description="Cap"/>
+				<EnumerationOption value="0" description="Telèfon mòvil no tan sols per trucar."/>
+				<EnumerationOption value="1" description="Tablet"/>
+				<EnumerationOption value="2" description="Ordinador personal."/>
+				<EnumerationOption value="3" description="Cap"/>
 			</AttributeDefinition>
 
 			<AttributeDefinition id="tech3" type="enumeration" multiplicity="exactlyOne" description="El seu cuidador principal fa anar:">
-				<EnumerationOption value="1" description="Telèfon mòvil no tan sols per trucar."/>
-				<EnumerationOption value="0.0001" description="Tablet"/>
-				<EnumerationOption value="0.0002" description="Ordinador personal."/>
-				<EnumerationOption value="0" description="Cap"/>
-			</AttributeDefinition>
-			
-			<DerivedAttributeDefinition id="tech4" expression="round(number(tech1,0))+round(number(tech2,0))+round(number(tech3,0))" description="Resultat del test tecnològic"/>
+				<EnumerationOption value="0" description="Telèfon mòvil no tan sols per trucar."/>
+				<EnumerationOption value="1" description="Tablet"/>
+				<EnumerationOption value="2" description="Ordinador personal."/>
+				<EnumerationOption value="3" description="Cap"/>
+			</AttributeDefinition>			
+			<DerivedAttributeDefinition id="tech4" expression='if (number(tech1, 0) + number(tech2, 0) + number(tech3,0)) = 0 then "No aprovat" else "Aprovat"' description="Test tecnològic"/>			
 		</EntityDefinition>	  	
 		
 		<EntityDefinition id="LCS3TEST_ComorbidityCharlsonDef" >
@@ -185,7 +181,7 @@
                 <EnumerationOption value="4" description="80-89"/>
                 <EnumerationOption value="5" description="90-99"/>
             </AttributeDefinition>           
-            <DerivedAttributeDefinition id="ch21" expression="number(ch1,0) + number(ch2,0) + number(ch3,0) + number(ch4,0) + number(ch5,0) + number(ch6,0) + number(ch7,0) + number(ch8,0) + number(ch9,0) + number(ch10,0) + number(ch11,0)*2 + number(ch12,0)*2 + number(ch13,0)*2 + number(ch14,0)*2 + number(ch15,0)*2 + number(ch16,0)*2 + number(ch17,0)*3 + number(ch18,0)*6 + number(ch19,0)*6 + number(ch20,0)" description="Charlson"/>
+            <DerivedAttributeDefinition id="ch21" expression="number(ch1,0) + number(ch2,0) + number(ch3,0) + number(ch4,0) + number(ch5,0) + number(ch6,0) + number(ch7,0) + number(ch8,0) + number(ch9,0) + number(ch10,0) + number(ch11,0)*2 + number(ch12,0)*2 + number(ch13,0)*2 + number(ch14,0)*2 + number(ch15,0)*2 + number(ch16,0)*2 + number(ch17,0)*3 + number(ch18,0)*6 + number(ch19,0)*6 + number(ch20,0)" description="Charlson"/>     			
 			</EntityDefinition>
 			
 		
@@ -278,7 +274,7 @@
 		
 		<!-- Estat cognitiu Índex de Pfeiffer -->
         <EntityDefinition id="LCS3TEST_ComorbidityPfeiffer">
-            <AttributeDefinition id="pfeiffer1" type="enumeration" multiplicity="exactlyOne" description="Número de errades" uiReference="colors(0<=green<=3<orange<=4<red<10)">
+            <AttributeDefinition id="pfeiffer1" type="enumeration" multiplicity="exactlyOne" description="Número de errades">
                 <EnumerationOption value="0" description="0"/>
                 <EnumerationOption value="1" description="1"/>
                 <EnumerationOption value="2" description="2"/>
@@ -291,7 +287,11 @@
                 <EnumerationOption value="9" description="9"/>
                 <EnumerationOption value="10" description="10"/>
             </AttributeDefinition>
-            <DerivedAttributeDefinition id="pfeiffer2" expression="number(pfeiffer1,0)" additionalDescription="De 3 a 4 pot tenir deteriorament cognitiu; De 4 a 10 és analfabet" description="Pfeiffer" uiReference="colors(0<=green<=3<orange<=4<red<10)"/>			
+			
+		<DerivedAttributeDefinition id="pfeiffer2" expression='if ( (number(pfeiffer1,0)) >= 0 AND (number(pfeiffer1,0)) <= 10) then "Pot tenir deteriorament cognitiu" else "És analfabet"' description="Pfeiffer" uiReference="colors(0<=green<=3<orange<=4<red<10)"/>
+			
+            <!--<DerivedAttributeDefinition id="pfeiffer2" expression="number(pfeiffer1,0)" additionalDescription="De 3 a 4 pot tenir deteriorament cognitiu; De 4 a 10 és analfabet" description="Pfeiffer" uiReference="colors(0<=green<=3<orange<=4<red<10)"/>-->						
+		<!--	<DerivedAttributeDefinition id="pfeiffer2" expression='if ((number(pfeiffer1,0)) >= 0 && (number(pfeiffer1,0)) <= 4) then "Pot tenir deteriorament cognitiu" else "És analfabet"' description="Pfeiffer" uiReference="colors(0<=green<=3<orange<=4<red<10)"/>			-->
         </EntityDefinition>
 	  	  
 		<EntityDefinition id="LCS3TEST_HospitalAnxietyAndDepressionScale">
@@ -474,10 +474,10 @@
             </AttributeDefinition>
 			
 			<!-- Resultado final; 0 = Rojo; 1 =   Verde colors(0<=green<=3<orange<=4<red<10) --> 
-			<DerivedAttributeDefinition id="audicio" expression="round(number(comm1,0)) + round(number(comm2,0))" description="Audicio temp" uiReference="colors(0<=orange<=10000)"/>  			
-			<DerivedAttributeDefinition id="audiciototal" description="Audició" expression="round(number(comm1,0),0) + round(number(comm2,0),0)" uiReference="colors(0<=red<=1<orange<=2<green<=10000)"/>
-			<DerivedAttributeDefinition id="visiototal" description="Visió" expression="round(number(comm3,0)) + round(number(comm4,0),0)" uiReference="colors(0<=red<=1<orange<=2<green<=10000)"/>
-			<DerivedAttributeDefinition id="capacitattotal" description="Capacitat per expressar-se" expression="2" uiReference="colors(0<=red<=1<orange<=2<green<=10000)"/>			
+			<DerivedAttributeDefinition id="audicio" expression="round(number(comm1,0)) + round(number(comm2,0))" description="Audicio temp" />  			
+			<DerivedAttributeDefinition id="audiciototal" description="Audició" expression="round(number(comm1,0),0) + round(number(comm2,0),0)"  />
+			<DerivedAttributeDefinition id="visiototal" description="Visió" expression="round(number(comm3,0)) + round(number(comm4,0),0)"  />
+			<DerivedAttributeDefinition id="capacitattotal" description="Capacitat per expressar-se" expression="2" />			
 		</EntityDefinition>
 		
 		<EntityDefinition id="LCS3TEST_Sleeping">
@@ -513,27 +513,34 @@
                 <EnumerationOption value="1.01" description="Molt dependent/Limitat"/>
                 <EnumerationOption value="1.001" description="Completament dependent/Limitat"/>
             </AttributeDefinition>
-			<DerivedAttributeDefinition id="money2" type="number" multiplicity="maximalOne" description="Problemes fent servir diners" additionalDescription="el pacient necessita l'ajuda d'una altra persona per utilitzar diners" uiReference="colors(0<=green<=1<red<2)" expression="round(number(money,0))"/> 
+			<DerivedAttributeDefinition id="money2" type="number" multiplicity="maximalOne" description="Problemes fent servir diners" additionalDescription="el pacient necessita l'ajuda d'una altra persona per utilitzar diners" expression="round(number(money,0))"/> 
         </EntityDefinition>
 		
 		<!-- Diagnòstic  -->
         <EntityDefinition id="LCS3TEST_AnthropometricVariables">
-            <AttributeDefinition id="AnWeigh" type="number" multiplicity="maximalOne" description="Pes (kg)"/>
-			<AttributeDefinition id="AnHeight" type="number" multiplicity="maximalOne" description="Alçada(cm)"/>
+            <AttributeDefinition id="AnWeigh" type="number" defaultValues="[0.00]" multiplicity="maximalOne" description="Pes (kg)"/>
+			<AttributeDefinition id="AnHeight" type="number" defaultValues="[0.0]" multiplicity="maximalOne" description="Alçada(cm)"/>
 			<DerivedAttributeDefinition id="Anthropometric4" type="number" multiplicity="maximalOne" description="IMC (kg/m2) amb pes i alçada" expression="round(AnWeigh/(AnHeight/100*AnHeight/100),2)"/> 
-            <AttributeDefinition id="Anthropometric6" type="number" multiplicity="maximalOne" description="Distància entre genoll i turmell (cm)"/>
-            <AttributeDefinition id="Anthropometric7" type="enumeration" multiplicity="exactlyOne" description="Gènere">
+ 			<AttributeDefinition id="Anthropometric5" type="enumeration" multiplicity="exactlyOne" description="IMC >= 30 kg/m2">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Sí"/>
+            </AttributeDefinition>
+			
+           <AttributeDefinition id="Anthropometric6" type="number" defaultValues="[0.00]" multiplicity="maximalOne" description="Distància entre genoll i turmell (cm)"/>
+		<AttributeDefinition id="Anthropometric7" type="enumeration" multiplicity="exactlyOne" description="Gènere">
                 <EnumerationOption value="0" description="Home"/>
                 <EnumerationOption value="1" description="Dona"/>
             </AttributeDefinition>
-			<AttributeDefinition id="Anthropometric8" type="number" multiplicity="maximalOne" description="Edat"/>			
+			<AttributeDefinition id="Anthropometric8" type="number" defaultValues="[0]" multiplicity="maximalOne" description="Edat"/>			
+			
 			<DerivedAttributeDefinition id="Anthropometric9" description="IMC (kg/m2) amb pes i distància entre genoll i turmell - Homes" additionalDescription="Home sobrepès > 27.8 | Obesitat => 30 " expression="((2.03*Anthropometric6)-(0.04*Anthropometric8)+64.19)"/> 			
 			<DerivedAttributeDefinition id="Anthropometric10" description="IMC (kg/m2) amb pes i distància entre genoll i turmell - Dones" additionalDescription="Dona sobrepès 27.3 | Obesitat => 30 " expression="((1.83*Anthropometric6)-(0.24*Anthropometric8)+84.88)"/> 			            
-			<AttributeDefinition id="Anthropometric5" type="enumeration" multiplicity="exactlyOne" description="IMC >= 30 kg/m2">
+			
+			<AttributeDefinition id="Anthropometric11" type="enumeration" multiplicity="exactlyOne" description="IMC >= 30 kg/m2">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
-            </AttributeDefinition>					
-		</EntityDefinition>
+            </AttributeDefinition>				
+		</EntityDefinition> 
 		
         <EntityDefinition id="LCS3TEST_DiagnosisSmokingAndAlcohol"> 
             <AttributeDefinition id="smalc1" type="enumeration" multiplicity="exactlyOne" description="Consum de tabac">
@@ -548,8 +555,8 @@
         </EntityDefinition>	 
 		
 		<EntityDefinition id="LCS3TEST_DiagnosisNutritionDef"> 		
-			<AttributeDefinition id="nutrition1" type="number.min(0).max(20)" defaultValues="[0.0]" multiplicity="maximalOne" description="Hemoglobina (gr/dl)"  additionalDescription="< 12 gr/dl anemia" uiReference="colors(0<=red<=12<green)"/>       
-			<AttributeDefinition id="nutrition2" type="number.min(0).max(10)" defaultValues="[0.0]" multiplicity="maximalOne" description="Proteínes (gr/dl)" additionalDescription="<6 gr / dl. Desnutrició proteica" uiReference="colors(0<=red<=6<green)"/>       
+			<AttributeDefinition id="nutrition1" type="number.min(0).max(20)" defaultValues="[0.0]" multiplicity="maximalOne" description="Hemoglobina (gr/dl)"  additionalDescription="menor de 12 gr/dl anemia" />       
+			<AttributeDefinition id="nutrition2" type="number.min(0).max(10)" defaultValues="[0.0]" multiplicity="maximalOne" description="Proteínes (gr/dl)" additionalDescription="menor 6 gr / dl. Desnutrició proteica" />       
 		</EntityDefinition>		
 		
 		<!--  -->
@@ -993,20 +1000,6 @@
 			<AttributeDefinition id="LCS3TEST_MonitoringPrescriptionBHDiastolic" type="Link.EntityDefinition.LCS3TEST_MonitoringPrescriptionDiastolic" multiplicity="any" /> 
 			<AttributeDefinition id="LCS3TEST_MonitoringPrescriptionBHBodyTemperature" type="Link.EntityDefinition.LCS3TEST_MonitoringPrescriptionBodyTemperature" multiplicity="any" /> 			
 		</EntityDefinition>
-		
-		<!-- TO BE DELETED
-		<AttributeDefinition id="LCS3TEST_PhysicalActivityBH" type="Link.EntityDefinition.LCS3TEST_PhysicalActivityBH" multiplicity="maximalOne" />
-		<EntityDefinition id="LCS3TEST_PhysicalActivityBH">
-            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="maximalOne" description="Data d'inici"/>
-            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="maximalOne" description="Data de fi"/>       
-            <AttributeDefinition id="dailysteps" type="number.min(0).max(100000)" defaultValues="[10000]" multiplicity="maximalOne" description="Número de passos a fer durant el dia"/>       
-            <AttributeDefinition id="dailylowlevel" type="number.min(0).max(1440)" defaultValues="[60]" multiplicity="maximalOne" description="Mínim de minuts d'intensitat baixa a fer durant el dia (caminar, bicicleta, nadar)"/>       
-            <AttributeDefinition id="dailymediumlevel" type="number.min(0).max(1440)" defaultValues="[40]" multiplicity="maximalOne" description="Mínim de minuts d'intensitat intermitja a fer durant el dia (caminar pas ràpid, tasques domèstiques lleugeres, jugar amb nens, passejar mascotes)"/>       
-            <AttributeDefinition id="dailyhighlevel" type="number.min(0).max(1440)" defaultValues="[20]" multiplicity="maximalOne" description="Mínim de minuts d'intensitat alta a fer durant el dia (footing, tasques domèstiques pesades, senderisme, activitats i esports competitius)"/> 
-            <AttributeDefinition id="dailynoactivity" type="number.min(0).max(1440)" defaultValues="[240]" multiplicity="maximalOne" description="Màxim de minuts permesos sense activitat durante el dia"/>               
-            <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Mesures"/>                 
-        </EntityDefinition> -->
-		
 			
 		<EntityDefinition id="LCS3TEST_AnaemiaAssessmentAndManagementNutritionDef" > 		
 			<AttributeDefinition id="nut0" type="number.min(0).max(1500)" defaultValues="[0.0]" multiplicity="maximalOne" description="Valor de la Ferritina (ng/mL)"/>
@@ -1044,20 +1037,6 @@
 		<EntityDefinition id="LCS3TEST_Comment">
 		     <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comentaris" additionalDescription="Proporcioneu suggeriments addicionals"/>   
 		</EntityDefinition>
-		
-		<!--		
-		<EntityDefinition id="LCS3TEST_MonitoringHospitalizationMeasureDef">
-		    <AttributeDefinition id="monitoringhospmeasure2" type="enumeration" multiplicity="exactlyOne" description="Quan">     
-                <EnumerationOption value="0" description="Matí"/>
-                <EnumerationOption value="1" description="Tarda"/>
-                <EnumerationOption value="2" description="Nit"/>
-            </AttributeDefinition> 
-		    <AttributeDefinition id="monitoringhospmeasure3" type="number.min(0).max(250)" defaultValues="[0.0]" multiplicity="maximalOne" description="Valor de la pressió arterial sistòlica (mmHg)"/>		
-			<AttributeDefinition id="monitoringhospmeasure4" type="number.min(0).max(200)" defaultValues="[0.0]" multiplicity="maximalOne" description="Valor de la pressió arterial diastòlica (mmHg)"/>					
-			<AttributeDefinition id="monitoringhospmeasure5" type="number.min(27).max(45)" defaultValues="[0.0]" multiplicity="maximalOne" description="Valor de la temperatura (·C)"/>								
-            <AttributeDefinition id="monitoringhospmeasure6" type="longtext" multiplicity="maximalOne" description="Comentaris"/>               
-        </EntityDefinition> -->
-				
 				
 		<!-- WORKSPACE: WorkplanDuringHospitalization -->			
 		<EntityDefinition id="LCS3TEST_WorkplanDuringHospitalization">
@@ -1201,20 +1180,7 @@
 			<AttributeDefinition id="discharge2" type="longtext"  description="Estat actual del pacient"/> 
 			<AttributeDefinition id="discharge3" type="longtext"  description="Pronostic (funcional, assistencial i social)"/> 
         </EntityDefinition>
-		
-		
-		<!-- ENTITY DEFINITION: RepeatedTasksTest 
-		<EntityDefinition id="LCS3TEST_RepeatedTasksTest">
-			<AttributeDefinition id="LCS3TEST_MonitoringPrescriptionBHSystolicRT" type="Link.EntityDefinition.LCS3TEST_MonitoringPrescriptionSystolic" multiplicity="any" /> 
-			<AttributeDefinition id="LCS3TEST_MonitoringPrescriptionBHDiastolicRT" type="Link.EntityDefinition.LCS3TEST_MonitoringPrescriptionDiastolic" multiplicity="any" /> 
-			<AttributeDefinition id="LCS3TEST_MonitoringPrescriptionBHBodyTemperatureRT" type="Link.EntityDefinition.LCS3TEST_MonitoringPrescriptionBodyTemperature" multiplicity="any" /> 
-			<AttributeDefinition id="LCS3TEST_EVAECNDDHRT" type="Link.EntityDefinition.LCS3TEST_EVAECNDDef" multiplicity="any" /> 
-			<AttributeDefinition id="LCS3TEST_MonitoringPrescriptionAHSystolic" type="Link.EntityDefinition.LCS3TEST_MonitoringPrescriptionSystolic" multiplicity="any" /> 			
-			<AttributeDefinition id="LCS3TEST_MonitoringPrescriptionAHDiastolic" type="Link.EntityDefinition.LCS3TEST_MonitoringPrescriptionDiastolic" multiplicity="any" /> 
-			<AttributeDefinition id="LCS3TEST_MonitoringPrescriptionAHBodyTemperature" type="Link.EntityDefinition.LCS3TEST_MonitoringPrescriptionBodyTemperature" multiplicity="any" /> 									
-			<AttributeDefinition id="LCS3TEST_PhysicalActivityAH" type="Link.EntityDefinition.LCS3TEST_PhysicalActivityAH" multiplicity="any" />	
-			<AttributeDefinition id="LCS3TEST_RehabilitationAH" type="Link.EntityDefinition.LCS3TEST_RehabilitationAH" multiplicity="any" />
-		</EntityDefinition>-->	
+
 			
 		<EntityDefinition id="LCS3TEST_MonitoringPrescriptionSystolic">
             <AttributeDefinition id="type" type="enumeration" defaultValues="['SYSTOLICBLOODPRESSURE']" multiplicity="exactlyOne" description="Tipus de mesura" additionalDescription="Seleccioneu el tipus de mesura per a la supervisió del pacient">
@@ -1315,43 +1281,6 @@
             <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Mesures"/>                      
         </EntityDefinition>
 
-		
-		<!-- Backup
-				<EntityDefinition id="LCS3TEST_MonitoringPrescription">
-            <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Tipus de mesura" additionalDescription="Seleccioneu el tipus de mesura per a la supervisió del pacient">
-                <EnumerationOption value="SYSTOLICBLOODPRESSURE" description="Pressió arterial sistòlica"/>
-				<EnumerationOption value="DIASTOLICBLOODPRESSURE" description="Pressió arterial diastòlica"/>
-				<EnumerationOption value="BODYTEMPERATURE" description="Temperatura"/>
-            </AttributeDefinition>   
-            <AttributeDefinition id="alertmin" type="number.min(0)" multiplicity="exactlyOne" description="Valor mínim permès" additionalDescription="Valor mínim per a aquesta mesura, ha de ser superior a 0"/>       
-            <AttributeDefinition id="alertmax" type="number.min(0)" multiplicity="exactlyOne" description="Valor màxim permès" additionalDescription="El valor màxim d'aquesta mesura, ha de ser superior a 0"/>      
-            <AttributeDefinition id="alertfreq" type="number" defaultValues="[1]" multiplicity="exactlyOne" description="Valor de freqüència d'alerta"/>       
-            <AttributeDefinition id="alertfrequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Unitat de freqüència d'alerta">     
-                <EnumerationOption value="DAYS" description="Dies"/>
-                <EnumerationOption value="WEEKS" description="Setmanes"/>
-                <EnumerationOption value="MONTHS" description="Mesos"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="freq" type="number.min(0)" defaultValues="[1]" multiplicity="exactlyOne" description="Freqüència"/> 
-            <AttributeDefinition id="frequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Unitat de freqüència">     
-                <EnumerationOption value="DAYS" description="Dies"/>
-                <EnumerationOption value="WEEKS" description="Setmanes"/>
-                <EnumerationOption value="MONTHS" description="Mesos"/>
-            </AttributeDefinition> 
-            <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="maximalOne" description="Retard màxim en minuts" additionalDescription="Retard màxim perque el pacient es prengui la mesura"/> 
-            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Data d'inici"/> 
-            <AttributeDefinition id="enddate" type="date.after(tartdate)" multiplicity="exactlyOne" description="Data de fi"/> 
-            <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="Franges per prendre les mesures" additionalDescription="Es poden seleccionar múltiples franges, cal seleccionar-ne almenys una">     
-                <EnumerationOption value="BREAKFAST" description="Esmorzar"/>
-                <EnumerationOption value="LUNCH" description="Dinar"/>
-                <EnumerationOption value="AFTERNOONSNACK" description="Berenar"/>
-                <EnumerationOption value="DINNER" description="Sopar"/>
-                <EnumerationOption value="BEFORESLEEP" description="Abans d'anar a dormir"/>
-                <EnumerationOption value="ANYTIMEDURINGDAY" description="En qualsevol moment del dia" additionalDescription="Seleccioneu aquesta opció quan el temps del dia no importa"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comentaris" additionalDescription="Proporcioneu suggeriments addicionals pel pacient"/>   
-            <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Mesures"/>                      
-        </EntityDefinition> -->
-		
 	
 		<EntityDefinition id="LCS3TEST_PhysicalActivityAH">
             <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="maximalOne" description="Data d'inici"/>
@@ -1378,14 +1307,19 @@
 	<!-- CASE DEFINITION -->				  
 		<CaseDefinition id="LCS3TEST_Leida" description="CS2 Lleida - Versió Eurecat" ownerPath="LCS3TEST_Owner" clientPath="LCS3TEST_Patient" entityDefinitionId="LCS3TEST_CaseData">	  
 		
+		<SummarySectionDefinition id="LCS3TEST_PatientStatus" description="Others" position="LEFT">    
+		        <SummaryParamDefinition path="LCS3TEST_Identification.LCS3TEST_TechnologicalTest.tech4"/>
+		</SummarySectionDefinition>
+
+		
 		<SummarySectionDefinition id="LCS3TEST_PatientStatus" description="Patient Status" position="LEFT">    
                 <SummaryParamDefinition path="LCS3TEST_Identification.LCS3TEST_ComorbidityCharlsonIdentification.ch21"/>
 				<SummaryParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_HospitalAnxietyAndDepressionScale.hadFinal"/>												
 				<!--<SummaryParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_ComorbidityPfeiffer.pfeiffer1"/>-->
 				<SummaryParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_ComorbidityPfeiffer.pfeiffer2"/>
 				<SummaryParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.Anthropometric4"/>				
-				<SummaryParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.Anthropometric9"/>				
-				<SummaryParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.Anthropometric10"/>				
+				<!--<SummaryParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.Anthropometric9"/>				
+				<SummaryParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.Anthropometric10"/>-->			
         </SummarySectionDefinition>
 								
 		<SummarySectionDefinition id="LCS3TEST_Barriers" description="Barriers" position="RIGHT">   
@@ -1484,15 +1418,7 @@
               </SentryDefinition>
               <TaskParamDefinition path="LCS3TEST_Identification.LCS3TEST_PatientsConsent.pConsent1" isReadOnly="false" isMandatory="true"/>
             </HumanTaskDefinition>			
-			
-			<!-- Test Blocked repeated tasks
-			<HumanTaskDefinition id="LCS3TEST_EVAECNDHT" description="[TESTINCLUSION] *Diagnòstic dolor – Escala de Qualificació Numèrica del Dolor (EQND)" ownerPath="LCS3TEST_Clinician" isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS3TEST_EVAECNDDef" entityAttachPath="LCS3TEST_Identification.LCS3TEST_EVAECND">
-				<TaskParamDefinition path="LCS3TEST_Identification.LCS3TEST_EVAECND.eva0" isReadOnly="false" isMandatory="true"/>
-				<TaskParamDefinition path="LCS3TEST_Identification.LCS3TEST_EVAECND.eva1" isReadOnly="false" isMandatory="true"/>
-				<TaskParamDefinition path="LCS3TEST_Identification.LCS3TEST_EVAECND.eva2" isReadOnly="false" isMandatory="true"/>
-			</HumanTaskDefinition>			 -->     					  
-			
-			
+						
 		</StageDefinition>
 		
 		
@@ -1608,16 +1534,16 @@
 		<!-- Infermera; Test LCS3TEST_PrimaryCareClinicians     -->  
 		<HumanTaskDefinition id="LCS3TEST_AnthropometricVariables" description="Diagnòstic - Variables antropomètriques" ownerPath="LCS3TEST_Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS3TEST_AnthropometricVariables" entityAttachPath="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables">
               <TaskParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.AnWeigh" isReadOnly="false" isMandatory="true"/>
-              <TaskParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.AnHeight" isReadOnly="false" isMandatory="false"/>              
+              <TaskParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.AnHeight" isReadOnly="false" isMandatory="false"/>  
 			  <TaskParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.Anthropometric4" isReadOnly="true" isMandatory="false"/>
-			  <TaskParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.Anthropometric5" isReadOnly="false" isMandatory="true"/>			  
-			  
-			  <TaskParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.Anthropometric6" isReadOnly="true" isMandatory="false"/>
-			  <TaskParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.Anthropometric7" isReadOnly="false" isMandatory="true"/>			  
-			  <TaskParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.Anthropometric8" isReadOnly="true" isMandatory="false"/>
+			  <TaskParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.Anthropometric5" isReadOnly="false" isMandatory="false"/>			  
+			  <TaskParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.Anthropometric6" isReadOnly="false" isMandatory="false"/>
+			  <TaskParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.Anthropometric7" isReadOnly="false" isMandatory="false"/>	
+			  <TaskParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.Anthropometric8" isReadOnly="false" isMandatory="false"/>
 			  <TaskParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.Anthropometric9" isReadOnly="true" isMandatory="false"/>
 			  <TaskParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.Anthropometric10" isReadOnly="true" isMandatory="false"/>
-			</HumanTaskDefinition>    
+			  <TaskParamDefinition path="LCS3TEST_Evaluation.LCS3TEST_AnthropometricVariables.Anthropometric11" isReadOnly="false" isMandatory="false"/>	
+		</HumanTaskDefinition>    
 
       <!-- PDT Cirurgiá/Anestesista -->      
             <HumanTaskDefinition id="LCS3TEST_DiagnosisSmokingAndAlcohol" description="Diagnòstic - Consum de tabac i alcohol" ownerPath="LCS3TEST_AnesClinic" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS3TEST_DiagnosisSmokingAndAlcohol" entityAttachPath="LCS3TEST_Evaluation.LCS3TEST_DiagnosisSmokingAndAlcohol">
@@ -1759,20 +1685,11 @@
 				<precondition processDefinitionId="LCS3TEST_CaseEvaluation"/>
 			</SentryDefinition> 			
 
-			<!-- Gerard no ho vol pq ho hauria de fer el metge de primaria pero no ho vol fer 
-			<HumanTaskDefinition id="LCS3TEST_MonitoringHospitalizationMeasureDHHT" description="Seguimient de constants vitals" ownerPath="LCS3TEST_Owner" isMandatory="false" repeatable="PARALLEL" isManualActivation="true" entityDefinitionId="LCS3TEST_MonitoringHospitalizationMeasureDef" entityAttachPath="LCS3TEST_WorkplanBeforeHospitalization.LCS3TEST_MonitoringHospitalizationMeasureDH">			
-   			<TaskParamDefinition path="LCS3TEST_WorkplanBeforeHospitalization.LCS3TEST_MonitoringHospitalizationMeasureDH.monitoringhospmeasure2" isReadOnly="false" isMandatory="true"/>				
-				<TaskParamDefinition path="LCS3TEST_WorkplanBeforeHospitalization.LCS3TEST_MonitoringHospitalizationMeasureDH.monitoringhospmeasure3" isReadOnly="false" isMandatory="true"/>
-				<TaskParamDefinition path="LCS3TEST_WorkplanBeforeHospitalization.LCS3TEST_MonitoringHospitalizationMeasureDH.monitoringhospmeasure4" isReadOnly="false" isMandatory="true"/>
-				<TaskParamDefinition path="LCS3TEST_WorkplanBeforeHospitalization.LCS3TEST_MonitoringHospitalizationMeasureDH.monitoringhospmeasure5" isReadOnly="false" isMandatory="true"/>
-				<TaskParamDefinition path="LCS3TEST_WorkplanBeforeHospitalization.LCS3TEST_MonitoringHospitalizationMeasureDH.monitoringhospmeasure6" isReadOnly="false" isMandatory="false"/>
-			</HumanTaskDefinition>  -->
-			
+			<!-- Gerard no ho vol pq ho hauria de fer el metge de primaria pero no ho vol fer  LCS3TEST_MonitoringHospitalizationMeasureDHHT -->
 			<HumanTaskDefinition id="LCS3TEST_AnaemiaAssessmentAndManagementNutritionBHHT" description="Anemia, proteínes (Avaluació del Cas)" ownerPath="LCS3TEST_AnesClinic" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS3TEST_AnaemiaAssessmentAndManagementNutritionDef" entityAttachPath="LCS3TEST_WorkplanBeforeHospitalization.LCS3TEST_AnaemiaAssessmentAndManagementNutritionBH">
 
 			<!-- Test Felix - KitiaraJuanma
 			<SentryDefinition>
-				<precondition processDefinitionId = "LCS3TEST_Evaluation.LCS3TEST_DiagnosisNutritionEvaluationHT"/>
 				<precondition expression = "LCS3TEST_Evaluation.LCS3TEST_DiagnosisNutritionEvaluation.nutrition1>0"/>
 			</SentryDefinition> -->
 			
@@ -1901,26 +1818,6 @@
 			  </HumanTaskDefinition>					  					  
 
 		
-		<!--			 
-            <DualTaskDefinition id="LCS3TEST_MonitoringPrescriptionWPDH" externalId="MonitoringPrescription" description="Prescripció de monitorització - Durant l'hospitalització" dynamicDescriptionPath="LCS3TEST_WorkplanBeforeHospitalization.LCS3TEST_MonitoringPrescription.type" ownerPath="LCS3TEST_Owner" dueDatePath="LCS3TEST_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" isManualActivation="true" entityDefinitionId="LCS3TEST_MonitoringPrescription" entityAttachPath="LCS3TEST_WorkplanBeforeHospitalization.LCS3TEST_MonitoringPrescription">
-                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
-                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_WorkplanBeforeHospitalization.LCS3TEST_MonitoringPrescription.type" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_WorkplanBeforeHospitalization.LCS3TEST_MonitoringPrescription.alertmin" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_WorkplanBeforeHospitalization.LCS3TEST_MonitoringPrescription.alertmax" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_WorkplanBeforeHospitalization.LCS3TEST_MonitoringPrescription.alertfreq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_WorkplanBeforeHospitalization.LCS3TEST_MonitoringPrescription.alertfrequnit" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_WorkplanBeforeHospitalization.LCS3TEST_MonitoringPrescription.freq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_WorkplanBeforeHospitalization.LCS3TEST_MonitoringPrescription.frequnit" isReadOnly="false" isMandatory="true"/>   
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_WorkplanBeforeHospitalization.LCS3TEST_MonitoringPrescription.maxdelay" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_WorkplanBeforeHospitalization.LCS3TEST_MonitoringPrescription.startdate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_WorkplanBeforeHospitalization.LCS3TEST_MonitoringPrescription.enddate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_WorkplanBeforeHospitalization.LCS3TEST_MonitoringPrescription.timeslot" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_WorkplanBeforeHospitalization.LCS3TEST_MonitoringPrescription.comments" isReadOnly="false" isMandatory="true"/>                    
-                    <TaskParamDefinition part="AUTOMATED" path="LCS3TEST_WorkplanBeforeHospitalization.LCS3TEST_MonitoringPrescription.measurement" isReadOnly="false" isMandatory="true"/>
-            </DualTaskDefinition>			
-			-->
-
 			<HumanTaskDefinition id="LCS3TEST_CommentWPDH" description="Comentaris" ownerPath="LCS3TEST_Clinician" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS3TEST_Comment" entityAttachPath="LCS3TEST_WorkplanDuringHospitalization.LCS3TEST_CommentDH">									
 				<TaskParamDefinition part="HUMAN" path="LCS3TEST_WorkplanDuringHospitalization.LCS3TEST_CommentDH.comments" isReadOnly="false" isMandatory="true"/>                    
 			</HumanTaskDefinition>
@@ -2015,8 +1912,7 @@
                     <TaskParamDefinition part="HUMAN" path="LCS3TEST_WorkplanAfterHospitalization.LCS3TEST_MonitoringPrescriptionAHBodyTemperature.timeslot" isReadOnly="false" isMandatory="true"/> 
                     <TaskParamDefinition part="HUMAN" path="LCS3TEST_WorkplanAfterHospitalization.LCS3TEST_MonitoringPrescriptionAHBodyTemperature.comments" isReadOnly="false" isMandatory="false"/>                    
                     <TaskParamDefinition part="AUTOMATED" path="LCS3TEST_WorkplanAfterHospitalization.LCS3TEST_MonitoringPrescriptionAHBodyTemperature.measurement" isReadOnly="false" isMandatory="true"/>
-            </DualTaskDefinition>										
-			
+            </DualTaskDefinition>													
 	
 			<DualTaskDefinition id="LCS3TEST_PhysicalActivityAHWP" externalId="PhysicalActivity" description="[POST] Activitat física - Desprès d'hospitalització" ownerPath="LCS3TEST_Physiotherapist" dueDatePath="LCS3TEST_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS3TEST_PhysicalActivityAH" entityAttachPath="LCS3TEST_WorkplanAfterHospitalization.LCS3TEST_PhysicalActivityAH">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
@@ -2068,158 +1964,11 @@
               <TaskParamDefinition path="LCS3TEST_Discharge.LCS3TEST_EQ-5DDischarge.EQ-5D-4" isReadOnly="false" isMandatory="true"/>
 			  <TaskParamDefinition path="LCS3TEST_Discharge.LCS3TEST_EQ-5DDischarge.EQ-5D-5" isReadOnly="false" isMandatory="true"/>              
            </HumanTaskDefinition>						
-		</StageDefinition>
 		
-		
-		<!-- <StageDefinition id="LCS3TEST_RepeatedTasksTest" description="T@sques" isMandatory="false" repeatable="SERIAL" entityDefinitionId="LCS3TEST_RepeatedTasksTest" entityAttachPath="LCS3TEST_RepeatedTasksTest">
-			
-			<SentryDefinition>
-				<precondition processDefinitionId="LCS3TEST_CaseIdentification"/>
-			</SentryDefinition> 
-		
-			LCS3TEST_WorkplanBeforeHospitalization; BEFORE
-			<DualTaskDefinition id="LCS3TEST_MonitoringPrescriptionBHWPSystolicRT" externalId="MonitoringPrescription" description="[PRE] Prescripció de la monitorització - Pressió arterial sistòlica - Abans d'hospitalització" dynamicDescriptionPath="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHSystolic.type" ownerPath="LCS3TEST_Clinician" dueDatePath="LCS3TEST_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS3TEST_MonitoringPrescriptionSystolic" entityAttachPath="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHSystolic">
-                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription LCS3TEST_MonitoringPrescriptionBHSystolic on Self-Management System!"/>
-                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring/terminate" method="POST" failureMessage="Could not terminate prescription LCS3TEST_MonitoringPrescriptionBHSystolic on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHSystolic.type" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHSystolic.alertmin" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHSystolic.alertmax" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHSystolic.alertfreq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHSystolic.alertfrequnit" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHSystolic.freq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHSystolic.frequnit" isReadOnly="false" isMandatory="true"/>   
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHSystolic.maxdelay" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHSystolic.startdate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHSystolic.enddate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHSystolic.timeslot" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHSystolic.comments" isReadOnly="false" isMandatory="false"/>                    
-                    <TaskParamDefinition part="AUTOMATED" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHSystolic.measurement" isReadOnly="false" isMandatory="true"/>
-            </DualTaskDefinition>				
+		</StageDefinition>		
 
-			<DualTaskDefinition id="LCS3TEST_MonitoringPrescriptionBHWPDiastolicRT" externalId="MonitoringPrescription" description="[PRE] Prescripció de la monitorització - Pressió arterial diastòlica - Abans d'hospitalització" dynamicDescriptionPath="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHDiastolic.type" ownerPath="LCS3TEST_Clinician" dueDatePath="LCS3TEST_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS3TEST_MonitoringPrescriptionDiastolic" entityAttachPath="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHDiastolic">
-                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription LCS3TEST_MonitoringPrescriptionBHDiastolic on Self-Management System!"/>
-                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring/terminate" method="POST" failureMessage="Could not terminate prescription LCS3TEST_MonitoringPrescriptionBHDiastolic on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHDiastolic.type" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHDiastolic.alertmin" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHDiastolic.alertmax" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHDiastolic.alertfreq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHDiastolic.alertfrequnit" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHDiastolic.freq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHDiastolic.frequnit" isReadOnly="false" isMandatory="true"/>   
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHDiastolic.maxdelay" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHDiastolic.startdate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHDiastolic.enddate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHDiastolic.timeslot" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHDiastolic.comments" isReadOnly="false" isMandatory="false"/>                    
-                    <TaskParamDefinition part="AUTOMATED" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHDiastolic.measurement" isReadOnly="false" isMandatory="true"/>
-            </DualTaskDefinition>				
-
-			<DualTaskDefinition id="LCS3TEST_MonitoringPrescriptionBHWPBodyTemperatureRT" externalId="MonitoringPrescription" description="[PRE] Prescripció de la monitorització - Temperatura - Abans d'hospitalització" dynamicDescriptionPath="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHBodyTemperature.type" ownerPath="LCS3TEST_Clinician" dueDatePath="LCS3TEST_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS3TEST_MonitoringPrescriptionBodyTemperature" entityAttachPath="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHBodyTemperature">
-                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription LCS3TEST_MonitoringPrescriptionBHBodyTemperature on Self-Management System!"/>
-                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring/terminate" method="POST" failureMessage="Could not terminate prescription LCS3TEST_MonitoringPrescriptionBHBodyTemperature on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHBodyTemperature.type" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHBodyTemperature.alertmin" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHBodyTemperature.alertmax" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHBodyTemperature.alertfreq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHBodyTemperature.alertfrequnit" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHBodyTemperature.freq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHBodyTemperature.frequnit" isReadOnly="false" isMandatory="true"/>   
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHBodyTemperature.maxdelay" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHBodyTemperature.startdate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHBodyTemperature.enddate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHBodyTemperature.timeslot" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHBodyTemperature.comments" isReadOnly="false" isMandatory="false"/>                    
-                    <TaskParamDefinition part="AUTOMATED" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionBHBodyTemperature.measurement" isReadOnly="false" isMandatory="true"/>
-            </DualTaskDefinition>				
-			
-			
-			LCS3TEST_WorkplanDuringHospitalization; DURANT 
-			<HumanTaskDefinition id="LCS3TEST_EVAECNDDHHTRT" description="[DURING] *Diagnòstic dolor – Escala de Qualificació Numèrica del Dolor (EQND)" ownerPath="LCS3TEST_Clinician" isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS3TEST_EVAECNDDef" entityAttachPath="LCS3TEST_RepeatedTasksTest.LCS3TEST_EVAECNDDHHT">
-				<TaskParamDefinition path="LCS3TEST_RepeatedTasksTest.LCS3TEST_EVAECNDDHHT.eva0" isReadOnly="false" isMandatory="true"/>
-				<TaskParamDefinition path="LCS3TEST_RepeatedTasksTest.LCS3TEST_EVAECNDDHHT.eva1" isReadOnly="false" isMandatory="true"/>
-				<TaskParamDefinition path="LCS3TEST_RepeatedTasksTest.LCS3TEST_EVAECNDDHHT.eva2" isReadOnly="false" isMandatory="true"/>
-			</HumanTaskDefinition>								  
-	
-	
-			LCS3TEST_WorkplanPostHospitalization; AFTER 
-			<DualTaskDefinition id="LCS3TEST_MonitoringPrescriptionAHWPSystolicRT" externalId="MonitoringPrescription" description="[POST] Prescripció de monitorització - Pressió arterial sistòlica - Desprès l'hospitalització" dynamicDescriptionPath="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHSystolic.type" ownerPath="LCS3TEST_PrimaryCareClinicians" dueDatePath="LCS3TEST_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS3TEST_MonitoringPrescriptionSystolic" entityAttachPath="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHSystolic">
-                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
-                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHSystolic.type" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHSystolic.alertmin" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHSystolic.alertmax" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHSystolic.alertfreq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHSystolic.alertfrequnit" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHSystolic.freq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHSystolic.frequnit" isReadOnly="false" isMandatory="true"/>   
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHSystolic.maxdelay" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHSystolic.startdate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHSystolic.enddate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHSystolic.timeslot" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHSystolic.comments" isReadOnly="false" isMandatory="false"/>                    
-                    <TaskParamDefinition part="AUTOMATED" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHSystolic.measurement" isReadOnly="false" isMandatory="true"/>
-            </DualTaskDefinition>	
-			
-			<DualTaskDefinition id="LCS3TEST_MonitoringPrescriptionAHWPDiastolicRT" externalId="MonitoringPrescription" description="[POST] Prescripció de la monitorització - Pressió arterial diastòlica - Desprès d'hospitalització" dynamicDescriptionPath="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHDiastolic.type" ownerPath="LCS3TEST_Clinician" dueDatePath="LCS3TEST_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS3TEST_MonitoringPrescriptionDiastolic" entityAttachPath="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHDiastolic">
-                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription LCS3TEST_MonitoringPrescriptionAHDiastolic on Self-Management System!"/>
-                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring/terminate" method="POST" failureMessage="Could not terminate prescription LCS3TEST_MonitoringPrescriptionAHDiastolic on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHDiastolic.type" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHDiastolic.alertmin" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHDiastolic.alertmax" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHDiastolic.alertfreq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHDiastolic.alertfrequnit" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHDiastolic.freq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHDiastolic.frequnit" isReadOnly="false" isMandatory="true"/>   
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHDiastolic.maxdelay" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHDiastolic.startdate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHDiastolic.enddate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHDiastolic.timeslot" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHDiastolic.comments" isReadOnly="false" isMandatory="false"/>                    
-                    <TaskParamDefinition part="AUTOMATED" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHDiastolic.measurement" isReadOnly="false" isMandatory="true"/>
-            </DualTaskDefinition>				
-
-			<DualTaskDefinition id="LCS3TEST_MonitoringPrescriptionAHWPBodyTemperatureRT" externalId="MonitoringPrescription" description="[POST] Prescripció de la monitorització - Temperatura - Desprès d'hospitalització" dynamicDescriptionPath="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHBodyTemperature.type" ownerPath="LCS3TEST_Clinician" dueDatePath="LCS3TEST_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS3TEST_MonitoringPrescriptionBodyTemperature" entityAttachPath="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHBodyTemperature">
-                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription LCS3TEST_MonitoringPrescriptionAHBodyTemperature on Self-Management System!"/>
-                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring/terminate" method="POST" failureMessage="Could not terminate prescription LCS3TEST_MonitoringPrescriptionAHBodyTemperature on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHBodyTemperature.type" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHBodyTemperature.alertmin" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHBodyTemperature.alertmax" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHBodyTemperature.alertfreq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHBodyTemperature.alertfrequnit" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHBodyTemperature.freq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHBodyTemperature.frequnit" isReadOnly="false" isMandatory="true"/>   
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHBodyTemperature.maxdelay" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHBodyTemperature.startdate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHBodyTemperature.enddate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHBodyTemperature.timeslot" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHBodyTemperature.comments" isReadOnly="false" isMandatory="false"/>                    
-                    <TaskParamDefinition part="AUTOMATED" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_MonitoringPrescriptionAHBodyTemperature.measurement" isReadOnly="false" isMandatory="true"/>
-            </DualTaskDefinition>										
-			
-	
-			<DualTaskDefinition id="LCS3TEST_PhysicalActivityAHWPRT" externalId="PhysicalActivity" description="[POST] Activitat física - Desprès d'hospitalització" ownerPath="LCS3TEST_Physiotherapist" dueDatePath="LCS3TEST_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS3TEST_PhysicalActivityAH" entityAttachPath="LCS3TEST_RepeatedTasksTest.LCS3TEST_PhysicalActivityAH">
-                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
-                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_PhysicalActivityAH.startdate" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_PhysicalActivityAH.enddate" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_PhysicalActivityAH.dailysteps" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_PhysicalActivityAH.dailylowlevel" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_PhysicalActivityAH.dailymediumlevel" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="AUTOMATED" path="LCS3TEST_RepeatedTasksTest.LCS3TEST_PhysicalActivityAH.measurement" isReadOnly="false" isMandatory="true"/>
-            </DualTaskDefinition>
-
-			<HumanTaskDefinition id="LCS3TEST_RehabilitationAHWPRT" description="[POST] Rehabilitació" ownerPath="LCS3TEST_Physiotherapist" isMandatory="true" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS3TEST_RehabilitationAH" entityAttachPath="LCS3TEST_RepeatedTasksTest.LCS3TEST_RehabilitationAH">
-				<TaskParamDefinition path="LCS3TEST_RepeatedTasksTest.LCS3TEST_RehabilitationAH.rehabExec0" isReadOnly="false" isMandatory="true"/>
-				<TaskParamDefinition path="LCS3TEST_RepeatedTasksTest.LCS3TEST_RehabilitationAH.rehabExec1" isReadOnly="false" isMandatory="true"/>
-				<TaskParamDefinition path="LCS3TEST_RepeatedTasksTest.LCS3TEST_RehabilitationAH.rehabExec2" isReadOnly="false" isMandatory="false"/>
-			</HumanTaskDefinition>
-			
-		</StageDefinition> -->
-		
-		
-    </CaseDefinition>
-	
-  </Workspace>
-
-  
+	</CaseDefinition>	
+ 
+ </Workspace>
+ 
 </SACMDefinition>
