@@ -1277,6 +1277,72 @@ router.delete('/:id/writer/:principalId', (req, res, next)=>{
 });
 
 /**
+ * @api {get} /cases/:id/notes Case Notes
+ * @apiName CaseNotes
+ * @apiGroup Cases
+ * @apiParam {String} id ID of the Case
+ * @apiSampleRequest /cases/:id/notes
+ * @apiSuccessExample {json} Success-Response:
+ * {
+ *     "id": "8zmoay4uke3e",
+ *     "notes": "some notes as html",
+ *     "mayEdit": true,
+ *     "lastEdit": {
+ *         "at": "2018-03-07 15:55:53.0",
+ *         "by": {
+ *             "id": "2c9480845bee03e7015bfcad28990010",
+ *             "email": "felix.michel@tum.de",
+ *             "name": "Felix Michel"
+ *         }
+ *     },
+ *     "editToken": "282b8575cfe9e9ae0a234ef3b01cbf6b",
+ *     "resourceType": "cases"
+ * }
+ */
+router.get('/:id/notes', (req, res, next)=>{
+  Case.notes(req.jwt, req.params.id)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    });
+});
+
+/**
+ * @api {patch} /cases/:id/notes Case Notes
+ * @apiName CaseNotes
+ * @apiGroup Cases
+ * @apiParam {String} id ID of the Case
+ * @apiSampleRequest /cases/:id/notes
+ * @apiSuccessExample {json} Success-Response:
+ * {
+ *     "id": "8zmoay4uke3e",
+ *     "notes": "some notes as html",
+ *     "mayEdit": true,
+ *     "lastEdit": {
+ *         "at": "2018-03-07 15:55:53.0",
+ *         "by": {
+ *             "id": "2c9480845bee03e7015bfcad28990010",
+ *             "email": "felix.michel@tum.de",
+ *             "name": "Felix Michel"
+ *         }
+ *     },
+ *     "editToken": "282b8575cfe9e9ae0a234ef3b01cbf6b",
+ *     "resourceType": "cases"
+ * }
+ */
+router.patch('/:id/notes', (req, res, next)=>{
+  Case.updateNotes(req.jwt, req.params.id, req.body)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    });
+});
+
+/**
  * @api {get} /cases/:id Get Case
  * @apiName GetCase
  * @apiGroup Cases

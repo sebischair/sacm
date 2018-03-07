@@ -73,6 +73,14 @@ export default class Case extends Model{
     return http.del(jwt, '/cases/'+caseId+'/writer/'+principalId);
   }
 
+  static notes(jwt, caseId) {
+    return http.get(jwt, '/cases/'+caseId+'/notes');
+  }
+
+  static updateNotes(jwt, caseId, data) {
+    return http.put(jwt, '/cases/'+caseId+'/notes', data);
+  }
+
   static findMe(jwt) {
     return http.get(jwt, '/cases/me');
   }
