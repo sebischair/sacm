@@ -753,6 +753,7 @@ module.exports = class Importer {
               entityDefinition: entityDefinitionId,
               newEntityDefinition: newEntityDefinitionIdPersisted,
               newEntityAttachPath: cd.$.newEntityAttachPath,
+              notesDefaultValue: cd.$.notesDefaultValue,
               version: this.version
             };
             return CaseDefinition.create(this.jwt, data)
