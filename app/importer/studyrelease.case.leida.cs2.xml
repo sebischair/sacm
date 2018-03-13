@@ -56,6 +56,7 @@
 
 		<!-- Identification Entity Definitions -->
         <EntityDefinition id="LCS2_Identification" description="Identification">
+			<AttributeDefinition id="LCS2_InclusionDiagnostic" type="Link.EntityDefinition.LCS2_InclusionDiagnostic" multiplicity="any" description="Diagnòstic d'inclusió"/> 
             <AttributeDefinition id="LCS2_TechnologicalTest" type="Link.EntityDefinition.LCS2_TechnologicalTest" multiplicity="any" description="Technological test"/> 
             <AttributeDefinition id="LCS2_ComorbidityCharlsonIdentification" type="Link.EntityDefinition.LCS2_ComorbidityCharlsonDef" multiplicity="any" description="Comorbidity Charlson"/> 
             <AttributeDefinition id="LCS2_GMAIdentification" type="Link.EntityDefinition.LCS2_GMADef" multiplicity="any" description="GMA"/> 
@@ -63,6 +64,15 @@
             <AttributeDefinition id="LCS2_PatientsConsent" type="Link.EntityDefinition.LCS2_PatientsConsent" multiplicity="any" description="Patients consent"/> 			
         </EntityDefinition>				
 
+		<EntityDefinition id="LCS2_InclusionDiagnostic">
+			<AttributeDefinition id="inclusiondiag" type="enumeration" multiplicity="maximalOne" description="Quina operació s'ha de fer el pacient?">
+				<EnumerationOption value="1" description="PGE - Pròtesi de genoll esquerra (LKP)"/>
+				<EnumerationOption value="2" description="PGD - Pròtesi de genoll dreta (RKP)"/>
+				<EnumerationOption value="3" description="AME - Artroplàstia de maluc esquerra (LHA) "/>
+				<EnumerationOption value="0" description="AMD - Artroplàstia de maluc dreta (RHA)"/>
+			</AttributeDefinition>			
+		</EntityDefinition>				
+		
 		<EntityDefinition id="LCS2_TechnologicalTest" >
 			<AttributeDefinition id="tech1" type="enumeration" multiplicity="maximalOne" description="Vosté o el seu cuidador tenen connexió a Internet?">
 				<EnumerationOption value="0" description="No"/>
@@ -1308,6 +1318,14 @@
                     <TaskParamDefinition path="LCS2_Settings.Physiotherapist" isReadOnly="false" isMandatory="true"/> 
                 </HumanTaskDefinition>					
                 
+				<HumanTaskDefinition id="LCS2_InclusionDiagnostic" description="Diagnòstic d'inclusió" ownerPath="LCS2_Settings.CaseManager" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_InclusionDiagnostic" entityAttachPath="LCS2_Identification.LCS2_InclusionDiagnostic">
+                    <SentryDefinition>
+                        <precondition processDefinitionId="LCS2_SelectPatient"/>
+                    </SentryDefinition>
+                    <TaskParamDefinition path="LCS2_Identification.LCS2_InclusionDiagnostic.inclusiondiag" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>	
+
+				
                 <!-- Gestor de Casos -->
                 <HumanTaskDefinition id="LCS2_TechnologicalTest" description="Test d'adherència a la tecnología" ownerPath="LCS2_Settings.CaseManager" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_TechnologicalTest" entityAttachPath="LCS2_Identification.LCS2_TechnologicalTest">
                     <SentryDefinition>
