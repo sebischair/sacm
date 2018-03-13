@@ -177,7 +177,9 @@
                 <EnumerationOption value="4" description="80-89"/>
                 <EnumerationOption value="5" description="90-99"/>
             </AttributeDefinition>           
-            <DerivedAttributeDefinition id="ch21" expression="number(ch1,0) + number(ch2,0) + number(ch3,0) + number(ch4,0) + number(ch5,0) + number(ch6,0) + number(ch7,0) + number(ch8,0) + number(ch9,0) + number(ch10,0) + number(ch11,0)*2 + number(ch12,0)*2 + number(ch13,0)*2 + number(ch14,0)*2 + number(ch15,0)*2 + number(ch16,0)*2 + number(ch17,0)*3 + number(ch18,0)*6 + number(ch19,0)*6 + number(ch20,0)" description="Charlson"/>
+            <DerivedAttributeDefinition id="ch21" 
+			expression="number(ch1,0) + number(ch2,0) + number(ch3,0) + number(ch4,0) + number(ch5,0) + number(ch6,0) + number(ch7,0) + number(ch8,0) + number(ch9,0) + number(ch10,0) + number(ch11,0)*2 + number(ch12,0)*2 + number(ch13,0)*2 + number(ch14,0)*2 + number(ch15,0)*2 + number(ch16,0)*2 + number(ch17,0)*3 + number(ch18,0)*6 + number(ch19,0)*6 + number(ch20,0)" 
+			description="Charlson"/>
 		</EntityDefinition>			
 		
 		<EntityDefinition id="LCS2_ComplexityRisk" >
@@ -195,19 +197,21 @@
             </AttributeDefinition>	
             <AttributeDefinition id="admissions1" type="number" multiplicity="maximalOne" description="Hospitalitzacions no programades el pacient durant el darrer any?"/>       
             <AttributeDefinition id="admissions2" type="number" multiplicity="maximalOne" description="Visites a urgències durant l´ultim any(incloses  urgències de primària)"/>       
-            <AttributeDefinition id="ASA" type="enumeration" multiplicity="maximalOne" description="Sistema de classificació d'estat físic - ASA de tipus:">
+            <AttributeDefinition id="ASA" 
+			additionalDescription="Sistema de classificació d'estat físic || ASA II: Pacient amb una lleu malaltia sistèmica | ASA III: Un pacient amb greu malaltia sistèmica"
+			type="enumeration" multiplicity="maximalOne" description="ASA de tipus:">
                 <EnumerationOption value="1.0001" description="II"/>
                 <EnumerationOption value="1" description="III"/>
             </AttributeDefinition>
-            <!-- PENDING PUT IN ADDITIONINFO
-                <EnumerationOption value="1" description="ASA I: Un pacient saludable normal"/>
-                <EnumerationOption value="2" description="ASA II: Pacient amb una lleu malaltia sistèmica"/>
-                <EnumerationOption value="3" description="ASA III: Un pacient amb greu malaltia sistèmica"/>
-                <EnumerationOption value="4" description="ASA IV: Un pacient amb greu malaltia sistèmica que constitueix una amenaça constant per a la vida"/>
-                <EnumerationOption value="5" description="ASA V: Un pacient moribund que no s'espera que sobrevisqui sense l'operació"/>
-                <EnumerationOption value="6" description="ASA VI: Un pacient declarat mort cerebral els òrgans són eliminats amb finalitats donants"/>
+            <!-- 	<EnumerationOption value="1" description="ASA I: Un pacient saludable normal"/>
+					<EnumerationOption value="2" description="ASA II: Pacient amb una lleu malaltia sistèmica"/>
+					<EnumerationOption value="3" description="ASA III: Un pacient amb greu malaltia sistèmica"/>
+					<EnumerationOption value="4" description="ASA IV: Un pacient amb greu malaltia sistèmica que constitueix una amenaça constant per a la vida"/>
+					<EnumerationOption value="5" description="ASA V: Un pacient moribund que no s'espera que sobrevisqui sense l'operació"/>
+					<EnumerationOption value="6" description="ASA VI: Un pacient declarat mort cerebral els òrgans són eliminats amb finalitats donants"/>
             -->
-            <DerivedAttributeDefinition id="complexityrisk" expression="round(number(cd1,0))+round(number(pmed1,0))+round(number(age,0))+round(number(ASA,0))" description="Puntuació"/> 
+            <DerivedAttributeDefinition id="complexityrisk" expression="round(number(cd1,0))+round(number(pmed1,0))+round(number(age,0))+round(number(ASA,0))"
+			description="Puntuació"/> 
 		</EntityDefinition>
 		
 		<EntityDefinition id="LCS2_GMADef" >
@@ -1244,16 +1248,24 @@
                 <SummaryParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch21"/>
                 <SummaryParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadFinal"/>												
                 <SummaryParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityPfeiffer.pfeiffer2"/>
+				<!-- Barthel -->
                 <SummaryParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariables.Anthropometric4"/>					
-				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_SLANSSEvaluation.slanssExec8"/>		
-				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_EVAECNDEvaluation.eva3"/>		
-				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_EVAECNDEvaluation.eva4"/>		
+								
+				<SummaryParamDefinition path="LCS2_Identification.LCS2_ComplexityRisk.ASA"/>
+				<!-- WOMAC -->
             </SummarySectionDefinition>
 
             <SummarySectionDefinition id="LCS2_Nutrition" description="Nutrició" position="LEFT">    
                 <SummaryParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisNutritionEvaluation.nutrition1"/>		
                 <SummaryParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisNutritionEvaluation.nutrition2"/>		
             </SummarySectionDefinition>
+						
+            <SummarySectionDefinition id="LCS2_Pain" description="Dolor" position="LEFT">    
+				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_SLANSSEvaluation.slanssExec8"/>		
+				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_EVAECNDEvaluation.eva3"/>		
+				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_EVAECNDEvaluation.eva4"/>		
+            </SummarySectionDefinition>
+
 						
             <SummarySectionDefinition id="LCS2_Barriers" description="Barreres" position="RIGHT">   
 			<!--
