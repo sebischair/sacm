@@ -369,9 +369,15 @@
                 <EnumerationOption value="2" description="Poques vegades"/>
                 <EnumerationOption value="3" description="Molt poques vegades"/>
             </AttributeDefinition>			
-             <DerivedAttributeDefinition id="hadA8" expression="number(hadA1,0)+number(hadA2,0)+number(hadA3,0)+number(hadA4,0)+number(hadA5,0)+number(hadA6,0)+number(hadA7,0)" description="Puntuació total ansietat"/> 
-             <DerivedAttributeDefinition id="hadD8" expression="number(hadD1,0)+number(hadD2,0)+number(hadD3,0)+number(hadD4,0)+number(hadD5,0)+number(hadD6,0)+number(hadD7,0)" description="Puntuació total depresió"/>              
-			 <DerivedAttributeDefinition id="hadFinal" expression="hadD8+hadA8" description="HAD"/> 			 			 
+			<DerivedAttributeDefinition id="hadA8" description="HAD Ansietat" 
+			uiReference="colors(0<=green<8<=orange<11<=red<=10000)"
+			additionalDescription="Verd si és més petit o igual a 7; Normal| Taronja si és més petit o igual a 10; Límit| Vermell si és 11; Cas anormal" 
+			expression="number(hadA1,0)+number(hadA2,0)+number(hadA3,0)+number(hadA4,0)+number(hadA5,0)+number(hadA6,0)+number(hadA7,0)" />			
+
+			<DerivedAttributeDefinition id="hadD8" description="HAD Depressió" 
+			uiReference="colors(0<=green<8<=orange<11<=red<=10000)"
+			additionalDescription="Verd si és més petit o igual a 7; Normal| Taronja si és més petit o igual a 10; Límit| Vermell si és 11; Cas anormal" 
+			expression="number(hadD1,0)+number(hadD2,0)+number(hadD3,0)+number(hadD4,0)+number(hadD5,0)+number(hadD6,0)+number(hadD7,0)" />						 
         </EntityDefinition> 
 		
 		<!-- Estat funcional --> 
@@ -1246,11 +1252,10 @@
             
             <SummarySectionDefinition id="LCS2_PatientStatus" description="Estat del pacient" position="LEFT">    
                 <SummaryParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch21"/>
-                <SummaryParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadFinal"/>												
+                
                 <SummaryParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityPfeiffer.pfeiffer2"/>
 				<!-- Barthel -->
-                <SummaryParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariables.Anthropometric4"/>					
-								
+                <SummaryParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariables.Anthropometric4"/>													
 				<SummaryParamDefinition path="LCS2_Identification.LCS2_ComplexityRisk.ASA"/>
 				<!-- WOMAC -->
             </SummarySectionDefinition>
@@ -1260,7 +1265,9 @@
                 <SummaryParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisNutritionEvaluation.nutrition2"/>		
             </SummarySectionDefinition>
 						
-            <SummarySectionDefinition id="LCS2_Pain" description="Dolor" position="LEFT">    
+            <SummarySectionDefinition id="LCS2_Pain" description="Dolor" position="LEFT">    											
+				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadA8"/>												
+                <SummaryParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadD8"/>							
 				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_SLANSSEvaluation.slanssExec8"/>		
 				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_EVAECNDEvaluation.eva3"/>		
 				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_EVAECNDEvaluation.eva4"/>		
@@ -1430,7 +1437,6 @@
                     <TaskParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadD7" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadA8" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadD8" isReadOnly="true" isMandatory="false"/>        
-                    <TaskParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadFinal" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
                     
 
