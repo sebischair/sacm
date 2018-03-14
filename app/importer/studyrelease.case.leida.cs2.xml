@@ -267,7 +267,11 @@
         </EntityDefinition>
 		
 		<!-- Estat cognitiu Índex de Pfeiffer -->
-        <EntityDefinition id="LCS2_ComorbidityPfeiffer">
+        <EntityDefinition id="LCS2_ComorbidityPfeiffer">		
+            <AttributeDefinition id="pfeiffer0" type="enumeration" multiplicity="exactlyOne" description="És analfabet?"> 
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Sí"/>				
+			</AttributeDefinition>			
             <AttributeDefinition id="pfeiffer1" type="enumeration" multiplicity="maximalOne" description="Número de errades">
                 <EnumerationOption value="0" description="0"/>
                 <EnumerationOption value="1" description="1"/>
@@ -280,8 +284,11 @@
                 <EnumerationOption value="8" description="8"/>
                 <EnumerationOption value="9" description="9"/>
                 <EnumerationOption value="10" description="10"/>
-            </AttributeDefinition>
-            <DerivedAttributeDefinition id="pfeiffer2" expression="number(pfeiffer1,0)" additionalDescription="De 3 a 4 pot tenir deteriorament cognitiu; De 4 a 10 és analfabet" description="Pfeiffer" />			
+            </AttributeDefinition>				
+			<DerivedAttributeDefinition id="pfeiffer2" description="Pfeiffer" 
+			additionalDescription="Vermell si és igual 0; Sospita de detiorament cognitiu| Verd si és igual 1; No hi ha deteriorament cognitiu"
+			expression='if number(pfeiffer0,0) = 0 and number(pfeiffer1,0) >= 3 then 0 else if  number(pfeiffer0,0) = 1 and number(pfeiffer1,0) >= 4 then 0 else 1'
+			uiReference="colors(0<=red<1<=green<11<=orange<=10000)" />							
         </EntityDefinition>
 	  	  
 		<EntityDefinition id="LCS2_HospitalAnxietyAndDepressionScale">
@@ -1251,8 +1258,7 @@
         <CaseDefinition id="LCS2_Leida" description="CS2 Lleida - Versió OK" ownerPath="LCS2_Settings.CaseManager" clientPath="LCS2_Settings.Patient" entityDefinitionId="LCS2_CaseData" newEntityDefinitionId="LCS2_Settings" newEntityAttachPath="LCS2_Settings" notesDefaultValue='<style>table{width:100%;}table th{background-color:#66308e; color:white;font-size:larger;}table td{border: 1px solid #999;border-width: 0px 1px 1px 1px;}</style><table cellpadding="4" cellspacing="0"> <tr> <th>HOSPITAL</th> <th>EQUIP DE PRIMARIA</th> </tr> <tr> <td><b>Anesthesiologist:</b></br> TBD</td> <td><b>Clinician:</b></br> TBD</td> </tr> <tr> <td><b>Physiotherapist:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>Clinician:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>Nurse:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>SocialCareer:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>New Rol:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>New Rol:</b></br> TBD</td> <td></td> </tr></table><span style="color:#666; font-size:smaller"><b>Hint:</b> One row for each rol.</span>'>	  
             
             <SummarySectionDefinition id="LCS2_PatientStatus" description="Estat del pacient" position="LEFT">    
-                <SummaryParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch21"/>
-                
+                <SummaryParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch21"/>                
                 <SummaryParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityPfeiffer.pfeiffer2"/>
 				<!-- Barthel -->
                 <SummaryParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariables.Anthropometric4"/>													
@@ -1416,7 +1422,8 @@
                 </HumanTaskDefinition> 
                         
                 <HumanTaskDefinition id="LCS2_ComorbidityPfeiffer" description="Estat cognitiu/mental - Pfeiffer" ownerPath="LCS2_Settings.Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_ComorbidityPfeiffer" entityAttachPath="LCS2_Evaluation.LCS2_ComorbidityPfeiffer">
-                    <TaskParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityPfeiffer.pfeiffer1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityPfeiffer.pfeiffer0" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityPfeiffer.pfeiffer1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityPfeiffer.pfeiffer2" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>        
 
