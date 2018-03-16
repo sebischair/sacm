@@ -89,8 +89,10 @@
 				<EnumerationOption value="0.0001" description="Tablet"/>
 				<EnumerationOption value="0.0002" description="Ordinador personal."/>
 				<EnumerationOption value="0.0003" description="Cap"/>
-			</AttributeDefinition>			
-			<DerivedAttributeDefinition id="tech4" expression="round(number(tech1,0))+round(number(tech2,0))+round(number(tech3,0))" description="Resultat del test tecnològic"/>
+			</AttributeDefinition>						
+			<DerivedAttributeDefinition id="tech4" description="Resultat del test tecnològic" 
+			additionalDescription="Si = 0 Suspès|| Si &gt; 0 Aprovat"
+			expression="round((number(tech1, 0) + number(tech2, 0) + number(tech3,0)))" />			
 		</EntityDefinition>	  	
 		
 		<EntityDefinition id="LCS2_ComorbidityCharlsonDef" >
@@ -198,20 +200,20 @@
             <AttributeDefinition id="admissions1" type="number" multiplicity="maximalOne" description="Hospitalitzacions no programades el pacient durant el darrer any?"/>       
             <AttributeDefinition id="admissions2" type="number" multiplicity="maximalOne" description="Visites a urgències durant l´ultim any(incloses  urgències de primària)"/>       
             <AttributeDefinition id="ASA" 
-			additionalDescription="Sistema de classificació d'estat físic || ASA II: Pacient amb una lleu malaltia sistèmica | ASA III: Un pacient amb greu malaltia sistèmica"
+			additionalDescription="ASA II: Pacient amb una lleu malaltia sistèmica || ASA III: Un pacient amb greu malaltia sistèmica"
 			type="enumeration" multiplicity="maximalOne" description="ASA de tipus:">
                 <EnumerationOption value="1.0001" description="II"/>
                 <EnumerationOption value="1" description="III"/>
             </AttributeDefinition>
-            <!-- 	<EnumerationOption value="1" description="ASA I: Un pacient saludable normal"/>
+            <!-- 	Sistema de classificació d'estat físic
+					<EnumerationOption value="1" description="ASA I: Un pacient saludable normal"/>
 					<EnumerationOption value="2" description="ASA II: Pacient amb una lleu malaltia sistèmica"/>
 					<EnumerationOption value="3" description="ASA III: Un pacient amb greu malaltia sistèmica"/>
 					<EnumerationOption value="4" description="ASA IV: Un pacient amb greu malaltia sistèmica que constitueix una amenaça constant per a la vida"/>
 					<EnumerationOption value="5" description="ASA V: Un pacient moribund que no s'espera que sobrevisqui sense l'operació"/>
 					<EnumerationOption value="6" description="ASA VI: Un pacient declarat mort cerebral els òrgans són eliminats amb finalitats donants"/>
-            -->
             <DerivedAttributeDefinition id="complexityrisk" expression="round(number(cd1,0))+round(number(pmed1,0))+round(number(age,0))+round(number(ASA,0))"
-			description="Puntuació"/> 
+			description="Puntuació"/> -->
 		</EntityDefinition>
 		
 		<EntityDefinition id="LCS2_GMADef" >
@@ -247,7 +249,11 @@
             <AttributeDefinition id="LCS2_ProblemsManagingMoney" type="Link.EntityDefinition.LCS2_ProblemsManagingMoney" multiplicity="any" description="Problems managing money"/> 
 			
             <!-- Diagonòstic -->
-            <AttributeDefinition id="LCS2_AnthropometricVariables" type="Link.EntityDefinition.LCS2_AnthropometricVariables" multiplicity="any" description="Anthropometric variables"/> 
+            <!--<AttributeDefinition id="LCS2_AnthropometricVariables" type="Link.EntityDefinition.LCS2_AnthropometricVariables" multiplicity="any" description="Anthropometric variables"/> -->
+			
+            <AttributeDefinition id="LCS2_AnthropometricVariablesAl" type="Link.EntityDefinition.LCS2_AnthropometricVariablesAl" multiplicity="any" description="Anthropometric variables"/> 			
+			<AttributeDefinition id="LCS2_AnthropometricVariablesGenoll" type="Link.EntityDefinition.LCS2_AnthropometricVariablesGenoll" multiplicity="any" description="Anthropometric variables"/> 
+			
 			<AttributeDefinition id="LCS2_DiagnosisSmokingAndAlcohol" type="Link.EntityDefinition.LCS2_DiagnosisSmokingAndAlcohol" multiplicity="any" description="Diagnosis smoking and alcohol"/> 			            
 			<AttributeDefinition id="LCS2_DiagnosisNutritionEvaluation" type="Link.EntityDefinition.LCS2_DiagnosisNutritionDef" multiplicity="any" description="Diagnosis nutrition"/> 			
 		    
@@ -284,14 +290,14 @@
 
 			<DerivedAttributeDefinition id="pfeiffer2" description="Pfeiffer" 
 			expression='number(pfeiffer1,0)'
-			additionalDescription="Si té 3 errors o més; Sospita de detiorament cognitiu| Si té fins a dos errors; No hi ha deteriorament cognitiu"
+			additionalDescription="Si &gt;= 3 Sospita de deteriorament cognitiu (Vermell)|| Si &lt;= 2 No hi ha deteriorament cognitiu (Verd)"
 			uiReference="colors(0<=green<3<=red<11<=orange<=10000)" />				
 			
 			<!--<DerivedAttributeDefinition id="pfeiffer2" description="Pfeiffer" 
 			additionalDescription="Vermell si és igual 0; Sospita de detiorament cognitiu| Verd si és igual 1; No hi ha deteriorament cognitiu"
 			expression='if number(pfeiffer0,0) = 0 and number(pfeiffer1,0) >= 3 then 0 else if  number(pfeiffer0,0) = 1 and number(pfeiffer1,0) >= 4 then 0 else 1'
 			uiReference="colors(0<=red<1<=green<11<=orange<=10000)" />	
-		-->			
+			-->			
         </EntityDefinition>
 	  	  
 		<EntityDefinition id="LCS2_HospitalAnxietyAndDepressionScale">
@@ -379,14 +385,15 @@
                 <EnumerationOption value="2" description="Poques vegades"/>
                 <EnumerationOption value="3" description="Molt poques vegades"/>
             </AttributeDefinition>			
+
 			<DerivedAttributeDefinition id="hadA8" description="HAD Ansietat" 
 			uiReference="colors(0<=green<8<=orange<11<=red<=10000)"
-			additionalDescription="Verd si és més petit o igual a 7; Normal| Taronja si és més petit o igual a 10; Límit| Vermell si és o més 11; Cas anormal" 
+			additionalDescription="si &lt;= 7 Normal (Verd)|| si &lt;= 10 Límit (Taronja)|| si &lt;= 11 Cas anormal (Vermell)" 
 			expression="number(hadA1,0)+number(hadA2,0)+number(hadA3,0)+number(hadA4,0)+number(hadA5,0)+number(hadA6,0)+number(hadA7,0)" />			
 
 			<DerivedAttributeDefinition id="hadD8" description="HAD Depressió" 
 			uiReference="colors(0<=green<8<=orange<11<=red<=10000)"
-			additionalDescription="Verd si és més petit o igual a 7; Normal| Taronja si és més petit o igual a 10; Límit| Vermell si és o més 11; Cas anormal" 
+			additionalDescription="si &lt;= 7 Normal (Verd)|| si &lt;= 10 Límit (Taronja)|| si &lt;= 11 Cas anormal (Vermell)" 
 			expression="number(hadD1,0)+number(hadD2,0)+number(hadD3,0)+number(hadD4,0)+number(hadD5,0)+number(hadD6,0)+number(hadD7,0)" />						 
         </EntityDefinition> 
 		
@@ -441,8 +448,11 @@
                 <EnumerationOption value="0" description="dependent"/>
                 <EnumerationOption value="5" description="necessita ajuda (verbal, física)"/>
                 <EnumerationOption value="10" description="independent"/>
-            </AttributeDefinition>   
-            <DerivedAttributeDefinition id="barthel11" expression="number(barthel1,0)+number(barthel2,0)+number(barthel3,0)+number(barthel4,0)+number(barthel5,0)+number(barthel6,0)+number(barthel7,0)+number(barthel8,0)+number(barthel9,0)+number(barthel10,0)" description="Barthel"/>  
+            </AttributeDefinition>               
+			<DerivedAttributeDefinition id="barthel11" description="Barthel" 
+			uiReference="colors(0<=red<61<=orange<91<=green<=10000)"
+			additionalDescription="Si &lt;= 20 Dependència total (Vermell)|| si &gt; 20 i &lt;= 60 Dependència severa (Vermell)|| si &gt; 61 i &lt;= 90 Dependència moderada (Taronja)|| si &gt; 91 i &lt;= 99 Dependència lleu (Verd)|| si = 100 Independència (Verd)" 
+			expression="number(barthel1,0)+number(barthel2,0)+number(barthel3,0)+number(barthel4,0)+number(barthel5,0)+number(barthel6,0)+number(barthel7,0)+number(barthel8,0)+number(barthel9,0)+number(barthel10,0)" />						
         </EntityDefinition>
 
         <EntityDefinition id="LCS2_DiagnosisCommunication">
@@ -521,30 +531,44 @@
 			<DerivedAttributeDefinition id="money2" type="number" multiplicity="maximalOne" description="Problemes fent servir diners" additionalDescription="el pacient necessita l'ajuda d'una altra persona per utilitzar diners" expression="round(number(money,0))"/> 
         </EntityDefinition>
 		
-		<!-- Diagnòstic  -->
-        <EntityDefinition id="LCS2_AnthropometricVariables">
-            <AttributeDefinition id="AnWeigh" type="number" multiplicity="maximalOne" description="Pes (kg)"/>
-			<AttributeDefinition id="AnHeight" type="number" multiplicity="maximalOne" description="Alçada(cm)"/>
-			<DerivedAttributeDefinition id="Anthropometric4" type="number" multiplicity="maximalOne" description="IMC (kg/m2) amb pes i alçada" expression="round(AnWeigh/(AnHeight/100*AnHeight/100),2)"/> 
-            <AttributeDefinition id="Anthropometric6" type="number" multiplicity="maximalOne" description="Distància entre genoll i turmell (cm)"/>
-			<AttributeDefinition id="Anthropometric5" type="enumeration" multiplicity="maximalOne" description="IMC >= 30 kg/m2">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
-            </AttributeDefinition>
-			<!--
-            <AttributeDefinition id="Anthropometric7" type="enumeration" multiplicity="maximalOne" description="Gènere">
-                <EnumerationOption value="0" description="Home"/>
-                <EnumerationOption value="1" description="Dona"/>
-            </AttributeDefinition>
-			<AttributeDefinition id="Anthropometric8" type="number" multiplicity="maximalOne" description="Edat"/>			
-			<DerivedAttributeDefinition id="Anthropometric9" description="IMC (kg/m2) amb pes i distància entre genoll i turmell - Homes" additionalDescription="Home sobrepès > 27.8 | Obesitat => 30 " expression="((2.03*Anthropometric6)-(0.04*Anthropometric8)+64.19)"/> 			
-			<DerivedAttributeDefinition id="Anthropometric10" description="IMC (kg/m2) amb pes i distància entre genoll i turmell - Dones" additionalDescription="Dona sobrepès 27.3 | Obesitat => 30 " expression="((1.83*Anthropometric6)-(0.24*Anthropometric8)+84.88)"/> 			            
-			<AttributeDefinition id="Anthropometric5" type="enumeration" multiplicity="maximalOne" description="IMC >= 30 kg/m2">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
-            </AttributeDefinition>-->					
+		<!-- Diagnòstic  -->		
+		<EntityDefinition id="LCS2_AnthropometricVariablesAl">
+            <AttributeDefinition id="AnWeighAl" type="number" multiplicity="maximalOne" description="Pes (kg)"/>
+			<AttributeDefinition id="AnHeightAl" type="number" multiplicity="maximalOne" description="Alçada(cm)"/>							
+
+			<DerivedAttributeDefinition id="AnthropometricAl" type="number" multiplicity="maximalOne" description="IMC (Pes i Alçada)"  
+			uiReference="colors(0<=green<30<=orange<40<=red<=10000)"
+			additionalDescription="si &lt; 30 Risc no molt alt (Verd)|| si &gt;= 30 Risc molt alt (Taronja)|| si &gt;= 40 Risc extremadament alt (Vermell)" 
+			expression="round(AnWeighAl/(AnHeightAl/100*AnHeightAl/100),2)" />										
 		</EntityDefinition> 
-		
+
+			
+		<EntityDefinition id="LCS2_AnthropometricVariablesGenoll">            
+			<AttributeDefinition id="AnKneeGenoll" type="number" multiplicity="maximalOne" description="Distància entre genoll i turmell (cm)"/>
+			<AttributeDefinition id="AnAgeGenoll" type="number" multiplicity="maximalOne" description="Edat (anys)"/>			
+
+			<DerivedAttributeDefinition id="AnthropometricGenollHomes" type="number" multiplicity="maximalOne" description="Alçada Homes" 
+			expression="round((2.03 * AnKneeGenoll) - (0.04 * AnAgeGenoll) + 64.19,2)" 
+			additionalDescription="(2.03 x alçada-genoll (cm)) – (0.04 x edat (anys)) + 64.19"/> 			
+			
+			<DerivedAttributeDefinition id="AnthropometricGenollDones" type="number" multiplicity="maximalOne" description="Alçada Dones" 
+			expression="round((1.83 * AnKneeGenoll) - (0.24 * AnAgeGenoll) + 84.88,2)" 
+			additionalDescription="(1.83 x alçada-genoll (cm)) – {0.24 x edat (anys)) + 84.88"/>			
+
+			<AttributeDefinition id="AnWeighGenoll" type="number" multiplicity="maximalOne" description="Pes (kg)"/>			
+						
+			<DerivedAttributeDefinition id="AnthropometricGenollHomesIMC" type="number" multiplicity="maximalOne" description="IMC Homes"  
+			uiReference="colors(0<=green<=27<orange<30<=red<=10000)"
+			additionalDescription="Home sobrepès si IMC &lt; 27.8 (Taronja)| Obesitat si IMC &lt;= 30 (Vermell)" 
+			expression="round(AnWeighGenoll/(AnthropometricGenollHomes/100*AnthropometricGenollHomes/100),2)" />										
+
+			<DerivedAttributeDefinition id="AnthropometricGenollDonesIMC" type="number" multiplicity="maximalOne" description="IMC Dones"  
+			uiReference="colors(0<=green<=27<orange<30<=red<=10000)"
+			additionalDescription="Dona sobrepès si IMC &lt; 27.3 (Taronja)| Obesitat si IMC &lt;= 30 (Vermell)" 
+			expression="round(AnWeighGenoll/(AnthropometricGenollDones/100*AnthropometricGenollDones/100),2)" />																														
+		</EntityDefinition> 				
+			
+
         <EntityDefinition id="LCS2_DiagnosisSmokingAndAlcohol"> 
             <AttributeDefinition id="smalc1" type="enumeration" multiplicity="maximalOne" description="Consum de tabac">
                 <EnumerationOption value="1" description="Actualment"/>
@@ -1261,27 +1285,25 @@
         <CaseDefinition id="LCS2_Leida" description="CS2 Lleida - Versió OK" ownerPath="LCS2_Settings.CaseManager" clientPath="LCS2_Settings.Patient" entityDefinitionId="LCS2_CaseData" newEntityDefinitionId="LCS2_Settings" newEntityAttachPath="LCS2_Settings" notesDefaultValue='<style>table{width:100%;}table th{background-color:#66308e; color:white;font-size:larger;}table td{border: 1px solid #999;border-width: 0px 1px 1px 1px;}</style><table cellpadding="4" cellspacing="0"> <tr> <th>HOSPITAL</th> <th>EQUIP DE PRIMARIA</th> </tr> <tr> <td><b>Anesthesiologist:</b></br> TBD</td> <td><b>Clinician:</b></br> TBD</td> </tr> <tr> <td><b>Physiotherapist:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>Clinician:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>Nurse:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>SocialCareer:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>New Rol:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>New Rol:</b></br> TBD</td> <td></td> </tr></table><span style="color:#666; font-size:smaller"><b>Hint:</b> One row for each rol.</span>'>	  
             
             <SummarySectionDefinition id="LCS2_PatientStatus" description="Estat del pacient" position="LEFT">    
-                <SummaryParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch21"/>                
-                <SummaryParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityPfeiffer.pfeiffer2"/>
-				<!-- Barthel -->
-                <SummaryParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariables.Anthropometric4"/>													
-				<SummaryParamDefinition path="LCS2_Identification.LCS2_ComplexityRisk.ASA"/>
-				<!-- WOMAC -->
-            </SummarySectionDefinition>
-
-            <SummarySectionDefinition id="LCS2_Nutrition" description="Nutrició" position="LEFT">    
-                <SummaryParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisNutritionEvaluation.nutrition1"/>		
-                <SummaryParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisNutritionEvaluation.nutrition2"/>		
-            </SummarySectionDefinition>
-						
-            <SummarySectionDefinition id="LCS2_Pain" description="Dolor" position="LEFT">    											
+                <SummaryParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch21"/>                				
 				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadA8"/>												
                 <SummaryParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadD8"/>							
+				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityPfeiffer.pfeiffer2"/>
+				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_Barthel.barthel11"/>								
+				
+                <SummaryParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesAl.AnthropometricAl"/>																									
+				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenoll.AnthropometricGenollHomesIMC"/>	
+				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenoll.AnthropometricGenollDonesIMC"/>	
+				
+                <SummaryParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisNutritionEvaluation.nutrition1"/>		
+                <SummaryParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisNutritionEvaluation.nutrition2"/>		
+				<SummaryParamDefinition path="LCS2_Identification.LCS2_ComplexityRisk.ASA"/>
+				<!-- WOMAC -->
 				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_SLANSSEvaluation.slanssExec8"/>		
 				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_EVAECNDEvaluation.eva3"/>		
 				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_EVAECNDEvaluation.eva4"/>		
-            </SummarySectionDefinition>
-
+            </SummarySectionDefinition>						
+			
 						
             <SummarySectionDefinition id="LCS2_Barriers" description="Barreres" position="RIGHT">   
 			<!--
@@ -1374,7 +1396,7 @@
                     <TaskParamDefinition path="LCS2_Identification.LCS2_ComplexityRisk.admissions2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS2_Identification.LCS2_ComplexityRisk.age" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS2_Identification.LCS2_ComplexityRisk.ASA" isReadOnly="false" isMandatory="true"/>	<!-- LCS2_ASAPhysicalStatusClassificationSystemIdentification -->				
-                    <TaskParamDefinition path="LCS2_Identification.LCS2_ComplexityRisk.complexityrisk" isReadOnly="false" isMandatory="false"/>				
+                    <!--<TaskParamDefinition path="LCS2_Identification.LCS2_ComplexityRisk.complexityrisk" isReadOnly="false" isMandatory="false"/>	-->
                 </HumanTaskDefinition>
                 
                 <!-- Gestor de Casos -->
@@ -1489,17 +1511,21 @@
                 </HumanTaskDefinition>    
             
                 <!-- Infermera; Test LCS2_PrimaryCareClinicians  -->  
-                <HumanTaskDefinition id="LCS2_AnthropometricVariables" description="Diagnòstic - Variables antropomètriques" ownerPath="LCS2_Settings.Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_AnthropometricVariables" entityAttachPath="LCS2_Evaluation.LCS2_AnthropometricVariables">
-                    <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariables.AnWeigh" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariables.AnHeight" isReadOnly="false" isMandatory="false"/>              
-                    <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariables.Anthropometric4" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariables.Anthropometric5" isReadOnly="false" isMandatory="true"/>			  
-                    <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariables.Anthropometric6" isReadOnly="false" isMandatory="false"/>
-                    <!--<TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariables.Anthropometric7" isReadOnly="false" isMandatory="true"/>			  
-                    <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariables.Anthropometric8" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariables.Anthropometric9" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariables.Anthropometric10" isReadOnly="true" isMandatory="false"/>-->
-                </HumanTaskDefinition>    
+				<HumanTaskDefinition id="LCS2_AnthropometricVariablesAl" description="Diagnòstic - Pes i alçada - Variables antropomètriques" ownerPath="LCS2_Settings.Nurse" isMandatory="false" repeatable="ONCE"  entityDefinitionId="LCS2_AnthropometricVariablesAl" entityAttachPath="LCS2_Evaluation.LCS2_AnthropometricVariablesAl">
+				  <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesAl.AnWeighAl" isReadOnly="false" isMandatory="true"/>
+				  <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesAl.AnHeightAl" isReadOnly="false" isMandatory="true"/>  
+				  <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesAl.AnthropometricAl" isReadOnly="true" isMandatory="false"/>
+				</HumanTaskDefinition>  			
+				
+				<HumanTaskDefinition id="LCS2_AnthropometricVariablesGenoll" description="Diagnòstic - Pes i distància - Variables antropomètriques" ownerPath="LCS2_Settings.Nurse" isMandatory="false" repeatable="ONCE"  entityDefinitionId="LCS2_AnthropometricVariablesGenoll" entityAttachPath="LCS2_Evaluation.LCS2_AnthropometricVariablesGenoll">
+				  <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenoll.AnWeighGenoll" isReadOnly="false" isMandatory="true"/>
+				  <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenoll.AnKneeGenoll" isReadOnly="false" isMandatory="true"/>  
+				  <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenoll.AnthropometricGenollHomes" isReadOnly="true" isMandatory="false"/>
+				  <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenoll.AnthropometricGenollDones" isReadOnly="true" isMandatory="false"/>
+				  <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenoll.AnAgeGenoll" isReadOnly="false" isMandatory="true"/>  				  				  
+				  <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenoll.AnthropometricGenollHomesIMC" isReadOnly="true" isMandatory="false"/>
+				  <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenoll.AnthropometricGenollDonesIMC" isReadOnly="true" isMandatory="false"/>
+				</HumanTaskDefinition>  							
 
                 <!-- PDT Cirurgiá/Anestesista -->      
                 <HumanTaskDefinition id="LCS2_DiagnosisSmokingAndAlcohol" description="Diagnòstic - Consum de tabac i alcohol" ownerPath="LCS2_Settings.AnesClinic" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_DiagnosisSmokingAndAlcohol" entityAttachPath="LCS2_Evaluation.LCS2_DiagnosisSmokingAndAlcohol">
