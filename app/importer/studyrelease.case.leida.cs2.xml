@@ -388,12 +388,12 @@
 
 			<DerivedAttributeDefinition id="hadA8" description="HAD Ansietat" 
 			uiReference="colors(0<=green<8<=orange<11<=red<=10000)"
-			additionalDescription="si &lt;= 7 Normal (Verd)|| si &lt;= 10 Límit (Taronja)|| si &lt;= 11 Cas anormal (Vermell)" 
+			additionalDescription="si &lt;= 7 Normal (Verd)|| si &gt;=8 i &lt;= 10 Límit (Taronja)|| si &gt;= 11 Cas anormal (Vermell)" 
 			expression="number(hadA1,0)+number(hadA2,0)+number(hadA3,0)+number(hadA4,0)+number(hadA5,0)+number(hadA6,0)+number(hadA7,0)" />			
-
+			
 			<DerivedAttributeDefinition id="hadD8" description="HAD Depressió" 
 			uiReference="colors(0<=green<8<=orange<11<=red<=10000)"
-			additionalDescription="si &lt;= 7 Normal (Verd)|| si &lt;= 10 Límit (Taronja)|| si &lt;= 11 Cas anormal (Vermell)" 
+			additionalDescription="si &lt;= 7 Normal (Verd)|| si &gt;=8 i &lt;= 10 Límit (Taronja)|| si &gt;= 11 Cas anormal (Vermell)" 
 			expression="number(hadD1,0)+number(hadD2,0)+number(hadD3,0)+number(hadD4,0)+number(hadD5,0)+number(hadD6,0)+number(hadD7,0)" />						 
         </EntityDefinition> 
 		
@@ -762,6 +762,12 @@
                 <EnumerationOption value="3" description="Molt"/>
                 <EnumerationOption value="4" description="Moltíssim"/>
             </AttributeDefinition>
+			<DerivedAttributeDefinition id="WomacDolor" description="WOMAC Dolor" 
+			expression="number(Womac1,0)+number(Womac2,0)+number(Womac3,0)+number(Womac4,0)+number(Womac5,0)" />			
+			<DerivedAttributeDefinition id="WomacRigidesa" description="WOMAC Rigidesa" 
+			expression="number(Womac6,0)+number(Womac7,0)" />			
+			<DerivedAttributeDefinition id="WomacFuncional" description="WOMAC Capacitat funcional" 
+			expression="number(Womac8,0)+number(Womac9,0)+number(Womac10,0)+number(Womac11,0)+number(Womac12,0)+number(Womac13,0)+number(Womac14,0)+number(Womac15,0)+number(Womac16,0)+number(Womac17,0)+number(Womac18,0)+number(Womac19,0)+number(Womac20,0)+number(Womac21,0)+number(Womac22,0)+number(Womac23,0)+number(Womac24,0)" />						
         </EntityDefinition> 
 				
 		<EntityDefinition id="LCS2_EVAECNDDef">
@@ -1305,7 +1311,11 @@
                 <SummaryParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisNutritionEvaluation.nutrition1"/>		
                 <SummaryParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisNutritionEvaluation.nutrition2"/>		
 				<SummaryParamDefinition path="LCS2_Identification.LCS2_ComplexityRisk.ASA"/>
-				<!-- WOMAC -->
+
+				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.WomacDolor"/>
+				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.WomacRigidesa"/>
+				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.WomacFuncional"/>						
+				
 				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_SLANSSEvaluation.slanssExec8"/>		
 				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_EVAECNDEvaluation.eva3"/>		
 				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_EVAECNDEvaluation.eva4"/>		
@@ -1586,6 +1596,9 @@
                     <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac22" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac23" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.Womac24" isReadOnly="false" isMandatory="true"/>        
+                    <TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.WomacDolor" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.WomacRigidesa" isReadOnly="true" isMandatory="false"/>
+					<TaskParamDefinition path="LCS2_Evaluation.LCS2_WOMAC.WomacFuncional" isReadOnly="true" isMandatory="false"/>										
                 </HumanTaskDefinition>         
             
                 <HumanTaskDefinition id="LCS2_EVAECNDEvaluationHT" description="*Diagnòstic dolor – Escala de Qualificació Numérica del Dolor(EQND) - (Abans cirurgia)" ownerPath="LCS2_Settings.Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_EVAECNDDef" entityAttachPath="LCS2_Evaluation.LCS2_EVAECNDEvaluation">
