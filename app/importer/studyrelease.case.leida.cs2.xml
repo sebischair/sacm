@@ -582,15 +582,8 @@
         </EntityDefinition>	 
 		
 		<EntityDefinition id="LCS2_DiagnosisNutritionDef"> 		
-			<AttributeDefinition id="nutrition1" type="number.min(0).max(20)" defaultValues="[0.0]" multiplicity="maximalOne" 
-			description="Hemoglobina (gr/dl)"  
-			uiReference="colors(0<=red<12<=green<21<=orange<=10000)"
-			additionalDescription="si &lt; 12 gr/dl Anemia (Vermell)|| si &gt;= 12 gr/dl Normal (Verd)" />       
-			
-			<AttributeDefinition id="nutrition2" type="number.min(0).max(10)" defaultValues="[0.0]" multiplicity="maximalOne" 
-			description="Proteínes (gr/dl)" 
-			uiReference="colors(0<=red<6<=green<11<=orange<=10000)"
-			additionalDescription="si &lt; 6 gr/dl Desnutrició proteica (Vermell)|| si &gt;= 6 gr/dl Normal (Verd)" />       						
+			<AttributeDefinition id="nutrition1" type="number.min(0).max(20)" defaultValues="[0.0]" multiplicity="maximalOne" description="Hemoglobina (gr/dl)"  additionalDescription="menor de 12 gr/dl anemia" />       
+			<AttributeDefinition id="nutrition2" type="number.min(0).max(10)" defaultValues="[0.0]" multiplicity="maximalOne" description="Proteínes (gr/dl)" additionalDescription="menor 6 gr / dl. Desnutrició proteica" />       
 		</EntityDefinition>		
 		
 		<EntityDefinition id="LCS2_WOMAC"> 
@@ -1357,9 +1350,7 @@
                 </HumanTaskDefinition>			
                 
                 <!-- Infermera  -->				
-                <HumanTaskDefinition id="LCS2_ComorbidityCharlsonIdentificationHT" description="Índex de comorbilitat de Charlson" 
-				footnote="Pendent rebre autorització"
-				ownerPath="LCS2_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_ComorbidityCharlsonDef" entityAttachPath="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification">
+                <HumanTaskDefinition id="LCS2_ComorbidityCharlsonIdentificationHT" description="Índex de comorbilitat de Charlson" ownerPath="LCS2_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_ComorbidityCharlsonDef" entityAttachPath="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification">
                     <SentryDefinition>
                         <precondition processDefinitionId="LCS2_SelectPatient"/>
                     </SentryDefinition>					  
@@ -1387,9 +1378,7 @@
                 </HumanTaskDefinition>
                 
                 <!-- Clínic  -->			
-                <HumanTaskDefinition id="LCS2_GMAIdentificationHT" description="GMA" 
-				footnote="Monterde D, Vela E, Clèries M. Los grupos de morbilidad ajustados: nuevo agrupador de morbilidad poblacional de utilidad en el ámbito de la atención primaria. Atención Primaria 2016;48:674–82. doi:10.1016/j.aprim.2016.06.003"
-				ownerPath="LCS2_Settings.Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_GMADef" entityAttachPath="LCS2_Identification.LCS2_GMAIdentification">
+                <HumanTaskDefinition id="LCS2_GMAIdentificationHT" description="GMA" ownerPath="LCS2_Settings.Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_GMADef" entityAttachPath="LCS2_Identification.LCS2_GMAIdentification">
                     <SentryDefinition>
                         <precondition processDefinitionId="LCS2_SelectPatient"/>
                     </SentryDefinition>
@@ -1428,16 +1417,12 @@
                 </SentryDefinition> 
             
                 <!-- Infermera  -->   
-                <HumanTaskDefinition id="LCS2_GMAEvaluationHT" description="Estat comòrbid - GMA (Identificació del Cas)" 
-				footnote="Monterde D, Vela E, Clèries M. Los grupos de morbilidad ajustados: nuevo agrupador de morbilidad poblacional de utilidad en el ámbito de la atención primaria. Atención Primaria 2016;48:674–82. doi:10.1016/j.aprim.2016.06.003"
-				ownerPath="LCS2_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_GMADef" entityAttachPath="LCS2_Evaluation.LCS2_GMAEvaluation">
+                <HumanTaskDefinition id="LCS2_GMAEvaluationHT" description="Estat comòrbid - GMA (Identificació del Cas)" ownerPath="LCS2_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_GMADef" entityAttachPath="LCS2_Evaluation.LCS2_GMAEvaluation">
                     <TaskParamDefinition path="LCS2_Identification.LCS2_GMAIdentification.gma" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition> 
             
                 <!-- Infermera  -->    
-                <HumanTaskDefinition id="LCS2_ComorbidityCharlsonEvaluationHT" description="Estat comòrbid - Índex de comorbilitat de Charlson (Identificació del Cas)" 
-				footnote="Pendent rebre autorització"
-				ownerPath="LCS2_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_ComorbidityCharlsonDef" entityAttachPath="LCS2_Evaluation.LCS2_ComorbidityCharlsonEvaluation">    
+                <HumanTaskDefinition id="LCS2_ComorbidityCharlsonEvaluationHT" description="Estat comòrbid - Índex de comorbilitat de Charlson (Identificació del Cas)" ownerPath="LCS2_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_ComorbidityCharlsonDef" entityAttachPath="LCS2_Evaluation.LCS2_ComorbidityCharlsonEvaluation">    
                     <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch1" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch2" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch3" isReadOnly="true" isMandatory="false"/>
@@ -1461,16 +1446,12 @@
                     <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch21" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition> 
                         
-                <HumanTaskDefinition id="LCS2_ComorbidityPfeiffer" description="Estat cognitiu/mental - Pfeiffer" 
-				footnote="Pfeiffer, E. (1975). A short portable mental status questionnaire for the assessment of organic brain deficit in elderly patients. Journal of American Geriatrics Society. 23, 433-41."
-				ownerPath="LCS2_Settings.Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_ComorbidityPfeiffer" entityAttachPath="LCS2_Evaluation.LCS2_ComorbidityPfeiffer">
+                <HumanTaskDefinition id="LCS2_ComorbidityPfeiffer" description="Estat cognitiu/mental - Pfeiffer" ownerPath="LCS2_Settings.Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_ComorbidityPfeiffer" entityAttachPath="LCS2_Evaluation.LCS2_ComorbidityPfeiffer">
 					<TaskParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityPfeiffer.pfeiffer1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS2_Evaluation.LCS2_ComorbidityPfeiffer.pfeiffer2" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>        
 
-                <HumanTaskDefinition id="LCS2_HospitalAnxietyAndDepressionScale" description="*Estat cognitiu/mental - Escala d'ansietat i depressió hospitalària (HAD)" 
-				footnote="Zigmond, A. S., & Snaith, R. P. (1983). The hospital anxiety and depression scale. Acta psychiatrica scandinavica, 67(6), 361-370."
-				ownerPath="LCS2_Settings.Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_HospitalAnxietyAndDepressionScale" entityAttachPath="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale">
+                <HumanTaskDefinition id="LCS2_HospitalAnxietyAndDepressionScale" description="*Estat cognitiu/mental - Escala d'ansietat i depressió hospitalària (HAD)" ownerPath="LCS2_Settings.Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_HospitalAnxietyAndDepressionScale" entityAttachPath="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale">
                     <TaskParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadA1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadD1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadA2" isReadOnly="false" isMandatory="true"/>
