@@ -536,7 +536,7 @@
             <AttributeDefinition id="AnWeighAl" type="number" multiplicity="maximalOne" description="Pes (kg)"/>
 			<AttributeDefinition id="AnHeightAl" type="number" multiplicity="maximalOne" description="Alçada(cm)"/>							
 
-			<DerivedAttributeDefinition id="AnthropometricAl" type="number" multiplicity="maximalOne" description="IMC (Pes i Alçada)"  
+			<DerivedAttributeDefinition id="AnthropometricAl" type="number" multiplicity="maximalOne" description="IMC(P/A)"  
 			uiReference="colors(0<=green<30<=orange<40<=red<=10000)"
 			additionalDescription="si &lt; 30 Risc no molt alt (Verd)|| si &gt;= 30 Risc molt alt (Taronja)|| si &gt;= 40 Risc extremadament alt (Vermell)" 
 			expression="round(AnWeighAl/(AnHeightAl/100*AnHeightAl/100),2)" />										
@@ -557,14 +557,14 @@
 
 			<AttributeDefinition id="AnWeighGenoll" type="number" multiplicity="maximalOne" description="Pes (kg)"/>			
 						
-			<DerivedAttributeDefinition id="AnthropometricGenollHomesIMC" type="number" multiplicity="maximalOne" description="IMC Homes (Pes i Distància)"  
+			<DerivedAttributeDefinition id="AnthropometricGenollHomesIMC" type="number" multiplicity="maximalOne" description="IMC Homes(P/D)"  
 			uiReference="colors(0<=green<=27<orange<30<=red<=10000)"
-			additionalDescription="Home sobrepès si IMC &lt; 27 (Taronja)| Obesitat si IMC &lt;= 30 (Vermell)" 
+			additionalDescription="Home sobrepès si IMC &lt; 27 (Taronja)|| Obesitat si IMC &lt;= 30 (Vermell)" 
 			expression="round(AnWeighGenoll/(AnthropometricGenollHomes/100*AnthropometricGenollHomes/100),2)" />										
 
-			<DerivedAttributeDefinition id="AnthropometricGenollDonesIMC" type="number" multiplicity="maximalOne" description="IMC Dones (Pes i Distància)"  
+			<DerivedAttributeDefinition id="AnthropometricGenollDonesIMC" type="number" multiplicity="maximalOne" description="IMC Dones(P/D)"  
 			uiReference="colors(0<=green<=27<orange<30<=red<=10000)"
-			additionalDescription="Dona sobrepès si IMC &lt; 27 (Taronja)| Obesitat si IMC &lt;= 30 (Vermell)" 
+			additionalDescription="Dona sobrepès si IMC &lt; 27 (Taronja)|| Obesitat si IMC &lt;= 30 (Vermell)" 
 			expression="round(AnWeighGenoll/(AnthropometricGenollDones/100*AnthropometricGenollDones/100),2)" />																														
 		</EntityDefinition> 				
 			
@@ -583,12 +583,12 @@
 		
 		<EntityDefinition id="LCS2_DiagnosisNutritionDef"> 		
 			<AttributeDefinition id="nutrition1" type="number.min(0).max(20)" defaultValues="[0.0]" multiplicity="maximalOne" 
-			description="Hemoglobina (gr/dl)"  
+			description="Hb (gr/dl)"  
 			uiReference="colors(0<=red<12<=green<21<=orange<=10000)"
 			additionalDescription="si &lt; 12 gr/dl Anemia (Vermell)|| si &gt;= 12 gr/dl Normal (Verd)" />       
 			
 			<AttributeDefinition id="nutrition2" type="number.min(0).max(10)" defaultValues="[0.0]" multiplicity="maximalOne" 
-			description="Proteínes (gr/dl)" 
+			description="Prot (gr/dl)" 
 			uiReference="colors(0<=red<6<=green<11<=orange<=10000)"
 			additionalDescription="si &lt; 6 gr/dl Desnutrició proteica (Vermell)|| si &gt;= 6 gr/dl Normal (Verd)" />       						
 		</EntityDefinition>		
@@ -762,11 +762,11 @@
                 <EnumerationOption value="3" description="Molt"/>
                 <EnumerationOption value="4" description="Moltíssim"/>
             </AttributeDefinition>
-			<DerivedAttributeDefinition id="WomacDolor" description="WOMAC Dolor" 
+			<DerivedAttributeDefinition id="WomacDolor" description="WOMAC D." additionalDescription="Dolor"
 			expression="number(Womac1,0)+number(Womac2,0)+number(Womac3,0)+number(Womac4,0)+number(Womac5,0)" />			
-			<DerivedAttributeDefinition id="WomacRigidesa" description="WOMAC Rigidesa" 
+			<DerivedAttributeDefinition id="WomacRigidesa" description="WOMAC R." additionalDescription="Rigidesa"
 			expression="number(Womac6,0)+number(Womac7,0)" />			
-			<DerivedAttributeDefinition id="WomacFuncional" description="WOMAC Capacitat funcional" 
+			<DerivedAttributeDefinition id="WomacFuncional" description="WOMAC C." additionalDescription="Capacitat funcional"
 			expression="number(Womac8,0)+number(Womac9,0)+number(Womac10,0)+number(Womac11,0)+number(Womac12,0)+number(Womac13,0)+number(Womac14,0)+number(Womac15,0)+number(Womac16,0)+number(Womac17,0)+number(Womac18,0)+number(Womac19,0)+number(Womac20,0)+number(Womac21,0)+number(Womac22,0)+number(Womac23,0)+number(Womac24,0)" />						
         </EntityDefinition> 
 				
@@ -802,9 +802,13 @@
                 <EnumerationOption value="9" description="9"/>
                 <EnumerationOption value="10" description="10"/>
             </AttributeDefinition>		
-			<DerivedAttributeDefinition id="eva3" description="EQND en repòs" 
+			<DerivedAttributeDefinition id="eva3" description="EQND repòs" 
+			additionalDescription="Dolor controlat si &lt;= 5 (Verd)|| Dolor no controlat si &gt;= 6 (Vermell)"
+			uiReference="colors(0<=green<6<=red<100<=orange<=10000)"
 			expression="(number(eva1,0))" />
-			<DerivedAttributeDefinition id="eva4" description="EQND en moviment" 
+			<DerivedAttributeDefinition id="eva4" description="EQND moviment" 
+			additionalDescription="Dolor controlat si &lt;= 5 (Verd)|| Dolor no controlat si &gt;= 6 (Vermell)"
+			uiReference="colors(0<=green<6<=red<100<=orange<=10000)"
 			expression="(number(eva2,0))" />			
         </EntityDefinition>		
 		
@@ -838,7 +842,11 @@
                 <EnumerationOption value="0" description="L'àrea dolorosa no se sent diferent de la zona no dolorosa"/>
                 <EnumerationOption value="3" description="Em sento entumiment o tendresa a la zona dolorosa que és diferent de l'àrea no dolorosa"/>
             </AttributeDefinition>
-            <DerivedAttributeDefinition id="slanssExec8" expression="number(slanssExec1,0)+number(slanssExec2,0)+number(slanssExec3,0)+number(slanssExec4,0)+number(slanssExec5,0)+number(slanssExec6,0)+number(slanssExec7,0)" description="S-LANSS"/>
+            <DerivedAttributeDefinition id="slanssExec8" 
+			uiReference="colors(0<=green<12<=red<100<=orange<=10000)"
+			additionalDescription="No hi ha dolor si &lt;= 11 (Verd)|| Hi ha dolor neuropàtic si IMC &gt;= 12 (Vermell)" 
+			expression="number(slanssExec1,0)+number(slanssExec2,0)+number(slanssExec3,0)+number(slanssExec4,0)+number(slanssExec5,0)+number(slanssExec6,0)+number(slanssExec7,0)" 
+			description="S-LANSS"/>
         </EntityDefinition>
 		
 	
@@ -1534,13 +1542,13 @@
                 </HumanTaskDefinition>    
             
                 <!-- Infermera; Test LCS2_PrimaryCareClinicians  -->  
-				<HumanTaskDefinition id="LCS2_AnthropometricVariablesAl" description="Diagnòstic - Pes i alçada - Variables antropomètriques" ownerPath="LCS2_Settings.Nurse" isMandatory="false" repeatable="ONCE"  entityDefinitionId="LCS2_AnthropometricVariablesAl" entityAttachPath="LCS2_Evaluation.LCS2_AnthropometricVariablesAl">
+				<HumanTaskDefinition id="LCS2_AnthropometricVariablesAl" description="Diagnòstic - Pes i alçada - Variables antropomètriques" ownerPath="LCS2_Settings.Nurse" isMandatory="false" repeatable="PARALLEL" activation="MANUAL"  entityDefinitionId="LCS2_AnthropometricVariablesAl" entityAttachPath="LCS2_Evaluation.LCS2_AnthropometricVariablesAl">
 				  <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesAl.AnWeighAl" isReadOnly="false" isMandatory="true"/>
 				  <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesAl.AnHeightAl" isReadOnly="false" isMandatory="true"/>  
 				  <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesAl.AnthropometricAl" isReadOnly="true" isMandatory="false"/>
 				</HumanTaskDefinition>  			
 				
-				<HumanTaskDefinition id="LCS2_AnthropometricVariablesGenoll" description="Diagnòstic - Pes i distància - Variables antropomètriques" ownerPath="LCS2_Settings.Nurse" isMandatory="false" repeatable="ONCE"  entityDefinitionId="LCS2_AnthropometricVariablesGenoll" entityAttachPath="LCS2_Evaluation.LCS2_AnthropometricVariablesGenoll">
+				<HumanTaskDefinition id="LCS2_AnthropometricVariablesGenoll" description="Diagnòstic - Pes i distància - Variables antropomètriques" ownerPath="LCS2_Settings.Nurse" isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_AnthropometricVariablesGenoll" entityAttachPath="LCS2_Evaluation.LCS2_AnthropometricVariablesGenoll">
 				  <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenoll.AnWeighGenoll" isReadOnly="false" isMandatory="true"/>
 				  <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenoll.AnKneeGenoll" isReadOnly="false" isMandatory="true"/>  
 				  <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenoll.AnAgeGenoll" isReadOnly="false" isMandatory="true"/>  				  				  				  
