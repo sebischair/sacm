@@ -43,7 +43,6 @@
         <!-- Settings Entity Definitions -->
         <EntityDefinition id="BCS2_Settings" description="Settings">
             <AttributeDefinition id="Patient" type="Link.Users(IdibapsPatients)" description="Patient"/>
-            <AttributeDefinition id="Owner" type="Link.Users(IdibapsProfessionals)" description="Owner"/>            
             <AttributeDefinition id="CaseManager" type="Link.Users(IdibapsCaseManagers)" description="Case Manager"/>            
             <AttributeDefinition id="Anesthesiologist" type="Link.Users(IdibapsAnesthesiologists)" description="Anestesista"/>
             <AttributeDefinition id="Nurse" type="Link.Users(IdibapsNurses)" description="Enfermero"/>
@@ -97,13 +96,12 @@
             <AttributeDefinition id="BCS2_FunctionalCapacityYPA" type="Link.EntityDefinition.BCS2_FunctionalCapacityYPA" multiplicity="maximalOne" description="Capacidad Funcional YPA"/> 
             <AttributeDefinition id="BCS2_AdherenceCapacityESES" type="Link.EntityDefinition.BCS2_AdherenceCapacityESES" multiplicity="maximalOne" description="Evaluación de adherencia ESES"/> 
             <AttributeDefinition id="BCS2_HospitalAnxietyAndDepressionScale" type="Link.EntityDefinition.BCS2_HospitalAnxietyAndDepressionScale" multiplicity="maximalOne" description="Hospital Anxiety and Depression Scale"/> 
-            <AttributeDefinition id="EvaluatioDueDate" type="date.after(TODAY)" description="Evaluation default due date"/>   
+            <AttributeDefinition id="EvaluationDueDate" type="date.after(TODAY)" description="Evaluation default due date"/>   
         </EntityDefinition>
 
         <EntityDefinition id="BCS2_ASATest" description="ASA Test">
             <AttributeDefinition id="AsaCalculator" type="string" multiplicity="maximalOne" description="Calculadora online de la American Society of Anaesthesiologists physical status classification"/>
         </EntityDefinition>
-
 
         <EntityDefinition id="BCS2_ClinicalInformation" description="Clinical Information">
             <AttributeDefinition id="SociodemoAddress" type="string" multiplicity="maximalOne" description="Dirección"/>
@@ -819,11 +817,15 @@
 
 
             <StageDefinition id="BCS2_CaseIdentification" description="Case Identification" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_Identification" entityAttachPath="BCS2_Identification">
-                <HumanTaskDefinition id="BCS2_SelectPatient" externalId="SelectPatient" description="Assign Patient" ownerPath="BCS2_Settings.Owner" isMandatory="true" repeatable="ONCE"> 
+                <HumanTaskDefinition id="BCS2_SelectPatient" externalId="SelectPatient" description="Assign Patient" ownerPath="BCS2_Settings.CaseManager" isMandatory="true" repeatable="ONCE"> 
                     <HttpHookDefinition on="COMPLETE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/case/patient/inclusion" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition path="BCS2_Settings.Patient" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Settings.Owner" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS2_Settings.WorkplanDueDate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition path="BCS2_Settings.CaseManager" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Settings.Anesthesiologist" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Settings.Nurse" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Settings.Nutritionist" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Settings.Physiotherapist" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Settings.Psychologists" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
                 <HumanTaskDefinition id="BCS2_Inclusion" description="Inclusion" ownerPath="BCS2_Settings.Anesthesiologist" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_Inclusion" entityAttachPath="BCS2_Identification.BCS2_Inclusion">
                     <TaskParamDefinition path="BCS2_Identification.BCS2_Inclusion.name" isReadOnly="false" isMandatory="true"/>
@@ -844,8 +846,8 @@
                     <precondition processDefinitionId="BCS2_CaseEvaluation"/>
                 </SentryDefinition>  
 
-                <HumanTaskDefinition id="BCS2_SelectedProfessionals" description="Set evluation due date" ownerPath="BCS2_Settings.CaseManager" isMandatory="true" repeatable="ONCE">
-                    <TaskParamDefinition path="BCS2_Evaluation.EvaluatioDueDate" isReadOnly="false" isMandatory="true"/>
+                <HumanTaskDefinition id="BCS2_SetEvaluationDueDate" description="Set evluation due date" ownerPath="BCS2_Settings.CaseManager" isMandatory="true" repeatable="ONCE">
+                    <TaskParamDefinition path="BCS2_Evaluation.EvaluationDueDate" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
                 
                 <HumanTaskDefinition id="BCS2_ASATest" description="ASA Test" ownerPath="BCS2_Settings.Anesthesiologist" dueDatePath="BCS2_Evaluation.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_ASATest" entityAttachPath="BCS2_Evaluation.BCS2_ASATest">
@@ -874,7 +876,7 @@
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.ClinicInfoComment" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="BCS2_Charlson" description="Charlson index" ownerPath="BCS2_Settings.Owner" dueDatePath="BCS2_Evaluation.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_Charlson" entityAttachPath="BCS2_Evaluation.BCS2_Charlson"
+                <HumanTaskDefinition id="BCS2_Charlson" description="Charlson index" ownerPath="BCS2_Settings.CaseManager" dueDatePath="BCS2_Evaluation.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_Charlson" entityAttachPath="BCS2_Evaluation.BCS2_Charlson"
                     footnote="Charlson ME, Pompei P, Ales KL, MacKenzie CR. A new method of classifying prognostic comorbidity in longitudinal studies: development and validation. J Chronic Dis 1987; 40:373–83."
                     >
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_Charlson.ch1" isReadOnly="false" isMandatory="true"/>
@@ -1047,7 +1049,7 @@ Young, D., Jee, S. and Appel, L. (2001). A comparison of the Yale Physical Activ
                     <precondition processDefinitionId="BCS2_CaseEvaluation"/>
                 </SentryDefinition>
 
-                <DualTaskDefinition id="BCS2_PhysicalActivity" externalId="PhysicalActivity" description="Physical Activity" ownerPath="BCS2_Settings.Owner" isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="BCS2_PhysicalActivity" entityAttachPath="BCS2_Workplan.BCS2_PhysicalActivity">
+                <DualTaskDefinition id="BCS2_PhysicalActivity" externalId="PhysicalActivity" description="Physical Activity" ownerPath="BCS2_Settings.CaseManager" isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="BCS2_PhysicalActivity" entityAttachPath="BCS2_Workplan.BCS2_PhysicalActivity">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_PhysicalActivity.startdate" isReadOnly="false" isMandatory="true"/>
@@ -1060,7 +1062,7 @@ Young, D., Jee, S. and Appel, L. (2001). A comparison of the Yale Physical Activ
                     <TaskParamDefinition part="AUTOMATED" path="BCS2_Workplan.BCS2_PhysicalActivity.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>
 
-                <DualTaskDefinition id="BCS2_MonitoringPrescription" externalId="MonitoringPrescription" description="Monitoring Prescription" dynamicDescriptionPath="BCS2_Workplan.BCS2_MonitoringPrescription.type" ownerPath="BCS2_Settings.Owner" isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="BCS2_MonitoringPrescription" entityAttachPath="BCS2_Workplan.BCS2_MonitoringPrescription">
+                <DualTaskDefinition id="BCS2_MonitoringPrescription" externalId="MonitoringPrescription" description="Monitoring Prescription" dynamicDescriptionPath="BCS2_Workplan.BCS2_MonitoringPrescription.type" ownerPath="BCS2_Settings.CaseManager" isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="BCS2_MonitoringPrescription" entityAttachPath="BCS2_Workplan.BCS2_MonitoringPrescription">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_MonitoringPrescription.type" isReadOnly="false" isMandatory="true"/>
@@ -1084,7 +1086,7 @@ Young, D., Jee, S. and Appel, L. (2001). A comparison of the Yale Physical Activ
                 <SentryDefinition>
                     <precondition processDefinitionId="BCS2_Workplan"/>
                 </SentryDefinition>
-                <HumanTaskDefinition id="BCS2_DischargeForm" description="Discharge Form" ownerPath="BCS2_Settings.Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_DischargeForm" entityAttachPath="BCS2_Discharge.BCS2_DischargeForm">
+                <HumanTaskDefinition id="BCS2_DischargeForm" description="Discharge Form" ownerPath="BCS2_Settings.CaseManager" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_DischargeForm" entityAttachPath="BCS2_Discharge.BCS2_DischargeForm">
                     <TaskParamDefinition path="BCS2_Discharge.BCS2_DischargeForm.comment" isReadOnly="false" isMandatory="true"/>                  
                 </HumanTaskDefinition>
             </StageDefinition>
@@ -1101,7 +1103,12 @@ Young, D., Jee, S. and Appel, L. (2001). A comparison of the Yale Physical Activ
     <Execution>
         <Action id="CompleteHumanTask" processId="BCS2_SelectPatient">
             <TaskParam path="BCS2_Settings.Patient"  userValue="coled"/>
-            <TaskParam path="BCS2_Settings.Owner"  userValue="salazart"/>
+            <TaskParam path="BCS2_Settings.CaseManager"  userValue="salazart"/>
+            <TaskParam path="BCS2_Settings.Anesthesiologist" userValue="velardem"/>
+            <TaskParam path="BCS2_Settings.Nurse" userValue="wilsong"/>
+            <TaskParam path="BCS2_Settings.Nutritionist" userValue="parkerw"/>
+            <TaskParam path="BCS2_Settings.Physiotherapist" userValue="parkerw"/>
+            <TaskParam path="BCS2_Settings.Psychologists" userValue="arpl"/>
         </Action>
         <Action id="CompleteHumanTask" processId="BCS2_Inclusion">            
             <TaskParam path="BCS2_Identification.BCS2_Inclusion.name" values="['Test Inclusion']"/>
@@ -1112,12 +1119,8 @@ Young, D., Jee, S. and Appel, L. (2001). A comparison of the Yale Physical Activ
             <TaskParam path="BCS2_Identification.BCS2_Inclusion.SurgeryPriority" values="['1']"/>
             <TaskParam path="BCS2_Identification.BCS2_Inclusion.IdentificacionComments" values="['Almost dead']"/>
         </Action>
-        <Action id="CompleteHumanTask" processId="BCS2_SelectedProfessionals">
-            <TaskParam path="BCS2_Settings.Anesthesiologist" userValue="velardem"/>
-            <TaskParam path="BCS2_Settings.Nurse" userValue="wilsong"/>
-            <TaskParam path="BCS2_Settings.Nutritionist" userValue="parkerw"/>
-            <TaskParam path="BCS2_Settings.Physiotherapist" userValue="parkerw"/>
-            <TaskParam path="BCS2_Settings.Psychologists" userValue="arpl"/>
+        <Action id="CompleteHumanTask" processId="BCS2_SetEvaluationDueDate">
+            <TaskParam path="BCS2_Evaluation.EvaluationDueDate" values="['2019-06-09T00:00:00.0']"/>
         </Action>  
         <Action id="CompleteHumanTask" processId="BCS2_ASATest">
             <TaskParam path="BCS2_Evaluation.BCS2_ASATest.AsaCalculator" values="['4390']"/>
