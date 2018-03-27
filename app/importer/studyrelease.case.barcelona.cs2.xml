@@ -1092,7 +1092,7 @@ Young, D., Jee, S. and Appel, L. (2001). A comparison of the Yale Physical Activ
                     <precondition processDefinitionId="BCS2_CaseEvaluation"/>
                 </SentryDefinition>
 
-                <DualTaskDefinition id="BCS2_PhysicalActivity" externalId="PhysicalActivity" description="Physical Activity" ownerPath="BCS2_Settings.CaseManager" isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="BCS2_PhysicalActivity" entityAttachPath="BCS2_Workplan.BCS2_PhysicalActivity">
+                <DualTaskDefinition id="BCS2_PhysicalActivity" externalId="PhysicalActivity" description="Physical Activity" ownerPath="BCS2_Settings.Physiotherapist" isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="BCS2_PhysicalActivity" entityAttachPath="BCS2_Workplan.BCS2_PhysicalActivity">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_PhysicalActivity.startdate" isReadOnly="false" isMandatory="true"/>
@@ -1105,7 +1105,7 @@ Young, D., Jee, S. and Appel, L. (2001). A comparison of the Yale Physical Activ
                     <TaskParamDefinition part="AUTOMATED" path="BCS2_Workplan.BCS2_PhysicalActivity.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>
 
-                <DualTaskDefinition id="BCS2_MonitoringPrescription" externalId="MonitoringPrescription" description="Monitoring Prescription" dynamicDescriptionPath="BCS2_Workplan.BCS2_MonitoringPrescription.type" ownerPath="BCS2_Settings.CaseManager" isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="BCS2_MonitoringPrescription" entityAttachPath="BCS2_Workplan.BCS2_MonitoringPrescription">
+                <DualTaskDefinition id="BCS2_MonitoringPrescription" externalId="MonitoringPrescription" description="Monitoring Prescription" dynamicDescriptionPath="BCS2_Workplan.BCS2_MonitoringPrescription.type" isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="BCS2_MonitoringPrescription" entityAttachPath="BCS2_Workplan.BCS2_MonitoringPrescription">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="BCS2_Workplan.BCS2_MonitoringPrescription.type" isReadOnly="false" isMandatory="true"/>
@@ -1129,7 +1129,7 @@ Young, D., Jee, S. and Appel, L. (2001). A comparison of the Yale Physical Activ
                 <SentryDefinition>
                     <precondition processDefinitionId="BCS2_Workplan"/>
                 </SentryDefinition>
-                <HumanTaskDefinition id="BCS2_DischargeForm" description="Discharge Form" ownerPath="BCS2_Settings.CaseManager" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_DischargeForm" entityAttachPath="BCS2_Discharge.BCS2_DischargeForm">
+                <HumanTaskDefinition id="BCS2_DischargeForm" description="Discharge Form" ownerPath="BCS2_Settings.Anesthesiologist" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_DischargeForm" entityAttachPath="BCS2_Discharge.BCS2_DischargeForm">
                     <TaskParamDefinition path="BCS2_Discharge.BCS2_DischargeForm.comment" isReadOnly="false" isMandatory="true"/>                  
                 </HumanTaskDefinition>
             </StageDefinition>
