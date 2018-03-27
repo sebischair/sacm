@@ -525,7 +525,7 @@
         <EntityDefinition id="GCS2_Workplan" description="Workplan">
             <AttributeDefinition id="GCS2_PhysicalActivity" type="Link.EntityDefinition.GCS2_PhysicalActivity" description="Physical Activity" multiplicity="any"/>
             <AttributeDefinition id="GCS2_MonitoringPrescription" type="Link.EntityDefinition.GCS2_MonitoringPrescription" description="Monitoring Prescription" multiplicity="any"/> 
-            <AttributeDefinition id="GCS2_SimpleTask" type="Link.EntityDefinition.GCS2_SimpleTask" description="Simple Task" multiplicity="any"/>
+            <!--<AttributeDefinition id="GCS2_SimpleTask" type="Link.EntityDefinition.GCS2_SimpleTask" description="Simple Task" multiplicity="any"/>-->
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_PhysicalActivity" description="Physical Activity">
@@ -575,6 +575,7 @@
             <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Measurement"/>                      
         </EntityDefinition>
 
+        <!-- Simple Task
         <EntityDefinition id="GCS2_SimpleTask" description="Simple Task">
             <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Activity Type" additionalDescription="Select simple task type.">     
                 <EnumerationOption value="STRAIGHTENING_AND_BENDING_KNEE_LYING_ON_BACK" description="יישור וכיפוף ברך בשכיבה על הגב"/>
@@ -625,7 +626,7 @@
             <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comments" additionalDescription="Please provide additional hints for the patient."/>   
             <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Measurement"/>      
         </EntityDefinition>
-
+        -->
 
         <!-- Discharge Entity Definitions -->
         <EntityDefinition id="GCS2_Discharge" description="GCS2_Discharge">
@@ -853,7 +854,7 @@
                     <TaskParamDefinition part="AUTOMATED" path="GCS2_Workplan.GCS2_MonitoringPrescription.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>
 
-                <!-- TODO needs to be removed after testing -->
+                <!-- Simple Task
                 <DualTaskDefinition id="GCS2_SimpleTask" externalId="SimpleTask" description="Simple Task" dynamicDescriptionPath="GCS2_Workplan.GCS2_SimpleTask.type" ownerPath="GCS2_Settings.Clinician" dueDatePath="GCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="GCS2_SimpleTask" entityAttachPath="GCS2_Workplan.GCS2_SimpleTask">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/simpletask" method="POST" failureMessage="Could not create prescription on Self-Management System!"></HttpHookDefinition>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/simpletask/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"></HttpHookDefinition>
@@ -867,7 +868,8 @@
                     <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_SimpleTask.repetitionseachday" isReadOnly="false" isMandatory="true"/> 
                     <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_SimpleTask.comments" isReadOnly="false" isMandatory="true"/>                    
                     <TaskParamDefinition part="AUTOMATED" path="GCS2_Workplan.GCS2_SimpleTask.measurement" isReadOnly="false" isMandatory="true"/>
-                </DualTaskDefinition>                
+                </DualTaskDefinition>  
+                -->              
             </StageDefinition>
             
             <StageDefinition id="GCS2_Discharge" description="Discharge" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_Discharge" entityAttachPath="GCS2_Discharge">
@@ -1039,6 +1041,7 @@
             <TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescription.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
         </Action>
 
+        <!-- Simple Task 
         <Action id="ActivateDualTask" processId="GCS2_SimpleTask" breakpoint="true"/>
         <Action id="CompleteDualTaskHumanPart" processId="GCS2_SimpleTask" breakpoint="true">
             <TaskParam path="GCS2_Workplan.GCS2_SimpleTask.type"  values="['OTHER']"/>
@@ -1054,7 +1057,12 @@
         <Action id="CompleteDualTaskAutomatedPart" processId="GCS2_SimpleTask">
             <TaskParam path="GCS2_Workplan.GCS2_SimpleTask.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
         </Action>
+        -->
 
+        <Action id="CompleteStage" processId="GCS2_Workplan"/>
+        <Action id="CompleteHumanTask" processId="GCS2_DischargeForm">
+            <TaskParam path="GCS2_Discharge.GCS2_DischargeForm.comment"  values="['The patient was discharged on xxx everything fine.']"/>
+        </Action>
     </Execution>
 
 </SACMDefinition>
