@@ -1,6 +1,7 @@
 import Promise from 'bluebird';
 import http from '../http';
 import Model from '../model';
+import config from '../../../config';
 
 
 export default class User extends Model{
@@ -23,6 +24,8 @@ export default class User extends Model{
 
   static createAndVerify(jwt, data) {
     let u = null;
+    data.password = config.sociocortex.defaultPassword;
+    data.passwordAgain = config.sociocortex.defaultPassword;
     return User.create(jwt, data)
       .then(user=>{
         u = user;
