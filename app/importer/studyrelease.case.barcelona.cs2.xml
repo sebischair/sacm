@@ -45,12 +45,11 @@
             <AttributeDefinition id="Patient" type="Link.Users(IdibapsPatients)" description="Patient"/>
             <AttributeDefinition id="Owner" type="Link.Users(IdibapsProfessionals)" description="Owner"/>            
             <AttributeDefinition id="CaseManager" type="Link.Users(IdibapsCaseManagers)" description="Case Manager"/>            
-            <AttributeDefinition id="Anesthesiologist" type="Link.Users(IdibapsAnesthesiologists)" description="Anesthesiologists"/>
-            <AttributeDefinition id="Nurse" type="Link.Users(IdibapsNurses)" description="Nurses"/>
-            <AttributeDefinition id="Nutritionist" type="Link.Users(IdibapsNutritionists)" description="Nutritionist"/>
-            <AttributeDefinition id="Physiotherapist" type="Link.Users(IdibapsPhysiotherapists)" description="Physiotherapist"/>
-            <AttributeDefinition id="Psychologists" type="Link.Users(IdibapsPsychologists)" description="Psychologists"/>
-            <AttributeDefinition id="WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date"/>   
+            <AttributeDefinition id="Anesthesiologist" type="Link.Users(IdibapsAnesthesiologists)" description="Anestesista"/>
+            <AttributeDefinition id="Nurse" type="Link.Users(IdibapsNurses)" description="Enfermero"/>
+            <AttributeDefinition id="Nutritionist" type="Link.Users(IdibapsNutritionists)" description="Nutricionista"/>
+            <AttributeDefinition id="Physiotherapist" type="Link.Users(IdibapsPhysiotherapists)" description="Fisioterapeuta"/>
+            <AttributeDefinition id="Psychologists" type="Link.Users(IdibapsPsychologists)" description="Psicólogo"/>
         </EntityDefinition>
 
         <!-- Identification Entity Definitions -->
@@ -84,7 +83,6 @@
 
         <!-- Evaluation Entity Definitions -->
         <EntityDefinition id="BCS2_Evaluation" description="Evaluation">
-            <AttributeDefinition id="BCS2_SelectedProfessionals" type="Link.EntityDefinition.BCS2_SelectedProfessionals" multiplicity="maximalOne" description="Selección inicial de profesionales"/> 
             <AttributeDefinition id="BCS2_ASATest" type="Link.EntityDefinition.BCS2_ASATest" multiplicity="maximalOne" description="ASA Test"/> 
             <AttributeDefinition id="BCS2_ClinicalInformation" type="Link.EntityDefinition.BCS2_ClinicalInformation" multiplicity="maximalOne" description="Clinical Information"/> 
             <AttributeDefinition id="BCS2_Charlson" type="Link.EntityDefinition.BCS2_Charlson" multiplicity="maximalOne" description="Charlson"/> 
@@ -99,15 +97,7 @@
             <AttributeDefinition id="BCS2_FunctionalCapacityYPA" type="Link.EntityDefinition.BCS2_FunctionalCapacityYPA" multiplicity="maximalOne" description="Capacidad Funcional YPA"/> 
             <AttributeDefinition id="BCS2_AdherenceCapacityESES" type="Link.EntityDefinition.BCS2_AdherenceCapacityESES" multiplicity="maximalOne" description="Evaluación de adherencia ESES"/> 
             <AttributeDefinition id="BCS2_HospitalAnxietyAndDepressionScale" type="Link.EntityDefinition.BCS2_HospitalAnxietyAndDepressionScale" multiplicity="maximalOne" description="Hospital Anxiety and Depression Scale"/> 
-        </EntityDefinition>
-
-        <EntityDefinition id="BCS2_SelectedProfessionals" description="Selección inicial de profesionales">
-            <AttributeDefinition id="SelectOwnerAnesthesia" type="Link.Users(IdibapsAnesthesiologists)" multiplicity="maximalOne" description="Selecciona el profesional encargado para realizar el rol de anestesista:"/>
-            <AttributeDefinition id="SelectOwnerNurse" type="Link.Users(IdibapsNurses)" multiplicity="maximalOne" description="Selecciona el profesional encargado para realizar el rol de enfermero:"/>
-            <AttributeDefinition id="SelectOwnerNutri" type="Link.Users(IdibapsNutritionists)" multiplicity="maximalOne" description="Selecciona el profesional encargado para realizar el rol de nutricionista:"/>
-            <AttributeDefinition id="SelectOwnerPsico" type="Link.Users(IdibapsPsychologists)" multiplicity="maximalOne" description="Selecciona el profesional encargado para realizar el rol de psicólogo:"/>
-            <AttributeDefinition id="SelectOwnerFisio" type="Link.Users(IdibapsPhysiotherapists)" multiplicity="maximalOne" description="Selecciona el profesional encargado para realizar el rol de fisioterapeuta:"/>
-            <AttributeDefinition id="EvaluationDueDate" type="date.after(TODAY)" description="Evaluation default due date"/>
+            <AttributeDefinition id="EvaluatioDueDate" type="date.after(TODAY)" description="Evaluation default due date"/>   
         </EntityDefinition>
 
         <EntityDefinition id="BCS2_ASATest" description="ASA Test">
@@ -854,15 +844,15 @@
                     <precondition processDefinitionId="BCS2_CaseEvaluation"/>
                 </SentryDefinition>  
 
-                <HumanTaskDefinition id="BCS2_SelectedProfessionals" description="Select Professional" ownerPath="BCS2_Settings.CaseManager" isMandatory="true" repeatable="ONCE">
-                    <TaskParamDefinition path="BCS2_Settings.Psychologists" isReadOnly="false" isMandatory="true"/>
+                <HumanTaskDefinition id="BCS2_SelectedProfessionals" description="Set evluation due date" ownerPath="BCS2_Settings.CaseManager" isMandatory="true" repeatable="ONCE">
+                    <TaskParamDefinition path="BCS2_Evaluation.EvaluatioDueDate" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
                 
-                <HumanTaskDefinition id="BCS2_ASATest" description="ASA Test" ownerPath="BCS2_Settings.Anesthesiologist" dueDatePath="BCS2_SelectedProfessionals.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_ASATest" entityAttachPath="BCS2_Evaluation.BCS2_ASATest">
+                <HumanTaskDefinition id="BCS2_ASATest" description="ASA Test" ownerPath="BCS2_Settings.Anesthesiologist" dueDatePath="BCS2_Evaluation.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_ASATest" entityAttachPath="BCS2_Evaluation.BCS2_ASATest">
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_ASATest.AsaCalculator" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
                 
-                <HumanTaskDefinition id="BCS2_ClinicalInformation" description="Clinical Information" ownerPath="BCS2_Settings.Anesthesiologist" dueDatePath="BCS2_SelectedProfessionals.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_ClinicalInformation" entityAttachPath="BCS2_Evaluation.BCS2_ClinicalInformation">
+                <HumanTaskDefinition id="BCS2_ClinicalInformation" description="Clinical Information" ownerPath="BCS2_Settings.Anesthesiologist" dueDatePath="BCS2_Evaluation.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_ClinicalInformation" entityAttachPath="BCS2_Evaluation.BCS2_ClinicalInformation">
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.SociodemoAddress" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.SociodemoTelf" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.SociodemoEmail" isReadOnly="false" isMandatory="true"/>
@@ -884,7 +874,7 @@
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_ClinicalInformation.ClinicInfoComment" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="BCS2_Charlson" description="Charlson index" ownerPath="BCS2_Settings.Owner" dueDatePath="BCS2_SelectedProfessionals.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_Charlson" entityAttachPath="BCS2_Evaluation.BCS2_Charlson"
+                <HumanTaskDefinition id="BCS2_Charlson" description="Charlson index" ownerPath="BCS2_Settings.Owner" dueDatePath="BCS2_Evaluation.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_Charlson" entityAttachPath="BCS2_Evaluation.BCS2_Charlson"
                     footnote="Charlson ME, Pompei P, Ales KL, MacKenzie CR. A new method of classifying prognostic comorbidity in longitudinal studies: development and validation. J Chronic Dis 1987; 40:373–83."
                     >
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_Charlson.ch1" isReadOnly="false" isMandatory="true"/>
@@ -910,7 +900,7 @@
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_Charlson.ch21" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="BCS2_PhysicalExamination" description="Physical Examination" ownerPath="BCS2_Settings.Nurse" dueDatePath="BCS2_SelectedProfessionals.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_PhysicalExamination" entityAttachPath="BCS2_Evaluation.BCS2_PhysicalExamination">
+                <HumanTaskDefinition id="BCS2_PhysicalExamination" description="Physical Examination" ownerPath="BCS2_Settings.Nurse" dueDatePath="BCS2_Evaluation.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_PhysicalExamination" entityAttachPath="BCS2_Evaluation.BCS2_PhysicalExamination">
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_PhysicalExamination.Height" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_PhysicalExamination.Weight" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_PhysicalExamination.Bmi" isReadOnly="true" isMandatory="false"/>
@@ -923,26 +913,26 @@
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_PhysicalExamination.FerroTherapy" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="BCS2_NutritionalInformationMUST" description="Nutritional Information MUST" ownerPath="BCS2_Settings.Nutritionist" dueDatePath="BCS2_SelectedProfessionals.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_NutritionalInformationMUST" entityAttachPath="BCS2_Evaluation.BCS2_NutritionalInformationMUST">
+                <HumanTaskDefinition id="BCS2_NutritionalInformationMUST" description="Nutritional Information MUST" ownerPath="BCS2_Settings.Nutritionist" dueDatePath="BCS2_Evaluation.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_NutritionalInformationMUST" entityAttachPath="BCS2_Evaluation.BCS2_NutritionalInformationMUST">
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_NutritionalInformationMUST.BmiCat" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_NutritionalInformationMUST.WeightLoss" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_NutritionalInformationMUST.RecentAcuteDisease" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_NutritionalInformationMUST.MustScore" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="BCS2_NutritionalInformationSGA" description="Nutritional Information SGA" ownerPath="BCS2_Settings.Nutritionist" dueDatePath="BCS2_SelectedProfessionals.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_NutritionalInformationSGA" entityAttachPath="BCS2_Evaluation.BCS2_NutritionalInformationSGA">
+                <HumanTaskDefinition id="BCS2_NutritionalInformationSGA" description="Nutritional Information SGA" ownerPath="BCS2_Settings.Nutritionist" dueDatePath="BCS2_Evaluation.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_NutritionalInformationSGA" entityAttachPath="BCS2_Evaluation.BCS2_NutritionalInformationSGA">
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_NutritionalInformationSGA.Sga" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_NutritionalInformationSGA.SgaScore" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="BCS2_NutritionalSupport" description="Nutritional Information Support" ownerPath="BCS2_Settings.Nutritionist" dueDatePath="BCS2_SelectedProfessionals.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_NutritionalSupport" entityAttachPath="BCS2_Evaluation.BCS2_NutritionalSupport">
+                <HumanTaskDefinition id="BCS2_NutritionalSupport" description="Nutritional Information Support" ownerPath="BCS2_Settings.Nutritionist" dueDatePath="BCS2_Evaluation.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_NutritionalSupport" entityAttachPath="BCS2_Evaluation.BCS2_NutritionalSupport">
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_NutritionalSupport.MustNutritionFollowup" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_NutritionalSupport.MustNutritionGroup" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_NutritionalSupport.PersonalisedSuppl" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_NutritionalSupport.SupplDosis" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="BCS2_FunctionalCapacityDUKE" description="Functional Capacity DUKE" ownerPath="BCS2_Settings.Anesthesiologist" dueDatePath="BCS2_SelectedProfessionals.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_FunctionalCapacityDUKE" entityAttachPath="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE">
+                <HumanTaskDefinition id="BCS2_FunctionalCapacityDUKE" description="Functional Capacity DUKE" ownerPath="BCS2_Settings.Anesthesiologist" dueDatePath="BCS2_Evaluation.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_FunctionalCapacityDUKE" entityAttachPath="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE">
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE.DukeVale" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE.DukeCam" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE.DukeCamu" isReadOnly="false" isMandatory="true"/>
@@ -956,14 +946,14 @@
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityDUKE.DukeScore" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="BCS2_FunctionalCapacityHandGrip" description="Functional Capacity Hand Grip" ownerPath="BCS2_Settings.Anesthesiologist" dueDatePath="BCS2_SelectedProfessionals.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_FunctionalCapacityHandGrip" entityAttachPath="BCS2_Evaluation.BCS2_FunctionalCapacityHandGrip"
+                <HumanTaskDefinition id="BCS2_FunctionalCapacityHandGrip" description="Functional Capacity Hand Grip" ownerPath="BCS2_Settings.Anesthesiologist" dueDatePath="BCS2_Evaluation.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_FunctionalCapacityHandGrip" entityAttachPath="BCS2_Evaluation.BCS2_FunctionalCapacityHandGrip"
                     footnote="Helen C. Roberts, Hayley J. Denison, Helen J. Martin, Harnish P. Patel, Holly Syddall, Cyrus Cooper and Avan Aihie Sayer, A review of the measurement of grip strength in clinical and epidemiological studies: towards a standardised approach. Age Ageing (2011) 40 (4): 423-429."
                     >
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityHandGrip.BestDominantHand" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityHandGrip.BestNonDominantHand" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="BCS2_FunctionalCapacitySitToStand" description="Functional Capacity Sit To Stand" ownerPath="BCS2_Settings.Anesthesiologist" dueDatePath="BCS2_SelectedProfessionals.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_FunctionalCapacitySitToStand" entityAttachPath="BCS2_Evaluation.BCS2_FunctionalCapacitySitToStand">
+                <HumanTaskDefinition id="BCS2_FunctionalCapacitySitToStand" description="Functional Capacity Sit To Stand" ownerPath="BCS2_Settings.Anesthesiologist" dueDatePath="BCS2_Evaluation.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_FunctionalCapacitySitToStand" entityAttachPath="BCS2_Evaluation.BCS2_FunctionalCapacitySitToStand">
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacitySitToStand.S2S1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacitySitToStand.S2S2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacitySitToStand.S2S3" isReadOnly="false" isMandatory="true"/>
@@ -976,7 +966,7 @@
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacitySitToStand.S2S10" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="BCS2_FunctionalCapacity6MWT" description="Functional Capacity 6MWT" ownerPath="BCS2_Settings.Anesthesiologist" dueDatePath="BCS2_SelectedProfessionals.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_FunctionalCapacity6MWT" entityAttachPath="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT">
+                <HumanTaskDefinition id="BCS2_FunctionalCapacity6MWT" description="Functional Capacity 6MWT" ownerPath="BCS2_Settings.Anesthesiologist" dueDatePath="BCS2_Evaluation.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_FunctionalCapacity6MWT" entityAttachPath="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT">
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTmeters" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTinitialFC" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTfinalFC" isReadOnly="false" isMandatory="true"/>
@@ -990,7 +980,7 @@
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTstop" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="BCS2_FunctionalCapacityYPA" description="Capacidad Funcional YPA" ownerPath="BCS2_Settings.Psychologists" dueDatePath="BCS2_SelectedProfessionals.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_FunctionalCapacityYPA" entityAttachPath="BCS2_Evaluation.BCS2_FunctionalCapacityYPA"
+                <HumanTaskDefinition id="BCS2_FunctionalCapacityYPA" description="Capacidad Funcional YPA" ownerPath="BCS2_Settings.Psychologists" dueDatePath="BCS2_Evaluation.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_FunctionalCapacityYPA" entityAttachPath="BCS2_Evaluation.BCS2_FunctionalCapacityYPA"
                     footnote="De Abajo, S., Larriba, R. And Marquez, S. (2001). Validity and reliability of the Yale Physical Activity Survey in Spanish elderly. Journal of Sports Medicine and Physical Fitness, 41(4), 479-485.
 DiPietro, L., Caspersen, C. J., Ostfeld, A. M. And Nadel, E. R. (1993). A survey for assessing physical activity among older adults. Medicine and Science in Sports and Exercise, 25(5), 628-642.
 Kruskall, L. J., Campbell, W. W., And Evans, W. J. (2004). The Yale Physical Activity Survey for older adults: Predictions in the energy expenditure due to physical activity. Journal of the American Dietetics Association, 104, 1251-1257.
@@ -1016,7 +1006,7 @@ Young, D., Jee, S. and Appel, L. (2001). A comparison of the Yale Physical Activ
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASsindre" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="BCS2_AdherenceCapacityESES" description="Evaluación de adherencia ESES" ownerPath="BCS2_Settings.Psychologists" dueDatePath="BCS2_SelectedProfessionals.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_AdherenceCapacityESES" entityAttachPath="BCS2_Evaluation.BCS2_AdherenceCapacityESES">
+                <HumanTaskDefinition id="BCS2_AdherenceCapacityESES" description="Evaluación de adherencia ESES" ownerPath="BCS2_Settings.Psychologists" dueDatePath="BCS2_Evaluation.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_AdherenceCapacityESES" entityAttachPath="BCS2_Evaluation.BCS2_AdherenceCapacityESES">
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.eses3" isReadOnly="false" isMandatory="true"/>
@@ -1030,7 +1020,7 @@ Young, D., Jee, S. and Appel, L. (2001). A comparison of the Yale Physical Activ
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_AdherenceCapacityESES.esesScore" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="BCS2_HospitalAnxietyAndDepressionScale" description="Hospital Anxiety and Depression Scale" ownerPath="BCS2_Settings.Physiotherapist" dueDatePath="BCS2_SelectedProfessionals.EvaluationDueDate" isMandatory="true" repeatable="ONCE"  entityDefinitionId="BCS2_HospitalAnxietyAndDepressionScale" entityAttachPath="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale">
+                <HumanTaskDefinition id="BCS2_HospitalAnxietyAndDepressionScale" description="Hospital Anxiety and Depression Scale" ownerPath="BCS2_Settings.Physiotherapist" dueDatePath="BCS2_Evaluation.EvaluationDueDate" isMandatory="true" repeatable="ONCE"  entityDefinitionId="BCS2_HospitalAnxietyAndDepressionScale" entityAttachPath="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale">
                   <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA1" isReadOnly="false" isMandatory="true"/>
                   <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadD1" isReadOnly="false" isMandatory="true"/>
                   <TaskParamDefinition path="BCS2_Evaluation.BCS2_HospitalAnxietyAndDepressionScale.hadA2" isReadOnly="false" isMandatory="true"/>
@@ -1112,7 +1102,6 @@ Young, D., Jee, S. and Appel, L. (2001). A comparison of the Yale Physical Activ
         <Action id="CompleteHumanTask" processId="BCS2_SelectPatient">
             <TaskParam path="BCS2_Settings.Patient"  userValue="coled"/>
             <TaskParam path="BCS2_Settings.Owner"  userValue="salazart"/>
-            <TaskParam path="BCS2_Settings.WorkplanDueDate" values="['2019-12-28T00:00:00.000']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="BCS2_Inclusion">            
             <TaskParam path="BCS2_Identification.BCS2_Inclusion.name" values="['Test Inclusion']"/>
