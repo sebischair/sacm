@@ -85,6 +85,24 @@ router.post('/', (req, res, next)=>{
 });
 
 /**
+ * @api {get} /casedefinitions/version Get CaseDefinition Versions
+ * @apiName GetCaseDefinitionVersions
+ * @apiGroup CaseDefinitions
+ * @apiSampleRequest /casedefinitions/versions
+ * @apiSuccessExample {json} Success-Response:
+ *     {}
+ */
+router.get('/versions', (req, res, next)=>{
+  CaseDefinition.versions(req.jwt)
+    .then(cd=>{
+        res.status(200).send(cd);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    });
+});
+
+/**
  * @api {get} /casedefinitions/:id Get CaseDefinition
  * @apiName GetCaseDefinition
  * @apiGroup CaseDefinitions

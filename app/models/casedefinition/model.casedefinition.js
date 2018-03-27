@@ -41,4 +41,8 @@ export default class CaseDefinition extends Model{
     return http.del(jwt, '/casedefinitions/'+caseDefinitionId);
   }
 
+  static versions(jwt) {
+    return http.get(jwt, '/casedefinitions/versions');
+  }
+
 }
