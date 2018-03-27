@@ -46,6 +46,7 @@
             <AttributeDefinition id="CaseManager" type="Link.Users(IdibapsCaseManagers)" description="Case Manager"/>            
             <AttributeDefinition id="Anesthesiologist" type="Link.Users(IdibapsAnesthesiologists)" description="Anestesista"/>
             <AttributeDefinition id="Nurse" type="Link.Users(IdibapsNurses)" description="Enfermero"/>
+            <AttributeDefinition id="AnesthesiologistOrNurse" type="Link.Users(IdibapsAnesthesiologists,IdibapsNurses)" description="Anestesista/Enfermero" additionalDescription="Select a Anestesista or Enfermero!"/>
             <AttributeDefinition id="Nutritionist" type="Link.Users(IdibapsNutritionists)" description="Nutricionista"/>
             <AttributeDefinition id="Physiotherapist" type="Link.Users(IdibapsPhysiotherapists)" description="Fisioterapeuta"/>
             <AttributeDefinition id="Psychologists" type="Link.Users(IdibapsPsychologists)" description="Psicólogo"/>
@@ -822,6 +823,7 @@
                     <TaskParamDefinition path="BCS2_Settings.Patient" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_Settings.CaseManager" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_Settings.Anesthesiologist" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS2_Settings.AnesthesiologistOrNurse" isReadOnly="false" isMandatory="true"/>                    
                     <TaskParamDefinition path="BCS2_Settings.Nurse" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_Settings.Nutritionist" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS2_Settings.Physiotherapist" isReadOnly="false" isMandatory="true"/>
@@ -996,7 +998,7 @@
                     <TaskParamDefinition path="BCS2_Evaluation.BCS2_FunctionalCapacitySitToStand.S2S10" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="BCS2_FunctionalCapacity6MWT" description="Functional Capacity 6MWT" ownerPath="BCS2_Settings.Anesthesiologist" dueDatePath="BCS2_Settings.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_FunctionalCapacity6MWT" entityAttachPath="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT">
+                <HumanTaskDefinition id="BCS2_FunctionalCapacity6MWT" description="Functional Capacity 6MWT" ownerPath="BCS2_Settings.AnesthesiologistOrNurse" dueDatePath="BCS2_Settings.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS2_FunctionalCapacity6MWT" entityAttachPath="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT">
                     <SentryDefinition>
                         <precondition processDefinitionId="BCS2_SetEvaluationDueDate"/>
                     </SentryDefinition>
@@ -1144,6 +1146,7 @@ Young, D., Jee, S. and Appel, L. (2001). A comparison of the Yale Physical Activ
             <TaskParam path="BCS2_Settings.Patient"  userValue="coled"/>
             <TaskParam path="BCS2_Settings.CaseManager"  userValue="salazart"/>
             <TaskParam path="BCS2_Settings.Anesthesiologist" userValue="velardem"/>
+            <TaskParam path="BCS2_Settings.AnesthesiologistOrNurse" userValue="velardem"/>            
             <TaskParam path="BCS2_Settings.Nurse" userValue="wilsong"/>
             <TaskParam path="BCS2_Settings.Nutritionist" userValue="parkerw"/>
             <TaskParam path="BCS2_Settings.Physiotherapist" userValue="arpl"/>
