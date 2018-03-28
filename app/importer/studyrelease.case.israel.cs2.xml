@@ -44,10 +44,10 @@
             <AttributeDefinition id="ICS2_SocialCareer" type="Link.Users(AssutaSocialCareers)" description="Social carer"/>
             <AttributeDefinition id="ICS2_Professional" type="Link.Users(AssutaProfessionals)" description="Professional"/>
 
-            <AttributeDefinition id="ICS2_Identification" type="Link.EntityDefinition.ICS2_Identification" description="Identification"/>
-            <AttributeDefinition id="ICS2_Evaluation" type="Link.EntityDefinition.ICS2_Evaluation" description="Evaluation"/>
-            <AttributeDefinition id="ICS2_Workplan" type="Link.EntityDefinition.ICS2_Workplan" description="Workplan"/>
-            <AttributeDefinition id="ICS2_Discharge" type="Link.EntityDefinition.ICS2_Discharge" description="Discharge"/>       
+            <AttributeDefinition id="ICS2_Identification" type="Link.EntityDefinition.ICS2_Identification" description="Identification" multiplicity="any"/>
+            <AttributeDefinition id="ICS2_Evaluation" type="Link.EntityDefinition.ICS2_Evaluation" description="Evaluation" multiplicity="any"/>
+            <AttributeDefinition id="ICS2_Workplan" type="Link.EntityDefinition.ICS2_Workplan" description="Workplan" multiplicity="any"/>
+            <AttributeDefinition id="ICS2_Discharge" type="Link.EntityDefinition.ICS2_Discharge" description="Discharge" multiplicity="any"/>       
         </EntityDefinition>
 
 
@@ -1691,8 +1691,6 @@
             <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT6" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWTRemarks" values="['1']"/>
         </Action>
-
-        <Action id="Delay" ms="200"/>
         <Action id="CompleteHumanTask" processId="ICS2_PhysiotherapistEvaluation30SSTS">
 		    <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS0" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS1" values="['1']"/>
@@ -1702,8 +1700,7 @@
             <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS5" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS6" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTSRemarks" values="['1']"/>
-        </Action>
-        
+        </Action>        
         <Action id="ActivateDualTask" processId="ICS2_PhysicalActivity" breakpoint="true"/>
         <Action id="CompleteDualTaskHumanPart" processId="ICS2_PhysicalActivity" breakpoint="true">
             <TaskParam path="ICS2_Workplan.ICS2_PhysicalActivity.startdate"  values="['2017-09-26T00:00:00.000']"/>
@@ -1753,7 +1750,7 @@
         <Action id="CompleteStage" processId="ICS2_Workplan"/>
         <Action id="CompleteHumanTask" processId="ICS2_DischargeForm">
             <TaskParam path="ICS2_Discharge.ICS2_DischargeForm.comment"  values="['The patient was discharged on xxx everything fine.']"/>
-        </Action>
+        </Action>     
     </Execution>
 
 </SACMDefinition>
