@@ -34,6 +34,10 @@ module.exports = class CaseDefinitionImporter extends Importer{
         return this.initializeMapsWithWorkspace();
       })
       .then(()=>{
+        if(!this.version)
+          return Promise.reject('Version not set!');
+        if(this.version.match(/^[0-9]+$/)==null)
+          return Promise.reject('Version can be only digits [0-9]!');
         if(this.json.Workspace == null)
           return Promise.reject('No Workspace defined in XML!');
         if(this.json.Workspace.length>1)
