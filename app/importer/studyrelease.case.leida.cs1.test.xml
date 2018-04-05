@@ -53,12 +53,13 @@
 		<!-- Identification Entity Definitions -->
         <EntityDefinition id="LCS1_Identification" description="Identification">
 			<AttributeDefinition id="LCS1_InclusionDiagnostic" type="Link.EntityDefinition.LCS1_InclusionDiagnostic" multiplicity="any" description="Diagnòstic d'inclusió"/> 
-           
-		   <!-- <AttributeDefinition id="LCS1_TechnologicalTest" type="Link.EntityDefinition.LCS1_TechnologicalTest" multiplicity="any" description="Technological test"/> 
+		    <AttributeDefinition id="LCS1_TechnologicalTest" type="Link.EntityDefinition.LCS1_TechnologicalTest" multiplicity="any" description="Technological test"/> 
+		    <AttributeDefinition id="LCS1_PatientsConsent" type="Link.EntityDefinition.LCS1_PatientsConsent" multiplicity="any" description="Patients consent"/> 
+		   
+		   <!-- 
             <AttributeDefinition id="LCS1_ComorbidityCharlsonIdentification" type="Link.EntityDefinition.LCS1_ComorbidityCharlsonDef" multiplicity="any" description="Comorbidity Charlson"/> 
             <AttributeDefinition id="LCS1_GMAIdentification" type="Link.EntityDefinition.LCS1_GMADef" multiplicity="any" description="GMA"/> 
             <AttributeDefinition id="LCS1_ComplexityRisk" type="Link.EntityDefinition.LCS1_ComplexityRisk" multiplicity="any" description="Complexity risk"/> 
-            <AttributeDefinition id="LCS1_PatientsConsent" type="Link.EntityDefinition.LCS1_PatientsConsent" multiplicity="any" description="Patients consent"/> 
 			-->			
         </EntityDefinition>				
 
@@ -69,7 +70,36 @@
 			</AttributeDefinition>			
 		</EntityDefinition>	
 		
+		<EntityDefinition id="LCS1_TechnologicalTest" >
+			<AttributeDefinition id="tech1" type="enumeration" multiplicity="maximalOne" description="Vosté o el seu cuidador tenen connexió a Internet?">
+				<EnumerationOption value="0" description="No"/>
+				<EnumerationOption value="1" description="Sí"/>
+			</AttributeDefinition>
+			<AttributeDefinition id="tech2" type="enumeration" multiplicity="maximalOne" description="Vosté fa anar:">
+				<EnumerationOption value="1" description="Telèfon mòvil no tan sols per trucar."/>
+				<EnumerationOption value="0.0001" description="Tablet"/>
+				<EnumerationOption value="0.0002" description="Ordinador personal."/>
+				<EnumerationOption value="0.0003" description="Cap"/>
+			</AttributeDefinition>
+			<AttributeDefinition id="tech3" type="enumeration" multiplicity="maximalOne" description="El seu cuidador principal fa anar:">
+				<EnumerationOption value="1" description="Telèfon mòvil no tan sols per trucar."/>
+				<EnumerationOption value="0.0001" description="Tablet"/>
+				<EnumerationOption value="0.0002" description="Ordinador personal."/>
+				<EnumerationOption value="0.0003" description="Cap"/>
+			</AttributeDefinition>						
+			<DerivedAttributeDefinition id="tech4" description="Resultat del test tecnològic" 
+			additionalDescription="Si = 0 Suspès|| Si &gt; 0 Aprovat"
+			expression="round((number(tech1, 0) + number(tech2, 0) + number(tech3,0)))" />			
+		</EntityDefinition>	
 		
+		<EntityDefinition id="LCS1_PatientsConsent" >
+            <AttributeDefinition id="pConsent1" type="enumeration" multiplicity="maximalOne" description="Accepta participar al procés clínic descrit al present document?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Sí"/>
+            </AttributeDefinition>
+		</EntityDefinition>	
+
+	
 
    <!-- CASE DEFINITION -->				  
         <CaseDefinition id="LCS1_Leida" description="CS1 Lleida - Versió OK" ownerPath="LCS1_Settings.CaseManager" clientPath="LCS1_Settings.Patient" entityDefinitionId="LCS1_CaseData" newEntityDefinitionId="LCS1_Settings" newEntityAttachPath="LCS1_Settings" notesDefaultValue='<style>table{width:100%;}table th{background-color:#66308e; color:white;font-size:larger;}table td{border: 1px solid #999;border-width: 0px 1px 1px 1px;}</style><table cellpadding="4" cellspacing="0"> <tr> <th>HOSPITAL</th> <th>EQUIP DE PRIMARIA</th> </tr> <tr> <td><b>Anesthesiologist:</b></br> TBD</td> <td><b>Clinician:</b></br> TBD</td> </tr> <tr> <td><b>Physiotherapist:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>Clinician:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>Nurse:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>SocialCareer:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>New Rol:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>New Rol:</b></br> TBD</td> <td></td> </tr></table><span style="color:#666; font-size:smaller"><b>Hint:</b> One row for each rol.</span>'>	  
@@ -93,6 +123,25 @@
                         <precondition processDefinitionId="LCS1_SelectPatient"/>
                     </SentryDefinition>
                     <TaskParamDefinition path="LCS1_Identification.LCS1_InclusionDiagnostic.inclusiondiag" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>	
+				
+				
+				<HumanTaskDefinition id="LCS1_TechnologicalTest" description="Test d'adherència a la tecnología" ownerPath="LCS1_Settings.CaseManager" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1_TechnologicalTest" entityAttachPath="LCS1_Identification.LCS1_TechnologicalTest">
+                    <SentryDefinition>
+                        <precondition processDefinitionId="LCS1_SelectPatient"/>
+                    </SentryDefinition>
+                    <TaskParamDefinition path="LCS1_Identification.LCS1_TechnologicalTest.tech1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Identification.LCS1_TechnologicalTest.tech2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Identification.LCS1_TechnologicalTest.tech3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Identification.LCS1_TechnologicalTest.tech4" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>			
+ 				
+				
+			    <HumanTaskDefinition id="LCS1_PatientsConsent" description="Consentiment informat del pacient" ownerPath="LCS1_Settings.Clinician" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1_PatientsConsent" entityAttachPath="LCS1_Identification.LCS1_PatientsConsent">			
+                    <SentryDefinition>
+                        <precondition processDefinitionId="LCS1_SelectPatient"/>
+                    </SentryDefinition>
+                    <TaskParamDefinition path="LCS1_Identification.LCS1_PatientsConsent.pConsent1" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>	
 	      </StageDefinition>
 	 
