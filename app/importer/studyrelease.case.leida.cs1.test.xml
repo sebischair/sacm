@@ -1,0 +1,59 @@
+<SACMDefinition>
+    <Group staticId="2c9480885d1737ef015d74deec7f0002" id="IrbllProfessionals"/>
+    <Group staticId="c137c88b923911e7bd0c0242ac120002" id="IrbllAdminOfficers"/>
+    <Group staticId="c137c886923911e7bd0c0242ac120002" id="IrbllAnesthesiologists"/>
+    <Group staticId="c137c87a923911e7bd0c0242ac120002" id="IrbllCaseManagers"/>
+    <Group staticId="c137c870923911e7bd0c0242ac120002" id="IrbllClinicians"/>
+    <Group staticId="c137c8b9923911e7bd0c0242ac120002" id="IrbllDataManagers"/>
+    <Group staticId="c137c8b0923911e7bd0c0242ac120002" id="IrbllLabTechnicians"/>
+    <Group staticId="c137c8b4923911e7bd0c0242ac120002" id="IrbllLocalPulmonologists"/>
+    <Group staticId="c137c880923911e7bd0c0242ac120002" id="IrbllNurses"/>
+    <Group staticId="c137c89d923911e7bd0c0242ac120002" id="IrbllNutritionists"/>
+    <Group staticId="c137c88f923911e7bd0c0242ac120002" id="IrbllPhysicians"/>
+    <Group staticId="c137c899923911e7bd0c0242ac120002" id="IrbllPhysiotherapists"/>
+    <Group staticId="c137c8ab923911e7bd0c0242ac120002" id="IrbllPrimaryCareClinicians"/>
+    <Group staticId="c137c8a1923911e7bd0c0242ac120002" id="IrbllPsychologists"/>
+    <Group staticId="c137c894923911e7bd0c0242ac120002" id="IrbllRNSTs"/>
+    <Group staticId="c137c8a6923911e7bd0c0242ac120002" id="IrbllSocialCareers"/>
+    <Group staticId="c137c876923911e7bd0c0242ac120002" id="IrbllAdmins"/>
+    <Group staticId="c137c821923911e7bd0c0242ac120002" id="IrbllPatients"/>
+
+    <User staticId="2c940c085e765068015e7652be860010" id="castrot"/>
+    <User staticId="2c940c085e765068015e765a27550020" id="foxn"/>
+    <User staticId="2c940c085e765068015e76dcc55f00c0" id="davidsonj"/>
+    <User staticId="2c940c085e765068015e76e40dec00d0" id="hartj"/>
+
+    <Workspace staticId="2c9480885d1737ef015d74deec7f0002" id="Irbll">
+
+        <EntityDefinition id="LCS1_CaseData" description="Case Data">
+			<AttributeDefinition id="LCS1_Settings" type="Link.EntityDefinition.LCS1_Settings" multiplicity="any"/> 
+			<!--
+			<AttributeDefinition id="LCS1_Identification" type="Link.EntityDefinition.LCS1_Identification" multiplicity="any"/>  		 	
+			<AttributeDefinition id="LCS1_Evaluation" type="Link.EntityDefinition.LCS1_Evaluation" multiplicity="any"/> 		  		  
+		  	<AttributeDefinition id="LCS1_Workplan" type="Link.EntityDefinition.LCS1_Workplan" multiplicity="any"/> 					
+		  	<AttributeDefinition id="LCS1_Discharge" type="Link.EntityDefinition.LCS1_Discharge" multiplicity="any"/> 		
+			-->			
+		</EntityDefinition>	
+			
+		<!-- Settings Entity Definitions -->
+        <EntityDefinition id="LCS1_Settings" description="Settings">                       		
+		    <AttributeDefinition id="Patient" type="Link.Users(IrbllPatients)" description="Pacient" multiplicity="maximalOne"/>
+		    <AttributeDefinition id="CaseManager" type="Link.Users(IrbllProfessionals)" description="Gestor de casos" multiplicity="maximalOne"/> 
+            <AttributeDefinition id="Anesthesiologist" type="Link.Users(IrbllAnesthesiologists)" description="Anestesiòleg" multiplicity="maximalOne"/>            
+		    <AttributeDefinition id="Physiotherapist" type="Link.Users(IrbllPhysiotherapists)" description="Fisioterapeuta" multiplicity="maximalOne"/>            
+		    <AttributeDefinition id="Clinician" type="Link.Users(IrbllClinicians)" description="Cirurgià" multiplicity="maximalOne"/> <!-- Metge -->
+		    <AttributeDefinition id="Nurse" type="Link.Users(IrbllNurses)" description="Infermera" multiplicity="maximalOne"/>
+		    <AttributeDefinition id="SocialCareer" type="Link.Users(IrbllSocialCareers)" description="Treballador social" multiplicity="maximalOne"/>
+		    <AttributeDefinition id="AnesClinic" type="Link.Users(IrbllAnesthesiologists, IrbllClinicians)" description="Anestesiòleg o Cirurgià" multiplicity="maximalOne"/>            		  		  
+		    <AttributeDefinition id="PrimaryCareClinicians" type="Link.Users(IrbllPrimaryCareClinicians)" description="Atenció Primària" multiplicity="maximalOne"/>	 
+		    <AttributeDefinition id="WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date" multiplicity="maximalOne"/>
+        </EntityDefinition>
+
+   <!-- CASE DEFINITION -->				  
+        <CaseDefinition id="LCS1_Leida" description="CS1 Lleida - Versió OK" ownerPath="LCS1_Settings.CaseManager" clientPath="LCS1_Settings.Patient" entityDefinitionId="LCS1_CaseData" newEntityDefinitionId="LCS1_Settings" newEntityAttachPath="LCS1_Settings" notesDefaultValue='<style>table{width:100%;}table th{background-color:#66308e; color:white;font-size:larger;}table td{border: 1px solid #999;border-width: 0px 1px 1px 1px;}</style><table cellpadding="4" cellspacing="0"> <tr> <th>HOSPITAL</th> <th>EQUIP DE PRIMARIA</th> </tr> <tr> <td><b>Anesthesiologist:</b></br> TBD</td> <td><b>Clinician:</b></br> TBD</td> </tr> <tr> <td><b>Physiotherapist:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>Clinician:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>Nurse:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>SocialCareer:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>New Rol:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>New Rol:</b></br> TBD</td> <td></td> </tr></table><span style="color:#666; font-size:smaller"><b>Hint:</b> One row for each rol.</span>'>	  
+     
+		</CaseDefinition>
+	
+	</Workspace>
+
+</SACMDefinition>
