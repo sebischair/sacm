@@ -27,8 +27,9 @@
 
         <EntityDefinition id="LCS1_CaseData" description="Case Data">
 			<AttributeDefinition id="LCS1_Settings" type="Link.EntityDefinition.LCS1_Settings" multiplicity="any"/> 
-			<!--
-			<AttributeDefinition id="LCS1_Identification" type="Link.EntityDefinition.LCS1_Identification" multiplicity="any"/>  		 	
+			<AttributeDefinition id="LCS1_Identification" type="Link.EntityDefinition.LCS1_Identification" multiplicity="any"/>  
+			
+			<!--		 	
 			<AttributeDefinition id="LCS1_Evaluation" type="Link.EntityDefinition.LCS1_Evaluation" multiplicity="any"/> 		  		  
 		  	<AttributeDefinition id="LCS1_Workplan" type="Link.EntityDefinition.LCS1_Workplan" multiplicity="any"/> 					
 		  	<AttributeDefinition id="LCS1_Discharge" type="Link.EntityDefinition.LCS1_Discharge" multiplicity="any"/> 		
@@ -48,10 +49,53 @@
 		    <AttributeDefinition id="PrimaryCareClinicians" type="Link.Users(IrbllPrimaryCareClinicians)" description="Atenció Primària" multiplicity="maximalOne"/>	 
 		    <AttributeDefinition id="WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date" multiplicity="maximalOne"/>
         </EntityDefinition>
+		
+		<!-- Identification Entity Definitions -->
+        <EntityDefinition id="LCS1_Identification" description="Identification">
+			<AttributeDefinition id="LCS1_InclusionDiagnostic" type="Link.EntityDefinition.LCS1_InclusionDiagnostic" multiplicity="any" description="Diagnòstic d'inclusió"/> 
+           
+		   <!-- <AttributeDefinition id="LCS1_TechnologicalTest" type="Link.EntityDefinition.LCS1_TechnologicalTest" multiplicity="any" description="Technological test"/> 
+            <AttributeDefinition id="LCS1_ComorbidityCharlsonIdentification" type="Link.EntityDefinition.LCS1_ComorbidityCharlsonDef" multiplicity="any" description="Comorbidity Charlson"/> 
+            <AttributeDefinition id="LCS1_GMAIdentification" type="Link.EntityDefinition.LCS1_GMADef" multiplicity="any" description="GMA"/> 
+            <AttributeDefinition id="LCS1_ComplexityRisk" type="Link.EntityDefinition.LCS1_ComplexityRisk" multiplicity="any" description="Complexity risk"/> 
+            <AttributeDefinition id="LCS1_PatientsConsent" type="Link.EntityDefinition.LCS1_PatientsConsent" multiplicity="any" description="Patients consent"/> 
+			-->			
+        </EntityDefinition>				
+
+		<EntityDefinition id="LCS1_InclusionDiagnostic">
+			<AttributeDefinition id="inclusiondiag" type="enumeration" multiplicity="atLeastOne" description="De que s'ha tractar el pacient?">
+				<EnumerationOption value="1" description="MPOC - Malaltia pulmonar obstructiva crònica"/>
+				<EnumerationOption value="2" description="IC - Insuficiència cardíaca"/>
+			</AttributeDefinition>			
+		</EntityDefinition>	
+		
+		
 
    <!-- CASE DEFINITION -->				  
         <CaseDefinition id="LCS1_Leida" description="CS1 Lleida - Versió OK" ownerPath="LCS1_Settings.CaseManager" clientPath="LCS1_Settings.Patient" entityDefinitionId="LCS1_CaseData" newEntityDefinitionId="LCS1_Settings" newEntityAttachPath="LCS1_Settings" notesDefaultValue='<style>table{width:100%;}table th{background-color:#66308e; color:white;font-size:larger;}table td{border: 1px solid #999;border-width: 0px 1px 1px 1px;}</style><table cellpadding="4" cellspacing="0"> <tr> <th>HOSPITAL</th> <th>EQUIP DE PRIMARIA</th> </tr> <tr> <td><b>Anesthesiologist:</b></br> TBD</td> <td><b>Clinician:</b></br> TBD</td> </tr> <tr> <td><b>Physiotherapist:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>Clinician:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>Nurse:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>SocialCareer:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>New Rol:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>New Rol:</b></br> TBD</td> <td></td> </tr></table><span style="color:#666; font-size:smaller"><b>Hint:</b> One row for each rol.</span>'>	  
      
+	 
+	    <!-- STAGEDEFINITION: CaseIdentification -->	  
+            <StageDefinition id="LCS1_CaseIdentification" description="Identificació del cas" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_Identification" entityAttachPath="LCS1_Identification">
+            
+                <HumanTaskDefinition id="LCS1_SelectPatient" externalId="SelectPatient" description="Inclusió" ownerPath="LCS1_Settings.CaseManager" isMandatory="true" repeatable="ONCE">
+                    <HttpHookDefinition on="COMPLETE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/case/patient/inclusion" method="POST" failureMessage="Could not COMPLETE SelectPatient on Self-Management System!"/>
+                    <TaskParamDefinition path="LCS1_Settings.Patient" isReadOnly="false" isMandatory="true"/>                
+                    <TaskParamDefinition path="LCS1_Settings.CaseManager" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition path="LCS1_Settings.Clinician" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Settings.Nurse" isReadOnly="false" isMandatory="true"/>                              
+                    <TaskParamDefinition path="LCS1_Settings.SocialCareer" isReadOnly="false" isMandatory="true"/>            
+                </HumanTaskDefinition>					
+       
+	 
+	 			<HumanTaskDefinition id="LCS1_InclusionDiagnostic" description="Diagnòstic d'inclusió" ownerPath="LCS1_Settings.CaseManager" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1_InclusionDiagnostic" entityAttachPath="LCS1_Identification.LCS1_InclusionDiagnostic">
+                    <SentryDefinition>
+                        <precondition processDefinitionId="LCS1_SelectPatient"/>
+                    </SentryDefinition>
+                    <TaskParamDefinition path="LCS1_Identification.LCS1_InclusionDiagnostic.inclusiondiag" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>	
+	      </StageDefinition>
+	 
 		</CaseDefinition>
 	
 	</Workspace>
