@@ -487,13 +487,7 @@
                 <EnumerationOption value="1.0001" description="Sovint es fa entendre: dificultat per trobar paraules o acabar pensaments i és necessari donar-li peu habitualment"/>
                 <EnumerationOption value="1.0002" description="Habitualment es fa entendre: Dificultat en trobar les paraules o acabar els pensament però donant-li temps no es necessària donar-li peu o la necessària és molt petita "/>
                 <EnumerationOption value="1.0003" description="Es fa entendre: Expressa idees sense dificultat "/>
-            </AttributeDefinition>
-			
-			<!-- Resultado final; 0 = Rojo; 1 =   Verde colors(0<=green<=3<orange<=4<red<10) 
-			<DerivedAttributeDefinition id="audicio" expression="round(number(comm1,0)) + round(number(comm2,0))" description="Audicio temp" />  			
-			<DerivedAttributeDefinition id="audiciototal" description="Audició" expression="round(number(comm1,0),0) + round(number(comm2,0),0)"  />
-			<DerivedAttributeDefinition id="visiototal" description="Visió" expression="round(number(comm3,0)) + round(number(comm4,0),0)"  />
-			<DerivedAttributeDefinition id="capacitattotal" description="Capacitat per expressar-se" expression="2" /> --> 
+            </AttributeDefinition>			
 		</EntityDefinition>
 		
 		<EntityDefinition id="LCS2_Sleeping">
@@ -1518,13 +1512,13 @@
                 </HumanTaskDefinition>    
             
                 <!-- Infermera; Test LCS2_PrimaryCareClinicians  -->  
-				<HumanTaskDefinition id="LCS2_AnthropometricVariablesAl" description="Diagnòstic - Pes i alçada - Variables antropomètriques" ownerPath="LCS2_Settings.Nurse" isMandatory="false" repeatable="PARALLEL" activation="MANUAL"  entityDefinitionId="LCS2_AnthropometricVariablesAl" entityAttachPath="LCS2_Evaluation.LCS2_AnthropometricVariablesAl">
+				<HumanTaskDefinition id="LCS2_AnthropometricVariablesAl" description="Diagnòstic - Pes i alçada - Variables antropomètriques" ownerPath="LCS2_Settings.Nurse" isMandatory="false" repeatable="ONCE" activation="MANUAL"  entityDefinitionId="LCS2_AnthropometricVariablesAl" entityAttachPath="LCS2_Evaluation.LCS2_AnthropometricVariablesAl">
 				  <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesAl.AnWeighAl" isReadOnly="false" isMandatory="true"/>
 				  <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesAl.AnHeightAl" isReadOnly="false" isMandatory="true"/>  
 				  <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesAl.AnthropometricAl" isReadOnly="true" isMandatory="false"/>
 				</HumanTaskDefinition>  			
 				
-				<HumanTaskDefinition id="LCS2_AnthropometricVariablesGenollHomes" description="Diagnòstic - Pes i distància (Homes) - Variables antropomètriques" ownerPath="LCS2_Settings.Nurse" isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_AnthropometricVariablesGenollHomes" entityAttachPath="LCS2_Evaluation.LCS2_AnthropometricVariablesGenollHomes">
+				<HumanTaskDefinition id="LCS2_AnthropometricVariablesGenollHomes" description="Diagnòstic - Pes i distància (Homes) - Variables antropomètriques" ownerPath="LCS2_Settings.Nurse" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS2_AnthropometricVariablesGenollHomes" entityAttachPath="LCS2_Evaluation.LCS2_AnthropometricVariablesGenollHomes">
 				  <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenollHomes.AnWeighGenoll" isReadOnly="false" isMandatory="true"/>
 				  <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenollHomes.AnKneeGenoll" isReadOnly="false" isMandatory="true"/>  
 				  <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenollHomes.AnAgeGenoll" isReadOnly="false" isMandatory="true"/>  				  				  				  
@@ -1532,7 +1526,7 @@
 				  <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenollHomes.AnthropometricGenollHomesIMC" isReadOnly="true" isMandatory="false"/>
 				</HumanTaskDefinition>  							
 
-				<HumanTaskDefinition id="LCS2_AnthropometricVariablesGenollDones" description="Diagnòstic - Pes i distància (Dones) - Variables antropomètriques" ownerPath="LCS2_Settings.Nurse" isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_AnthropometricVariablesGenollDones" entityAttachPath="LCS2_Evaluation.LCS2_AnthropometricVariablesGenollDones">
+				<HumanTaskDefinition id="LCS2_AnthropometricVariablesGenollDones" description="Diagnòstic - Pes i distància (Dones) - Variables antropomètriques" ownerPath="LCS2_Settings.Nurse" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS2_AnthropometricVariablesGenollDones" entityAttachPath="LCS2_Evaluation.LCS2_AnthropometricVariablesGenollDones">
 				  <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenollDones.AnWeighGenoll" isReadOnly="false" isMandatory="true"/>
 				  <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenollDones.AnKneeGenoll" isReadOnly="false" isMandatory="true"/>  
 				  <TaskParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenollDones.AnAgeGenoll" isReadOnly="false" isMandatory="true"/>  				  				  				  
