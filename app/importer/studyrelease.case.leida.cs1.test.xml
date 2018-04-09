@@ -1,0 +1,274 @@
+<SACMDefinition>
+    <Group staticId="2c9480885d1737ef015d74deec7f0002" id="IrbllProfessionals"/>
+    <Group staticId="c137c88b923911e7bd0c0242ac120002" id="IrbllAdminOfficers"/>
+    <Group staticId="c137c886923911e7bd0c0242ac120002" id="IrbllAnesthesiologists"/>
+    <Group staticId="c137c87a923911e7bd0c0242ac120002" id="IrbllCaseManagers"/>
+    <Group staticId="c137c870923911e7bd0c0242ac120002" id="IrbllClinicians"/>
+    <Group staticId="c137c8b9923911e7bd0c0242ac120002" id="IrbllDataManagers"/>
+    <Group staticId="c137c8b0923911e7bd0c0242ac120002" id="IrbllLabTechnicians"/>
+    <Group staticId="c137c8b4923911e7bd0c0242ac120002" id="IrbllLocalPulmonologists"/>
+    <Group staticId="c137c880923911e7bd0c0242ac120002" id="IrbllNurses"/>
+    <Group staticId="c137c89d923911e7bd0c0242ac120002" id="IrbllNutritionists"/>
+    <Group staticId="c137c88f923911e7bd0c0242ac120002" id="IrbllPhysicians"/>
+    <Group staticId="c137c899923911e7bd0c0242ac120002" id="IrbllPhysiotherapists"/>
+    <Group staticId="c137c8ab923911e7bd0c0242ac120002" id="IrbllPrimaryCareClinicians"/>
+    <Group staticId="c137c8a1923911e7bd0c0242ac120002" id="IrbllPsychologists"/>
+    <Group staticId="c137c894923911e7bd0c0242ac120002" id="IrbllRNSTs"/>
+    <Group staticId="c137c8a6923911e7bd0c0242ac120002" id="IrbllSocialCareers"/>
+    <Group staticId="c137c876923911e7bd0c0242ac120002" id="IrbllAdmins"/>
+    <Group staticId="c137c821923911e7bd0c0242ac120002" id="IrbllPatients"/>
+
+    <User staticId="2c940c085e765068015e7652be860010" id="castrot"/>
+    <User staticId="2c940c085e765068015e765a27550020" id="foxn"/>
+    <User staticId="2c940c085e765068015e76dcc55f00c0" id="davidsonj"/>
+    <User staticId="2c940c085e765068015e76e40dec00d0" id="hartj"/>
+
+    <Workspace staticId="2c9480885d1737ef015d74deec7f0002" id="Irbll">
+
+        <EntityDefinition id="LCS1_CaseData" description="Case Data">
+			<AttributeDefinition id="LCS1_Settings" type="Link.EntityDefinition.LCS1_Settings" multiplicity="any"/> 
+			<AttributeDefinition id="LCS1_Identification" type="Link.EntityDefinition.LCS1_Identification" multiplicity="any"/>  
+			
+			<!--		 	
+			<AttributeDefinition id="LCS1_Evaluation" type="Link.EntityDefinition.LCS1_Evaluation" multiplicity="any"/> 		  		  
+		  	<AttributeDefinition id="LCS1_Workplan" type="Link.EntityDefinition.LCS1_Workplan" multiplicity="any"/> 					
+		  	<AttributeDefinition id="LCS1_Discharge" type="Link.EntityDefinition.LCS1_Discharge" multiplicity="any"/> 		
+			-->			
+		</EntityDefinition>	
+			
+		<!-- Settings Entity Definitions -->
+        <EntityDefinition id="LCS1_Settings" description="Settings">                       		
+		    <AttributeDefinition id="Patient" type="Link.Users(IrbllPatients)" description="Pacient" multiplicity="maximalOne"/>
+		    <AttributeDefinition id="CaseManager" type="Link.Users(IrbllProfessionals)" description="Gestor de casos" multiplicity="maximalOne"/> 
+            <AttributeDefinition id="Anesthesiologist" type="Link.Users(IrbllAnesthesiologists)" description="Anestesiòleg" multiplicity="maximalOne"/>            
+		    <AttributeDefinition id="Physiotherapist" type="Link.Users(IrbllPhysiotherapists)" description="Fisioterapeuta" multiplicity="maximalOne"/>            
+		    <AttributeDefinition id="Clinician" type="Link.Users(IrbllClinicians)" description="Cirurgià" multiplicity="maximalOne"/> <!-- Metge -->
+		    <AttributeDefinition id="Nurse" type="Link.Users(IrbllNurses)" description="Infermera" multiplicity="maximalOne"/>
+		    <AttributeDefinition id="SocialCareer" type="Link.Users(IrbllSocialCareers)" description="Treballador social" multiplicity="maximalOne"/>
+		    <AttributeDefinition id="AnesClinic" type="Link.Users(IrbllAnesthesiologists, IrbllClinicians)" description="Anestesiòleg o Cirurgià" multiplicity="maximalOne"/>            		  		  
+		    <AttributeDefinition id="PrimaryCareClinicians" type="Link.Users(IrbllPrimaryCareClinicians)" description="Atenció Primària" multiplicity="maximalOne"/>	 
+		    <AttributeDefinition id="WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date" multiplicity="maximalOne"/>
+        </EntityDefinition>
+		
+		<!-- Identification Entity Definitions -->
+        <EntityDefinition id="LCS1_Identification" description="Identification">
+			<AttributeDefinition id="LCS1_InclusionDiagnostic" type="Link.EntityDefinition.LCS1_InclusionDiagnostic" multiplicity="any" description="Diagnòstic d'inclusió"/> 
+		    <AttributeDefinition id="LCS1_TechnologicalTest" type="Link.EntityDefinition.LCS1_TechnologicalTest" multiplicity="any" description="Technological test"/> 
+		    <AttributeDefinition id="LCS1_PatientsConsent" type="Link.EntityDefinition.LCS1_PatientsConsent" multiplicity="any" description="Patients consent"/> 
+		   
+		    <AttributeDefinition id="LCS1_Lace" type="Link.EntityDefinition.LCS1_Lace" multiplicity="any" description="LACE"/>
+		    <AttributeDefinition id="LCS1_GlobalDeteriorationScale" type="Link.EntityDefinition.LCS1_GlobalDeteriorationScale" multiplicity="any" description="GDS"/>
+		   
+		   <!-- 
+            <AttributeDefinition id="LCS1_ComorbidityCharlsonIdentification" type="Link.EntityDefinition.LCS1_ComorbidityCharlsonDef" multiplicity="any" description="Comorbidity Charlson"/>  
+            <AttributeDefinition id="LCS1_ComplexityRisk" type="Link.EntityDefinition.LCS1_ComplexityRisk" multiplicity="any" description="Complexity risk"/> 
+			-->			
+        </EntityDefinition>				
+
+		<EntityDefinition id="LCS1_InclusionDiagnostic">
+			<AttributeDefinition id="inclusiondiag" type="enumeration" multiplicity="atLeastOne" description="De que s'ha tractar el pacient?">
+				<EnumerationOption value="1" description="MPOC - Malaltia pulmonar obstructiva crònica"/>
+				<EnumerationOption value="2" description="IC - Insuficiència cardíaca"/>
+			</AttributeDefinition>			
+		</EntityDefinition>	
+		
+		<EntityDefinition id="LCS1_TechnologicalTest" >
+			<AttributeDefinition id="tech1" type="enumeration" multiplicity="maximalOne" description="Vosté o el seu cuidador tenen connexió a Internet?">
+				<EnumerationOption value="0" description="No"/>
+				<EnumerationOption value="1" description="Sí"/>
+			</AttributeDefinition>
+			<AttributeDefinition id="tech2" type="enumeration" multiplicity="maximalOne" description="Vosté fa anar:">
+				<EnumerationOption value="1" description="Telèfon mòvil no tan sols per trucar."/>
+				<EnumerationOption value="0.0001" description="Tablet"/>
+				<EnumerationOption value="0.0002" description="Ordinador personal."/>
+				<EnumerationOption value="0.0003" description="Cap"/>
+			</AttributeDefinition>
+			<AttributeDefinition id="tech3" type="enumeration" multiplicity="maximalOne" description="El seu cuidador principal fa anar:">
+				<EnumerationOption value="1" description="Telèfon mòvil no tan sols per trucar."/>
+				<EnumerationOption value="0.0001" description="Tablet"/>
+				<EnumerationOption value="0.0002" description="Ordinador personal."/>
+				<EnumerationOption value="0.0003" description="Cap"/>
+			</AttributeDefinition>						
+			<DerivedAttributeDefinition id="tech4" description="Resultat del test tecnològic" 
+			additionalDescription="Si = 0 Suspès|| Si &gt; 0 Aprovat"
+			expression="round((number(tech1, 0) + number(tech2, 0) + number(tech3,0)))" />			
+		</EntityDefinition>	
+		
+		<EntityDefinition id="LCS1_PatientsConsent" >
+            <AttributeDefinition id="pConsent1" type="enumeration" multiplicity="maximalOne" description="Accepta participar al procés clínic descrit al present document?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Sí"/>
+            </AttributeDefinition>
+		</EntityDefinition>	
+
+        <EntityDefinition id="LCS1_Lace">
+            <AttributeDefinition id="lace1" type="enumeration" multiplicity="maximalOne" description="Durada de la estada en nº dies (dia de ingrès i d'alta inclós)">
+                <EnumerationOption value="1" description="1 dia"/>
+                <EnumerationOption value="2" description="2 dies"/>
+                <EnumerationOption value="3" description="3 dies"/>
+                <EnumerationOption value="4" description="4-6 dies"/>
+                <EnumerationOption value="5" description="7-13 dies"/>
+                <EnumerationOption value="7" description="14 o més dies"/>
+            </AttributeDefinition>        
+            <AttributeDefinition id="lace2" type="enumeration" multiplicity="maximalOne" description="El pacient va ingresar via urgències?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Sí"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="lace3" type="enumeration" multiplicity="maximalOne" description="Infart de miocardi previ">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Sí"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="lace4" type="enumeration" multiplicity="maximalOne" description="Malaltia cerebrovascular">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Sí"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="lace5" type="enumeration" multiplicity="maximalOne" description="Malaltia vascular perifèrica">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Sí"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="lace6" type="enumeration" multiplicity="maximalOne" description="Diabetes sense complicacions">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Sí"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="lace7" type="enumeration" multiplicity="maximalOne" description="Insuficiència cardiaca">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="2" description="Sí"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="lace8" type="enumeration" multiplicity="maximalOne" description="Diabetes amb afectaciò d´organs diana">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="2" description="Sí"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="lace9" type="enumeration" multiplicity="maximalOne" description="Malaltia pulmonar crònica">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="2" description="Sí"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="lace10" type="enumeration" multiplicity="maximalOne" description="Malaltia hepàtica o renal lleugera">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="2" description="Sí"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="lace11" type="enumeration" multiplicity="maximalOne" description="Qualsevol tumor (inclus limfoma o leucèmia)">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="2" description="Sí"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="lace12" type="enumeration" multiplicity="maximalOne" description="Demència">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="3" description="Sí"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="lace13" type="enumeration" multiplicity="maximalOne" description="Malaltia del teixit conectiu">    
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="3" description="Sí"/>
+            </AttributeDefinition>     
+            <AttributeDefinition id="lace14" type="enumeration" multiplicity="maximalOne" description="Síndrome de immunodeficiència adquirida">  
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="4" description="Sí"/>
+            </AttributeDefinition>       
+            <AttributeDefinition id="lace15" type="enumeration" multiplicity="maximalOne" description="insuficiència renal moderada o severa">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="4" description="Sí"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="lace16" type="enumeration" multiplicity="maximalOne" description="Tumor sòlid metastasic">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="6" description="Sí"/>
+            </AttributeDefinition> 
+            <DerivedAttributeDefinition id="lace17" expression="number(lace3,0)+number(lace4,0)+number(lace5,0)+number(lace6,0)+number(lace7,0)+number(lace8,0)+number(lace9,0)+number(lace10,0)+number(lace11,0)+number(lace12,0)+number(lace13,0)+number(lace14,0)+number(lace15,0)+number(lace16,0)" description="Comorbidities"/>
+            <AttributeDefinition id="lace18" type="enumeration" multiplicity="maximalOne" description="Nº de visites a urgències (CAP o Hospital) en els darrers sis mesos abans del ingrès">
+                <EnumerationOption value="0" description="0 visites"/>
+                <EnumerationOption value="1" description="1 visita"/>
+                <EnumerationOption value="2" description="2 visites"/>            
+                <EnumerationOption value="3" description="3 visites"/>
+                <EnumerationOption value="4" description="4 o més visites"/>
+            </AttributeDefinition>  
+            <DerivedAttributeDefinition id="lace19" expression="number(lace1,0)+number(lace2,0)+lace17+number(lace18,0)" description="Puntuació de LACE"/>  
+        </EntityDefinition>	
+
+        <EntityDefinition id="LCS1_GlobalDeteriorationScale">
+            <AttributeDefinition id="gds1" type="enumeration" multiplicity="maximalOne" description="Estadi">
+                <EnumerationOption value="0" description="GDS 1. Absència de dèficit cognitiu"/>
+                <EnumerationOption value="1" description="GDS 2. Dèficit cognitiu molt lleu l"/>
+				<EnumerationOption value="3" description="GDS 3. Dèficit cognitiu lleu"/>
+                <EnumerationOption value="4" description="GDS 4. Dèficit cognitiu moderat"/>
+				<EnumerationOption value="5" description="GDS 5. Dèficit cognitiu moderadament greu"/>
+                <EnumerationOption value="6" description="GDS 6. Dèficit cognitiu greu"/>
+				<EnumerationOption value="7" description="GDS 7. Déficit cognitiu molt greu"/>
+            </AttributeDefinition>        
+        </EntityDefinition>		
+		
+		
+   <!-- CASE DEFINITION -->				  
+        <CaseDefinition id="LCS1_Leida" description="CS1 Lleida - Versió OK" ownerPath="LCS1_Settings.CaseManager" clientPath="LCS1_Settings.Patient" entityDefinitionId="LCS1_CaseData" newEntityDefinitionId="LCS1_Settings" newEntityAttachPath="LCS1_Settings" notesDefaultValue='<style>table{width:100%;}table th{background-color:#66308e; color:white;font-size:larger;}table td{border: 1px solid #999;border-width: 0px 1px 1px 1px;}</style><table cellpadding="4" cellspacing="0"> <tr> <th>HOSPITAL</th> <th>EQUIP DE PRIMARIA</th> </tr> <tr> <td><b>Anesthesiologist:</b></br> TBD</td> <td><b>Clinician:</b></br> TBD</td> </tr> <tr> <td><b>Physiotherapist:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>Clinician:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>Nurse:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>SocialCareer:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>New Rol:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>New Rol:</b></br> TBD</td> <td></td> </tr></table><span style="color:#666; font-size:smaller"><b>Hint:</b> One row for each rol.</span>'>	  
+     
+	 
+	    <!-- STAGEDEFINITION: CaseIdentification -->	  
+            <StageDefinition id="LCS1_CaseIdentification" description="Identificació del cas" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_Identification" entityAttachPath="LCS1_Identification">
+            
+                <HumanTaskDefinition id="LCS1_SelectPatient" externalId="SelectPatient" description="Inclusió" ownerPath="LCS1_Settings.CaseManager" isMandatory="true" repeatable="ONCE">
+                    <HttpHookDefinition on="COMPLETE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/case/patient/inclusion" method="POST" failureMessage="Could not COMPLETE SelectPatient on Self-Management System!"/>
+                    <TaskParamDefinition path="LCS1_Settings.Patient" isReadOnly="false" isMandatory="true"/>                
+                    <TaskParamDefinition path="LCS1_Settings.CaseManager" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition path="LCS1_Settings.Clinician" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Settings.Nurse" isReadOnly="false" isMandatory="true"/>                              
+                    <TaskParamDefinition path="LCS1_Settings.SocialCareer" isReadOnly="false" isMandatory="true"/>            
+                </HumanTaskDefinition>					
+       
+	 			<HumanTaskDefinition id="LCS1_InclusionDiagnostic" description="Diagnòstic d'inclusió" ownerPath="LCS1_Settings.CaseManager" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1_InclusionDiagnostic" entityAttachPath="LCS1_Identification.LCS1_InclusionDiagnostic">
+                    <SentryDefinition>
+                        <precondition processDefinitionId="LCS1_SelectPatient"/>
+                    </SentryDefinition>
+                    <TaskParamDefinition path="LCS1_Identification.LCS1_InclusionDiagnostic.inclusiondiag" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>	
+				
+			   <HumanTaskDefinition id="LCS1_Lace" description="LACE" ownerPath="LCS1_Settings.Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_Lace" entityAttachPath="LCS1_Identification.LCS1_Lace">                
+					<SentryDefinition>
+					  <precondition processDefinitionId="LCS1_SelectPatient"/>
+					</SentryDefinition>
+					<TaskParamDefinition path="LCS1_Identification.LCS1_Lace.lace1" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Identification.LCS1_Lace.lace2" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Identification.LCS1_Lace.lace3" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Identification.LCS1_Lace.lace4" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Identification.LCS1_Lace.lace5" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Identification.LCS1_Lace.lace6" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Identification.LCS1_Lace.lace7" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Identification.LCS1_Lace.lace8" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Identification.LCS1_Lace.lace9" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Identification.LCS1_Lace.lace10" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Identification.LCS1_Lace.lace11" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Identification.LCS1_Lace.lace12" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Identification.LCS1_Lace.lace13" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Identification.LCS1_Lace.lace14" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Identification.LCS1_Lace.lace15" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Identification.LCS1_Lace.lace16" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Identification.LCS1_Lace.lace17" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Identification.LCS1_Lace.lace18" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Identification.LCS1_Lace.lace19" isReadOnly="true" isMandatory="false"/>
+				</HumanTaskDefinition>
+				
+				<HumanTaskDefinition id="LCS1_GlobalDeteriorationScale" description="Escala de danys globals (GDS)" ownerPath="LCS1_Settings.Clinician" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS1_GlobalDeteriorationScale" entityAttachPath="LCS1_Identification.LCS1_GlobalDeteriorationScale">                
+					<SentryDefinition>
+					  <precondition processDefinitionId="LCS1_SelectPatient"/>
+					</SentryDefinition>
+					<TaskParamDefinition path="LCS1_Identification.LCS1_GlobalDeteriorationScale.gds1" isReadOnly="false" isMandatory="true"/>
+				</HumanTaskDefinition>
+				
+				<HumanTaskDefinition id="LCS1_TechnologicalTest" description="Test d'adherència a la tecnología" ownerPath="LCS1_Settings.CaseManager" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1_TechnologicalTest" entityAttachPath="LCS1_Identification.LCS1_TechnologicalTest">
+                    <SentryDefinition>
+                        <precondition processDefinitionId="LCS1_SelectPatient"/>
+                    </SentryDefinition>
+                    <TaskParamDefinition path="LCS1_Identification.LCS1_TechnologicalTest.tech1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Identification.LCS1_TechnologicalTest.tech2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Identification.LCS1_TechnologicalTest.tech3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Identification.LCS1_TechnologicalTest.tech4" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>			
+ 				
+			    <HumanTaskDefinition id="LCS1_PatientsConsent" description="Consentiment informat del pacient" ownerPath="LCS1_Settings.Clinician" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1_PatientsConsent" entityAttachPath="LCS1_Identification.LCS1_PatientsConsent">			
+                    <SentryDefinition>
+                        <precondition processDefinitionId="LCS1_SelectPatient"/>
+                    </SentryDefinition>
+                    <TaskParamDefinition path="LCS1_Identification.LCS1_PatientsConsent.pConsent1" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>	
+	      </StageDefinition>
+	 
+		</CaseDefinition>
+	
+	</Workspace>
+
+</SACMDefinition>
