@@ -4,6 +4,10 @@ import rq from 'request-promise';
 import Promise from 'bluebird';
 import colors from 'colors';
 import atob from 'atob';
+import jwt from 'jsonwebtoken';
+import fs from 'fs';
+
+const secret = fs.readFileSync('public.key.pem')+'';
 
 function header(jwt){
     return {
@@ -16,30 +20,46 @@ function generateJWT(email, pw){
     return 'Basic ' + new Buffer(email + ':' + pw).toString('base64');
 };
 
-function getEmailFromJWT(jwt){
-    if(jwt != null && jwt.startsWith('Basic ')){
-        jwt = jwt.replace('Basic ', '');
-        jwt = atob(jwt.trim());
-        jwt = jwt.split(':');
-        if(jwt.length>0)
-            return jwt[0];
-    }
-    return '';   
+function getEmailFromJWT(jwtToken){
+    return new Promise((resolve, reject)=>{
+        console.log("jwt token"+jwtToken)
+        if(jwtToken != null && jwtToken.startsWith('Basic ')){
+            jwtToken = jwtToken.replace('Basic ', '');
+            jwtToken = atob(jwtToken.trim());
+            jwtToken = jwtToken.split(':');
+            if(jwtToken.length>0)
+                resolve(jwtToken[0]);
+        }else if(jwtToken != null && jwtToken.startsWith('conecarebearer ')){
+            jwtToken = jwtToken.replace('conecarebearer ', '');
+            jwt.verify(jwtToken, secret, {algorithms: ['RS256']}, (err, decoded)=> {
+                if(!err){
+                    resolve(JSON.parse(decoded.user_name).username);  
+                }else{
+                    reject('');    
+                }   
+            });
+        }else{
+            reject(''); 
+        }
+    });  
 };
     
 
 function successRequest(method, url, reqBody, resBody, statusCode, start, jwt){
     const durationInMs = +(new Date().getTime()-start.getTime())+"ms";
-    const email = getEmailFromJWT(jwt);
-    console.log('SC-'+method+': '+ url + " "+colors.green(statusCode)+" "+durationInMs +" "+email);
+    getEmailFromJWT(jwt).then(email=>{
+        console.log('SC-'+method+': '+ url + " "+colors.green(statusCode)+" "+durationInMs +" "+email);
+    });    
 }
 
 function errorRequest(method, url, reqBody, resBody, statusCode, start, jwt){
     const durationInMs = +(new Date().getTime()-start.getTime())+"ms";
-    const email = getEmailFromJWT(jwt);
-    console.log(colors.red('SC-'+method+': '+ url + " "+colors.green(statusCode))+" "+durationInMs+" "+email);
-    console.log(reqBody);
-    console.log(resBody);
+    getEmailFromJWT(jwt).then(email=>{
+        console.log('email: '+email)
+        console.log(colors.red('SC-'+method+': '+ url + " "+colors.green(statusCode))+" "+durationInMs+" "+email);
+        console.log(reqBody);
+        console.log(resBody);
+    }); 
 }
 
 module.exports = {
