@@ -121,15 +121,15 @@ const LogSchema = new mongoose.Schema({
   }
 },{timestamps: true});
 
-LogSchema.statics.jwtUserLog = (req, userId, workspaceId)=>{
-  Log.log(req, false, userId, null, workspaceId);
+LogSchema.statics.jwtUserLog = (req, userId, userName, workspaceId)=>{
+  Log.log(req, false, userId, userName, null, workspaceId);
 }
 
 LogSchema.statics.simulateUserLog = (req, email)=>{
-  Log.log(req, true, null, email, null);
+  Log.log(req, true, null, null, email, null);
 }
 
-LogSchema.statics.log = (req, isSimulateUser, userId, email, workspaceId)=>{
+LogSchema.statics.log = (req, isSimulateUser, userId, userName, email, workspaceId)=>{
   if(!config.logging.isEnabled)
     return;
   let application = applications.NA;
@@ -166,6 +166,7 @@ LogSchema.statics.log = (req, isSimulateUser, userId, email, workspaceId)=>{
     acceptLanguage: req.headers['accept-language'],
     isSimulateUser: isSimulateUser,
     userId: userId,
+    username: userName,
     email: email,
     workspaceId: workspaceId,
     reqBody: req.body,

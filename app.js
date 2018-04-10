@@ -114,7 +114,7 @@ app.use('/api/v1', (req, res, next)=>{
           }else{
             req.jwt = 'conecarebearer '+token;  
             let un = JSON.parse(decoded.user_name);         
-            Log.jwtUserLog(req, un.uuid, un.tenantUuid);
+            Log.jwtUserLog(req, un.uuid, un.username, un.tenantUuid);
             next();
           }
         });
