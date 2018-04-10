@@ -196,7 +196,8 @@
 			<AttributeDefinition id="LCS1_ComorbidityCharlsonEvaluation" type="Link.EntityDefinition.LCS1_ComorbidityCharlsonDef" multiplicity="any" description="Comorbidity Charlson"/> 		
 			<AttributeDefinition id="LCS1_ComorbidityPfeiffer" type="Link.EntityDefinition.LCS1_ComorbidityPfeiffer" multiplicity="any" description="Comorbidity Pfeiffer"/>             
 			<AttributeDefinition id="LCS1_HospitalAnxietyAndDepressionScale" type="Link.EntityDefinition.LCS1_HospitalAnxietyAndDepressionScale" multiplicity="any" description="Hospital anxiety and depression scale"/> 			
-		</EntityDefinition>
+			<AttributeDefinition id="LCS1_Barthel" type="Link.EntityDefinition.LCS1_Barthel" multiplicity="any" description="Barthel"/> 
+			</EntityDefinition>
 		
 		<EntityDefinition id="LCS1_ComorbidityCharlsonDef" >
             <AttributeDefinition id="ch1" type="enumeration" multiplicity="maximalOne" description="Infart del miocardi">
@@ -405,6 +406,63 @@
 			expression="number(hadD1,0)+number(hadD2,0)+number(hadD3,0)+number(hadD4,0)+number(hadD5,0)+number(hadD6,0)+number(hadD7,0)" />						 
         </EntityDefinition> 
 		
+		<EntityDefinition id="LCS1_Barthel">
+            <AttributeDefinition id="barthel1" type="enumeration" multiplicity="maximalOne" description="Menjar">
+                <EnumerationOption value="0" description="dependent"/>
+                <EnumerationOption value="5" description="necessita ajuda per tallar, estendre mantega, etc., o requereix una dieta modificada"/>
+                <EnumerationOption value="10" description="independent"/>
+            </AttributeDefinition>        
+            <AttributeDefinition id="barthel2" type="enumeration" multiplicity="maximalOne" description="Rentar-se - banyar-se">
+                <EnumerationOption value="0" description="dependent"/>
+                <EnumerationOption value="5" description="independent (o fent servir la dutxa)"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="barthel3" type="enumeration" multiplicity="maximalOne" description="Vestir-se">
+                <EnumerationOption value="0" description="depenent"/>
+                <EnumerationOption value="5" description="necessita ajuda, però pot fer al menys la meitat de les tasques en un temps raonable "/>
+                <EnumerationOption value="10" description="independent (incloent botons, cremalleres, llaços, etc.)"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="barthel4" type="enumeration" multiplicity="maximalOne" description="Endreçar-se">
+                <EnumerationOption value="0" description="dependent"/>
+                <EnumerationOption value="5" description="independent, incloent rentar-se la cara, mans, dents, afaitar-se i pentinar-se (Els complements necessaris poden ser provistos per altres persones)"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="barthel5" type="enumeration" multiplicity="maximalOne" description="Depòsició">
+                <EnumerationOption value="0" description="incontinent (inclou administració d’ènemes o supositoris per una altre persona)"/>
+                <EnumerationOption value="5" description="accident ocasional"/>
+                <EnumerationOption value="10" description="continent"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="barthel6" type="enumeration" multiplicity="maximalOne" description="Micció- Valorar la situació la setmana previa">
+                <EnumerationOption value="0" description="incontinent, (pacients amb sonda incapaços de manejar-se)"/>
+                <EnumerationOption value="5" description="accident ocasional"/>
+                <EnumerationOption value="10" description="continent"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="barthel7" type="enumeration" multiplicity="maximalOne" description="Anar al lavabo">
+                <EnumerationOption value="0" description="dependent"/>
+                <EnumerationOption value="5" description="necessita alguna ajuda però pot fer coses sol"/>            
+                <EnumerationOption value="10" description="independent (entra i surt sol, es pot vestir i netejar-se)"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="barthel8" type="enumeration" multiplicity="maximalOne" description="Traslladar-se del sillon /llit">
+                <EnumerationOption value="0" description="incapaç, incapaç de romandre assegut"/>
+                <EnumerationOption value="5" description="ajuda gran (una o dues persones o preparada físicament per poder seure), pot romandre assegut"/>
+                <EnumerationOption value="10" description="ajuda menor (verbal o física)"/>
+                <EnumerationOption value="15" description="independent"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="barthel9" type="enumeration" multiplicity="maximalOne" description="Marxa">
+                <EnumerationOption value="0" description="inmóvil o incapaç de caminar menys 50 metres"/>
+                <EnumerationOption value="5" description="independent en cadira de rodes, incloent portes i cantonades superant els 50 metres"/>
+                <EnumerationOption value="10" description="camina, amb la ajuda d'una persona (verbal o física) o elements externs (caminador), 50 metres"/>
+                <EnumerationOption value="15" description="independent (però amb ajudes; com per exemple un bastó) camina al menys 50 metres"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="barthel10" type="enumeration" multiplicity="maximalOne" description="Pujar i baixar escales">
+                <EnumerationOption value="0" description="dependent"/>
+                <EnumerationOption value="5" description="necessita ajuda (verbal, física)"/>
+                <EnumerationOption value="10" description="independent"/>
+            </AttributeDefinition>               
+			<DerivedAttributeDefinition id="barthel11" description="Barthel" 
+			uiReference="colors(0<=red<61<=orange<91<=green<=10000)"
+			additionalDescription="Si &lt;= 20 Dependència total (Vermell)|| si &gt; 20 i &lt;= 60 Dependència severa (Vermell)|| si &gt; 61 i &lt;= 90 Dependència moderada (Taronja)|| si &gt; 91 i &lt;= 99 Dependència lleu (Verd)|| si = 100 Independent (Verd)" 
+			expression="number(barthel1,0)+number(barthel2,0)+number(barthel3,0)+number(barthel4,0)+number(barthel5,0)+number(barthel6,0)+number(barthel7,0)+number(barthel8,0)+number(barthel9,0)+number(barthel10,0)" />						
+        </EntityDefinition>
+		
 		
    <!-- CASE DEFINITION -->				  
         <CaseDefinition id="LCS1_Leida" description="CS1 Lleida - Versió OK" ownerPath="LCS1_Settings.CaseManager" clientPath="LCS1_Settings.Patient" entityDefinitionId="LCS1_CaseData" newEntityDefinitionId="LCS1_Settings" newEntityAttachPath="LCS1_Settings" notesDefaultValue='<style>table{width:100%;}table th{background-color:#66308e; color:white;font-size:larger;}table td{border: 1px solid #999;border-width: 0px 1px 1px 1px;}</style><table cellpadding="4" cellspacing="0"> <tr> <th>HOSPITAL</th> <th>EQUIP DE PRIMARIA</th> </tr> <tr> <td><b>Anesthesiologist:</b></br> TBD</td> <td><b>Clinician:</b></br> TBD</td> </tr> <tr> <td><b>Physiotherapist:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>Clinician:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>Nurse:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>SocialCareer:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>New Rol:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>New Rol:</b></br> TBD</td> <td></td> </tr></table><span style="color:#666; font-size:smaller"><b>Hint:</b> One row for each rol.</span>'>	  
@@ -414,6 +472,7 @@
 				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_ComorbidityPfeiffer.pfeiffer2"/>				
 				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadA8"/>												
                 <SummaryParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadD8"/>											
+				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_Barthel.barthel11"/>								
 		</SummarySectionDefinition>
 	 
 	    <!-- STAGEDEFINITION: CaseIdentification -->	  
@@ -544,6 +603,25 @@
                     <TaskParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadD7" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadA8" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadD8" isReadOnly="true" isMandatory="false"/>        
+                </HumanTaskDefinition>
+				
+                <HumanTaskDefinition id="LCS1_Barthel" description="Estat comòrbid - Barthel" 
+				footnote="Mahoney FI, Barthel D. &quot;Functional evaluation: the Barthel Index.&quot;Maryland State Medical Journal 1965;14:56-61. Used with permission.
+				Loewen SC, Anderson BA. &quot;Predictors of stroke outcome using objective measurement scales.&quot; Stroke.1990;21:78-81.
+				Gresham GE, Phillips TF, Labi ML. &quot;ADL status in stroke: relative merits of three standard indexes.&quot; Arch Phys Med
+				Rehabil.1980;61:355-358. Collin C, Wade DT, Davies S, Horne V. &quot;The Barthel ADL Index: a reliability study.&quot; Int Disability Study.1988;10:61-63."
+				ownerPath="LCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_Barthel" entityAttachPath="LCS1_Evaluation.LCS1_Barthel">
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_Barthel.barthel1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_Barthel.barthel2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_Barthel.barthel3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_Barthel.barthel4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_Barthel.barthel5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_Barthel.barthel6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_Barthel.barthel7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_Barthel.barthel8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_Barthel.barthel9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_Barthel.barthel10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_Barthel.barthel11" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
 				
 				
