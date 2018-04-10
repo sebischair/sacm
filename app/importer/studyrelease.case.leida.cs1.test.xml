@@ -197,6 +197,7 @@
 			<AttributeDefinition id="LCS1_ComorbidityPfeiffer" type="Link.EntityDefinition.LCS1_ComorbidityPfeiffer" multiplicity="any" description="Comorbidity Pfeiffer"/>             
 			<AttributeDefinition id="LCS1_HospitalAnxietyAndDepressionScale" type="Link.EntityDefinition.LCS1_HospitalAnxietyAndDepressionScale" multiplicity="any" description="Hospital anxiety and depression scale"/> 			
 			<AttributeDefinition id="LCS1_Barthel" type="Link.EntityDefinition.LCS1_Barthel" multiplicity="any" description="Barthel"/> 
+			<AttributeDefinition id="LCS1_DiagnosisIADL" type="Link.EntityDefinition.LCS1_DiagnosisIADL" multiplicity="any" description="Activitats instrumentals de la vida diària"/>  
 			</EntityDefinition>
 		
 		<EntityDefinition id="LCS1_ComorbidityCharlsonDef" >
@@ -463,6 +464,52 @@
 			expression="number(barthel1,0)+number(barthel2,0)+number(barthel3,0)+number(barthel4,0)+number(barthel5,0)+number(barthel6,0)+number(barthel7,0)+number(barthel8,0)+number(barthel9,0)+number(barthel10,0)" />						
         </EntityDefinition>
 		
+        <EntityDefinition id="LCS1_DiagnosisIADL"> 
+            <AttributeDefinition id="IADL1" type="enumeration" multiplicity="maximalOne" description="Neteja i mantenimient de la casa">
+                <EnumerationOption value="1" description="Totalment independent/Gens limitat"/>
+                <EnumerationOption value="2" description="Poc dependent/limitat"/>
+                <EnumerationOption value="3" description="Moderadament dependent/limitat"/>
+                <EnumerationOption value="4" description="Molt dependent/limitat"/>
+                <EnumerationOption value="5" description="Completament dependent/limitat"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="IADL2" type="enumeration" multiplicity="maximalOne" description="Preparació d´apats">
+                <EnumerationOption value="1" description="Totalment independent/Not limitat at all"/>
+                <EnumerationOption value="2" description="Poc dependent/limitat"/>
+                <EnumerationOption value="3" description="Moderadament dependent/limitat"/>
+                <EnumerationOption value="4" description="Molt dependent/limitat"/>
+                <EnumerationOption value="5" description="Completament dependent/limitat"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="IADL3" type="enumeration" multiplicity="maximalOne" description="Escala">
+                <EnumerationOption value="1" description="Totalment independent/Not limitat at all"/>
+                <EnumerationOption value="2" description="Poc dependent/limitat"/>
+                <EnumerationOption value="3" description="Moderadament dependent/limitat"/>
+                <EnumerationOption value="4" description="Molt dependent/limitat"/>
+                <EnumerationOption value="5" description="Completament dependent/limitat"/>
+            </AttributeDefinition>             
+            <AttributeDefinition id="IADL4" type="enumeration" multiplicity="maximalOne" description="Compra de queviures i necesitats">
+                <EnumerationOption value="1" description="Totalment independent/Not limitat at all"/>
+                <EnumerationOption value="2" description="Poc dependent/limitat"/>
+                <EnumerationOption value="3" description="Moderadament dependent/limitat"/>
+                <EnumerationOption value="4" description="Molt dependent/limitat"/>
+                <EnumerationOption value="5" description="Completament dependent/limitat"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="IADL5" type="enumeration" multiplicity="maximalOne" description="Capacitat de moure's dintre de la comunitat">
+                <EnumerationOption value="1" description="Totalment independent/Not limitat at all"/>
+                <EnumerationOption value="2" description="Poc dependent/limitat"/>
+                <EnumerationOption value="3" description="Moderadament dependent/limitat"/>
+                <EnumerationOption value="4" description="Molt dependent/limitat"/>
+                <EnumerationOption value="5" description="Completament dependent/limitat"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="IADL6" type="enumeration" multiplicity="maximalOne" description="Correcta presa dels medicaments prescrits">
+                <EnumerationOption value="1" description="Totalment independent/Not limitat at all"/>
+                <EnumerationOption value="2" description="Poc dependent/limitat"/>
+                <EnumerationOption value="3" description="Moderadament dependent/limitat"/>
+                <EnumerationOption value="4" description="Molt dependent/limitat"/>
+                <EnumerationOption value="5" description="Completament dependent/limitat"/>
+            </AttributeDefinition> 
+			<DerivedAttributeDefinition id="IADL7" expression="number(IADL1,0)+number(IADL2,0)+number(IADL3,0)+number(IADL4,0)+number(IADL5,0)+number(IADL6,0)" description="Index d'activitats instrumentals de la vida diària"/>  
+        </EntityDefinition>   		
+		
 		
    <!-- CASE DEFINITION -->				  
         <CaseDefinition id="LCS1_Leida" description="CS1 Lleida - Versió OK" ownerPath="LCS1_Settings.CaseManager" clientPath="LCS1_Settings.Patient" entityDefinitionId="LCS1_CaseData" newEntityDefinitionId="LCS1_Settings" newEntityAttachPath="LCS1_Settings" notesDefaultValue='<style>table{width:100%;}table th{background-color:#66308e; color:white;font-size:larger;}table td{border: 1px solid #999;border-width: 0px 1px 1px 1px;}</style><table cellpadding="4" cellspacing="0"> <tr> <th>HOSPITAL</th> <th>EQUIP DE PRIMARIA</th> </tr> <tr> <td><b>Anesthesiologist:</b></br> TBD</td> <td><b>Clinician:</b></br> TBD</td> </tr> <tr> <td><b>Physiotherapist:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>Clinician:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>Nurse:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>SocialCareer:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>New Rol:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>New Rol:</b></br> TBD</td> <td></td> </tr></table><span style="color:#666; font-size:smaller"><b>Hint:</b> One row for each rol.</span>'>	  
@@ -624,6 +671,16 @@
                     <TaskParamDefinition path="LCS1_Evaluation.LCS1_Barthel.barthel11" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
 				
+				<HumanTaskDefinition id="LCS1_DiagnosisIADL" description="Diagnòstic - Activitats instrumentals de la vida diària" 
+				ownerPath="LCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_DiagnosisIADL" entityAttachPath="LCS1_Evaluation.LCS1_DiagnosisIADL">                
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisIADL.IADL1" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisIADL.IADL2" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisIADL.IADL3" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisIADL.IADL4" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisIADL.IADL5" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisIADL.IADL6" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisIADL.IADL7" isReadOnly="true" isMandatory="false"/>
+				</HumanTaskDefinition>				
 				
 			</StageDefinition>
 		  	 
