@@ -200,6 +200,7 @@
 		<!-- Case Evaluation Entity Definitions -->		
         <EntityDefinition id="LCS1_Evaluation" description="Case evaluation">
 			<AttributeDefinition id="LCS1_ComorbidityCharlsonEvaluation" type="Link.EntityDefinition.LCS1_ComorbidityCharlsonDef" multiplicity="any" description="Comorbidity Charlson"/> 		
+			<AttributeDefinition id="LCS1_ComorbidityPfeiffer" type="Link.EntityDefinition.LCS1_ComorbidityPfeiffer" multiplicity="any" description="Comorbidity Pfeiffer"/>             
 		</EntityDefinition>
 		
 		<EntityDefinition id="LCS1_ComorbidityCharlsonDef" >
@@ -291,12 +292,33 @@
 			description="Charlson"/>
 		</EntityDefinition>			
 		
+        <EntityDefinition id="LCS1_ComorbidityPfeiffer">					
+            <AttributeDefinition id="pfeiffer1" type="enumeration" multiplicity="maximalOne" description="Número de errades">
+                <EnumerationOption value="0" description="0"/>
+                <EnumerationOption value="1" description="1"/>
+                <EnumerationOption value="2" description="2"/>
+                <EnumerationOption value="3" description="3"/>
+                <EnumerationOption value="4" description="4"/>
+                <EnumerationOption value="5" description="5"/>
+                <EnumerationOption value="6" description="6"/>
+                <EnumerationOption value="7" description="7"/>
+                <EnumerationOption value="8" description="8"/>
+                <EnumerationOption value="9" description="9"/>
+                <EnumerationOption value="10" description="10"/>
+            </AttributeDefinition>	
+
+			<DerivedAttributeDefinition id="pfeiffer2" description="Pfeiffer" 
+			expression='number(pfeiffer1,0)'
+			additionalDescription="Si &gt;= 3 Sospita de deteriorament cognitiu (Vermell)|| Si &lt;= 2 No hi ha deteriorament cognitiu (Verd)"
+			uiReference="colors(0<=green<3<=red<11<=orange<=10000)" />							
+        </EntityDefinition>		
 		
    <!-- CASE DEFINITION -->				  
         <CaseDefinition id="LCS1_Leida" description="CS1 Lleida - Versió OK" ownerPath="LCS1_Settings.CaseManager" clientPath="LCS1_Settings.Patient" entityDefinitionId="LCS1_CaseData" newEntityDefinitionId="LCS1_Settings" newEntityAttachPath="LCS1_Settings" notesDefaultValue='<style>table{width:100%;}table th{background-color:#66308e; color:white;font-size:larger;}table td{border: 1px solid #999;border-width: 0px 1px 1px 1px;}</style><table cellpadding="4" cellspacing="0"> <tr> <th>HOSPITAL</th> <th>EQUIP DE PRIMARIA</th> </tr> <tr> <td><b>Anesthesiologist:</b></br> TBD</td> <td><b>Clinician:</b></br> TBD</td> </tr> <tr> <td><b>Physiotherapist:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>Clinician:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>Nurse:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>SocialCareer:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>New Rol:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>New Rol:</b></br> TBD</td> <td></td> </tr></table><span style="color:#666; font-size:smaller"><b>Hint:</b> One row for each rol.</span>'>	  
      
 	    <SummarySectionDefinition id="LCS1_PatientStatus" description="Estat del pacient" position="LEFT">    
-                <SummaryParamDefinition path="LCS1_Evaluation.LCS1_ComorbidityCharlsonEvaluation.ch21"/>                				
+                <SummaryParamDefinition path="LCS1_Evaluation.LCS1_ComorbidityCharlsonEvaluation.ch21"/>  
+				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_ComorbidityPfeiffer.pfeiffer2"/>				
 		</SummarySectionDefinition>
 	 
 	    <!-- STAGEDEFINITION: CaseIdentification -->	  
@@ -375,7 +397,7 @@
                     <precondition processDefinitionId="LCS1_CaseIdentification"/>
                 </SentryDefinition> -->
 		  
-		        <HumanTaskDefinition id="LCS1_ComorbidityCharlsonEvaluationHT" description="Índex de comorbilitat de Charlson" 
+		        <HumanTaskDefinition id="LCS1_ComorbidityCharlsonEvaluationHT" description="Estat comòrbid - Índex de comorbilitat de Charlson" 
 				footnote="Pendent rebre autorització"
 				ownerPath="LCS1_Settings.Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_ComorbidityCharlsonDef" entityAttachPath="LCS1_Evaluation.LCS1_ComorbidityCharlsonEvaluation"> 			  
                     <TaskParamDefinition path="LCS1_Evaluation.LCS1_ComorbidityCharlsonEvaluation.ch1" isReadOnly="false" isMandatory="true"/>
@@ -400,6 +422,15 @@
                     <TaskParamDefinition path="LCS1_Evaluation.LCS1_ComorbidityCharlsonEvaluation.ch20" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS1_Evaluation.LCS1_ComorbidityCharlsonEvaluation.ch21" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
+				
+                <HumanTaskDefinition id="LCS1_ComorbidityPfeiffer" description="Estat cognitiu/mental - Pfeiffer" 
+				footnote="Pfeiffer, E. (1975). A short portable mental status questionnaire for the assessment of organic brain deficit in elderly patients. Journal of American Geriatrics Society. 23, 433-41."
+				ownerPath="LCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1_ComorbidityPfeiffer" entityAttachPath="LCS1_Evaluation.LCS1_ComorbidityPfeiffer">
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_ComorbidityPfeiffer.pfeiffer1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_ComorbidityPfeiffer.pfeiffer2" isReadOnly="true" isMandatory="false"/>
+                </HumanTaskDefinition>        
+
+				
 			</StageDefinition>
 		  	 
 		</CaseDefinition>
