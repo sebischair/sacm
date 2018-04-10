@@ -10,8 +10,9 @@
     <Group staticId="c137c880923911e7bd0c0242ac120002" id="IrbllNurses"/>
     <Group staticId="c137c89d923911e7bd0c0242ac120002" id="IrbllNutritionists"/>
     <Group staticId="c137c88f923911e7bd0c0242ac120002" id="IrbllPhysicians"/>
-    <Group staticId="c137c899923911e7bd0c0242ac120002" id="IrbllPhysiotherapists"/>
-    <Group staticId="c137c8ab923911e7bd0c0242ac120002" id="IrbllPrimaryCareClinicians"/>
+    <Group staticId="c137c899923911e7bd0c0242ac120002" id="IrbllPhysiotherapists"/>    
+	<Group staticId="c137c8ab923911e7bd0c0242ac120002" id="IrbllPrimaryCareClinicians"/>	
+	<Group staticId="b8e8091c30ea11e8a1e70242ac120003" id="IrbllPrimaryCareNurse"/>			
     <Group staticId="c137c8a1923911e7bd0c0242ac120002" id="IrbllPsychologists"/>
     <Group staticId="c137c894923911e7bd0c0242ac120002" id="IrbllRNSTs"/>
     <Group staticId="c137c8a6923911e7bd0c0242ac120002" id="IrbllSocialCareers"/>
@@ -44,9 +45,12 @@
 		    <AttributeDefinition id="Physiotherapist" type="Link.Users(IrbllPhysiotherapists)" description="Fisioterapeuta" multiplicity="maximalOne"/>            
 		    <AttributeDefinition id="Clinician" type="Link.Users(IrbllClinicians)" description="Cirurgià" multiplicity="maximalOne"/> <!-- Metge -->
 		    <AttributeDefinition id="Nurse" type="Link.Users(IrbllNurses)" description="Infermera" multiplicity="maximalOne"/>
-		    <AttributeDefinition id="SocialCareer" type="Link.Users(IrbllSocialCareers)" description="Treballador social" multiplicity="maximalOne"/>
+		    <AttributeDefinition id="SocialCareer" type="Link.Users(IrbllSocialCareers)" description="Treballador social" multiplicity="maximalOne"/>			
 		    <AttributeDefinition id="AnesClinic" type="Link.Users(IrbllAnesthesiologists, IrbllClinicians)" description="Anestesiòleg o Cirurgià" multiplicity="maximalOne"/>            		  		  
-		    <AttributeDefinition id="PrimaryCareClinicians" type="Link.Users(IrbllPrimaryCareClinicians)" description="Atenció Primària" multiplicity="maximalOne"/>	 
+			<AttributeDefinition id="NurseSocial" type="Link.Users(IrbllNurses, IrbllSocialCareers)" description="Infermera o Treballador social" multiplicity="maximalOne"/>            		  		  			
+			<AttributeDefinition id="NurseSocialClinician" type="Link.Users(IrbllClinicians, IrbllNurses, IrbllSocialCareers)" description="Cirurgià o Infermera o Treballador social" multiplicity="maximalOne"/>            		  		  			
+		    <AttributeDefinition id="PrimaryCareClinicians" type="Link.Users(IrbllPrimaryCareClinicians)" description="Cirurgià - Atenció Primària" multiplicity="maximalOne"/>	 
+			<AttributeDefinition id="PrimaryCareNurse" type="Link.Users(IrbllPrimaryCareNurse)" description="Infermera - Atenció Primària" multiplicity="maximalOne"/>	 			
 		    <AttributeDefinition id="WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date" multiplicity="maximalOne"/>
         </EntityDefinition>
 		
