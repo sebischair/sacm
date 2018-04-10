@@ -58,15 +58,9 @@
         <EntityDefinition id="LCS1_Identification" description="Identification">
 			<AttributeDefinition id="LCS1_InclusionDiagnostic" type="Link.EntityDefinition.LCS1_InclusionDiagnostic" multiplicity="any" description="Diagnòstic d'inclusió"/> 
 		    <AttributeDefinition id="LCS1_TechnologicalTest" type="Link.EntityDefinition.LCS1_TechnologicalTest" multiplicity="any" description="Technological test"/> 
-		    <AttributeDefinition id="LCS1_PatientsConsent" type="Link.EntityDefinition.LCS1_PatientsConsent" multiplicity="any" description="Patients consent"/> 
-		   
+		    <AttributeDefinition id="LCS1_PatientsConsent" type="Link.EntityDefinition.LCS1_PatientsConsent" multiplicity="any" description="Patients consent"/> 		   
 		    <AttributeDefinition id="LCS1_Lace" type="Link.EntityDefinition.LCS1_Lace" multiplicity="any" description="LACE"/>
 		    <AttributeDefinition id="LCS1_GlobalDeteriorationScale" type="Link.EntityDefinition.LCS1_GlobalDeteriorationScale" multiplicity="any" description="GDS"/>
-		   
-		   <!-- 
-            <AttributeDefinition id="LCS1_ComorbidityCharlsonEvaluation" type="Link.EntityDefinition.LCS1_ComorbidityCharlsonDef" multiplicity="any" description="Comorbidity Charlson"/>  
-            <AttributeDefinition id="LCS1_ComplexityRisk" type="Link.EntityDefinition.LCS1_ComplexityRisk" multiplicity="any" description="Complexity risk"/> 
-			-->			
         </EntityDefinition>				
 
 		<EntityDefinition id="LCS1_InclusionDiagnostic">
@@ -201,6 +195,7 @@
         <EntityDefinition id="LCS1_Evaluation" description="Case evaluation">
 			<AttributeDefinition id="LCS1_ComorbidityCharlsonEvaluation" type="Link.EntityDefinition.LCS1_ComorbidityCharlsonDef" multiplicity="any" description="Comorbidity Charlson"/> 		
 			<AttributeDefinition id="LCS1_ComorbidityPfeiffer" type="Link.EntityDefinition.LCS1_ComorbidityPfeiffer" multiplicity="any" description="Comorbidity Pfeiffer"/>             
+			<AttributeDefinition id="LCS1_HospitalAnxietyAndDepressionScale" type="Link.EntityDefinition.LCS1_HospitalAnxietyAndDepressionScale" multiplicity="any" description="Hospital anxiety and depression scale"/> 			
 		</EntityDefinition>
 		
 		<EntityDefinition id="LCS1_ComorbidityCharlsonDef" >
@@ -313,12 +308,112 @@
 			uiReference="colors(0<=green<3<=red<11<=orange<=10000)" />							
         </EntityDefinition>		
 		
+		<EntityDefinition id="LCS1_HospitalAnxietyAndDepressionScale">
+            <AttributeDefinition id="hadA1" type="enumeration" multiplicity="maximalOne" description="A.1. Em trobo tens/a o nervios/a"> 
+                <EnumerationOption value="0" description="En absolut"/>
+                <EnumerationOption value="1" description="De tant en tant, de manera ocasional"/>
+                <EnumerationOption value="2" description="Gran part del temps"/>
+                <EnumerationOption value="3" description="La major part del temps"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadD1" type="enumeration" multiplicity="maximalOne" description="D.1. Continuo gaudint de la vida com sempre"> 
+                <EnumerationOption value="0" description="Certament, igual que abans"/>
+                <EnumerationOption value="1" description="No tant com abans"/>
+                <EnumerationOption value="2" description="Solament una mica"/>
+                <EnumerationOption value="3" description="Ja no gaudeixo amb res"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadA2" type="enumeration" multiplicity="maximalOne" description="A.2.Sento una espècie de por com si algo dolent fos a passar"> 
+                <EnumerationOption value="0" description="En absolut"/>
+                <EnumerationOption value="1" description="Una mica, però no em preocupa"/>
+                <EnumerationOption value="2" description="Sí, però no molt malament"/>
+                <EnumerationOption value="3" description="Molta i bastant malament"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadD2" type="enumeration" multiplicity="maximalOne" description="D.2. Soc capaç de riure i veure el costat graciós de les coses:"> 
+                <EnumerationOption value="0" description="Tant com sempre he pogut"/>
+                <EnumerationOption value="1" description="No tant actualment"/>
+                <EnumerationOption value="2" description="No molt actualment"/>
+                <EnumerationOption value="3" description="En absolut"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadA3" type="enumeration" multiplicity="maximalOne" description="A.3. Tinc el cap ple de preocupacions"> 
+                <EnumerationOption value="0" description="Només de manera ocasional"/>
+                <EnumerationOption value="1" description="De tant en tant, però no molt freqüèntment"/>
+                <EnumerationOption value="2" description="Molta part del meu temps"/>
+                <EnumerationOption value="3" description="Gran part del temps"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadD3" type="enumeration" multiplicity="maximalOne" description="D.3. Em trobo alegre"> 
+                <EnumerationOption value="0" description="Només de manera ocasional"/>
+                <EnumerationOption value="1" description="De tant en tant, però no molt freqüèntment"/>
+                <EnumerationOption value="2" description="Molta part del meu temps"/>
+                <EnumerationOption value="3" description="Gran part del temps"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadA4" type="enumeration" multiplicity="maximalOne" description="A.4. Soc capaç de romandre asegut/da tranquil/a i relaxat/da:"> 
+                <EnumerationOption value="0" description="Definitivament"/>
+                <EnumerationOption value="1" description="De manera habitual"/>
+                <EnumerationOption value="2" description="No de manera freqüent"/>
+                <EnumerationOption value="3" description="En absolut"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadD4" type="enumeration" multiplicity="maximalOne" description="D.4. Em trobo lent i maldestre"> 
+                <EnumerationOption value="0" description="En absolut"/>
+                <EnumerationOption value="1" description="De vegades"/>
+                <EnumerationOption value="2" description="Molt sovint"/>
+                <EnumerationOption value="3" description="Pràcticament tot el temps"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadA5" type="enumeration" multiplicity="maximalOne" description="A.5. Experimento una desagradable sensació de 'nervis i formigeig' a l'estomac"> 
+                <EnumerationOption value="0" description="En absolut"/>
+                <EnumerationOption value="1" description="Ocasionalment"/>
+                <EnumerationOption value="2" description="Bastant sovint"/>
+                <EnumerationOption value="3" description="Molt sovint"/>
+            </AttributeDefinition>
+			<AttributeDefinition id="hadD5" type="enumeration" multiplicity="maximalOne" description="D.5. He perdut l'interès per el meu aspecte personal"> 
+                <EnumerationOption value="0" description="Tinc la mateixa cura que sempre"/>
+                <EnumerationOption value="1" description="No puc tenir molta cura"/>
+                <EnumerationOption value="2" description="No tinc la cura que hauria de tenir "/>
+                <EnumerationOption value="3" description="Definitivament"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadA6" type="enumeration" multiplicity="maximalOne" description="A.6. Em trobo inquiet/a com si no pugués parar de moure'm"> 
+                <EnumerationOption value="0" description="En absolut"/>
+                <EnumerationOption value="1" description="No molt"/>
+                <EnumerationOption value="2" description="Molt"/>
+                <EnumerationOption value="3" description="De fet, molt"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadD6" type="enumeration" multiplicity="maximalOne" description="D.6. Espero les coses amb il·lusió"> 
+                <EnumerationOption value="0" description="Tant com ho he fet sempre"/>
+                <EnumerationOption value="1" description=" Més aviat menys del que solia "/>
+                <EnumerationOption value="2" description=" Definitivament menys del que solia fer "/>
+                <EnumerationOption value="3" description="Tot just tinc il·lusió"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadA7" type="enumeration" multiplicity="maximalOne" description="A.7. Experimento sobtadament sensacions de gran angoixa o por"> 
+                <EnumerationOption value="0" description="En absolut"/>
+                <EnumerationOption value="1" description="No molt sovint"/>
+                <EnumerationOption value="2" description="Bastant sovint"/>
+                <EnumerationOption value="3" description="De fet, molt sovint"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="hadD7" type="enumeration" multiplicity="maximalOne" description="D.7. Soc capaç de disfrutar amb un bon llibre o amb un bon programa de ràdio o televisió"> 
+                <EnumerationOption value="0" description="Sovint"/>
+                <EnumerationOption value="1" description="De vegades"/>
+                <EnumerationOption value="2" description="Poques vegades"/>
+                <EnumerationOption value="3" description="Molt poques vegades"/>
+            </AttributeDefinition>			
+
+			<DerivedAttributeDefinition id="hadA8" description="HAD Ansietat" 
+			uiReference="colors(0<=green<8<=orange<11<=red<=10000)"
+			additionalDescription="si &lt;= 7 Normal (Verd)|| si &gt;=8 i &lt;= 10 Límit (Taronja)|| si &gt;= 11 Cas anormal (Vermell)" 
+			expression="number(hadA1,0)+number(hadA2,0)+number(hadA3,0)+number(hadA4,0)+number(hadA5,0)+number(hadA6,0)+number(hadA7,0)" />			
+			
+			<DerivedAttributeDefinition id="hadD8" description="HAD Depressió" 
+			uiReference="colors(0<=green<8<=orange<11<=red<=10000)"
+			additionalDescription="si &lt;= 7 Normal (Verd)|| si &gt;=8 i &lt;= 10 Límit (Taronja)|| si &gt;= 11 Cas anormal (Vermell)" 
+			expression="number(hadD1,0)+number(hadD2,0)+number(hadD3,0)+number(hadD4,0)+number(hadD5,0)+number(hadD6,0)+number(hadD7,0)" />						 
+        </EntityDefinition> 
+		
+		
    <!-- CASE DEFINITION -->				  
         <CaseDefinition id="LCS1_Leida" description="CS1 Lleida - Versió OK" ownerPath="LCS1_Settings.CaseManager" clientPath="LCS1_Settings.Patient" entityDefinitionId="LCS1_CaseData" newEntityDefinitionId="LCS1_Settings" newEntityAttachPath="LCS1_Settings" notesDefaultValue='<style>table{width:100%;}table th{background-color:#66308e; color:white;font-size:larger;}table td{border: 1px solid #999;border-width: 0px 1px 1px 1px;}</style><table cellpadding="4" cellspacing="0"> <tr> <th>HOSPITAL</th> <th>EQUIP DE PRIMARIA</th> </tr> <tr> <td><b>Anesthesiologist:</b></br> TBD</td> <td><b>Clinician:</b></br> TBD</td> </tr> <tr> <td><b>Physiotherapist:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>Clinician:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>Nurse:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>SocialCareer:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>New Rol:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>New Rol:</b></br> TBD</td> <td></td> </tr></table><span style="color:#666; font-size:smaller"><b>Hint:</b> One row for each rol.</span>'>	  
      
 	    <SummarySectionDefinition id="LCS1_PatientStatus" description="Estat del pacient" position="LEFT">    
                 <SummaryParamDefinition path="LCS1_Evaluation.LCS1_ComorbidityCharlsonEvaluation.ch21"/>  
 				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_ComorbidityPfeiffer.pfeiffer2"/>				
+				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadA8"/>												
+                <SummaryParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadD8"/>											
 		</SummarySectionDefinition>
 	 
 	    <!-- STAGEDEFINITION: CaseIdentification -->	  
@@ -429,7 +524,28 @@
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_ComorbidityPfeiffer.pfeiffer1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS1_Evaluation.LCS1_ComorbidityPfeiffer.pfeiffer2" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>        
-
+				
+                <HumanTaskDefinition id="LCS1_HospitalAnxietyAndDepressionScale" description="Estat comòrbid - Escala d'ansietat i depressió hospitalària (HAD)" 
+				footnote="Zigmond, A. S., &amp; Snaith, R. P. (1983). The hospital anxiety and depression scale. Acta psychiatrica scandinavica, 67(6), 361-370."
+				ownerPath="LCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1_HospitalAnxietyAndDepressionScale" entityAttachPath="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale">
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadA1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadD1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadA2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadD2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadA3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadD3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadA4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadD4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadA5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadD5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadA6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadD6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadA7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadD7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadA8" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadD8" isReadOnly="true" isMandatory="false"/>        
+                </HumanTaskDefinition>
+				
 				
 			</StageDefinition>
 		  	 
