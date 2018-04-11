@@ -1,6 +1,7 @@
 'use strict';
 import Promise from 'bluebird';
 import request from 'request-promise';
+import colors from 'colors';
 import xml2js from 'xml2js';
 import prompt from 'prompt-promise';
 import Workspace from '../models/workspace/model.workspace';
@@ -1069,19 +1070,16 @@ module.exports = class Importer {
       if(actions == null)
         return Promise.resolve('No Action Element Defined!');
       //console.log(JSON.stringify(actions,null,2))
-      console.log('Execute following actions: ')
+      console.log(colors.green('Execute following actions: '))
       actions.forEach(action=>{
-        if(action.$.id != 'Delay'){
-          console.log(action.$.id+'('+action.$.processId+')');
-        }else{
-          console.log(action.$.id+'('+action.$.ms+')');
-        }
+        console.log(this.getActionConsoleString(action))
       });
       return Promise.each(actions, action=>{
         let p = Promise.resolve();
         if(isDebug && action.$.breakpoint)
           p = prompt('Press enter to continue with action "'+action.$.id+'('+action.$.processId+')": ')
         return p.then(()=>{
+          console.log(colors.green('Start '+this.getActionConsoleString(action)));          
           if(action.$.id == "ActivateStage"){
             return this.activateStageWithName(caseId, action.$.processId);
 
@@ -1121,6 +1119,14 @@ module.exports = class Importer {
       .then(()=>{
         return Case.findTreeById(this.executionJwt, caseId);
       })
+    }
+
+    getActionConsoleString(action){
+      if(action.$.id != 'Delay'){
+        return action.$.id+'('+action.$.processId+')';
+      }else{
+        return action.$.id+'('+action.$.ms+')';
+      }
     }
 
     getParms(action){
@@ -1212,18 +1218,14 @@ module.exports = class Importer {
   }
 
     activateStageWithName(caseId, stageName){
-      return Stage.findAllByCaseId(this.executionJwt, caseId)
-      .then(allStages=>{
-        let foundStage = null;
-        allStages.forEach(repeatedStages=>{
-          repeatedStages.forEach(repeatedStage=>{
-            if(!foundStage && repeatedStage.name == stageName && repeatedStage.possibleActions.includes('ACTIVATE')){
-              foundStage = repeatedStage;              
-            }
-          });
-        });
-        if(foundStage){
-          return Stage.activate(this.executionJwt, foundStage.id);
+      return Process.findByCaseQueryLast(this.executionJwt, caseId, {
+        resourceType: Stage.getResourceType(),
+        name: taskName,
+        possibleActions: Process.POSSIBLEACTION_ACTIVATE
+      }) 
+      .then(stage=>{       
+        if(stage){
+          return Stage.activate(this.executionJwt, stage.id);
         }else{
           return Promise.reject('Could not activate Stage "'+stageName+'"!')
         }       
@@ -1232,22 +1234,18 @@ module.exports = class Importer {
 
 
     activateDualTaskWithName(caseId, taskName){
-      return DualTask.findAllByCaseId(this.executionJwt, caseId)
-      .then(allTasks=>{
-        let foundTask = null;
-        allTasks.forEach(repeatedTasks=>{
-          repeatedTasks.forEach(repeatedTask=>{
-            if(!foundTask && repeatedTask.name == taskName && repeatedTask.possibleActions.includes('ACTIVATE')){
-              foundTask = repeatedTask;              
-            }
-          });
+      return Process.findByCaseQueryLast(this.executionJwt, caseId, {
+          resourceType: DualTask.getResourceType(),
+          name: taskName,
+          possibleActions: Process.POSSIBLEACTION_ACTIVATE
+        }) 
+        .then(task=>{
+          if(task){
+            return DualTask.activate(this.executionJwt, task.id);
+          }else{
+            return Promise.reject('Could not activate DualTask "'+taskName+'"!')
+          }       
         });
-        if(foundTask){
-          return DualTask.activate(this.executionJwt, foundTask.id);
-        }else{
-          return Promise.reject('Could not activate DualTask "'+taskName+'"!')
-        }       
-      });
     }
 
     /**
