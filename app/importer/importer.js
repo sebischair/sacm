@@ -1269,28 +1269,6 @@ module.exports = class Importer {
         })      
     }
 
-    /**
-     * @deprecated Since the SocioCortex supports a case query request
-     */    
-    findActiveProcessWithName(nestedProcesses, searchedName){
-      for(let process of nestedProcesses)     
-        for(let instance of process)
-          if(instance.name == searchedName && instance.state == "ACTIVE")
-            return instance;
-      return null;
-    }
-
-   /**
-     * @deprecated Since the SocioCortex supports a case query request
-     */  
-    findProcessWithName(nestedProcesses, searchedName){
-      for(let process of nestedProcesses)     
-        for(let instance of process)
-          if(instance.name == searchedName)
-            return instance;
-      return null;
-    }
-
     createAlert(caseId, processName, action){
       return Process.findByCaseQueryLast(this.executionJwt, caseId, {
           resourceType: Process.getResourceType(),
