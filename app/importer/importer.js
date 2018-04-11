@@ -1252,6 +1252,10 @@ module.exports = class Importer {
        return HumanTask.findAllByCaseId(this.executionJwt, caseId)
         .then(humanTasks=>{          
           const ht = this.findActiveProcessWithName(humanTasks, taskName);
+          if(!ht){
+            console.log('HumanTask for execution not found!');
+            throw new Error('HumanTask for execution not found!')
+          }
           return HumanTask.findById(this.executionJwt, ht.id);
         })        
         .then(humanTask=>{
