@@ -1294,11 +1294,10 @@ module.exports = class Importer {
     }
 
     createAlert(caseId, processName, action){
-       return Process.findAllByCaseId(this.executionJwt, caseId)
-        .then(processes=>{          
-          const p = this.findProcessWithName(processes, processName);
-          return Process.findById(this.executionJwt, p.id);
-        })        
+      return Process.findByCaseQueryLast(this.executionJwt, caseId, {
+          resourceType: Process.getResourceType(),
+          name: processName
+        })         
         .then(p=>{
           const data = {
             process: p.id,
