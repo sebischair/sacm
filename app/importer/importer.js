@@ -1173,19 +1173,25 @@ module.exports = class Importer {
        });        
    }
 
-  completeStageWithName(caseId, stageName){     
-    return Stage.findAllByCaseId(this.executionJwt, caseId)
-     .then(stages=>{          
-       const s = this.findActiveProcessWithName(stages, stageName);
-       return Stage.complete(this.executionJwt, s.id);
+  completeStageWithName(caseId, stageName){   
+    return Process.findByCaseQueryLast(this.executionJwt, caseId, {
+        state: Process.STATE_ACTIVE,
+        resourceType: Stage.getResourceType(),
+        name: stageName
+      })   
+     .then(stage=>{  
+       return Stage.complete(this.executionJwt, stage.id);
      });      
   }
 
   terminateStageWithName(caseId, stageName){     
-    return Stage.findAllByCaseId(this.executionJwt, caseId)
-     .then(stages=>{          
-       const s = this.findActiveProcessWithName(stages, stageName);
-       return Stage.terminate(this.executionJwt, s.id);
+    return Process.findByCaseQueryLast(this.executionJwt, caseId, {
+        state: Process.STATE_ACTIVE,
+        resourceType: Stage.getResourceType(),
+        name: stageName
+      })   
+    .then(stage=>{  
+       return Stage.terminate(this.executionJwt, stage.id);
      });      
   }
 
