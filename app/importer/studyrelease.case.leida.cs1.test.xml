@@ -168,7 +168,7 @@
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="6" description="Sí"/>
             </AttributeDefinition> 
-            <DerivedAttributeDefinition id="lace17" expression="number(lace3,0)+number(lace4,0)+number(lace5,0)+number(lace6,0)+number(lace7,0)+number(lace8,0)+number(lace9,0)+number(lace10,0)+number(lace11,0)+number(lace12,0)+number(lace13,0)+number(lace14,0)+number(lace15,0)+number(lace16,0)" description="Comorbidities"/>
+            <DerivedAttributeDefinition id="lace17" expression="number(lace3,0)+number(lace4,0)+number(lace5,0)+number(lace6,0)+number(lace7,0)+number(lace8,0)+number(lace9,0)+number(lace10,0)+number(lace11,0)+number(lace12,0)+number(lace13,0)+number(lace14,0)+number(lace15,0)+number(lace16,0)" description="Comorbiditats"/>
             <AttributeDefinition id="lace18" type="enumeration" multiplicity="maximalOne" description="Nº de visites a urgències (CAP o Hospital) en els darrers sis mesos abans del ingrès">
                 <EnumerationOption value="0" description="0 visites"/>
                 <EnumerationOption value="1" description="1 visita"/>
@@ -640,9 +640,9 @@
 				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadA8"/>												
                 <SummaryParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadD8"/>											
 				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_Barthel.barthel11"/>				
-				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesAl.AnthropometricAl"/>																									
-				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenollHomes.AnthropometricGenollHomesIMC"/>	
-				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenollDones.AnthropometricGenollDonesIMC"/>	
+				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_AnthropometricVariablesAl.AnthropometricAl"/>																									
+				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_AnthropometricVariablesGenollHomes.AnthropometricGenollHomesIMC"/>	
+				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_AnthropometricVariablesGenollDones.AnthropometricGenollDonesIMC"/>	
 		</SummarySectionDefinition>
 	 
 	    <!-- STAGEDEFINITION: CaseIdentification -->	  
@@ -716,10 +716,10 @@
 		  
 		  
             <StageDefinition id="LCS1_CaseEvaluation" description="Avaluació del cas" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_Evaluation" entityAttachPath="LCS1_Evaluation.LCS1_Evaluation">
-			<!-- ONLY TEST
+			<!-- ONLY TEST -->
                 <SentryDefinition>
                     <precondition processDefinitionId="LCS1_CaseIdentification"/>
-                </SentryDefinition> -->
+                </SentryDefinition> 
 		  
 		        <HumanTaskDefinition id="LCS1_ComorbidityCharlsonEvaluationHT" description="Estat comòrbid - Índex de comorbilitat de Charlson" 
 				footnote="Pendent rebre autorització"
@@ -847,6 +847,7 @@
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisNyha.nyha1" isReadOnly="false" isMandatory="true"/>
 				</HumanTaskDefinition>
 				
+				<!--
 				<HumanTaskDefinition id="LCS1_DiagnosisGold" description="Diagnòstic - Diagnosis grau GOLD"
 				ownerPath="LCS1_Settings.Clinician" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS1_DiagnosisGold" entityAttachPath="LCS1_Evaluation.LCS1_DiagnosisGold">                
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisGold.gold1" isReadOnly="false" isMandatory="true"/>
@@ -862,7 +863,8 @@
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodex.codex3" isReadOnly="true" isMandatory="false"/>
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodex.codex4" isReadOnly="true" isMandatory="false"/>
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodex.codex5" isReadOnly="true" isMandatory="false"/>
-				</HumanTaskDefinition>										
+				</HumanTaskDefinition>	 
+				-->									
 				
 			</StageDefinition>
 		  	 
