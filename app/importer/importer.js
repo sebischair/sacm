@@ -1248,16 +1248,12 @@ module.exports = class Importer {
      * @param taskName 
      * @param paramsMap {attrName1:[value1, value2], attrName2: [value1, value2]}
      */
-    completeHumanTaskWithName(caseId, taskName, paramsMap){     
-       return HumanTask.findAllByCaseId(this.executionJwt, caseId)
-        .then(humanTasks=>{          
-          const ht = this.findActiveProcessWithName(humanTasks, taskName);
-          if(!ht){
-            console.log('HumanTask for execution not found!');
-            throw new Error('HumanTask for execution not found!')
-          }
-          return HumanTask.findById(this.executionJwt, ht.id);
-        })        
+    completeHumanTaskWithName(caseId, taskName, paramsMap){  
+      return Process.findByCaseQueryLast(this.executionJwt, caseId, {
+          state: Process.STATE_ACTIVE,
+          resourceType: HumanTask.getResourceType(),
+          name: taskName
+        })       
         .then(humanTask=>{
           for(let i=0; i<humanTask.taskParams.length; i++){
             let tp = humanTask.taskParams[i];
@@ -1265,7 +1261,7 @@ module.exports = class Importer {
               humanTask.taskParams[i].values = paramsMap[tp.name];            
           }
           return HumanTask.complete(this.executionJwt, humanTask);
-        });        
+        })      
     }
 
     findActiveProcessWithName(nestedProcesses, searchedName){
