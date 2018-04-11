@@ -28,6 +28,7 @@ import Process from '../models/case/model.process';
 import Alert from '../models/case/model.alert';
 import Settings from '../models/settings/model.settings';
 import config from '../../config';
+import { deprecate } from 'util';
 const xml2jspromise = Promise.promisifyAll(xml2js);
 const fs = Promise.promisifyAll(require("fs"));
 
@@ -1141,11 +1142,11 @@ module.exports = class Importer {
     }
    
     completeAutomatedTaskWithName(caseId, taskName, paramsMap){     
-       return AutomatedTask.findAllByCaseId(this.executionJwt, caseId)
-        .then(tasks=>{          
-          const t = this.findActiveProcessWithName(tasks, taskName);
-          return AutomatedTask.findById(this.executionJwt, t.id);
-        })        
+      return Process.findByCaseQueryLast(this.executionJwt, caseId, {
+          state: Process.STATE_ACTIVE,
+          resourceType: AutomatedTask.getResourceType(),
+          name: taskName
+        })   
         .then(task=>{
           for(let i=0; i<task.taskParams.length; i++){
             let tp = task.taskParams[i];
@@ -1264,6 +1265,9 @@ module.exports = class Importer {
         })      
     }
 
+    /**
+     * @deprecated Since the SocioCortex supports a case query request
+     */    
     findActiveProcessWithName(nestedProcesses, searchedName){
       for(let process of nestedProcesses)     
         for(let instance of process)
@@ -1272,6 +1276,9 @@ module.exports = class Importer {
       return null;
     }
 
+   /**
+     * @deprecated Since the SocioCortex supports a case query request
+     */  
     findProcessWithName(nestedProcesses, searchedName){
       for(let process of nestedProcesses)     
         for(let instance of process)
