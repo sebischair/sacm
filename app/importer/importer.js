@@ -1157,12 +1157,12 @@ module.exports = class Importer {
         });        
     }
 
-    completeDualTaskHumanPartWithName(caseId, taskName, paramsMap){     
-      return DualTask.findAllByCaseId(this.executionJwt, caseId)
-       .then(tasks=>{          
-         const t = this.findActiveProcessWithName(tasks, taskName);
-         return DualTask.findById(this.executionJwt, t.id);
-       })        
+    completeDualTaskHumanPartWithName(caseId, taskName, paramsMap){ 
+      return Process.findByCaseQueryLast(this.executionJwt, caseId, {
+          state: Process.STATE_ACTIVE,
+          resourceType: DualTask.getResourceType(),
+          name: taskName
+        })        
        .then(task=>{
          for(let i=0; i<task.taskParams.length; i++){
            let tp = task.taskParams[i];
@@ -1190,11 +1190,11 @@ module.exports = class Importer {
   }
 
    completeDualTaskAutomatedPartWithName(caseId, taskName, paramsMap){     
-    return DualTask.findAllByCaseId(this.executionJwt, caseId)
-     .then(tasks=>{          
-       const t = this.findActiveProcessWithName(tasks, taskName);
-       return DualTask.findById(this.executionJwt, t.id);
-     })        
+    return Process.findByCaseQueryLast(this.executionJwt, caseId, {
+        state: Process.STATE_ACTIVE,
+        resourceType: DualTask.getResourceType(),
+        name: taskName
+      })       
      .then(task=>{
        for(let i=0; i<task.taskParams.length; i++){
          let tp = task.taskParams[i];
