@@ -28,4 +28,8 @@ export default class Process extends Model{
   static autocompleteOwner(jwt, processId){
     return http.get(jwt, '/processes/'+processId+'/owner/autocomplete');
   }
+
+  static findByCaseQuery(jwt, caseId, query){
+    return http.post(jwt, '/cases/'+caseId+'/processes/query', query);
+  }
 }
