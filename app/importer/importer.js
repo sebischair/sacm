@@ -1146,6 +1146,15 @@ module.exports = class Importer {
       }
       return params;
     }
+
+    addParamsToTask(task, paramsMap){
+      for(let i=0; i<task.taskParams.length; i++){
+        let tp = task.taskParams[i];
+        if(paramsMap.hasOwnProperty(tp.name))
+          task.taskParams[i].values = paramsMap[tp.name];            
+      }
+      return task;
+    }
    
     completeAutomatedTaskWithName(caseId, taskName, paramsMap){     
       return Process.findByCaseQueryLast(this.executionJwt, caseId, {
@@ -1153,13 +1162,8 @@ module.exports = class Importer {
           resourceType: AutomatedTask.getResourceType(),
           name: taskName
         })   
-        .then(task=>{
-          for(let i=0; i<task.taskParams.length; i++){
-            let tp = task.taskParams[i];
-            if(paramsMap.hasOwnProperty(tp.name))
-              task.taskParams[i].values = paramsMap[tp.name];            
-          }
-          return AutomatedTask.complete(this.executionJwt, task);
+        .then(task=>{          
+          return AutomatedTask.complete(this.executionJwt, this.addParamsToTask(task, paramsMap));
         });        
     }
 
@@ -1170,12 +1174,7 @@ module.exports = class Importer {
           name: taskName
         })        
        .then(task=>{
-         for(let i=0; i<task.taskParams.length; i++){
-           let tp = task.taskParams[i];
-           if(paramsMap.hasOwnProperty(tp.name))
-             task.taskParams[i].values = paramsMap[tp.name];            
-         }
-         return DualTask.completeHumanPart(this.executionJwt, task);
+         return DualTask.completeHumanPart(this.executionJwt, this.addParamsToTask(task, paramsMap));
        });        
    }
 
@@ -1208,12 +1207,7 @@ module.exports = class Importer {
         name: taskName
       })       
      .then(task=>{
-       for(let i=0; i<task.taskParams.length; i++){
-         let tp = task.taskParams[i];
-         if(paramsMap.hasOwnProperty(tp.name))
-           task.taskParams[i].values = paramsMap[tp.name];            
-       }
-       return DualTask.completeAutomatedPart(this.executionJwt, task);
+       return DualTask.completeAutomatedPart(this.executionJwt, this.addParamsToTask(task, paramsMap));
      });        
   }
 
@@ -1259,13 +1253,8 @@ module.exports = class Importer {
           resourceType: HumanTask.getResourceType(),
           name: taskName
         })       
-        .then(humanTask=>{
-          for(let i=0; i<humanTask.taskParams.length; i++){
-            let tp = humanTask.taskParams[i];
-            if(paramsMap.hasOwnProperty(tp.name))
-              humanTask.taskParams[i].values = paramsMap[tp.name];            
-          }
-          return HumanTask.complete(this.executionJwt, humanTask);
+        .then(task=>{
+          return HumanTask.complete(this.executionJwt, this.addParamsToTask(task, paramsMap));
         })      
     }
 
