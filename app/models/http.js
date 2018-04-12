@@ -22,7 +22,6 @@ function generateJWT(email, pw){
 
 function getEmailFromJWT(jwtToken){
     return new Promise((resolve, reject)=>{
-        console.log("jwt token"+jwtToken)
         if(jwtToken != null && jwtToken.startsWith('Basic ')){
             jwtToken = jwtToken.replace('Basic ', '');
             jwtToken = atob(jwtToken.trim());

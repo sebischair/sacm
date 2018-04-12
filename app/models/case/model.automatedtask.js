@@ -5,6 +5,10 @@ import Model from '../model';
 
 export default class AutomatedTask extends Model{
 
+  static getResourceType(){
+    return 'automatedtasks';
+  }
+
   static findById(jwt, automatedTaskId) {
     return http.get(jwt, '/automatedtasks/'+automatedTaskId);
   }

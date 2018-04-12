@@ -3,6 +3,7 @@ import Importer from './../importer/importer';
 import WorkspaceImporter from './../importer/importer.workspace';
 import CaseDefinitionImporter from './../importer/importer.casedefinition';
 import http from './../models/http';
+import config from './../../config';
 const router = express.Router();
 
 /**
@@ -26,7 +27,7 @@ router.post('/all', (req, res, next)=>{
   if(req.body.execute)
     isExecuteCase = true;
   if(req.body.executionUser){
-    executionJwt = http.generateJWT(req.body.executionUser, 'ottto');
+    executionJwt = http.generateJWT(req.body.executionUser, config.SOCIOCORTEX_DEFAULT_PASSWORD);
   }
 
   xml.import(req.jwt, file, isExecuteCase, executionJwt)

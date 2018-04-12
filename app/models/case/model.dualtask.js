@@ -4,6 +4,10 @@ import Model from '../model';
 
 
 export default class DualTask extends Model{
+
+  static getResourceType(){
+    return 'dualtasks';
+  }
   
   static findById(jwt, dualTaskId) {
     return http.get(jwt, '/dualtasks/'+dualTaskId);

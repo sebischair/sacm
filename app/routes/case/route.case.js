@@ -524,6 +524,26 @@ router.delete('/:id', (req, res, next)=>{
 });
 
 
+/**
+ * @api {post} /cases/:id/processes/query Get Child Processes
+ * @apiName PostProcessesQuery
+ * @apiGroup Processes
+ * @apiParam {String} id (mandatory) ID of the Case
+ * @apiSampleRequest /cases/:id/processes/query
+ * @apiSuccessExample {json} Success-Response:
+ *     {}
+ */
+router.post('/:id/processes/query', (req, res, next)=>{
+  Process.findByCaseQuery(req.jwt, req.params.id, req.body)
+    .then(p=>{
+        res.status(200).send(p);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+
 // processes
 
 /**

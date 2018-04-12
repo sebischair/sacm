@@ -1,6 +1,7 @@
 'use strict';
 import Promise from 'bluebird';
 import request from 'request-promise';
+import colors from 'colors';
 import xml2js from 'xml2js';
 import prompt from 'prompt-promise';
 import Workspace from '../models/workspace/model.workspace';
@@ -28,6 +29,7 @@ import Process from '../models/case/model.process';
 import Alert from '../models/case/model.alert';
 import Settings from '../models/settings/model.settings';
 import config from '../../config';
+import { deprecate } from 'util';
 const xml2jspromise = Promise.promisifyAll(xml2js);
 const fs = Promise.promisifyAll(require("fs"));
 
@@ -1068,24 +1070,24 @@ module.exports = class Importer {
       if(actions == null)
         return Promise.resolve('No Action Element Defined!');
       //console.log(JSON.stringify(actions,null,2))
-      console.log('Execute following actions: ')
+      console.log(colors.green('Execute following actions: '))
       actions.forEach(action=>{
-        if(action.$.id != 'Delay'){
-          console.log(action.$.id+'('+action.$.processId+')');
-        }else{
-          console.log(action.$.id+'('+action.$.ms+')');
-        }
+        console.log(this.getActionConsoleString(action))
       });
       return Promise.each(actions, action=>{
         let p = Promise.resolve();
         if(isDebug && action.$.breakpoint)
           p = prompt('Press enter to continue with action "'+action.$.id+'('+action.$.processId+')": ')
         return p.then(()=>{
+          console.log(colors.green('Start '+this.getActionConsoleString(action)));          
           if(action.$.id == "ActivateStage"){
             return this.activateStageWithName(caseId, action.$.processId);
 
           }else if(action.$.id == "CompleteStage"){
             return this.completeStageWithName(caseId, action.$.processId);
+  
+          }else if(action.$.id == "ActivateHumanTask"){
+            return this.activateHumanTaskWithName(caseId, action.$.processId);
 
           }else if(action.$.id == "ActivateDualTask"){
             return this.activateDualTaskWithName(caseId, action.$.processId);
@@ -1122,6 +1124,14 @@ module.exports = class Importer {
       })
     }
 
+    getActionConsoleString(action){
+      if(action.$.id != 'Delay'){
+        return action.$.id+'('+action.$.processId+')';
+      }else{
+        return action.$.id+'('+action.$.ms+')';
+      }
+    }
+
     getParms(action){
       const params = {};
       if(action.TaskParam != null){
@@ -1139,108 +1149,115 @@ module.exports = class Importer {
       }
       return params;
     }
+
+    addParamsToTask(task, paramsMap){
+      for(let i=0; i<task.taskParams.length; i++){
+        let tp = task.taskParams[i];
+        if(paramsMap.hasOwnProperty(tp.name))
+          task.taskParams[i].values = paramsMap[tp.name];            
+      }
+      return task;
+    }
    
     completeAutomatedTaskWithName(caseId, taskName, paramsMap){     
-       return AutomatedTask.findAllByCaseId(this.executionJwt, caseId)
-        .then(tasks=>{          
-          const t = this.findActiveProcessWithName(tasks, taskName);
-          return AutomatedTask.findById(this.executionJwt, t.id);
-        })        
-        .then(task=>{
-          for(let i=0; i<task.taskParams.length; i++){
-            let tp = task.taskParams[i];
-            if(paramsMap.hasOwnProperty(tp.name))
-              task.taskParams[i].values = paramsMap[tp.name];            
-          }
-          return AutomatedTask.complete(this.executionJwt, task);
+      return Process.findByCaseQueryLast(this.executionJwt, caseId, {
+          state: Process.STATE_ACTIVE,
+          resourceType: AutomatedTask.getResourceType(),
+          name: taskName
+        })   
+        .then(task=>{          
+          return AutomatedTask.complete(this.executionJwt, this.addParamsToTask(task, paramsMap));
         });        
     }
 
-    completeDualTaskHumanPartWithName(caseId, taskName, paramsMap){     
-      return DualTask.findAllByCaseId(this.executionJwt, caseId)
-       .then(tasks=>{          
-         const t = this.findActiveProcessWithName(tasks, taskName);
-         return DualTask.findById(this.executionJwt, t.id);
-       })        
+    completeDualTaskHumanPartWithName(caseId, taskName, paramsMap){ 
+      return Process.findByCaseQueryLast(this.executionJwt, caseId, {
+          state: Process.STATE_ACTIVE,
+          resourceType: DualTask.getResourceType(),
+          name: taskName
+        })        
        .then(task=>{
-         for(let i=0; i<task.taskParams.length; i++){
-           let tp = task.taskParams[i];
-           if(paramsMap.hasOwnProperty(tp.name))
-             task.taskParams[i].values = paramsMap[tp.name];            
-         }
-         return DualTask.completeHumanPart(this.executionJwt, task);
+         return DualTask.completeHumanPart(this.executionJwt, this.addParamsToTask(task, paramsMap));
        });        
    }
 
-  completeStageWithName(caseId, stageName){     
-    return Stage.findAllByCaseId(this.executionJwt, caseId)
-     .then(stages=>{          
-       const s = this.findActiveProcessWithName(stages, stageName);
-       return Stage.complete(this.executionJwt, s.id);
+  completeStageWithName(caseId, stageName){   
+    return Process.findByCaseQueryLast(this.executionJwt, caseId, {
+        state: Process.STATE_ACTIVE,
+        resourceType: Stage.getResourceType(),
+        name: stageName
+      })   
+     .then(stage=>{  
+       return Stage.complete(this.executionJwt, stage.id);
      });      
   }
 
   terminateStageWithName(caseId, stageName){     
-    return Stage.findAllByCaseId(this.executionJwt, caseId)
-     .then(stages=>{          
-       const s = this.findActiveProcessWithName(stages, stageName);
-       return Stage.terminate(this.executionJwt, s.id);
+    return Process.findByCaseQueryLast(this.executionJwt, caseId, {
+        state: Process.STATE_ACTIVE,
+        resourceType: Stage.getResourceType(),
+        name: stageName
+      })   
+    .then(stage=>{  
+       return Stage.terminate(this.executionJwt, stage.id);
      });      
   }
 
    completeDualTaskAutomatedPartWithName(caseId, taskName, paramsMap){     
-    return DualTask.findAllByCaseId(this.executionJwt, caseId)
-     .then(tasks=>{          
-       const t = this.findActiveProcessWithName(tasks, taskName);
-       return DualTask.findById(this.executionJwt, t.id);
-     })        
+    return Process.findByCaseQueryLast(this.executionJwt, caseId, {
+        state: Process.STATE_ACTIVE,
+        resourceType: DualTask.getResourceType(),
+        name: taskName
+      })       
      .then(task=>{
-       for(let i=0; i<task.taskParams.length; i++){
-         let tp = task.taskParams[i];
-         if(paramsMap.hasOwnProperty(tp.name))
-           task.taskParams[i].values = paramsMap[tp.name];            
-       }
-       return DualTask.completeAutomatedPart(this.executionJwt, task);
+       return DualTask.completeAutomatedPart(this.executionJwt, this.addParamsToTask(task, paramsMap));
      });        
   }
 
     activateStageWithName(caseId, stageName){
-      return Stage.findAllByCaseId(this.executionJwt, caseId)
-      .then(allStages=>{
-        let foundStage = null;
-        allStages.forEach(repeatedStages=>{
-          repeatedStages.forEach(repeatedStage=>{
-            if(!foundStage && repeatedStage.name == stageName && repeatedStage.possibleActions.includes('ACTIVATE')){
-              foundStage = repeatedStage;              
-            }
-          });
-        });
-        if(foundStage){
-          return Stage.activate(this.executionJwt, foundStage.id);
+      return Process.findByCaseQueryLast(this.executionJwt, caseId, {
+        resourceType: Stage.getResourceType(),
+        name: taskName,
+        possibleActions: Process.POSSIBLEACTION_ACTIVATE
+      }) 
+      .then(stage=>{       
+        if(stage){
+          return Stage.activate(this.executionJwt, stage.id);
         }else{
           return Promise.reject('Could not activate Stage "'+stageName+'"!')
         }       
       });
     }
 
+    activateHumanTaskWithName(caseId, taskName){
+      return Process.findByCaseQueryLast(this.executionJwt, caseId, {
+          resourceType: HumanTask.getResourceType(),
+          name: taskName,
+          possibleActions: Process.POSSIBLEACTION_ACTIVATE
+        }) 
+        .then(task=>{
+          if(task){
+            return HumanTask.activate(this.executionJwt, task.id);
+          }else{
+            return Promise.reject('Could not activate HumanTask "'+taskName+'"!')
+          }       
+        });
+    }
+
 
     activateDualTaskWithName(caseId, taskName){
-      return DualTask.findAllByCaseId(this.executionJwt, caseId)
-      .then(allTasks=>{
-        let foundTask = null;
-        allTasks.forEach(repeatedTasks=>{
-          repeatedTasks.forEach(repeatedTask=>{
-            if(!foundTask && repeatedTask.name == taskName && repeatedTask.possibleActions.includes('ACTIVATE')){
-              foundTask = repeatedTask;              
-            }
-          });
+      return Process.findByCaseQueryLast(this.executionJwt, caseId, {
+          resourceType: DualTask.getResourceType(),
+          name: taskName,
+          possibleActions: Process.POSSIBLEACTION_ACTIVATE
+        }) 
+        .then(task=>{
+          if(task){
+            return DualTask.activate(this.executionJwt, task.id);
+          }else{
+            return Promise.reject('Could not activate DualTask "'+taskName+'"!')
+          }       
         });
-        if(foundTask){
-          return DualTask.activate(this.executionJwt, foundTask.id);
-        }else{
-          return Promise.reject('Could not activate DualTask "'+taskName+'"!')
-        }       
-      });
     }
 
     /**
@@ -1248,44 +1265,22 @@ module.exports = class Importer {
      * @param taskName 
      * @param paramsMap {attrName1:[value1, value2], attrName2: [value1, value2]}
      */
-    completeHumanTaskWithName(caseId, taskName, paramsMap){     
-       return HumanTask.findAllByCaseId(this.executionJwt, caseId)
-        .then(humanTasks=>{          
-          const ht = this.findActiveProcessWithName(humanTasks, taskName);
-          return HumanTask.findById(this.executionJwt, ht.id);
-        })        
-        .then(humanTask=>{
-          for(let i=0; i<humanTask.taskParams.length; i++){
-            let tp = humanTask.taskParams[i];
-            if(paramsMap.hasOwnProperty(tp.name))
-              humanTask.taskParams[i].values = paramsMap[tp.name];            
-          }
-          return HumanTask.complete(this.executionJwt, humanTask);
-        });        
-    }
-
-    findActiveProcessWithName(nestedProcesses, searchedName){
-      for(let process of nestedProcesses)     
-        for(let instance of process)
-          if(instance.name == searchedName && instance.state == "ACTIVE")
-            return instance;
-      return null;
-    }
-
-    findProcessWithName(nestedProcesses, searchedName){
-      for(let process of nestedProcesses)     
-        for(let instance of process)
-          if(instance.name == searchedName)
-            return instance;
-      return null;
+    completeHumanTaskWithName(caseId, taskName, paramsMap){  
+      return Process.findByCaseQueryLast(this.executionJwt, caseId, {
+          state: Process.STATE_ACTIVE,
+          resourceType: HumanTask.getResourceType(),
+          name: taskName
+        })       
+        .then(task=>{
+          return HumanTask.complete(this.executionJwt, this.addParamsToTask(task, paramsMap));
+        })      
     }
 
     createAlert(caseId, processName, action){
-       return Process.findAllByCaseId(this.executionJwt, caseId)
-        .then(processes=>{          
-          const p = this.findProcessWithName(processes, processName);
-          return Process.findById(this.executionJwt, p.id);
-        })        
+      return Process.findByCaseQueryLast(this.executionJwt, caseId, {
+          resourceType: Process.getResourceType(),
+          name: processName
+        })         
         .then(p=>{
           const data = {
             process: p.id,
