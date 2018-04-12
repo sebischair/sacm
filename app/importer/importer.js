@@ -1085,6 +1085,9 @@ module.exports = class Importer {
 
           }else if(action.$.id == "CompleteStage"){
             return this.completeStageWithName(caseId, action.$.processId);
+  
+          }else if(action.$.id == "ActivateHumanTask"){
+            return this.activateHumanTaskWithName(caseId, action.$.processId);
 
           }else if(action.$.id == "ActivateDualTask"){
             return this.activateDualTaskWithName(caseId, action.$.processId);
@@ -1224,6 +1227,21 @@ module.exports = class Importer {
           return Promise.reject('Could not activate Stage "'+stageName+'"!')
         }       
       });
+    }
+
+    activateHumanTaskWithName(caseId, taskName){
+      return Process.findByCaseQueryLast(this.executionJwt, caseId, {
+          resourceType: HumanTask.getResourceType(),
+          name: taskName,
+          possibleActions: Process.POSSIBLEACTION_ACTIVATE
+        }) 
+        .then(task=>{
+          if(task){
+            return HumanTask.activate(this.executionJwt, task.id);
+          }else{
+            return Promise.reject('Could not activate HumanTask "'+taskName+'"!')
+          }       
+        });
     }
 
 
