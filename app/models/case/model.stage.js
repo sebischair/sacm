@@ -5,6 +5,10 @@ import Model from '../model';
 
 export default class Stage extends Model{
 
+  static getResourceType(){
+    return 'stages';
+  }  
+
   static findById(jwt, stageId){
     return http.get(jwt, '/stages/'+stageId);
   }

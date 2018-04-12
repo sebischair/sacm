@@ -5,6 +5,10 @@ import Model from '../model';
 
 export default class HumanTask extends Model{
   
+  static getResourceType(){
+    return 'humantasks';
+  }  
+
   static findById(jwt, humanTaskId) {
     return http.get(jwt, '/humantasks/'+humanTaskId);
   }
