@@ -617,22 +617,31 @@
         </EntityDefinition>
 
        <EntityDefinition id="LCS1_DiagnosisCodex" description="Diagnosis CODEX">             
-			<AttributeDefinition id="codex1" type="number"  multiplicity="maximalOne" description="Comorbididat: Charlson"/>       						
-            <AttributeDefinition id="codex2" type="enumeration" multiplicity="maximalOne" description="Obstrucció: FEV1 (Forced Expiratory Volume)"> 
+			<AttributeDefinition id="codex1result" type="number"  multiplicity="maximalOne" 
+			description="Comorbididat: Charlson"/>       									
+            <AttributeDefinition id="codex1" type="enumeration" multiplicity="maximalOne" description="Indiqui el valor de l'Índex de Charlson:"> 
+                <EnumerationOption value="0" description="&lt;=4"/>
+				<EnumerationOption value="1" description="Entre 5-7"/>
+				<EnumerationOption value="2" description="&gt;=8"/>                                
+            </AttributeDefinition>					
+            <AttributeDefinition id="codex2" type="enumeration" multiplicity="maximalOne" description="Indiqui el valor d'obstrucció: FEV1 (Forced Expiratory Volume)"> 
                 <EnumerationOption value="0" description="&gt;=65"/>
                 <EnumerationOption value="1" description="Entre 50-64"/>
                 <EnumerationOption value="2" description="Entre 36-49"/>
                 <EnumerationOption value="3" description="&lt;=35"/>
             </AttributeDefinition>			
-            <AttributeDefinition id="codex3" type="enumeration" multiplicity="maximalOne" description="Dispnea: mMRC (Medical Research Council Scale)"> 
+            <AttributeDefinition id="codex3" type="enumeration" multiplicity="maximalOne" description="Indiqui el valor de dispnea: mMRC (Medical Research Council Scale)"> 
                 <EnumerationOption value="0" description="0-1"/>
                 <EnumerationOption value="1" description="2"/>
                 <EnumerationOption value="2" description="3"/>
                 <EnumerationOption value="3" description="4"/>
             </AttributeDefinition>			
-            <DerivedAttributeDefinition id="codex4" expression="1" description="Exacerbacions que impliquin atenció unitats d´ urgències o adminssions a urgències"/>
-			<!-- Gerard defines the Exacerbation score is ever 1 -->
-            <DerivedAttributeDefinition id="codex5" additionalDescription="Punts totals" expression="number(codex2,0)+number(codex3,0)+codex4" description="Índex CODEX"/> 
+            <AttributeDefinition id="codex4" type="enumeration" multiplicity="maximalOne" description="Indiqui el valor de les exacerbacions que impliquin atenció unitats d'urgències o admissions a urgències"> 
+                <EnumerationOption value="0" description="0"/>
+                <EnumerationOption value="1" description="1-2"/>
+                <EnumerationOption value="2" description="&gt;=63"/>
+            </AttributeDefinition>			
+            <DerivedAttributeDefinition id="codex5" expression="number(codex1,0)+number(codex2,0)+number(codex3,0)+number(codex4,0)" description="CODEX"/> 
         </EntityDefinition>
 
         <EntityDefinition id="LCS1_DiagnosisGold" description="Diagnosis grau GOLD"> 
@@ -653,7 +662,8 @@
 				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_Barthel.barthel11"/>				
 				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_AnthropometricVariablesAl.AnthropometricAl"/>																									
 				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_AnthropometricVariablesGenollHomes.AnthropometricGenollHomesIMC"/>	
-				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_AnthropometricVariablesGenollDones.AnthropometricGenollDonesIMC"/>	
+				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_AnthropometricVariablesGenollDones.AnthropometricGenollDonesIMC"/>					
+				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodex.codex5"/>	
 		</SummarySectionDefinition>
 	 
 	    <!-- STAGEDEFINITION: CaseIdentification -->	  
@@ -870,11 +880,12 @@
 				ownerPath="LCS1_Settings.Clinician" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS1_DiagnosisCodex" entityAttachPath="LCS1_Evaluation.LCS1_DiagnosisCodex">                
                     <SentryDefinition>
                         <precondition processDefinitionId="LCS1_ComorbidityCharlsonEvaluationHT"/>
-                    </SentryDefinition>				
+                    </SentryDefinition>
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_ComorbidityCharlsonEvaluation.ch21" isReadOnly="true" isMandatory="false"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodex.codex1" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodex.codex2" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodex.codex3" isReadOnly="false" isMandatory="true"/>
-					<!--<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodex.codex4" isReadOnly="true" isMandatory="false"/>-->
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodex.codex4" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodex.codex5" isReadOnly="true" isMandatory="false"/>
 				</HumanTaskDefinition>	 								
 				
