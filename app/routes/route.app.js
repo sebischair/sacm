@@ -26,6 +26,7 @@ import user from './group/route.user';
 import group from './group/route.group';
 import importer from './route.import';
 import test from './route.test';
+import job from './route.job';
 
 function routes(){
     const router = express.Router();
@@ -73,6 +74,9 @@ function routes(){
 
     /** Other routes */
     router.use('/test', test);
+
+    /** Jobs route */
+    router.use('/jobs', job);
 
 
     return router;
