@@ -193,6 +193,7 @@
 		
 		<!-- Case Evaluation Entity Definitions -->		
         <EntityDefinition id="LCS1_Evaluation" description="Case evaluation">
+			<AttributeDefinition id="LCS1_GMAEvaluation" type="Link.EntityDefinition.LCS1_GMADef" multiplicity="any" description="GMA"/> 
 			<AttributeDefinition id="LCS1_ComorbidityCharlsonEvaluation" type="Link.EntityDefinition.LCS1_ComorbidityCharlsonDef" multiplicity="any" description="Comorbidity Charlson"/> 		
 			<AttributeDefinition id="LCS1_ComorbidityPfeiffer" type="Link.EntityDefinition.LCS1_ComorbidityPfeiffer" multiplicity="any" description="Comorbidity Pfeiffer"/>             
 			<AttributeDefinition id="LCS1_HospitalAnxietyAndDepressionScale" type="Link.EntityDefinition.LCS1_HospitalAnxietyAndDepressionScale" multiplicity="any" description="Hospital anxiety and depression scale"/> 			
@@ -207,9 +208,17 @@
 						
             <AttributeDefinition id="LCS1_DiagnosisNyha" type="Link.EntityDefinition.LCS1_DiagnosisNyha" multiplicity="any"/>  
             <AttributeDefinition id="LCS1_DiagnosisCodex" type="Link.EntityDefinition.LCS1_DiagnosisCodex" multiplicity="any"/>  
-            <AttributeDefinition id="LCS1_DiagnosisGold" type="Link.EntityDefinition.LCS1_DiagnosisGold" multiplicity="any"/>  
-												
+            <AttributeDefinition id="LCS1_DiagnosisGold" type="Link.EntityDefinition.LCS1_DiagnosisGold" multiplicity="any"/>  											
 		</EntityDefinition>
+		
+		<EntityDefinition id="LCS1_GMADef" >
+            <AttributeDefinition id="gma" type="enumeration" multiplicity="maximalOne" description="Índex GMA">
+                <EnumerationOption value="1" description="Grup 1"/>
+                <EnumerationOption value="2" description="Grup 2"/>
+                <EnumerationOption value="3" description="Grup 3"/>
+                <EnumerationOption value="4" description="Grup 4"/>
+            </AttributeDefinition>
+		</EntityDefinition> 				
 		
 		<EntityDefinition id="LCS1_ComorbidityCharlsonDef" >
             <AttributeDefinition id="ch1" type="enumeration" multiplicity="maximalOne" description="Infart del miocardi">
@@ -740,7 +749,10 @@
 			<!-- ONLY TEST 
                 <SentryDefinition>
                     <precondition processDefinitionId="LCS1_CaseIdentification"/>
-                </SentryDefinition> -->
+                </SentryDefinition> -->				
+                <HumanTaskDefinition id="LCS1_GMAEvaluationHT" description="GMA" ownerPath="LCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_GMADef" entityAttachPath="LCS1_Evaluation.LCS1_GMAEvaluation">
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_GMAEvaluation.gma" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition> 				
 		  
 		        <HumanTaskDefinition id="LCS1_ComorbidityCharlsonEvaluationHT" description="Estat comòrbid - Índex de comorbilitat de Charlson" 
 				footnote="Pendent rebre autorització"
