@@ -665,8 +665,9 @@
             <AttributeDefinition id="gold3" type="enumeration" multiplicity="maximalOne" defaultValues="['1']" description="Indiqui el valor de dispnea: mMRC (Medical Research Council Scale)"> 
                 <EnumerationOption value="0" description="0-1"/>
                 <EnumerationOption value="1" description="&gt;=2"/>
-            </AttributeDefinition>							
+            </AttributeDefinition>
             <DerivedAttributeDefinition id="gold4" 
+			additionalDescription="A Risc Baix i Pocs símptomes| B Risc Baix i Més símptomes| C Risc Alt i Pocs símptomes| D Risc Alt i Més símptomes"
 			expression='if (number(gold1, 0) + number(gold2, 0) + number(gold3,0)) = 0 then "A" else 
 			if ( (number(gold1, 0) + number(gold3,0)) = 1 and number(gold2, 0) = 0) then "B" else 
 			if ( (number(gold1, 0) + number(gold2,0)) = 1 and number(gold3, 0) = 0) then "C" else 
@@ -907,7 +908,7 @@
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisGold.gold4" isReadOnly="true" isMandatory="false"/>
 				</HumanTaskDefinition>
 				
-				<HumanTaskDefinition id="LCS1_DiagnosisCodex" description="Diagnòstic - Diagnosis CODEX"
+				<HumanTaskDefinition id="LCS1_DiagnosisCodex" description="Diagnòstic - Diagnosis CODEX (dependència amb Charlson)"
 				ownerPath="LCS1_Settings.Clinician" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS1_DiagnosisCodex" entityAttachPath="LCS1_Evaluation.LCS1_DiagnosisCodex">                
                     <SentryDefinition>
                         <precondition processDefinitionId="LCS1_ComorbidityCharlsonEvaluationHT"/>
