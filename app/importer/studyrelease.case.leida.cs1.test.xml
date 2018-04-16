@@ -633,7 +633,7 @@
 				<EnumerationOption value="1" description="Entre 5-7"/>
 				<EnumerationOption value="2" description="&gt;=8"/>                                
             </AttributeDefinition>					
-            <AttributeDefinition id="codex2" type="enumeration" multiplicity="maximalOne" description="Indiqui el valor d'obstrucció: FEV1 (Forced Expiratory Volume)"> 
+            <AttributeDefinition id="codex2" type="enumeration" multiplicity="maximalOne" description="Indiqui el valor d'obstrucció: FEV1%PBD (Forced Expiratory Volume)"> 
                 <EnumerationOption value="0" description="&gt;=65"/>
                 <EnumerationOption value="1" description="Entre 50-64"/>
                 <EnumerationOption value="2" description="Entre 36-49"/>
@@ -654,10 +654,24 @@
         </EntityDefinition>
 
         <EntityDefinition id="LCS1_DiagnosisGold" description="Diagnosis grau GOLD"> 
-            <AttributeDefinition id="gold1" type="number.min(1)" multiplicity="maximalOne" description="Número d´ hospitalizations"/>   
-            <AttributeDefinition id="gold2" type="number" multiplicity="maximalOne" description="Obstrucció: FEV1 (Forced Expiratory Volume)"/> 
-            <AttributeDefinition id="gold3" type="number" multiplicity="maximalOne" description="Dispnea: mMRC (Medical Research Council Scale)"/> 
-            <DerivedAttributeDefinition id="gold4" expression="-1" description="GOLD Index"/>
+            <AttributeDefinition id="gold1" type="enumeration" multiplicity="maximalOne" description="Indiqui el valor d'obstrucció: FEV1%PBD (Forced Expiratory Volume)"> 
+                <EnumerationOption value="0" description="GOLD1-2 &gt;= 50"/>
+                <EnumerationOption value="1" description="GOLD3-4 &lt;= 49"/>
+            </AttributeDefinition>							
+            <AttributeDefinition id="gold2" type="enumeration" multiplicity="maximalOne" description="Indiqui el valor de les exacerbacions que impliquin atenció unitats d'urgències o admissions a urgències"> 
+                <EnumerationOption value="0" description="&lt;=1"/>
+                <EnumerationOption value="1" description="&gt;=2"/>
+            </AttributeDefinition>						
+            <AttributeDefinition id="gold3" type="enumeration" multiplicity="maximalOne" defaultValues="['1']" description="Indiqui el valor de dispnea: mMRC (Medical Research Council Scale)"> 
+                <EnumerationOption value="0" description="0-1"/>
+                <EnumerationOption value="1" description="&gt;=2"/>
+            </AttributeDefinition>							
+            <DerivedAttributeDefinition id="gold4" 
+			expression='if (number(gold1, 0) + number(gold2, 0) + number(gold3,0)) = 0 then "A" else 
+			if ( (number(gold1, 0) + number(gold3,0)) = 1 and number(gold2, 0) = 0) then "B" else 
+			if ( (number(gold1, 0) + number(gold2,0)) = 1 and number(gold3, 0) = 0) then "C" else 
+			if (number(gold1, 0) + number(gold2, 0) + number(gold3,0)) = 3 then "D" else
+			"No existeix aquesta combinació"' description="GOLD"/>						
         </EntityDefinition>    				
 		
    <!-- CASE DEFINITION -->				  
@@ -673,6 +687,7 @@
 				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_AnthropometricVariablesGenollHomes.AnthropometricGenollHomesIMC"/>	
 				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_AnthropometricVariablesGenollDones.AnthropometricGenollDonesIMC"/>					
 				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodex.codex5"/>	
+				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisGold.gold4"/>					
 		</SummarySectionDefinition>
 	 
 	    <!-- STAGEDEFINITION: CaseIdentification -->	  
@@ -750,7 +765,8 @@
                 <SentryDefinition>
                     <precondition processDefinitionId="LCS1_CaseIdentification"/>
                 </SentryDefinition> -->				
-                <HumanTaskDefinition id="LCS1_GMAEvaluationHT" description="GMA" ownerPath="LCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_GMADef" entityAttachPath="LCS1_Evaluation.LCS1_GMAEvaluation">
+                <HumanTaskDefinition id="LCS1_GMAEvaluationHT" description="Estat comòrbid - GMA"
+				ownerPath="LCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_GMADef" entityAttachPath="LCS1_Evaluation.LCS1_GMAEvaluation">
                     <TaskParamDefinition path="LCS1_Evaluation.LCS1_GMAEvaluation.gma" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition> 				
 		  
@@ -838,7 +854,8 @@
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisIADL.IADL7" isReadOnly="true" isMandatory="false"/>
 				</HumanTaskDefinition>				
 				
-                <HumanTaskDefinition id="LCS1_DiagnosisCommunicationHT" description="Diagnòstic - Communicació" ownerPath="LCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_DiagnosisCommunication" entityAttachPath="LCS1_Evaluation.LCS1_DiagnosisCommunication">
+                <HumanTaskDefinition id="LCS1_DiagnosisCommunicationHT" description="Diagnòstic - Communicació"
+				ownerPath="LCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_DiagnosisCommunication" entityAttachPath="LCS1_Evaluation.LCS1_DiagnosisCommunication">
                     <TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCommunication.comm1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCommunication.comm2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCommunication.comm3" isReadOnly="false" isMandatory="true"/>
@@ -846,13 +863,15 @@
                     <TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCommunication.comm5" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>				
 
-				<HumanTaskDefinition id="LCS1_AnthropometricVariablesAl" description="Diagnòstic - Pes i alçada - Variables antropomètriques" ownerPath="LCS1_Settings.Nurse" isMandatory="false" repeatable="ONCE" activation="MANUAL"  entityDefinitionId="LCS1_AnthropometricVariablesAl" entityAttachPath="LCS1_Evaluation.LCS1_AnthropometricVariablesAl">
+				<HumanTaskDefinition id="LCS1_AnthropometricVariablesAl" description="Diagnòstic - Pes i alçada - Variables antropomètriques"
+				ownerPath="LCS1_Settings.Nurse" isMandatory="false" repeatable="ONCE" activation="MANUAL"  entityDefinitionId="LCS1_AnthropometricVariablesAl" entityAttachPath="LCS1_Evaluation.LCS1_AnthropometricVariablesAl">
 				  <TaskParamDefinition path="LCS1_Evaluation.LCS1_AnthropometricVariablesAl.AnWeighAl" isReadOnly="false" isMandatory="true"/>
 				  <TaskParamDefinition path="LCS1_Evaluation.LCS1_AnthropometricVariablesAl.AnHeightAl" isReadOnly="false" isMandatory="true"/>  
 				  <TaskParamDefinition path="LCS1_Evaluation.LCS1_AnthropometricVariablesAl.AnthropometricAl" isReadOnly="true" isMandatory="false"/>
 				</HumanTaskDefinition>  			
 				
-				<HumanTaskDefinition id="LCS1_AnthropometricVariablesGenollHomes" description="Diagnòstic - Pes i distància (Homes) - Variables antropomètriques" ownerPath="LCS1_Settings.Nurse" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS1_AnthropometricVariablesGenollHomes" entityAttachPath="LCS1_Evaluation.LCS1_AnthropometricVariablesGenollHomes">
+				<HumanTaskDefinition id="LCS1_AnthropometricVariablesGenollHomes" description="Diagnòstic - Pes i distància (Homes) - Variables antropomètriques"
+				ownerPath="LCS1_Settings.Nurse" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS1_AnthropometricVariablesGenollHomes" entityAttachPath="LCS1_Evaluation.LCS1_AnthropometricVariablesGenollHomes">
 				  <TaskParamDefinition path="LCS1_Evaluation.LCS1_AnthropometricVariablesGenollHomes.AnWeighGenoll" isReadOnly="false" isMandatory="true"/>
 				  <TaskParamDefinition path="LCS1_Evaluation.LCS1_AnthropometricVariablesGenollHomes.AnKneeGenoll" isReadOnly="false" isMandatory="true"/>  
 				  <TaskParamDefinition path="LCS1_Evaluation.LCS1_AnthropometricVariablesGenollHomes.AnAgeGenoll" isReadOnly="false" isMandatory="true"/>  				  				  				  
