@@ -188,7 +188,11 @@
 				<EnumerationOption value="5" description="GDS 5. Dèficit cognitiu moderadament greu"/>
                 <EnumerationOption value="6" description="GDS 6. Dèficit cognitiu greu"/>
 				<EnumerationOption value="7" description="GDS 7. Déficit cognitiu molt greu"/>
-            </AttributeDefinition>        
+            </AttributeDefinition>        			
+			<DerivedAttributeDefinition id="gdstotal" description="GDS" 
+			uiReference="colors(0<=green<6<=red<11<=orange<=10000)"
+			additionalDescription="si &gt;= 6 No Apte (Vermell)|| si &lt;= 5 Apte (Verd)" 
+			expression="number(gds1,0)" />									
         </EntityDefinition>		
 		
 		<!-- Case Evaluation Entity Definitions -->		
@@ -1027,7 +1031,8 @@
         <CaseDefinition id="LCS1_Leida" description="CS1 Lleida - Versió OK" ownerPath="LCS1_Settings.CaseManager" clientPath="LCS1_Settings.Patient" entityDefinitionId="LCS1_CaseData" newEntityDefinitionId="LCS1_Settings" newEntityAttachPath="LCS1_Settings" notesDefaultValue='<style>table{width:100%;}table th{background-color:#66308e; color:white;font-size:larger;}table td{border: 1px solid #999;border-width: 0px 1px 1px 1px;}</style><table cellpadding="4" cellspacing="0"> <tr> <th>HOSPITAL</th> <th>EQUIP DE PRIMARIA</th> </tr> <tr> <td><b>Anesthesiologist:</b></br> TBD</td> <td><b>Clinician:</b></br> TBD</td> </tr> <tr> <td><b>Physiotherapist:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>Clinician:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>Nurse:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>SocialCareer:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>New Rol:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>New Rol:</b></br> TBD</td> <td></td> </tr></table><span style="color:#666; font-size:smaller"><b>Hint:</b> One row for each rol.</span>'>	  
      
 	    <SummarySectionDefinition id="LCS1_PatientStatus" description="Estat del pacient" position="LEFT">    
-                <SummaryParamDefinition path="LCS1_Evaluation.LCS1_ComorbidityCharlsonEvaluation.ch21"/>  
+                <SummaryParamDefinition path="LCS1_Evaluation.LCS1_ComorbidityCharlsonEvaluation.ch21"/>  				
+				<SummaryParamDefinition path="LCS1_Identification.LCS1_GlobalDeteriorationScale.gdstotal"/>				
 				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadA8"/>												
                 <SummaryParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadD8"/>					
 				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_ComorbidityPfeiffer.pfeiffer2"/>														
@@ -1098,6 +1103,7 @@
 					  <precondition processDefinitionId="LCS1_SelectPatient"/>
 					</SentryDefinition>
 					<TaskParamDefinition path="LCS1_Identification.LCS1_GlobalDeteriorationScale.gds1" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Identification.LCS1_GlobalDeteriorationScale.gdstotal" isReadOnly="true" isMandatory="false"/>
 				</HumanTaskDefinition>
 				
 				<HumanTaskDefinition id="LCS1_TechnologicalTest" description="Test d'adherència a la tecnología" ownerPath="LCS1_Settings.CaseManager" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1_TechnologicalTest" entityAttachPath="LCS1_Identification.LCS1_TechnologicalTest">
