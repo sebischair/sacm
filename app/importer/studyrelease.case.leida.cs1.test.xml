@@ -199,7 +199,9 @@
 			<AttributeDefinition id="LCS1_HospitalAnxietyAndDepressionScale" type="Link.EntityDefinition.LCS1_HospitalAnxietyAndDepressionScale" multiplicity="any" description="Hospital anxiety and depression scale"/> 			
 			<AttributeDefinition id="LCS1_Barthel" type="Link.EntityDefinition.LCS1_Barthel" multiplicity="any" description="Barthel"/> 
 			<AttributeDefinition id="LCS1_DiagnosisIADL" type="Link.EntityDefinition.LCS1_DiagnosisIADL" multiplicity="any" description="Activitats instrumentals de la vida diària"/>  
-			
+
+			<AttributeDefinition id="LCS1_FallRisk" multiplicity="any" type="Link.EntityDefinition.LCS1_FallRisk" />
+			<AttributeDefinition id="LCS1_Sleeping" multiplicity="any" type="Link.EntityDefinition.LCS1_Sleeping"/>			
             <AttributeDefinition id="LCS1_DiagnosisCommunication" type="Link.EntityDefinition.LCS1_DiagnosisCommunication" multiplicity="any" description="Diagnosis Communication"/> 
             <AttributeDefinition id="LCS1_AnthropometricVariablesAl" type="Link.EntityDefinition.LCS1_AnthropometricVariablesAl" multiplicity="any" description="Anthropometric variables"/> 			
 			<AttributeDefinition id="LCS1_AnthropometricVariablesGenollHomes" type="Link.EntityDefinition.LCS1_AnthropometricVariablesGenollHomes" multiplicity="any" description="Anthropometric variables"/> 
@@ -492,6 +494,56 @@
 			additionalDescription="Si &lt;= 20 Dependència total (Vermell)|| si &gt; 20 i &lt;= 60 Dependència severa (Vermell)|| si &gt; 61 i &lt;= 90 Dependència moderada (Taronja)|| si &gt; 91 i &lt;= 99 Dependència lleu (Verd)|| si = 100 Independent (Verd)" 
 			expression="number(barthel1,0)+number(barthel2,0)+number(barthel3,0)+number(barthel4,0)+number(barthel5,0)+number(barthel6,0)+number(barthel7,0)+number(barthel8,0)+number(barthel9,0)+number(barthel10,0)" />						
         </EntityDefinition>
+		
+		<EntityDefinition id="LCS1_FallRisk">
+			<AttributeDefinition id="fallRisk1" type="enumeration" multiplicity="maximalOne" description="Caigudes prèvies">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Sí"/>
+            </AttributeDefinition>  
+			<AttributeDefinition id="fallRisk2" type="enumeration" multiplicity="maximalOne" description="Medicaments">
+                <EnumerationOption value="0" description="Cap"/>
+                <EnumerationOption value="1" description="Tranquil·litzants, sedants, diürètics, antidepressius, antiparkinsonians, hipotensors, altres"/>
+            </AttributeDefinition>  
+			<AttributeDefinition id="fallRisk3" type="enumeration" multiplicity="maximalOne" description="Dèficits sensorials">
+                <EnumerationOption value="0" description="Cap"/>
+                <EnumerationOption value="1" description="Alteracions visuals, auditives"/>
+            </AttributeDefinition>  
+			<AttributeDefinition id="fallRisk4" type="enumeration" multiplicity="maximalOne" description="Estat mental">
+                <EnumerationOption value="0" description="Orientat"/>
+                <EnumerationOption value="1" description="Confús"/>
+            </AttributeDefinition>  
+			<AttributeDefinition id="fallRisk5" type="enumeration" multiplicity="maximalOne" description="Deambulació">
+                <EnumerationOption value="0" description="Normal"/>
+                <EnumerationOption value="1" description="Segura amb ayuda, insegura"/>
+            </AttributeDefinition>  
+			<DerivedAttributeDefinition id="fallRisk6" expression="number(fallRisk1,0)+number(fallRisk2,0)+number(fallRisk3,0)+number(fallRisk4,0)+number(fallRisk5,0)" description="Risc total"/>  
+		</EntityDefinition>
+
+		<EntityDefinition id="LCS1_Sleeping">
+			<AttributeDefinition id="sleeping1" type="enumeration" multiplicity="maximalOne" description="Dificultat per adormir o quedar-se adormida; es despertar massa aviat; inquietud; somni no reparador">
+                <EnumerationOption value="0" description="No està present"/>
+                <EnumerationOption value="1" description="Present però no exposat en els últims 3 dies"/>
+                <EnumerationOption value="2" description="Present en 1 dels últims 3 dies"/>
+                <EnumerationOption value="3" description="Present en 2 dels últims 3 dies"/>
+                <EnumerationOption value="4" description="Presentat diàriament els últims 3 dies"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="sleeping2" type="enumeration" multiplicity="maximalOne" description="Massa son - Somni excessiu que interfereix amb el funcionament normal de la persona">
+                <EnumerationOption value="0" description="No està present"/>
+                <EnumerationOption value="1" description="Present però no exposat en els últims 3 dies"/>
+                <EnumerationOption value="2" description="Present en 1 dels últims 3 dies"/>
+                <EnumerationOption value="3" description="Present en 2 dels últims 3 dies"/>
+                <EnumerationOption value="4" description="Presentat diàriament els últims 3 dies"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="sleeping3" type="enumeration" multiplicity="maximalOne" description="Ús de medicaments per dormir">
+                <EnumerationOption value="1" description="Sí"/>
+                <EnumerationOption value="2" description="No"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="sleeping4" type="enumeration" multiplicity="maximalOne" description="Fa servir ajudes per al son (BPAP, CPAP)">
+                <EnumerationOption value="1" description="Sí"/>
+                <EnumerationOption value="2" description="No"/>
+            </AttributeDefinition> 
+        </EntityDefinition>
+		
 		
         <EntityDefinition id="LCS1_DiagnosisIADL"> 
             <AttributeDefinition id="IADL1" type="enumeration" multiplicity="maximalOne" description="Neteja i mantenimient de la casa">
@@ -1161,6 +1213,24 @@
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisIADL.IADL7" isReadOnly="true" isMandatory="false"/>
 				</HumanTaskDefinition>				
 				
+				<HumanTaskDefinition id="LCS1_FallRisk" description="Barreres - Risc de caigudes"
+				ownerPath="LCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_FallRisk" entityAttachPath="LCS1_Evaluation.LCS1_FallRisk">                
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_FallRisk.fallRisk1" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_FallRisk.fallRisk2" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_FallRisk.fallRisk3" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_FallRisk.fallRisk4" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_FallRisk.fallRisk5" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_FallRisk.fallRisk6" isReadOnly="true" isMandatory="false"/>
+				</HumanTaskDefinition>
+				
+				<HumanTaskDefinition id="LCS1_Sleeping" description="Barreres - Avaluació del son"
+				ownerPath="LCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_Sleeping" entityAttachPath="LCS1_Evaluation.LCS1_Sleeping">                
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_Sleeping.sleeping1" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_Sleeping.sleeping2" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_Sleeping.sleeping3" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_Sleeping.sleeping4" isReadOnly="false" isMandatory="true"/>
+				</HumanTaskDefinition>	
+												
                 <HumanTaskDefinition id="LCS1_DiagnosisCommunicationHT" description="Diagnòstic - Communicació"
 				ownerPath="LCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_DiagnosisCommunication" entityAttachPath="LCS1_Evaluation.LCS1_DiagnosisCommunication">
                     <TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCommunication.comm1" isReadOnly="false" isMandatory="true"/>
