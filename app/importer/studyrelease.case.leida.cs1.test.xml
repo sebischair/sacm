@@ -209,6 +209,10 @@
             <AttributeDefinition id="LCS1_DiagnosisNyha" type="Link.EntityDefinition.LCS1_DiagnosisNyha" multiplicity="any"/>  
             <AttributeDefinition id="LCS1_DiagnosisCodex" type="Link.EntityDefinition.LCS1_DiagnosisCodex" multiplicity="any"/>  
             <AttributeDefinition id="LCS1_DiagnosisGold" type="Link.EntityDefinition.LCS1_DiagnosisGold" multiplicity="any"/>  											
+			<AttributeDefinition id="LCS1_SF12Evaluation" type="Link.EntityDefinition.LCS1_SF12Def" multiplicity="any"/>
+			
+			<AttributeDefinition id="LCS1_SelfCareAutoTestEPOC" type="Link.EntityDefinition.LCS1_SelfCareAutoTestEPOC" multiplicity="any"/> 
+			<AttributeDefinition id="LCS1_SelfCareAutoTestHF" type="Link.EntityDefinition.LCS1_SelfCareAutoTestHF" multiplicity="any"/> 			
 		</EntityDefinition>
 		
 		<EntityDefinition id="LCS1_GMADef" >
@@ -673,22 +677,222 @@
 			if ( (number(gold1, 0) + number(gold2,0)) = 1 and number(gold3, 0) = 0) then "C" else 
 			if (number(gold1, 0) + number(gold2, 0) + number(gold3,0)) = 3 then "D" else
 			"No existeix"' description="GOLD"/>						
-        </EntityDefinition>    				
+        </EntityDefinition>    	
+
+        <EntityDefinition id="LCS1_SF12Def">
+            <AttributeDefinition id="sf12-1"  type="enumeration" multiplicity="maximalOne" description="1. En general, vostè diria que la seva salut és:">
+                <EnumerationOption value="1"  description="Excel·lent"/>
+                <EnumerationOption value="2"  description="Molt bona"/>
+                <EnumerationOption value="3"  description="Bona"/>
+                <EnumerationOption value="4"  description="Aceptable"/>
+                <EnumerationOption value="5"  description="Pobre"/>
+            </AttributeDefinition>     
+            <AttributeDefinition id="sf12-2" type="enumeration" multiplicity="maximalOne" description="Les seguents preguntes són referents a activitats o coses que vostè podría fer un día normal. El seu estat de salut actual, ¿el limita per fer aquestes activitats o coses? Si es aixì ¿quant?
+ 2. Esforços moderats, com moure una taula, passar l´aspiradora, jugar a bitlles o caminar mes d´una hora">
+                <EnumerationOption value="1" description="Sí, molt limitat"/>
+                <EnumerationOption value="2" description="Sí, poc limitat"/>
+                <EnumerationOption value="3" description="No, gens limitat"/>
+			</AttributeDefinition>        
+            <AttributeDefinition id="sf12-3" type="enumeration" multiplicity="maximalOne" description="Les seguents preguntes són referents a activitats o coses que vostè podría fer un día normal. El seu estat de salut actual, el limita per fer aquestes activitats o coses? Si es aixì, quant?
+ 3. Pujar varios pisos per la escala">
+                <EnumerationOption value="1" description="Sí, molt limitat"/>
+                <EnumerationOption value="2" description="Sí, poc limitat"/>
+                <EnumerationOption value="3" description="No, gens limitat"/>
+            </AttributeDefinition>     
+            <AttributeDefinition id="sf12-4" type="enumeration" multiplicity="maximalOne" description="En el curs de les últimes 4 setmanes, ha tingut algun dels seguents problemes a la feina o a les seves activitats habituals, com a consequència de la seva salut física? 4. Va fer menys del que volia fer?">
+                <EnumerationOption value="1" description="Sí"/>
+                <EnumerationOption value="2" description="No"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="sf12-5" type="enumeration" multiplicity="maximalOne" description="En el curs de les últimes 4 setmanes, ha tingut algun dels seguents problemes a la feina o a les seves activitats habituals, com a consequència de la seva salut física? 5. Va haver de deixar de fer algunes tasques a la seva feina o a les seves actitats habituals?">
+                <EnumerationOption value="1" description="Sí"/>
+                <EnumerationOption value="2" description="No"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="sf12-6" type="enumeration" multiplicity="maximalOne" description="En el curs de les últimes 4 setmanes, ha tingut algun dels seguents problemes a la feina o a les seves activitats habituals, com a consequència d´algun problema emocional? (Com estar trsit, deprimit o nervios) 6. Va fer menys del que hagues volgut fer per algun problema emocional?">
+                <EnumerationOption value="1" description="Sí"/>
+                <EnumerationOption value="2" description="No"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="sf12-7" type="enumeration" multiplicity="maximalOne" description="En el curs de les últimes 4 setmanes, ha tingut algun dels seguents problemes a la feina o a les seves activitats habituals, com a consequència d´algun problema emocional? (Com estar trsit, deprimit o nervios) 7. No va fer la seva feina o les seves activitats habituals amb tanta cura com ho fa habitualement, per algun probles emocional.">
+                <EnumerationOption value="1" description="Sí"/>
+                <EnumerationOption value="2" description="No"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="sf12-8" type="enumeration" multiplicity="maximalOne" description="En el curs de les últimes 4 setmanes, ha tingut algun dels seguents problemes a la feina o a les seves activitats habituals, com a consequència d´algun problema emocional? (Com estar trsit, deprimit o nervios) 8. En le curs de les últimes 4 setmanes, Fins a quin punt el dolor li ha entorpit la seva feina habitual? (treball fora de casa i tasques domestiques)">
+                <EnumerationOption value="1" description="En absolut"/>
+                <EnumerationOption value="2" description="Una mica"/>
+                <EnumerationOption value="3" description="Moderadament"/>
+                <EnumerationOption value="4" description="Força"/>
+                <EnumerationOption value="5" description="Extremadament"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="sf12-9" type="enumeration" multiplicity="maximalOne" description="Les preguntes que segueixen fan referència a com s´ha sentit i com li han anat les coses les darreres 4 setmanes. A cada pregunta respongui el mes semblant a coms´ha sentit vostè. En le curs de les ultimes 4 setmanes, 9. Quan de temps s´ha sentit tranquil i en pau?">
+                <EnumerationOption value="1" description="Tot el temps"/>
+                <EnumerationOption value="2" description="La major part del temps"/>
+                <EnumerationOption value="3" description="Una bona part del temps"/>
+                <EnumerationOption value="4" description="Alguna part del temps"/>
+                <EnumerationOption value="5" description="Una mica de temps"/>
+                <EnumerationOption value="6" description="Gens de temps"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="sf12-10" type="enumeration" multiplicity="maximalOne" description="Les preguntes que segueixen fan referència a com s´ha sentit i com li han anat les coses les darreres 4 setmanes. A cada pregunta respongui el mes semblant a coms´ha sentit vostè. En le curs de les ultimes 4 setmanes, 10. Quan de temps s´ha sentit amb molta energia?">
+                <EnumerationOption value="1" description="Tot el temps"/>
+                <EnumerationOption value="2" description="La major part del temps"/>
+                <EnumerationOption value="3" description="Una bona part del temps"/>
+                <EnumerationOption value="4" description="Alguna part del temps"/>
+                <EnumerationOption value="5" description="Una mica de temps"/>
+                <EnumerationOption value="6" description="Gens de temps"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="sf12-11" type="enumeration" multiplicity="maximalOne" description="Les preguntes que segueixen fan referència a com s´ha sentit i com li han anat les coses les darreres 4 setmanes. A cada pregunta respongui el mes semblant a coms´ha sentit vostè. En le curs de les ultimes 4 setmanes, 11. Quan de temps S´ha sentit amb desanimat i trist?">
+                <EnumerationOption value="1" description="Tot el temps"/>
+                <EnumerationOption value="2" description="La major part del temps"/>
+                <EnumerationOption value="3" description="Una bona part del temps"/>
+                <EnumerationOption value="4" description="Alguna part del temps"/>
+                <EnumerationOption value="5" description="Una mica de temps"/>
+                <EnumerationOption value="6" description="Gens de temps"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="sf12-12" type="enumeration" multiplicity="maximalOne" description="12. En le curs de les últimes 4 setmanes, Amb quina frequència la salut física o els problemes emocionals li han dificultat les seves activitats socials (com visitar a amics i familiars)?">
+                <EnumerationOption value="1" description="Tot el temps"/>
+                <EnumerationOption value="2" description="La major part del temps"/>
+                <EnumerationOption value="3" description="Alguna part del temps "/>
+                <EnumerationOption value="4" description="Una mica de temps"/>
+                <EnumerationOption value="5" description="Gens de temps"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="sf12-13" type="enumeration" multiplicity="maximalOne" description="Tipus de visita">
+                <EnumerationOption value="1" description="6 setmanes"/>
+                <EnumerationOption value="2" description="3 mesos"/>
+                <EnumerationOption value="3" description="6 mesos"/>
+                <EnumerationOption value="4" description="12 mesos"/>
+                <EnumerationOption value="5" description="24 mesos"/>
+                <EnumerationOption value="6" description="altres"/>
+            </AttributeDefinition>     
+            <AttributeDefinition id="sf12-14" type="enumeration" multiplicity="maximalOne" description="Quants cops he de realitzar els exercicis de rehabilitació">
+                <EnumerationOption value="1" description="Un cop al dia"/>
+                <EnumerationOption value="2" description="No s'han de fer"/>
+                <EnumerationOption value="3" description="4 cops al dia"/>
+            </AttributeDefinition>     						                  
+        </EntityDefinition>
+		
+        <EntityDefinition id="LCS1_SelfCareAutoTestEPOC" description="Capacitat d'autocura - MPOC">
+            <AttributeDefinition id="scat_epoc1" type="enumeration" multiplicity="maximalOne" description="1. Em peso cada día">
+                <EnumerationOption value="1" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="3" description="Dubtós"/>
+            </AttributeDefinition>        
+            <AttributeDefinition id="scat_epoc2" type="enumeration" multiplicity="maximalOne" description="2. Si tinc dificultat per respirar paro i descanso.">
+                <EnumerationOption value="1" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="3" description="Dubtós"/>
+            </AttributeDefinition>      
+            <AttributeDefinition id="scat_epoc3" type="enumeration" multiplicity="maximalOne" description="3. Si la meva dificultat per respirar augmenta contacto amb el meu metge o infermera.">
+                <EnumerationOption value="1" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="3" description="Dubtós"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="scat_epoc4" type="enumeration" multiplicity="maximalOne" description="4. Si els meus peus/cames comencesa inflarse mes del habitual, contacto amb el meu metge o infermera">
+                <EnumerationOption value="1" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="3" description="Dubtós"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="scat_epoc5" type="enumeration" multiplicity="maximalOne" description="5. Si augmento el meu pes 2 kg en una setman, contacto amb el meu metge o infermera.">
+                <EnumerationOption value="1" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="3" description="Dubtós"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="scat_epoc6" type="enumeration" multiplicity="maximalOne" description="6. Limito la quantitat de liquids que bec (a meny de 1,5-2 litre diaris)">
+                <EnumerationOption value="1" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="3" description="Dubtós"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="scat_epoc7" type="enumeration" multiplicity="maximalOne" description="7. Descanso una estona durant el día.">
+                <EnumerationOption value="1" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="3" description="Dubtós"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="scat_epoc8" type="enumeration" multiplicity="maximalOne" description="8. Si em sento mes fatigat del normal (cansat), contacto amb le meu metge o infermera.">
+                <EnumerationOption value="1" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="3" description="Dubtós"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="scat_epoc9" type="enumeration" multiplicity="maximalOne" description="9. Faig una dieta baixa en sal.">
+                <EnumerationOption value="1" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="3" description="Dubtós"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="scat_epoc10" type="enumeration" multiplicity="maximalOne" description="10. Em prenc tota la medicació com m´han dit.">
+                <EnumerationOption value="1" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="3" description="Dubtós"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="scat_epoc11" type="enumeration" multiplicity="maximalOne" description="11. Em vacuno per la grip tots els anys">
+                <EnumerationOption value="1" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="3" description="Dubtós"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="scat_epoc12" type="enumeration" multiplicity="maximalOne" description="12. Faig exercici de manera regular">
+                <EnumerationOption value="1" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="3" description="Dubtós"/>
+            </AttributeDefinition>  
+            <DerivedAttributeDefinition id="scat_epocTotal" expression="number(scat_epoc1,0)+number(scat_epoc2,0)+number(scat_epoc3,0)+number(scat_epoc4,0)+number(scat_epoc5,0)+number(scat_epoc6,0)+number(scat_epoc7,0)+number(scat_epoc8,0)+number(scat_epoc9,0)+number(scat_epoc10,0)+number(scat_epoc11,0)+number(scat_epoc12,0)" description="Puntuació MPOC"/> 
+        </EntityDefinition>
+		
+        <EntityDefinition id="LCS1_SelfCareAutoTestHF" description="Capacitat d'autocura - IC">
+            <AttributeDefinition id="scat_ic1" type="enumeration" multiplicity="maximalOne" description="Si tinc dificultat per respirar paro i descanso.">
+                <EnumerationOption value="1" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="3" description="Dubtós"/>
+            </AttributeDefinition>     
+            <AttributeDefinition id="scat_ic2" type="enumeration" multiplicity="maximalOne" description="Si la meva dificultat per respirar augmenta contacto amb el meu metge o infermera.">
+                <EnumerationOption value="1" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="3" description="Dubtós"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="scat_ic3" type="enumeration" multiplicity="maximalOne" description="Si la meva tos i espectoració augmenten y/o la mucositat es torna lletja contacto amb el meu metge o infermera.">
+                <EnumerationOption value="1" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="3" description="Dubtós"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="scat_ic4" type="enumeration" multiplicity="maximalOne" description="Descanso una estona durant el día.">
+                <EnumerationOption value="1" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="3" description="Dubtós"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="scat_ic5" type="enumeration" multiplicity="maximalOne" description="Si em sento mes fatigat del normal (cansat), contacto amb le meu metge o infermera.">
+                <EnumerationOption value="1" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="3" description="Dubtós"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="scat_ic6" type="enumeration" multiplicity="maximalOne" description="Em prenc tota la medicació com m´han dit.">
+                <EnumerationOption value="1" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="3" description="Dubtós"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="scat_ic7" type="enumeration" multiplicity="maximalOne" description="Em vacuno per la grip tots els anys">
+                <EnumerationOption value="1" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="3" description="Dubtós"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="scat_ic8" type="enumeration" multiplicity="maximalOne" description="Faig exercici de manera regular">
+                <EnumerationOption value="1" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="3" description="Dubtós"/>
+            </AttributeDefinition>  
+            <DerivedAttributeDefinition id="scat_icTotal" expression="number(scat_ic1,0)+number(scat_ic2,0)+number(scat_ic3,0)+number(scat_ic4,0)+number(scat_ic5,0)+number(scat_ic6,0)+number(scat_ic7,0)+number(scat_ic8,0)" description="Puntuacio IC"/> 
+        </EntityDefinition>
+		
 		
    <!-- CASE DEFINITION -->				  
         <CaseDefinition id="LCS1_Leida" description="CS1 Lleida - Versió OK" ownerPath="LCS1_Settings.CaseManager" clientPath="LCS1_Settings.Patient" entityDefinitionId="LCS1_CaseData" newEntityDefinitionId="LCS1_Settings" newEntityAttachPath="LCS1_Settings" notesDefaultValue='<style>table{width:100%;}table th{background-color:#66308e; color:white;font-size:larger;}table td{border: 1px solid #999;border-width: 0px 1px 1px 1px;}</style><table cellpadding="4" cellspacing="0"> <tr> <th>HOSPITAL</th> <th>EQUIP DE PRIMARIA</th> </tr> <tr> <td><b>Anesthesiologist:</b></br> TBD</td> <td><b>Clinician:</b></br> TBD</td> </tr> <tr> <td><b>Physiotherapist:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>Clinician:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>Nurse:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>SocialCareer:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>New Rol:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>New Rol:</b></br> TBD</td> <td></td> </tr></table><span style="color:#666; font-size:smaller"><b>Hint:</b> One row for each rol.</span>'>	  
      
 	    <SummarySectionDefinition id="LCS1_PatientStatus" description="Estat del pacient" position="LEFT">    
                 <SummaryParamDefinition path="LCS1_Evaluation.LCS1_ComorbidityCharlsonEvaluation.ch21"/>  
-				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_ComorbidityPfeiffer.pfeiffer2"/>				
 				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadA8"/>												
-                <SummaryParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadD8"/>											
+                <SummaryParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadD8"/>					
+				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_ComorbidityPfeiffer.pfeiffer2"/>														
 				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_Barthel.barthel11"/>				
+				
 				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_AnthropometricVariablesAl.AnthropometricAl"/>																									
 				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_AnthropometricVariablesGenollHomes.AnthropometricGenollHomesIMC"/>	
-				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_AnthropometricVariablesGenollDones.AnthropometricGenollDonesIMC"/>					
-				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodex.codex5"/>	
-				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisGold.gold4"/>					
+				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_AnthropometricVariablesGenollDones.AnthropometricGenollDonesIMC"/>	
+				
+				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisGold.gold4"/>	
+				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodex.codex5"/>					
 		</SummarySectionDefinition>
 	 
 	    <!-- STAGEDEFINITION: CaseIdentification -->	  
@@ -797,14 +1001,14 @@
                     <TaskParamDefinition path="LCS1_Evaluation.LCS1_ComorbidityCharlsonEvaluation.ch21" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
 				
-                <HumanTaskDefinition id="LCS1_ComorbidityPfeiffer" description="Estat cognitiu/mental - Pfeiffer" 
+                <HumanTaskDefinition id="LCS1_ComorbidityPfeifferHT" description="Estat cognitiu/mental - Pfeiffer" 
 				footnote="Pfeiffer, E. (1975). A short portable mental status questionnaire for the assessment of organic brain deficit in elderly patients. Journal of American Geriatrics Society. 23, 433-41."
 				ownerPath="LCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1_ComorbidityPfeiffer" entityAttachPath="LCS1_Evaluation.LCS1_ComorbidityPfeiffer">
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_ComorbidityPfeiffer.pfeiffer1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS1_Evaluation.LCS1_ComorbidityPfeiffer.pfeiffer2" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>        
 				
-                <HumanTaskDefinition id="LCS1_HospitalAnxietyAndDepressionScale" description="Estat comòrbid - Escala d'ansietat i depressió hospitalària (HAD)" 
+                <HumanTaskDefinition id="LCS1_HospitalAnxietyAndDepressionScaleHT" description="Estat comòrbid - Escala d'ansietat i depressió hospitalària (HAD)" 
 				footnote="Zigmond, A. S., &amp; Snaith, R. P. (1983). The hospital anxiety and depression scale. Acta psychiatrica scandinavica, 67(6), 361-370."
 				ownerPath="LCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1_HospitalAnxietyAndDepressionScale" entityAttachPath="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale">
                     <TaskParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadA1" isReadOnly="false" isMandatory="true"/>
@@ -825,7 +1029,7 @@
                     <TaskParamDefinition path="LCS1_Evaluation.LCS1_HospitalAnxietyAndDepressionScale.hadD8" isReadOnly="true" isMandatory="false"/>        
                 </HumanTaskDefinition>
 				
-                <HumanTaskDefinition id="LCS1_Barthel" description="Estat comòrbid - Barthel" 
+                <HumanTaskDefinition id="LCS1_BarthelHT" description="Estat comòrbid - Barthel" 
 				footnote="Mahoney FI, Barthel D. &quot;Functional evaluation: the Barthel Index.&quot;Maryland State Medical Journal 1965;14:56-61. Used with permission.
 				Loewen SC, Anderson BA. &quot;Predictors of stroke outcome using objective measurement scales.&quot; Stroke.1990;21:78-81.
 				Gresham GE, Phillips TF, Labi ML. &quot;ADL status in stroke: relative merits of three standard indexes.&quot; Arch Phys Med
@@ -844,7 +1048,7 @@
                     <TaskParamDefinition path="LCS1_Evaluation.LCS1_Barthel.barthel11" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
 				
-				<HumanTaskDefinition id="LCS1_DiagnosisIADL" description="Diagnòstic - Activitats instrumentals de la vida diària" 
+				<HumanTaskDefinition id="LCS1_DiagnosisIADLHT" description="Diagnòstic - Activitats instrumentals de la vida diària" 
 				ownerPath="LCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_DiagnosisIADL" entityAttachPath="LCS1_Evaluation.LCS1_DiagnosisIADL">                
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisIADL.IADL1" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisIADL.IADL2" isReadOnly="false" isMandatory="true"/>
@@ -864,14 +1068,14 @@
                     <TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCommunication.comm5" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>				
 
-				<HumanTaskDefinition id="LCS1_AnthropometricVariablesAl" description="Diagnòstic - Pes i alçada - Variables antropomètriques"
+				<HumanTaskDefinition id="LCS1_AnthropometricVariablesAlHT" description="Diagnòstic - Pes i alçada - Variables antropomètriques"
 				ownerPath="LCS1_Settings.Nurse" isMandatory="false" repeatable="ONCE" activation="MANUAL"  entityDefinitionId="LCS1_AnthropometricVariablesAl" entityAttachPath="LCS1_Evaluation.LCS1_AnthropometricVariablesAl">
 				  <TaskParamDefinition path="LCS1_Evaluation.LCS1_AnthropometricVariablesAl.AnWeighAl" isReadOnly="false" isMandatory="true"/>
 				  <TaskParamDefinition path="LCS1_Evaluation.LCS1_AnthropometricVariablesAl.AnHeightAl" isReadOnly="false" isMandatory="true"/>  
 				  <TaskParamDefinition path="LCS1_Evaluation.LCS1_AnthropometricVariablesAl.AnthropometricAl" isReadOnly="true" isMandatory="false"/>
 				</HumanTaskDefinition>  			
 				
-				<HumanTaskDefinition id="LCS1_AnthropometricVariablesGenollHomes" description="Diagnòstic - Pes i distància (Homes) - Variables antropomètriques"
+				<HumanTaskDefinition id="LCS1_AnthropometricVariablesGenollHomesHT" description="Diagnòstic - Pes i distància (Homes) - Variables antropomètriques"
 				ownerPath="LCS1_Settings.Nurse" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS1_AnthropometricVariablesGenollHomes" entityAttachPath="LCS1_Evaluation.LCS1_AnthropometricVariablesGenollHomes">
 				  <TaskParamDefinition path="LCS1_Evaluation.LCS1_AnthropometricVariablesGenollHomes.AnWeighGenoll" isReadOnly="false" isMandatory="true"/>
 				  <TaskParamDefinition path="LCS1_Evaluation.LCS1_AnthropometricVariablesGenollHomes.AnKneeGenoll" isReadOnly="false" isMandatory="true"/>  
@@ -880,7 +1084,7 @@
 				  <TaskParamDefinition path="LCS1_Evaluation.LCS1_AnthropometricVariablesGenollHomes.AnthropometricGenollHomesIMC" isReadOnly="true" isMandatory="false"/>
 				</HumanTaskDefinition>  							
 
-				<HumanTaskDefinition id="LCS1_AnthropometricVariablesGenollDones" description="Diagnòstic - Pes i distància (Dones) - Variables antropomètriques"
+				<HumanTaskDefinition id="LCS1_AnthropometricVariablesGenollDonesHT" description="Diagnòstic - Pes i distància (Dones) - Variables antropomètriques"
 				ownerPath="LCS1_Settings.Nurse" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS1_AnthropometricVariablesGenollDones" entityAttachPath="LCS1_Evaluation.LCS1_AnthropometricVariablesGenollDones">
 				  <TaskParamDefinition path="LCS1_Evaluation.LCS1_AnthropometricVariablesGenollDones.AnWeighGenoll" isReadOnly="false" isMandatory="true"/>
 				  <TaskParamDefinition path="LCS1_Evaluation.LCS1_AnthropometricVariablesGenollDones.AnKneeGenoll" isReadOnly="false" isMandatory="true"/>  
@@ -889,18 +1093,18 @@
 				  <TaskParamDefinition path="LCS1_Evaluation.LCS1_AnthropometricVariablesGenollDones.AnthropometricGenollDonesIMC" isReadOnly="true" isMandatory="false"/>
 				</HumanTaskDefinition>  				
 				
-                <HumanTaskDefinition id="LCS1_DiagnosisSmokingAndAlcohol" description="Diagnòstic - Consum de tabac i alcohol"
-				ownerPath="LCS1_Settings.AnesClinic" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1_DiagnosisSmokingAndAlcohol" entityAttachPath="LCS1_Evaluation.LCS1_DiagnosisSmokingAndAlcohol">
+                <HumanTaskDefinition id="LCS1_DiagnosisSmokingAndAlcoholHT" description="Diagnòstic - Consum de tabac i alcohol"
+				ownerPath="LCS1_Settings.Clinician" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1_DiagnosisSmokingAndAlcohol" entityAttachPath="LCS1_Evaluation.LCS1_DiagnosisSmokingAndAlcohol">
                     <TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisSmokingAndAlcohol.smalc1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisSmokingAndAlcohol.smalc2" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition> 	
 
-				<HumanTaskDefinition id="LCS1_DiagnosisNyha" description="Diagnòstic - Diagnosis classe funcional NYHA"
+				<HumanTaskDefinition id="LCS1_DiagnosisNyhaHT" description="Diagnòstic - Diagnosis classe funcional NYHA"
 				ownerPath="LCS1_Settings.Clinician" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS1_DiagnosisNyha" entityAttachPath="LCS1_Evaluation.LCS1_DiagnosisNyha">                
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisNyha.nyha1" isReadOnly="false" isMandatory="true"/>
 				</HumanTaskDefinition>
 								
-				<HumanTaskDefinition id="LCS1_DiagnosisGold" description="Diagnòstic - Diagnosis grau GOLD"
+				<HumanTaskDefinition id="LCS1_DiagnosisGoldHT" description="Diagnòstic - Diagnosis grau GOLD"
 				ownerPath="LCS1_Settings.Clinician" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS1_DiagnosisGold" entityAttachPath="LCS1_Evaluation.LCS1_DiagnosisGold">                
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisGold.gold1" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisGold.gold2" isReadOnly="false" isMandatory="true"/>
@@ -908,7 +1112,7 @@
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisGold.gold4" isReadOnly="true" isMandatory="false"/>
 				</HumanTaskDefinition>
 				
-				<HumanTaskDefinition id="LCS1_DiagnosisCodex" description="Diagnòstic - Diagnosis CODEX (dependència amb Charlson)"
+				<HumanTaskDefinition id="LCS1_DiagnosisCodexHT" description="Diagnòstic - Diagnosis CODEX (dependència amb Charlson)"
 				ownerPath="LCS1_Settings.Clinician" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS1_DiagnosisCodex" entityAttachPath="LCS1_Evaluation.LCS1_DiagnosisCodex">                
                     <SentryDefinition>
                         <precondition processDefinitionId="LCS1_ComorbidityCharlsonEvaluationHT"/>
@@ -919,7 +1123,56 @@
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodex.codex3" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodex.codex4" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodex.codex5" isReadOnly="true" isMandatory="false"/>
-				</HumanTaskDefinition>	 								
+				</HumanTaskDefinition>	 	
+
+				
+                <HumanTaskDefinition id="LCS1_SF12EvaluationHT" description="Diagnòstic - SF-12"
+				ownerPath="LCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_SF12Def" entityAttachPath="LCS1_Evaluation.LCS1_SF12Evaluation">                
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_SF12Evaluation.sf12-1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_SF12Evaluation.sf12-2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_SF12Evaluation.sf12-3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_SF12Evaluation.sf12-4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_SF12Evaluation.sf12-5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_SF12Evaluation.sf12-6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_SF12Evaluation.sf12-7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_SF12Evaluation.sf12-8" isReadOnly="false" isMandatory="true"/>    
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_SF12Evaluation.sf12-9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_SF12Evaluation.sf12-10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_SF12Evaluation.sf12-11" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_SF12Evaluation.sf12-12" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_SF12Evaluation.sf12-13" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_SF12Evaluation.sf12-14" isReadOnly="false" isMandatory="true"/>     
+                </HumanTaskDefinition> 	
+
+				<HumanTaskDefinition id="LCS1_SelfCareAutoTestEPOCHT" description="Barreres - Capacitat d'autocura (MPOC)" 
+				ownerPath="LCS1_Settings.Nurse" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS1_SelfCareAutoTestEPOC" entityAttachPath="LCS1_Evaluation.LCS1_SelfCareAutoTestEPOC">                
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestEPOC.scat_epoc1" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestEPOC.scat_epoc2" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestEPOC.scat_epoc3" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestEPOC.scat_epoc4" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestEPOC.scat_epoc5" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestEPOC.scat_epoc6" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestEPOC.scat_epoc7" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestEPOC.scat_epoc8" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestEPOC.scat_epoc9" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestEPOC.scat_epoc10" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestEPOC.scat_epoc11" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestEPOC.scat_epoc12" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestEPOC.scat_epocTotal" isReadOnly="true" isMandatory="false"/>            
+				</HumanTaskDefinition>       
+		
+				<HumanTaskDefinition id="LCS1_SelfCareAutoTestHFHT" description="Barreres - Capacitat d'autocura (IC)" 
+				ownerPath="LCS1_Settings.Nurse" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS1_SelfCareAutoTestHF" entityAttachPath="LCS1_Evaluation.LCS1_SelfCareAutoTestHF">                			
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestHF.scat_ic1" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestHF.scat_ic2" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestHF.scat_ic3" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestHF.scat_ic4" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestHF.scat_ic5" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestHF.scat_ic6" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestHF.scat_ic7" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestHF.scat_ic8" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestHF.scat_icTotal" isReadOnly="true" isMandatory="false"/>
+				</HumanTaskDefinition>       
 				
 			</StageDefinition>
 		  	 
