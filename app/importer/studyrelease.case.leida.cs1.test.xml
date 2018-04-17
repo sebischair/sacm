@@ -213,6 +213,11 @@
 			
 			<AttributeDefinition id="LCS1_SelfCareAutoTestEPOC" type="Link.EntityDefinition.LCS1_SelfCareAutoTestEPOC" multiplicity="any"/> 
 			<AttributeDefinition id="LCS1_SelfCareAutoTestHF" type="Link.EntityDefinition.LCS1_SelfCareAutoTestHF" multiplicity="any"/> 			
+			
+            <AttributeDefinition id="LCS1_MedicationFollowing" type="Link.EntityDefinition.LCS1_MedicationFollowing" multiplicity="any" description="Medication following"/> 
+            <AttributeDefinition id="LCS1_Medication" type="Link.EntityDefinition.LCS1_Medication" multiplicity="any" description="Medication"/> 
+            <AttributeDefinition id="LCS1_SocialDwelling" type="Link.EntityDefinition.LCS1_SocialDwelling" multiplicity="any" description="Social dwelling"/> 
+            <AttributeDefinition id="LCS1_SocialSelfCareCareerAbility" type="Link.EntityDefinition.LCS1_SocialSelfCareCareerAbility" multiplicity="any" description="Social self career ability"/>            									
 		</EntityDefinition>
 		
 		<EntityDefinition id="LCS1_GMADef" >
@@ -876,6 +881,95 @@
             <DerivedAttributeDefinition id="scat_icTotal" expression="number(scat_ic1,0)+number(scat_ic2,0)+number(scat_ic3,0)+number(scat_ic4,0)+number(scat_ic5,0)+number(scat_ic6,0)+number(scat_ic7,0)+number(scat_ic8,0)" description="Puntuacio IC"/> 
         </EntityDefinition>
 		
+	<EntityDefinition id="LCS1_MedicationFollowing"> 
+            <AttributeDefinition id="Medication1" type="enumeration" multiplicity="maximalOne" description="Supera el 80% de compliment de retirada de la medicacio de la oficina de Farmacia?">
+                <EnumerationOption value="0" description="Sí"/>
+				<EnumerationOption value="1" description="No"/>
+            </AttributeDefinition>  
+			<DerivedAttributeDefinition id="Medication2" description="Compliment farmàcia" 
+			uiReference="colors(0<=green<1<=red<2<=orange<=10000)"
+			additionalDescription="si 0 (Verd)|| si 1 (Vermell)" 
+			expression="number(Medication1,0)"/>			
+        </EntityDefinition> 
+
+		<EntityDefinition id="LCS1_Medication"> 
+            <AttributeDefinition id="Medication1" type="enumeration" multiplicity="maximalOne" description="Més de 4 pastilles al dia?">
+                <EnumerationOption value="1" description="Sí"/>
+				<EnumerationOption value="0" description="No"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="Medication2" type="enumeration" multiplicity="maximalOne" description="Més de 4 tipus de medicaments al dia?">
+                <EnumerationOption value="1" description="Sí"/>
+				<EnumerationOption value="0" description="No"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="Medication3" type="enumeration" multiplicity="maximalOne" description="Hi ha alguna dificultat per preparar el medicament?">
+                <EnumerationOption value="1" description="Sí"/>
+				<EnumerationOption value="0" description="No"/>
+             </AttributeDefinition> 
+            <AttributeDefinition id="Medication4" type="enumeration" multiplicity="maximalOne" description="Hi ha alguna dificultat per realitzar l'execució del medicament?">
+                <EnumerationOption value="1" description="Sí"/>
+				<EnumerationOption value="0" description="No"/>
+            </AttributeDefinition> 		
+			<DerivedAttributeDefinition id="Medication5" description="Dificultat tractament" 
+			uiReference="colors(0<=green<1<=orange<2<=red<=10000)"
+			additionalDescription="si 0 (Verd)|| si 1 (Taronja)|| si &gt;= 2 (Vermell)" 
+			expression="number(Medication1,0)+number(Medication2,0)+number(Medication3,0)+number(Medication4,0)" />						
+        </EntityDefinition>		
+		
+       <EntityDefinition id="LCS1_SocialDwelling"> 
+            <AttributeDefinition id="dwelling1" type="enumeration" multiplicity="maximalOne" description="Tipus de vivenda"> 
+			    <EnumerationOption value="1" description="Viu a casa pero necessita suport total"/>
+                <EnumerationOption value="0.0001" description="Viu a casa de manera independent"/>
+                <EnumerationOption value="0.0002" description="Viu a casa amb suport parcial"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="dwelling2" type="enumeration" multiplicity="maximalOne" description="Situació de la vivenda"> 
+                <EnumerationOption value="1" description="Sol/a"/>
+                <EnumerationOption value="0.0001" description="Amb el seu cònjuge"/>
+                <EnumerationOption value="0.0002" description="Amb fills"/>
+                <EnumerationOption value="0.0003" description="Amb altres familiars"/>
+                <EnumerationOption value="0.0004" description="Sense familiars"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="dwelling3" type="enumeration" multiplicity="maximalOne" description="Condició de la vivenda (Accesibilitat)"> 
+                <EnumerationOption value="1" description="Pobre (Pobre: incluo ausecencia d'ascensor a l'edifici del pacient en pacientss amb un dolent estatus funcional)"/>
+                <EnumerationOption value="0" description="Bé"/>  
+			</AttributeDefinition>
+            <AttributeDefinition id="dwelling4" type="enumeration" multiplicity="maximalOne" description="Condición de la vivenda (Neteja)"> 
+				<EnumerationOption value="1" description="Pobre (Pobre: significa poc sa o brut, reportat prèviament pels serveis socials)"/>
+                <EnumerationOption value="0.0001" description="Bé"/>
+                <EnumerationOption value="0.0002" description="Moderadament"/>
+                <EnumerationOption value="0.0003" description="Desconegut"/>
+            </AttributeDefinition>
+		    <DerivedAttributeDefinition id="dwelling5" 
+			uiReference="colors(0<=green<1<=orange<2<=red<=10000)"
+			additionalDescription="si 0 (Verd)|| si 1 (Taronja)|| si &gt;= 2 (Vermell)" 
+			expression="round(number(dwelling1,0))+round(number(dwelling2,0))+round(number(dwelling3,0))+round(number(dwelling4,0))" 
+			description="Habitatge Social"/> 									
+        </EntityDefinition>		
+
+        <EntityDefinition id="LCS1_SocialSelfCareCareerAbility"> 
+            <AttributeDefinition id="career1" type="enumeration" multiplicity="maximalOne" description="El Cuidador és no apte (informat per serveis socials o per profesionals de la salut)"> 
+                <EnumerationOption value="1" description="Sí"/>
+				<EnumerationOption value="0" description="No"/>                
+            </AttributeDefinition>
+            <AttributeDefinition id="career2" type="enumeration" multiplicity="maximalOne" description="El cuidador també té una malatía crónica"> 
+			    <EnumerationOption value="1" description="Sí"/>
+                <EnumerationOption value="0" description="No"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="career3" type="enumeration" multiplicity="maximalOne" description="Percepció del recolzament rebut pel pacient"> 
+                <EnumerationOption value="1" description="Inadecuat"/>
+				<EnumerationOption value="0" description="Adequat"/>                
+            </AttributeDefinition>
+            <AttributeDefinition id="career4" type="enumeration" multiplicity="maximalOne" description="Tipus de recolzament"> 
+                <EnumerationOption value="1" description="Suport parcial setmanal o viu sol/a"/>
+                <EnumerationOption value="0.0001" description="Suport parcial diari"/>
+                <EnumerationOption value="0.0002" description="Suport complert 24h"/>
+            </AttributeDefinition>
+			<DerivedAttributeDefinition id="career5" 
+			uiReference="colors(0<=green<1<=red<10<=orange<=10000)"
+			additionalDescription="si 0 (Verd)|| si &gt;= 1 (Vermell)" 			
+			expression="round(number(career1,0))+round(number(career2,0))+round(number(career3,0))+round(number(career4,0))" 
+			description="Capacitat Cuidador"/> 
+        </EntityDefinition>				
+
 		
    <!-- CASE DEFINITION -->				  
         <CaseDefinition id="LCS1_Leida" description="CS1 Lleida - Versió OK" ownerPath="LCS1_Settings.CaseManager" clientPath="LCS1_Settings.Patient" entityDefinitionId="LCS1_CaseData" newEntityDefinitionId="LCS1_Settings" newEntityAttachPath="LCS1_Settings" notesDefaultValue='<style>table{width:100%;}table th{background-color:#66308e; color:white;font-size:larger;}table td{border: 1px solid #999;border-width: 0px 1px 1px 1px;}</style><table cellpadding="4" cellspacing="0"> <tr> <th>HOSPITAL</th> <th>EQUIP DE PRIMARIA</th> </tr> <tr> <td><b>Anesthesiologist:</b></br> TBD</td> <td><b>Clinician:</b></br> TBD</td> </tr> <tr> <td><b>Physiotherapist:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>Clinician:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>Nurse:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>SocialCareer:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>New Rol:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>New Rol:</b></br> TBD</td> <td></td> </tr></table><span style="color:#666; font-size:smaller"><b>Hint:</b> One row for each rol.</span>'>	  
@@ -894,6 +988,14 @@
 				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisGold.gold4"/>	
 				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodex.codex5"/>					
 		</SummarySectionDefinition>
+	 
+	    <SummarySectionDefinition id="LCS1_Barriers" description="Barreres" position="RIGHT">   			
+				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_MedicationFollowing.medication2"/>
+				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_Medication.Medication5"/>
+                <SummaryParamDefinition path="LCS1_Evaluation.LCS1_SocialDwelling.dwelling5"/>	
+                <SummaryParamDefinition path="LCS1_Evaluation.LCS1_SocialSelfCareCareerAbility.career5"/>				
+        </SummarySectionDefinition>
+	 
 	 
 	    <!-- STAGEDEFINITION: CaseIdentification -->	  
             <StageDefinition id="LCS1_CaseIdentification" description="Identificació del cas" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_Identification" entityAttachPath="LCS1_Identification">
@@ -1172,7 +1274,40 @@
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestHF.scat_ic7" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestHF.scat_ic8" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestHF.scat_icTotal" isReadOnly="true" isMandatory="false"/>
-				</HumanTaskDefinition>       
+				</HumanTaskDefinition>      
+
+                <HumanTaskDefinition id="LCS1_Medication" description="Barreres - Tractament: Compliment/Complexitat/Habilitat per executar-lo"
+				ownerPath="LCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_Medication" entityAttachPath="LCS1_Evaluation.LCS1_Medication">                
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_Medication.Medication1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_Medication.Medication2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_Medication.Medication3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_Medication.Medication4" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_Medication.Medication5" isReadOnly="true" isMandatory="false"/>
+                </HumanTaskDefinition>              
+
+                <HumanTaskDefinition id="LCS1_MedicationFollowing" description="Barreres - Dades farmàcia Compliment"
+				ownerPath="LCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_MedicationFollowing" entityAttachPath="LCS1_Evaluation.LCS1_MedicationFollowing">                
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_MedicationFollowing.medication1" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_MedicationFollowing.medication2" isReadOnly="true" isMandatory="false"/>
+                </HumanTaskDefinition>
+    
+              <HumanTaskDefinition id="LCS1_SocialDwelling" description="Barreres - Habitatge social"
+			  ownerPath="LCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1_SocialDwelling" entityAttachPath="LCS1_Evaluation.LCS1_SocialDwelling">
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_SocialDwelling.dwelling1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_SocialDwelling.dwelling2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_SocialDwelling.dwelling3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_SocialDwelling.dwelling4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_SocialDwelling.dwelling5" isReadOnly="true" isMandatory="false"/>
+                </HumanTaskDefinition>
+            
+                <HumanTaskDefinition id="LCS1_SocialSelfCareCareerAbility" description="Barreres - Capacitat del cuidador"
+				ownerPath="LCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1_SocialSelfCareCareerAbility" entityAttachPath="LCS1_Evaluation.LCS1_SocialSelfCareCareerAbility">
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_SocialSelfCareCareerAbility.career1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_SocialSelfCareCareerAbility.career2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_SocialSelfCareCareerAbility.career3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_SocialSelfCareCareerAbility.career4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_SocialSelfCareCareerAbility.career5" isReadOnly="true" isMandatory="false"/>
+                </HumanTaskDefinition>  							
 				
 			</StageDefinition>
 		  	 
