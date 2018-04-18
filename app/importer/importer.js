@@ -909,10 +909,13 @@ module.exports = class Importer {
             }
             if(isDualTaskDefinition){   
               data.dueDatePath = td.$.dueDatePath;
+              data.automaticCompleteOnPath = td.$.automaticCompleteOnPath;
               return DualTaskDefinition.create(this.jwt, data);
             }
-            if(isAutomatedTaskDefinition)       
+            if(isAutomatedTaskDefinition){
+              data.automaticCompleteOnPath = td.$.automaticCompleteOnPath;
               return AutomatedTaskDefinition.create(this.jwt, data);
+            }
           })
           .then(persistedTaskDef=>{
             if(isHumanTaskDefinition)
