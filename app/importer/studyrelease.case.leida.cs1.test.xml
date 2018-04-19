@@ -172,9 +172,8 @@
 			expression="round(number(lace3,0))+round(number(lace4,0))+round(number(lace5,0))+round(number(lace6,0))+round(number(lace7,0))+round(number(lace8,0))+round(number(lace9,0))+round(number(lace10,0))+round(number(lace11,0))+round(number(lace12,0))+round(number(lace13,0))+round(number(lace14,0))+round(number(lace15,0))+round(number(lace16,0))"
 			description="Comorbiditats Total"/>			
 			
-            <DerivedAttributeDefinition id="lace17total" multiplicity="maximalOne"  expression='if lace17 < 4 then lace17 else "5"' description="Comorbities Result"/> 			
-			
-            <AttributeDefinition id="lace18" type="enumeration" multiplicity="maximalOne" description="Nº de visites a urgències (CAP o Hospital) en els darrers sis mesos abans del ingrès">
+            <DerivedAttributeDefinition id="lace17total" multiplicity="maximalOne"  expression='if lace17 < 4 then lace17.toString() else "5"' description="Comorbities Result"/> 									
+            <AttributeDefinition id="lace18" type="enumeration" multiplicity="maximalOne" description="(E) Nº de visites a urgències (CAP o Hospital) en els darrers sis mesos abans del ingrès">
                 <EnumerationOption value="0" description="0 visites"/>
                 <EnumerationOption value="1" description="1 visita"/>
                 <EnumerationOption value="2" description="2 visites"/>            
@@ -184,7 +183,7 @@
 			<DerivedAttributeDefinition id="lace19" description="LACE" 
 			uiReference="colors(0<=green<5<=orange<10<=red<=10000)"
 			additionalDescription="si &lt;= 4 Risc baix (Verd)|| si &gt;= 5 i &lt;= 9 Risc moderat (taronja)|| si &gt;= 10 Risc alt de readmissió (Vermell)" 
-			expression="number(lace1,0)+number(lace2,0)+number(lace18,0)" />			
+			expression="number(lace1,0)+number(lace2,0)+number(lace18,0)+number(lace17total,0)" />			
         </EntityDefinition>					
 
         <EntityDefinition id="LCS1_GlobalDeteriorationScale">
@@ -1109,8 +1108,9 @@
 					<TaskParamDefinition path="LCS1_Identification.LCS1_Lace.lace14" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS1_Identification.LCS1_Lace.lace15" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS1_Identification.LCS1_Lace.lace16" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1_Identification.LCS1_Lace.lace17" isReadOnly="false" isMandatory="true"/>
+					<!--<TaskParamDefinition path="LCS1_Identification.LCS1_Lace.lace17" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS1_Identification.LCS1_Lace.lace17total" isReadOnly="false" isMandatory="true"/>					
+					-->
 					<TaskParamDefinition path="LCS1_Identification.LCS1_Lace.lace18" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS1_Identification.LCS1_Lace.lace19" isReadOnly="true" isMandatory="false"/>
 				</HumanTaskDefinition>
