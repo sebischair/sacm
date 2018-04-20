@@ -847,7 +847,7 @@
                     <precondition processDefinitionId="GCS2_CaseEvaluation"/>
                 </SentryDefinition>
 
-                <DualTaskDefinition id="GCS2_PhysicalActivity" externalId="PhysicalActivity" description="Physical Activity" ownerPath="GCS2_Settings.Clinician" dueDatePath="GCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="GCS2_PhysicalActivity" entityAttachPath="GCS2_Workplan.GCS2_PhysicalActivity">
+                <DualTaskDefinition id="GCS2_PhysicalActivity" externalId="PhysicalActivity" description="Physical Activity" ownerPath="GCS2_Settings.Clinician" dueDatePath="GCS2_Settings.WorkplanDueDate" automaticCompleteOnPath="GCS2_Workplan.GCS2_PhysicalActivity.enddate" isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="GCS2_PhysicalActivity" entityAttachPath="GCS2_Workplan.GCS2_PhysicalActivity">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_PhysicalActivity.startdate" isReadOnly="false" isMandatory="true"/>
