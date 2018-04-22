@@ -667,7 +667,7 @@ module.exports = class Importer {
         attrDef.defaultValues = JSON.parse(AttributeDefinition.$.defaultValues.replace(/'/g,'"'));      
       if(AttributeDefinition.$.defaultValue != null){
         attrDef.defaultValues = [];
-        attrDef.defaultValues.push(AttributeDefinition.$.defaultValue.replace(/'/g,'"'));  
+        attrDef.defaultValues.push(AttributeDefinition.$.defaultValue);  
       }  
       const ref = type.split('.');   
       const validTypes = ['link', 'notype', 'string', 'longtext', 'boolean', 'number', 'enumeration', 'date', 'json'];
