@@ -665,6 +665,10 @@ module.exports = class Importer {
         return attrDef;
       if(AttributeDefinition.$.defaultValues != null)
         attrDef.defaultValues = JSON.parse(AttributeDefinition.$.defaultValues.replace(/'/g,'"'));      
+      if(AttributeDefinition.$.defaultValue != null){
+        attrDef.defaultValues = [];
+        attrDef.defaultValues.push(AttributeDefinition.$.defaultValue.replace(/'/g,'"'));  
+      }  
       const ref = type.split('.');   
       const validTypes = ['link', 'notype', 'string', 'longtext', 'boolean', 'number', 'enumeration', 'date', 'json'];
       if(validTypes.indexOf(ref[0].toLowerCase()) == -1){        
