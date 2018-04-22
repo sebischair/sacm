@@ -749,6 +749,7 @@ module.exports = class Importer {
                 description: ad.$.description,
                 additionalDescription: ad.$.additionalDescription,
                 expression: ad.$.expression,
+                explicitAttributeType: ad.$.explicitType,
                 entityDefinition: entityDefId,
                 uiReference: ad.$.uiReference,
                 externalId: ad.$.externalId
