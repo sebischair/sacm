@@ -102,6 +102,13 @@ module.exports = class Importer {
         return this.groupMap.get(groupXMLId);  
     }
 
+    isGroupByXMLId(groupXMLId){
+      if(groupXMLId == null)
+        console.error('Group Id can not be null!');
+      else 
+        return this.groupMap.has(groupXMLId);
+    }
+
     getPrincipalIdByXMLId(principalXMLId){
       if(principalXMLId == null)
           console.error('Principal Id can not be null!');
@@ -429,7 +436,24 @@ module.exports = class Importer {
     }
 
     createGroups(){
-      return Promise.each(this.json.Group, g=>{
+      let groupsWithDependency = [];
+      let groupsWithoutDependency = [];
+      if(this.json.Group != null)
+        this.json.Group.forEach(g=>{
+          let isDependent = false;
+          if(g.Administrator != null)
+            g.Administrator.forEach(a=>{            
+              if(this.isGroupByXMLId(a.$.principalId))
+                isDependent = true;
+            });
+          if(isDependent){
+            groupsWithDependency.push(g);
+          }else{
+            groupsWithoutDependency.push(g);
+          }
+        });
+      let orderedGroups = groupsWithoutDependency.concat(groupsWithDependency);
+      return Promise.each(orderedGroups, g=>{
         const data = {
           name: g.$.name,
           description: g.$.description,
@@ -641,6 +665,10 @@ module.exports = class Importer {
         return attrDef;
       if(AttributeDefinition.$.defaultValues != null)
         attrDef.defaultValues = JSON.parse(AttributeDefinition.$.defaultValues.replace(/'/g,'"'));      
+      if(AttributeDefinition.$.defaultValue != null){
+        attrDef.defaultValues = [];
+        attrDef.defaultValues.push(AttributeDefinition.$.defaultValue.replace(/'/g,'"'));  
+      }  
       const ref = type.split('.');   
       const validTypes = ['link', 'notype', 'string', 'longtext', 'boolean', 'number', 'enumeration', 'date', 'json'];
       if(validTypes.indexOf(ref[0].toLowerCase()) == -1){        
@@ -721,6 +749,7 @@ module.exports = class Importer {
                 description: ad.$.description,
                 additionalDescription: ad.$.additionalDescription,
                 expression: ad.$.expression,
+                explicitAttributeType: ad.$.explicitType,
                 entityDefinition: entityDefId,
                 uiReference: ad.$.uiReference,
                 externalId: ad.$.externalId
@@ -909,10 +938,13 @@ module.exports = class Importer {
             }
             if(isDualTaskDefinition){   
               data.dueDatePath = td.$.dueDatePath;
+              data.automaticCompleteOnPath = td.$.automaticCompleteOnPath;
               return DualTaskDefinition.create(this.jwt, data);
             }
-            if(isAutomatedTaskDefinition)       
+            if(isAutomatedTaskDefinition){
+              data.automaticCompleteOnPath = td.$.automaticCompleteOnPath;
               return AutomatedTaskDefinition.create(this.jwt, data);
+            }
           })
           .then(persistedTaskDef=>{
             if(isHumanTaskDefinition)
