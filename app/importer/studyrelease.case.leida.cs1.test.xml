@@ -742,7 +742,7 @@
                 <EnumerationOption value="1" description="Entre 50-64"/>
                 <EnumerationOption value="2" description="Entre 36-49"/>
                 <EnumerationOption value="3" description="&lt;=35"/>
-            </AttributeDefinition>
+            </AttributeDefinition>			
             <DerivedAttributeDefinition id="gold4" 
 			additionalDescription="A Risc Baix i Pocs símptomes| B Risc Baix i Més símptomes| C Risc Alt i Pocs símptomes| D Risc Alt i Més símptomes"
 			expression='if (number(gold1, 0) + number(gold2, 0) + number(gold3,0)) = 0 then "A" else 
@@ -750,6 +750,7 @@
 			if ( (number(gold1, 0) + number(gold2,0)) = 1 and number(gold3, 0) = 0) then "C" else 
 			if (number(gold1, 0) + number(gold2, 0) + number(gold3,0)) = 3 then "D" else
 			"No existeix"' description="GOLD"/>						
+			
         </EntityDefinition>    	
 
         <EntityDefinition id="LCS1_SF12Def">
@@ -1146,7 +1147,8 @@
 			<!-- ONLY TEST -->		
                 <SentryDefinition>
                     <precondition processDefinitionId="LCS1_CaseIdentification"/>
-                </SentryDefinition> 		
+                </SentryDefinition> 						
+				
                 <HumanTaskDefinition id="LCS1_GMAEvaluationHT" description="Estat comòrbid - GMA"
 				ownerPath="LCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_GMADef" entityAttachPath="LCS1_Evaluation.LCS1_GMAEvaluation">
                     <TaskParamDefinition path="LCS1_Evaluation.LCS1_GMAEvaluation.gma" isReadOnly="false" isMandatory="true"/>
@@ -1295,7 +1297,7 @@
                 </HumanTaskDefinition> 	
 
 				<HumanTaskDefinition id="LCS1_DiagnosisNyhaHT" description="Diagnòstic - Diagnosis classe funcional NYHA"
-				ownerPath="LCS1_Settings.Clinician" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS1_DiagnosisNyha" entityAttachPath="LCS1_Evaluation.LCS1_DiagnosisNyha">                
+				ownerPath="LCS1_Settings.Clinician" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS1_DiagnosisNyha" entityAttachPath="LCS1_Evaluation.LCS1_DiagnosisNyha">                
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisNyha.nyha1" isReadOnly="false" isMandatory="true"/>
 				</HumanTaskDefinition>
 								
@@ -1340,7 +1342,7 @@
                 </HumanTaskDefinition> 	
 
 				<HumanTaskDefinition id="LCS1_SelfCareAutoTestEPOCHT" description="*Barreres - Capacitat d'autocura (IC)" 
-				ownerPath="LCS1_Settings.Nurse" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS1_SelfCareAutoTestEPOC" entityAttachPath="LCS1_Evaluation.LCS1_SelfCareAutoTestEPOC">                
+				ownerPath="LCS1_Settings.Nurse" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS1_SelfCareAutoTestEPOC" entityAttachPath="LCS1_Evaluation.LCS1_SelfCareAutoTestEPOC">                
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestEPOC.scat_epoc1" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestEPOC.scat_epoc2" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestEPOC.scat_epoc3" isReadOnly="false" isMandatory="true"/>
@@ -1357,7 +1359,7 @@
 				</HumanTaskDefinition>       
 		
 				<HumanTaskDefinition id="LCS1_SelfCareAutoTestHFHT" description="*Barreres - Capacitat d'autocura (MPOC)" 
-				ownerPath="LCS1_Settings.Nurse" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS1_SelfCareAutoTestHF" entityAttachPath="LCS1_Evaluation.LCS1_SelfCareAutoTestHF">                			
+				ownerPath="LCS1_Settings.Nurse" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS1_SelfCareAutoTestHF" entityAttachPath="LCS1_Evaluation.LCS1_SelfCareAutoTestHF">                			
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestHF.scat_ic1" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestHF.scat_ic2" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestHF.scat_ic3" isReadOnly="false" isMandatory="true"/>
