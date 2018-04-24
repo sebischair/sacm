@@ -228,15 +228,17 @@
                     then "#rha{visibility: visible;} "
                     else if inclusiondiag="LHA"
                     then "#lha{visibility: visible;} "
-                    else if inclusiondiag="RKA"
-                    then "#rka{visibility: visible;} "
-                    else if inclusiondiag="LKA"
-                    then "#lka{visibility: visible;} "
-                    else "" in
+                    else if inclusiondiag="RKP"
+                    then "#rkp{visibility: visible;} "
+                    else if inclusiondiag="LKP"
+                    then "#lkp{visibility: visible;} "
+                    else "#diagnosticsna{visibility: visible;} " in
                 r8' description="Charlson" uiReference="hidden"/>
-            <DerivedAttributeDefinition id="bodysvg" explicitType="String" expression='replace(replace(bodytemplate, "#dynamicstylevars{}", bodystyle), "#charlsonscorevar", string(ch21))' description="Charlson" uiReference="svg"/>     
+            <DerivedAttributeDefinition id="bodysvg" explicitType="String" expression='replace(replace(bodytemplate, "#dynamicstylevars{}", bodystyle), "#charlsonscorevar", (if ch21=0 then "N.A." else string(ch21)))' description="Charlson" uiReference="svg"/>     
 		</EntityDefinition>			
 		
+
+
 		<EntityDefinition id="LCS2_ComplexityRisk" >
             <AttributeDefinition id="age" type="enumeration" multiplicity="maximalOne" description="Edat superior als 65 anys?">
                 <EnumerationOption value="0" description="No"/>
@@ -1400,7 +1402,8 @@
 				ownerPath="LCS2_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_ComorbidityCharlsonDef" entityAttachPath="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification">
                     <SentryDefinition>
                         <precondition processDefinitionId="LCS2_SelectPatient"/>
-                    </SentryDefinition>					  
+                    </SentryDefinition>		
+                    <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.inclusiondiag" isReadOnly="false" isMandatory="true"/>   
                     <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch3" isReadOnly="false" isMandatory="true"/>
@@ -1472,7 +1475,6 @@
                 <HumanTaskDefinition id="LCS2_ComorbidityCharlsonEvaluationHT" description="Estat comòrbid - Índex de comorbilitat de Charlson (Identificació del Cas)" 
 				footnote="Pendent rebre autorització"
 				ownerPath="LCS2_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_ComorbidityCharlsonDef" entityAttachPath="LCS2_Evaluation.LCS2_ComorbidityCharlsonEvaluation"> 
-                    <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.inclusiondiag" isReadOnly="false" isMandatory="true"/>   
                     <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch1" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch2" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch3" isReadOnly="true" isMandatory="false"/>
