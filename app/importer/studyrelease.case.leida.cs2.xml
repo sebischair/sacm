@@ -62,7 +62,7 @@
 
 		<!-- Identification Entity Definitions -->
         <EntityDefinition id="LCS2_Identification" description="Identification">
-			<AttributeDefinition id="LCS2_InclusionDiagnostic" type="Link.EntityDefinition.LCS2_InclusionDiagnostic" multiplicity="any" description="Diagnòstic d'inclusió"/> 
+			<!--<AttributeDefinition id="LCS2_InclusionDiagnostic" type="Link.EntityDefinition.LCS2_InclusionDiagnostic" multiplicity="any" description="Diagnòstic d'inclusió"/> -->
             <AttributeDefinition id="LCS2_TechnologicalTest" type="Link.EntityDefinition.LCS2_TechnologicalTest" multiplicity="any" description="Technological test"/> 
             <AttributeDefinition id="LCS2_ComorbidityCharlsonIdentification" type="Link.EntityDefinition.LCS2_ComorbidityCharlsonDef" multiplicity="any" description="Comorbidity Charlson"/> 
             <AttributeDefinition id="LCS2_GMAIdentification" type="Link.EntityDefinition.LCS2_GMADef" multiplicity="any" description="GMA"/> 
@@ -70,6 +70,7 @@
             <AttributeDefinition id="LCS2_PatientsConsent" type="Link.EntityDefinition.LCS2_PatientsConsent" multiplicity="any" description="Patients consent"/> 			
         </EntityDefinition>				
 
+        <!--
 		<EntityDefinition id="LCS2_InclusionDiagnostic">
 			<AttributeDefinition id="inclusiondiag" type="enumeration" multiplicity="maximalOne" description="Quina operació s'ha de fer el pacient?">
 				<EnumerationOption value="1" description="PGE - Pròtesi de genoll esquerra (LKP)"/>
@@ -77,7 +78,8 @@
 				<EnumerationOption value="3" description="AME - Artroplàstia de maluc esquerra (LHA) "/>
 				<EnumerationOption value="0" description="AMD - Artroplàstia de maluc dreta (RHA)"/>
 			</AttributeDefinition>			
-		</EntityDefinition>				
+		</EntityDefinition>			
+        -->	
 		
 		<EntityDefinition id="LCS2_TechnologicalTest" >
 			<AttributeDefinition id="tech1" type="enumeration" multiplicity="maximalOne" description="Vosté o el seu cuidador tenen connexió a Internet?">
@@ -102,6 +104,12 @@
 		</EntityDefinition>	  	
 		
 		<EntityDefinition id="LCS2_ComorbidityCharlsonDef" >
+            <AttributeDefinition id="inclusiondiag" type="enumeration" multiplicity="maximalOne" description="Quina operació s'ha de fer el pacient?">
+				<EnumerationOption value="1" description="PGE - Pròtesi de genoll esquerra (LKP)"/>
+				<EnumerationOption value="2" description="PGD - Pròtesi de genoll dreta (RKP)"/>
+				<EnumerationOption value="3" description="AME - Artroplàstia de maluc esquerra (LHA) "/>
+				<EnumerationOption value="0" description="AMD - Artroplàstia de maluc dreta (RHA)"/>
+			</AttributeDefinition>
             <AttributeDefinition id="ch1" type="enumeration" multiplicity="maximalOne" description="Infart del miocardi">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
@@ -1453,7 +1461,8 @@
                 <!-- Infermera  -->    
                 <HumanTaskDefinition id="LCS2_ComorbidityCharlsonEvaluationHT" description="Estat comòrbid - Índex de comorbilitat de Charlson (Identificació del Cas)" 
 				footnote="Pendent rebre autorització"
-				ownerPath="LCS2_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_ComorbidityCharlsonDef" entityAttachPath="LCS2_Evaluation.LCS2_ComorbidityCharlsonEvaluation">    
+				ownerPath="LCS2_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_ComorbidityCharlsonDef" entityAttachPath="LCS2_Evaluation.LCS2_ComorbidityCharlsonEvaluation"> 
+                    <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.inclusiondiag" isReadOnly="false" isMandatory="true"/>   
                     <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch1" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch2" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch3" isReadOnly="true" isMandatory="false"/>
@@ -1903,11 +1912,11 @@
         <TaskParam path="LCS2_Settings.Physiotherapist" userValue="bigordaa"/>  
     </Action>  
 
-
+<!--
     <Action id="CompleteHumanTask" processId="LCS2_InclusionDiagnostic" breakpoint="true">  
         <TaskParam path="LCS2_Identification.LCS2_InclusionDiagnostic.inclusiondiag" values="['1']"/> 
     </Action>  
-
+-->
 
     <Action id="CompleteHumanTask" processId="LCS2_TechnologicalTest" breakpoint="true">  
         <TaskParam path="LCS2_Identification.LCS2_TechnologicalTest.tech1" values="['0']"/> 
@@ -1917,6 +1926,7 @@
 
 
     <Action id="CompleteHumanTask" processId="LCS2_ComorbidityCharlsonIdentificationHT" breakpoint="true">  
+        <TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.inclusiondiag" values="['1']"/> 
         <TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch1" values="['0']"/> 
         <TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch2" values="['0']"/> 
         <TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch3" values="['0']"/> 
