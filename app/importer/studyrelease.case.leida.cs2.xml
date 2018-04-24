@@ -105,10 +105,10 @@
 		
 		<EntityDefinition id="LCS2_ComorbidityCharlsonDef" >
             <AttributeDefinition id="inclusiondiag" type="enumeration" multiplicity="maximalOne" description="Quina operació s'ha de fer el pacient?">
-				<EnumerationOption value="1" description="PGE - Pròtesi de genoll esquerra (LKP)"/>
-				<EnumerationOption value="2" description="PGD - Pròtesi de genoll dreta (RKP)"/>
-				<EnumerationOption value="3" description="AME - Artroplàstia de maluc esquerra (LHA) "/>
-				<EnumerationOption value="0" description="AMD - Artroplàstia de maluc dreta (RHA)"/>
+				<EnumerationOption value="LKP" description="PGE - Pròtesi de genoll esquerra (LKP)"/>
+				<EnumerationOption value="RKP" description="PGD - Pròtesi de genoll dreta (RKP)"/>
+				<EnumerationOption value="LHA" description="AME - Artroplàstia de maluc esquerra (LHA) "/>
+				<EnumerationOption value="RHA" description="AMD - Artroplàstia de maluc dreta (RHA)"/>
 			</AttributeDefinition>
             <AttributeDefinition id="ch1" type="enumeration" multiplicity="maximalOne" description="Infart del miocardi">
                 <EnumerationOption value="0" description="No"/>
@@ -224,7 +224,16 @@
                 let r7 = r6+ if ch13="1" 
                     then "#kidneyfillcolor{fill:"+red+";} #kidneystrokecolor{stroke:"+red+";} "
                     else "#kidneyfillcolor{fill:"+green+";} #kidneystrokecolor{stroke:"+green+";} " in
-                r7 + "#rha{visibility: visible;}"' description="Charlson" uiReference="hidden"/>
+                let r8 = r7+ if inclusiondiag="RHA"
+                    then "#rha{visibility: visible;} "
+                    else if inclusiondiag="LHA"
+                    then "#lha{visibility: visible;} "
+                    else if inclusiondiag="RKA"
+                    then "#rka{visibility: visible;} "
+                    else if inclusiondiag="LKA"
+                    then "#lka{visibility: visible;} "
+                    else "" in
+                r8' description="Charlson" uiReference="hidden"/>
             <DerivedAttributeDefinition id="bodysvg" explicitType="String" expression='replace(replace(bodytemplate, "#dynamicstylevars{}", bodystyle), "#charlsonscorevar", string(ch21))' description="Charlson" uiReference="svg"/>     
 		</EntityDefinition>			
 		
@@ -1365,13 +1374,14 @@
                     <TaskParamDefinition path="LCS2_Settings.Physiotherapist" isReadOnly="false" isMandatory="true"/> 
                 </HumanTaskDefinition>					
                 
+                <!--
 				<HumanTaskDefinition id="LCS2_InclusionDiagnostic" description="Diagnòstic d'inclusió" ownerPath="LCS2_Settings.CaseManager" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_InclusionDiagnostic" entityAttachPath="LCS2_Identification.LCS2_InclusionDiagnostic">
                     <SentryDefinition>
                         <precondition processDefinitionId="LCS2_SelectPatient"/>
                     </SentryDefinition>
                     <TaskParamDefinition path="LCS2_Identification.LCS2_InclusionDiagnostic.inclusiondiag" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>	
-
+                -->
 				
                 <!-- Gestor de Casos -->
                 <HumanTaskDefinition id="LCS2_TechnologicalTest" description="Test d'adherència a la tecnología" ownerPath="LCS2_Settings.CaseManager" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_TechnologicalTest" entityAttachPath="LCS2_Identification.LCS2_TechnologicalTest">
@@ -1926,7 +1936,7 @@
 
 
     <Action id="CompleteHumanTask" processId="LCS2_ComorbidityCharlsonIdentificationHT" breakpoint="true">  
-        <TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.inclusiondiag" values="['1']"/> 
+        <TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.inclusiondiag" values="['LKP']"/> 
         <TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch1" values="['0']"/> 
         <TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch2" values="['0']"/> 
         <TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch3" values="['0']"/> 
