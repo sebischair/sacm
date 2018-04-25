@@ -19,38 +19,48 @@
     <Group staticId="3a21c9cb923a11e7bd0c0242ac120002" id="IdibapsPatients"/>
 
     <User staticId="2c940c085e765068015e7667fc700040" id="salazart"/>
-	<User staticId="2c940c085e765068015e7671fbfc0050" id="mcdonaldr"/>
+    <User staticId="2c940c085e765068015e7671fbfc0050" id="mcdonaldr"/>
+    <User staticId="26be3a3605b011e8941d0242ac140002" id="parkerw"/>
+    <User staticId="f0cbee0505b011e8941d0242ac140002" id="velardem"/>
+    <User staticId="c073767705b111e8941d0242ac140002" id="arpl"/>
+    <User staticId="f854153e05b111e8941d0242ac140002" id="wilsong"/>
 
     <User staticId="2c940c085e765068015e76f92c3a00f0" id="coled"/>
     <User staticId="2c940c085e765068015e76ff40800100" id="aguilara"/>
-	<User staticId="2c940c085e765068015e770238860110" id="romeroe"/>
+    <User staticId="2c940c085e765068015e770238860110" id="romeroe"/>
 
     <Workspace staticId="2c9480885d1737ef015d74deecbf0004" id="Idibaps">
             
         <EntityDefinition id="BCS1_CaseData" description="Case Data">
-            <AttributeDefinition id="BCS1_Patient" type="Link.Users(IdibapsPatients)" description="Patient"/>
-            <AttributeDefinition id="BCS1_Owner" type="Link.Users(IdibapsProfessionals)" description="Owner"/>
-            <AttributeDefinition id="BCS1_Inclusion" type="Link.EntityDefinition.BCS1_Inclusion" description="Inclusion form"/>      
-            <AttributeDefinition id="BCS1_ClinicalInformation" type="Link.EntityDefinition.BCS1_ClinicalInformation" description="Información clínica"/>             
-            <AttributeDefinition id="BCS1_Charlson" type="Link.EntityDefinition.BCS1_Charlson" description="Barthel"/>
-            <AttributeDefinition id="BCS1_RiskFactors" type="Link.EntityDefinition.BCS1_RiskFactors" description="Risk Factors"/>
-            <AttributeDefinition id="BCS1_Barthel" type="Link.EntityDefinition.BCS1_Barthel" description="Barthel"/>
-            <AttributeDefinition id="BCS1_MedicationAdherences" type="Link.EntityDefinition.BCS1_MedicationAdherences" description="Barthel"/>
-            <AttributeDefinition id="BCS1_SF36" type="Link.EntityDefinition.BCS1_SF36" description="Barthel"/>
-            <AttributeDefinition id="BCS1_DailyHomeVisit" type="Link.EntityDefinition.BCS1_DailyHomeVisit" description="Barthel"/>
-            <AttributeDefinition id="BCS1_DailyHomeVisit_AterialBlodGases" type="Link.EntityDefinition.BCS1_DailyHomeVisit_AterialBlodGases" description="Daily Home Visit"/>
-
-            <AttributeDefinition id="BCS1_DailyHomeVisit_BloodAnalytics" type="Link.EntityDefinition.BCS1_DailyHomeVisit_BloodAnalytics" description="Daily Home Visit"/>
-            <AttributeDefinition id="BCS1_DailyHomeVisit_SputumCulture" type="Link.EntityDefinition.BCS1_DailyHomeVisit_SputumCulture" description="Daily Home Visit"/>
-            <AttributeDefinition id="BCS1_DailyHomeVisit_ForcedSpirometry" type="Link.EntityDefinition.BCS1_DailyHomeVisit_ForcedSpirometry" description="Daily Home Visit"/>
-            <AttributeDefinition id="BCS1_DailyHomeVisit_PhysiciansHomeVisit" type="Link.EntityDefinition.BCS1_DailyHomeVisit_PhysiciansHomeVisit" description="Daily Home Visit"/>
-
-
-
-            <AttributeDefinition id="BCS1_RemotePatientSelfMonitoring" type="Link.EntityDefinition.BCS1_RemotePatientSelfMonitoring" description="Remote Patient Self-monitoring"/>
-            <AttributeDefinition id="BCS1_ManagementOfCallCenterEvents" type="Link.EntityDefinition.BCS1_ManagementOfCallCenterEvents" description="Management of call center events"/>
+            <AttributeDefinition id="BCS1_Identification" type="Link.EntityDefinition.BCS1_Identification" description="Identification"/>
+            <AttributeDefinition id="BCS1_Evaluation" type="Link.EntityDefinition.BCS1_Evaluation" description="Identification"/>
+            <AttributeDefinition id="BCS1_Workplan" type="Link.EntityDefinition.BCS1_Workplan" description="Workplan"/>
             <AttributeDefinition id="BCS1_Discharge" type="Link.EntityDefinition.BCS1_Discharge" description="Discharge"/>
+            <AttributeDefinition id="BCS1_Settings" type="Link.EntityDefinition.BCS1_Settings" description="Settings"/>   
         </EntityDefinition>
+
+
+        <!-- Settings Entity Definitions -->
+        <EntityDefinition id="BCS1_Settings" description="Settings">
+            <AttributeDefinition id="Patient" type="Link.Users(IdibapsPatients)" description="Patient"/>
+            <AttributeDefinition id="CaseManager" type="Link.Users(IdibapsCaseManagers)" description="Case Manager"/>            
+            <AttributeDefinition id="Nurse" type="Link.Users(IdibapsNurses)" description="Enfermero"/>
+            <AttributeDefinition id="Anesthesiologist" type="Link.Users(IdibapsAnesthesiologists)" description="Anestesista"/>
+            <AttributeDefinition id="AnesthesiologistOrNurse" type="Link.Users(IdibapsAnesthesiologists,IdibapsNurses)" description="Anestesista/Enfermero" additionalDescription="Select a Anestesista or Enfermero!"/>
+            <AttributeDefinition id="Nutritionist" type="Link.Users(IdibapsNutritionists)" description="Nutricionista"/>
+            <AttributeDefinition id="NutritionistOrNurse" type="Link.Users(IdibapsNutritionists)" description="Nutricionista/Enfermero" additionalDescription="Select a Nutricionista or Enfermero!"/>
+            <AttributeDefinition id="Physiotherapist" type="Link.Users(IdibapsPhysiotherapists)" description="Fisioterapeuta"/>
+            <AttributeDefinition id="Psychologists" type="Link.Users(IdibapsPsychologists)" description="Psicólogo"/>
+            <AttributeDefinition id="Clinicians" type="Link.Users(IdibapsClinicians)" description="Clinician"/>   
+            <AttributeDefinition id="EvaluationDueDate" type="date.after(TODAY)" description="Evaluation default due date"/>   
+        </EntityDefinition>
+
+
+        <!-- Identification Entity Definitions -->
+        <EntityDefinition id="BCS1_Identification" description="Identification">
+            <AttributeDefinition id="BCS1_Inclusion" type="Link.EntityDefinition.BCS1_Inclusion" multiplicity="maximalOne" description="Inclusion"/> 
+        </EntityDefinition>
+
 
         <EntityDefinition id="BCS1_Inclusion" description="Inclusion">
             <AttributeDefinition id="nhc" type="number" multiplicity="maximalOne" description="NHC"/> 
@@ -87,6 +97,20 @@
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
         </EntityDefinition>
+
+
+
+
+        <!-- Evaluation Entity Definitions -->
+        <EntityDefinition id="BCS1_Evaluation" description="Evaluation">
+            <AttributeDefinition id="BCS1_ClinicalInformation" type="Link.EntityDefinition.BCS1_ClinicalInformation" multiplicity="maximalOne" description="Información clínica"/> 
+            <AttributeDefinition id="BCS1_Charlson" type="Link.EntityDefinition.BCS1_Charlson" multiplicity="maximalOne" description="Charlson"/> 
+            <AttributeDefinition id="BCS1_RiskFactors" type="Link.EntityDefinition.BCS1_RiskFactors" multiplicity="maximalOne" description="Risk factors"/> 
+            <AttributeDefinition id="BCS1_Barthel" type="Link.EntityDefinition.BCS1_Barthel" multiplicity="maximalOne" description="Barthel"/> 
+            <AttributeDefinition id="BCS1_MedicationAdherences" type="Link.EntityDefinition.BCS1_MedicationAdherences" multiplicity="maximalOne" description="Medication adherence"/> 
+            <AttributeDefinition id="BCS1_SF36" type="Link.EntityDefinition.BCS1_SF36" multiplicity="maximalOne" description="SF-36"/> 
+        </EntityDefinition>
+
 
         <EntityDefinition id="BCS1_ClinicalInformation" description="Información clínica">
             <AttributeDefinition id="healthcareresources" type="string" multiplicity="maximalOne" description="Recursos sanitarios"/>   
@@ -510,6 +534,7 @@
             <DerivedAttributeDefinition id="sf36-37" expression="0" description="SF-36"/>         
         </EntityDefinition>
 
+<!--
         <EntityDefinition id="BCS1_DailyHomeVisit" description="Daily home visit">
             <AttributeDefinition id="dhv1" type="string" multiplicity="maximalOne" description="assessment of patient clinical status"/>
             <AttributeDefinition id="dhv2" type="string" multiplicity="maximalOne" description="control de las co-mórbilidades"/>
@@ -565,196 +590,252 @@
         <EntityDefinition id="BCS1_Discharge" description="Discharge Patient">
             <AttributeDefinition id="comment" type="string" multiplicity="maximalOne" description="comment"/>
         </EntityDefinition>
+-->
+
+               <!-- Workplan Entity Definitions -->
+        <EntityDefinition id="BCS1_Workplan" description="Workplan">
+            <AttributeDefinition id="BCS1_PhysicalActivity" type="Link.EntityDefinition.BCS1_PhysicalActivity" description="Physical Activity"/>
+            <AttributeDefinition id="BCS1_MonitoringPrescription" type="Link.EntityDefinition.BCS1_MonitoringPrescription" description="Monitoring Prescription"/> 
+        </EntityDefinition>
+
+        <EntityDefinition id="BCS1_PhysicalActivity" description="Physical Activity">
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="maximalOne" description="Start date"/>
+            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="maximalOne" description="End date"/>       
+            <AttributeDefinition id="dailysteps" type="number.min(0).max(100000)" defaultValues="[10000]" multiplicity="maximalOne" description="Number of steps daily"/>       
+            <AttributeDefinition id="dailylowlevel" type="number.min(0).max(1440)" defaultValues="[60]" multiplicity="maximalOne" description="Minutes of low level activity daily"/>       
+            <AttributeDefinition id="dailymediumlevel" type="number.min(0).max(1440)" defaultValues="[40]" multiplicity="maximalOne" description="Minutes of medium level activity daily"/>       
+            <AttributeDefinition id="dailyhighlevel" type="number.min(0).max(1440)" defaultValues="[20]" multiplicity="maximalOne" description="Minutes of high level activity daily"/> 
+            <AttributeDefinition id="dailynoactivity" type="number.min(0).max(1440)" defaultValues="[240]" multiplicity="maximalOne" description="Max minutes without activity allowed daily"/>   
+            <!--{stepsFollowing: [{date: '2017-06-09 14:54:53.0', value: 12}], lowFollowing:[], mediumFollowing:[], highFollowing:[], noActivityFollowing:[]}-->
+            <!--Collected Data e.g. {stepsFollowing: [{date: '2017-06-09 14:54:53.0', value: 12}], lowFollowing:[], mediumFollowing:[], highFollowing:[], noActivityFollowing:[]}"-->
+            <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Measurement"/>                 
+        </EntityDefinition>
+        
+        <EntityDefinition id="BCS1_MonitoringPrescription" description="Patient Monitory">
+            <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Measure type" additionalDescription="Select measure type for patient monitory.">
+                <EnumerationOption value="DIASTOLICBLOODPRESSURE" description="Diastolic Blood Pressure"/>
+                <EnumerationOption value="SYSTOLICBLOODPRESSURE" description="Systolic Blood Pressure"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="alertmin" type="number.min(0)" multiplicity="exactlyOne" description="Min value allowed" additionalDescription="Minimum value for this measuremnt greather than 0"/>       
+            <AttributeDefinition id="alertmax" type="number.min(0)" multiplicity="exactlyOne" description="Max value allowed" additionalDescription="Maximum value for this measuremnt greather than 0"/>      
+            <AttributeDefinition id="alertfreq" type="number" defaultValues="[1]" multiplicity="exactlyOne" description="Alert Frecuency Value"/>       
+            <AttributeDefinition id="alertfrequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Alert Frecuency Unit">     
+                <EnumerationOption value="DAYS" description="Days"/>
+                <EnumerationOption value="WEEKS" description="Weeks"/>
+                <EnumerationOption value="MONTHS" description="Months"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="freq" type="number.min(0)" defaultValues="[1]" multiplicity="exactlyOne" description="Measurement Frecuency"/> 
+            <AttributeDefinition id="frequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Measurement Frecuency Unit">     
+                <EnumerationOption value="DAYS" description="Days"/>
+                <EnumerationOption value="WEEKS" description="Weeks"/>
+                <EnumerationOption value="MONTHS" description="Months"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="maximalOne" description="Max delay in minutes" additionalDescription="Maximum delay to fullfill the prescription by the patient"/> 
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Start date"/> 
+            <AttributeDefinition id="enddate" type="date.after(tartdate)" multiplicity="exactlyOne" description="End date"/> 
+            <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="Slots to take the measurements" additionalDescription="Multiple slots can be selected, at least one slot need to be selected">     
+                <EnumerationOption value="BREAKFAST" description="Breakfast"/>
+                <EnumerationOption value="LUNCH" description="Lunch"/>
+                <EnumerationOption value="AFTERNOONSNACK" description="Afternoon Snack"/>
+                <EnumerationOption value="DINNER" description="Dinner"/>
+                <EnumerationOption value="BEFORESLEEP" description="Before Sleep"/>
+                <EnumerationOption value="ANYTIMEDURINGDAY" description="Any time a day" additionalDescription="Please select this option when the timeslot of a day doesn't matter."/>
+            </AttributeDefinition>
+            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comments" additionalDescription="Please provide additional hints for the patient."/>   
+            <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Measurement"/>                      
+        </EntityDefinition>
+
+        
+        <!-- Discharge Entity Definitions -->
+        <EntityDefinition id="BCS1_Discharge" description="BCS1_Discharge">
+            <AttributeDefinition id="BCS1_DischargeForm" type="Link.EntityDefinition.BCS1_DischargeForm" description="Discharge From"/> 
+        </EntityDefinition>
+
+        <EntityDefinition id="BCS1_DischargeForm" description="Discharge From">
+            <AttributeDefinition id="comment" type="longtext" multiplicity="maximalOne" description="Comment"/>                             
+        </EntityDefinition>
 
         
 
 
         <!-- Case Definition -->
-        <CaseDefinition id="BCS1_Barcelona" description="CS1 Barcelona" ownerPath="BCS1_Owner" clientPath="BCS1_Patient" entityDefinitionId="BCS1_CaseData">
+        <CaseDefinition id="BCS1_Barcelona" description="CS1 Barcelona" ownerPath="BCS1_Settings.CaseManager" clientPath="BCS1_Settings.Patient" entityDefinitionId="BCS1_CaseData" newEntityDefinitionId="BCS1_Settings" newEntityAttachPath="BCS1_Settings">
+
 
             <StageDefinition id="BCS1_CaseIdentification" description="Case Identification" isMandatory="true" repeatable="ONCE">        
-                <HumanTaskDefinition id="BCS1_Inclusion" description="Inclusion" ownerPath="BCS1_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS1_Inclusion" entityAttachPath="BCS1_Inclusion">                
-                    <TaskParamDefinition path="BCS1_Patient" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Owner" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Inclusion.nhc" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Inclusion.inclusioncriteria1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Inclusion.inclusioncriteria2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Inclusion.inclusioncriteria3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Inclusion.exclusioncriteria1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Inclusion.exclusioncriteria2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Inclusion.exclusioncriteria3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Inclusion.exclusioncriteria4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Inclusion.exclusioncriteria5" isReadOnly="false" isMandatory="true"/>
+                <HumanTaskDefinition id="BCS1_AssignPatient" externalId="SelectPatient" description="Assign Patient" ownerPath="BCS1_Settings.CaseManager" isMandatory="true" repeatable="ONCE"> 
+                    <HttpHookDefinition on="COMPLETE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/case/patient/inclusion" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition path="BCS1_Settings.Patient" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Settings.CaseManager" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Settings.Nurse" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Settings.Anesthesiologist" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Settings.AnesthesiologistOrNurse" isReadOnly="false" isMandatory="false"/>              
+                    <TaskParamDefinition path="BCS1_Settings.Nutritionist" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Settings.NutritionistOrNurse" isReadOnly="false" isMandatory="false"/>                    
+                    <TaskParamDefinition path="BCS1_Settings.Physiotherapist" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Settings.Psychologists" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
+                <!--
+                <HumanTaskDefinition id="BCS1_Inclusion" description="Inclusion" ownerPath="BCS1_Settings.CaseManager" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS1_Inclusion" entityAttachPath="BCS1_Identification.BCS1_Inclusion">                
+                    <TaskParamDefinition path="BCS1_Identification.BCS1_Inclusion.nhc" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Identification.BCS1_Inclusion.inclusioncriteria1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Identification.BCS1_Inclusion.inclusioncriteria2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Identification.BCS1_Inclusion.inclusioncriteria3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Identification.BCS1_Inclusion.exclusioncriteria1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Identification.BCS1_Inclusion.exclusioncriteria2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Identification.BCS1_Inclusion.exclusioncriteria3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Identification.BCS1_Inclusion.exclusioncriteria4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Identification.BCS1_Inclusion.exclusioncriteria5" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>
+            -->
             </StageDefinition>
 
-            <StageDefinition id="BCS1_CaseEvaluation" description="Case Evaluation" isMandatory="true" repeatable="ONCE">  
+            <StageDefinition id="BCS1_CaseEvaluation" description="Case Evaluation" isMandatory="true" repeatable="SERIAL" activation="EXPRESSION" manualActivationExpression="BCS1_Evaluation.count()>0" entityDefinitionId="BCS1_Evaluation" entityAttachPath="BCS1_Evaluation">
                 <SentryDefinition>
                     <precondition processDefinitionId="BCS1_CaseIdentification"/>
                 </SentryDefinition>
-                <HumanTaskDefinition id="BCS1_ClinicalInformation" description="Información clínica" ownerPath="BCS1_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS1_ClinicalInformation" entityAttachPath="BCS1_ClinicalInformation">
-                    <TaskParamDefinition path="BCS1_ClinicalInformation.healthcareresources" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_ClinicalInformation.diagnosisinfo" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_ClinicalInformation.surgeryinfo" isReadOnly="false" isMandatory="true"/>
+                <HumanTaskDefinition id="BCS1_ClinicalInformation" description="Información clínica" ownerPath="BCS1_Settings.CaseManager" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS1_ClinicalInformation" entityAttachPath="BCS1_Evaluation.BCS1_ClinicalInformation">
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_ClinicalInformation.healthcareresources" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_ClinicalInformation.diagnosisinfo" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_ClinicalInformation.surgeryinfo" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
-                <HumanTaskDefinition id="BCS1_Charlson" description="Charlson index" ownerPath="BCS1_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS1_Charlson" entityAttachPath="BCS1_Charlson">
-                    <TaskParamDefinition path="BCS1_Charlson.ch1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Charlson.ch2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Charlson.ch3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Charlson.ch4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Charlson.ch5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Charlson.ch6" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Charlson.ch7" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Charlson.ch8" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Charlson.ch9" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Charlson.ch10" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Charlson.ch11" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Charlson.ch12" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Charlson.ch13" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Charlson.ch14" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Charlson.ch15" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Charlson.ch16" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Charlson.ch17" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Charlson.ch18" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Charlson.ch19" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Charlson.ch20" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Charlson.ch21" isReadOnly="true" isMandatory="false"/>                   
+                <HumanTaskDefinition id="BCS1_Charlson" description="Charlson index" ownerPath="BCS1_Settings.CaseManager" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS1_Charlson" entityAttachPath="BCS1_Evaluation.BCS1_Charlson">
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Charlson.ch1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Charlson.ch2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Charlson.ch3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Charlson.ch4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Charlson.ch5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Charlson.ch6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Charlson.ch7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Charlson.ch8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Charlson.ch9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Charlson.ch10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Charlson.ch11" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Charlson.ch12" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Charlson.ch13" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Charlson.ch14" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Charlson.ch15" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Charlson.ch16" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Charlson.ch17" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Charlson.ch18" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Charlson.ch19" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Charlson.ch20" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Charlson.ch21" isReadOnly="true" isMandatory="false"/>                   
                 </HumanTaskDefinition>
-                <HumanTaskDefinition id="BCS1_RiskFactors" description="Risk Factors" ownerPath="BCS1_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS1_RiskFactors" entityAttachPath="BCS1_RiskFactors">
-                    <TaskParamDefinition path="BCS1_RiskFactors.smokingpackyr" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_RiskFactors.activesmoker" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_RiskFactors.passivesmoker" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_RiskFactors.bmi" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_RiskFactors.sedentarylifestyle" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_RiskFactors.other" isReadOnly="false" isMandatory="true"/>
+                <HumanTaskDefinition id="BCS1_RiskFactors" description="Risk Factors" ownerPath="BCS1_Settings.CaseManager" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS1_RiskFactors" entityAttachPath="BCS1_Evaluation.BCS1_RiskFactors">
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_RiskFactors.smokingpackyr" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_RiskFactors.activesmoker" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_RiskFactors.passivesmoker" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_RiskFactors.bmi" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_RiskFactors.sedentarylifestyle" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_RiskFactors.other" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
-                <HumanTaskDefinition id="BCS1_Barthel" description="Barthel" ownerPath="BCS1_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS1_Barthel" entityAttachPath="BCS1_Barthel">
-                    <TaskParamDefinition path="BCS1_Barthel.barthel1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Barthel.barthel2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Barthel.barthel3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Barthel.barthel4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Barthel.barthel5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Barthel.barthel6" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Barthel.barthel7" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Barthel.barthel8" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Barthel.barthel9" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Barthel.barthel10" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_Barthel.barthel11" isReadOnly="true" isMandatory="false"/>
+                <HumanTaskDefinition id="BCS1_Barthel" description="Barthel" ownerPath="BCS1_Settings.CaseManager" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS1_Barthel" entityAttachPath="BCS1_Evaluation.BCS1_Barthel">
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Barthel.barthel1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Barthel.barthel2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Barthel.barthel3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Barthel.barthel4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Barthel.barthel5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Barthel.barthel6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Barthel.barthel7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Barthel.barthel8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Barthel.barthel9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Barthel.barthel10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_Barthel.barthel11" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
-                <HumanTaskDefinition id="BCS1_MedicationAdherences" description="Medication Adherences" ownerPath="BCS1_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS1_MedicationAdherences" entityAttachPath="BCS1_MedicationAdherences">
-                    <TaskParamDefinition path="BCS1_MedicationAdherences.morisky1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_MedicationAdherences.morisky2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_MedicationAdherences.morisky3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_MedicationAdherences.morisky4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_MedicationAdherences.morisky5" isReadOnly="true" isMandatory="false"/>
+                <HumanTaskDefinition id="BCS1_MedicationAdherences" description="Medication Adherences" ownerPath="BCS1_Settings.CaseManager" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS1_MedicationAdherences" entityAttachPath="BCS1_Evaluation.BCS1_MedicationAdherences">
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_MedicationAdherences.morisky1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_MedicationAdherences.morisky2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_MedicationAdherences.morisky3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_MedicationAdherences.morisky4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_MedicationAdherences.morisky5" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
-                <HumanTaskDefinition id="BCS1_SF36" description="SF-36" ownerPath="BCS1_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS1_SF36" entityAttachPath="BCS1_SF36">
-                    <TaskParamDefinition path="BCS1_SF36.sf36-1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-6" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-7" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-8" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-9" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-10" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-11" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-12" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-13" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-14" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-15" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-16" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-17" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-18" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-19" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-20" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-21" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-22" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-23" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-24" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-25" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-26" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-27" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-28" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-29" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-30" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-31" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-32" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-33" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-34" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-35" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-36" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_SF36.sf36-37" isReadOnly="true" isMandatory="false"/>
+                <HumanTaskDefinition id="BCS1_SF36" description="SF-36" ownerPath="BCS1_Settings.CaseManager" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS1_SF36" entityAttachPath="BCS1_Evaluation.BCS1_SF36">
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-11" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-12" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-13" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-14" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-15" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-16" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-17" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-18" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-19" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-20" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-21" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-22" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-23" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-24" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-25" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-26" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-27" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-28" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-29" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-30" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-31" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-32" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-33" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-34" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-35" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-36" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF36.sf36-37" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
             </StageDefinition>
-            <StageDefinition id="BCS1_WorkplanDefinition" description="Workplan Definition" isMandatory="true" repeatable="ONCE">  
+
+
+            <StageDefinition id="BCS1_Workplan" description="Workplan" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS1_Workplan" entityAttachPath="BCS1_Workplan">
                 <SentryDefinition>
                     <precondition processDefinitionId="BCS1_CaseEvaluation"/>
                 </SentryDefinition>
-                <HumanTaskDefinition id="BCS1_DailyHomeVisit" description="Daily Home Visit" ownerPath="BCS1_Owner" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS1_DailyHomeVisit" entityAttachPath="BCS1_DailyHomeVisit">
-                    <TaskParamDefinition path="BCS1_DailyHomeVisit.dhv1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_DailyHomeVisit.dhv2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_DailyHomeVisit.dhv3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_DailyHomeVisit.dhv4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_DailyHomeVisit.dhv5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS1_DailyHomeVisit.dhv6" isReadOnly="false" isMandatory="true"/>
-                </HumanTaskDefinition>
-                <HumanTaskDefinition id="BCS1_DailyHomeVisit_AterialBlodGases" entityDefinitionId="BCS1_DailyHomeVisit_AterialBlodGases" entityAttachPath="BCS1_DailyHomeVisit_AterialBlodGases" description="Aterial Blod Gases" ownerPath="BCS1_Owner" isMandatory="false" repeatable="ONCE" activation="MANUAL">
-                    <SentryDefinition>
-                        <precondition processDefinitionId="BCS1_DailyHomeVisit"/>
-                    </SentryDefinition>
-                    <TaskParamDefinition path="BCS1_DailyHomeVisit.dhv7" isReadOnly="false" isMandatory="true"/>
-                </HumanTaskDefinition>
-                <HumanTaskDefinition id="BCS1_DailyHomeVisit_BloodAnalytics" entityDefinitionId="BCS1_DailyHomeVisit_BloodAnalytics" entityAttachPath="BCS1_DailyHomeVisit_BloodAnalytics" description="Blood Analytics" ownerPath="BCS1_Owner" isMandatory="false" repeatable="ONCE" activation="MANUAL">
-                    <SentryDefinition>
-                        <precondition processDefinitionId="BCS1_DailyHomeVisit"/>
-                    </SentryDefinition>
-                    <TaskParamDefinition path="BCS1_DailyHomeVisit_BloodAnalytics.ba" isReadOnly="false" isMandatory="true"/>
-                </HumanTaskDefinition>                
-                <HumanTaskDefinition id="BCS1_DailyHomeVisit_SputumCulture" entityDefinitionId="BCS1_DailyHomeVisit_SputumCulture" entityAttachPath="BCS1_DailyHomeVisit_SputumCulture" description="sputum culture" ownerPath="BCS1_Owner" isMandatory="false" repeatable="ONCE" activation="MANUAL">
-                    <SentryDefinition>
-                        <precondition processDefinitionId="BCS1_DailyHomeVisit"/>
-                    </SentryDefinition>
-                    <TaskParamDefinition path="BCS1_DailyHomeVisit_SputumCulture.sc" isReadOnly="false" isMandatory="true"/>
-                </HumanTaskDefinition>
-                <HumanTaskDefinition id="BCS1_DailyHomeVisit_ForcedSpirometry" entityDefinitionId="BCS1_DailyHomeVisit_ForcedSpirometry" entityAttachPath="BCS1_DailyHomeVisit_ForcedSpirometry" description="forced spirometry" ownerPath="BCS1_Owner" isMandatory="false" repeatable="ONCE" activation="MANUAL">
-                    <SentryDefinition>
-                        <precondition processDefinitionId="BCS1_DailyHomeVisit"/>
-                    </SentryDefinition>
-                    <TaskParamDefinition path="BCS1_DailyHomeVisit_ForcedSpirometry.fs" isReadOnly="false" isMandatory="true"/>
-                </HumanTaskDefinition>
-                <HumanTaskDefinition id="BCS1_DailyHomeVisit_PhysiciansHomeVisit" entityDefinitionId="BCS1_DailyHomeVisit_PhysiciansHomeVisit" entityAttachPath="BCS1_DailyHomeVisit_PhysiciansHomeVisit" description="physician´s home visit" ownerPath="BCS1_Owner" isMandatory="false" repeatable="ONCE" activation="MANUAL">
-                    <SentryDefinition>
-                        <precondition processDefinitionId="BCS1_DailyHomeVisit"/>
-                    </SentryDefinition>
-                    <TaskParamDefinition path="BCS1_DailyHomeVisit_PhysiciansHomeVisit.phv" isReadOnly="false" isMandatory="true"/>
-                </HumanTaskDefinition>
 
+                <DualTaskDefinition id="BCS1_PhysicalActivity" externalId="PhysicalActivity" description="Physical Activity" ownerPath="BCS1_Settings.Physiotherapist" isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="BCS1_PhysicalActivity" entityAttachPath="BCS1_Workplan.BCS1_PhysicalActivity">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS1_Workplan.BCS1_PhysicalActivity.startdate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS1_Workplan.BCS1_PhysicalActivity.enddate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS1_Workplan.BCS1_PhysicalActivity.dailysteps" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS1_Workplan.BCS1_PhysicalActivity.dailylowlevel" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS1_Workplan.BCS1_PhysicalActivity.dailymediumlevel" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS1_Workplan.BCS1_PhysicalActivity.dailyhighlevel" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS1_Workplan.BCS1_PhysicalActivity.dailynoactivity" isReadOnly="false" isMandatory="true"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="BCS1_Workplan.BCS1_PhysicalActivity.measurement" isReadOnly="false" isMandatory="true"/>
+                </DualTaskDefinition>
 
-	            <HumanTaskDefinition id="BCS1_RemotePatientSelfMonitoring" entityDefinitionId="BCS1_RemotePatientSelfMonitoring" entityAttachPath="BCS1_RemotePatientSelfMonitoring" description="Remote Patient Self-monitoring" isMandatory="true" repeatable="ONCE">  
-	                <TaskParamDefinition path="BCS1_RemotePatientSelfMonitoring.pulse_oximeter" isReadOnly="false" isMandatory="true"/>
-	                <TaskParamDefinition path="BCS1_RemotePatientSelfMonitoring.spirometer" isReadOnly="false" isMandatory="true"/>
-	                <TaskParamDefinition path="BCS1_RemotePatientSelfMonitoring.scale" isReadOnly="false" isMandatory="true"/>
-	                <TaskParamDefinition path="BCS1_RemotePatientSelfMonitoring.glucometer" isReadOnly="false" isMandatory="true"/>
-	            </HumanTaskDefinition>
-
-	            <HumanTaskDefinition id="BCS1_ManagementOfCallCenterEvents" entityDefinitionId="BCS1_ManagementOfCallCenterEvents" entityAttachPath="BCS1_ManagementOfCallCenterEvents" description="Management of call center events" isMandatory="true" repeatable="ONCE">  
-	                <TaskParamDefinition path="BCS1_ManagementOfCallCenterEvents.health_issues" isReadOnly="false" isMandatory="true"/>
-	                <TaskParamDefinition path="BCS1_ManagementOfCallCenterEvents.administrative_problems" isReadOnly="false" isMandatory="true"/>
-	                <TaskParamDefinition path="BCS1_ManagementOfCallCenterEvents.social_support_requests" isReadOnly="false" isMandatory="true"/>
-	            </HumanTaskDefinition>
-
+                <DualTaskDefinition id="BCS1_MonitoringPrescription" externalId="MonitoringPrescription" description="Monitoring Prescription"  ownerPath="BCS1_Settings.Physiotherapist" dynamicDescriptionPath="BCS1_Workplan.BCS1_MonitoringPrescription.type" isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="BCS1_MonitoringPrescription" entityAttachPath="BCS1_Workplan.BCS1_MonitoringPrescription">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS1_Workplan.BCS1_MonitoringPrescription.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS1_Workplan.BCS1_MonitoringPrescription.alertmin" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS1_Workplan.BCS1_MonitoringPrescription.alertmax" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS1_Workplan.BCS1_MonitoringPrescription.alertfreq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS1_Workplan.BCS1_MonitoringPrescription.alertfrequnit" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS1_Workplan.BCS1_MonitoringPrescription.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS1_Workplan.BCS1_MonitoringPrescription.frequnit" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition part="HUMAN" path="BCS1_Workplan.BCS1_MonitoringPrescription.maxdelay" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="BCS1_Workplan.BCS1_MonitoringPrescription.startdate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="BCS1_Workplan.BCS1_MonitoringPrescription.enddate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="BCS1_Workplan.BCS1_MonitoringPrescription.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="BCS1_Workplan.BCS1_MonitoringPrescription.comments" isReadOnly="false" isMandatory="true"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="BCS1_Workplan.BCS1_MonitoringPrescription.measurement" isReadOnly="false" isMandatory="true"/>
+                </DualTaskDefinition>
+                
             </StageDefinition>
-
-
-
-            <StageDefinition id="BCS1_DischargePatient" description="Discharge" isMandatory="true" repeatable="ONCE">  
+            
+            <StageDefinition id="BCS1_Discharge" description="Discharge" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS1_Discharge" entityAttachPath="BCS1_Discharge">
                 <SentryDefinition>
-                    <precondition processDefinitionId="BCS1_WorkplanDefinition"/>
+                    <precondition processDefinitionId="BCS1_Workplan"/>
                 </SentryDefinition>
-                <HumanTaskDefinition id="BCS1_Discharge" entityDefinitionId="BCS1_Discharge" entityAttachPath="BCS1_Discharge" description="Discharge Patient" isMandatory="true" repeatable="ONCE">  
-                    <TaskParamDefinition path="BCS1_Discharge.comment" isReadOnly="false" isMandatory="true"/>
+                <HumanTaskDefinition id="BCS1_DischargeForm" description="Discharge Form" ownerPath="BCS1_Settings.Anesthesiologist" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS1_DischargeForm" entityAttachPath="BCS1_Discharge.BCS1_DischargeForm">
+                    <TaskParamDefinition path="BCS1_Discharge.BCS1_DischargeForm.comment" isReadOnly="false" isMandatory="true"/>                  
                 </HumanTaskDefinition>
             </StageDefinition>
             
