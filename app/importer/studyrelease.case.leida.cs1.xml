@@ -30,11 +30,8 @@
 			<AttributeDefinition id="LCS1_Settings" type="Link.EntityDefinition.LCS1_Settings" multiplicity="any"/> 
 			<AttributeDefinition id="LCS1_Identification" type="Link.EntityDefinition.LCS1_Identification" multiplicity="any"/>  
 			<AttributeDefinition id="LCS1_Evaluation" type="Link.EntityDefinition.LCS1_Evaluation" multiplicity="any"/> 		  		
-			
-			<!--		 				 
-		  	<AttributeDefinition id="LCS1_Workplan" type="Link.EntityDefinition.LCS1_Workplan" multiplicity="any"/> 					
-		  	<AttributeDefinition id="LCS1_Discharge" type="Link.EntityDefinition.LCS1_Discharge" multiplicity="any"/> 		
-			-->			
+			<AttributeDefinition id="LCS1_Workplan" type="Link.EntityDefinition.LCS1_Workplan" multiplicity="any"/> 					
+			<AttributeDefinition id="LCS1_Discharge" type="Link.EntityDefinition.LCS1_Discharge" multiplicity="any"/> 		
 		</EntityDefinition>	
 			
 		<!-- Settings Entity Definitions -->
@@ -62,7 +59,7 @@
 		    <AttributeDefinition id="LCS1_Lace" type="Link.EntityDefinition.LCS1_Lace" multiplicity="any" description="LACE"/>
 		    <AttributeDefinition id="LCS1_GlobalDeteriorationScale" type="Link.EntityDefinition.LCS1_GlobalDeteriorationScale" multiplicity="any" description="GDS"/>
         </EntityDefinition>				
-
+		
 		<EntityDefinition id="LCS1_InclusionDiagnostic">
 			<AttributeDefinition id="inclusiondiag" type="enumeration" multiplicity="atLeastOne" description="De que s'ha tractar el pacient?">
 				<EnumerationOption value="1" description="MPOC - Malaltia pulmonar obstructiva crònica"/>
@@ -217,16 +214,11 @@
             <AttributeDefinition id="LCS1_AnthropometricVariablesAl" type="Link.EntityDefinition.LCS1_AnthropometricVariablesAl" multiplicity="any" description="Anthropometric variables"/> 			
 			<AttributeDefinition id="LCS1_AnthropometricVariablesGenollHomes" type="Link.EntityDefinition.LCS1_AnthropometricVariablesGenollHomes" multiplicity="any" description="Anthropometric variables"/> 
 			<AttributeDefinition id="LCS1_AnthropometricVariablesGenollDones" type="Link.EntityDefinition.LCS1_AnthropometricVariablesGenollDones" multiplicity="any" description="Anthropometric variables"/> 
-			<AttributeDefinition id="LCS1_DiagnosisSmokingAndAlcohol" type="Link.EntityDefinition.LCS1_DiagnosisSmokingAndAlcohol" multiplicity="any" description="Diagnosis smoking and alcohol"/> 			            
-						
+			<AttributeDefinition id="LCS1_DiagnosisSmokingAndAlcohol" type="Link.EntityDefinition.LCS1_DiagnosisSmokingAndAlcohol" multiplicity="any" description="Diagnosis smoking and alcohol"/> 			            					
             <AttributeDefinition id="LCS1_DiagnosisNyha" type="Link.EntityDefinition.LCS1_DiagnosisNyha" multiplicity="any"/>  
-            <AttributeDefinition id="LCS1_DiagnosisCodex" type="Link.EntityDefinition.LCS1_DiagnosisCodex" multiplicity="any"/>  
-            <AttributeDefinition id="LCS1_DiagnosisGold" type="Link.EntityDefinition.LCS1_DiagnosisGold" multiplicity="any"/>  											
-			
 			<AttributeDefinition id="LCS1_DiagnosisCodexGold" type="Link.EntityDefinition.LCS1_DiagnosisCodexGold" multiplicity="any"/>  
 			
-			<AttributeDefinition id="LCS1_SF12Evaluation" type="Link.EntityDefinition.LCS1_SF12Def" multiplicity="any"/>
-			
+			<AttributeDefinition id="LCS1_SF12Evaluation" type="Link.EntityDefinition.LCS1_SF12Def" multiplicity="any"/>			
 			<AttributeDefinition id="LCS1_SelfCareAutoTestEPOC" type="Link.EntityDefinition.LCS1_SelfCareAutoTestEPOC" multiplicity="any"/> 
 			<AttributeDefinition id="LCS1_SelfCareAutoTestHF" type="Link.EntityDefinition.LCS1_SelfCareAutoTestHF" multiplicity="any"/> 			
 			
@@ -699,69 +691,37 @@
                 <EnumerationOption value="3" description="Classe IV, Incapacitat per dur a terme qualsevol activitat física sense disconfort. Els símptomes d'insuficiència cardíaca o de síndrome anginós poden estar presents fins i tot en repòs. Si es realitza qualsevol activitat física, el disconfort augmenta."/>
             </AttributeDefinition>  
         </EntityDefinition>
-
-       <EntityDefinition id="LCS1_DiagnosisCodex" description="Diagnosis CODEX">             
-			<AttributeDefinition id="codex1result" type="number"  multiplicity="maximalOne" 
-			description="Comorbididat: Charlson"/>       									
-            <AttributeDefinition id="codex1" type="enumeration" multiplicity="maximalOne" description="Indiqui el valor de l'Índex de Charlson:"> 
-                <EnumerationOption value="0" description="&lt;=4"/>
-				<EnumerationOption value="1" description="Entre 5-7"/>
-				<EnumerationOption value="2" description="&gt;=8"/>                                
-            </AttributeDefinition>					
-            <AttributeDefinition id="codex2" type="enumeration" multiplicity="maximalOne" description="Indiqui el valor d'obstrucció: FEV1%PBD (Forced Expiratory Volume)"> 
-                <EnumerationOption value="0" description="&gt;=65"/>
-                <EnumerationOption value="1" description="Entre 50-64"/>
-                <EnumerationOption value="2" description="Entre 36-49"/>
-                <EnumerationOption value="3" description="&lt;=35"/>
-            </AttributeDefinition>			
-            <AttributeDefinition id="codex3" type="enumeration" multiplicity="maximalOne" description="Indiqui el valor de dispnea: mMRC (Medical Research Council Scale)"> 
-                <EnumerationOption value="0" description="0-1"/>
-                <EnumerationOption value="1" description="2"/>
-                <EnumerationOption value="2" description="3"/>
-                <EnumerationOption value="3" description="4"/>
-            </AttributeDefinition>			
-            <AttributeDefinition id="codex4" type="enumeration" multiplicity="maximalOne" description="Indiqui el valor de les exacerbacions que impliquin atenció unitats d'urgències o admissions a urgències"> 
-                <EnumerationOption value="1" description="1-2"/>
-                <EnumerationOption value="2" description="&gt;=3"/>
-            </AttributeDefinition>			
-            <DerivedAttributeDefinition id="codex5" expression="number(codex1,0)+number(codex2,0)+number(codex3,0)+number(codex4,0)" description="CODEX"/> 
-        </EntityDefinition>
 		
 		<EntityDefinition id="LCS1_DiagnosisCodexGold" description="Diagnosis GOLD+CODEX"> 		
 			<AttributeDefinition id="codex1result" type="number"  multiplicity="maximalOne" 
 			description="Comorbididat: Charlson"/>    
-            <AttributeDefinition id="codex1" type="enumeration" multiplicity="maximalOne" description="(C) Indiqui el valor de l'Índex de Charlson:"> 
+            <AttributeDefinition id="codex1" type="enumeration" multiplicity="maximalOne"
+			additionalDescription="Charlson; si &lt;= 4 (val 0)|| entre 5-7 (val 1)|| si &gt;=8 (val 2)" 	
+			description="(C) Indiqui el valor de l'Índex de Charlson:"> 
                 <EnumerationOption value="0" description="&lt;=4"/>
 				<EnumerationOption value="1" description="Entre 5-7"/>
 				<EnumerationOption value="2" description="&gt;=8"/>                                
             </AttributeDefinition>				
-			
-			<!--			
-			<AttributeDefinition id="FEV" type="enumeration" multiplicity="maximalOne" description="(O) Indiqui el valor d'obstrucció: FEV1(post broncodilatació)"> 
-                <EnumerationOption value="1" description="GOLD 1 &gt;=80"/>
-                <EnumerationOption value="2" description="GOLD 2 Entre 50-79"/>
-                <EnumerationOption value="3" description="GOLD 3 Entre 30-49"/>
-                <EnumerationOption value="4" description="GOLD 4 &lt;30"/>
-            </AttributeDefinition>		
-			<DerivedAttributeDefinition id="FEVTotal" expression="number(FEV,0)" description="GOLD"/> 	
-			-->
-			<AttributeDefinition id="FEVNumber" type="number" multiplicity="maximalOne" description="(O) Indiqui el valor d'obstrucció: FEV1(post broncodilatació)"/>       			
-			
+			<AttributeDefinition id="FEVNumber" type="number" multiplicity="maximalOne" description="(O) Indiqui el valor d'obstrucció: FEV1(post broncodilatació)"/>       						
 			<DerivedAttributeDefinition id="FEVNumberTotal1" expression='if(FEVNumber<30)then "4" else if (FEVNumber>29 and FEVNumber<50) then "3" else if (FEVNumber>49 and FEVNumber<80) then "2" else "1"' 
-			description="GOLD"/> 
-			
+			additionalDescription="FEV1; si &lt;= 29 (GOLD 4)|| entre 30-49 (GOLD 3)|| entre 50-79 (GOLD 2)|| si &gt;=80 (GOLD 1)" 	
+			description="GOLD"/> 			
 			<DerivedAttributeDefinition id="FEVNumberTotal2" expression='if(FEVNumber<36)then "3" else if (FEVNumber>35 and FEVNumber<50) then "2" else if (FEVNumber>49 and FEVNumber<63) then "1" else "0"' 
-			description="CODEX"/> 
-						
-			<AttributeDefinition id="MMRC" type="enumeration" multiplicity="maximalOne" description="(D) Indiqui el valor de dispnea: mMRC (Medical Research Council Scale)"> 
+			additionalDescription="FEV1; si &lt;= 35 (val 3)|| entre 36-49 (val 2)|| entre 50-64 (val 1)|| si &gt;=65 (val 0)" 	
+			description="CODEX"/> 						
+			<AttributeDefinition id="MMRC" type="enumeration" multiplicity="maximalOne"
+			description="(D) Indiqui el valor de dispnea: mMRC (Medical Research Council Scale)"> 
                 <EnumerationOption value="0" description="0-1"/>
                 <EnumerationOption value="1" description="2"/>
 				<EnumerationOption value="2" description="3"/>
 				<EnumerationOption value="3" description="4"/>
             </AttributeDefinition>			
-			<DerivedAttributeDefinition id="MMRCTotal" expression='if number(MMRC,0) = 0 then "Grup C" else "Grup D"' description="mMRC"/> 						
-			
-            <AttributeDefinition id="exacerbacions" type="enumeration" multiplicity="maximalOne" description="(EX) Indiqui el valor de les exacerbacions que impliquin atenció unitats d'urgències o admissions a urgències"> 
+			<DerivedAttributeDefinition id="MMRCTotal" expression='if number(MMRC,0) = 0 then "Grup C" else "Grup D"' 
+			additionalDescription="mMRC; si 0 (Grup C)|| si &gt;=1 (Grup D)" 	
+			description="mMRC"/> 									
+            <AttributeDefinition id="exacerbacions" type="enumeration" multiplicity="maximalOne" 
+			additionalDescription="Exacerbacions; si 0 (val 0)|| si 1-2 (val 1)|| si &gt;=3 (val 2)" 	
+			description="(EX) Indiqui el valor de les exacerbacions que impliquin atenció unitats d'urgències o admissions a urgències"> 
                 <EnumerationOption value="0" description="0"/>
 				<EnumerationOption value="1" description="1-2"/>
                 <EnumerationOption value="2" description="&gt;=3"/>
@@ -769,6 +729,7 @@
 			<DerivedAttributeDefinition id="codextotal" expression="number(codex1,0)+number(exacerbacions,0)+number(FEVNumberTotal2,0)+number(MMRC,0)" description="CODEX"/> 						
 		</EntityDefinition>				
 		
+		<!--
         <EntityDefinition id="LCS1_DiagnosisGold" description="Diagnosis grau GOLD"> 
             <AttributeDefinition id="gold1" type="enumeration" multiplicity="maximalOne" defaultValues="['1']" description="Indiqui el valor d'obstrucció: FEV1%PBD (Forced Expiratory Volume)"> 
                 <EnumerationOption value="0" description="GOLD1-2 &gt;= 50"/>
@@ -794,9 +755,8 @@
 			if ( (number(gold1, 0) + number(gold3,0)) = 1 and number(gold2, 0) = 0) then "B" else 
 			if ( (number(gold1, 0) + number(gold2,0)) = 1 and number(gold3, 0) = 0) then "C" else 
 			if (number(gold1, 0) + number(gold2, 0) + number(gold3,0)) = 3 then "D" else
-			"No existeix"' description="GOLD"/>						
-			
-        </EntityDefinition>    	
+			"No existeix"' description="GOLD"/>									
+        </EntityDefinition>    -->
 
         <EntityDefinition id="LCS1_SF12Def">
             <AttributeDefinition id="sf12-1"  type="enumeration" multiplicity="maximalOne" description="1. En general, vostè diria que la seva salut és:">
@@ -1086,6 +1046,22 @@
 			description="Capacitat Cuidador"/> 
         </EntityDefinition>				
 
+		<!-- Workplan Entity Definitions -->			
+		<EntityDefinition id="LCS1_Workplan">
+			
+		</EntityDefinition>				
+		
+        <!-- Discharge Definitions -->		
+		<EntityDefinition id="LCS1_Discharge">
+			<AttributeDefinition id="LCS1_DischargeTest" type="Link.EntityDefinition.LCS1_DischargeTest" multiplicity="any"/>									
+		</EntityDefinition>						
+				
+		<EntityDefinition id="LCS1_DischargeTest"> 
+			<AttributeDefinition id="discharge1" type="longtext" description="Com ens ha anat?" multiplicity="maximalOne" /> 
+			<AttributeDefinition id="discharge2" type="longtext" description="Estat actual del pacient" multiplicity="maximalOne"/> 
+			<AttributeDefinition id="discharge3" type="longtext" description="Pronostic (funcional, assistencial i social)" multiplicity="maximalOne"/> 
+        </EntityDefinition>		
+		
 		
    <!-- CASE DEFINITION -->				  
         <CaseDefinition id="LCS1_Leida" description="CS1 Lleida - Versió OK" ownerPath="LCS1_Settings.CaseManager" clientPath="LCS1_Settings.Patient" entityDefinitionId="LCS1_CaseData" newEntityDefinitionId="LCS1_Settings" newEntityAttachPath="LCS1_Settings" notesDefaultValue='<style>table{width:100%;}table th{background-color:#66308e; color:white;font-size:larger;}table td{border: 1px solid #999;border-width: 0px 1px 1px 1px;}</style><table cellpadding="4" cellspacing="0"> <tr> <th>HOSPITAL</th> <th>EQUIP DE PRIMARIA</th> </tr> <tr> <td><b>Anesthesiologist:</b></br> TBD</td> <td><b>Clinician:</b></br> TBD</td> </tr> <tr> <td><b>Physiotherapist:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>Clinician:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>Nurse:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>SocialCareer:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>New Rol:</b></br> TBD</td> <td></td> </tr> <tr> <td><b>New Rol:</b></br> TBD</td> <td></td> </tr></table><span style="color:#666; font-size:smaller"><b>Hint:</b> One row for each rol.</span>'>	  
@@ -1347,8 +1323,8 @@
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisNyha.nyha1" isReadOnly="false" isMandatory="true"/>
 				</HumanTaskDefinition>
 
-				<HumanTaskDefinition id="LCS1_DiagnosisCodexGold" description="Diagnòstic - Diagnosis grau GOLD+CODEX (dependència amb Charlson)"
-				ownerPath="LCS1_Settings.Clinician" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS1_DiagnosisCodexGold" entityAttachPath="LCS1_Evaluation.LCS1_DiagnosisCodexGold">                
+				<HumanTaskDefinition id="LCS1_DiagnosisCodexGold" description="Diagnòstic - Funcional MPOC: FEV1/mMRC/GOLD/CODEX (dependència amb Charlson)"
+				ownerPath="LCS1_Settings.Clinician" isMandatory="false" repeatable="ONCE" activation="MANUAL"  entityDefinitionId="LCS1_DiagnosisCodexGold" entityAttachPath="LCS1_Evaluation.LCS1_DiagnosisCodexGold">                
                     <SentryDefinition>
                         <precondition processDefinitionId="LCS1_ComorbidityCharlsonEvaluationHT"/>
                     </SentryDefinition>
@@ -1359,31 +1335,9 @@
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodexGold.exacerbacions" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodexGold.MMRCTotal" isReadOnly="true" isMandatory="false"/>
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodexGold.FEVNumberTotal1" isReadOnly="true" isMandatory="false"/>
-					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodexGold.FEVNumberTotal2" isReadOnly="true" isMandatory="false"/>			
+					<!--<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodexGold.FEVNumberTotal2" isReadOnly="true" isMandatory="false"/>	-->
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodexGold.codextotal" isReadOnly="true" isMandatory="false"/>										
 				</HumanTaskDefinition>
-				
-				<!--
-				<HumanTaskDefinition id="LCS1_DiagnosisGoldHT" description="Diagnòstic - Diagnosis grau GOLD"
-				ownerPath="LCS1_Settings.Clinician" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS1_DiagnosisGold" entityAttachPath="LCS1_Evaluation.LCS1_DiagnosisGold">                
-					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisGold.gold3" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisGold.gold5" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisGold.gold4" isReadOnly="true" isMandatory="false"/>
-				</HumanTaskDefinition>
-				
-				<HumanTaskDefinition id="LCS1_DiagnosisCodexHT" description="Diagnòstic - Diagnosis CODEX (dependència amb Charlson)"
-				ownerPath="LCS1_Settings.Clinician" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS1_DiagnosisCodex" entityAttachPath="LCS1_Evaluation.LCS1_DiagnosisCodex">                
-                    <SentryDefinition>
-                        <precondition processDefinitionId="LCS1_ComorbidityCharlsonEvaluationHT"/>
-                    </SentryDefinition>
-					<TaskParamDefinition path="LCS1_Evaluation.LCS1_ComorbidityCharlsonEvaluation.ch21" isReadOnly="true" isMandatory="false"/>
-					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodex.codex1" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodex.codex2" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodex.codex3" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodex.codex4" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodex.codex5" isReadOnly="true" isMandatory="false"/>
-				</HumanTaskDefinition>	 	
-				-->
 				
                 <HumanTaskDefinition id="LCS1_SF12EvaluationHT" description="*Diagnòstic - SF-12"
 				ownerPath="LCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_SF12Def" entityAttachPath="LCS1_Evaluation.LCS1_SF12Evaluation">                
@@ -1464,10 +1418,23 @@
                     <TaskParamDefinition path="LCS1_Evaluation.LCS1_SocialSelfCareCareerAbility.career3" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS1_Evaluation.LCS1_SocialSelfCareCareerAbility.career4" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS1_Evaluation.LCS1_SocialSelfCareCareerAbility.career5" isReadOnly="true" isMandatory="false"/>
-                </HumanTaskDefinition>  							
-				
+                </HumanTaskDefinition>  											
 			</StageDefinition>
+			
+			
+            <!-- STAGEDEFINITION: Workplan -->    
+            <StageDefinition id="LCS1_Workplan" description="Pla de treball" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_Workplan" entityAttachPath="LCS1_Workplan">			
+			</StageDefinition>			
 		  	 
+            <StageDefinition id="LCS1_Discharge" description="Alta del pacient" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS1_Discharge" entityAttachPath="LCS1_Discharge">
+                <HumanTaskDefinition id="LCS1_DischargeTestHT" description="Alta del pacient"
+				ownerPath="LCS1_Settings.Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS1_DischargeTest" entityAttachPath="LCS1_Discharge.LCS1_DischargeTest">									
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Discharge.LCS1_DischargeTest.discharge1" isReadOnly="false" isMandatory="true"/>                    
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Discharge.LCS1_DischargeTest.discharge2" isReadOnly="false" isMandatory="true"/>                    
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Discharge.LCS1_DischargeTest.discharge3" isReadOnly="false" isMandatory="true"/>                    
+                </HumanTaskDefinition>		
+			</StageDefinition> 
+			 
 		</CaseDefinition>
 	
 	</Workspace>
