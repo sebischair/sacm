@@ -68,7 +68,7 @@
             <AttributeDefinition id="LCS2_GMAIdentification" type="Link.EntityDefinition.LCS2_GMADef" multiplicity="any" description="GMA"/> 
             <AttributeDefinition id="LCS2_ComplexityRisk" type="Link.EntityDefinition.LCS2_ComplexityRisk" multiplicity="any" description="Complexity risk"/> 
             <AttributeDefinition id="LCS2_PatientsConsent" type="Link.EntityDefinition.LCS2_PatientsConsent" multiplicity="any" description="Patients consent"/> 			
-        </EntityDefinition>				
+        </EntityDefinition>
 
         <!--
 		<EntityDefinition id="LCS2_InclusionDiagnostic">
@@ -1427,12 +1427,12 @@
                 </SentryDefinition> 
             
                 <!-- Infermera  -->   
-                <HumanTaskDefinition id="LCS2_GMAEvaluationHT" description="Estat comòrbid - GMA (Identificació del Cas)" ownerPath="LCS2_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_GMADef" entityAttachPath="LCS2_Evaluation.LCS2_GMAEvaluation">
+                <HumanTaskDefinition id="LCS2_GMAEvaluationHT" description="Estat comòrbid - GMA [Identificació del Cas]" ownerPath="LCS2_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_GMADef" entityAttachPath="LCS2_Evaluation.LCS2_GMAEvaluation">
                     <TaskParamDefinition path="LCS2_Identification.LCS2_GMAIdentification.gma" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition> 
             
                 <!-- Infermera  -->    
-                <HumanTaskDefinition id="LCS2_ComorbidityCharlsonEvaluationHT" description="Estat comòrbid - Índex de comorbilitat de Charlson (Identificació del Cas)" 
+                <HumanTaskDefinition id="LCS2_ComorbidityCharlsonEvaluationHT" description="Estat comòrbid - Índex de comorbilitat de Charlson [Identificació del Cas]" 
 				footnote="Pendent rebre autorització"
 				ownerPath="LCS2_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_ComorbidityCharlsonDef" entityAttachPath="LCS2_Evaluation.LCS2_ComorbidityCharlsonEvaluation"> 
                     <TaskParamDefinition path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch1" isReadOnly="true" isMandatory="false"/>
@@ -1549,19 +1549,22 @@
 				</HumanTaskDefinition>  				
 				
                 <!-- Cirurgiá/Anestesista -->      
-                <HumanTaskDefinition id="LCS2_DiagnosisSmokingAndAlcohol" description="Diagnòstic - Consum de tabac i alcohol" ownerPath="LCS2_Settings.AnesClinic" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_DiagnosisSmokingAndAlcohol" entityAttachPath="LCS2_Evaluation.LCS2_DiagnosisSmokingAndAlcohol">
+                <HumanTaskDefinition id="LCS2_DiagnosisSmokingAndAlcohol"
+				description="Diagnòstic - Consum de tabac i alcohol" ownerPath="LCS2_Settings.AnesClinic" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_DiagnosisSmokingAndAlcohol" entityAttachPath="LCS2_Evaluation.LCS2_DiagnosisSmokingAndAlcohol">
                     <TaskParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisSmokingAndAlcohol.smalc1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisSmokingAndAlcohol.smalc2" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition> 
             
                 <!-- Anestesista  -->       
-                <HumanTaskDefinition id="LCS2_DiagnosisNutritionEvaluationHT" description="Diagnòstic - Nutrició (proteínes)" ownerPath="LCS2_Settings.Anesthesiologist" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_DiagnosisNutritionDef" entityAttachPath="LCS2_Evaluation.LCS2_DiagnosisNutritionEvaluation">
+                <HumanTaskDefinition id="LCS2_DiagnosisNutritionEvaluationHT"
+				description="Diagnòstic - Nutrició (proteínes)" ownerPath="LCS2_Settings.Anesthesiologist" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_DiagnosisNutritionDef" entityAttachPath="LCS2_Evaluation.LCS2_DiagnosisNutritionEvaluation">
                     <TaskParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisNutritionEvaluation.nutrition1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS2_Evaluation.LCS2_DiagnosisNutritionEvaluation.nutrition2" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>      
             
                 <!-- Cirurgiá/Anestesista -->   	 
-                <HumanTaskDefinition id="LCS2_ASAPhysicalStatusClassificationSystemEvaluation" description="Diagnòstic - Sistema de classificació d'estat físic ASA (Identificació del Cas)" ownerPath="LCS2_Settings.AnesClinic" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_ComplexityRisk" entityAttachPath="LCS2_Evaluation.LCS2_ComplexityRisk">
+                <HumanTaskDefinition id="LCS2_ASAPhysicalStatusClassificationSystemEvaluation"
+				description="Diagnòstic - Sistema de classificació d'estat físic ASA (Identificació del Cas)" ownerPath="LCS2_Settings.AnesClinic" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_ComplexityRisk" entityAttachPath="LCS2_Evaluation.LCS2_ComplexityRisk">
                     <TaskParamDefinition path="LCS2_Identification.LCS2_ComplexityRisk.ASA" isReadOnly="true" isMandatory="false"/>       
                 </HumanTaskDefinition>	
                     
@@ -1684,11 +1687,9 @@
             
             <!-- STAGEDEFINITION: Workplan -->    
             <StageDefinition id="LCS2_WorkplanBeforeHospitalization" description="Pla de treball (Pre)" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_WorkplanBeforeHospitalization" entityAttachPath="LCS2_WorkplanBeforeHospitalization">
-                <!--  
                 <SentryDefinition>
-                    <precondition processDefinitionId="LCS2_CaseEvaluation"/>
+                    <precondition processDefinitionId="LCS2_CaseIdentification"/>
                 </SentryDefinition> 
-				-->
 
                 <!-- Gerard no ho vol pq ho hauria de fer el metge de primaria pero no ho vol fer  LCS2_MonitoringHospitalizationMeasureDHHT -->
                 <HumanTaskDefinition id="LCS2_AnaemiaAssessmentAndManagementNutritionBHHT" description="Anemia, proteínes" ownerPath="LCS2_Settings.AnesClinic" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS2_AnaemiaAssessmentAndManagementNutritionDef" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_AnaemiaAssessmentAndManagementNutritionBH">
@@ -1724,7 +1725,8 @@
                     <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_CommentBH.comments" isReadOnly="false" isMandatory="true"/>                    
                 </HumanTaskDefinition>			
                                         
-                <DualTaskDefinition id="LCS2_MonitoringPrescriptionBHWPSystolic" externalId="MonitoringPrescription" description="Prescripció de la monitorització - Pressió arterial sistòlica - Abans d'hospitalització" dynamicDescriptionPath="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHSystolic.type"
+                <DualTaskDefinition id="LCS2_MonitoringPrescriptionBHWPSystolic" externalId="MonitoringPrescription"
+				description="Prescripció de la monitorització - Pressió arterial sistòlica - Abans d'hospitalització" dynamicDescriptionPath="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHSystolic.type"
 				ownerPath="LCS2_Settings.PrimaryCareClinicians" dueDatePath="LCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_MonitoringPrescriptionSystolic" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHSystolic">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
@@ -1743,7 +1745,8 @@
                     <TaskParamDefinition part="AUTOMATED" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHSystolic.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>				
 
-                <DualTaskDefinition id="LCS2_MonitoringPrescriptionBHWPDiastolic" externalId="MonitoringPrescription" description="Prescripció de la monitorització - Pressió arterial diastòlica - Abans d'hospitalització" dynamicDescriptionPath="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHDiastolic.type"
+                <DualTaskDefinition id="LCS2_MonitoringPrescriptionBHWPDiastolic" externalId="MonitoringPrescription"
+				description="Prescripció de la monitorització - Pressió arterial diastòlica - Abans d'hospitalització" dynamicDescriptionPath="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHDiastolic.type"
 				ownerPath="LCS2_Settings.PrimaryCareClinicians" dueDatePath="LCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_MonitoringPrescriptionDiastolic" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHDiastolic">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
@@ -1766,10 +1769,9 @@
                        
             <!-- STAGEDEFINITION: WorkplanAfterHospitalization -->    
             <StageDefinition id="LCS2_WorkplanAfterHospitalization" description="Pla de treball (Post)" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_WorkplanAfterHospitalization" entityAttachPath="LCS2_WorkplanAfterHospitalization">
-			<!--
-			    <SentryDefinition>
-                    <precondition processDefinitionId="LCS2_WorkplanBeforeHospitalization"/>								
-                </SentryDefinition>  -->
+                <SentryDefinition>
+                    <precondition processDefinitionId="LCS2_CaseIdentification"/>
+                </SentryDefinition> 
 			
                 <HumanTaskDefinition id="LCS2_PatientEducationAndTrainingToTheCaregiverWPAH1" description="Educació i formació pel cuidador (equip de l'hospital)" ownerPath="LCS2_Settings.Clinician" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_PatientEducationAndTrainingToTheCaregiverAH" entityAttachPath="LCS2_WorkplanAfterHospitalization.LCS2_PatientEducationAndTrainingToTheCaregiverAH">
                     <TaskParamDefinition path="LCS2_WorkplanAfterHospitalization.LCS2_PatientEducationAndTrainingToTheCaregiverAH.educaExec1" isReadOnly="false" isMandatory="true"/>
@@ -1784,7 +1786,8 @@
                     <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_CommentAH.comments" isReadOnly="false" isMandatory="true"/>                    
                 </HumanTaskDefinition>		
 
-                <DualTaskDefinition id="LCS2_MonitoringPrescriptionAHWPSystolic" externalId="MonitoringPrescription" description="Prescripció de monitorització - Pressió arterial sistòlica - Desprès l'hospitalització" dynamicDescriptionPath="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHSystolic.type" ownerPath="LCS2_Settings.PrimaryCareClinicians" dueDatePath="LCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_MonitoringPrescriptionSystolic" entityAttachPath="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHSystolic">
+                <DualTaskDefinition id="LCS2_MonitoringPrescriptionAHWPSystolic" externalId="MonitoringPrescription"
+				description="Prescripció de monitorització - Pressió arterial sistòlica - Desprès l'hospitalització" dynamicDescriptionPath="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHSystolic.type" ownerPath="LCS2_Settings.PrimaryCareClinicians" dueDatePath="LCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_MonitoringPrescriptionSystolic" entityAttachPath="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHSystolic">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHSystolic.type" isReadOnly="false" isMandatory="true"/>
@@ -1802,7 +1805,8 @@
                     <TaskParamDefinition part="AUTOMATED" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHSystolic.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>	
                 
-                <DualTaskDefinition id="LCS2_MonitoringPrescriptionAHWPDiastolic" externalId="MonitoringPrescription" description="Prescripció de la monitorització - Pressió arterial diastòlica - Desprès d'hospitalització" dynamicDescriptionPath="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHDiastolic.type" ownerPath="LCS2_Settings.Clinician" dueDatePath="LCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_MonitoringPrescriptionDiastolic" entityAttachPath="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHDiastolic">
+                <DualTaskDefinition id="LCS2_MonitoringPrescriptionAHWPDiastolic" externalId="MonitoringPrescription"
+				description="Prescripció de la monitorització - Pressió arterial diastòlica - Desprès d'hospitalització" dynamicDescriptionPath="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHDiastolic.type" ownerPath="LCS2_Settings.Clinician" dueDatePath="LCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_MonitoringPrescriptionDiastolic" entityAttachPath="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHDiastolic">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHDiastolic.type" isReadOnly="false" isMandatory="true"/>
@@ -1820,7 +1824,8 @@
                     <TaskParamDefinition part="AUTOMATED" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHDiastolic.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>				
 
-                <DualTaskDefinition id="LCS2_PhysicalActivityAHWP" externalId="PhysicalActivity" description="Activitat física - Desprès d'hospitalització" ownerPath="LCS2_Settings.Physiotherapist" dueDatePath="LCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_PhysicalActivityAH" entityAttachPath="LCS2_WorkplanAfterHospitalization.LCS2_PhysicalActivityAH">
+                <DualTaskDefinition id="LCS2_PhysicalActivityAHWP" externalId="PhysicalActivity"
+				description="Activitat física - Desprès d'hospitalització" ownerPath="LCS2_Settings.Physiotherapist" dueDatePath="LCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_PhysicalActivityAH" entityAttachPath="LCS2_WorkplanAfterHospitalization.LCS2_PhysicalActivityAH">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_PhysicalActivityAH.startdate" isReadOnly="false" isMandatory="true"/>
