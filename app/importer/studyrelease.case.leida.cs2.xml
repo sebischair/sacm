@@ -929,14 +929,6 @@
                 <EnumerationOption value="4" description="Una mica de temps"/>
                 <EnumerationOption value="5" description="Gens de temps"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="sf12-13" type="enumeration" multiplicity="maximalOne" description="Tipus de visita">
-                <EnumerationOption value="1" description="6 setmanes"/>
-                <EnumerationOption value="2" description="3 mesos"/>
-                <EnumerationOption value="3" description="6 mesos"/>
-                <EnumerationOption value="4" description="12 mesos"/>
-                <EnumerationOption value="5" description="24 mesos"/>
-                <EnumerationOption value="6" description="altres"/>
-            </AttributeDefinition>       						                  
         </EntityDefinition> 
 		
 		<!-- Barreres -->		
@@ -1172,7 +1164,9 @@
 				<EnumerationOption value="3"  description="Estic moderat ansiós o deprimit"/>
 				<EnumerationOption value="4"  description="Estic molt ansiós o deprimit "/>
 				<EnumerationOption value="5"  description="Estic extremedament ansiós o deprimit"/>
-			</AttributeDefinition>       
+			</AttributeDefinition>       						
+			<AttributeDefinition id="EQ-5D-6" type="number.min(0).max(100)" defaultValues="[0.0]" multiplicity="maximalOne" 
+			description="Com et trobes avui? Escala numerada: On 0 és molt malament i 100 és molt bé"/>       						
 		</EntityDefinition>
 		
         <!-- Discharge Definitions -->		
@@ -1624,8 +1618,7 @@
                     <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12Evaluation.sf12-9" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12Evaluation.sf12-10" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12Evaluation.sf12-11" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12Evaluation.sf12-12" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12Evaluation.sf12-13" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition path="LCS2_Evaluation.LCS2_SF12Evaluation.sf12-12" isReadOnly="false" isMandatory="true"/>   
                 </HumanTaskDefinition> 
                     
                 <!-- Cirurgiá/Anestesista  -->
@@ -1858,7 +1851,6 @@
                     <TaskParamDefinition path="LCS2_Discharge.LCS2_SF12Discharge.sf12-10" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS2_Discharge.LCS2_SF12Discharge.sf12-11" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS2_Discharge.LCS2_SF12Discharge.sf12-12" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS2_Discharge.LCS2_SF12Discharge.sf12-13" isReadOnly="false" isMandatory="true"/> 
                 </HumanTaskDefinition> 		
 
                 <HumanTaskDefinition id="LCS2_EQ-5DDischargeHT" description="*EQ-5D" ownerPath="LCS2_Settings.Clinician" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_EQ-5DDef" entityAttachPath="LCS2_Discharge.LCS2_EQ-5DDischarge">
@@ -1867,9 +1859,9 @@
                     <TaskParamDefinition path="LCS2_Discharge.LCS2_EQ-5DDischarge.EQ-5D-3" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS2_Discharge.LCS2_EQ-5DDischarge.EQ-5D-4" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS2_Discharge.LCS2_EQ-5DDischarge.EQ-5D-5" isReadOnly="false" isMandatory="true"/>              
+					<TaskParamDefinition path="LCS2_Discharge.LCS2_EQ-5DDischarge.EQ-5D-6" isReadOnly="false" isMandatory="true"/>              					
                 </HumanTaskDefinition>						
-            </StageDefinition>
-		
+            </StageDefinition>		
         </CaseDefinition>	
     </Workspace>  
 
@@ -2116,11 +2108,7 @@
         <TaskParam path="LCS2_Evaluation.LCS2_SF12Def.sf12-10" values="['1']"/>   
         <TaskParam path="LCS2_Evaluation.LCS2_SF12Def.sf12-11" values="['1']"/>   
         <TaskParam path="LCS2_Evaluation.LCS2_SF12Def.sf12-12" values="['1']"/>   
-        <TaskParam path="LCS2_Evaluation.LCS2_SF12Def.sf12-13" values="['1']"/>   
-        <TaskParam path="LCS2_Evaluation.LCS2_SF12Def.sf12-14" values="['1']"/>   
     </Action> 
-
-   
 
     <Action id="CompleteHumanTask" processId="LCS2_MedicationFollowing" breakpoint="true"> 
         <TaskParam path="LCS2_Evaluation.LCS2_MedicationFollowing.Medication1" values="['1']"/>   
@@ -2265,8 +2253,6 @@
         <TaskParam path="LCS2_Discharge.LCS2_SF12Discharge.sf12-10" values="['1']"/> 
         <TaskParam path="LCS2_Discharge.LCS2_SF12Discharge.sf12-11" values="['1']"/> 
         <TaskParam path="LCS2_Discharge.LCS2_SF12Discharge.sf12-12" values="['1']"/> 
-        <TaskParam path="LCS2_Discharge.LCS2_SF12Discharge.sf12-13" values="['1']"/> 
-        <TaskParam path="LCS2_Discharge.LCS2_SF12Discharge.sf12-14" values="['1']"/> 
     </Action> 
 
     <Action id="CompleteHumanTask" processId="LCS2_EQ-5DDischargeHT" breakpoint="true">  
@@ -2275,6 +2261,7 @@
         <TaskParam path="LCS2_Discharge.LCS2_EQ-5DDischarge.EQ-5D-3" values="['1']"/> 
         <TaskParam path="LCS2_Discharge.LCS2_EQ-5DDischarge.EQ-5D-4" values="['1']"/> 
         <TaskParam path="LCS2_Discharge.LCS2_EQ-5DDischarge.EQ-5D-5" values="['1']"/> 
+		<TaskParam path="LCS2_Discharge.LCS2_EQ-5DDischarge.EQ-5D-6" values="[51]"/> 
     </Action> 
 
 
