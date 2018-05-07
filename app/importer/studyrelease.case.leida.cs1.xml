@@ -57,8 +57,8 @@
 		    <AttributeDefinition id="LCS1_TechnologicalTest" type="Link.EntityDefinition.LCS1_TechnologicalTest" multiplicity="any" description="Technological test"/> 
 		    <AttributeDefinition id="LCS1_PatientsConsent" type="Link.EntityDefinition.LCS1_PatientsConsent" multiplicity="any" description="Patients consent"/> 		   
 		    <AttributeDefinition id="LCS1_Lace" type="Link.EntityDefinition.LCS1_Lace" multiplicity="any" description="LACE"/>
-		    <AttributeDefinition id="LCS1_GlobalDeteriorationScale" type="Link.EntityDefinition.LCS1_GlobalDeteriorationScale" multiplicity="any" description="GDS"/>
-        </EntityDefinition>				
+		    <AttributeDefinition id="LCS1_GlobalDeteriorationScale" type="Link.EntityDefinition.LCS1_GlobalDeteriorationScale" multiplicity="any" description="GDS"/>			
+        </EntityDefinition>			
 		
 		<EntityDefinition id="LCS1_InclusionDiagnostic">
 			<AttributeDefinition id="inclusiondiag" type="enumeration" multiplicity="atLeastOne" description="De que s'ha tractar el pacient?">
@@ -219,6 +219,8 @@
 			<AttributeDefinition id="LCS1_DiagnosisCodexGold" type="Link.EntityDefinition.LCS1_DiagnosisCodexGold" multiplicity="any"/>  
 			
 			<AttributeDefinition id="LCS1_SF12Evaluation" type="Link.EntityDefinition.LCS1_SF12Def" multiplicity="any"/>			
+			<AttributeDefinition id="LCS1_CardiacRehabilitation" type="Link.EntityDefinition.LCS1_CardiacRehabilitation" multiplicity="any" description="Diagnóstic - Rehabilitació-cardiaca"/> 
+			
 			<AttributeDefinition id="LCS1_SelfCareAutoTestEPOC" type="Link.EntityDefinition.LCS1_SelfCareAutoTestEPOC" multiplicity="any"/> 
 			<AttributeDefinition id="LCS1_SelfCareAutoTestHF" type="Link.EntityDefinition.LCS1_SelfCareAutoTestHF" multiplicity="any"/> 			
 			
@@ -716,9 +718,9 @@
 				<EnumerationOption value="2" description="3"/>
 				<EnumerationOption value="3" description="4"/>
             </AttributeDefinition>			
-			<DerivedAttributeDefinition id="MMRCTotal" expression='if number(MMRC,0) = 0 then "Grup C" else "Grup D"' 
-			additionalDescription="mMRC; si 0 (Grup C)|| si &gt;=1 (Grup D)" 	
-			description="mMRC"/> 									
+			<DerivedAttributeDefinition id="MMRCTotal" expression='if number(MMRC,0) = 0 then "C" else " D"' 
+			additionalDescription="si 0 el Grup és C|| si &gt;=1 el Grup és D" 	
+			description="Grup"/> 									
             <AttributeDefinition id="exacerbacions" type="enumeration" multiplicity="maximalOne" 
 			additionalDescription="Exacerbacions; si 0 (val 0)|| si 1-2 (val 1)|| si &gt;=3 (val 2)" 	
 			description="(EX) Indiqui el valor de les exacerbacions que impliquin atenció unitats d'urgències o admissions a urgències"> 
@@ -833,6 +835,34 @@
                 <EnumerationOption value="5" description="Gens de temps"/>
             </AttributeDefinition> 
         </EntityDefinition>
+		
+		<EntityDefinition id="LCS1_CardiacRehabilitation" >
+			<AttributeDefinition id="cr1" type="enumeration" multiplicity="maximalOne" description="Té el pacient classe funcional III-IV de la NYHA?">
+				<EnumerationOption value="0" description="No"/>
+				<EnumerationOption value="1" description="Sí"/>
+			</AttributeDefinition>
+			<AttributeDefinition id="cr2" type="enumeration" multiplicity="maximalOne" description="Té disfunció sistòlica entesa com una Fracció de Ejecció VI < 40%?">
+				<EnumerationOption value="0" description="No"/>
+				<EnumerationOption value="1" description="Sí"/>
+			</AttributeDefinition>
+			<AttributeDefinition id="cr3" type="enumeration" multiplicity="maximalOne" description="Va tenir el pacient arítmies (taquicàrdies ventriculars) y/o angina a la proba d´esforç?">
+				<EnumerationOption value="0" description="No"/>
+				<EnumerationOption value="1" description="Sí"/>
+			</AttributeDefinition>
+			<AttributeDefinition id="cr4" type="enumeration" multiplicity="maximalOne" description="Té el pacient lesió coronaries pendents de revascularitzar?">
+				<EnumerationOption value="0" description="No"/>
+				<EnumerationOption value="1" description="Sí"/>
+			</AttributeDefinition>
+	        <AttributeDefinition id="cr5" type="number" multiplicity="maximalOne" defaultValues="[0]" description="Introduir número de METS de la proba de esforç:"/>       
+			<AttributeDefinition id="cr6" type="enumeration" multiplicity="maximalOne" description="Va fer el pacient < 7 METS?">
+				<EnumerationOption value="0" description="No"/>
+				<EnumerationOption value="1" description="Sí"/>
+			</AttributeDefinition>	
+			<DerivedAttributeDefinition id="cr7" description="Resultat" multiplicity="maximalOne" 
+			additionalDescription="Si = 0 Apte (Risc Baix)|| Si &gt; 0 No apte (Risc Moderat o Alt)"
+			expression="number(cr1,0) + number(cr2,0) + number(cr3,0) + number(cr4,0) + number(cr6,0)" />				
+		</EntityDefinition>
+		
 		
         <EntityDefinition id="LCS1_SelfCareAutoTestEPOC" description="Capacitat d'autocura - MPOC">
             <AttributeDefinition id="scat_epoc1" type="enumeration" multiplicity="maximalOne" description="1. Em peso cada día">
@@ -1147,7 +1177,8 @@
 				
 				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodexGold.FEVNumberTotal1"/>	
 				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodexGold.MMRCTotal"/>					
-				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodexGold.codextotal"/>					
+				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodexGold.codextotal"/>		
+				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_CardiacRehabilitation.cr7"/>				
 		</SummarySectionDefinition>
 	 
 	    <SummarySectionDefinition id="LCS1_Barriers" description="Barreres" position="RIGHT">   			
@@ -1169,7 +1200,7 @@
                     <TaskParamDefinition path="LCS1_Settings.Nurse" isReadOnly="false" isMandatory="true"/>                              
                     <TaskParamDefinition path="LCS1_Settings.SocialCareer" isReadOnly="false" isMandatory="true"/>            
                 </HumanTaskDefinition>					
-       
+       	   
 	 			<HumanTaskDefinition id="LCS1_InclusionDiagnostic" description="Diagnòstic d'inclusió" ownerPath="LCS1_Settings.CaseManager" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1_InclusionDiagnostic" entityAttachPath="LCS1_Identification.LCS1_InclusionDiagnostic">
                     <SentryDefinition>
                         <precondition processDefinitionId="LCS1_SelectPatient"/>
@@ -1388,6 +1419,19 @@
 				ownerPath="LCS1_Settings.Clinician" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS1_DiagnosisNyha" entityAttachPath="LCS1_Evaluation.LCS1_DiagnosisNyha">                
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisNyha.nyha1" isReadOnly="false" isMandatory="true"/>
 				</HumanTaskDefinition>
+				
+				<HumanTaskDefinition id="LCS1_CardiacRehabilitation" description="Diagnóstic - Diagnosis Rehabilitació-cardiaca [dependència amb NYHA]" ownerPath="LCS1_Settings.CaseManager" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1_CardiacRehabilitation" entityAttachPath="LCS1_Evaluation.LCS1_CardiacRehabilitation">
+                    <SentryDefinition>
+                        <precondition processDefinitionId="LCS1_DiagnosisNyhaHT"/>
+                    </SentryDefinition>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_CardiacRehabilitation.cr1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_CardiacRehabilitation.cr2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_CardiacRehabilitation.cr3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_CardiacRehabilitation.cr4" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_CardiacRehabilitation.cr5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_CardiacRehabilitation.cr6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_CardiacRehabilitation.cr7" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>		   				
 
 				<HumanTaskDefinition id="LCS1_DiagnosisCodexGold" description="Diagnòstic - Funcional MPOC: FEV1/mMRC/GOLD/CODEX [dependència amb Charlson]"
 				ownerPath="LCS1_Settings.Clinician" isMandatory="false" repeatable="ONCE" activation="MANUAL"  entityDefinitionId="LCS1_DiagnosisCodexGold" entityAttachPath="LCS1_Evaluation.LCS1_DiagnosisCodexGold">                
@@ -1533,7 +1577,7 @@
                 </DualTaskDefinition>				
 
                 <DualTaskDefinition id="LCS1_PhysicalActivityAHWP" externalId="PhysicalActivity"
-				description="Activitat física"
+				description="Prescripció de la monitorització - Activitat física"
 				ownerPath="LCS1_Settings.Clinician" dueDatePath="LCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS1_PhysicalActivityAH" entityAttachPath="LCS1_Workplan.LCS1_PhysicalActivityAH">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
@@ -1542,11 +1586,12 @@
                     <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_PhysicalActivityAH.dailysteps" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_PhysicalActivityAH.dailylowlevel" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_PhysicalActivityAH.dailymediumlevel" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_PhysicalActivityAH.dailyhighlevel" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition part="AUTOMATED" path="LCS1_Workplan.LCS1_PhysicalActivityAH.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>			
 			
                 <DualTaskDefinition id="LCS1_PhysicalActivityCardiacRehabilAHWP" externalId="PhysicalActivity"
-				description="Activitat física - Rehabilitació cardíaca"
+				description="Activitat física - Rehabilitació"
 				ownerPath="LCS1_Settings.Clinician" dueDatePath="LCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS1_PhysicalActivityAH" entityAttachPath="LCS1_Workplan.LCS1_PhysicalActivityAH">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
