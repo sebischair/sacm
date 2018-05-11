@@ -457,4 +457,26 @@ router.post('/:id/duedate', (req, res, next)=>{
         res.status(500).send(err);
     })
 });
+
+/**
+ * @api {post} /humantasks/:id/externalid/:externalid Set HumanTask ExternalId
+ * @apiName SetExternalIdHumanTask
+ * @apiGroup HumanTasks
+ * @apiParam {String} id ID of a HumanTask
+ * @apiParam {String} externalId
+ * @apiSampleRequest /humantasks/:id/externalid/:externalid
+ * @apiSuccessExample {json} Success-Response:
+ *     {
+ *     }
+ */
+router.post('/:id/externalid/:externalid', (req, res, next)=>{
+    HumanTask.setExternalId(req.jwt, req.params.id, req.params.externalid)
+      .then(c=>{
+          res.status(200).send(c);
+      })
+      .catch(err=>{
+          res.status(500).send(err);
+      })
+});
+
 module.exports = router;

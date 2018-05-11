@@ -149,4 +149,26 @@ router.post('/:id/owner/:userid', (req, res, next)=>{
     })
 });
 
+
+/**
+ * @api {post} /automatedtasks/:id/externalid/:externalid Set AutomatedTask ExternalId
+ * @apiName SetExternalIdAutomatedTask
+ * @apiGroup AutomatedTasks
+ * @apiParam {String} id ID of a AutomatedTask
+ * @apiParam {String} externalId
+ * @apiSampleRequest /automatedtasks/:id/externalid/:externalid
+ * @apiSuccessExample {json} Success-Response:
+ *     {
+ *     }
+ */
+router.post('/:id/externalid/:externalid', (req, res, next)=>{
+    AutomatedTask.setExternalId(req.jwt, req.params.id, req.params.externalid)
+      .then(c=>{
+          res.status(200).send(c);
+      })
+      .catch(err=>{
+          res.status(500).send(err);
+      })
+});
+
 module.exports = router;

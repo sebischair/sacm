@@ -53,6 +53,10 @@ export default class HumanTask extends Model{
     return http.post(jwt, '/humantasks/'+humanTaskId+'/duedate', {dueDate: dueDate});
   }
 
+  static setExternalId(jwt, humanTaskId, externalId){
+    return http.post(jwt, '/humantasks/'+humanTaskId+'/externalid/'+externalId);
+  }
+
   static findMeActive(jwt) {
     return http.get(jwt, '/humantasks/me/active');
   }

@@ -1097,8 +1097,111 @@
 		<EntityDefinition id="LCS1_Workplan">			
 			<AttributeDefinition id="LCS1_MonitoringPrescriptionAHSystolic" type="Link.EntityDefinition.LCS1_MonitoringPrescriptionSystolic" multiplicity="any" /> 			
 			<AttributeDefinition id="LCS1_MonitoringPrescriptionAHDiastolic" type="Link.EntityDefinition.LCS1_MonitoringPrescriptionDiastolic" multiplicity="any" /> 
-			<AttributeDefinition id="LCS1_PhysicalActivityAH" type="Link.EntityDefinition.LCS1_PhysicalActivityAH" multiplicity="any" />
+			<AttributeDefinition id="LCS1_PhysicalActivityAH" type="Link.EntityDefinition.LCS1_PhysicalActivity" multiplicity="any" />				
+			<AttributeDefinition id="LCS1_HeartPulseAH" type="Link.EntityDefinition.LCS1_HeartPulse" multiplicity="any" />							
+			<AttributeDefinition id="LCS1_WeightAH" type="Link.EntityDefinition.LCS1_Weight" multiplicity="any" />				
+			<AttributeDefinition id="LCS1_SP02AH" type="Link.EntityDefinition.LCS1_SP02" multiplicity="any" />							
 		</EntityDefinition>				
+		
+		<EntityDefinition id="LCS1_Weight">
+            <AttributeDefinition id="type" type="enumeration" defaultValues="['WEIGHT']" multiplicity="maximalOne" description="Tipus de mesura" additionalDescription="Seleccioneu el tipus de mesura per a la supervisió del pacient">
+                <EnumerationOption value="WEIGHT" description="Pes"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="alertmin" type="number.min(0)" multiplicity="maximalOne" description="Valor mínim permès" additionalDescription="Valor mínim per a aquesta mesura, ha de ser superior a 0"/>       
+            <AttributeDefinition id="alertmax" type="number.min(0)" multiplicity="maximalOne" description="Valor màxim permès" additionalDescription="El valor màxim d'aquesta mesura, ha de ser superior a 0"/>      
+            <AttributeDefinition id="alertfreq" type="number" defaultValues="[1]" multiplicity="maximalOne" description="Valor de freqüència d'alerta"/>       
+            <AttributeDefinition id="alertfrequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="maximalOne" description="Unitat de freqüència d'alerta">     
+                <EnumerationOption value="DAYS" description="Dies"/>
+                <EnumerationOption value="WEEKS" description="Setmanes"/>
+                <EnumerationOption value="MONTHS" description="Mesos"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="freq" type="number.min(0)" defaultValues="[1]" multiplicity="maximalOne" description="Freqüència"/> 
+            <AttributeDefinition id="frequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="maximalOne" description="Unitat de freqüència">     
+                <EnumerationOption value="DAYS" description="Dies"/>
+                <EnumerationOption value="WEEKS" description="Setmanes"/>
+                <EnumerationOption value="MONTHS" description="Mesos"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="maximalOne" description="Retard màxim en minuts" additionalDescription="Retard màxim perque el pacient es prengui la mesura"/> 
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="maximalOne" description="Data d'inici"/> 
+            <AttributeDefinition id="enddate" type="date.after(tartdate)" multiplicity="maximalOne" description="Data de fi"/> 
+            <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="Franges per prendre les mesures" additionalDescription="Es poden seleccionar múltiples franges, cal seleccionar-ne almenys una">     
+                <EnumerationOption value="BREAKFAST" description="Esmorzar"/>
+                <EnumerationOption value="LUNCH" description="Dinar"/>
+                <EnumerationOption value="AFTERNOONSNACK" description="Berenar"/>
+                <EnumerationOption value="DINNER" description="Sopar"/>
+                <EnumerationOption value="BEFORESLEEP" description="Abans d'anar a dormir"/>
+                <EnumerationOption value="ANYTIMEDURINGDAY" description="En qualsevol moment del dia" additionalDescription="Seleccioneu aquesta opció quan el temps del dia no importa"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comentaris" additionalDescription="Proporcioneu suggeriments addicionals pel pacient"/>   
+            <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Mesures"/>                      
+        </EntityDefinition>		
+		
+		<EntityDefinition id="LCS1_SP02">
+            <AttributeDefinition id="type" type="enumeration" defaultValues="['SP02']" multiplicity="maximalOne" description="Tipus de mesura" additionalDescription="Seleccioneu el tipus de mesura per a la supervisió del pacient">
+                <EnumerationOption value="SP02" description="Saturació d'oxigen"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="alertmin" type="number.min(0)" multiplicity="maximalOne" description="Valor mínim permès" additionalDescription="Valor mínim per a aquesta mesura, ha de ser superior a 0"/>       
+            <AttributeDefinition id="alertmax" type="number.min(0)" multiplicity="maximalOne" description="Valor màxim permès" additionalDescription="El valor màxim d'aquesta mesura, ha de ser superior a 0"/>      
+            <AttributeDefinition id="alertfreq" type="number" defaultValues="[1]" multiplicity="maximalOne" description="Valor de freqüència d'alerta"/>       
+            <AttributeDefinition id="alertfrequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="maximalOne" description="Unitat de freqüència d'alerta">     
+                <EnumerationOption value="DAYS" description="Dies"/>
+                <EnumerationOption value="WEEKS" description="Setmanes"/>
+                <EnumerationOption value="MONTHS" description="Mesos"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="freq" type="number.min(0)" defaultValues="[1]" multiplicity="maximalOne" description="Freqüència"/> 
+            <AttributeDefinition id="frequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="maximalOne" description="Unitat de freqüència">     
+                <EnumerationOption value="DAYS" description="Dies"/>
+                <EnumerationOption value="WEEKS" description="Setmanes"/>
+                <EnumerationOption value="MONTHS" description="Mesos"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="maximalOne" description="Retard màxim en minuts" additionalDescription="Retard màxim perque el pacient es prengui la mesura"/> 
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="maximalOne" description="Data d'inici"/> 
+            <AttributeDefinition id="enddate" type="date.after(tartdate)" multiplicity="maximalOne" description="Data de fi"/> 
+            <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="Franges per prendre les mesures" additionalDescription="Es poden seleccionar múltiples franges, cal seleccionar-ne almenys una">     
+                <EnumerationOption value="BREAKFAST" description="Esmorzar"/>
+                <EnumerationOption value="LUNCH" description="Dinar"/>
+                <EnumerationOption value="AFTERNOONSNACK" description="Berenar"/>
+                <EnumerationOption value="DINNER" description="Sopar"/>
+                <EnumerationOption value="BEFORESLEEP" description="Abans d'anar a dormir"/>
+                <EnumerationOption value="ANYTIMEDURINGDAY" description="En qualsevol moment del dia" additionalDescription="Seleccioneu aquesta opció quan el temps del dia no importa"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comentaris" additionalDescription="Proporcioneu suggeriments addicionals pel pacient"/>   
+            <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Mesures"/>                      
+        </EntityDefinition>		
+
+		
+		<EntityDefinition id="LCS1_HeartPulse">
+            <AttributeDefinition id="type" type="enumeration" defaultValues="['HEARTPULSE']" multiplicity="maximalOne" description="Tipus de mesura" additionalDescription="Seleccioneu el tipus de mesura per a la supervisió del pacient">
+                <EnumerationOption value="HEARTPULSE" description="Pols cardíac"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="alertmin" type="number.min(0)" multiplicity="maximalOne" description="Valor mínim permès" additionalDescription="Valor mínim per a aquesta mesura, ha de ser superior a 0"/>       
+            <AttributeDefinition id="alertmax" type="number.min(0)" multiplicity="maximalOne" description="Valor màxim permès" additionalDescription="El valor màxim d'aquesta mesura, ha de ser superior a 0"/>      
+            <AttributeDefinition id="alertfreq" type="number" defaultValues="[1]" multiplicity="maximalOne" description="Valor de freqüència d'alerta"/>       
+            <AttributeDefinition id="alertfrequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="maximalOne" description="Unitat de freqüència d'alerta">     
+                <EnumerationOption value="DAYS" description="Dies"/>
+                <EnumerationOption value="WEEKS" description="Setmanes"/>
+                <EnumerationOption value="MONTHS" description="Mesos"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="freq" type="number.min(0)" defaultValues="[1]" multiplicity="maximalOne" description="Freqüència"/> 
+            <AttributeDefinition id="frequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="maximalOne" description="Unitat de freqüència">     
+                <EnumerationOption value="DAYS" description="Dies"/>
+                <EnumerationOption value="WEEKS" description="Setmanes"/>
+                <EnumerationOption value="MONTHS" description="Mesos"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="maximalOne" description="Retard màxim en minuts" additionalDescription="Retard màxim perque el pacient es prengui la mesura"/> 
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="maximalOne" description="Data d'inici"/> 
+            <AttributeDefinition id="enddate" type="date.after(tartdate)" multiplicity="maximalOne" description="Data de fi"/> 
+            <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="Franges per prendre les mesures" additionalDescription="Es poden seleccionar múltiples franges, cal seleccionar-ne almenys una">     
+                <EnumerationOption value="BREAKFAST" description="Esmorzar"/>
+                <EnumerationOption value="LUNCH" description="Dinar"/>
+                <EnumerationOption value="AFTERNOONSNACK" description="Berenar"/>
+                <EnumerationOption value="DINNER" description="Sopar"/>
+                <EnumerationOption value="BEFORESLEEP" description="Abans d'anar a dormir"/>
+                <EnumerationOption value="ANYTIMEDURINGDAY" description="En qualsevol moment del dia" additionalDescription="Seleccioneu aquesta opció quan el temps del dia no importa"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comentaris" additionalDescription="Proporcioneu suggeriments addicionals pel pacient"/>   
+            <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Mesures"/>                      
+        </EntityDefinition>		
 		
 		<EntityDefinition id="LCS1_MonitoringPrescriptionSystolic">
             <AttributeDefinition id="type" type="enumeration" defaultValues="['SYSTOLICBLOODPRESSURE']" multiplicity="maximalOne" description="Tipus de mesura" additionalDescription="Seleccioneu el tipus de mesura per a la supervisió del pacient">
@@ -1165,8 +1268,8 @@
             <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comentaris" additionalDescription="Proporcioneu suggeriments addicionals pel pacient"/>   
             <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Mesures"/>                      
         </EntityDefinition>
-		
-		<EntityDefinition id="LCS1_PhysicalActivityAH">
+
+		<EntityDefinition id="LCS1_PhysicalActivity">
             <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="maximalOne" description="Data d'inici"/>
             <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="maximalOne" description="Data de fi"/>       
             <AttributeDefinition id="dailysteps" type="number.min(0).max(100000)" defaultValues="[10000]" multiplicity="maximalOne" description="Número de passos a fer durant el dia"/>       
@@ -1618,9 +1721,69 @@
                     <TaskParamDefinition part="AUTOMATED" path="LCS1_Workplan.LCS1_MonitoringPrescriptionAHDiastolic.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>				
 
+                <DualTaskDefinition id="LCS1_WeightAHWP" externalId="MonitoringPrescription"
+				description="Prescripció de la monitorització - Pes"
+				ownerPath="LCS1_Settings.Clinician" dueDatePath="LCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS1_Weight" entityAttachPath="LCS1_Workplan.LCS1_WeightAH">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_WeightAH.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_WeightAH.alertmin" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_WeightAH.alertmax" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_WeightAH.alertfreq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_WeightAH.alertfrequnit" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_WeightAH.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_WeightAH.frequnit" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_WeightAH.maxdelay" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_WeightAH.startdate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_WeightAH.enddate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_WeightAH.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_WeightAH.comments" isReadOnly="false" isMandatory="false"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="LCS1_Workplan.LCS1_WeightAH.measurement" isReadOnly="false" isMandatory="true"/>
+                </DualTaskDefinition>							
+
+                <DualTaskDefinition id="LCS1_SP02AHWP" externalId="MonitoringPrescription"
+				description="Prescripció de la monitorització - Saturació d'oxigen"
+				ownerPath="LCS1_Settings.Clinician" dueDatePath="LCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS1_SP02" entityAttachPath="LCS1_Workplan.LCS1_SP02AH">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_SP02AH.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_SP02AH.alertmin" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_SP02AH.alertmax" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_SP02AH.alertfreq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_SP02AH.alertfrequnit" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_SP02AH.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_SP02AH.frequnit" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_SP02AH.maxdelay" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_SP02AH.startdate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_SP02AH.enddate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_SP02AH.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_SP02AH.comments" isReadOnly="false" isMandatory="false"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="LCS1_Workplan.LCS1_SP02AH.measurement" isReadOnly="false" isMandatory="true"/>
+                </DualTaskDefinition>							
+				
+                <DualTaskDefinition id="LCS1_HeartPulseAHWP" externalId="MonitoringPrescription"
+				description="Prescripció de la monitorització - Pols cardíac"
+				ownerPath="LCS1_Settings.Clinician" dueDatePath="LCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS1_HeartPulse" entityAttachPath="LCS1_Workplan.LCS1_HeartPulseAH">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_HeartPulseAH.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_HeartPulseAH.alertmin" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_HeartPulseAH.alertmax" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_HeartPulseAH.alertfreq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_HeartPulseAH.alertfrequnit" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_HeartPulseAH.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_HeartPulseAH.frequnit" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_HeartPulseAH.maxdelay" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_HeartPulseAH.startdate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_HeartPulseAH.enddate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_HeartPulseAH.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_HeartPulseAH.comments" isReadOnly="false" isMandatory="false"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="LCS1_Workplan.LCS1_HeartPulseAH.measurement" isReadOnly="false" isMandatory="true"/>
+                </DualTaskDefinition>							
+				
                 <DualTaskDefinition id="LCS1_PhysicalActivityAHWP" externalId="PhysicalActivity"
 				description="Prescripció de la monitorització - Activitat física"
-				ownerPath="LCS1_Settings.Clinician" dueDatePath="LCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS1_PhysicalActivityAH" entityAttachPath="LCS1_Workplan.LCS1_PhysicalActivityAH">
+				ownerPath="LCS1_Settings.Clinician" dueDatePath="LCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS1_PhysicalActivity" entityAttachPath="LCS1_Workplan.LCS1_PhysicalActivityAH">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_PhysicalActivityAH.startdate" isReadOnly="false" isMandatory="true"/>
@@ -1634,7 +1797,7 @@
 			
                 <DualTaskDefinition id="LCS1_PhysicalActivityCardiacRehabilAHWP" externalId="PhysicalActivity"
 				description="Activitat física - Rehabilitació"
-				ownerPath="LCS1_Settings.Clinician" dueDatePath="LCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS1_PhysicalActivityAH" entityAttachPath="LCS1_Workplan.LCS1_PhysicalActivityAH">
+				ownerPath="LCS1_Settings.Clinician" dueDatePath="LCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS1_PhysicalActivity" entityAttachPath="LCS1_Workplan.LCS1_PhysicalActivityAH">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_PhysicalActivityAH.startdate" isReadOnly="false" isMandatory="true"/>
