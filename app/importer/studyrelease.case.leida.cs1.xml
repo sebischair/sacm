@@ -85,7 +85,8 @@
             <AttributeDefinition id="pConsent1" type="enumeration" multiplicity="maximalOne" description="Accepta participar al procés clínic descrit al present document?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
-            </AttributeDefinition>
+            </AttributeDefinition>						
+			<AttributeDefinition id="pConsent2" uiReference="link" type="string" description="PROVA! Enllaç per descarregar el fitxer https://eurecatcloud.sharepoint.com"   defaultValue="https://eurecatcloud.sharepoint.com"/>
 		</EntityDefinition>	
 
         <EntityDefinition id="LCS1_Lace">
@@ -211,7 +212,8 @@
 			<AttributeDefinition id="LCS1_DiagnosisCodexGold" type="Link.EntityDefinition.LCS1_DiagnosisCodexGold" multiplicity="any"/>  
 			
 			<AttributeDefinition id="LCS1_SF12Evaluation" type="Link.EntityDefinition.LCS1_SF12Def" multiplicity="any"/>			
-			<AttributeDefinition id="LCS1_CardiacRehabilitation" type="Link.EntityDefinition.LCS1_CardiacRehabilitation" multiplicity="any" description="Diagnóstic - Rehabilitació-cardiaca"/> 
+			<AttributeDefinition id="LCS1_CardiacRehabilitation" type="Link.EntityDefinition.LCS1_CardiacRehabilitation" multiplicity="any" description="Diagnòstic - Rehabilitació-cardiaca"/> 
+			<AttributeDefinition id="LCS1_RespiratoryRehabilitation" type="Link.EntityDefinition.LCS1_RespiratoryRehabilitation" multiplicity="any" description="Diagnòstic - Rehabilitació-respiratòria"/> 
 			
 			<AttributeDefinition id="LCS1_SelfCareAutoTestEPOC" type="Link.EntityDefinition.LCS1_SelfCareAutoTestEPOC" multiplicity="any"/> 
 			<AttributeDefinition id="LCS1_SelfCareAutoTestHF" type="Link.EntityDefinition.LCS1_SelfCareAutoTestHF" multiplicity="any"/> 			
@@ -865,7 +867,32 @@
 			additionalDescription="Si = 0 Apte (Risc Baix)|| Si &gt; 0 No apte (Risc Moderat o Alt)"
 			expression="number(cr1,0) + number(cr2,0) + number(cr3,0) + number(cr4,0) + number(cr6,0)" />				
 		</EntityDefinition>
-		
+				
+		<EntityDefinition id="LCS1_RespiratoryRehabilitation" >
+			<AttributeDefinition id="rr1" type="enumeration" multiplicity="maximalOne" description="El/la pacient requereix oxigenoteràpia crònica domiciliària?">
+				<EnumerationOption value="0" description="No"/>
+				<EnumerationOption value="1" description="Sí"/>
+			</AttributeDefinition>
+			<AttributeDefinition id="rr2" type="enumeration" multiplicity="maximalOne" description="El/la pacient té un FEV1 <30% del valor de referència?">
+				<EnumerationOption value="0" description="No"/>
+				<EnumerationOption value="1" description="Sí"/>
+			</AttributeDefinition>
+			<AttributeDefinition id="rr3" type="enumeration" multiplicity="maximalOne" description="El/la pacient té una puntuació> 2 en l'escala d'estrès mMRC?">
+				<EnumerationOption value="0" description="No"/>
+				<EnumerationOption value="1" description="Sí"/>
+			</AttributeDefinition>
+			<AttributeDefinition id="rr4" type="enumeration" multiplicity="maximalOne" description="El/la pacient presenta una desaturació d'O2 per sota del 90% amb la prova de la marxa de 6 minuts?">
+				<EnumerationOption value="0" description="No"/>
+				<EnumerationOption value="1" description="Sí"/>
+			</AttributeDefinition>
+			<AttributeDefinition id="rr5" type="enumeration" multiplicity="maximalOne" description="El/la pacient camina una distància menor de 250 metres en la prova de la marxa de 6 minuts?">
+				<EnumerationOption value="0" description="No"/>
+				<EnumerationOption value="1" description="Sí"/>
+			</AttributeDefinition>	
+			<DerivedAttributeDefinition id="rr6" description="Rehabilitació-respiratòria" multiplicity="maximalOne" 
+			additionalDescription="Si = 0 Apte (Risc Baix)|| Si &gt; 0 No apte (Risc Moderat o Alt)"
+			expression="number(rr1,0) + number(rr2,0) + number(rr3,0) + number(rr4,0) + number(rr5,0)" />				
+		</EntityDefinition>				
 		
         <EntityDefinition id="LCS1_SelfCareAutoTestEPOC" description="Capacitat d'autocura - MPOC">
             <AttributeDefinition id="scat_epoc1" type="enumeration" multiplicity="maximalOne" description="1. Em peso cada día">
@@ -1182,6 +1209,8 @@
 				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodexGold.MMRCTotal"/>					
 				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodexGold.codextotal"/>		
 				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_CardiacRehabilitation.cr7"/>				
+				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_RespiratoryRehabilitation.rr6"/>
+				
 		</SummarySectionDefinition>
 		
 			<SummarySectionDefinition id="LCS1_Body" description="Diagnosis" position="CENTER">   			
@@ -1259,6 +1288,7 @@
                         <precondition processDefinitionId="LCS1_SelectPatient"/>
                     </SentryDefinition>
                     <TaskParamDefinition path="LCS1_Identification.LCS1_PatientsConsent.pConsent1" isReadOnly="false" isMandatory="true"/>
+					<!--<TaskParamDefinition path="LCS1_Identification.LCS1_PatientsConsent.pConsent2" isReadOnly="true" isMandatory="false"/>-->			
                 </HumanTaskDefinition>	
 			</StageDefinition>
 		  
@@ -1422,7 +1452,7 @@
 				</HumanTaskDefinition>
 				
 				<HumanTaskDefinition id="LCS1_CardiacRehabilitation" description="Diagnòstic - Diagnosis Rehabilitació-cardíaca [dependència amb NYHA]" 
-				ownerPath="LCS1_Settings.CaseManager" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS1_CardiacRehabilitation" entityAttachPath="LCS1_Evaluation.LCS1_CardiacRehabilitation">
+				ownerPath="LCS1_Settings.Clinician" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS1_CardiacRehabilitation" entityAttachPath="LCS1_Evaluation.LCS1_CardiacRehabilitation">
                     <SentryDefinition>
                         <precondition processDefinitionId="LCS1_DiagnosisNyhaHT"/>
                     </SentryDefinition>
@@ -1435,6 +1465,16 @@
                     <TaskParamDefinition path="LCS1_Evaluation.LCS1_CardiacRehabilitation.cr7" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>		   				
 
+				<HumanTaskDefinition id="LCS1_RespiratoryRehabilitation" description="Diagnòstic - Rehabilitació-respiratòria" 
+				ownerPath="LCS1_Settings.Clinician" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS1_RespiratoryRehabilitation" entityAttachPath="LCS1_Evaluation.LCS1_RespiratoryRehabilitation">
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_RespiratoryRehabilitation.rr1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_RespiratoryRehabilitation.rr2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_RespiratoryRehabilitation.rr3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_RespiratoryRehabilitation.rr4" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_RespiratoryRehabilitation.rr5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Evaluation.LCS1_RespiratoryRehabilitation.rr6" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>		   			
+				
 				<HumanTaskDefinition id="LCS1_DiagnosisCodexGold" description="Diagnòstic - Funcional MPOC: FEV1/mMRC/GOLD/CODEX [dependència amb Charlson]"
 				ownerPath="LCS1_Settings.Clinician" isMandatory="false" repeatable="ONCE" activation="MANUAL"  entityDefinitionId="LCS1_DiagnosisCodexGold" entityAttachPath="LCS1_Evaluation.LCS1_DiagnosisCodexGold">                
                     <SentryDefinition>
