@@ -62,24 +62,12 @@
 
 		<!-- Identification Entity Definitions -->
         <EntityDefinition id="LCS2_Identification" description="Identification">
-			<!--<AttributeDefinition id="LCS2_InclusionDiagnostic" type="Link.EntityDefinition.LCS2_InclusionDiagnostic" multiplicity="any" description="Diagnòstic d'inclusió"/> -->
-            <AttributeDefinition id="LCS2_TechnologicalTest" type="Link.EntityDefinition.LCS2_TechnologicalTest" multiplicity="any" description="Technological test"/> 
+			<AttributeDefinition id="LCS2_TechnologicalTest" type="Link.EntityDefinition.LCS2_TechnologicalTest" multiplicity="any" description="Technological test"/> 
             <AttributeDefinition id="LCS2_ComorbidityCharlsonIdentification" type="Link.EntityDefinition.LCS2_ComorbidityCharlsonDef" multiplicity="any" description="Comorbidity Charlson"/> 
             <AttributeDefinition id="LCS2_GMAIdentification" type="Link.EntityDefinition.LCS2_GMADef" multiplicity="any" description="GMA"/> 
             <AttributeDefinition id="LCS2_ComplexityRisk" type="Link.EntityDefinition.LCS2_ComplexityRisk" multiplicity="any" description="Complexity risk"/> 
             <AttributeDefinition id="LCS2_PatientsConsent" type="Link.EntityDefinition.LCS2_PatientsConsent" multiplicity="any" description="Patients consent"/> 			
         </EntityDefinition>
-
-        <!--
-		<EntityDefinition id="LCS2_InclusionDiagnostic">
-			<AttributeDefinition id="inclusiondiag" type="enumeration" multiplicity="maximalOne" description="Quina operació s'ha de fer el pacient?">
-				<EnumerationOption value="1" description="PGE - Pròtesi de genoll esquerra (LKP)"/>
-				<EnumerationOption value="2" description="PGD - Pròtesi de genoll dreta (RKP)"/>
-				<EnumerationOption value="3" description="AME - Artroplàstia de maluc esquerra (LHA) "/>
-				<EnumerationOption value="0" description="AMD - Artroplàstia de maluc dreta (RHA)"/>
-			</AttributeDefinition>			
-		</EntityDefinition>			
-        -->	
 		
 		<EntityDefinition id="LCS2_TechnologicalTest" >
 			<AttributeDefinition id="tech1" type="enumeration" multiplicity="maximalOne" description="Vosté o el seu cuidador tenen connexió a Internet?">
@@ -1050,21 +1038,17 @@
         </EntityDefinition>				
 						
 		<!-- Workplan Before Hospitalization Entity Definitions -->			
-		<EntityDefinition id="LCS2_WorkplanBeforeHospitalization">
-			<!--<AttributeDefinition id="LCS2_MonitoringHospitalizationMeasureDH" type="Link.EntityDefinition.LCS2_MonitoringHospitalizationMeasureDef"/> -->		
+		<EntityDefinition id="LCS2_WorkplanBeforeHospitalization">	
 			<AttributeDefinition id="LCS2_CommentBH" type="Link.EntityDefinition.LCS2_Comment" multiplicity="any"/> 			
 			<AttributeDefinition id="LCS2_AnaemiaAssessmentAndManagementNutritionBH" type="Link.EntityDefinition.LCS2_AnaemiaAssessmentAndManagementNutritionDef" multiplicity="any"/>					    
 			<AttributeDefinition id="LCS2_BloodPressureControlBH" type="Link.EntityDefinition.LCS2_BloodPressureControlBH" multiplicity="any"/>		  
 		    <AttributeDefinition id="LCS2_DiabetesControlBH" type="Link.EntityDefinition.LCS2_DiabetesControlBH" multiplicity="any"/>
-
 			<!-- TO BE DELETED
 			<AttributeDefinition id="LCS2_EVAECNDBH" type="Link.EntityDefinition.LCS2_EVAECNDDef" multiplicity="any"/> 
 		    <AttributeDefinition id="LCS2_SLANSSBH" type="Link.EntityDefinition.LCS2_SLANSSDef" multiplicity="any"/>		
-			-->
-			
+			-->			
 			<AttributeDefinition id="LCS2_MonitoringPrescriptionBHSystolic" type="Link.EntityDefinition.LCS2_MonitoringPrescriptionSystolic" multiplicity="any" /> 
 			<AttributeDefinition id="LCS2_MonitoringPrescriptionBHDiastolic" type="Link.EntityDefinition.LCS2_MonitoringPrescriptionDiastolic" multiplicity="any" /> 
-			<!--<AttributeDefinition id="LCS2_MonitoringPrescriptionBHBodyTemperature" type="Link.EntityDefinition.LCS2_MonitoringPrescriptionBodyTemperature" multiplicity="any" />--> 			
 		</EntityDefinition>
 			
 		<EntityDefinition id="LCS2_AnaemiaAssessmentAndManagementNutritionDef" > 		
@@ -1324,16 +1308,7 @@
                     <TaskParamDefinition path="LCS2_Settings.Anesthesiologist" isReadOnly="false" isMandatory="true"/> 
                     <TaskParamDefinition path="LCS2_Settings.Physiotherapist" isReadOnly="false" isMandatory="true"/> 
                 </HumanTaskDefinition>					
-                
-                <!--
-				<HumanTaskDefinition id="LCS2_InclusionDiagnostic" description="Diagnòstic d'inclusió" ownerPath="LCS2_Settings.CaseManager" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_InclusionDiagnostic" entityAttachPath="LCS2_Identification.LCS2_InclusionDiagnostic">
-                    <SentryDefinition>
-                        <precondition processDefinitionId="LCS2_SelectPatient"/>
-                    </SentryDefinition>
-                    <TaskParamDefinition path="LCS2_Identification.LCS2_InclusionDiagnostic.inclusiondiag" isReadOnly="false" isMandatory="true"/>
-                </HumanTaskDefinition>	
-                -->
-				
+                				
                 <!-- Gestor de Casos -->
                 <HumanTaskDefinition id="LCS2_TechnologicalTest" description="Test d'adherència a la tecnología" ownerPath="LCS2_Settings.CaseManager" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_TechnologicalTest" entityAttachPath="LCS2_Identification.LCS2_TechnologicalTest">
                     <SentryDefinition>
@@ -1876,18 +1851,11 @@
         <TaskParam path="LCS2_Settings.Physiotherapist" userValue="bigordaa"/>  
     </Action>  
 
-<!--
-    <Action id="CompleteHumanTask" processId="LCS2_InclusionDiagnostic" breakpoint="true">  
-        <TaskParam path="LCS2_Identification.LCS2_InclusionDiagnostic.inclusiondiag" values="['1']"/> 
-    </Action>  
--->
-
     <Action id="CompleteHumanTask" processId="LCS2_TechnologicalTest" breakpoint="true">  
         <TaskParam path="LCS2_Identification.LCS2_TechnologicalTest.tech1" values="['0']"/> 
         <TaskParam path="LCS2_Identification.LCS2_TechnologicalTest.tech2" values="['1']"/> 
         <TaskParam path="LCS2_Identification.LCS2_TechnologicalTest.tech3" values="['1']"/> 
     </Action>  
-
 
     <Action id="CompleteHumanTask" processId="LCS2_ComorbidityCharlsonIdentificationHT" breakpoint="true">  
         <TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.inclusiondiag" values="['LKP']"/> 
@@ -1930,11 +1898,9 @@
         <TaskParam path="LCS2_Identification.LCS2_GMAIdentification.gma" values="['1']"/> 
     </Action>   
 
-
     <Action id="CompleteHumanTask" processId="LCS2_GMAEvaluationHT" breakpoint="true">    
         <TaskParam path="LCS2_Identification.LCS2_GMAIdentification.gma" values="['1']"/>   
     </Action>  
-
  
      <Action id="CompleteHumanTask" processId="LCS2_ComorbidityCharlsonEvaluationHT" breakpoint="true">    
         <TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch1" values="['0']"/> 
@@ -1959,13 +1925,10 @@
         <TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch20" values="['1']"/>    
     </Action>  
 
-
     <Action id="CompleteHumanTask" processId="LCS2_ComorbidityPfeiffer" breakpoint="true">    
         <TaskParam path="LCS2_Evaluation.LCS2_ComorbidityPfeiffer.pfeiffer1" values="['1']"/>   
     </Action>    
-
   
-
     <Action id="CompleteHumanTask" processId="LCS2_HospitalAnxietyAndDepressionScale" breakpoint="true">  
         <TaskParam path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadA1" values="['1']"/> 
         <TaskParam path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadA2" values="['1']"/> 
@@ -1983,8 +1946,6 @@
         <TaskParam path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadD7" values="['1']"/> 
     </Action> 
 
-
-
     <Action id="CompleteHumanTask" processId="LCS2_Barthel" breakpoint="true">    
         <TaskParam path="LCS2_Evaluation.LCS2_Barthel.barthel1" values="['0']"/>
         <TaskParam path="LCS2_Evaluation.LCS2_Barthel.barthel2" values="['0']"/>
@@ -1996,7 +1957,6 @@
         <TaskParam path="LCS2_Evaluation.LCS2_Barthel.barthel8" values="['0']"/>
         <TaskParam path="LCS2_Evaluation.LCS2_Barthel.barthel9" values="['0']"/>
         <TaskParam path="LCS2_Evaluation.LCS2_Barthel.barthel10" values="['0']"/>
-
     </Action> 
 
     <Action id="CompleteHumanTask" processId="LCS2_DiagnosisCommunicationHT" breakpoint="true"> 
@@ -2151,8 +2111,6 @@
     </Action>  
 -->
 
-  
-
     <Action id="CompleteHumanTask" processId="LCS2_AnaemiaAssessmentAndManagementNutritionBHHT" breakpoint="true">  
         <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_AnaemiaAssessmentAndManagementNutritionBH.nut0" values="['1']"/> 
         <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_AnaemiaAssessmentAndManagementNutritionBH.nut3" values="['1']"/> 
@@ -2263,9 +2221,6 @@
         <TaskParam path="LCS2_Discharge.LCS2_EQ-5DDischarge.EQ-5D-5" values="['1']"/> 
 		<TaskParam path="LCS2_Discharge.LCS2_EQ-5DDischarge.EQ-5D-6" values="[51]"/> 
     </Action> 
-
-
-
 </Execution>
 
 </SACMDefinition>
