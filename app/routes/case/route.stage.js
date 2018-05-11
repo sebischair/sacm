@@ -306,6 +306,26 @@ router.post('/:id/owner/:userid', (req, res, next)=>{
     })
 });
 
+/**
+ * @api {post} /stages/:id/externalid/:externalid Set Stage ExternalId
+ * @apiName SetExternalIdStage
+ * @apiGroup Stages
+ * @apiParam {String} id ID of a Stage
+ * @apiParam {String} externalId
+ * @apiSampleRequest /stages/:id/externalid/:externalid
+ * @apiSuccessExample {json} Success-Response:
+ *     {
+ *     }
+ */
+router.post('/:id/externalid/:externalid', (req, res, next)=>{
+  Stage.setExternalId(req.jwt, req.params.id, req.params.externalid)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+        res.status(500).send(err);
+    })
+});
 
 
 module.exports = router;

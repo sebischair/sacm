@@ -687,4 +687,26 @@ router.post('/:id/duedate', (req, res, next)=>{
         res.status(500).send(err);
     })
 });
+
+/**
+ * @api {post} /dualtasks/:id/externalid/:externalid Set DualTask ExternalId
+ * @apiName SetExternalIdDualTask
+ * @apiGroup DualTasks
+ * @apiParam {String} id ID of a DualTask
+ * @apiParam {String} externalId
+ * @apiSampleRequest /dualtasks/:id/externalid/:externalid
+ * @apiSuccessExample {json} Success-Response:
+ *     {
+ *     }
+ */
+router.post('/:id/externalid/:externalid', (req, res, next)=>{
+    DualTask.setExternalId(req.jwt, req.params.id, req.params.externalid)
+      .then(c=>{
+          res.status(200).send(c);
+      })
+      .catch(err=>{
+          res.status(500).send(err);
+      })
+});
+
 module.exports = router;
