@@ -1394,9 +1394,7 @@
             </StageDefinition>
 
             <StageDefinition id="ICS2_Workplan" description="תוכנית הטיפול" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Workplan" entityAttachPath="ICS2_Workplan">
-                <SentryDefinition>
-                    <precondition processDefinitionId="ICS2_CaseEvaluation"/>
-                </SentryDefinition>
+               
 
                 <DualTaskDefinition id="ICS2_PhysicalActivity" externalId="PhysicalActivity" description="הנחיות הליכה" ownerPath="ICS2_CaseManager" dueDatePath="ICS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="ICS2_PhysicalActivity" entityAttachPath="ICS2_Workplan.ICS2_PhysicalActivity">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
