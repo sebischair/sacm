@@ -33,26 +33,26 @@
     <Workspace staticId="2c9480885d1737ef015d74deecbf0004" id="Idibaps">
 
         <EntityDefinition id="BCS2_CaseData" description="Case Data">
-            <AttributeDefinition id="BCS2_Identification" type="Link.EntityDefinition.BCS2_Identification" description="Identification"/>
+            <AttributeDefinition id="BCS2_Identification" type="Link.EntityDefinition.BCS2_Identification" description="Identification" multiplicity="any"/>
             <AttributeDefinition id="BCS2_Evaluation" type="Link.EntityDefinition.BCS2_Evaluation" description="Evaluation" multiplicity="any"/>
-            <AttributeDefinition id="BCS2_Workplan" type="Link.EntityDefinition.BCS2_Workplan" description="Workplan"/> 
-            <AttributeDefinition id="BCS2_Discharge" type="Link.EntityDefinition.BCS2_Discharge" description="Discharge"/>  
-            <AttributeDefinition id="BCS2_Settings" type="Link.EntityDefinition.BCS2_Settings" description="Settings"/>   
+            <AttributeDefinition id="BCS2_Workplan" type="Link.EntityDefinition.BCS2_Workplan" description="Workplan" multiplicity="any"/> 
+            <AttributeDefinition id="BCS2_Discharge" type="Link.EntityDefinition.BCS2_Discharge" description="Discharge" multiplicity="any"/>  
+            <AttributeDefinition id="BCS2_Settings" type="Link.EntityDefinition.BCS2_Settings" description="Settings" multiplicity="any"/>   
         </EntityDefinition>
 
         <!-- Settings Entity Definitions -->
         <EntityDefinition id="BCS2_Settings" description="Settings">
-            <AttributeDefinition id="Patient" type="Link.Users(IdibapsPatients)" description="Patient"/>
-            <AttributeDefinition id="CaseManager" type="Link.Users(IdibapsCaseManagers)" description="Case Manager"/>            
-            <AttributeDefinition id="Nurse" type="Link.Users(IdibapsNurses)" description="Enfermero"/>
-            <AttributeDefinition id="Anesthesiologist" type="Link.Users(IdibapsAnesthesiologists)" description="Anestesista"/>
-            <AttributeDefinition id="AnesthesiologistOrNurse" type="Link.Users(IdibapsAnesthesiologists,IdibapsNurses)" description="Anestesista/Enfermero" additionalDescription="Select a Anestesista or Enfermero!"/>
-            <AttributeDefinition id="Nutritionist" type="Link.Users(IdibapsNutritionists)" description="Nutricionista"/>
-            <AttributeDefinition id="NutritionistOrNurse" type="Link.Users(IdibapsNutritionists)" description="Nutricionista/Enfermero" additionalDescription="Select a Nutricionista or Enfermero!"/>
-            <AttributeDefinition id="Physiotherapist" type="Link.Users(IdibapsPhysiotherapists)" description="Fisioterapeuta"/>
-            <AttributeDefinition id="Psychologists" type="Link.Users(IdibapsPsychologists)" description="Psicólogo"/>
-            <AttributeDefinition id="Clinicians" type="Link.Users(IdibapsClinicians)" description="Clinician"/>   
-            <AttributeDefinition id="EvaluationDueDate" type="date.after(TODAY)" description="Evaluation default due date"/>   
+            <AttributeDefinition id="Patient" type="Link.Users(IdibapsPatients)" multiplicity="exactlyOne" description="Patient" />
+            <AttributeDefinition id="CaseManager" type="Link.Users(IdibapsCaseManagers)" multiplicity="exactlyOne" description="Case Manager"/>            
+            <AttributeDefinition id="Nurse" type="Link.Users(IdibapsNurses)" multiplicity="exactlyOne" description="Enfermero"/>
+            <AttributeDefinition id="Anesthesiologist" type="Link.Users(IdibapsAnesthesiologists)" multiplicity="exactlyOne" description="Anestesista"/>
+            <AttributeDefinition id="AnesthesiologistOrNurse" type="Link.Users(IdibapsAnesthesiologists,IdibapsNurses)" multiplicity="exactlyOne" description="Anestesista/Enfermero" additionalDescription="Select a Anestesista or Enfermero!"/>
+            <AttributeDefinition id="Nutritionist" type="Link.Users(IdibapsNutritionists)" multiplicity="exactlyOne" description="Nutricionista"/>
+            <AttributeDefinition id="NutritionistOrNurse" type="Link.Users(IdibapsNutritionists)" multiplicity="exactlyOne" description="Nutricionista/Enfermero" additionalDescription="Select a Nutricionista or Enfermero!"/>
+            <AttributeDefinition id="Physiotherapist" type="Link.Users(IdibapsPhysiotherapists)" multiplicity="exactlyOne" description="Fisioterapeuta"/>
+            <AttributeDefinition id="Psychologists" type="Link.Users(IdibapsPsychologists)" multiplicity="exactlyOne" description="Psicólogo"/>
+            <AttributeDefinition id="Clinicians" type="Link.Users(IdibapsClinicians)" multiplicity="exactlyOne" description="Clinician"/>   
+            <AttributeDefinition id="EvaluationDueDate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Evaluation default due date"/>   
         </EntityDefinition>
 
         <!-- Identification Entity Definitions -->
@@ -61,10 +61,10 @@
         </EntityDefinition>
 
         <EntityDefinition id="BCS2_Inclusion" description="Inclusion">
-            <AttributeDefinition id="name" type="string" multiplicity="maximalOne" description="Nombre"/>
-            <AttributeDefinition id="nhc" type="number" multiplicity="maximalOne" description="Número de história clínica"/>
-            <AttributeDefinition id="age" type="number" multiplicity="maximalOne" description="Edad"/>
-            <AttributeDefinition id="MajorSurgerySpecialty" type="enumeration" multiplicity="maximalOne" description="Cirugía mayor de alguna de las siguientes especialidades:">
+            <AttributeDefinition id="name" type="string" multiplicity="exactlyOne" description="Nombre"/>
+            <AttributeDefinition id="nhc" type="number" multiplicity="exactlyOne" description="Número de história clínica"/>
+            <AttributeDefinition id="age" type="number" multiplicity="exactlyOne" description="Edad"/>
+            <AttributeDefinition id="MajorSurgerySpecialty" type="enumeration" multiplicity="exactlyOne" description="Cirugía mayor de alguna de las siguientes especialidades:">
                 <EnumerationOption value="0" description="Digestivo"/>
                 <EnumerationOption value="1" description="Ginecología"/>
                 <EnumerationOption value="2" description="Cardiovascular"/>
@@ -72,16 +72,16 @@
                 <EnumerationOption value="4" description="Tórax"/>
                 <EnumerationOption value="5" description="ICMEQ"/>
             </AttributeDefinition>
-            <AttributeDefinition id="AsaScore" type="enumeration" multiplicity="maximalOne" description="Nivel alto de riesgo: ASA 3-4">
+            <AttributeDefinition id="AsaScore" type="enumeration" multiplicity="exactlyOne" description="Nivel alto de riesgo: ASA 3-4">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="SurgeryPriority" type="enumeration" multiplicity="maximalOne" description="Prioridad deseable para la cirugía:">
+            <AttributeDefinition id="SurgeryPriority" type="enumeration" multiplicity="exactlyOne" description="Prioridad deseable para la cirugía:">
                 <EnumerationOption value="0" description="3-4 semanas"/>
                 <EnumerationOption value="1" description="4-8 semanas"/>
                 <EnumerationOption value="2" description="> 8 semanas"/>
             </AttributeDefinition>
-            <AttributeDefinition id="IdentificacionComments" type="longtext" multiplicity="maximalOne" description="Comentarios"/>
+            <AttributeDefinition id="IdentificacionComments" type="longtext" multiplicity="exactlyOne" description="Comentarios"/>
         </EntityDefinition>
 
         <!-- Evaluation Entity Definitions -->
@@ -103,26 +103,26 @@
         </EntityDefinition>
 
         <EntityDefinition id="BCS2_ASATest" description="ASA Test">
-            <AttributeDefinition id="AsaCalculator" type="string" multiplicity="maximalOne" description="Calculadora online de la American Society of Anaesthesiologists physical status classification"/>
+            <AttributeDefinition id="AsaCalculator" type="string" multiplicity="exactlyOne" description="Calculadora online de la American Society of Anaesthesiologists physical status classification"/>
         </EntityDefinition>
 
         <EntityDefinition id="BCS2_ClinicalInformation" description="Clinical Information">
-            <AttributeDefinition id="SociodemoAddress" type="string" multiplicity="maximalOne" description="Dirección"/>
-            <AttributeDefinition id="SociodemoTelf" type="number" multiplicity="maximalOne" description="Teléfono"/>
-            <AttributeDefinition id="SociodemoEmail" type="string" multiplicity="maximalOne" description="Email"/>
-            <AttributeDefinition id="SociodemoZone" type="enumeration" multiplicity="maximalOne" description="Zona Clínic:">
+            <AttributeDefinition id="SociodemoAddress" type="string" multiplicity="exactlyOne" description="Dirección"/>
+            <AttributeDefinition id="SociodemoTelf" type="number" multiplicity="exactlyOne" description="Teléfono"/>
+            <AttributeDefinition id="SociodemoEmail" type="string" multiplicity="exactlyOne" description="Email"/>
+            <AttributeDefinition id="SociodemoZone" type="enumeration" multiplicity="exactlyOne" description="Zona Clínic:">
                 <EnumerationOption value="0" description="zona Clínic"/>
                 <EnumerationOption value="1" description="Barcelona ciudad"/>
                 <EnumerationOption value="2" description="Barcelona área metropolitana"/>
                 <EnumerationOption value="3" description="Otros"/>
             </AttributeDefinition>
-            <AttributeDefinition id="SociodemoAge" type="number" multiplicity="maximalOne" description="Age"/>
-            <AttributeDefinition id="SociodemoSex" type="enumeration" multiplicity="maximalOne" description="Sexo:">
+            <AttributeDefinition id="SociodemoAge" type="number" multiplicity="exactlyOne" description="Age"/>
+            <AttributeDefinition id="SociodemoSex" type="enumeration" multiplicity="exactlyOne" description="Sexo:">
                 <EnumerationOption value="0" description="Hombre"/>
                 <EnumerationOption value="1" description="Mujer"/>
             </AttributeDefinition>
-            <AttributeDefinition id="SociodemoPhoto" type="string" multiplicity="maximalOne" description="Foto"/> <!-- actually non supported type file -->
-            <AttributeDefinition id="DiagnosisInfo" type="enumeration" multiplicity="maximalOne" description="Diagnosis info">
+            <AttributeDefinition id="SociodemoPhoto" type="string" multiplicity="exactlyOne" description="Foto"/> <!-- actually non supported type file -->
+            <AttributeDefinition id="DiagnosisInfo" type="enumeration" multiplicity="exactlyOne" description="Diagnosis info">
                 <EnumerationOption value="0" description="Digestivo - Obesidad"/>
                 <EnumerationOption value="1" description="Digestivo - Patología gastroesofágica"/>
                 <EnumerationOption value="2" description="Digestivo - Patología colorectal"/>
@@ -153,7 +153,7 @@
                 <EnumerationOption value="27" description="ICMEQ (Trauma/ORL/MF/Plástica) - Cirugía reconstructiva mayor"/>
                 <EnumerationOption value="28" description="ICMEQ (Trauma/ORL/MF/Plástica) - Otros ICEMEQ"/>
             </AttributeDefinition>
-            <AttributeDefinition id="SurgeryInfo" type="enumeration" multiplicity="maximalOne" description="Surgery info">
+            <AttributeDefinition id="SurgeryInfo" type="enumeration" multiplicity="exactlyOne" description="Surgery info">
                 <EnumerationOption value="0" description="Digestivo - Cirugía bariátrica"/>
                 <EnumerationOption value="1" description="Digestivo - Gastrectomia"/>
                 <EnumerationOption value="2" description="Digestivo - Esofaguectomia"/>
@@ -192,27 +192,27 @@
                 <EnumerationOption value="35" description="ICMEQ (Trauma/ORL/MF/Plástica) - Cirugía reconstructiva mayor"/>
                 <EnumerationOption value="36" description="ICMEQ (Trauma/ORL/MF/Plástica) - Otros ICEMEQ"/>
             </AttributeDefinition>
-            <AttributeDefinition id="Onco" type="enumeration" multiplicity="maximalOne" description="Oncològica">
+            <AttributeDefinition id="Onco" type="enumeration" multiplicity="exactlyOne" description="Oncològica">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="Neo" type="enumeration" multiplicity="maximalOne" description="Neoadyuvancia">
+            <AttributeDefinition id="Neo" type="enumeration" multiplicity="exactlyOne" description="Neoadyuvancia">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="NeoStart" type="date" multiplicity="maximalOne" description="Inicio Neoadyuvancia"/>
-            <AttributeDefinition id="NeoEnd" type="date" multiplicity="maximalOne" description="Fin Neoadyuvancia"/>
+            <AttributeDefinition id="NeoStart" type="date" multiplicity="exactlyOne" description="Inicio Neoadyuvancia"/>
+            <AttributeDefinition id="NeoEnd" type="date" multiplicity="exactlyOne" description="Fin Neoadyuvancia"/>
             <!-- Here Charlson?! -->
-            <AttributeDefinition id="Tabaquism" type="enumeration" multiplicity="maximalOne" description="Tabaquismo">
+            <AttributeDefinition id="Tabaquism" type="enumeration" multiplicity="exactlyOne" description="Tabaquismo">
                 <EnumerationOption value="0" description="fumador"/>
                 <EnumerationOption value="1" description="ex fumador"/>
                 <EnumerationOption value="2" description="nunca fumador"/>
             </AttributeDefinition>
-            <AttributeDefinition id="QuitSmokingProgram" type="enumeration" multiplicity="maximalOne" description="¿Precisa derivación a programa deshabituación tabáquica?">
+            <AttributeDefinition id="QuitSmokingProgram" type="enumeration" multiplicity="exactlyOne" description="¿Precisa derivación a programa deshabituación tabáquica?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="Frailty" type="enumeration" multiplicity="maximalOne" description="Fragilidad">
+            <AttributeDefinition id="Frailty" type="enumeration" multiplicity="exactlyOne" description="Fragilidad">
                 <EnumerationOption value="0" description="Activo"/>
                 <EnumerationOption value="1" description="Bien"/>
                 <EnumerationOption value="2" description="Problemas médicos bien controlados"/>
@@ -223,12 +223,12 @@
                 <EnumerationOption value="7" description="Fragilidad muy severa total dependencia"/>
                 <EnumerationOption value="8" description="Enfermo terminal con expectativa de vida <6meses aunque no necesariamente dependiente"/>
             </AttributeDefinition>
-            <AttributeDefinition id="NumDrugs" type="enumeration" multiplicity="maximalOne" description="Tratamiento crónico - nº fármacos">
+            <AttributeDefinition id="NumDrugs" type="enumeration" multiplicity="exactlyOne" description="Tratamiento crónico - nº fármacos">
                 <EnumerationOption value="0" description="<3"/>
                 <EnumerationOption value="1" description="entre 3-5"/>
                 <EnumerationOption value="2" description=">5"/>
             </AttributeDefinition>
-            <AttributeDefinition id="DrugTreatment" type="enumeration" multiplicity="maximalOne" description="Tratamiento Farmacológico">
+            <AttributeDefinition id="DrugTreatment" type="enumeration" multiplicity="exactlyOne" description="Tratamiento Farmacológico">
                 <EnumerationOption value="0" description="Portador DAI"/>
                 <EnumerationOption value="1" description="Portador Marcapasos"/>
                 <EnumerationOption value="2" description="Sintron / Otros anticoagulantes"/>
@@ -246,88 +246,88 @@
                 <EnumerationOption value="14" description="Corticoides"/>
                 <EnumerationOption value="15" description="Otros (Texto Libre)"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ClinicInfoComment" type="string" multiplicity="maximalOne" description="Inicio Neoadyuvancia"/>
+            <AttributeDefinition id="ClinicInfoComment" type="string" multiplicity="exactlyOne" description="Inicio Neoadyuvancia"/>
         </EntityDefinition>
 
 
         <EntityDefinition id="BCS2_Charlson" description="Charlson">
-            <AttributeDefinition id="ch1" type="enumeration" multiplicity="maximalOne" description="Infarto de Miocardio (se excluye cambios EKG sin antecedentes médicos)">
+            <AttributeDefinition id="ch1" type="enumeration" multiplicity="exactlyOne" description="Infarto de Miocardio (se excluye cambios EKG sin antecedentes médicos)">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch2" type="enumeration" multiplicity="maximalOne" description="Insuficiencia Cardiaca Congestiva">
+            <AttributeDefinition id="ch2" type="enumeration" multiplicity="exactlyOne" description="Insuficiencia Cardiaca Congestiva">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch3" type="enumeration" multiplicity="maximalOne" description="Enfermedad Vascular Periférica ( incluye Aneurisma de Aorta 6 cm )">
+            <AttributeDefinition id="ch3" type="enumeration" multiplicity="exactlyOne" description="Enfermedad Vascular Periférica ( incluye Aneurisma de Aorta 6 cm )">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch4" type="enumeration" multiplicity="maximalOne" description="Enfermedad Cerebrovascular">
+            <AttributeDefinition id="ch4" type="enumeration" multiplicity="exactlyOne" description="Enfermedad Cerebrovascular">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch5" type="enumeration" multiplicity="maximalOne" description="Demencia">
+            <AttributeDefinition id="ch5" type="enumeration" multiplicity="exactlyOne" description="Demencia">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch6" type="enumeration" multiplicity="maximalOne" description="EPOC">
+            <AttributeDefinition id="ch6" type="enumeration" multiplicity="exactlyOne" description="EPOC">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch7" type="enumeration" multiplicity="maximalOne" description="Enfermedad del tejido conectivo">
+            <AttributeDefinition id="ch7" type="enumeration" multiplicity="exactlyOne" description="Enfermedad del tejido conectivo">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch8" type="enumeration" multiplicity="maximalOne" description="Ulcus péptico">
+            <AttributeDefinition id="ch8" type="enumeration" multiplicity="exactlyOne" description="Ulcus péptico">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch9" type="enumeration" multiplicity="maximalOne" description="Hepatopatía Leve ( sin hipertensión portal incluye hepatitis crónica)">
+            <AttributeDefinition id="ch9" type="enumeration" multiplicity="exactlyOne" description="Hepatopatía Leve ( sin hipertensión portal incluye hepatitis crónica)">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch10" type="enumeration" multiplicity="maximalOne" description="Diabetes mellitus sin evidencia de afectación de órganos diana">
+            <AttributeDefinition id="ch10" type="enumeration" multiplicity="exactlyOne" description="Diabetes mellitus sin evidencia de afectación de órganos diana">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch11" type="enumeration" multiplicity="maximalOne" description="Diabetes con afectación de órganos dianas (retinopatía,nefropatía etc)">
+            <AttributeDefinition id="ch11" type="enumeration" multiplicity="exactlyOne" description="Diabetes con afectación de órganos dianas (retinopatía,nefropatía etc)">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch12" type="enumeration" multiplicity="maximalOne" description="Hemiplejia">
+            <AttributeDefinition id="ch12" type="enumeration" multiplicity="exactlyOne" description="Hemiplejia">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch13" type="enumeration" multiplicity="maximalOne" description="Enfermedad Renal moderada-severa">
+            <AttributeDefinition id="ch13" type="enumeration" multiplicity="exactlyOne" description="Enfermedad Renal moderada-severa">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch14" type="enumeration" multiplicity="maximalOne" description="Tumor sin metástasis ( excluir si > 5 años desde el diagnostico)">
+            <AttributeDefinition id="ch14" type="enumeration" multiplicity="exactlyOne" description="Tumor sin metástasis ( excluir si > 5 años desde el diagnostico)">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch15" type="enumeration" multiplicity="maximalOne" description="Leucemia (Aguda o Crónica)">
+            <AttributeDefinition id="ch15" type="enumeration" multiplicity="exactlyOne" description="Leucemia (Aguda o Crónica)">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch16" type="enumeration" multiplicity="maximalOne" description="Linfoma">
+            <AttributeDefinition id="ch16" type="enumeration" multiplicity="exactlyOne" description="Linfoma">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch17" type="enumeration" multiplicity="maximalOne" description="Enfermedad Hepática moderada o severa">
+            <AttributeDefinition id="ch17" type="enumeration" multiplicity="exactlyOne" description="Enfermedad Hepática moderada o severa">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch18" type="enumeration" multiplicity="maximalOne" description="Tumor Sólido con metástasis">
+            <AttributeDefinition id="ch18" type="enumeration" multiplicity="exactlyOne" description="Tumor Sólido con metástasis">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch19" type="enumeration" multiplicity="maximalOne" description="SIDA ( no únicamente HIV positivo )">
+            <AttributeDefinition id="ch19" type="enumeration" multiplicity="exactlyOne" description="SIDA ( no únicamente HIV positivo )">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch20" type="enumeration" multiplicity="maximalOne" description="Edad">
+            <AttributeDefinition id="ch20" type="enumeration" multiplicity="exactlyOne" description="Edad">
                 <EnumerationOption value="1" description="50-59"/>
                 <EnumerationOption value="2" description="60-69"/>
                 <EnumerationOption value="3" description="70-79"/>
@@ -338,56 +338,56 @@
         </EntityDefinition>
 
         <EntityDefinition id="BCS2_PhysicalExamination" description="Examinación física">
-            <AttributeDefinition id="Height" type="number" multiplicity="maximalOne" description="Altura (cm)"/>
-            <AttributeDefinition id="Weight" type="number" multiplicity="maximalOne" description="Peso (Kg)"/>
+            <AttributeDefinition id="Height" type="number" multiplicity="exactlyOne" description="Altura (cm)"/>
+            <AttributeDefinition id="Weight" type="number" multiplicity="exactlyOne" description="Peso (Kg)"/>
             <DerivedAttributeDefinition id="Bmi" expression="round((Weight / ((Height/100) * (Height/100))))" description="Bmi"/>
-            <AttributeDefinition id="BloodPressSist" type="number" multiplicity="maximalOne" description="Presión Arterial Sistólica (mmHg)"/>
-            <AttributeDefinition id="BloodPressDiast" type="number" multiplicity="maximalOne" description="Presión Arterial Diastólica (mmHg)"/>
-            <AttributeDefinition id="HeartRate" type="number" multiplicity="maximalOne" description="Freq. Cardíaca (bps)"/>
-            <AttributeDefinition id="OxygenSat" type="number" multiplicity="maximalOne" description="Saturación de oxígeno (%)"/>
-            <AttributeDefinition id="Albumina" type="number" multiplicity="maximalOne" description="Albúmina (g/dL)"/>
-            <AttributeDefinition id="Hemo" type="number" multiplicity="maximalOne" description="Hemoglobina (g/dL)"/>
-            <AttributeDefinition id="FerroTherapy" type="enumeration" multiplicity="maximalOne" description="¿Precisa derivación a ferroterapia IV?">
+            <AttributeDefinition id="BloodPressSist" type="number" multiplicity="exactlyOne" description="Presión Arterial Sistólica (mmHg)"/>
+            <AttributeDefinition id="BloodPressDiast" type="number" multiplicity="exactlyOne" description="Presión Arterial Diastólica (mmHg)"/>
+            <AttributeDefinition id="HeartRate" type="number" multiplicity="exactlyOne" description="Freq. Cardíaca (bps)"/>
+            <AttributeDefinition id="OxygenSat" type="number" multiplicity="exactlyOne" description="Saturación de oxígeno (%)"/>
+            <AttributeDefinition id="Albumina" type="number" multiplicity="exactlyOne" description="Albúmina (g/dL)"/>
+            <AttributeDefinition id="Hemo" type="number" multiplicity="exactlyOne" description="Hemoglobina (g/dL)"/>
+            <AttributeDefinition id="FerroTherapy" type="enumeration" multiplicity="exactlyOne" description="¿Precisa derivación a ferroterapia IV?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
         </EntityDefinition>
 
         <EntityDefinition id="BCS2_NutritionalInformationMUST" description="Información nutricional - MUST">
-            <AttributeDefinition id="BmiCat" type="enumeration" multiplicity="maximalOne" description="BMI">
+            <AttributeDefinition id="BmiCat" type="enumeration" multiplicity="exactlyOne" description="BMI">
                 <EnumerationOption value="0" description=">20"/>
                 <EnumerationOption value="1" description="18.5-20"/>
                 <EnumerationOption value="2" description="<18.5"/>
             </AttributeDefinition>
-            <AttributeDefinition id="WeightLoss" type="enumeration" multiplicity="maximalOne" description="Pérdida de peso en los últimos 3-6 meses:">
+            <AttributeDefinition id="WeightLoss" type="enumeration" multiplicity="exactlyOne" description="Pérdida de peso en los últimos 3-6 meses:">
                 <EnumerationOption value="0" description="<5%"/>
                 <EnumerationOption value="1" description="5-10%"/>
                 <EnumerationOption value="2" description=">10%"/>
             </AttributeDefinition>
-            <AttributeDefinition id="RecentAcuteDisease" type="enumeration" multiplicity="maximalOne" description="¿Enfermedad aguda reciente y ha estado o tiene previsión de no ingesta >5 días?">
+            <AttributeDefinition id="RecentAcuteDisease" type="enumeration" multiplicity="exactlyOne" description="¿Enfermedad aguda reciente y ha estado o tiene previsión de no ingesta >5 días?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <DerivedAttributeDefinition id="MustScore" expression="BmiCat + WeightLoss + number(RecentAcuteDisease,0) * 2" multiplicity="maximalOne" description="Must Score"/>
+            <DerivedAttributeDefinition id="MustScore" expression="BmiCat + WeightLoss + number(RecentAcuteDisease,0) * 2" multiplicity="exactlyOne" description="Must Score"/>
         </EntityDefinition>
 
 
         <EntityDefinition id="BCS2_NutritionalInformationSGA" description="Información nutricional - SGA">
-            <AttributeDefinition id="Sga" type="string" multiplicity="maximalOne" description="Enlace al formualrio para realizar la Subjective Global Assessment (SGA)" />
-            <AttributeDefinition id="SgaScore" type="number" multiplicity="maximalOne" description="Valoración Global SGA" />
+            <AttributeDefinition id="Sga" type="string" multiplicity="exactlyOne" description="Enlace al formualrio para realizar la Subjective Global Assessment (SGA)" />
+            <AttributeDefinition id="SgaScore" type="number" multiplicity="exactlyOne" description="Valoración Global SGA" />
         </EntityDefinition>
 
 
         <EntityDefinition id="BCS2_NutritionalSupport" description="¿Requiere soporte nutricional?">
-            <AttributeDefinition id="MustNutritionFollowup" type="enumeration" description="¿Requerirá seguimiento por nutricionista?">
+            <AttributeDefinition id="MustNutritionFollowup" type="enumeration" multiplicity="exactlyOne" description="¿Requerirá seguimiento por nutricionista?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="MustNutritionGroup" type="enumeration" description="¿Acudirá a la sesión grupal?">
+            <AttributeDefinition id="MustNutritionGroup" type="enumeration" multiplicity="exactlyOne" description="¿Acudirá a la sesión grupal?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="PersonalisedSuppl" type="enumeration" description="Suplementación personalizada:">
+            <AttributeDefinition id="PersonalisedSuppl" type="enumeration" multiplicity="exactlyOne" description="Suplementación personalizada:">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Alimentos"/>
                 <EnumerationOption value="2" description="Módulo proteico"/>
@@ -396,7 +396,7 @@
                 <EnumerationOption value="5" description="Energética-proteica"/>
                 <EnumerationOption value="6" description="Dieta inmunomoduladora pre-CIR"/>
             </AttributeDefinition>
-            <AttributeDefinition id="SupplDosis" type="enumeration" description="Suplementación personalizada">
+            <AttributeDefinition id="SupplDosis" type="enumeration" multiplicity="exactlyOne" description="Suplementación personalizada">
                 <EnumerationOption value="0" description="0"/>
                 <EnumerationOption value="1" description="1/d"/>
                 <EnumerationOption value="2" description="2/d"/>
@@ -406,31 +406,31 @@
 
 
         <EntityDefinition id="BCS2_FunctionalCapacityDUKE" description="Capacidad Funcional DUKE">
-            <AttributeDefinition id="DukeVale" type="enumeration" description="¿Valerse por si solo, vestirse, asearse?">
+            <AttributeDefinition id="DukeVale" type="enumeration" multiplicity="exactlyOne" description="¿Valerse por si solo, vestirse, asearse?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="DukeCam" type="enumeration" description="¿Caminar por su casa?">
+            <AttributeDefinition id="DukeCam" type="enumeration" multiplicity="exactlyOne" description="¿Caminar por su casa?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="DukeCamu" type="enumeration" description="¿Caminar unos 2km sobre llano (sin pendiente)?">
+            <AttributeDefinition id="DukeCamu" type="enumeration" multiplicity="exactlyOne" description="¿Caminar unos 2km sobre llano (sin pendiente)?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="DukeSub" type="enumeration" description="¿Subir un tramo de escalera o caminar sobre una pendiente moderada?">
+            <AttributeDefinition id="DukeSub" type="enumeration" multiplicity="exactlyOne" description="¿Subir un tramo de escalera o caminar sobre una pendiente moderada?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="DukeCorre" type="enumeration" description="¿Correr una distancia corta?">
+            <AttributeDefinition id="DukeCorre" type="enumeration" multiplicity="exactlyOne" description="¿Correr una distancia corta?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="DukeReal" type="enumeration" description="¿Realizar trabajos de casa suaves como sacar el polvo, lavar platos?">
+            <AttributeDefinition id="DukeReal" type="enumeration" multiplicity="exactlyOne" description="¿Realizar trabajos de casa suaves como sacar el polvo, lavar platos?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="DukePasa" type="enumeration" description="¿Pasar el aspirador, barrer, llevar compra ligera?">
+            <AttributeDefinition id="DukePasa" type="enumeration" multiplicity="exactlyOne" description="¿Pasar el aspirador, barrer, llevar compra ligera?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
@@ -438,19 +438,19 @@
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="DukeBici" type="enumeration" description="Bicicleta sobre llano, caminar con marcha ligera, empujar">
+            <AttributeDefinition id="DukeBici" type="enumeration" multiplicity="exactlyOne" description="Bicicleta sobre llano, caminar con marcha ligera, empujar">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="DukeTene" type="enumeration" description="Tener relaciones sexuales">
+            <AttributeDefinition id="DukeTene" type="enumeration" multiplicity="exactlyOne" description="Tener relaciones sexuales">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="DukeBail" type="enumeration" description="Bailar, golf, tenis dobles, nadar">
+            <AttributeDefinition id="DukeBail" type="enumeration" multiplicity="exactlyOne" description="Bailar, golf, tenis dobles, nadar">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
-            <AttributeDefinition id="DukeEjerin" type="enumeration" description="¿Ejercicio intenso como esquiar, squash, padel, tenis simple, bicicleta de montana ?">
+            <AttributeDefinition id="DukeEjerin" type="enumeration" multiplicity="exactlyOne" description="¿Ejercicio intenso como esquiar, squash, padel, tenis simple, bicicleta de montana ?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
@@ -458,22 +458,22 @@
         </EntityDefinition>
 
         <EntityDefinition id="BCS2_FunctionalCapacityHandGrip" description="Capacidad Funcional Hand Grip">
-            <AttributeDefinition id="BestDominantHand" type="number" description="Mejor medición mano dominante (Kg)"/>
-            <AttributeDefinition id="BestNonDominantHand" type="number" description="Mejor medición mano no dominante (Kg)"/>
+            <AttributeDefinition id="BestDominantHand" type="number" multiplicity="exactlyOne" description="Mejor medición mano dominante (Kg)"/>
+            <AttributeDefinition id="BestNonDominantHand" type="number" multiplicity="exactlyOne" description="Mejor medición mano no dominante (Kg)"/>
         </EntityDefinition>
 
 
         <EntityDefinition id="BCS2_FunctionalCapacitySitToStand" description="Capacidad Funcional Sit to Stand">
-            <AttributeDefinition id="S2S1" type="number" description="Basal Frecuencia Cardíaca (bps)"/>
-            <AttributeDefinition id="S2S2" type="number" description="Basal SpO2 (%)"/>
-            <AttributeDefinition id="S2S3" type="number" description="Basal Borg Disnea"/>
-            <AttributeDefinition id="S2S4" type="number" description="Basal Borg EEII"/>
-            <AttributeDefinition id="S2S5" type="number" description="Final Frequencia Cardíaca (bps)"/>
-            <AttributeDefinition id="S2S6" type="number" description="Final SpO2 (%)"/>
-            <AttributeDefinition id="S2S7" type="number" description="Final Borg Disnea"/>
-            <AttributeDefinition id="S2S8" type="number" description="Final Borg EEII"/>
-            <AttributeDefinition id="S2S9" type="number" description="Numero de repeticiones"/>
-            <AttributeDefinition id="S2S10" type="enumeration" description="¿Ha necesitado el paciente pararse?">
+            <AttributeDefinition id="S2S1" type="number" multiplicity="exactlyOne" description="Basal Frecuencia Cardíaca (bps)"/>
+            <AttributeDefinition id="S2S2" type="number" multiplicity="exactlyOne" description="Basal SpO2 (%)"/>
+            <AttributeDefinition id="S2S3" type="number" multiplicity="exactlyOne" description="Basal Borg Disnea"/>
+            <AttributeDefinition id="S2S4" type="number" multiplicity="exactlyOne" description="Basal Borg EEII"/>
+            <AttributeDefinition id="S2S5" type="number" multiplicity="exactlyOne" description="Final Frequencia Cardíaca (bps)"/>
+            <AttributeDefinition id="S2S6" type="number" multiplicity="exactlyOne" description="Final SpO2 (%)"/>
+            <AttributeDefinition id="S2S7" type="number" multiplicity="exactlyOne" description="Final Borg Disnea"/>
+            <AttributeDefinition id="S2S8" type="number" multiplicity="exactlyOne" description="Final Borg EEII"/>
+            <AttributeDefinition id="S2S9" type="number" multiplicity="exactlyOne" description="Numero de repeticiones"/>
+            <AttributeDefinition id="S2S10" type="enumeration" multiplicity="exactlyOne" description="¿Ha necesitado el paciente pararse?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
@@ -481,17 +481,17 @@
 
 
         <EntityDefinition id="BCS2_FunctionalCapacity6MWT" description="Capacidad Funcional 6MWT">
-            <AttributeDefinition id="6MWTmeters" type="number" description="Distancia (meters)"/>
-            <AttributeDefinition id="6MWTinitialFC" type="number" description="Frecuencia cardiaca inicial (bps)"/>
-            <AttributeDefinition id="6MWTfinalFC" type="number" description="Frecuencia cardiaca final (bps)"/>
-            <AttributeDefinition id="6MWTinitialSat" type="number" description="Saturacion de oxigeno inicial (%)"/>
-            <AttributeDefinition id="6MWTfinalSat" type="number" description="Saturacion de oxigeno final (%)"/>
-            <AttributeDefinition id="6MWTinitialDisnea" type="number" description="Disnea inicial (Modified Borg Scale, 0-10)"/>
-            <AttributeDefinition id="6MWTfinalDisnea" type="number" description="Disnea final (Modified Borg Scale, 0-10)"/>
-            <AttributeDefinition id="6MWTinitialFatigue" type="number" description="Fatiga inicial (Modified Borg Scale, 0-10)"/>
-            <AttributeDefinition id="6MWTfinalFatigue" type="number" description="Fatiga final (Modified Borg Scale, 0-10)"/>
-            <AttributeDefinition id="6MWTHRR1" type="number" description="HRR1 (beats)"/>
-            <AttributeDefinition id="6MWTstop" type="enumeration" description="¿Ha necesitado el paciente pararse?">
+            <AttributeDefinition id="6MWTmeters" type="number" multiplicity="exactlyOne" description="Distancia (meters)"/>
+            <AttributeDefinition id="6MWTinitialFC" type="number" multiplicity="exactlyOne" description="Frecuencia cardiaca inicial (bps)"/>
+            <AttributeDefinition id="6MWTfinalFC" type="number" multiplicity="exactlyOne" description="Frecuencia cardiaca final (bps)"/>
+            <AttributeDefinition id="6MWTinitialSat" type="number" multiplicity="exactlyOne" multiplicity="exactlyOne" description="Saturacion de oxigeno inicial (%)"/>
+            <AttributeDefinition id="6MWTfinalSat" type="number" multiplicity="exactlyOne" description="Saturacion de oxigeno final (%)"/>
+            <AttributeDefinition id="6MWTinitialDisnea" type="number" multiplicity="exactlyOne" description="Disnea inicial (Modified Borg Scale, 0-10)"/>
+            <AttributeDefinition id="6MWTfinalDisnea" type="number" multiplicity="exactlyOne" description="Disnea final (Modified Borg Scale, 0-10)"/>
+            <AttributeDefinition id="6MWTinitialFatigue" type="number" multiplicity="exactlyOne" description="Fatiga inicial (Modified Borg Scale, 0-10)"/>
+            <AttributeDefinition id="6MWTfinalFatigue" type="number" multiplicity="exactlyOne" description="Fatiga final (Modified Borg Scale, 0-10)"/>
+            <AttributeDefinition id="6MWTHRR1" type="number" multiplicity="exactlyOne" description="HRR1 (beats)"/>
+            <AttributeDefinition id="6MWTstop" type="enumeration" multiplicity="exactlyOne" description="¿Ha necesitado el paciente pararse?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Si"/>
             </AttributeDefinition>
@@ -499,14 +499,14 @@
 
 
         <EntityDefinition id="BCS2_FunctionalCapacityYPA" description="Capacidad Funcional YPA">
-            <AttributeDefinition id="YPASdipme" type="enumeration" description="¿Aproximadamente cuantas veces durante el ultimo mes ha participado en actividades intensas que duraron al menos 10 minutos, y provocaron importantes aumentos en su respiracion, pulso, cansancio de piernas o le hacían sudar?">
+            <AttributeDefinition id="YPASdipme" type="enumeration" multiplicity="exactlyOne" description="¿Aproximadamente cuantas veces durante el ultimo mes ha participado en actividades intensas que duraron al menos 10 minutos, y provocaron importantes aumentos en su respiracion, pulso, cansancio de piernas o le hacían sudar?">
                 <EnumerationOption value="0" description="nunca"/>
                 <EnumerationOption value="1" description="1-3 veces por mes"/>
                 <EnumerationOption value="2" description="1-2 veces por semana"/>
                 <EnumerationOption value="3" description="3-4 veces por semana"/>
                 <EnumerationOption value="4" description=">5 veces por semana"/>
             </AttributeDefinition>
-            <AttributeDefinition id="YPASti" type="enumeration" description="¿Aproximadamente durante cuanto tiempo realizo cada vez esta actividad vigorosa?">
+            <AttributeDefinition id="YPASti" type="enumeration" multiplicity="exactlyOne" description="¿Aproximadamente durante cuanto tiempo realizo cada vez esta actividad vigorosa?">
                 <EnumerationOption value="0" description="10-30 min"/>
                 <EnumerationOption value="1" description="31-60 min"/>
                 <EnumerationOption value="2" description=">60 min"/>
@@ -514,14 +514,14 @@
             <DerivedAttributeDefinition id="YPASsdipme" expression="YPASdipme" multiplicity="maximalOne" description="Score actividad fisica intensa dias por mes"/>
             <DerivedAttributeDefinition id="YPASsti" expression="if number(YPASti,0) = 0 then 1 else if number(YPASti,0) = 1 then 2 else 3" description="Score actividad fisica intensa tiempo"/>
             <DerivedAttributeDefinition id="YPASsactfi" expression="number(YPASdipme,0)*number(YPASti,0) * 5" multiplicity="maximalOne" description="YPAS indice Act Vigorosa"/>
-            <AttributeDefinition id="YPASpdipme" type="enumeration" description="¿Piense en los paseos que ha realizado durante el ultimo mes. Aproximadamente cuantas veces al mes fue a pasear al menos 10 minutos o más sin parar pero que no fue suficiente para causar grandes incrementos en la respiración, pulso, cansancio de piernas ni le hacía sudar?">
+            <AttributeDefinition id="YPASpdipme" type="enumeration" multiplicity="exactlyOne" description="¿Piense en los paseos que ha realizado durante el ultimo mes. Aproximadamente cuantas veces al mes fue a pasear al menos 10 minutos o más sin parar pero que no fue suficiente para causar grandes incrementos en la respiración, pulso, cansancio de piernas ni le hacía sudar?">
                 <EnumerationOption value="0" description="nunca"/>
                 <EnumerationOption value="1" description="1-3 veces por mes"/>
                 <EnumerationOption value="2" description="1-2 veces por semana"/>
                 <EnumerationOption value="3" description="3-4 veces por semana"/>
                 <EnumerationOption value="4" description=">5 veces por semana"/>
             </AttributeDefinition>
-            <AttributeDefinition id="YPASpti" type="enumeration" description="¿Cuando fue a pasear asi, durante cuantos minutos camino?">
+            <AttributeDefinition id="YPASpti" type="enumeration" multiplicity="exactlyOne" description="¿Cuando fue a pasear asi, durante cuantos minutos camino?">
                 <EnumerationOption value="0" description="10-30 min"/>
                 <EnumerationOption value="1" description="31-60 min"/>
                 <EnumerationOption value="2" description=">60 min"/>
@@ -529,7 +529,7 @@
             <DerivedAttributeDefinition id="YPASpsdipme" expression="YPASpdipme" multiplicity="maximalOne" description="Score Paseos dias por mes"/>
             <DerivedAttributeDefinition id="YPASpsti" expression="if number(YPASpti, 0) = 0 then 1 else if number(YPASpti, 0) = 1 then 2 else 3" description="Score Paseos tiempo"/>
             <DerivedAttributeDefinition id="YPASspas" expression="number(YPASpsdipme,0)*number(YPASpdipme,0) * 3" multiplicity="maximalOne" description="YPAS indice Pasear"/>
-            <AttributeDefinition id="YPAStiemov" type="enumeration" description="Aproximadamente cuantas horas al dia pasa moviendose de un lado a otro mientras hace cosas?(Por favor, insistir sobre el tiempo realmente en movimiento)">
+            <AttributeDefinition id="YPAStiemov" type="enumeration" multiplicity="exactlyOne" description="Aproximadamente cuantas horas al dia pasa moviendose de un lado a otro mientras hace cosas?(Por favor, insistir sobre el tiempo realmente en movimiento)">
                 <EnumerationOption value="0" description="ninguna"/>
                 <EnumerationOption value="1" description="<1h dia"/>
                 <EnumerationOption value="2" description="de 1 a 3 h al dia"/>
@@ -538,7 +538,7 @@
                 <EnumerationOption value="5" description="mas de 7 horas al dia"/>
             </AttributeDefinition>
             <DerivedAttributeDefinition id="YPASstiemov" expression="number(YPAStiemov,0) * 3" multiplicity="maximalOne" description="YPAS indice Movimiento"/>
-            <AttributeDefinition id="YPASesdep" type="enumeration" description="¿Piense en cuanto tiempo paso de pie, como promedio, durante el ultimo mes.Aproximadamente cuantas horas al dia esta de pie?">
+            <AttributeDefinition id="YPASesdep" type="enumeration" multiplicity="exactlyOne" description="¿Piense en cuanto tiempo paso de pie, como promedio, durante el ultimo mes.Aproximadamente cuantas horas al dia esta de pie?">
                 <EnumerationOption value="0" description="ninguna"/>
                 <EnumerationOption value="1" description="<1h dia"/>
                 <EnumerationOption value="2" description="de 1 a 3 h al dia"/>
@@ -547,7 +547,7 @@
                 <EnumerationOption value="5" description="mas de 7 horas al dia"/>
             </AttributeDefinition>
             <DerivedAttributeDefinition id="YPASsesdep" expression="number(YPASesdep,0)*2" multiplicity="maximalOne" description="YPAS indice Bipedestacion"/>
-            <AttributeDefinition id="YPAStisen" type="enumeration" description="¿Aproximadamente, en un día típico del último mes, cuantas horas paso sentado/a?">
+            <AttributeDefinition id="YPAStisen" type="enumeration" multiplicity="exactlyOne" description="¿Aproximadamente, en un día típico del último mes, cuantas horas paso sentado/a?">
                 <EnumerationOption value="0" description="ninguna"/>
                 <EnumerationOption value="1" description="<1h dia"/>
                 <EnumerationOption value="2" description="de 1 a 3 h al dia"/>
@@ -561,61 +561,61 @@
 
 
         <EntityDefinition id="BCS2_AdherenceCapacityESES" description="Evaluación de adherencia ESES">
-            <AttributeDefinition id="eses1" type="enumeration" description="I am confident that I could always overcome barriers and challenges with regards to exercise if I try hard enough">
+            <AttributeDefinition id="eses1" type="enumeration" multiplicity="exactlyOne" description="I am confident that I could always overcome barriers and challenges with regards to exercise if I try hard enough">
                 <EnumerationOption value="1" description="Not at all true"/>
                 <EnumerationOption value="2" description="Hardly true"/>
                 <EnumerationOption value="3" description="Moderately true"/>
                 <EnumerationOption value="4" description="Exactly true"/>
             </AttributeDefinition>
-            <AttributeDefinition id="eses2" type="enumeration" description="I am confident that I could find the means and ways to exercise and be physically active">
+            <AttributeDefinition id="eses2" type="enumeration" multiplicity="exactlyOne" description="I am confident that I could find the means and ways to exercise and be physically active">
                 <EnumerationOption value="1" description="Not at all true"/>
                 <EnumerationOption value="2" description="Hardly true"/>
                 <EnumerationOption value="3" description="Moderately true"/>
                 <EnumerationOption value="4" description="Exactly true"/>
             </AttributeDefinition>
-            <AttributeDefinition id="eses3" type="enumeration" description="I am confident that it is easy for me to accomplish my activity and exercise goals">
+            <AttributeDefinition id="eses3" type="enumeration" multiplicity="exactlyOne" description="I am confident that it is easy for me to accomplish my activity and exercise goals">
                 <EnumerationOption value="1" description="Not at all true"/>
                 <EnumerationOption value="2" description="Hardly true"/>
                 <EnumerationOption value="3" description="Moderately true"/>
                 <EnumerationOption value="4" description="Exactly true"/>
             </AttributeDefinition>
-            <AttributeDefinition id="eses4" type="enumeration" description="I am confident that when I am confronted with a barrier to exercise I could usually find several solutions to overcome this barrier">
+            <AttributeDefinition id="eses4" type="enumeration" multiplicity="exactlyOne" description="I am confident that when I am confronted with a barrier to exercise I could usually find several solutions to overcome this barrier">
                 <EnumerationOption value="1" description="Not at all true"/>
                 <EnumerationOption value="2" description="Hardly true"/>
                 <EnumerationOption value="3" description="Moderately true"/>
                 <EnumerationOption value="4" description="Exactly true"/>
             </AttributeDefinition>
-            <AttributeDefinition id="eses5" type="enumeration" description="I am confident I could exercise even when I am tired">
+            <AttributeDefinition id="eses5" type="enumeration" multiplicity="exactlyOne" description="I am confident I could exercise even when I am tired">
                 <EnumerationOption value="1" description="Not at all true"/>
                 <EnumerationOption value="2" description="Hardly true"/>
                 <EnumerationOption value="3" description="Moderately true"/>
                 <EnumerationOption value="4" description="Exactly true"/>
             </AttributeDefinition>
-            <AttributeDefinition id="eses6" type="enumeration" description="I am confident I could exercise even when I am feeling depressed">
+            <AttributeDefinition id="eses6" type="enumeration" multiplicity="exactlyOne" description="I am confident I could exercise even when I am feeling depressed">
                 <EnumerationOption value="1" description="Not at all true"/>
                 <EnumerationOption value="2" description="Hardly true"/>
                 <EnumerationOption value="3" description="Moderately true"/>
                 <EnumerationOption value="4" description="Exactly true"/>
             </AttributeDefinition>
-            <AttributeDefinition id="eses7" type="enumeration" description="I am confident that I could exercise even without the support of my family or friends">
+            <AttributeDefinition id="eses7" type="enumeration" multiplicity="exactlyOne" description="I am confident that I could exercise even without the support of my family or friends">
                 <EnumerationOption value="1" description="Not at all true"/>
                 <EnumerationOption value="2" description="Hardly true"/>
                 <EnumerationOption value="3" description="Moderately true"/>
                 <EnumerationOption value="4" description="Exactly true"/>
             </AttributeDefinition>
-            <AttributeDefinition id="eses8" type="enumeration" description="I am confident that I could exercise without the help of an exercise therapist">
+            <AttributeDefinition id="eses8" type="enumeration" multiplicity="exactlyOne" description="I am confident that I could exercise without the help of an exercise therapist">
                 <EnumerationOption value="1" description="Not at all true"/>
                 <EnumerationOption value="2" description="Hardly true"/>
                 <EnumerationOption value="3" description="Moderately true"/>
                 <EnumerationOption value="4" description="Exactly true"/>
             </AttributeDefinition>
-            <AttributeDefinition id="eses9" type="enumeration" description="I am confident that I could be physically active despite my spinal cord injury">
+            <AttributeDefinition id="eses9" type="enumeration" multiplicity="exactlyOne" description="I am confident that I could be physically active despite my spinal cord injury">
                 <EnumerationOption value="1" description="Not at all true"/>
                 <EnumerationOption value="2" description="Hardly true"/>
                 <EnumerationOption value="3" description="Moderately true"/>
                 <EnumerationOption value="4" description="Exactly true"/>
             </AttributeDefinition>
-            <AttributeDefinition id="eses10" type="enumeration" description="I am confident that I could exercise even if I had no access to a gym or training facility">
+            <AttributeDefinition id="eses10" type="enumeration" multiplicity="exactlyOne" description="I am confident that I could exercise even if I had no access to a gym or training facility">
                 <EnumerationOption value="1" description="Not at all true"/>
                 <EnumerationOption value="2" description="Hardly true"/>
                 <EnumerationOption value="3" description="Moderately true"/>
@@ -626,85 +626,85 @@
 
 
         <EntityDefinition id="BCS2_HospitalAnxietyAndDepressionScale" description="Hospital Anxiety and Depression Scale">
-            <AttributeDefinition id="hadA1" type="enumeration" multiplicity="maximalOne" description="Me siento tenso o nervioso."> 
+            <AttributeDefinition id="hadA1" type="enumeration" multiplicity="exactlyOne" description="Me siento tenso o nervioso."> 
                 <EnumerationOption value="0" description="Nunca"/>
                 <EnumerationOption value="1" description="A veces"/>
                 <EnumerationOption value="2" description="Muchas veces"/>
                 <EnumerationOption value="3" description="Todos los dias"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadD1" type="enumeration" multiplicity="maximalOne" description="Todavia disfruto con lo que antes me gustaba."> 
+            <AttributeDefinition id="hadD1" type="enumeration" multiplicity="exactlyOne" description="Todavia disfruto con lo que antes me gustaba."> 
                 <EnumerationOption value="0" description="Como siempre"/>
                 <EnumerationOption value="1" description="No lo bastante"/>
                 <EnumerationOption value="2" description="Solo un poco"/>
                 <EnumerationOption value="3" description="Nada"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadA2" type="enumeration" multiplicity="maximalOne" description="Tengo una sensacion de miedo, como si algo horrible me fuera a suceder."> 
+            <AttributeDefinition id="hadA2" type="enumeration" multiplicity="exactlyOne" description="Tengo una sensacion de miedo, como si algo horrible me fuera a suceder."> 
                 <EnumerationOption value="0" description="Nada"/>
                 <EnumerationOption value="1" description="Un poco, pero no me preocupa"/>
                 <EnumerationOption value="2" description="Si, pero no es muy fuerte"/>
                 <EnumerationOption value="3" description="Definitivamente y es muy fuerte"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadD2" type="enumeration" multiplicity="maximalOne" description="Puedo reirme y ver el lado divertido de las cosas."> 
+            <AttributeDefinition id="hadD2" type="enumeration" multiplicity="exactlyOne" description="Puedo reirme y ver el lado divertido de las cosas."> 
                 <EnumerationOption value="0" description="Al igual que siempre lo hice"/>
                 <EnumerationOption value="1" description="No tanto ahora"/>
                 <EnumerationOption value="2" description="Casi nunca"/>
                 <EnumerationOption value="3" description="Nunca"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadA3" type="enumeration" multiplicity="maximalOne" description="Tengo mi mente llena de preocupaciones."> 
+            <AttributeDefinition id="hadA3" type="enumeration" multiplicity="exactlyOne" description="Tengo mi mente llena de preocupaciones."> 
                 <EnumerationOption value="0" description="Solo en ocasiones"/>
                 <EnumerationOption value="1" description="A veces, aunque no muy a menudo"/>
                 <EnumerationOption value="2" description="Con bastante frecuencia"/>
                 <EnumerationOption value="3" description="La mayoria de las veces"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadD3" type="enumeration" multiplicity="maximalOne" description="Me siento alegre."> 
+            <AttributeDefinition id="hadD3" type="enumeration" multiplicity="exactlyOne" description="Me siento alegre."> 
                 <EnumerationOption value="0" description="Casi siempre"/>
                 <EnumerationOption value="1" description="A veces"/>
                 <EnumerationOption value="2" description="No muy a menudo"/>
                 <EnumerationOption value="3" description="Nunca"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadA4" type="enumeration" multiplicity="maximalOne" description="Puedo estar sentado confortablemente y sentirme relajado."> 
+            <AttributeDefinition id="hadA4" type="enumeration" multiplicity="exactlyOne" description="Puedo estar sentado confortablemente y sentirme relajado."> 
                 <EnumerationOption value="0" description="Siempre"/>
                 <EnumerationOption value="1" description="Por lo general"/>
                 <EnumerationOption value="2" description="No muy a menudo"/>
                 <EnumerationOption value="3" description="Nunca"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadD4" type="enumeration" multiplicity="maximalOne" description="Me siento como si cada dia estuviera mas lento."> 
+            <AttributeDefinition id="hadD4" type="enumeration" multiplicity="exactlyOne" description="Me siento como si cada dia estuviera mas lento."> 
                 <EnumerationOption value="0" description="Nunca"/>
                 <EnumerationOption value="1" description="A veces"/>
                 <EnumerationOption value="2" description="Muy a menudo"/>
                 <EnumerationOption value="3" description="Por lo general, en todo momento"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadA5" type="enumeration" multiplicity="maximalOne" description="Tengo una sensacion extrana, como si tuviera mariposasen el estomago."> 
+            <AttributeDefinition id="hadA5" type="enumeration" multiplicity="exactlyOne" description="Tengo una sensacion extrana, como si tuviera mariposasen el estomago."> 
                 <EnumerationOption value="0" description="El Nunca"/>
                 <EnumerationOption value="1" description="En ciertas ocasiones"/>
                 <EnumerationOption value="2" description="Con bastante frecuencia"/>
                 <EnumerationOption value="3" description="Muy a menudo"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadD5" type="enumeration" multiplicity="maximalOne" description="He perdido interes en mi aspecto personal."> 
+            <AttributeDefinition id="hadD5" type="enumeration" multiplicity="exactlyOne" description="He perdido interes en mi aspecto personal."> 
                 <EnumerationOption value="0" description="Me preocupo al igual que siempre"/>
                 <EnumerationOption value="1" description="Podria tener un poco mas de cuidado"/>
                 <EnumerationOption value="2" description="No me preocupeo tanto como debiera"/>
                 <EnumerationOption value="3" description="Totalmente"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadA6" type="enumeration" multiplicity="maximalOne" description="Me siento inquieto, como si no pudiera parar demoverme."> 
+            <AttributeDefinition id="hadA6" type="enumeration" multiplicity="exactlyOne" description="Me siento inquieto, como si no pudiera parar demoverme."> 
                 <EnumerationOption value="0" description="Nada"/>
                 <EnumerationOption value="1" description="No mucho"/>
                 <EnumerationOption value="2" description="Bastante"/>
                 <EnumerationOption value="3" description="Mucho"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadD6" type="enumeration" multiplicity="maximalOne" description="Me siento optimista respecto al futuro."> 
+            <AttributeDefinition id="hadD6" type="enumeration" multiplicity="exactlyOne" description="Me siento optimista respecto al futuro."> 
                 <EnumerationOption value="0" description="Igual que siempre"/>
                 <EnumerationOption value="1" description="Menos de lo que acostumbraba"/>
                 <EnumerationOption value="2" description="Mucho menos de lo que acostumbraba"/>
                 <EnumerationOption value="3" description="Nada"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadA7" type="enumeration" multiplicity="maximalOne" description="Me asaltan sentimientos repentinos de panico."> 
+            <AttributeDefinition id="hadA7" type="enumeration" multiplicity="exactlyOne" description="Me asaltan sentimientos repentinos de panico."> 
                 <EnumerationOption value="0" description="Rara vez"/>
                 <EnumerationOption value="1" description="No muy a menudo"/>
                 <EnumerationOption value="2" description="Bastante a menudo"/>
                 <EnumerationOption value="3" description="Muy frecuentemente"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadD7" type="enumeration" multiplicity="maximalOne" description="Me divierto con un buen libro, la radio, o un programa de television."> 
+            <AttributeDefinition id="hadD7" type="enumeration" multiplicity="exactlyOne" description="Me divierto con un buen libro, la radio, o un programa de television."> 
                 <EnumerationOption value="0" description="Menudo"/>
                 <EnumerationOption value="1" description="A veces"/>
                 <EnumerationOption value="2" description="No muy a menudo"/>
@@ -723,16 +723,16 @@
         </EntityDefinition>
 
         <EntityDefinition id="BCS2_PhysicalActivity" description="Physical Activity">
-            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="maximalOne" description="Start date"/>
-            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="maximalOne" description="End date"/>       
-            <AttributeDefinition id="dailysteps" type="number.min(0).max(100000)" defaultValues="[10000]" multiplicity="maximalOne" description="Number of steps daily"/>       
-            <AttributeDefinition id="dailylowlevel" type="number.min(0).max(1440)" defaultValues="[60]" multiplicity="maximalOne" description="Minutes of low level activity daily"/>       
-            <AttributeDefinition id="dailymediumlevel" type="number.min(0).max(1440)" defaultValues="[40]" multiplicity="maximalOne" description="Minutes of medium level activity daily"/>       
-            <AttributeDefinition id="dailyhighlevel" type="number.min(0).max(1440)" defaultValues="[20]" multiplicity="maximalOne" description="Minutes of high level activity daily"/> 
-            <AttributeDefinition id="dailynoactivity" type="number.min(0).max(1440)" defaultValues="[240]" multiplicity="maximalOne" description="Max minutes without activity allowed daily"/>   
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Start date"/>
+            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="End date"/>       
+            <AttributeDefinition id="dailysteps" type="number.min(0).max(100000)" defaultValues="[10000]" multiplicity="exactlyOne" description="Number of steps daily"/>       
+            <AttributeDefinition id="dailylowlevel" type="number.min(0).max(1440)" defaultValues="[60]" multiplicity="exactlyOne" description="Minutes of low level activity daily"/>       
+            <AttributeDefinition id="dailymediumlevel" type="number.min(0).max(1440)" defaultValues="[40]" multiplicity="exactlyOne" description="Minutes of medium level activity daily"/>       
+            <AttributeDefinition id="dailyhighlevel" type="number.min(0).max(1440)" defaultValues="[20]" multiplicity="exactlyOne" description="Minutes of high level activity daily"/> 
+            <AttributeDefinition id="dailynoactivity" type="number.min(0).max(1440)" defaultValues="[240]" multiplicity="exactlyOne" description="Max minutes without activity allowed daily"/>   
             <!--{stepsFollowing: [{date: '2017-06-09 14:54:53.0', value: 12}], lowFollowing:[], mediumFollowing:[], highFollowing:[], noActivityFollowing:[]}-->
             <!--Collected Data e.g. {stepsFollowing: [{date: '2017-06-09 14:54:53.0', value: 12}], lowFollowing:[], mediumFollowing:[], highFollowing:[], noActivityFollowing:[]}"-->
-            <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Measurement"/>                 
+            <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Measurement"/>                 
         </EntityDefinition>
         
         <EntityDefinition id="BCS2_MonitoringPrescription" description="Patient Monitory">
@@ -766,17 +766,17 @@
                 <EnumerationOption value="ANYTIMEDURINGDAY" description="Any time a day" additionalDescription="Please select this option when the timeslot of a day doesn't matter."/>
             </AttributeDefinition>
             <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comments" additionalDescription="Please provide additional hints for the patient."/>   
-            <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Measurement"/>                      
+            <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Measurement"/>                      
         </EntityDefinition>
 
         
         <!-- Discharge Entity Definitions -->
         <EntityDefinition id="BCS2_Discharge" description="BCS2_Discharge">
-            <AttributeDefinition id="BCS2_DischargeForm" type="Link.EntityDefinition.BCS2_DischargeForm" description="Discharge From"/> 
+            <AttributeDefinition id="BCS2_DischargeForm" type="Link.EntityDefinition.BCS2_DischargeForm" multiplicity="maximalOne" description="Discharge From"/> 
         </EntityDefinition>
 
         <EntityDefinition id="BCS2_DischargeForm" description="Discharge From">
-            <AttributeDefinition id="comment" type="longtext" multiplicity="maximalOne" description="Comment"/>                             
+            <AttributeDefinition id="comment" type="longtext" multiplicity="exactlyOne" description="Comment"/>                             
         </EntityDefinition>
 
 
@@ -1276,6 +1276,7 @@ Young, D., Jee, S. and Appel, L. (2001). A comparison of the Yale Physical Activ
             <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTinitialFC" values="['32']"/>
             <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTfinalFC" values="['32']"/>
             <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTinitialSat" values="['32']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTfinalSat" values="['32']"/>
             <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTinitialDisnea" values="['9']"/>
             <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTfinalDisnea" values="['8']"/>
             <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacity6MWT.6MWTinitialFatigue" values="['7']"/>
@@ -1287,6 +1288,8 @@ Young, D., Jee, S. and Appel, L. (2001). A comparison of the Yale Physical Activ
             <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASdipme" values="['4']"/>
             <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASti" values="['2']"/>
             <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASpdipme" values="['4']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASpti" values="['2']"/>
+            <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPAStiemov" values="['2']"/>
             <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPASesdep" values="['3']"/>
             <TaskParam path="BCS2_Evaluation.BCS2_FunctionalCapacityYPA.YPAStisen" values="['5']"/>
         </Action>
