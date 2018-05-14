@@ -1098,12 +1098,12 @@
 			<AttributeDefinition id="LCS1_MonitoringPrescriptionAHSystolic" type="Link.EntityDefinition.LCS1_MonitoringPrescriptionSystolic" multiplicity="any" /> 			
 			<AttributeDefinition id="LCS1_MonitoringPrescriptionAHDiastolic" type="Link.EntityDefinition.LCS1_MonitoringPrescriptionDiastolic" multiplicity="any" /> 
 			<AttributeDefinition id="LCS1_PhysicalActivityAH" type="Link.EntityDefinition.LCS1_PhysicalActivity" multiplicity="any" />				
-			<AttributeDefinition id="LCS1_HeartPulseAH" type="Link.EntityDefinition.LCS1_HeartPulse" multiplicity="any" />							
-			<AttributeDefinition id="LCS1_WeightAH" type="Link.EntityDefinition.LCS1_Weight" multiplicity="any" />				
-			<AttributeDefinition id="LCS1_SP02AH" type="Link.EntityDefinition.LCS1_SP02" multiplicity="any" />							
+			<AttributeDefinition id="LCS1_MonitoringPrescriptionHeartPulseAH" type="Link.EntityDefinition.LCS1_MonitoringPrescriptionHeartPulse" multiplicity="any" />							
+			<AttributeDefinition id="LCS1_MonitoringPrescriptionWeightAH" type="Link.EntityDefinition.LCS1_MonitoringPrescriptionWeight" multiplicity="any" />				
+			<AttributeDefinition id="LCS1_MonitoringPrescriptionSP02AH" type="Link.EntityDefinition.LCS1_MonitoringPrescriptionSP02" multiplicity="any" />							
 		</EntityDefinition>				
 		
-		<EntityDefinition id="LCS1_Weight">
+		<EntityDefinition id="LCS1_MonitoringPrescriptionWeight">
             <AttributeDefinition id="type" type="enumeration" defaultValues="['WEIGHT']" multiplicity="maximalOne" description="Tipus de mesura" additionalDescription="Seleccioneu el tipus de mesura per a la supervisió del pacient">
                 <EnumerationOption value="WEIGHT" description="Pes"/>
             </AttributeDefinition>   
@@ -1136,7 +1136,7 @@
             <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Mesures"/>                      
         </EntityDefinition>		
 		
-		<EntityDefinition id="LCS1_SP02">
+		<EntityDefinition id="LCS1_MonitoringPrescriptionSP02">
             <AttributeDefinition id="type" type="enumeration" defaultValues="['SP02']" multiplicity="maximalOne" description="Tipus de mesura" additionalDescription="Seleccioneu el tipus de mesura per a la supervisió del pacient">
                 <EnumerationOption value="SP02" description="Saturació d'oxigen"/>
             </AttributeDefinition>   
@@ -1170,7 +1170,7 @@
         </EntityDefinition>		
 
 		
-		<EntityDefinition id="LCS1_HeartPulse">
+		<EntityDefinition id="LCS1_MonitoringPrescriptionHeartPulse">
             <AttributeDefinition id="type" type="enumeration" defaultValues="['HEARTPULSE']" multiplicity="maximalOne" description="Tipus de mesura" additionalDescription="Seleccioneu el tipus de mesura per a la supervisió del pacient">
                 <EnumerationOption value="HEARTPULSE" description="Pols cardíac"/>
             </AttributeDefinition>   
@@ -1721,64 +1721,64 @@
                     <TaskParamDefinition part="AUTOMATED" path="LCS1_Workplan.LCS1_MonitoringPrescriptionAHDiastolic.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>				
 
-                <DualTaskDefinition id="LCS1_WeightAHWP" externalId="MonitoringPrescription"
+                <DualTaskDefinition id="LCS1_MonitoringPrescriptionWeightAHWP" externalId="MonitoringPrescription"
 				description="Prescripció de la monitorització - Pes"
-				ownerPath="LCS1_Settings.Clinician" dueDatePath="LCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS1_Weight" entityAttachPath="LCS1_Workplan.LCS1_WeightAH">
+				ownerPath="LCS1_Settings.Clinician" dueDatePath="LCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS1_MonitoringPrescriptionWeight" entityAttachPath="LCS1_Workplan.LCS1_MonitoringPrescriptionWeightAH">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_WeightAH.type" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_WeightAH.alertmin" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_WeightAH.alertmax" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_WeightAH.alertfreq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_WeightAH.alertfrequnit" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_WeightAH.freq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_WeightAH.frequnit" isReadOnly="false" isMandatory="true"/>   
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_WeightAH.maxdelay" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_WeightAH.startdate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_WeightAH.enddate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_WeightAH.timeslot" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_WeightAH.comments" isReadOnly="false" isMandatory="false"/>                    
-                    <TaskParamDefinition part="AUTOMATED" path="LCS1_Workplan.LCS1_WeightAH.measurement" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionWeightAH.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionWeightAH.alertmin" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionWeightAH.alertmax" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionWeightAH.alertfreq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionWeightAH.alertfrequnit" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionWeightAH.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionWeightAH.frequnit" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionWeightAH.maxdelay" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionWeightAH.startdate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionWeightAH.enddate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionWeightAH.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionWeightAH.comments" isReadOnly="false" isMandatory="false"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="LCS1_Workplan.LCS1_MonitoringPrescriptionWeightAH.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>							
 
-                <DualTaskDefinition id="LCS1_SP02AHWP" externalId="MonitoringPrescription"
+                <DualTaskDefinition id="LCS1_MonitoringPrescriptionSP02AHWP" externalId="MonitoringPrescription"
 				description="Prescripció de la monitorització - Saturació d'oxigen"
-				ownerPath="LCS1_Settings.Clinician" dueDatePath="LCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS1_SP02" entityAttachPath="LCS1_Workplan.LCS1_SP02AH">
+				ownerPath="LCS1_Settings.Clinician" dueDatePath="LCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS1_MonitoringPrescriptionSP02" entityAttachPath="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_SP02AH.type" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_SP02AH.alertmin" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_SP02AH.alertmax" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_SP02AH.alertfreq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_SP02AH.alertfrequnit" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_SP02AH.freq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_SP02AH.frequnit" isReadOnly="false" isMandatory="true"/>   
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_SP02AH.maxdelay" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_SP02AH.startdate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_SP02AH.enddate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_SP02AH.timeslot" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_SP02AH.comments" isReadOnly="false" isMandatory="false"/>                    
-                    <TaskParamDefinition part="AUTOMATED" path="LCS1_Workplan.LCS1_SP02AH.measurement" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.alertmin" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.alertmax" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.alertfreq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.alertfrequnit" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.frequnit" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.maxdelay" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.startdate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.enddate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.comments" isReadOnly="false" isMandatory="false"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>							
 				
-                <DualTaskDefinition id="LCS1_HeartPulseAHWP" externalId="MonitoringPrescription"
+                <DualTaskDefinition id="LCS1_MonitoringPrescriptionHeartPulseAHWP" externalId="MonitoringPrescription"
 				description="Prescripció de la monitorització - Pols cardíac"
-				ownerPath="LCS1_Settings.Clinician" dueDatePath="LCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS1_HeartPulse" entityAttachPath="LCS1_Workplan.LCS1_HeartPulseAH">
+				ownerPath="LCS1_Settings.Clinician" dueDatePath="LCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS1_MonitoringPrescriptionHeartPulse" entityAttachPath="LCS1_Workplan.LCS1_MonitoringPrescriptionHeartPulseAH">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_HeartPulseAH.type" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_HeartPulseAH.alertmin" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_HeartPulseAH.alertmax" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_HeartPulseAH.alertfreq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_HeartPulseAH.alertfrequnit" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_HeartPulseAH.freq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_HeartPulseAH.frequnit" isReadOnly="false" isMandatory="true"/>   
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_HeartPulseAH.maxdelay" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_HeartPulseAH.startdate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_HeartPulseAH.enddate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_HeartPulseAH.timeslot" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_HeartPulseAH.comments" isReadOnly="false" isMandatory="false"/>                    
-                    <TaskParamDefinition part="AUTOMATED" path="LCS1_Workplan.LCS1_HeartPulseAH.measurement" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionHeartPulseAH.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionHeartPulseAH.alertmin" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionHeartPulseAH.alertmax" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionHeartPulseAH.alertfreq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionHeartPulseAH.alertfrequnit" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionHeartPulseAH.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionHeartPulseAH.frequnit" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionHeartPulseAH.maxdelay" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionHeartPulseAH.startdate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionHeartPulseAH.enddate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionHeartPulseAH.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionHeartPulseAH.comments" isReadOnly="false" isMandatory="false"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="LCS1_Workplan.LCS1_MonitoringPrescriptionHeartPulseAH.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>							
 				
                 <DualTaskDefinition id="LCS1_PhysicalActivityAHWP" externalId="PhysicalActivity"
