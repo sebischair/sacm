@@ -28,21 +28,21 @@
     <Workspace staticId="2c9480885d1737ef015d74deeac90000" id="Assuta">
 
         <EntityDefinition id="ICS2_CaseData" description="Case Data">
-            <AttributeDefinition id="ICS2_Patient" type="Link.Users(AssutaPatients)" description="Patient"/>
-            <AttributeDefinition id="ICS2_CaseManager" type="Link.Users(AssutaProfessionals)" description="מנהל הטיפול"/> <!-- AssutaCaseManagers to AssutaProfessionals -->
-            <AttributeDefinition id="ICS2_EvaluationDueDate" type="date.after(TODAY)" description="תאריך סיום לביצוע הערכה"/>
-            <AttributeDefinition id="ICS2_WorkplanDueDate" type="date.after(TODAY)" description="תאריך סיום לתוכנית הטיפול"/>
-			<AttributeDefinition id="ICS2_CaseData1" type="string" multiplicity="maximalOne" description="אבחנה ראשית" />
-			<AttributeDefinition id="ICS2_CaseData2" type="enumeration" multiplicity="maximalOne" description="סיבת האשפוז" >
+            <AttributeDefinition id="ICS2_Patient" type="Link.Users(AssutaPatients)" multiplicity="exactlyOne" description="Patient"/>
+            <AttributeDefinition id="ICS2_CaseManager" type="Link.Users(AssutaProfessionals)" multiplicity="exactlyOne" description="מנהל הטיפול"/> <!-- AssutaCaseManagers to AssutaProfessionals -->
+            <AttributeDefinition id="ICS2_EvaluationDueDate" type="date.after(TODAY)" multiplicity="exactlyOne" description="תאריך סיום לביצוע הערכה"/>
+            <AttributeDefinition id="ICS2_WorkplanDueDate" type="date.after(TODAY)" multiplicity="exactlyOne" description="תאריך סיום לתוכנית הטיפול"/>
+			<AttributeDefinition id="ICS2_CaseData1" type="string" multiplicity="exactlyOne" description="אבחנה ראשית" />
+			<AttributeDefinition id="ICS2_CaseData2" type="enumeration" multiplicity="exactlyOne" description="סיבת האשפוז" >
 			  <EnumerationOption value="0" description="ניתוח אלקטיבי"/>
               <EnumerationOption value="1" description="החמרת מחלה"/>
 			  <EnumerationOption value="2" description="ארוע אקוטי"/>
             </AttributeDefinition>   
 
-            <AttributeDefinition id="ICS2_Clinician" type="Link.Users(AssutaClinicians)" description="Clinician"/>
-            <AttributeDefinition id="ICS2_Nurse" type="Link.Users(AssutaNurses)" description="אחות CM"/>
-            <AttributeDefinition id="ICS2_SocialCareer" type="Link.Users(AssutaSocialCareers)" description="Social carer"/>
-            <AttributeDefinition id="ICS2_Professional" type="Link.Users(AssutaProfessionals)" description="Professional"/>
+            <AttributeDefinition id="ICS2_Clinician" type="Link.Users(AssutaClinicians)" multiplicity="exactlyOne" description="Clinician"/>
+            <AttributeDefinition id="ICS2_Nurse" type="Link.Users(AssutaNurses)" multiplicity="exactlyOne" description="אחות CM"/>
+            <AttributeDefinition id="ICS2_SocialCareer" type="Link.Users(AssutaSocialCareers)" multiplicity="exactlyOne" description="Social carer"/>
+            <AttributeDefinition id="ICS2_Professional" type="Link.Users(AssutaProfessionals)" multiplicity="exactlyOne" description="Professional"/>
 
             <AttributeDefinition id="ICS2_Identification" type="Link.EntityDefinition.ICS2_Identification" description="Identification" multiplicity="any"/>
             <AttributeDefinition id="ICS2_Evaluation" type="Link.EntityDefinition.ICS2_Evaluation" description="Evaluation" multiplicity="any"/>
