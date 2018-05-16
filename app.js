@@ -16,6 +16,9 @@ import mongoose from 'mongoose';
 import Log from './app/logging/log.model';
 import uuid from 'uuid/v1';
 import maxmind from 'maxmind';
+import winston from 'winston';
+
+winston.add(winston.transports.File, { filename: 'sacm.backend.log' });
 
 const secret = fs.readFileSync('public.key.pem')+'';
 
