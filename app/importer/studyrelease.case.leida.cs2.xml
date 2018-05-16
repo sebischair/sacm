@@ -232,6 +232,7 @@
 		</EntityDefinition> 		
 
 		<EntityDefinition id="LCS2_PatientsConsent" >
+            <AttributeDefinition id="pConsent0" type="string" multiplicity="exactlyOne" description="Consent Form" defaultValues="['https://system.connecare.eu/static/irbllpatientconsentv1.pdf']"  uiReference="link"/>
             <AttributeDefinition id="pConsent1" type="enumeration" multiplicity="exactlyOne" description="Accepta participar al procés clínic descrit al present document?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
@@ -1378,7 +1379,8 @@
                 <HumanTaskDefinition id="LCS2_PatientsConsent" description="Consentiment informat del pacient" ownerPath="LCS2_Settings.CaseManager" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS2_PatientsConsent" entityAttachPath="LCS2_Identification.LCS2_PatientsConsent">			
                     <SentryDefinition>
                         <precondition processDefinitionId="LCS2_SelectPatient"/>
-                    </SentryDefinition>
+                    </SentryDefinition>                    
+                    <TaskParamDefinition path="LCS2_Identification.LCS2_PatientsConsent.pConsent0" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="LCS2_Identification.LCS2_PatientsConsent.pConsent1" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>			                            
             </StageDefinition>
