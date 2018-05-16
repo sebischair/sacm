@@ -110,6 +110,7 @@
         </EntityDefinition>
 
         <EntityDefinition id="ICS2_PatientsConsent" description="הסכמת המטופל">
+            <AttributeDefinition id="ConsentPDF" type="string" multiplicity="exactlyOne" description="Consent Form" defaultValues="['https://system.connecare.eu/static/assutapatientconsentv1.pdf']"  uiReference="link"/>
             <AttributeDefinition id="ConsentYN" type="enumeration" multiplicity="exactlyOne" description="המטופל נתן את הסכמתו להשתתפות במחקר?">
                 <EnumerationOption value="0" description="לא"/>
                 <EnumerationOption value="1" description="כן"/>
@@ -1120,7 +1121,8 @@
                 <HumanTaskDefinition id="ICS2_PatientsConsent" description="הסכמת המטופל" ownerPath="ICS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PatientsConsent" entityAttachPath="ICS2_Identification.ICS2_PatientsConsent">                
                     <SentryDefinition>
                         <precondition processDefinitionId="ICS2_InclusionCriteria"/>
-                    </SentryDefinition>
+                    </SentryDefinition>                    
+                    <TaskParamDefinition path="ICS2_Identification.ICS2_PatientsConsent.ConsentPDF" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="ICS2_Identification.ICS2_PatientsConsent.ConsentYN" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Identification.ICS2_PatientsConsent.ConsentDate" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
