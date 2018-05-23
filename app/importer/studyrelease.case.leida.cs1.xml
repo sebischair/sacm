@@ -515,23 +515,51 @@
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>  
-			<AttributeDefinition id="fallRisk2" type="enumeration" multiplicity="exactlyOne" description="Medicaments">
-                <EnumerationOption value="0" description="Cap medicament de risc"/>
-                <EnumerationOption value="1" description="Pren medicació de risc: Tranquil·litzants, sedants, diürètics, antidepressius, antiparkinsonians, hipotensors, altres"/>
-            </AttributeDefinition>  
+			<AttributeDefinition id="fallRisk20" type="enumeration" multiplicity="exactlyOne" description="Medicaments - Tranquil·litzants, sedants">
+				<EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Sí"/>
+			</AttributeDefinition>  	
+			<AttributeDefinition id="fallRisk21" type="enumeration" multiplicity="exactlyOne" description="Medicaments - Diürètics hipotensors no diurètics">
+				<EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Sí"/>
+			</AttributeDefinition>  
+			<AttributeDefinition id="fallRisk22" type="enumeration" multiplicity="exactlyOne" description="Medicaments - Antiparkinsonians, antidepressius, altres">
+				<EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Sí"/>
+			</AttributeDefinition>  			
 			<AttributeDefinition id="fallRisk3" type="enumeration" multiplicity="exactlyOne" description="Dèficits sensorials">
                 <EnumerationOption value="0" description="Cap"/>
-                <EnumerationOption value="1" description="Alteracions visuals, auditives"/>
+                <EnumerationOption value="1" description="Alteracions visuals o auditives"/>
             </AttributeDefinition>  
-			<AttributeDefinition id="fallRisk4" type="enumeration" multiplicity="exactlyOne" description="Estat mental">
-                <EnumerationOption value="0" description="Orientat"/>
-                <EnumerationOption value="1" description="Confús"/>
+			<AttributeDefinition id="fallRisk40" type="enumeration" multiplicity="exactlyOne" description="Estat mental - Orientat">
+				<EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="0.001" description="Sí"/>
             </AttributeDefinition>  
-			<AttributeDefinition id="fallRisk5" type="enumeration" multiplicity="exactlyOne" description="Deambulació">
-                <EnumerationOption value="0" description="Normal"/>
-                <EnumerationOption value="1" description="Necessita ajuda o és inestable"/>
+			<AttributeDefinition id="fallRisk41" type="enumeration" multiplicity="exactlyOne" description="Estat mental - Confús">
+				<EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>  
-			<DerivedAttributeDefinition id="fallRisk6" expression="number(fallRisk1,0)+number(fallRisk2,0)+number(fallRisk3,0)+number(fallRisk4,0)+number(fallRisk5,0)" description="Risc de caigudes"/>  
+			<AttributeDefinition id="fallRisk42" type="enumeration" multiplicity="exactlyOne" description="Estat mental - Agitació psicomotora">
+				<EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Sí"/>
+            </AttributeDefinition>  
+			<AttributeDefinition id="fallRisk50" type="enumeration" multiplicity="exactlyOne" description="Deambulació - Normal">
+				<EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="0.001" description="Sí"/>
+            </AttributeDefinition>  
+			<AttributeDefinition id="fallRisk51" type="enumeration" multiplicity="exactlyOne" description="Deambulació - Assitida amb elements de recolzament">
+				<EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Sí"/>
+            </AttributeDefinition>  
+			<AttributeDefinition id="fallRisk52" type="enumeration" multiplicity="exactlyOne" description="Deambulació - Repòs absolut postrat">
+				<EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Sí"/>
+            </AttributeDefinition>  
+			<DerivedAttributeDefinition id="fallRisk6"
+			uiReference="colors(0<=green<3<=orange<5<=red<=10000)"			
+			additionalDescription="Risc baix si &lt;= 2 (Verd)|| Risc mig si 3 o 4 (Taronja)|| Risc alt si &gt;= 5 i &lt;= 9 (Vermell)" 
+			expression="round(number(fallRisk1,0))+round(number(fallRisk20,0))+round(number(fallRisk21,0))+round(number(fallRisk22,0))+round(number(fallRisk3,0))+round(number(fallRisk40,0))+round(number(fallRisk41,0))+round(number(fallRisk42,0))+round(number(fallRisk50,0))+round(number(fallRisk51,0))+round(number(fallRisk52,0))"
+			description="Risc de caigudes"/>  
 		</EntityDefinition>
 
 		<EntityDefinition id="LCS1_Sleeping">
@@ -1493,13 +1521,19 @@
 				<HumanTaskDefinition id="LCS1_FallRisk" description="Diagnòstic - Risc de caigudes"
 				ownerPath="LCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_FallRisk" entityAttachPath="LCS1_Evaluation.LCS1_FallRisk">                
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_FallRisk.fallRisk1" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1_Evaluation.LCS1_FallRisk.fallRisk2" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_FallRisk.fallRisk20" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_FallRisk.fallRisk21" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_FallRisk.fallRisk22" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_FallRisk.fallRisk3" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1_Evaluation.LCS1_FallRisk.fallRisk4" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1_Evaluation.LCS1_FallRisk.fallRisk5" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_FallRisk.fallRisk40" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_FallRisk.fallRisk41" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_FallRisk.fallRisk42" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_FallRisk.fallRisk50" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_FallRisk.fallRisk51" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_FallRisk.fallRisk52" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_FallRisk.fallRisk6" isReadOnly="true" isMandatory="false"/>
-				</HumanTaskDefinition>			
-
+				</HumanTaskDefinition>							
+				
 				<HumanTaskDefinition id="LCS1_AnthropometricVariablesAlHT" description="Diagnòstic - Pes i alçada - Variables antropomètriques"
 				ownerPath="LCS1_Settings.Nurse" isMandatory="false" repeatable="ONCE" activation="MANUAL"  entityDefinitionId="LCS1_AnthropometricVariablesAl" entityAttachPath="LCS1_Evaluation.LCS1_AnthropometricVariablesAl">
 				  <TaskParamDefinition path="LCS1_Evaluation.LCS1_AnthropometricVariablesAl.AnWeighAl" isReadOnly="false" isMandatory="true"/>
