@@ -55,7 +55,7 @@
 			<AttributeDefinition id="AnesClinic" type="Link.Users(IrbllAnesthesiologists, IrbllClinicians)" description="Anestesiòleg o Cirurgià" multiplicity="exactlyOne"/>            		  		  
 			<AttributeDefinition id="NurseSocial" type="Link.Users(IrbllNurses, IrbllSocialCareers)" description="Infermera o Treballador social" multiplicity="exactlyOne"/>            		  		  			
 			<AttributeDefinition id="NurseSocialClinician" type="Link.Users(IrbllClinicians, IrbllNurses, IrbllSocialCareers)" description="Cirurgià o Infermera o Treballador social" multiplicity="exactlyOne"/>            		  		  			
-		    <AttributeDefinition id="PrimaryCareClinicians" type="Link.Users(IrbllPrimaryCareClinicians)" description="Cirurgià - Atenció Primària" multiplicity="exactlyOne"/>	
+		    <AttributeDefinition id="PrimaryCareClinicians" type="Link.Users(IrbllPrimaryCareClinicians)" description="Metge - Atenció Primària" multiplicity="exactlyOne"/>	
 			<AttributeDefinition id="PrimaryCareNurse" type="Link.Users(IrbllPrimaryCareNurse)" description="Infermera - Atenció Primària" multiplicity="exactlyOne"/>				
 		    <AttributeDefinition id="WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date" multiplicity="exactlyOne"/>
         </EntityDefinition>
@@ -1039,7 +1039,6 @@
 						
 		<!-- Workplan Before Hospitalization Entity Definitions -->			
 		<EntityDefinition id="LCS2_WorkplanBeforeHospitalization">	
-			<AttributeDefinition id="LCS2_CommentBH" type="Link.EntityDefinition.LCS2_Comment" multiplicity="any"/> 			
 			<AttributeDefinition id="LCS2_AnaemiaAssessmentAndManagementNutritionBH" type="Link.EntityDefinition.LCS2_AnaemiaAssessmentAndManagementNutritionDef" multiplicity="any"/>					    
 			<AttributeDefinition id="LCS2_BloodPressureControlBH" type="Link.EntityDefinition.LCS2_BloodPressureControlBH" multiplicity="any"/>		  
 		    <AttributeDefinition id="LCS2_DiabetesControlBH" type="Link.EntityDefinition.LCS2_DiabetesControlBH" multiplicity="any"/>
@@ -1083,15 +1082,10 @@
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>
         </EntityDefinition>
-
-		<EntityDefinition id="LCS2_Comment">
-		     <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comentaris" additionalDescription="Proporcioneu suggeriments addicionals"/>   
-		</EntityDefinition>
 				
 		<!-- Workplan After Hospitalization Entity Definitions -->		
 		<EntityDefinition id="LCS2_WorkplanAfterHospitalization">						    
 			<AttributeDefinition id="LCS2_PatientEducationAndTrainingToTheCaregiverAH" type="Link.EntityDefinition.LCS2_PatientEducationAndTrainingToTheCaregiverAH" multiplicity="any"/>			
-			<AttributeDefinition id="LCS2_CommentAH" type="Link.EntityDefinition.LCS2_Comment" multiplicity="any"/> 	
 			<AttributeDefinition id="LCS2_MonitoringPrescriptionAHSystolic" type="Link.EntityDefinition.LCS2_MonitoringPrescriptionSystolic" multiplicity="any" /> 			
 			<AttributeDefinition id="LCS2_MonitoringPrescriptionAHDiastolic" type="Link.EntityDefinition.LCS2_MonitoringPrescriptionDiastolic" multiplicity="any" /> 
 			<AttributeDefinition id="LCS2_PhysicalActivityAH" type="Link.EntityDefinition.LCS2_PhysicalActivityAH" multiplicity="any" />	
@@ -1153,19 +1147,6 @@
 			description="Com et trobes avui? Escala numerada: On 0 és molt malament i 100 és molt bé"/>       						
 		</EntityDefinition>
 		
-        <!-- Discharge Definitions -->		
-		<EntityDefinition id="LCS2_Discharge">
-			<AttributeDefinition id="LCS2_DischargeTest" type="Link.EntityDefinition.LCS2_DischargeTest" multiplicity="any"/>									
-			<AttributeDefinition id="LCS2_SF12Discharge" type="Link.EntityDefinition.LCS2_SF12Def" multiplicity="any"/> 			
-			<AttributeDefinition id="LCS2_EQ-5DDischarge" type="Link.EntityDefinition.LCS2_EQ-5DDef" multiplicity="any"/> 						
-		</EntityDefinition>
-		
-		<EntityDefinition id="LCS2_DischargeTest"> 
-			<AttributeDefinition id="discharge1" type="longtext" description="Com ens ha anat?" multiplicity="exactlyOne" /> 
-			<AttributeDefinition id="discharge2" type="longtext" description="Estat actual del pacient" multiplicity="exactlyOne"/> 
-			<AttributeDefinition id="discharge3" type="longtext" description="Pronostic (funcional, assistencial i social)" multiplicity="exactlyOne"/> 
-        </EntityDefinition>
-			
 		<EntityDefinition id="LCS2_MonitoringPrescriptionSystolic">
             <AttributeDefinition id="type" type="enumeration" defaultValues="['SYSTOLICBLOODPRESSURE']" multiplicity="exactlyOne" description="Tipus de mesura" additionalDescription="Seleccioneu el tipus de mesura per a la supervisió del pacient">
                 <EnumerationOption value="SYSTOLICBLOODPRESSURE" description="Pressió arterial sistòlica"/>
@@ -1239,8 +1220,22 @@
             <AttributeDefinition id="dailylowlevel" type="number.min(0).max(1440)" defaultValues="[60]" multiplicity="exactlyOne" description="Mínim de minuts d'intensitat baixa a fer durant el dia (caminar, bicicleta, nadar)"/>       
             <AttributeDefinition id="dailymediumlevel" type="number.min(0).max(1440)" defaultValues="[40]" multiplicity="exactlyOne" description="Mínim de minuts d'intensitat intermitja a fer durant el dia (caminar pas ràpid, tasques domèstiques lleugeres, jugar amb nens, passejar mascotes)"/>       			
             <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Mesures"/>                 
-        </EntityDefinition> 
+        </EntityDefinition> 		
 		
+		
+        <!-- Discharge Definitions -->		
+		<EntityDefinition id="LCS2_Discharge">
+			<AttributeDefinition id="LCS2_DischargeTest" type="Link.EntityDefinition.LCS2_DischargeTest" multiplicity="any"/>									
+			<AttributeDefinition id="LCS2_SF12Discharge" type="Link.EntityDefinition.LCS2_SF12Def" multiplicity="any"/> 			
+			<AttributeDefinition id="LCS2_EQ-5DDischarge" type="Link.EntityDefinition.LCS2_EQ-5DDef" multiplicity="any"/> 						
+		</EntityDefinition>
+		
+		<EntityDefinition id="LCS2_DischargeTest"> 
+			<AttributeDefinition id="discharge1" type="longtext" description="Com ens ha anat?" multiplicity="exactlyOne" /> 
+			<AttributeDefinition id="discharge2" type="longtext" description="Estat actual del pacient" multiplicity="exactlyOne"/> 
+			<AttributeDefinition id="discharge3" type="longtext" description="Pronostic (funcional, assistencial i social)" multiplicity="exactlyOne"/> 
+        </EntityDefinition>
+					
         <EntityDefinition id="LCS2_RehabilitationAH">
             <AttributeDefinition id="rehabExec0" type="enumeration" multiplicity="exactlyOne" description="Quan">     
                 <EnumerationOption value="0" description="Matí"/>
@@ -1681,10 +1676,6 @@
                     <TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_DiabetesControlBH.DiabetisControl0" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_DiabetesControlBH.DiabetisControl1" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
-
-				<HumanTaskDefinition id="LCS2_CommentWPBH" description="Comentaris" ownerPath="LCS2_Settings.Clinician" isMandatory="false" isRepeatable="false" entityDefinitionId="LCS2_Comment" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_CommentBH">									
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_CommentBH.comments" isReadOnly="false" isMandatory="true"/>                    
-                </HumanTaskDefinition>			
                                         
                 <DualTaskDefinition id="LCS2_MonitoringPrescriptionBHWPSystolic" externalId="MonitoringPrescription"
 				description="Prescripció de la monitorització - Pressió arterial sistòlica - Abans d'hospitalització" dynamicDescriptionPath="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHSystolic.type"
@@ -1743,10 +1734,6 @@
                     <TaskParamDefinition path="LCS2_WorkplanAfterHospitalization.LCS2_PatientEducationAndTrainingToTheCaregiverAH.educaExec3" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
             
-                <HumanTaskDefinition id="LCS2_CommentWPAH" description="Comentaris" ownerPath="LCS2_Settings.Clinician" isMandatory="false" isRepeatable="false" entityDefinitionId="LCS2_Comment" entityAttachPath="LCS2_WorkplanAfterHospitalization.LCS2_CommentAH">									
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_CommentAH.comments" isReadOnly="false" isMandatory="true"/>                    
-                </HumanTaskDefinition>		
-
                 <DualTaskDefinition id="LCS2_MonitoringPrescriptionAHWPSystolic" externalId="MonitoringPrescription"
 				description="Prescripció de monitorització - Pressió arterial sistòlica - Desprès l'hospitalització" dynamicDescriptionPath="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHSystolic.type" ownerPath="LCS2_Settings.PrimaryCareClinicians" dueDatePath="LCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_MonitoringPrescriptionSystolic" entityAttachPath="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHSystolic">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
@@ -1854,7 +1841,8 @@
         <TaskParam path="LCS2_Identification.LCS2_TechnologicalTest.tech1" values="['0']"/> 
         <TaskParam path="LCS2_Identification.LCS2_TechnologicalTest.tech2" values="['1']"/> 
         <TaskParam path="LCS2_Identification.LCS2_TechnologicalTest.tech3" values="['1']"/> 
-    </Action>  
+		<TaskParam path="LCS2_Identification.LCS2_TechnologicalTest.tech4" values="['2']"/> 
+    </Action>
 
     <Action id="CompleteHumanTask" processId="LCS2_ComorbidityCharlsonIdentificationHT" breakpoint="true">  
         <TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.inclusiondiag" values="['LKP']"/> 
@@ -1878,7 +1866,8 @@
         <TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch18" values="['0']"/>    
         <TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch19" values="['0']"/>    
         <TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch20" values="['1']"/>    
-    </Action> 
+		<TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch21" values="['1']"/>    
+    </Action>
 
     <Action id="CompleteHumanTask" processId="LCS2_ComplexityRiskHT" breakpoint="true"> 
         <TaskParam path="LCS2_Identification.LCS2_ComplexityRisk.age" values="['0']"/> 
@@ -1887,23 +1876,21 @@
         <TaskParam path="LCS2_Identification.LCS2_ComplexityRisk.admissions1" values="['0']"/>  
         <TaskParam path="LCS2_Identification.LCS2_ComplexityRisk.admissions2" values="['0']"/>  
         <TaskParam path="LCS2_Identification.LCS2_ComplexityRisk.ASA" values="['1']"/>  
-    </Action> 
-
-    <Action id="CompleteHumanTask" processId="LCS2_PatientsConsent" breakpoint="true">  
-        <TaskParam path="LCS2_Identification.LCS2_PatientsConsent.pConsent1" values="['1']"/> 
-    </Action> 
+		<TaskParam path="LCS2_Identification.LCS2_ComplexityRisk.complexity" values="['0']"/>  
+		<TaskParam path="LCS2_Identification.LCS2_ComplexityRisk.complexitytotal" values="['1']"/>  
+    </Action>
 
     <Action id="CompleteHumanTask" processId="LCS2_GMAIdentificationHT" breakpoint="true">  
         <TaskParam path="LCS2_Identification.LCS2_GMAIdentification.gma" values="['1']"/> 
     </Action>   
 
-    <Action id="CompleteHumanTask" processId="LCS2_GMAEvaluationHT" breakpoint="true">    
-        <TaskParam path="LCS2_Identification.LCS2_GMAIdentification.gma" values="['1']"/>   
-    </Action>  
- 
-     <Action id="CompleteHumanTask" processId="LCS2_ComorbidityCharlsonEvaluationHT" breakpoint="true">    
-        <TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch1" values="['0']"/> 
-        <TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch2" values="['0']"/> 
+    <Action id="CompleteHumanTask" processId="LCS2_PatientsConsent" breakpoint="true">  
+        <TaskParam path="LCS2_Identification.LCS2_PatientsConsent.pConsent1" values="['1']"/> 
+    </Action>
+	
+    <Action id="CompleteHumanTask" processId="LCS2_ComorbidityCharlsonEvaluationHT" breakpoint="true">    
+        <TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch1" values="['1']"/> 
+        <TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch2" values="['1']"/> 
         <TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch3" values="['0']"/> 
         <TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch4" values="['0']"/> 
         <TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch5" values="['0']"/> 
@@ -1921,30 +1908,34 @@
         <TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch17" values="['0']"/>    
         <TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch18" values="['0']"/>    
         <TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch19" values="['0']"/>    
-        <TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch20" values="['1']"/>    
-    </Action>  
+        <TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch20" values="['0']"/>    
+		<TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch21" values="['2']"/>    
+    </Action>  	
 
     <Action id="CompleteHumanTask" processId="LCS2_ComorbidityPfeiffer" breakpoint="true">    
-        <TaskParam path="LCS2_Evaluation.LCS2_ComorbidityPfeiffer.pfeiffer1" values="['1']"/>   
+        <TaskParam path="LCS2_Evaluation.LCS2_ComorbidityPfeiffer.pfeiffer1" values="['7']"/>   
+		<TaskParam path="LCS2_Evaluation.LCS2_ComorbidityPfeiffer.pfeiffer2" values="['7']"/>   
     </Action>    
-  
+	
     <Action id="CompleteHumanTask" processId="LCS2_HospitalAnxietyAndDepressionScale" breakpoint="true">  
         <TaskParam path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadA1" values="['1']"/> 
         <TaskParam path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadA2" values="['1']"/> 
         <TaskParam path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadA3" values="['1']"/> 
-        <TaskParam path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadA4" values="['1']"/> 
-        <TaskParam path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadA5" values="['1']"/> 
-        <TaskParam path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadA6" values="['1']"/> 
-        <TaskParam path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadA7" values="['1']"/> 
+        <TaskParam path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadA4" values="['0']"/> 
+        <TaskParam path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadA5" values="['0']"/> 
+        <TaskParam path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadA6" values="['0']"/> 
+        <TaskParam path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadA7" values="['0']"/> 
         <TaskParam path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadD1" values="['1']"/> 
         <TaskParam path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadD2" values="['1']"/> 
         <TaskParam path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadD3" values="['1']"/> 
         <TaskParam path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadD4" values="['1']"/> 
         <TaskParam path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadD5" values="['1']"/> 
         <TaskParam path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadD6" values="['1']"/> 
-        <TaskParam path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadD7" values="['1']"/> 
+        <TaskParam path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadD7" values="['1']"/> 		
+		<TaskParam path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadA8" values="['3']"/> 
+		<TaskParam path="LCS2_Evaluation.LCS2_HospitalAnxietyAndDepressionScale.hadD8" values="['7']"/> 
     </Action> 
-
+	
     <Action id="CompleteHumanTask" processId="LCS2_Barthel" breakpoint="true">    
         <TaskParam path="LCS2_Evaluation.LCS2_Barthel.barthel1" values="['0']"/>
         <TaskParam path="LCS2_Evaluation.LCS2_Barthel.barthel2" values="['0']"/>
@@ -1952,12 +1943,13 @@
         <TaskParam path="LCS2_Evaluation.LCS2_Barthel.barthel4" values="['0']"/>
         <TaskParam path="LCS2_Evaluation.LCS2_Barthel.barthel5" values="['0']"/>
         <TaskParam path="LCS2_Evaluation.LCS2_Barthel.barthel6" values="['0']"/>
-        <TaskParam path="LCS2_Evaluation.LCS2_Barthel.barthel7" values="['0']"/>
+        <TaskParam path="LCS2_Evaluation.LCS2_Barthel.barthel7" values="['5']"/>
         <TaskParam path="LCS2_Evaluation.LCS2_Barthel.barthel8" values="['0']"/>
-        <TaskParam path="LCS2_Evaluation.LCS2_Barthel.barthel9" values="['0']"/>
+        <TaskParam path="LCS2_Evaluation.LCS2_Barthel.barthel9" values="['5']"/>
         <TaskParam path="LCS2_Evaluation.LCS2_Barthel.barthel10" values="['0']"/>
-    </Action> 
-
+		<TaskParam path="LCS2_Evaluation.LCS2_Barthel.barthel11" values="['10']"/>
+    </Action> 	
+	
     <Action id="CompleteHumanTask" processId="LCS2_DiagnosisCommunicationHT" breakpoint="true"> 
         <TaskParam path="LCS2_Evaluation.LCS2_DiagnosisCommunication.comm1" values="['0.0001']"/>    
         <TaskParam path="LCS2_Evaluation.LCS2_DiagnosisCommunication.comm2" values="['1']"/>    
@@ -1979,23 +1971,28 @@
 
     <Action id="ActivateHumanTask" processId="LCS2_AnthropometricVariablesAl" breakpoint="true"/>
     <Action id="CompleteHumanTask" processId="LCS2_AnthropometricVariablesAl" breakpoint="true">    
-        <TaskParam path="LCS2_Evaluation.LCS2_AnthropometricVariablesAl.AnWeighAl" values="['20']"/> 
+        <TaskParam path="LCS2_Evaluation.LCS2_AnthropometricVariablesAl.AnWeighAl" values="['60']"/> 
         <TaskParam path="LCS2_Evaluation.LCS2_AnthropometricVariablesAl.AnHeightAl" values="['180']"/>    
-    </Action>  
+		<TaskParam path="LCS2_Evaluation.LCS2_AnthropometricVariablesAl.AnthropometricAl" values="['18.51']"/>    
+    </Action>
 
     <Action id="ActivateHumanTask" processId="LCS2_AnthropometricVariablesGenollHomes" breakpoint="true"/>
     <Action id="CompleteHumanTask" processId="LCS2_AnthropometricVariablesGenollHomes" breakpoint="true">    
         <TaskParam path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenollHomes.AnKneeGenoll" values="['1']"/> 
-        <TaskParam path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenollHomes.AnAgeGenoll" values="['1']"/>    
+        <TaskParam path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenollHomes.AnAgeGenoll" values="['1']"/>    		
+		<TaskParam path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenollHomes.AnthropometricGenollHomes" values="['1']"/>    		
         <TaskParam path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenollHomes.AnWeighGenoll" values="['1']"/>    
-    </Action>  
+		<TaskParam path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenollHomes.AnthropometricGenollHomesIMC" values="['1']"/>    		
+    </Action>
 
     <Action id="ActivateHumanTask" processId="LCS2_AnthropometricVariablesGenollDones" breakpoint="true"/>
     <Action id="CompleteHumanTask" processId="LCS2_AnthropometricVariablesGenollDones" breakpoint="true">    
         <TaskParam path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenollDones.AnKneeGenoll" values="['1']"/> 
         <TaskParam path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenollDones.AnAgeGenoll" values="['1']"/>    
+		<TaskParam path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenollDones.AnthropometricGenollDones" values="['1']"/>    		
         <TaskParam path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenollDones.AnWeighGenoll" values="['1']"/>    
-    </Action>  
+		<TaskParam path="LCS2_Evaluation.LCS2_AnthropometricVariablesGenollDones.AnthropometricGenollDonesIMC" values="['1']"/>    		
+    </Action>  	
 
     <Action id="CompleteHumanTask" processId="LCS2_DiagnosisSmokingAndAlcohol" breakpoint="true"> 
         <TaskParam path="LCS2_Evaluation.LCS2_DiagnosisSmokingAndAlcohol.smalc1" values="['1']"/>   
@@ -2035,13 +2032,18 @@
         <TaskParam path="LCS2_Evaluation.LCS2_WOMAC.Womac21" values="['1']"/>   
         <TaskParam path="LCS2_Evaluation.LCS2_WOMAC.Womac22" values="['1']"/>   
         <TaskParam path="LCS2_Evaluation.LCS2_WOMAC.Womac23" values="['1']"/>   
-        <TaskParam path="LCS2_Evaluation.LCS2_WOMAC.Womac24" values="['1']"/>   
+        <TaskParam path="LCS2_Evaluation.LCS2_WOMAC.Womac24" values="['1']"/>   		
+		<TaskParam path="LCS2_Evaluation.LCS2_WOMAC.WomacDolor" values="['5']"/>   
+		<TaskParam path="LCS2_Evaluation.LCS2_WOMAC.WomacRigidesa" values="['2']"/>   
+		<TaskParam path="LCS2_Evaluation.LCS2_WOMAC.WomacFuncional" values="['17']"/>   
     </Action> 
 
     <Action id="CompleteHumanTask" processId="LCS2_EVAECNDEvaluationHT" breakpoint="true"> 
         <TaskParam path="LCS2_Evaluation.LCS2_EVAECNDDef.eva0" values="['1']"/>   
         <TaskParam path="LCS2_Evaluation.LCS2_EVAECNDDef.eva1" values="['1']"/>   
         <TaskParam path="LCS2_Evaluation.LCS2_EVAECNDDef.eva2" values="['1']"/>   
+        <TaskParam path="LCS2_Evaluation.LCS2_EVAECNDDef.eva3" values="['1']"/>   
+        <TaskParam path="LCS2_Evaluation.LCS2_EVAECNDDef.eva4" values="['1']"/>   		
     </Action> 
 
     <Action id="CompleteHumanTask" processId="LCS2_SLANSSEvaluationHT" breakpoint="true"> 
@@ -2052,6 +2054,7 @@
         <TaskParam path="LCS2_Evaluation.LCS2_SLANSS.slanssExec5" values="['0']"/>    
         <TaskParam path="LCS2_Evaluation.LCS2_SLANSS.slanssExec6" values="['0']"/>    
         <TaskParam path="LCS2_Evaluation.LCS2_SLANSS.slanssExec7" values="['0']"/>  
+		<TaskParam path="LCS2_Evaluation.LCS2_SLANSS.slanssExec8" values="['0']"/>  
     </Action> 
 
     <Action id="CompleteHumanTask" processId="LCS2_SF12EvaluationHT" breakpoint="true"> 
@@ -2071,6 +2074,7 @@
 
     <Action id="CompleteHumanTask" processId="LCS2_MedicationFollowing" breakpoint="true"> 
         <TaskParam path="LCS2_Evaluation.LCS2_MedicationFollowing.Medication1" values="['1']"/>   
+		<TaskParam path="LCS2_Evaluation.LCS2_MedicationFollowing.Medication2" values="['1']"/>   
     </Action> 
 
     <Action id="CompleteHumanTask" processId="LCS2_Medication" breakpoint="true"> 
@@ -2078,6 +2082,7 @@
         <TaskParam path="LCS2_Evaluation.LCS2_Medication.Medication2" values="['1']"/>   
         <TaskParam path="LCS2_Evaluation.LCS2_Medication.Medication3" values="['1']"/>   
         <TaskParam path="LCS2_Evaluation.LCS2_Medication.Medication4" values="['1']"/>   
+		<TaskParam path="LCS2_Evaluation.LCS2_Medication.Medication5" values="['4']"/> 
     </Action> 
 
     <Action id="CompleteHumanTask" processId="LCS2_SelfCareAuto" breakpoint="true">   
@@ -2085,13 +2090,15 @@
         <TaskParam path="LCS2_Evaluation.LCS2_SelfCareAuto.sca2" values="['1']"/>   
         <TaskParam path="LCS2_Evaluation.LCS2_SelfCareAuto.sca3" values="['1']"/>   
         <TaskParam path="LCS2_Evaluation.LCS2_SelfCareAuto.sca4" values="['1']"/>   
+		<TaskParam path="LCS2_Evaluation.LCS2_SelfCareAuto.sca5" values="['4']"/>   
     </Action>  
 
     <Action id="CompleteHumanTask" processId="LCS2_SocialDwelling" breakpoint="true"> 
         <TaskParam path="LCS2_Evaluation.LCS2_SocialDwelling.dwelling1" values="['1']"/>    
         <TaskParam path="LCS2_Evaluation.LCS2_SocialDwelling.dwelling2" values="['1']"/>    
         <TaskParam path="LCS2_Evaluation.LCS2_SocialDwelling.dwelling3" values="['1']"/>    
-        <TaskParam path="LCS2_Evaluation.LCS2_SocialDwelling.dwelling4" values="['1']"/>    
+        <TaskParam path="LCS2_Evaluation.LCS2_SocialDwelling.dwelling4" values="['0.0001']"/>    
+		<TaskParam path="LCS2_Evaluation.LCS2_SocialDwelling.dwelling5" values="['3']"/>    
     </Action>  
 
 
@@ -2100,6 +2107,7 @@
         <TaskParam path="LCS2_Evaluation.LCS2_SocialSelfCareCareerAbility.career2" values="['1']"/> 
         <TaskParam path="LCS2_Evaluation.LCS2_SocialSelfCareCareerAbility.career3" values="['1']"/> 
         <TaskParam path="LCS2_Evaluation.LCS2_SocialSelfCareCareerAbility.career4" values="['1']"/> 
+		<TaskParam path="LCS2_Evaluation.LCS2_SocialSelfCareCareerAbility.career5" values="['1']"/> 
     </Action>
 
  <!--
@@ -2128,10 +2136,10 @@
     </Action> 
 
     <Action id="CompleteHumanTask" processId="LCS2_DiabetesControlWPBH" breakpoint="true">  
-        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_DiabetesControlBH.DiabetisControl0" values="['1']"/> 
-        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_DiabetesControlBH.DiabetisControl1" values="['1']"/> 
-    </Action> 
-
+        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_DiabetesControlBH.DiabetisControl0" values="['1']"/>
+        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_DiabetesControlBH.DiabetisControl1" values="['1']"/>
+    </Action> 		
+	
     <Action id="ActivateDualTask" processId="LCS2_MonitoringPrescriptionBHWPSystolic" breakpoint="true"/>
     <Action id="CompleteDualTaskHumanPart" processId="LCS2_MonitoringPrescriptionBHWPSystolic" breakpoint="true">
         <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWPSystolic.type"  values="['SYSTOLICBLOODPRESSURE']"/>
@@ -2150,7 +2158,7 @@
     <Action id="CompleteDualTaskAutomatedPart" processId="LCS2_MonitoringPrescriptionBHWPSystolic" breakpoint="true">
         <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWPSystolic.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
     </Action>
-
+	
     <Action id="ActivateDualTask" processId="LCS2_MonitoringPrescriptionBHWPDiastolic" breakpoint="true"/>
     <Action id="CompleteDualTaskHumanPart" processId="LCS2_MonitoringPrescriptionBHWPDiastolic" breakpoint="true">
         <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWPDiastolic.type"  values="['DIASTOLICBLOODPRESSURE']"/>
@@ -2168,8 +2176,56 @@
     </Action>
     <Action id="CompleteDualTaskAutomatedPart" processId="LCS2_MonitoringPrescriptionBHWPDiastolic" breakpoint="true">
         <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWPDiastolic.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
-    </Action>
+    </Action>	
+	
+	
+	<Action id="CompleteHumanTask" processId="LCS2_PatientEducationAndTrainingToTheCaregiverWPAH1" breakpoint="true">  
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PatientEducationAndTrainingToTheCaregiverAH.educaExec1" values="['1']"/> 
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PatientEducationAndTrainingToTheCaregiverAH.educaExec2" values="['1']"/> 
+    </Action> 	
 
+	<Action id="CompleteHumanTask" processId="LCS2_PatientEducationAndTrainingToTheCaregiverWPAH2" breakpoint="true">  
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PatientEducationAndTrainingToTheCaregiverAH.educaExec3" values="['1']"/> 
+    </Action> 		
+
+    <Action id="ActivateDualTask" processId="LCS2_MonitoringPrescriptionAHWPSystolic" breakpoint="true"/>
+    <Action id="CompleteDualTaskHumanPart" processId="LCS2_MonitoringPrescriptionAHWPSystolic" breakpoint="true">
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPSystolic.type"  values="['SYSTOLICBLOODPRESSURE']"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPSystolic.alertmin"  values="[50]"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPSystolic.alertmax"  values="[150]"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPSystolic.alertfreq"  values="[2]"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPSystolic.alertfrequnit"  values="['DAYS']"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPSystolic.comments"  values="['Some random comment']"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPSystolic.freq"  values="[5]"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPSystolic.freqqunit"  values="['WEEKS']"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPSystolic.maxdelay"  values="[100]"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPSystolic.startdate"  values="['2017-06-09T00:00:00.0']"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPSystolic.enddate"  values="['2019-06-09T00:00:00.0']"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPSystolic.timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
+    </Action>
+    <Action id="CompleteDualTaskAutomatedPart" processId="LCS2_MonitoringPrescriptionAHWPSystolic" breakpoint="true">
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPSystolic.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
+    </Action>
+	
+    <Action id="ActivateDualTask" processId="LCS2_MonitoringPrescriptionAHWPDiastolic" breakpoint="true"/>
+    <Action id="CompleteDualTaskHumanPart" processId="LCS2_MonitoringPrescriptionAHWPDiastolic" breakpoint="true">
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPDiastolic.type"  values="['DIASTOLICBLOODPRESSURE']"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPDiastolic.alertmin"  values="[50]"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPDiastolic.alertmax"  values="[150]"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPDiastolic.alertfreq"  values="[2]"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPDiastolic.alertfrequnit"  values="['DAYS']"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPDiastolic.comments"  values="['Some random comment']"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPDiastolic.freq"  values="[5]"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPDiastolic.freqqunit"  values="['WEEKS']"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPDiastolic.maxdelay"  values="[100]"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPDiastolic.startdate"  values="['2017-06-09T00:00:00.0']"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPDiastolic.enddate"  values="['2019-06-09T00:00:00.0']"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPDiastolic.timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
+    </Action>
+    <Action id="CompleteDualTaskAutomatedPart" processId="LCS2_MonitoringPrescriptionAHWPDiastolic" breakpoint="true">
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPDiastolic.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
+    </Action>	
+	
     <Action id="ActivateDualTask" processId="LCS2_PhysicalActivityAHWP" breakpoint="true"/>
     <Action id="CompleteDualTaskHumanPart" processId="LCS2_PhysicalActivityAHWP" breakpoint="true">
         <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PhysicalActivityAHWP.startdate"  values="['2017-09-26T00:00:00.000']"/>
@@ -2177,12 +2233,10 @@
         <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PhysicalActivityAHWP.dailysteps"  values="[10000]"/>
         <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PhysicalActivityAHWP.dailylowlevel"  values="[15]"/>
         <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PhysicalActivityAHWP.dailymediumlevel"  values="[5]"/>
-        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PhysicalActivityAHWP.dailyhighlevel"  values="[10]"/>
-        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PhysicalActivityAHWP.dailynoactivity"  values="[30]"/>
     </Action>
     <Action id="CompleteDualTaskAutomatedPart" processId="LCS2_PhysicalActivityAHWP">
         <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PhysicalActivityAHWP.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
-    </Action>  
+    </Action>  	
 
     <Action id="ActivateHumanTask" processId="LCS2_RehabilitationAHWP" breakpoint="true"/>
     <Action id="CompleteHumanTask" processId="LCS2_RehabilitationAHWP" breakpoint="true">  
@@ -2190,7 +2244,7 @@
         <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_RehabilitationAH.rehabExec1" values="['1']"/> 
         <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_RehabilitationAH.rehabExec2" values="['sss']"/> 
     </Action> 
-
+	
     <Action id="CompleteHumanTask" processId="LCS2_DischargeTestHT" breakpoint="true">  
         <TaskParam path="LCS2_Discharge.LCS2_DischargeTest.discharge1" values="['aaa']"/> 
         <TaskParam path="LCS2_Discharge.LCS2_DischargeTest.discharge2" values="['bbb']"/> 
