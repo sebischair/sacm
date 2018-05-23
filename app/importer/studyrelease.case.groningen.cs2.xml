@@ -40,10 +40,10 @@
 
         <!-- Settings Entity Definitions -->
         <EntityDefinition id="GCS2_Settings" description="Settings">
-            <AttributeDefinition id="Patient" type="Link.Users(UmcgPatients)" description="Patient" additionalDescription="Patient that is assigned to this case."/>
-            <AttributeDefinition id="CaseOwner" type="Link.Users(UmcgProfessionals)" description="Case Owner"/>
-            <AttributeDefinition id="Clinician" type="Link.Users(UmcgProfessionals)" description="Clinican"/>
-            <AttributeDefinition id="EvaluationDueDate" type="date.after(TODAY)" description="Evaluation default due date"/>
+            <AttributeDefinition id="Patient" type="Link.Users(UmcgPatients)" description="Patient" additionalDescription="Patient that is assigned to this case." multiplicity="exactlyOne"/>
+            <AttributeDefinition id="CaseOwner" type="Link.Users(UmcgProfessionals)" description="Case Owner" multiplicity="exactlyOne"/>
+            <AttributeDefinition id="Clinician" type="Link.Users(UmcgProfessionals)" description="Clinican" multiplicity="exactlyOne"/>
+            <AttributeDefinition id="EvaluationDueDate" type="date.after(TODAY)" description="Evaluation default due date" multiplicity="exactlyOne"/>
             <AttributeDefinition id="WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date" multiplicity="exactlyOne"/>
         </EntityDefinition>
 
@@ -55,25 +55,25 @@
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_PatientsConsent" description="Patient's consent">
-            <AttributeDefinition id="pConsent0" type="string" multiplicity="maximalOne" description="http://www.connecare.eu/" uiReference="link"/>
-            <AttributeDefinition id="pConsent1" type="enumeration" multiplicity="maximalOne" description="Do you agree to participate into the process described in the document?">
+            <AttributeDefinition id="pConsent0" type="string" multiplicity="exactlyOne" description="Consent Form" defaultValues="['https://system.connecare.eu/static/umcgpatientconsentv1.pdf']"  uiReference="link"/>
+            <AttributeDefinition id="pConsent1" type="enumeration" multiplicity="exactlyOne" description="Do you agree to participate into the process described in the document?">
                 <EnumerationOption value="1" description="No"/>
                 <EnumerationOption value="2" description="Yes"/>
             </AttributeDefinition> 
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_ThechTest" description="Technological Test">
-            <AttributeDefinition id="tech1" type="enumeration" multiplicity="maximalOne" description="Do you or your carergiver have an internet connection?">
+            <AttributeDefinition id="tech1" type="enumeration" multiplicity="exactlyOne" description="Do you or your carergiver have an internet connection?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>  
-            <AttributeDefinition id="tech2" type="enumeration" multiplicity="maximalOne" description="Do you use:">
+            <AttributeDefinition id="tech2" type="enumeration" multiplicity="exactlyOne" description="Do you use:">
                 <EnumerationOption value="0" description="Smartphone (not only to call)"/>
                 <EnumerationOption value="1" description="Tablet"/>
                 <EnumerationOption value="2" description="Personal Computer"/>
                 <EnumerationOption value="3" description="None of the above"/>
             </AttributeDefinition>   
-            <AttributeDefinition id="tech3" type="enumeration" multiplicity="maximalOne" description="Does your primary caregiver use:">
+            <AttributeDefinition id="tech3" type="enumeration" multiplicity="exactlyOne" description="Does your primary caregiver use:">
                 <EnumerationOption value="0" description="Smartphone (not only to call)"/>
                 <EnumerationOption value="1" description="Tablet"/>
                 <EnumerationOption value="2" description="Personal Computer"/>
@@ -83,7 +83,7 @@
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_ASA" description="ASA">
-            <AttributeDefinition id="asa" type="enumeration" multiplicity="maximalOne" description="ASA" uiReference="colors(0<=green<=1<orange<=3<red<11)">
+            <AttributeDefinition id="asa" type="enumeration" multiplicity="exactlyOne" description="ASA" uiReference="colors(0<=green<=1<orange<=3<red<11)">
                 <EnumerationOption value="1" description="ASA 1"/>
                 <EnumerationOption value="2" description="ASA 2"/>
                 <EnumerationOption value="3" description="ASA 3"/>
@@ -104,83 +104,83 @@
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_Charlson" description="Charlson">
-            <AttributeDefinition id="ch1" type="enumeration" multiplicity="maximalOne" description="Myocardial infarct">
+            <AttributeDefinition id="ch1" type="enumeration" multiplicity="exactlyOne" description="Myocardial infarct">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="ch2" type="enumeration" multiplicity="maximalOne" description="Congestive heart failure">
+            <AttributeDefinition id="ch2" type="enumeration" multiplicity="exactlyOne" description="Congestive heart failure">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch3" type="enumeration" multiplicity="maximalOne" description="Peripheral vascular disease">
+            <AttributeDefinition id="ch3" type="enumeration" multiplicity="exactlyOne" description="Peripheral vascular disease">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch4" type="enumeration" multiplicity="maximalOne" description="Cerebrovascular disease (except hemiplegia)">
+            <AttributeDefinition id="ch4" type="enumeration" multiplicity="exactlyOne" description="Cerebrovascular disease (except hemiplegia)">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch5" type="enumeration" multiplicity="maximalOne" description="Dementia">
+            <AttributeDefinition id="ch5" type="enumeration" multiplicity="exactlyOne" description="Dementia">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch6" type="enumeration" multiplicity="maximalOne" description="Chronic pulmonary disease">
+            <AttributeDefinition id="ch6" type="enumeration" multiplicity="exactlyOne" description="Chronic pulmonary disease">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch7" type="enumeration" multiplicity="maximalOne" description="Connective tissue disease">
+            <AttributeDefinition id="ch7" type="enumeration" multiplicity="exactlyOne" description="Connective tissue disease">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch8" type="enumeration" multiplicity="maximalOne" description="Ulcer disease">
+            <AttributeDefinition id="ch8" type="enumeration" multiplicity="exactlyOne" description="Ulcer disease">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch9" type="enumeration" multiplicity="maximalOne" description="Mild liver disease">
+            <AttributeDefinition id="ch9" type="enumeration" multiplicity="exactlyOne" description="Mild liver disease">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch10" type="enumeration" multiplicity="maximalOne" description="Diabetes (without complications)">
+            <AttributeDefinition id="ch10" type="enumeration" multiplicity="exactlyOne" description="Diabetes (without complications)">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch11" type="enumeration" multiplicity="maximalOne" description="Diabetes with end organ damage">
+            <AttributeDefinition id="ch11" type="enumeration" multiplicity="exactlyOne" description="Diabetes with end organ damage">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch12" type="enumeration" multiplicity="maximalOne" description="Hemiplegia">
+            <AttributeDefinition id="ch12" type="enumeration" multiplicity="exactlyOne" description="Hemiplegia">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch13" type="enumeration" multiplicity="maximalOne" description="Moderate or severe renal disease">
+            <AttributeDefinition id="ch13" type="enumeration" multiplicity="exactlyOne" description="Moderate or severe renal disease">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch14" type="enumeration" multiplicity="maximalOne" description="Solid tumor (non metastatic)">
+            <AttributeDefinition id="ch14" type="enumeration" multiplicity="exactlyOne" description="Solid tumor (non metastatic)">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch15" type="enumeration" multiplicity="maximalOne" description="Leukemia">
+            <AttributeDefinition id="ch15" type="enumeration" multiplicity="exactlyOne" description="Leukemia">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch16" type="enumeration" multiplicity="maximalOne" description="Lymphoma, Multiple myeloma">
+            <AttributeDefinition id="ch16" type="enumeration" multiplicity="exactlyOne" description="Lymphoma, Multiple myeloma">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch17" type="enumeration" multiplicity="maximalOne" description="Moderate or severe liver disease">
+            <AttributeDefinition id="ch17" type="enumeration" multiplicity="exactlyOne" description="Moderate or severe liver disease">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch18" type="enumeration" multiplicity="maximalOne" description="Metastatic solid tumor">
+            <AttributeDefinition id="ch18" type="enumeration" multiplicity="exactlyOne" description="Metastatic solid tumor">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch19" type="enumeration" multiplicity="maximalOne" description="AIDS">
+            <AttributeDefinition id="ch19" type="enumeration" multiplicity="exactlyOne" description="AIDS">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ch20" type="enumeration" multiplicity="maximalOne" description="Age">
+            <AttributeDefinition id="ch20" type="enumeration" multiplicity="exactlyOne" description="Age">
                 <EnumerationOption value="1" description="50-59"/>
                 <EnumerationOption value="2" description="60-69"/>
                 <EnumerationOption value="3" description="70-79"/>
@@ -192,69 +192,69 @@
         </EntityDefinition>
     
         <EntityDefinition id="GCS2_GFI" description="Groningen Frailty Indicator (GFI)">
-            <AttributeDefinition id="gfi1" type="enumeration" multiplicity="maximalOne" description="Kan patiënt zonder enige hulp van iemand anders zelfstandig deze taak uitvoeren? - Boodschappen doen?">
+            <AttributeDefinition id="gfi1" type="enumeration" multiplicity="exactlyOne" description="Kan patiënt zonder enige hulp van iemand anders zelfstandig deze taak uitvoeren? - Boodschappen doen?">
                 <EnumerationOption value="1" description="No"/>
                 <EnumerationOption value="0" description="Yes"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="gfi2" type="enumeration" multiplicity="maximalOne" description="Kan patiënt zonder enige hulp van iemand anders zelfstandig deze taak uitvoeren? Buitenshuis rondlopen?">
+            <AttributeDefinition id="gfi2" type="enumeration" multiplicity="exactlyOne" description="Kan patiënt zonder enige hulp van iemand anders zelfstandig deze taak uitvoeren? Buitenshuis rondlopen?">
                 <EnumerationOption value="1" description="No"/>
                 <EnumerationOption value="0" description="Yes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="gfi3" type="enumeration" multiplicity="maximalOne" description="Kan patiënt zonder enige hulp van iemand anders zelfstandig deze taak uitvoeren? - Aan - en uitkleden?">
+            <AttributeDefinition id="gfi3" type="enumeration" multiplicity="exactlyOne" description="Kan patiënt zonder enige hulp van iemand anders zelfstandig deze taak uitvoeren? - Aan - en uitkleden?">
                 <EnumerationOption value="1" description="No"/>
                 <EnumerationOption value="0" description="Yes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="gfi4" type="enumeration" multiplicity="maximalOne" description="Kan patiënt zonder enige hulp van iemand anders zelfstandig deze taak uitvoeren? Toiletbezoek?">
+            <AttributeDefinition id="gfi4" type="enumeration" multiplicity="exactlyOne" description="Kan patiënt zonder enige hulp van iemand anders zelfstandig deze taak uitvoeren? Toiletbezoek?">
                 <EnumerationOption value="1" description="No"/>
                 <EnumerationOption value="0" description="Yes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="gfi5" type="enumeration" multiplicity="maximalOne" description="Ondervindt patiënt problemen in het dagelijks leven door slecht zien?">
+            <AttributeDefinition id="gfi5" type="enumeration" multiplicity="exactlyOne" description="Ondervindt patiënt problemen in het dagelijks leven door slecht zien?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="gfi6" type="enumeration" multiplicity="maximalOne" description="Ondervindt patiënt problemen in het dagelijks leven door slecht horen?">
+            <AttributeDefinition id="gfi6" type="enumeration" multiplicity="exactlyOne" description="Ondervindt patiënt problemen in het dagelijks leven door slecht horen?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="gfi7" type="enumeration" multiplicity="maximalOne" description="Is patiënt afgelopen 6 maanden veel (6kg) afgevallen zonder dit zelf te willen? (of 3 kg in een maand)">
+            <AttributeDefinition id="gfi7" type="enumeration" multiplicity="exactlyOne" description="Is patiënt afgelopen 6 maanden veel (6kg) afgevallen zonder dit zelf te willen? (of 3 kg in een maand)">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="gfi8" type="enumeration" multiplicity="maximalOne" description="Gebruikt patiënt momenteel 4 of meer verschillende soorten medicijnen?">
+            <AttributeDefinition id="gfi8" type="enumeration" multiplicity="exactlyOne" description="Gebruikt patiënt momenteel 4 of meer verschillende soorten medicijnen?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="gfi9" type="enumeration" multiplicity="maximalOne" description="Heeft patiënt momenteel klachten over zijn geheugen (of bekend met dementie)?">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Yes"/>
-                <EnumerationOption value="2" description="Sometimes"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="gfi10" type="enumeration" multiplicity="maximalOne" description="Ervaart patiënt wel eens een leegte om zich heen?">
+            <AttributeDefinition id="gfi9" type="enumeration" multiplicity="exactlyOne" description="Heeft patiënt momenteel klachten over zijn geheugen (of bekend met dementie)?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
                 <EnumerationOption value="2" description="Sometimes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="gfi11" type="enumeration" multiplicity="maximalOne" description="Mist patiënt wel eens mensen om zich heen?">
+            <AttributeDefinition id="gfi10" type="enumeration" multiplicity="exactlyOne" description="Ervaart patiënt wel eens een leegte om zich heen?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
                 <EnumerationOption value="2" description="Sometimes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="gfi12" type="enumeration" multiplicity="maximalOne" description="Voelt patiënt zich wel eens in de steek gelaten?">
+            <AttributeDefinition id="gfi11" type="enumeration" multiplicity="exactlyOne" description="Mist patiënt wel eens mensen om zich heen?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
                 <EnumerationOption value="2" description="Sometimes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="gfi13" type="enumeration" multiplicity="maximalOne" description="Heeft patiënt zich de laatste tijd somber of neerslachtig gevoeld?">
+            <AttributeDefinition id="gfi12" type="enumeration" multiplicity="exactlyOne" description="Voelt patiënt zich wel eens in de steek gelaten?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
                 <EnumerationOption value="2" description="Sometimes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="gfi14" type="enumeration" multiplicity="maximalOne" description="Heeft patiënt zich de laatste tijd nerveus of angstig gevoeld?">
+            <AttributeDefinition id="gfi13" type="enumeration" multiplicity="exactlyOne" description="Heeft patiënt zich de laatste tijd somber of neerslachtig gevoeld?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
                 <EnumerationOption value="2" description="Sometimes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="gfi15" type="enumeration" multiplicity="maximalOne" description="Welk rapportcijfer geeft patiënt zichzelf voor lichamelijke fitheid? (0-10, 0 is erg slecht, 10 is erg goed).">
+            <AttributeDefinition id="gfi14" type="enumeration" multiplicity="exactlyOne" description="Heeft patiënt zich de laatste tijd nerveus of angstig gevoeld?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+                <EnumerationOption value="2" description="Sometimes"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="gfi15" type="enumeration" multiplicity="exactlyOne" description="Welk rapportcijfer geeft patiënt zichzelf voor lichamelijke fitheid? (0-10, 0 is erg slecht, 10 is erg goed).">
                 <EnumerationOption value="1.0001" description="0"/>
                 <EnumerationOption value="1.0002" description="1"/>
                 <EnumerationOption value="1.0003" description="2"/>
@@ -271,32 +271,32 @@
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_ADL" description="Activities of Daily Living (ADL)">
-            <AttributeDefinition id="adl1" type="enumeration" multiplicity="maximalOne" description="Bathing">
+            <AttributeDefinition id="adl1" type="enumeration" multiplicity="exactlyOne" description="Bathing">
                 <EnumerationOption value="0" description="Does not need help"/>
                 <EnumerationOption value="1" description="Needs help with 1 body part"/>
                 <EnumerationOption value="2" description="Needs help with more than 1 body part"/>
             </AttributeDefinition>
-            <AttributeDefinition id="adl2" type="enumeration" multiplicity="maximalOne" description="Dressing">
+            <AttributeDefinition id="adl2" type="enumeration" multiplicity="exactlyOne" description="Dressing">
                 <EnumerationOption value="0" description="Does the dressing without help, also buttons shirt and ties shoe laces"/>
                 <EnumerationOption value="1" description="Picks clothes independently"/>
                 <EnumerationOption value="2" description="Needs help to button shirt and to tie shoe laces"/>
             </AttributeDefinition>
-            <AttributeDefinition id="adl3" type="enumeration" multiplicity="maximalOne" description="Toilet use">
+            <AttributeDefinition id="adl3" type="enumeration" multiplicity="exactlyOne" description="Toilet use">
                 <EnumerationOption value="0" description="Uses the toilet without help "/>
                 <EnumerationOption value="1" description="Needs help with toilet use"/>
                 <EnumerationOption value="2" description="Does not go to the toilet, uses cathether etc."/>
             </AttributeDefinition>
-            <AttributeDefinition id="adl4" type="enumeration" multiplicity="maximalOne" description="Transfer">
+            <AttributeDefinition id="adl4" type="enumeration" multiplicity="exactlyOne" description="Transfer">
                 <EnumerationOption value="0" description="Transfers from the bed and back without any help"/>
                 <EnumerationOption value="1" description="Transfers from the bed and back with help"/>
                 <EnumerationOption value="2" description="Does not leave the bed"/>
             </AttributeDefinition>
-            <AttributeDefinition id="adl5" type="enumeration" multiplicity="maximalOne" description="Bladder and bowel">
+            <AttributeDefinition id="adl5" type="enumeration" multiplicity="exactlyOne" description="Bladder and bowel">
                 <EnumerationOption value="0" description="Continent"/>
                 <EnumerationOption value="1" description="Occasional accident"/>
                 <EnumerationOption value="2" description="Incontinent (or needs to be given enemas)"/>
             </AttributeDefinition>
-            <AttributeDefinition id="adl6" type="enumeration" multiplicity="maximalOne" description="Feeding">
+            <AttributeDefinition id="adl6" type="enumeration" multiplicity="exactlyOne" description="Feeding">
                 <EnumerationOption value="0" description="Indepenent"/>
                 <EnumerationOption value="1" description="Needs help cutting, spreading butter etc. or requires modified diet"/>
                 <EnumerationOption value="2" description="Needs help with eating, or receives enteral feeding"/>
@@ -305,48 +305,48 @@
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_iADL" description="Instrumental Activities of Daily Living (iADL)">
-            <AttributeDefinition id="iadl1" type="enumeration" multiplicity="maximalOne" description="Telephoning">
+            <AttributeDefinition id="iadl1" type="enumeration" multiplicity="exactlyOne" description="Telephoning">
                 <EnumerationOption value="1.0001" description="Uses the telephone, dials the numbers without help"/>
                 <EnumerationOption value="1.0002" description="only calls some known numbers"/>
                 <EnumerationOption value="1.0003" description="Answers the phone, but does not call"/>
                 <EnumerationOption value="0" description="Doest not use the telephone"/>
             </AttributeDefinition>
-            <AttributeDefinition id="iadl2" type="enumeration" multiplicity="maximalOne" description="Shopping / Doing groceries">
+            <AttributeDefinition id="iadl2" type="enumeration" multiplicity="exactlyOne" description="Shopping / Doing groceries">
                 <EnumerationOption value="1" description="Does all groceries independently"/>
                 <EnumerationOption value="0.0001" description="Does some groceries independetly"/>
                 <EnumerationOption value="0.0002" description="Needs hepl with doing groceries"/>
                 <EnumerationOption value="0.0003" description="Is not able to do groceries"/>
             </AttributeDefinition>
-            <AttributeDefinition id="iadl3" type="enumeration" multiplicity="maximalOne" description="Cooking">
+            <AttributeDefinition id="iadl3" type="enumeration" multiplicity="exactlyOne" description="Cooking">
                 <EnumerationOption value="1" description="Is able to cook and serve"/>	
                 <EnumerationOption value="0.0001" description="Cooks dinner, but ingredients are delivered"/>
                 <EnumerationOption value="0.0002" description="Heatens meals, but diet is insufficient"/>
                 <EnumerationOption value="0.0003" description="Needs pre-cooked meals"/>
             </AttributeDefinition>
-            <AttributeDefinition id="iadl4" type="enumeration" multiplicity="maximalOne" description="Housekeeping">
+            <AttributeDefinition id="iadl4" type="enumeration" multiplicity="exactlyOne" description="Housekeeping">
                 <EnumerationOption value="1.0001" description="Runs the household without help"/>
                 <EnumerationOption value="1.0002" description="Does light tasks in the household independent"/>
                 <EnumerationOption value="1.0003" description="Does light tasks independent, but is not able to maintain the household"/>
                 <EnumerationOption value="1.0004" description="Needs help with all housekeeping"/>
                 <EnumerationOption value="1.0005" description="Does not maintain the household"/>
             </AttributeDefinition>
-            <AttributeDefinition id="iadl5" type="enumeration" multiplicity="maximalOne" description="Laundry">
+            <AttributeDefinition id="iadl5" type="enumeration" multiplicity="exactlyOne" description="Laundry">
                 <EnumerationOption value="1.0001" description="Does all laundry"/>
                 <EnumerationOption value="1.0002" description="Does only little laundry (socks etc.)"/>
                 <EnumerationOption value="1.0003" description="All laundry is done by others"/>
             </AttributeDefinition>
-            <AttributeDefinition id="iadl6" type="enumeration" multiplicity="maximalOne" description="Transport">
+            <AttributeDefinition id="iadl6" type="enumeration" multiplicity="exactlyOne" description="Transport">
                 <EnumerationOption value="1.0001" description="Travels by car or public transport without help "/>
                 <EnumerationOption value="1.0002" description="Organizes taxi but does not travel with public transport"/>
                 <EnumerationOption value="1.0003" description="Needs help with public transport"/>
                 <EnumerationOption value="0" description="Travels by taxi, by car with help, or does not travel"/>
             </AttributeDefinition>
-            <AttributeDefinition id="iadl7" type="enumeration" multiplicity="maximalOne" description="Responsibility for medication">
+            <AttributeDefinition id="iadl7" type="enumeration" multiplicity="exactlyOne" description="Responsibility for medication">
                 <EnumerationOption value="1" description="Takes medication according to prescription "/>
                 <EnumerationOption value="0.0001" description="Takes medication if prepared by someone"/>
                 <EnumerationOption value="0.0002" description="Is not able to bear responsibility for medication"/>
             </AttributeDefinition>
-            <AttributeDefinition id="iadl8" type="enumeration" multiplicity="maximalOne" description="Finances">
+            <AttributeDefinition id="iadl8" type="enumeration" multiplicity="exactlyOne" description="Finances">
                 <EnumerationOption value="1.0001" description="Is able to handle own finances"/>
                 <EnumerationOption value="1.0002" description="Needs help with finances"/>
                 <EnumerationOption value="0" description="Is not able to deal with money"/>
@@ -355,35 +355,35 @@
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_NRS" description="Nutritional Risk Screening (NRS)">
-            <AttributeDefinition id="nrs1" type="enumeration" multiplicity="maximalOne" description="Is BMI <20,5?">
+            <AttributeDefinition id="nrs1" type="enumeration" multiplicity="exactlyOne" description="Is BMI <20,5?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="nrs2" type="enumeration" multiplicity="maximalOne" description="Has the patient lost weight within the last 3 months?">
+            <AttributeDefinition id="nrs2" type="enumeration" multiplicity="exactlyOne" description="Has the patient lost weight within the last 3 months?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="nrs3" type="enumeration" multiplicity="maximalOne" description="Has the patient had a reduced dietary intake in the last week?">
+            <AttributeDefinition id="nrs3" type="enumeration" multiplicity="exactlyOne" description="Has the patient had a reduced dietary intake in the last week?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="nrs4" type="enumeration" multiplicity="maximalOne" description="Is the patient severely ill?">
+            <AttributeDefinition id="nrs4" type="enumeration" multiplicity="exactlyOne" description="Is the patient severely ill?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>
-            <AttributeDefinition id="nrs5" type="enumeration" multiplicity="maximalOne" description="Impared nutritional status">
+            <AttributeDefinition id="nrs5" type="enumeration" multiplicity="exactlyOne" description="Impared nutritional status">
                 <EnumerationOption value="0" description="Absent"/>
                 <EnumerationOption value="1" description="Weightloss > 5% in 3 months or food intake below 50-7% of normal requierement"/>
                 <EnumerationOption value="2" description="Weightloss > 5% in 2 months or BMI 18.5-20.5 + impaired general condition or food intake 25-60% of normal requirement"/>
                 <EnumerationOption value="3" description="Weightloss > 5% in 1 month (> 15% in 3 months) or BMI < 18.5 + impaired general condition or food intake 0-25% of normal requirement."/>
             </AttributeDefinition>
-            <AttributeDefinition id="nrs6" type="enumeration" multiplicity="maximalOne" description="Severity of disease">
+            <AttributeDefinition id="nrs6" type="enumeration" multiplicity="exactlyOne" description="Severity of disease">
                 <EnumerationOption value="0" description="Absent"/>
                 <EnumerationOption value="1" description="Hip fracture * chronic patients with acute complications, COPD, cirrhosis *"/>
                 <EnumerationOption value="2" description="Major Abdominal Surgery * Stroke"/>
                 <EnumerationOption value="3" description="Head injury * Bone marrow transplantation"/>
             </AttributeDefinition>
-            <AttributeDefinition id="nrs7" type="enumeration" multiplicity="maximalOne" description="Age">
+            <AttributeDefinition id="nrs7" type="enumeration" multiplicity="exactlyOne" description="Age">
                 <EnumerationOption value="0" description="< 70 years"/>
                 <EnumerationOption value="1" description="≥ 70 years"/>	
             </AttributeDefinition>
@@ -391,36 +391,36 @@
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_MNASF" description="Mini Nutritional Assesment (MNA-SF®)">
-            <AttributeDefinition id="mnasf1" type="enumeration" multiplicity="maximalOne" description="Has food intake declined over the past 3 months due to loss of appetite, digestive problems, chewing or swallowingen difficulties?" additionalDescription="0 = Severe decrease in food intake | 1 = Moderate decrease in food intake | 2 = no decrease in food intake">
+            <AttributeDefinition id="mnasf1" type="enumeration" multiplicity="exactlyOne" description="Has food intake declined over the past 3 months due to loss of appetite, digestive problems, chewing or swallowingen difficulties?" additionalDescription="0 = Severe decrease in food intake | 1 = Moderate decrease in food intake | 2 = no decrease in food intake">
                 <EnumerationOption value="0" description="Severe decrease in food intake"/>	
                 <EnumerationOption value="1" description="Moderate decrease in food intake"/>
                 <EnumerationOption value="2" description="no decrease in food intake"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="mnasf2" type="enumeration" multiplicity="maximalOne" description="Weight loss during the last 3 months" additionalDescription="0 = Weight loss greater than 3 kg | 1 = Does not know | 2 = Weight loss between 1 and 3 kg | 3 = No weight loss">
+            <AttributeDefinition id="mnasf2" type="enumeration" multiplicity="exactlyOne" description="Weight loss during the last 3 months" additionalDescription="0 = Weight loss greater than 3 kg | 1 = Does not know | 2 = Weight loss between 1 and 3 kg | 3 = No weight loss">
                 <EnumerationOption value="0" description="Weight loss greater than 3 kg"/>
                 <EnumerationOption value="1" description="Does not know"/>
                 <EnumerationOption value="2" description="Weight loss between 1 and 3 kg"/>
                 <EnumerationOption value="3" description="No weight loss"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="mnasf3" type="enumeration" multiplicity="maximalOne" description="Mobility" additionalDescription="0 = Bed or chair bound | 1 = Able to get out of bed / chair but does not go out | 2 = Goes out">
+            <AttributeDefinition id="mnasf3" type="enumeration" multiplicity="exactlyOne" description="Mobility" additionalDescription="0 = Bed or chair bound | 1 = Able to get out of bed / chair but does not go out | 2 = Goes out">
                 <EnumerationOption value="0" description="Bed or chair bound"/>	
                 <EnumerationOption value="1" description="Able to get out of bed / chair but does not go out"/>
                 <EnumerationOption value="2" description=" Goes out"/>
             </AttributeDefinition>
-            <AttributeDefinition id="mnasf4" type="enumeration" multiplicity="maximalOne" description="Has suffered psychological stress or acute disease in the past 3 months" additionalDescription="0 = Yes | 2 = No">
+            <AttributeDefinition id="mnasf4" type="enumeration" multiplicity="exactlyOne" description="Has suffered psychological stress or acute disease in the past 3 months" additionalDescription="0 = Yes | 2 = No">
                 <EnumerationOption value="0" description="Yes"/>
                 <EnumerationOption value="2" description="No"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="mnasf5" type="enumeration" multiplicity="maximalOne" description="Neuropsychological problems" additionalDescription="0 = Severe dementia or depression | 1 = Mild dementia | 2 = No psychological problems">
+            <AttributeDefinition id="mnasf5" type="enumeration" multiplicity="exactlyOne" description="Neuropsychological problems" additionalDescription="0 = Severe dementia or depression | 1 = Mild dementia | 2 = No psychological problems">
                 <EnumerationOption value="0" description="Severe dementia or depression"/>	
                 <EnumerationOption value="1" description="Mild dementia"/>
                 <EnumerationOption value="2" description="No psychological problems"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="mnasf6" type="number" multiplicity="maximalOne" description="Weight in kg"/>
-            <AttributeDefinition id="mnasf7" type="number" multiplicity="maximalOne" description="Length in cm"/>
+            <AttributeDefinition id="mnasf6" type="number" multiplicity="exactlyOne" description="Weight in kg"/>
+            <AttributeDefinition id="mnasf7" type="number" multiplicity="exactlyOne" description="Length in cm"/>
             <DerivedAttributeDefinition id="mnasf8" expression="round((mnasf6 / ((mnasf7/100) * (mnasf7/100))), 2)" description="BMI raw"/>  
             <DerivedAttributeDefinition id="mnasf9" expression="if mnasf8 < 19 then 0 else if mnasf8 >= 19 and mnasf8 < 21 then 1 else if mnasf8 >= 21 and mnasf8 < 23 then 2 else 3" description="BMI range indicator" additionalDescription="0 = BMI less than 19 | 1 = BMI 19 to less than 21 | 2 = BMI 21 to less than 23 | 3 = BMI 23 or greater" uiReference="colors(14>=green>=12>orange>=8>red>=0)"/>  
-            <AttributeDefinition id="mnasf10" type="enumeration" multiplicity="maximalOne" description="Calf circumference (CC) in cm " additionalDescription="ANSWER ONLY IF BMI IS NOT AVAILABLE">
+            <AttributeDefinition id="mnasf10" type="enumeration" multiplicity="exactlyOne" description="Calf circumference (CC) in cm " additionalDescription="ANSWER ONLY IF BMI IS NOT AVAILABLE">
                 <EnumerationOption value="0.0001" description="No Answer"/>
                 <EnumerationOption value="0" description="CC less than 31"/>	
                 <EnumerationOption value="3" description="CC 31 or greater"/>
@@ -431,85 +431,85 @@
 
         <!-- HAD -->
         <EntityDefinition id="GCS2_HospitalAnxietyAndDepressionScale">
-            <AttributeDefinition id="hadA1" type="enumeration" multiplicity="maximalOne" description="I feel tense or 'wound up'"> 
+            <AttributeDefinition id="hadA1" type="enumeration" multiplicity="exactlyOne" description="I feel tense or 'wound up'"> 
                 <EnumerationOption value="0" description="Not at all"/>
                 <EnumerationOption value="1" description="From time to time, occasionally"/>
                 <EnumerationOption value="2" description="A lot of the time"/>
                 <EnumerationOption value="3" description="Most of the time "/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadD1" type="enumeration" multiplicity="maximalOne" description="I still enjoy the things I used to enjoy:"> 
+            <AttributeDefinition id="hadD1" type="enumeration" multiplicity="exactlyOne" description="I still enjoy the things I used to enjoy:"> 
                 <EnumerationOption value="0" description="Definitely as much"/>
                 <EnumerationOption value="1" description="Not quite so much"/>
                 <EnumerationOption value="2" description="Only a little"/>
                 <EnumerationOption value="3" description="Hardly at all"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadA2" type="enumeration" multiplicity="maximalOne" description="I get a sort of frightened feeling as if  something awful is about to  happen:"> 
+            <AttributeDefinition id="hadA2" type="enumeration" multiplicity="exactlyOne" description="I get a sort of frightened feeling as if  something awful is about to  happen:"> 
                 <EnumerationOption value="0" description="Not at all"/>
                 <EnumerationOption value="1" description="A little, but it doesn't worry me"/>
                 <EnumerationOption value="2" description="Yes, but not too badly"/>
                 <EnumerationOption value="3" description="Very definitely and quite badly"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadD2" type="enumeration" multiplicity="maximalOne" description="I can laugh and see the funny side of things:"> 
+            <AttributeDefinition id="hadD2" type="enumeration" multiplicity="exactlyOne" description="I can laugh and see the funny side of things:"> 
                 <EnumerationOption value="0" description="As much as I always could"/>
                 <EnumerationOption value="1" description="Not quite so much now"/>
                 <EnumerationOption value="2" description="Definitely not so much now"/>
                 <EnumerationOption value="3" description="Not at all"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadA3" type="enumeration" multiplicity="maximalOne" description="Worrying thoughts go through my mind:"> 
+            <AttributeDefinition id="hadA3" type="enumeration" multiplicity="exactlyOne" description="Worrying thoughts go through my mind:"> 
                 <EnumerationOption value="0" description="Only occasionally"/>
                 <EnumerationOption value="1" description="From time to time, but not too often"/>
                 <EnumerationOption value="2" description="A lot of the time"/>
                 <EnumerationOption value="3" description="A great deal of the time"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadD3" type="enumeration" multiplicity="maximalOne" description="I feel cheerful:"> 
+            <AttributeDefinition id="hadD3" type="enumeration" multiplicity="exactlyOne" description="I feel cheerful:"> 
                 <EnumerationOption value="0" description="Most of the time"/>
                 <EnumerationOption value="1" description="Sometimes"/>
                 <EnumerationOption value="2" description="Not often"/>
                 <EnumerationOption value="3" description="Not at all"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadA4" type="enumeration" multiplicity="maximalOne" description="I can sit at ease and feel relaxed:"> 
+            <AttributeDefinition id="hadA4" type="enumeration" multiplicity="exactlyOne" description="I can sit at ease and feel relaxed:"> 
                 <EnumerationOption value="0" description="Definitely"/>
                 <EnumerationOption value="1" description="Usually"/>
                 <EnumerationOption value="2" description="Not often"/>
                 <EnumerationOption value="3" description="Not at all"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadD4" type="enumeration" multiplicity="maximalOne" description="I feel as if I am slowed down:"> 
+            <AttributeDefinition id="hadD4" type="enumeration" multiplicity="exactlyOne" description="I feel as if I am slowed down:"> 
                 <EnumerationOption value="0" description="Not at all"/>
                 <EnumerationOption value="1" description="Sometimes"/>
                 <EnumerationOption value="2" description="Very often"/>
                 <EnumerationOption value="3" description="Nearly all the time"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadA5" type="enumeration" multiplicity="maximalOne" description="I get a sort of frightened feeling like 'butterflies' in the stomach:">
+            <AttributeDefinition id="hadA5" type="enumeration" multiplicity="exactlyOne" description="I get a sort of frightened feeling like 'butterflies' in the stomach:">
                 <EnumerationOption value="0" description="Not at all"/>
                 <EnumerationOption value="1" description="Occasionally"/>
                 <EnumerationOption value="2" description="Quite often"/>
                 <EnumerationOption value="3" description="Very often"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadD5" type="enumeration" multiplicity="maximalOne" description="I have lost interest in my appearance:"> 
+            <AttributeDefinition id="hadD5" type="enumeration" multiplicity="exactlyOne" description="I have lost interest in my appearance:"> 
                 <EnumerationOption value="0" description="I take just as much care as ever"/>
                 <EnumerationOption value="1" description="I may not take quite as much care"/>
                 <EnumerationOption value="2" description="I don't take as much care as I should"/>
                 <EnumerationOption value="3" description="Definitely"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadA6" type="enumeration" multiplicity="maximalOne" description="I feel restless as I have to be on the move:"> 
+            <AttributeDefinition id="hadA6" type="enumeration" multiplicity="exactlyOne" description="I feel restless as I have to be on the move:"> 
                 <EnumerationOption value="0" description="Not at all"/>
                 <EnumerationOption value="1" description="Quite a lot"/>
                 <EnumerationOption value="2" description="Not very much"/>
                 <EnumerationOption value="3" description="Very much indeed "/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadD6" type="enumeration" multiplicity="maximalOne" description="I look forward with enjoyment to things:"> 
+            <AttributeDefinition id="hadD6" type="enumeration" multiplicity="exactlyOne" description="I look forward with enjoyment to things:"> 
                 <EnumerationOption value="0" description="As much as I ever did"/>
                 <EnumerationOption value="1" description="Rather less than I used to"/>
                 <EnumerationOption value="2" description="Definitely less than I used to"/>
                 <EnumerationOption value="3" description="Hardly at all"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadA7" type="enumeration" multiplicity="maximalOne" description="I get sudden feelings of panic"> 
+            <AttributeDefinition id="hadA7" type="enumeration" multiplicity="exactlyOne" description="I get sudden feelings of panic"> 
                 <EnumerationOption value="0" description="Not at all"/>
                 <EnumerationOption value="1" description="Not very often"/>
                 <EnumerationOption value="2" description="Quite often"/>
                 <EnumerationOption value="3" description="Hardly at all"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadD7" type="enumeration" multiplicity="maximalOne" description="I can enjoy a good book or radio or TV program:"> 
+            <AttributeDefinition id="hadD7" type="enumeration" multiplicity="exactlyOne" description="I can enjoy a good book or radio or TV program:"> 
                 <EnumerationOption value="0" description="Often"/>
                 <EnumerationOption value="1" description="Sometimes"/>
                 <EnumerationOption value="2" description="Not often"/>
@@ -530,16 +530,16 @@
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_PhysicalActivity" description="Physical Activity">
-            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="maximalOne" description="Start date"/>
-            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="maximalOne" description="End date"/>       
-            <AttributeDefinition id="dailysteps" type="number.min(0).max(100000)" defaultValues="[10000]" multiplicity="maximalOne" description="Number of steps daily"/>       
-            <AttributeDefinition id="dailylowlevel" type="number.min(0).max(1440)" defaultValues="[60]" multiplicity="maximalOne" description="Minutes of low level activity daily"/>       
-            <AttributeDefinition id="dailymediumlevel" type="number.min(0).max(1440)" defaultValues="[40]" multiplicity="maximalOne" description="Minutes of medium level activity daily"/>       
-            <AttributeDefinition id="dailyhighlevel" type="number.min(0).max(1440)" defaultValues="[20]" multiplicity="maximalOne" description="Minutes of high level activity daily"/> 
-            <AttributeDefinition id="dailynoactivity" type="number.min(0).max(1440)" defaultValues="[240]" multiplicity="maximalOne" description="Max minutes without activity allowed daily"/>   
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Start date"/>
+            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="End date"/>       
+            <AttributeDefinition id="dailysteps" type="number.min(0).max(100000)" defaultValues="[10000]" multiplicity="exactlyOne" description="Number of steps daily"/>       
+            <AttributeDefinition id="dailylowlevel" type="number.min(0).max(1440)" defaultValues="[60]" multiplicity="exactlyOne" description="Minutes of low level activity daily"/>       
+            <AttributeDefinition id="dailymediumlevel" type="number.min(0).max(1440)" defaultValues="[40]" multiplicity="exactlyOne" description="Minutes of medium level activity daily"/>       
+            <AttributeDefinition id="dailyhighlevel" type="number.min(0).max(1440)" defaultValues="[20]" multiplicity="exactlyOne" description="Minutes of high level activity daily"/> 
+            <AttributeDefinition id="dailynoactivity" type="number.min(0).max(1440)" defaultValues="[240]" multiplicity="exactlyOne" description="Max minutes without activity allowed daily"/>   
             <!--{stepsFollowing: [{date: '2017-06-09 14:54:53.0', value: 12}], lowFollowing:[], mediumFollowing:[], highFollowing:[], noActivityFollowing:[]}-->
             <!--Collected Data e.g. {stepsFollowing: [{date: '2017-06-09 14:54:53.0', value: 12}], lowFollowing:[], mediumFollowing:[], highFollowing:[], noActivityFollowing:[]}"-->
-            <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Measurement"/>                 
+            <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Measurement"/>                 
         </EntityDefinition>
         
         <EntityDefinition id="GCS2_MonitoringPrescription" description="Patient Monitory">
@@ -560,7 +560,7 @@
                 <EnumerationOption value="WEEKS" description="Weeks"/>
                 <EnumerationOption value="MONTHS" description="Months"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="maximalOne" description="Max delay in minutes" additionalDescription="Maximum delay to fullfill the prescription by the patient"/> 
+            <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="exactlyOne" description="Max delay in minutes" additionalDescription="Maximum delay to fullfill the prescription by the patient"/> 
             <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Start date"/> 
             <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="End date"/> 
             <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="Slots to take the measurements" additionalDescription="Multiple slots can be selected, at least one slot need to be selected">     
@@ -572,7 +572,7 @@
                 <EnumerationOption value="ANYTIMEDURINGDAY" description="Any time a day" additionalDescription="Please select this option when the timeslot of a day doesn't matter."/>
             </AttributeDefinition>
             <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comments" additionalDescription="Please provide additional hints for the patient."/>   
-            <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Measurement"/>                      
+            <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Measurement"/>                      
         </EntityDefinition>
 
         <!-- Simple Task
@@ -634,7 +634,7 @@
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_DischargeForm" description="Discharge From">
-            <AttributeDefinition id="comment" type="longtext" multiplicity="maximalOne" description="Comment"/>                             
+            <AttributeDefinition id="comment" type="longtext" multiplicity="exactlyOne" description="Comment"/>                             
         </EntityDefinition>
 
 
