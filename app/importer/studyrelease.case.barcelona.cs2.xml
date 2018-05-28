@@ -737,11 +737,10 @@
         
         <EntityDefinition id="BCS2_MonitoringPrescription" description="Patient Monitory">
             <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Measure type" additionalDescription="Select measure type for patient monitory.">
-                <EnumerationOption value="DIASTOLICBLOODPRESSURE" description="Diastolic Blood Pressure"/>
-                <EnumerationOption value="SYSTOLICBLOODPRESSURE" description="Systolic Blood Pressure"/>
+                <EnumerationOption value="BLOODPRESSURE" description="Systolic/Diastolic Blood Pressure"/>
             </AttributeDefinition>   
-            <AttributeDefinition id="alertmin" type="number.min(0)" multiplicity="exactlyOne" description="Min value allowed" additionalDescription="Minimum value for this measuremnt greather than 0"/>       
-            <AttributeDefinition id="alertmax" type="number.min(0)" multiplicity="exactlyOne" description="Max value allowed" additionalDescription="Maximum value for this measuremnt greather than 0"/>      
+            <AttributeDefinition id="alertmin" type="number.min(0)" multiplicity="any" uiReference="conditonalmultiplicity(1,type=BLOODPRESSURE=>2)" description="Min value allowed" additionalDescription="Minimum value for this measuremnt greather than 0. If blood pressure is selected, please specify the systolic / diastolic maximum."/>       
+            <AttributeDefinition id="alertmax" type="number.min(0)" multiplicity="any" uiReference="conditonalmultiplicity(1,type=BLOODPRESSURE=>2)" description="Max value allowed" additionalDescription="Maximum value for this measuremnt greather than 0. If blood pressure is selected, please specify the systolic / diastolic minimum."/>      
             <AttributeDefinition id="alertfreq" type="number" defaultValues="[1]" multiplicity="exactlyOne" description="Alert Frecuency Value"/>       
             <AttributeDefinition id="alertfrequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Alert Frecuency Unit">     
                 <EnumerationOption value="DAYS" description="Days"/>
@@ -1336,9 +1335,9 @@ Young, D., Jee, S. and Appel, L. (2001). A comparison of the Yale Physical Activ
         </Action>
         <Action id="ActivateDualTask" processId="BCS2_MonitoringPrescription" breakpoint="true"/>
         <Action id="CompleteDualTaskHumanPart" processId="BCS2_MonitoringPrescription" breakpoint="true">
-            <TaskParam path="BCS2_Workplan.BCS2_MonitoringPrescription.type"  values="['DIASTOLICBLOODPRESSURE']"/>
-            <TaskParam path="BCS2_Workplan.BCS2_MonitoringPrescription.alertmin"  values="[50]"/>
-            <TaskParam path="BCS2_Workplan.BCS2_MonitoringPrescription.alertmax"  values="[150]"/>
+            <TaskParam path="BCS2_Workplan.BCS2_MonitoringPrescription.type"  values="['BLOODPRESSURE']"/>
+            <TaskParam path="BCS2_Workplan.BCS2_MonitoringPrescription.alertmin"  values="[50, 60]"/>
+            <TaskParam path="BCS2_Workplan.BCS2_MonitoringPrescription.alertmax"  values="[150, 160]"/>
             <TaskParam path="BCS2_Workplan.BCS2_MonitoringPrescription.alertfreq"  values="[2]"/>
             <TaskParam path="BCS2_Workplan.BCS2_MonitoringPrescription.alertfrequnit"  values="['DAYS']"/>
             <TaskParam path="BCS2_Workplan.BCS2_MonitoringPrescription.comments"  values="['Some random comment']"/>
