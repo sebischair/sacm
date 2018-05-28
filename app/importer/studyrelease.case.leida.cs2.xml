@@ -1046,8 +1046,7 @@
 			<AttributeDefinition id="LCS2_EVAECNDBH" type="Link.EntityDefinition.LCS2_EVAECNDDef" multiplicity="any"/> 
 		    <AttributeDefinition id="LCS2_SLANSSBH" type="Link.EntityDefinition.LCS2_SLANSSDef" multiplicity="any"/>		
 			-->			
-			<AttributeDefinition id="LCS2_MonitoringPrescriptionBHSystolic" type="Link.EntityDefinition.LCS2_MonitoringPrescriptionSystolic" multiplicity="any" /> 
-			<AttributeDefinition id="LCS2_MonitoringPrescriptionBHDiastolic" type="Link.EntityDefinition.LCS2_MonitoringPrescriptionDiastolic" multiplicity="any" /> 
+			<AttributeDefinition id="LCS2_MonitoringPrescriptionBH" type="Link.EntityDefinition.LCS2_MonitoringPrescription" multiplicity="any" /> 
 		</EntityDefinition>
 			
 		<EntityDefinition id="LCS2_AnaemiaAssessmentAndManagementNutritionDef" > 		
@@ -1086,8 +1085,7 @@
 		<!-- Workplan After Hospitalization Entity Definitions -->		
 		<EntityDefinition id="LCS2_WorkplanAfterHospitalization">						    
 			<AttributeDefinition id="LCS2_PatientEducationAndTrainingToTheCaregiverAH" type="Link.EntityDefinition.LCS2_PatientEducationAndTrainingToTheCaregiverAH" multiplicity="any"/>			
-			<AttributeDefinition id="LCS2_MonitoringPrescriptionAHSystolic" type="Link.EntityDefinition.LCS2_MonitoringPrescriptionSystolic" multiplicity="any" /> 			
-			<AttributeDefinition id="LCS2_MonitoringPrescriptionAHDiastolic" type="Link.EntityDefinition.LCS2_MonitoringPrescriptionDiastolic" multiplicity="any" /> 
+			<AttributeDefinition id="LCS2_MonitoringPrescriptionAH" type="Link.EntityDefinition.LCS2_MonitoringPrescription" multiplicity="any" /> 			
 			<AttributeDefinition id="LCS2_PhysicalActivityAH" type="Link.EntityDefinition.LCS2_PhysicalActivityAH" multiplicity="any" />	
 			<AttributeDefinition id="LCS2_RehabilitationAH" type="Link.EntityDefinition.LCS2_RehabilitationAH" multiplicity="any" />			
 		</EntityDefinition>
@@ -1147,45 +1145,12 @@
 			description="Com et trobes avui? Escala numerada: On 0 és molt malament i 100 és molt bé"/>       						
 		</EntityDefinition>
 		
-		<EntityDefinition id="LCS2_MonitoringPrescriptionSystolic">
-            <AttributeDefinition id="type" type="enumeration" defaultValues="['SYSTOLICBLOODPRESSURE']" multiplicity="exactlyOne" description="Tipus de mesura" additionalDescription="Seleccioneu el tipus de mesura per a la supervisió del pacient">
-                <EnumerationOption value="SYSTOLICBLOODPRESSURE" description="Pressió arterial sistòlica"/>
+		<EntityDefinition id="LCS2_MonitoringPrescription">
+            <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Tipus de mesura" additionalDescription="Seleccioneu el tipus de mesura per a la supervisió del pacient">
+                <EnumerationOption value="BLOODPRESSURE" description="Pressió arterial sistòlica"/>
             </AttributeDefinition>   
-            <AttributeDefinition id="alertmin" type="number.min(0)" defaultValues="[90]" multiplicity="exactlyOne" description="Valor mínim permès" additionalDescription="Valor mínim per a aquesta mesura, ha de ser superior a 0"/>       
-            <AttributeDefinition id="alertmax" type="number.min(0)" defaultValues="[180]" multiplicity="exactlyOne" description="Valor màxim permès" additionalDescription="El valor màxim d'aquesta mesura, ha de ser superior a 0"/>      
-            <AttributeDefinition id="alertfreq" type="number" defaultValues="[1]" multiplicity="exactlyOne" description="Valor de freqüència d'alerta"/>       
-            <AttributeDefinition id="alertfrequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Unitat de freqüència d'alerta">     
-                <EnumerationOption value="DAYS" description="Dies"/>
-                <EnumerationOption value="WEEKS" description="Setmanes"/>
-                <EnumerationOption value="MONTHS" description="Mesos"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="freq" type="number.min(0)" defaultValues="[1]" multiplicity="exactlyOne" description="Freqüència"/> 
-            <AttributeDefinition id="frequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Unitat de freqüència">     
-                <EnumerationOption value="DAYS" description="Dies"/>
-                <EnumerationOption value="WEEKS" description="Setmanes"/>
-                <EnumerationOption value="MONTHS" description="Mesos"/>
-            </AttributeDefinition> 
-            <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="exactlyOne" description="Retard màxim en minuts" additionalDescription="Retard màxim perque el pacient es prengui la mesura"/> 
-            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Data d'inici"/> 
-            <AttributeDefinition id="enddate" type="date.after(tartdate)" multiplicity="exactlyOne" description="Data de fi"/> 
-            <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="Franges per prendre les mesures" additionalDescription="Es poden seleccionar múltiples franges, cal seleccionar-ne almenys una">     
-                <EnumerationOption value="BREAKFAST" description="Esmorzar"/>
-                <EnumerationOption value="LUNCH" description="Dinar"/>
-                <EnumerationOption value="AFTERNOONSNACK" description="Berenar"/>
-                <EnumerationOption value="DINNER" description="Sopar"/>
-                <EnumerationOption value="BEFORESLEEP" description="Abans d'anar a dormir"/>
-                <EnumerationOption value="ANYTIMEDURINGDAY" description="En qualsevol moment del dia" additionalDescription="Seleccioneu aquesta opció quan el temps del dia no importa"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comentaris" additionalDescription="Proporcioneu suggeriments addicionals pel pacient"/>   
-            <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Mesures"/>                      
-        </EntityDefinition>
-		
-		<EntityDefinition id="LCS2_MonitoringPrescriptionDiastolic">
-            <AttributeDefinition id="type" type="enumeration" defaultValues="['DIASTOLICBLOODPRESSURE']" multiplicity="exactlyOne" description="Tipus de mesura" additionalDescription="Seleccioneu el tipus de mesura per a la supervisió del pacient">
-				<EnumerationOption value="DIASTOLICBLOODPRESSURE" description="Pressió arterial diastòlica"/>
-            </AttributeDefinition>   
-            <AttributeDefinition id="alertmin" type="number.min(0)" defaultValues="[60]" multiplicity="exactlyOne" description="Valor mínim permès" additionalDescription="Valor mínim per a aquesta mesura, ha de ser superior a 0"/>       
-            <AttributeDefinition id="alertmax" type="number.min(0)" defaultValues="[90]" multiplicity="exactlyOne" description="Valor màxim permès" additionalDescription="El valor màxim d'aquesta mesura, ha de ser superior a 0"/>      
+            <AttributeDefinition id="alertmin" type="number.min(0)" multiplicity="any" uiReference="conditonalmultiplicity(1,type=BLOODPRESSURE=>2)" description="Valor mínim permès" additionalDescription="Valor mínim per a aquesta mesura, ha de ser superior a 0"/>       
+            <AttributeDefinition id="alertmax" type="number.min(0)" multiplicity="any" uiReference="conditonalmultiplicity(1,type=BLOODPRESSURE=>2)" description="Valor màxim permès" additionalDescription="El valor màxim d'aquesta mesura, ha de ser superior a 0"/>      
             <AttributeDefinition id="alertfreq" type="number" defaultValues="[1]" multiplicity="exactlyOne" description="Valor de freqüència d'alerta"/>       
             <AttributeDefinition id="alertfrequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Unitat de freqüència d'alerta">     
                 <EnumerationOption value="DAYS" description="Dies"/>
@@ -1677,44 +1642,24 @@
                     <TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_DiabetesControlBH.DiabetisControl1" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
                                         
-                <DualTaskDefinition id="LCS2_MonitoringPrescriptionBHWPSystolic" externalId="MonitoringPrescription"
-				description="Prescripció de la monitorització - Pressió arterial sistòlica - Abans d'hospitalització" dynamicDescriptionPath="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHSystolic.type"
-				ownerPath="LCS2_Settings.PrimaryCareClinicians" dueDatePath="LCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_MonitoringPrescriptionSystolic" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHSystolic">
+                <DualTaskDefinition id="LCS2_MonitoringPrescriptionBHWP" externalId="MonitoringPrescription"
+				description="Prescripció de la monitorització - Pressió arterial sistòlica - Abans d'hospitalització" dynamicDescriptionPath="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBH.type"
+				ownerPath="LCS2_Settings.PrimaryCareClinicians" dueDatePath="LCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_MonitoringPrescription" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBH">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHSystolic.type" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHSystolic.alertmin" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHSystolic.alertmax" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHSystolic.alertfreq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHSystolic.alertfrequnit" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHSystolic.freq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHSystolic.frequnit" isReadOnly="false" isMandatory="true"/>   
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHSystolic.maxdelay" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHSystolic.startdate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHSystolic.enddate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHSystolic.timeslot" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHSystolic.comments" isReadOnly="false" isMandatory="false"/>                    
-                    <TaskParamDefinition part="AUTOMATED" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHSystolic.measurement" isReadOnly="false" isMandatory="true"/>
-                </DualTaskDefinition>				
-
-                <DualTaskDefinition id="LCS2_MonitoringPrescriptionBHWPDiastolic" externalId="MonitoringPrescription"
-				description="Prescripció de la monitorització - Pressió arterial diastòlica - Abans d'hospitalització" dynamicDescriptionPath="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHDiastolic.type"
-				ownerPath="LCS2_Settings.PrimaryCareClinicians" dueDatePath="LCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_MonitoringPrescriptionDiastolic" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHDiastolic">
-                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
-                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHDiastolic.type" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHDiastolic.alertmin" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHDiastolic.alertmax" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHDiastolic.alertfreq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHDiastolic.alertfrequnit" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHDiastolic.freq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHDiastolic.frequnit" isReadOnly="false" isMandatory="true"/>   
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHDiastolic.maxdelay" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHDiastolic.startdate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHDiastolic.enddate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHDiastolic.timeslot" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHDiastolic.comments" isReadOnly="false" isMandatory="false"/>                    
-                    <TaskParamDefinition part="AUTOMATED" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHDiastolic.measurement" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBH.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBH.alertmin" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBH.alertmax" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBH.alertfreq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBH.alertfrequnit" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBH.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBH.frequnit" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBH.maxdelay" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBH.startdate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBH.enddate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBH.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBH.comments" isReadOnly="false" isMandatory="false"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBH.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>				
 					
             </StageDefinition>
@@ -1734,43 +1679,25 @@
                     <TaskParamDefinition path="LCS2_WorkplanAfterHospitalization.LCS2_PatientEducationAndTrainingToTheCaregiverAH.educaExec3" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
             
-                <DualTaskDefinition id="LCS2_MonitoringPrescriptionAHWPSystolic" externalId="MonitoringPrescription"
-				description="Prescripció de monitorització - Pressió arterial sistòlica - Desprès l'hospitalització" dynamicDescriptionPath="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHSystolic.type" ownerPath="LCS2_Settings.PrimaryCareClinicians" dueDatePath="LCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_MonitoringPrescriptionSystolic" entityAttachPath="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHSystolic">
+                <DualTaskDefinition id="LCS2_MonitoringPrescriptionAHWP" externalId="MonitoringPrescription"
+				description="Prescripció de monitorització - Pressió arterial sistòlica - Desprès l'hospitalització" dynamicDescriptionPath="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAH.type" ownerPath="LCS2_Settings.PrimaryCareClinicians" dueDatePath="LCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_MonitoringPrescription" entityAttachPath="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAH">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHSystolic.type" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHSystolic.alertmin" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHSystolic.alertmax" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHSystolic.alertfreq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHSystolic.alertfrequnit" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHSystolic.freq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHSystolic.frequnit" isReadOnly="false" isMandatory="true"/>   
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHSystolic.maxdelay" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHSystolic.startdate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHSystolic.enddate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHSystolic.timeslot" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHSystolic.comments" isReadOnly="false" isMandatory="false"/>                    
-                    <TaskParamDefinition part="AUTOMATED" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHSystolic.measurement" isReadOnly="false" isMandatory="true"/>
-                </DualTaskDefinition>	
-                
-                <DualTaskDefinition id="LCS2_MonitoringPrescriptionAHWPDiastolic" externalId="MonitoringPrescription"
-				description="Prescripció de la monitorització - Pressió arterial diastòlica - Desprès d'hospitalització" dynamicDescriptionPath="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHDiastolic.type" ownerPath="LCS2_Settings.Clinician" dueDatePath="LCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_MonitoringPrescriptionDiastolic" entityAttachPath="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHDiastolic">
-                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
-                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHDiastolic.type" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHDiastolic.alertmin" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHDiastolic.alertmax" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHDiastolic.alertfreq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHDiastolic.alertfrequnit" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHDiastolic.freq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHDiastolic.frequnit" isReadOnly="false" isMandatory="true"/>   
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHDiastolic.maxdelay" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHDiastolic.startdate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHDiastolic.enddate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHDiastolic.timeslot" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHDiastolic.comments" isReadOnly="false" isMandatory="false"/>                    
-                    <TaskParamDefinition part="AUTOMATED" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHDiastolic.measurement" isReadOnly="false" isMandatory="true"/>
-                </DualTaskDefinition>				
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAH.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAH.alertmin" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAH.alertmax" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAH.alertfreq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAH.alertfrequnit" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAH.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAH.frequnit" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAH.maxdelay" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAH.startdate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAH.enddate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAH.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAH.comments" isReadOnly="false" isMandatory="false"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAH.measurement" isReadOnly="false" isMandatory="true"/>
+                </DualTaskDefinition>	              
+               		
 
                 <DualTaskDefinition id="LCS2_PhysicalActivityAHWP" externalId="PhysicalActivity"
 				description="Activitat física - Desprès d'hospitalització" ownerPath="LCS2_Settings.Physiotherapist" dueDatePath="LCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_PhysicalActivityAH" entityAttachPath="LCS2_WorkplanAfterHospitalization.LCS2_PhysicalActivityAH">
@@ -2140,44 +2067,24 @@
         <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_DiabetesControlBH.DiabetisControl1" values="['1']"/>
     </Action> 		
 	
-    <Action id="ActivateDualTask" processId="LCS2_MonitoringPrescriptionBHWPSystolic" breakpoint="true"/>
-    <Action id="CompleteDualTaskHumanPart" processId="LCS2_MonitoringPrescriptionBHWPSystolic" breakpoint="true">
-        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWPSystolic.type"  values="['SYSTOLICBLOODPRESSURE']"/>
-        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWPSystolic.alertmin"  values="[50]"/>
-        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWPSystolic.alertmax"  values="[150]"/>
-        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWPSystolic.alertfreq"  values="[2]"/>
-        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWPSystolic.alertfrequnit"  values="['DAYS']"/>
-        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWPSystolic.comments"  values="['Some random comment']"/>
-        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWPSystolic.freq"  values="[5]"/>
-        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWPSystolic.freqqunit"  values="['WEEKS']"/>
-        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWPSystolic.maxdelay"  values="[100]"/>
-        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWPSystolic.startdate"  values="['2017-06-09T00:00:00.0']"/>
-        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWPSystolic.enddate"  values="['2019-06-09T00:00:00.0']"/>
-        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWPSystolic.timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
+    <Action id="ActivateDualTask" processId="LCS2_MonitoringPrescriptionBHWP" breakpoint="true"/>
+    <Action id="CompleteDualTaskHumanPart" processId="LCS2_MonitoringPrescriptionBHWP" breakpoint="true">
+        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWP.type"  values="['BLOODPRESSURE']"/>
+        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWP.alertmin"  values="[50, 60]"/>
+        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWP.alertmax"  values="[150, 160]"/>
+        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWP.alertfreq"  values="[2]"/>
+        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWP.alertfrequnit"  values="['DAYS']"/>
+        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWP.comments"  values="['Some random comment']"/>
+        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWP.freq"  values="[5]"/>
+        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWP.freqqunit"  values="['WEEKS']"/>
+        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWP.maxdelay"  values="[100]"/>
+        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWP.startdate"  values="['2017-06-09T00:00:00.0']"/>
+        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWP.enddate"  values="['2019-06-09T00:00:00.0']"/>
+        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWP.timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
     </Action>
-    <Action id="CompleteDualTaskAutomatedPart" processId="LCS2_MonitoringPrescriptionBHWPSystolic" breakpoint="true">
-        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWPSystolic.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
-    </Action>
-	
-    <Action id="ActivateDualTask" processId="LCS2_MonitoringPrescriptionBHWPDiastolic" breakpoint="true"/>
-    <Action id="CompleteDualTaskHumanPart" processId="LCS2_MonitoringPrescriptionBHWPDiastolic" breakpoint="true">
-        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWPDiastolic.type"  values="['DIASTOLICBLOODPRESSURE']"/>
-        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWPDiastolic.alertmin"  values="[50]"/>
-        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWPDiastolic.alertmax"  values="[150]"/>
-        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWPDiastolic.alertfreq"  values="[2]"/>
-        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWPDiastolic.alertfrequnit"  values="['DAYS']"/>
-        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWPDiastolic.comments"  values="['Some random comment']"/>
-        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWPDiastolic.freq"  values="[5]"/>
-        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWPDiastolic.freqqunit"  values="['WEEKS']"/>
-        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWPDiastolic.maxdelay"  values="[100]"/>
-        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWPDiastolic.startdate"  values="['2017-06-09T00:00:00.0']"/>
-        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWPDiastolic.enddate"  values="['2019-06-09T00:00:00.0']"/>
-        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWPDiastolic.timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
-    </Action>
-    <Action id="CompleteDualTaskAutomatedPart" processId="LCS2_MonitoringPrescriptionBHWPDiastolic" breakpoint="true">
-        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWPDiastolic.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
-    </Action>	
-	
+    <Action id="CompleteDualTaskAutomatedPart" processId="LCS2_MonitoringPrescriptionBHWP" breakpoint="true">
+        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBHWP.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
+    </Action>   	
 	
 	<Action id="CompleteHumanTask" processId="LCS2_PatientEducationAndTrainingToTheCaregiverWPAH1" breakpoint="true">  
         <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PatientEducationAndTrainingToTheCaregiverAH.educaExec1" values="['1']"/> 
@@ -2188,43 +2095,24 @@
         <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PatientEducationAndTrainingToTheCaregiverAH.educaExec3" values="['1']"/> 
     </Action> 		
 
-    <Action id="ActivateDualTask" processId="LCS2_MonitoringPrescriptionAHWPSystolic" breakpoint="true"/>
-    <Action id="CompleteDualTaskHumanPart" processId="LCS2_MonitoringPrescriptionAHWPSystolic" breakpoint="true">
-        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPSystolic.type"  values="['SYSTOLICBLOODPRESSURE']"/>
-        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPSystolic.alertmin"  values="[50]"/>
-        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPSystolic.alertmax"  values="[150]"/>
-        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPSystolic.alertfreq"  values="[2]"/>
-        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPSystolic.alertfrequnit"  values="['DAYS']"/>
-        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPSystolic.comments"  values="['Some random comment']"/>
-        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPSystolic.freq"  values="[5]"/>
-        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPSystolic.freqqunit"  values="['WEEKS']"/>
-        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPSystolic.maxdelay"  values="[100]"/>
-        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPSystolic.startdate"  values="['2017-06-09T00:00:00.0']"/>
-        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPSystolic.enddate"  values="['2019-06-09T00:00:00.0']"/>
-        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPSystolic.timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
+    <Action id="ActivateDualTask" processId="LCS2_MonitoringPrescriptionAHWP" breakpoint="true"/>
+    <Action id="CompleteDualTaskHumanPart" processId="LCS2_MonitoringPrescriptionAHWP" breakpoint="true">
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWP.type"  values="['BLOODPRESSURE']"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWP.alertmin"  values="[50, 60]"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWP.alertmax"  values="[150, 160]"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWP.alertfreq"  values="[2]"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWP.alertfrequnit"  values="['DAYS']"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWP.comments"  values="['Some random comment']"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWP.freq"  values="[5]"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWP.freqqunit"  values="['WEEKS']"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWP.maxdelay"  values="[100]"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWP.startdate"  values="['2017-06-09T00:00:00.0']"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWP.enddate"  values="['2019-06-09T00:00:00.0']"/>
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWP.timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
     </Action>
-    <Action id="CompleteDualTaskAutomatedPart" processId="LCS2_MonitoringPrescriptionAHWPSystolic" breakpoint="true">
-        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPSystolic.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
+    <Action id="CompleteDualTaskAutomatedPart" processId="LCS2_MonitoringPrescriptionAHWP" breakpoint="true">
+        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWP.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
     </Action>
-	
-    <Action id="ActivateDualTask" processId="LCS2_MonitoringPrescriptionAHWPDiastolic" breakpoint="true"/>
-    <Action id="CompleteDualTaskHumanPart" processId="LCS2_MonitoringPrescriptionAHWPDiastolic" breakpoint="true">
-        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPDiastolic.type"  values="['DIASTOLICBLOODPRESSURE']"/>
-        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPDiastolic.alertmin"  values="[50]"/>
-        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPDiastolic.alertmax"  values="[150]"/>
-        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPDiastolic.alertfreq"  values="[2]"/>
-        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPDiastolic.alertfrequnit"  values="['DAYS']"/>
-        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPDiastolic.comments"  values="['Some random comment']"/>
-        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPDiastolic.freq"  values="[5]"/>
-        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPDiastolic.freqqunit"  values="['WEEKS']"/>
-        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPDiastolic.maxdelay"  values="[100]"/>
-        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPDiastolic.startdate"  values="['2017-06-09T00:00:00.0']"/>
-        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPDiastolic.enddate"  values="['2019-06-09T00:00:00.0']"/>
-        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPDiastolic.timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
-    </Action>
-    <Action id="CompleteDualTaskAutomatedPart" processId="LCS2_MonitoringPrescriptionAHWPDiastolic" breakpoint="true">
-        <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWPDiastolic.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
-    </Action>	
 	
     <Action id="ActivateDualTask" processId="LCS2_PhysicalActivityAHWP" breakpoint="true"/>
     <Action id="CompleteDualTaskHumanPart" processId="LCS2_PhysicalActivityAHWP" breakpoint="true">
