@@ -29,6 +29,10 @@ export default class Alert extends Model{
     return http.post(jwt, '/alerts/'+alertId+'/seen');
   }
 
+  static seenByCaseId(jwt, caseId) {
+    return http.post(jwt, '/cases/'+caseId+'/alerts/seen');
+  }
+
   static findMeUnseen(jwt) {
     return http.get(jwt, '/alerts/me/unseen');
   }
