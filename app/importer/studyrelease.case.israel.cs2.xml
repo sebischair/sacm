@@ -962,11 +962,10 @@
         
         <EntityDefinition id="ICS2_MonitoringPrescription" description="Patient Monitory">
             <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="סוג המדידה" additionalDescription="בחר מדד">
-                <EnumerationOption value="DIASTOLICBLOODPRESSURE" description="לחץ דם דיאסטולי"/>
-                <EnumerationOption value="SYSTOLICBLOODPRESSURE" description="לחץ דם סיסטולי"/>
+                <EnumerationOption value="BLOODPRESSURE" description="לחץ דם דיאסטולי"/>
             </AttributeDefinition>   
-            <AttributeDefinition id="alertmin" type="number.min(0)" multiplicity="exactlyOne" description="ערך מינימלי מותר" additionalDescription="ערך מינמלי חייב להיות גדול מאפס"/>       
-            <AttributeDefinition id="alertmax" type="number.min(0)" multiplicity="exactlyOne" description="ערך מקסימלי מותר" additionalDescription="ערך מקסימלי עבור מדד זה"/>      
+            <AttributeDefinition id="alertmin" type="number.min(0)" multiplicity="any" uiReference="conditonalmultiplicity(1,type=BLOODPRESSURE=>2)" description="ערך מינימלי מותר" additionalDescription="If blood pressure is selected, please specify the systolic / diastolic maximum. ערך מינמלי חייב להיות גדול מאפס"/>       
+            <AttributeDefinition id="alertmax" type="number.min(0)" multiplicity="any" uiReference="conditonalmultiplicity(1,type=BLOODPRESSURE=>2)" description="ערך מקסימלי מותר" additionalDescription="If blood pressure is selected, please specify the systolic / diastolic minimum. ערך מקסימלי עבור מדד זה"/>      
             <AttributeDefinition id="alertfreq" type="number" defaultValues="[1]" multiplicity="exactlyOne" description="תדירות התראה עבור מדד זה"/>       
             <AttributeDefinition id="alertfrequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="יחידות עבור תדירות התראה">     
                 <EnumerationOption value="DAYS" description="ימים"/>
@@ -991,7 +990,7 @@
                 <EnumerationOption value="ANYTIMEDURINGDAY" description="בכל שעה ביום" additionalDescription="במידה ואין חשיבות לזמן המדידה יש לבחור אפשרות זו"/>
             </AttributeDefinition>
             <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="הערות" additionalDescription="הערות חשובות למטופל"/>   
-            <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Measurement"/>                      
+            <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Measurement"/>                      
         </EntityDefinition>
 
         <EntityDefinition id="ICS2_SimpleTask" description="משימות לביצוע">
@@ -1464,6 +1463,8 @@
         <Action id="CompleteHumanTask" processId="ICS2_SelectPatient">
             <TaskParam path="ICS2_Patient"  userValue="carlsonc"/>
             <TaskParam path="ICS2_CaseManager"  userValue="millerc"/>
+            <TaskParam path="ICS2_Clinician" userValue="evansn"/>
+            <TaskParam path="ICS2_Nurse" userValue="rothmanm"/>
             <TaskParam path="ICS2_EvaluationDueDate" values="['2018-05-26T00:00:00.000']"/>
             <TaskParam path="ICS2_WorkplanDueDate" values="['2019-12-28T00:00:00.000']"/>
 			<TaskParam path="ICS2_CaseData1" values="['1']"/>
@@ -1473,7 +1474,7 @@
             <TaskParam path="ICS2_Identification.ICS2_InclusionCriteria.BasicAge"  values="['0']"/>
             <TaskParam path="ICS2_Identification.ICS2_InclusionCriteria.BasicResidantual"  values="['1']"/>
             <TaskParam path="ICS2_Identification.ICS2_InclusionCriteria.Basicoperation" values="['1']"/>
-			 <TaskParam path="ICS2_Identification.ICS2_InclusionCriteria.OpName" values="['0']"/>
+			<TaskParam path="ICS2_Identification.ICS2_InclusionCriteria.OpName" values="['0']"/>
             <TaskParam path="ICS2_Identification.ICS2_InclusionCriteria.BasicASA" values="['0']"/>
             <TaskParam path="ICS2_Identification.ICS2_InclusionCriteria.BasicCronical" values="['1']"/>
             <TaskParam path="ICS2_Identification.ICS2_InclusionCriteria.BasicLanguegue" values="['0']"/>
@@ -1717,9 +1718,9 @@
         </Action>
         <Action id="ActivateDualTask" processId="ICS2_MonitoringPrescription" breakpoint="true"/>
         <Action id="CompleteDualTaskHumanPart" processId="ICS2_MonitoringPrescription" breakpoint="true">
-            <TaskParam path="ICS2_Workplan.ICS2_MonitoringPrescription.type"  values="['DIASTOLICBLOODPRESSURE']"/>
-            <TaskParam path="ICS2_Workplan.ICS2_MonitoringPrescription.alertmin"  values="[50]"/>
-            <TaskParam path="ICS2_Workplan.ICS2_MonitoringPrescription.alertmax"  values="[150]"/>
+            <TaskParam path="ICS2_Workplan.ICS2_MonitoringPrescription.type"  values="['BLOODPRESSURE']"/>
+            <TaskParam path="ICS2_Workplan.ICS2_MonitoringPrescription.alertmin"  values="[50, 60]"/>
+            <TaskParam path="ICS2_Workplan.ICS2_MonitoringPrescription.alertmax"  values="[150, 160]"/>
             <TaskParam path="ICS2_Workplan.ICS2_MonitoringPrescription.alertfreq"  values="[2]"/>
             <TaskParam path="ICS2_Workplan.ICS2_MonitoringPrescription.alertfrequnit"  values="['DAYS']"/>
             <TaskParam path="ICS2_Workplan.ICS2_MonitoringPrescription.comments"  values="['Some random comment']"/>

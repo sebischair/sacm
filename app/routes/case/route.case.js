@@ -955,6 +955,25 @@ router.get('/:id/messages', (req, res, next)=>{
 // alerts
 
 /**
+ * @api {post} /cases/:id/alerts/seen Mark Alerts by Case as seen
+ * @apiName MarkCaseAlertsAsSeen
+ * @apiGroup Alerts
+ * @apiParam {String} id ID of the Case 
+ * @apiSampleRequest /cases/:id/alerts/seen
+ * @apiSuccessExample {json} Success-Response:
+ *  {}
+ */
+router.post('/:id/alerts/seen', (req, res, next)=>{
+  Alert.seenByCaseId(req.jwt, req.params.id)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
  * @api {get} /cases/:id/alerts Get Alerts by Case
  * @apiName GetAlerts
  * @apiGroup Alerts

@@ -53,6 +53,10 @@ export default class DualTask extends Model{
     return http.post(jwt, '/dualtasks/'+dualTaskId+'/terminate');
   }
 
+  static correctHumanPart(jwt, data) {
+    return http.post(jwt, '/dualtasks/'+data.id+'/humanpart/correct', data);
+  }
+
   static setOwner(jwt, dualTaskId, userId){
     return http.post(jwt, '/dualtasks/'+dualTaskId+'/owner/'+userId);
   }

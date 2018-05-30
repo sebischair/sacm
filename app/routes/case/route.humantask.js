@@ -416,6 +416,28 @@ router.post('/:id/terminate', (req, res, next)=>{
 });
 
 /**
+ * @api {post} /humantasks/:id/correct Correct HumanTask
+ * @apiName CorrectHumanTask
+ * @apiGroup HumanTasks
+ * @apiParam {String} id ID of a HumanTask
+ * @apiSampleRequest /humantasks/:id/correct
+ * @apiSuccessExample {json} Success-Response:
+ *     {
+ *     }
+ */
+router.post('/:id/correct', (req, res, next)=>{
+    let data = req.body;
+    data.id = req.params.id;
+    HumanTask.correct(req.jwt, data)
+      .then(c=>{
+          res.status(200).send(c);
+      })
+      .catch(err=>{
+          res.status(500).send(err);
+      })
+  });
+
+/**
  * @api {post} /humantasks/:id/owner/:userid Set HumanTask Owner
  * @apiName SetOwnerHumanTask
  * @apiGroup HumanTasks

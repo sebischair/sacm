@@ -393,7 +393,7 @@ router.post('/:id/automatedpart/draft', (req, res, next)=>{
  * @apiGroup DualTasks
  * @apiParam {String} id ID of a DualTask
  * @apiParam {Array} taskParams An array of task paramerts
- * @apiSampleRequest /dualtasks/:id/complete
+ * @apiSampleRequest /dualtasks/:id/humanpart/complete
  * {
  * 	"id": "9411d2nyotg3",
  * 	"taskParams": [
@@ -504,6 +504,27 @@ router.post('/:id/humanpart/complete', (req, res, next)=>{
     .catch(err=>{
         res.status(500).send(err);
     })
+});
+
+/**
+ * @api {post} /dualtasks/:id/humanpart/correct Correct DualTask human part
+ * @apiName CorrectHumanPartDualTask
+ * @apiGroup DualTasks
+ * @apiParam {String} id ID of a DualTask
+ * @apiParam {Array} taskParams An array of task parameters
+ * @apiSampleRequest /dualtasks/:id/correct
+ * {}
+ */
+router.post('/:id/humanpart/correct', (req, res, next)=>{
+ let data = req.body;
+ data.id = req.params.id;
+ DualTask.correctHumanPart(req.jwt, data)
+   .then(c=>{
+       res.status(200).send(c);
+   })
+   .catch(err=>{
+       res.status(500).send(err);
+   })
 });
 
 /**
