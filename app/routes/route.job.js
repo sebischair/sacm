@@ -4,14 +4,14 @@ const router = express.Router();
 
 
 /**
- * @api {get} /jobs/completeon/trigger Tigger complete on with manual trigger
- * @apiName PostJobsCompleteonManualTrigger
+ * @api {get} /jobs/completion/trigger Tigger complete on with manual trigger
+ * @apiName PostJobsCompletionManualTrigger
  * @apiGroup Jobs
- * @apiSampleRequest /jobs/completeon/trigger
+ * @apiSampleRequest /jobs/completion/trigger
  * @apiSuccessExample {json} Success-Response:
  *  {}
  */
-router.post('/completeon/trigger', (req, res, next)=>{
+router.post('/completion/trigger', (req, res, next)=>{
   Job.triggerCompleteOn(req.jwt)
     .then(c=>{
       res.status(200).send(c);

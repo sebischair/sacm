@@ -6,6 +6,6 @@ import Model from './model';
 export default class Job extends Model{
 
   static triggerCompleteOn(jwt){
-    return http.post(jwt, '/jobs/completeon/trigger');
+    return http.post(jwt, '/jobs/completion/trigger');
   }
 }
