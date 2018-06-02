@@ -306,6 +306,26 @@ router.get('/:id/casedefinitions/caninstantiate', (req, res, next)=>{
     })
 });
 
+
+/**
+ * @api {post} /workspaces/:id/humantasks/me/active/hideondashboard Hide My active Humantasks On Dashboard by Workspace
+ * @apiName PostMyHumanTasksByWorkspace
+ * @apiGroup HumanTasks
+ * @apiParam {String} ID The ID of the the Workspace
+ * @apiSampleRequest /workspaces/:id/humantasks/me/active/hideondashboard
+ * @apiSuccessExample {json} Success-Response:
+ * {}
+ */
+router.post('/:id/humantasks/me/active/hideondashboard', (req, res, next)=>{
+  HumanTask.hideOnDashboardByWorkspace(req.jwt, req.params.id)
+    .then(ht=>{
+        res.status(200).send(ht);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
 /**
  * @api {get} /workspaces/:id/humantasks/me/active Get My active Humantasks by Workspace
  * @apiName GetMyHumanTasksByWorkspace

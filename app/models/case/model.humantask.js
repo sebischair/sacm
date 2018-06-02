@@ -61,6 +61,10 @@ export default class HumanTask extends Model{
     return http.post(jwt, '/humantasks/'+humanTaskId+'/hideondashboard');
   }
 
+  static hideOnDashboardByWorkspace(jwt, workspaceId){
+    return http.post(jwt, '/workspaces/'+workspaceId+'/humantasks/me/active/hideondashboard');
+  }
+
   static setExternalId(jwt, humanTaskId, externalId){
     return http.post(jwt, '/humantasks/'+humanTaskId+'/externalid/'+externalId);
   }
