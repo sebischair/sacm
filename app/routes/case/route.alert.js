@@ -40,6 +40,26 @@ router.get('/me/unseen', (req, res, next)=>{
     })
 });
 
+
+
+/**
+ * @api {get} /alerts/me/seen Mark My Alerts as seen
+ * @apiName PostMySeenAlerts
+ * @apiGroup Alerts
+ * @apiSampleRequest /alerts/me/seen
+ * @apiSuccessExample {json} Success-Response:
+ *  {}
+ */
+router.post('/me/seen', (req, res, next)=>{
+  Alert.seenByMe(req.jwt)
+    .then(c=>{
+      res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
 /**
  * @api {get} /alerts/:id Get Alert
  * @apiName GetAlert

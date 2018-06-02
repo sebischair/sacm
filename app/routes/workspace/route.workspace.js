@@ -345,6 +345,25 @@ router.get('/:id/alerts/me/unseen', (req, res, next)=>{
 });
 
 /**
+ * @api {get} /workspaces/:id/alerts/me/seen Mark My Alerts As seen by Workspace
+ * @apiName PostMySeenAlertsByWorkspace
+ * @apiGroup Alerts
+ * @apiParam {String} ID The ID of the the Workspace
+ * @apiSampleRequest /workspaces/:id/alerts/me/seen
+ * @apiSuccessExample {json} Success-Response:
+ * {}
+ */
+router.post('/:id/alerts/me/seen', (req, res, next)=>{
+  Alert.seenByWorkspaceId(req.jwt, req.params.id)
+    .then(a=>{
+        res.status(200).send(a);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
  * @api {get} /workspaces/:id/messages/me/unseen Get My unseen Messages by Workspace
  * @apiName GetMyUnseenMessagesByWorkspace
  * @apiGroup Messages
