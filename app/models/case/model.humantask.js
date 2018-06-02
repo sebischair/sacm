@@ -57,6 +57,10 @@ export default class HumanTask extends Model{
     return http.post(jwt, '/humantasks/'+humanTaskId+'/duedate', {dueDate: dueDate});
   }
 
+  static hideOnDashboard(jwt, humanTaskId){
+    return http.post(jwt, '/humantasks/'+humanTaskId+'/hideondashboard');
+  }
+
   static setExternalId(jwt, humanTaskId, externalId){
     return http.post(jwt, '/humantasks/'+humanTaskId+'/externalid/'+externalId);
   }

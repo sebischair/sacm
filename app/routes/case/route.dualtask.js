@@ -710,6 +710,27 @@ router.post('/:id/duedate', (req, res, next)=>{
 });
 
 /**
+ * @api {post} /dualtasks/:id/hideondashboard Hide DualTask on Dashboard
+ * @apiName PostDualTaskHideOnDashboard
+ * @apiGroup DualTasks
+ * @apiParam {String} id ID of a DualTask
+ * @apiParam {String} dueDate 
+ * @apiSampleRequest /dualtask/:id/hideondashboard
+ * {dueDate: 'some date'}
+ * @apiSuccessExample {json} Success-Response:
+ *   {}
+ */
+router.post('/:id/hideondashboard', (req, res, next)=>{
+    DualTask.hideOnDashboard(req.jwt, req.params.id)
+      .then(c=>{
+          res.status(200).send(c);
+      })
+      .catch(err=>{
+          res.status(500).send(err);
+      })
+  });
+
+/**
  * @api {post} /dualtasks/:id/externalid/:externalid Set DualTask ExternalId
  * @apiName SetExternalIdDualTask
  * @apiGroup DualTasks
