@@ -22,6 +22,25 @@ router.get('/me/unseen', (req, res, next)=>{
 });
 
 /**
+ * @api {post} /messages/me/seen Mark as seen Messages
+ * @apiName MySeenMessages
+ * @apiGroup Messages
+ * @apiSampleRequest /messages/me/seen
+ * @apiSuccessExample {json} Success-Response:
+ *   {}
+ */
+router.post('/me/seen', (req, res, next)=>{
+  console.log('here')
+  Message.seenByMe(req.jwt)
+    .then(c=>{
+      res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
  * @api {get} /messages/:id Get Message
  * @apiName GetMessage
  * @apiGroup Messages

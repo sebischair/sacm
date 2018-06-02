@@ -382,5 +382,24 @@ router.get('/:id/messages/me/unseen', (req, res, next)=>{
     })
 });
 
+/**
+ * @api {get} /workspaces/:id/messages/me/seen Mark My Messages As Seen by Workspace
+ * @apiName PostMySeenMessagesByWorkspace
+ * @apiGroup Messages
+ * @apiParam {String} ID The ID of the the Workspace
+ * @apiSampleRequest /workspaces/:id/messages/me/seen
+ * @apiSuccessExample {json} Success-Response:
+ * {}
+ */
+router.post('/:id/messages/me/seen', (req, res, next)=>{
+  Message.seenByWorkspaceId(req.jwt, req.params.id)
+    .then(m=>{
+      res.status(200).send(m);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
 
 module.exports = router;

@@ -21,6 +21,18 @@ export default class Message extends Model{
     return http.post(jwt, '/messages/'+messageId+'/seen');
   }
 
+  static seenByCaseId(jwt, caseId) {
+    return http.post(jwt, '/cases/'+caseId+'/messages/seen');
+  }
+
+  static seenByWorkspaceId(jwt, workspaceId) {
+    return http.post(jwt, '/workspaces/'+workspaceId+'/messages/me/seen');
+  }
+
+  static seenByMe(jwt) {
+    return http.post(jwt, '/messages/me/seen');
+  }
+
   static findMeUnseen(jwt) {
     return http.get(jwt, '/messages/me/unseen');
   }
@@ -29,8 +41,6 @@ export default class Message extends Model{
     return http.get(jwt, '/workspaces/'+workspaceId+'/messages/me/unseen');
   }
 
-  static seenCase(jwt, caseId) {
-    return http.post(jwt, '/cases/'+caseId+'/messages/seen');
-  }
+
 
 }
