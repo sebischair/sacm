@@ -1152,7 +1152,7 @@ router.get('/:id/summarysections', (req, res, next)=>{
  * {}
  */
 router.post('/:id/messages/seen', (req, res, next)=>{
-  Message.seenCase(req.jwt, req.params.id)
+  Message.seenByCaseId(req.jwt, req.params.id)
     .then(c=>{
         res.status(200).send(c);
     })

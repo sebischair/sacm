@@ -65,6 +65,10 @@ export default class DualTask extends Model{
     return http.post(jwt, '/dualtasks/'+dualTaskId+'/duedate', {dueDate: dueDate});
   }
 
+  static hideOnDashboard(jwt, dualTaskId){
+    return http.post(jwt, '/dualtasks/'+dualTaskId+'/hideondashboard');
+  }
+
   static setExternalId(jwt, dualTaskId, externalId){
     return http.post(jwt, '/dualtasks/'+dualTaskId+'/externalid/'+externalId);
   }
