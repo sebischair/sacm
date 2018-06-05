@@ -27,6 +27,7 @@ import group from './group/route.group';
 import importer from './route.import';
 import test from './route.test';
 import job from './route.job';
+import context from './route.context';
 
 function routes(){
     const router = express.Router();
@@ -78,6 +79,8 @@ function routes(){
     /** Jobs route */
     router.use('/jobs', job);
 
+    /** Context route */
+    router.use('/', context);
 
     return router;
 };
