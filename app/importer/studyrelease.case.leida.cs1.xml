@@ -1263,6 +1263,8 @@
         <!-- Discharge Definitions -->		
 		<EntityDefinition id="LCS1_Discharge">
 			<AttributeDefinition id="LCS1_DischargeTest" type="Link.EntityDefinition.LCS1_DischargeTest" multiplicity="any"/>									
+			<AttributeDefinition id="LCS1_SF12Discharge" type="Link.EntityDefinition.LCS1_SF12Def" multiplicity="any"/> 			
+			<AttributeDefinition id="LCS1_EQ-5DDischarge" type="Link.EntityDefinition.LCS1_EQ-5DDef" multiplicity="any"/> 									
 		</EntityDefinition>						
 				
 		<EntityDefinition id="LCS1_DischargeTest"> 
@@ -1270,6 +1272,47 @@
 			<AttributeDefinition id="discharge2" type="longtext" description="Estat actual del pacient" multiplicity="exactlyOne"/> 
 			<AttributeDefinition id="discharge3" type="longtext" description="Pronostic (funcional, assistencial i social)" multiplicity="exactlyOne"/> 
         </EntityDefinition>		
+				
+		<EntityDefinition id="LCS1_EQ-5DDef">
+			<AttributeDefinition id="EQ-5D-1" type="enumeration" multiplicity="exactlyOne" description="MOBILITAT">
+				<EnumerationOption value="1"  description="No tinc problemes per caminar "/>
+				<EnumerationOption value="2"  description="Tinc problemes lleugers per caminar"/>
+				<EnumerationOption value="3"  description="Tinc problemes moderats per caminar"/>
+				<EnumerationOption value="4"  description="Tinc problemes greus per caminar"/>
+				<EnumerationOption value="5"  description="No puc seguir caminant"/>
+			</AttributeDefinition>     
+			<AttributeDefinition id="EQ-5D-2" type="enumeration" multiplicity="exactlyOne" description="AUTOCURA">
+				<EnumerationOption value="1"  description="No tinc problemes per rentar-me ni vestir-me "/>
+				<EnumerationOption value="2"  description="Tinc problemes lleugers per rentar-me o vestir-me"/>
+				<EnumerationOption value="3"  description="Tinc problemes moderats per rentar-me o vestir-me"/>
+				<EnumerationOption value="4"  description="Tinc problemes greus per rentar-me o vestir-me"/>
+				<EnumerationOption value="5"  description="No sóc capaç de rentar-me ni vestir-me"/>
+			</AttributeDefinition>      
+			<AttributeDefinition id="EQ-5D-3"  type="enumeration" multiplicity="exactlyOne" description="ACTIVITATS USUALS (p. Ex. Treball, estudi, tasques domèstiques, activitats familiars o de lleure)">
+				<EnumerationOption value="1"  description="No tinc problemes per fer les meves activitats habituals "/>
+				<EnumerationOption value="2"  description="Tinc problemes lleugers fent les meves activitats habituals"/>
+				<EnumerationOption value="3"  description="Tinc problemes moderats fent les meves activitats habituals"/>
+				<EnumerationOption value="4"  description="Tinc problemes greus fent les meves activitats habituals"/>
+				<EnumerationOption value="5"  description="No puc fer les meves activitats habituals "/>
+			</AttributeDefinition>      
+			<AttributeDefinition id="EQ-5D-4"  type="enumeration" multiplicity="exactlyOne" description="DOLOR / MOLESTIES">
+				<EnumerationOption value="1"  description="No tinc dolor ni molèstia "/>
+				<EnumerationOption value="2"  description="Tinc dolor o molèsties lleus"/>
+				<EnumerationOption value="3"  description="Tinc dolor moderat o incomoditat"/>
+				<EnumerationOption value="4"  description="Tinc dolor greu o incomoditat "/>
+				<EnumerationOption value="5"  description="Tinc dolor extrem o incomoditat"/>
+			</AttributeDefinition>      
+			<AttributeDefinition id="EQ-5D-5"  type="enumeration" multiplicity="exactlyOne" description="ANSIETAT / DEPRESSIÓ">
+				<EnumerationOption value="1"  description="No estic ansiós o deprimit "/>
+				<EnumerationOption value="2"  description="Estic lleument ansiós o deprimit "/>
+				<EnumerationOption value="3"  description="Estic moderat ansiós o deprimit"/>
+				<EnumerationOption value="4"  description="Estic molt ansiós o deprimit "/>
+				<EnumerationOption value="5"  description="Estic extremedament ansiós o deprimit"/>
+			</AttributeDefinition>       						
+			<AttributeDefinition id="EQ-5D-6" type="number.min(0).max(100)" defaultValues="[0.0]" multiplicity="exactlyOne" 
+			description="Com et trobes avui? Escala numerada: On 0 és molt malament i 100 és molt bé"/>       						
+		</EntityDefinition>
+			
 		
 		
    <!-- CASE DEFINITION -->				  
@@ -1773,7 +1816,31 @@
                     <TaskParamDefinition part="HUMAN" path="LCS1_Discharge.LCS1_DischargeTest.discharge2" isReadOnly="false" isMandatory="true"/>                    
                     <TaskParamDefinition part="HUMAN" path="LCS1_Discharge.LCS1_DischargeTest.discharge3" isReadOnly="false" isMandatory="true"/>                    
                 </HumanTaskDefinition>		
-			</StageDefinition> 
+				
+                <HumanTaskDefinition id="LCS1_SF12DischargeHT" description="*SF-12" ownerPath="LCS1_Settings.Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_SF12Def" entityAttachPath="LCS1_Discharge.LCS1_SF12Discharge">                
+                    <TaskParamDefinition path="LCS1_Discharge.LCS1_SF12Discharge.sf12-1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Discharge.LCS1_SF12Discharge.sf12-2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Discharge.LCS1_SF12Discharge.sf12-3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Discharge.LCS1_SF12Discharge.sf12-4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Discharge.LCS1_SF12Discharge.sf12-5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Discharge.LCS1_SF12Discharge.sf12-6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Discharge.LCS1_SF12Discharge.sf12-7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Discharge.LCS1_SF12Discharge.sf12-8" isReadOnly="false" isMandatory="true"/>    
+                    <TaskParamDefinition path="LCS1_Discharge.LCS1_SF12Discharge.sf12-9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Discharge.LCS1_SF12Discharge.sf12-10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Discharge.LCS1_SF12Discharge.sf12-11" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Discharge.LCS1_SF12Discharge.sf12-12" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition> 		
+
+                <HumanTaskDefinition id="LCS1_EQ-5DDischargeHT" description="*EQ-5D" ownerPath="LCS1_Settings.Clinician" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1_EQ-5DDef" entityAttachPath="LCS1_Discharge.LCS1_EQ-5DDischarge">
+                    <TaskParamDefinition path="LCS1_Discharge.LCS1_EQ-5DDischarge.EQ-5D-1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Discharge.LCS1_EQ-5DDischarge.EQ-5D-2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Discharge.LCS1_EQ-5DDischarge.EQ-5D-3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Discharge.LCS1_EQ-5DDischarge.EQ-5D-4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1_Discharge.LCS1_EQ-5DDischarge.EQ-5D-5" isReadOnly="false" isMandatory="true"/>              
+					<TaskParamDefinition path="LCS1_Discharge.LCS1_EQ-5DDischarge.EQ-5D-6" isReadOnly="false" isMandatory="true"/>              					
+                </HumanTaskDefinition>										
+			</StageDefinition> 						
 			 
 		</CaseDefinition>
 	
