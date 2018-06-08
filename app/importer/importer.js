@@ -78,7 +78,7 @@ module.exports = class Importer {
         if(userXMLId == null)
           return null
         else if(!this.userMap.has(userXMLId)){
-          console.err('ERROR: User ID "'+userXMLId+'" not found');
+          console.log('ERROR: User ID "'+userXMLId+'" not found');
           return new Error('ERROR: User ID "'+userXMLId+'" not found');
         }else
           return this.userMap.get(userXMLId);  
