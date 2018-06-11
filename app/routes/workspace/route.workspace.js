@@ -336,7 +336,7 @@ router.post('/:id/humantasks/me/active/hideondashboard', (req, res, next)=>{
  * {}
  */
 router.get('/:id/humantasks/me/active', (req, res, next)=>{
-  HumanTask.findMeActiveByWorkspaceId(req.jwt, req.params.id)
+  HumanTask.findMeActiveByWorkspaceId(req.jwt, req.params.id, req.query)
     .then(ht=>{
         res.status(200).send(ht);
     })

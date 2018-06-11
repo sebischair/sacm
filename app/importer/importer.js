@@ -78,7 +78,7 @@ module.exports = class Importer {
         if(userXMLId == null)
           return null
         else if(!this.userMap.has(userXMLId)){
-          console.err('ERROR: User ID "'+userXMLId+'" not found');
+          console.log('ERROR: User ID "'+userXMLId+'" not found');
           return new Error('ERROR: User ID "'+userXMLId+'" not found');
         }else
           return this.userMap.get(userXMLId);  
@@ -1139,6 +1139,14 @@ module.exports = class Importer {
           }else if(action.$.id == "CompleteDualTaskAutomatedPart"){
             const params = this.getParms(action);
             return this.completeDualTaskAutomatedPartWithName(caseId, action.$.processId, params)
+          
+          }else if(action.$.id == "CorrectHumanTask"){
+            const params = this.getParms(action);
+            return this.correctHumanTaskWithName(caseId, action.$.processId, params)
+
+          }else if(action.$.id == "CorrectDualTaskHumanPart"){
+            const params = this.getParms(action);
+            return this.correctDualTaskHumanPartWithName(caseId, action.$.processId, params)
 
           }else if(action.$.id == "CreateAlert"){
             return this.createAlert(caseId, action.$.processId, action)        
@@ -1305,6 +1313,38 @@ module.exports = class Importer {
         })       
         .then(task=>{
           return HumanTask.complete(this.executionJwt, this.addParamsToTask(task, paramsMap));
+        })      
+    }
+
+    /**
+     * @param caseId 
+     * @param taskName 
+     * @param paramsMap {attrName1:[value1, value2], attrName2: [value1, value2]}
+     */
+    correctHumanTaskWithName(caseId, taskName, paramsMap){  
+      return Process.findByCaseQueryLast(this.executionJwt, caseId, {
+          state: Process.STATE_COMPLETED,
+          resourceType: HumanTask.getResourceType(),
+          name: taskName
+        })       
+        .then(task=>{
+          return HumanTask.correct(this.executionJwt, this.addParamsToTask(task, paramsMap));
+        })      
+    }
+
+    /**
+     * @param caseId 
+     * @param taskName 
+     * @param paramsMap {attrName1:[value1, value2], attrName2: [value1, value2]}
+     */
+    correctDualTaskHumanPartWithName(caseId, taskName, paramsMap){  
+      return Process.findByCaseQueryLast(this.executionJwt, caseId, {
+          state: Process.STATE_COMPLETED,
+          resourceType: DualTask.getResourceType(),
+          name: taskName
+        })       
+        .then(task=>{
+          return DualTask.correctHumanPart(this.executionJwt, this.addParamsToTask(task, paramsMap));
         })      
     }
 

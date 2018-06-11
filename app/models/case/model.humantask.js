@@ -69,12 +69,12 @@ export default class HumanTask extends Model{
     return http.post(jwt, '/humantasks/'+humanTaskId+'/externalid/'+externalId);
   }
 
-  static findMeActive(jwt) {
-    return http.get(jwt, '/humantasks/me/active');
+  static findMeActive(jwt, params) {
+    return http.get(jwt, '/humantasks/me/active', params);
   }
 
-  static findMeActiveByWorkspaceId(jwt, workspaceId) {
-    return http.get(jwt, '/workspaces/'+workspaceId+'/humantasks/me/active');
+  static findMeActiveByWorkspaceId(jwt, workspaceId, params) {
+    return http.get(jwt, '/workspaces/'+workspaceId+'/humantasks/me/active', params);
   }
 
 

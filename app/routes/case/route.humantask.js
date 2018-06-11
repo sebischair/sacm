@@ -36,7 +36,7 @@ const router = express.Router();
  * }
  */
 router.get('/me/active', (req, res, next)=>{
-  HumanTask.findMeActive(req.jwt)
+  HumanTask.findMeActive(req.jwt, req.query)
     .then(hts=>{
         res.status(200).send(hts);
     })
