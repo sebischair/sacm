@@ -972,7 +972,8 @@
                 <EnumerationOption value="WEEKS" description="שבועות"/>
                 <EnumerationOption value="MONTHS" description="חודשים"/>
             </AttributeDefinition>
-            <AttributeDefinition id="freq" type="number.min(0)" defaultValues="[1]" multiplicity="exactlyOne" description="תדירות ביצוע המדד"/> 
+            <AttributeDefinition id="freq" type="number.min(0)" defaultValues="[1]" multiplicity="exactlyOne" description="תדירות ביצוע המדד" additionalDescription="1 ימים = כל יום תקפוץ למטופל תזכורת כל יום על פי הזמנים שיבחרו מטה .  2 ימים = אחת ליומיים תקפוץ למטופל תזכורת (יום כן / יום לא) על פי הזמנים שיבחרו מטה. 
+1 שבועות /חודשים = פעם בשבוע / בחודש תקפוץ למטופל תזכורת  (ביום בשבוע בו הוגדרה המשימה) על פי הזמנים שיבחרו מטה " /> 
             <AttributeDefinition id="frequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="יחידות עבור תדירות ביצוע המדד">     
                 <EnumerationOption value="DAYS" description="ימים"/>
                 <EnumerationOption value="WEEKS" description="שבועות"/>
@@ -1022,7 +1023,8 @@
                 <EnumerationOption value="VISIT_DOCTOR_AT_CLINIC" description="ביקור אצל הופא במרפאה"/>
                 <EnumerationOption value="OTHER" description="Other"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="freq" type="number" multiplicity="exactlyOne" description="תדירות לביצוע" additionalDescription="מספר חזרות ביום/שבוע/חודש"/> 
+            <AttributeDefinition id="freq" type="number" multiplicity="exactlyOne" description="תדירות לביצוע" additionalDescription="תדירות ביצוע המשימה כגון 1 ימים = כל יום תקפוץ למטופל תזכורת כל יום על פי הזמנים שיבחרו מטה .  2 ימים = אחת ליומיים תקפוץ למטופל תזכורת (יום כן / יום לא) על פי הזמנים שיבחרו מטה. 
+1 שבועות /חודשים = פעם בשבוע / בחודש תקפוץ למטופל תזכורת  (ביום בשבוע בו הוגדרה המשימה) על פי הזמנים שיבחרו מטה "/> 
             <AttributeDefinition id="freqqunit" type="enumeration" multiplicity="exactlyOne" description="יחידות תדירות">     
                 <EnumerationOption value="DAYS" description="ימים"/>
                 <EnumerationOption value="WEEKS" description="שבועות"/>
@@ -1032,7 +1034,7 @@
             <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="תאריך התחלה"/> 
             <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="תאריך סיום"/> 
             <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="זמנים לביצוע המשימה">     
-                <EnumerationOption value="REPETITIONSET" description="חזרה"/>
+                <EnumerationOption value="REPETITIONSET" description="בכל שעה ביום"/>
                 <EnumerationOption value="BREAKFAST" description="ארוחת בוקר"/>
                 <EnumerationOption value="LUNCH" description="ארוחת צהריים"/>
                 <EnumerationOption value="AFTERNOONSNACK" description="אחר הצהריים"/>
@@ -1134,7 +1136,7 @@
                 <SentryDefinition>
                     <precondition processDefinitionId="ICS2_CaseEvaluation"/>
                 </SentryDefinition>   
-                <HumanTaskDefinition id="ICS2_PatientsData" description="פרטים דמוגרפיים" ownerPath="ICS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PatientsData" entityAttachPath="ICS2_Evaluation.ICS2_PatientsData">                
+                <HumanTaskDefinition id="ICS2_PatientsData" description="פרטים דמוגרפיים" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PatientsData" entityAttachPath="ICS2_Evaluation.ICS2_PatientsData">                
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_PatientsData.Birthcountry" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_PatientsData.ImmigrationYear" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_PatientsData.KidsNum" isReadOnly="false" isMandatory="true"/>
@@ -1429,7 +1431,7 @@
                     <TaskParamDefinition part="AUTOMATED" path="ICS2_Workplan.ICS2_MonitoringPrescription.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>
 
-                <DualTaskDefinition id="ICS2_SimpleTask" externalId="SimpleTask" description="Simple Task" dynamicDescriptionPath="ICS2_Workplan.ICS2_SimpleTask.type" ownerPath="ICS2_CaseManager" dueDatePath="ICS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="ICS2_SimpleTask" entityAttachPath="ICS2_Workplan.ICS2_SimpleTask">
+                <DualTaskDefinition id="ICS2_SimpleTask" externalId="SimpleTask" description="משימות לביצוע" dynamicDescriptionPath="ICS2_Workplan.ICS2_SimpleTask.type" ownerPath="ICS2_CaseManager" dueDatePath="ICS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="ICS2_SimpleTask" entityAttachPath="ICS2_Workplan.ICS2_SimpleTask">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/simpletask" method="POST" failureMessage="Could not create prescription on Self-Management System!"></HttpHookDefinition>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/simpletask/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"></HttpHookDefinition>
                     <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_SimpleTask.type" isReadOnly="false" isMandatory="true"/>
