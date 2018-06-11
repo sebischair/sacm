@@ -1199,12 +1199,12 @@
             <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="תאריך התחלה"/> 
             <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="תאריך סיום"/> 
             <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="זמנים לביצוע המשימה">     
-                <EnumerationOption value="REPETITIONSET" description="בוקר"/>
-                <EnumerationOption value="BREAKFAST" description="צהריים"/>
-                <EnumerationOption value="LUNCH" description="אחר צהריים"/>
-                <EnumerationOption value="AFTERNOONSNACK" description="ערב"/>
-                <EnumerationOption value="DINNER" description="לפני השינה"/>
-                <EnumerationOption value="BEFORESLEEP" description="אין חשיבות לזמן"/>
+                <EnumerationOption value="REPETITIONSET" description="אין חשיבות לזמן"/>
+                <EnumerationOption value="BREAKFAST" description="בוקר"/>
+                <EnumerationOption value="LUNCH" description="צהריים"/>
+                <EnumerationOption value="AFTERNOONSNACK" description="אחר הצהריים"/>
+                <EnumerationOption value="DINNER" description="ערב"/>
+                <EnumerationOption value="BEFORESLEEP" description="לפני השינה"/>
             </AttributeDefinition>
             <AttributeDefinition id="repetitionseachday" type="number" description="מספר חזרות בכל פעם"/>
             <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="הערות" additionalDescription="הערות חשובות למטופל"/>   
@@ -1315,7 +1315,7 @@
                 <SentryDefinition>
                     <precondition processDefinitionId="ICS1_CaseEvaluation"/>
                 </SentryDefinition>   
-                <HumanTaskDefinition id="ICS1_PatientsData" description="פרטים דמוגרפיים" ownerPath="ICS1_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS1_PatientsData" entityAttachPath="ICS1_Evaluation.ICS1_PatientsData">                
+                <HumanTaskDefinition id="ICS1_PatientsData" description="פרטים דמוגרפיים" ownerPath="ICS1_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS1_PatientsData" entityAttachPath="ICS1_Evaluation.ICS1_PatientsData">                
                     <TaskParamDefinition path="ICS1_Evaluation.ICS1_PatientsData.Birthcountry" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS1_Evaluation.ICS1_PatientsData.ImmigrationYear" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS1_Evaluation.ICS1_PatientsData.KidsNum" isReadOnly="false" isMandatory="true"/>
@@ -1632,7 +1632,7 @@
                     <TaskParamDefinition part="AUTOMATED" path="ICS1_Workplan.ICS1_MonitoringPrescription.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>
 
-                <DualTaskDefinition id="ICS1_SimpleTask" externalId="SimpleTask" description="Simple Task" dynamicDescriptionPath="ICS1_Workplan.ICS1_SimpleTask.type" ownerPath="ICS1_CaseManager" dueDatePath="ICS1_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="ICS1_SimpleTask" entityAttachPath="ICS1_Workplan.ICS1_SimpleTask">
+                <DualTaskDefinition id="ICS1_SimpleTask" externalId="SimpleTask" description="משימות לביצוע" dynamicDescriptionPath="ICS1_Workplan.ICS1_SimpleTask.type" ownerPath="ICS1_CaseManager" dueDatePath="ICS1_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="ICS1_SimpleTask" entityAttachPath="ICS1_Workplan.ICS1_SimpleTask">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/simpletask" method="POST" failureMessage="Could not create prescription on Self-Management System!"></HttpHookDefinition>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/simpletask/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"></HttpHookDefinition>
                     <TaskParamDefinition part="HUMAN" path="ICS1_Workplan.ICS1_SimpleTask.type" isReadOnly="false" isMandatory="true"/>
