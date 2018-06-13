@@ -28,8 +28,8 @@
     <Workspace staticId="2c9480885d1737ef015d74deeac90000" id="Assuta">
 
         <EntityDefinition id="ICS1_CaseData" description="Case Data">
-            <AttributeDefinition id="ICS1_Patient" type="Link.Users(AssutaPatients)" description="Patient"/>
-            <AttributeDefinition id="ICS1_CaseManager" type="Link.Users(AssutaProfessionals)" description=" מנהל הטיפול"/> <!-- AssutaCaseManagers to AssutaProfessionals -->
+            <AttributeDefinition id="ICS1_Patient" type="Link.Users(AssutaPatients)" description="מטופל"/>
+            <AttributeDefinition id="ICS1_CaseManager" type="Link.Users(AssutaProfessionals)" description="אחראי מאסותא"/> <!-- AssutaCaseManagers to AssutaProfessionals -->
             <AttributeDefinition id="ICS1_EvaluationDueDate" type="date.after(TODAY)" description="תאריך סיום לביצוע הערכה"/>
             <AttributeDefinition id="ICS1_WorkplanDueDate" type="date.after(TODAY)" description="תאריך סיום לתוכנית הטיפול"/>
             <AttributeDefinition id="ICS1_CaseData1" type="string" multiplicity="maximalOne" description="אבחנה ראשית" />
@@ -39,8 +39,8 @@
               <EnumerationOption value="2" description="ארוע אקוטי"/>
             </AttributeDefinition>   
 
-            <AttributeDefinition id="ICS1_Clinician" type="Link.Users(AssutaClinicians)" description="Clinician"/>
-            <AttributeDefinition id="ICS1_Nurse" type="Link.Users(AssutaNurses)" description="אחות CM"/>
+			<AttributeDefinition id="ICS1_Nurse" type="Link.Users(AssutaNurses)" description="אחות מעקב מכבי"/>
+            <AttributeDefinition id="ICS1_Clinician" type="Link.Users(AssutaClinicians)" description="אחות מעקב מכבי נוספת"/>
             <AttributeDefinition id="ICS1_SocialCareer" type="Link.Users(AssutaSocialCareers)" description="Social carer"/>
             <AttributeDefinition id="ICS1_Professional" type="Link.Users(AssutaProfessionals)" description="Professional"/>
 
@@ -65,8 +65,6 @@
                 <EnumerationOption value="2" description="יומיים"/>
 				<EnumerationOption value="3" description="שלושה ימים"/>
 				<EnumerationOption value="4" description="4-6 ימים"/>
-				<EnumerationOption value="5" description="5 ימים"/>
-				<EnumerationOption value="6" description="6 ימים"/>
 				<EnumerationOption value="7" description="7-13 ימים"/>
 				<EnumerationOption value="8" description="מעל 14 ימים"/>
             </AttributeDefinition>        
@@ -140,6 +138,7 @@
                 <EnumerationOption value="0" description="לא"/>
                 <EnumerationOption value="1" description="כן"/>
             </AttributeDefinition> 		
+		 <DerivedAttributeDefinition id="LaceScore" expression="number(LACE1,0)+number(LACE2,0)+number(LACE3,0)+number(LACE4,0)+number(LACE5,0)+number(LACE6,0)+number(LACE7,0)+number(LACE8,0)+number(LACE9,0)+number(LACE10,0)+number(LACE11,0)+number(LACE12,0)+number(LACE13,0)+number(LACE14,0)+number(LACE15,0)+number(LACE16,0)+number(LACE17,0)+number(LACE18,0)" description="תוצאה סופית "  />
 		
 		</EntityDefinition> 
 		
@@ -1128,8 +1127,7 @@
         
         <EntityDefinition id="ICS1_MonitoringPrescription" description="Patient Monitory">
             <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="סוג המדידה" additionalDescription="בחר מדד">
-                <EnumerationOption value="DIASTOLICBLOODPRESSURE" description="לחץ דם דיאסטולי"/>
-                <EnumerationOption value="SYSTOLICBLOODPRESSURE" description="לחץ דם סיסטולי"/>
+                <EnumerationOption value="BLOODPRESSURE" description="לחץ דם"/>
             </AttributeDefinition>   
             <AttributeDefinition id="alertmin" type="number.min(0)" multiplicity="exactlyOne" description="ערך מינימלי מותר" additionalDescription="ערך מינמלי חייב להיות גדול מאפס"/>       
             <AttributeDefinition id="alertmax" type="number.min(0)" multiplicity="exactlyOne" description="ערך מקסימלי מותר" additionalDescription="ערך מקסימלי עבור מדד זה"/>      
@@ -1139,7 +1137,7 @@
                 <EnumerationOption value="WEEKS" description="שבועות"/>
                 <EnumerationOption value="MONTHS" description="חודשים"/>
             </AttributeDefinition>
-            <AttributeDefinition id="freq" type="number.min(0)" defaultValues="[1]" multiplicity="exactlyOne" description="תדירות ביצוע המדד"/> 
+            <AttributeDefinition id="freq" type="number.min(0)" defaultValues="[1]" multiplicity="exactlyOne" description="תדירות ביצוע המדד" additionalDescription="1 ימים = כל יום תקפוץ למטופל תזכורת על פי הזמנים שיבחרו מטה .  2 ימים = אחת ליומיים תקפוץ למטופל תזכורת (יום כן / יום לא) על פי הזמנים שיבחרו מטה.  1 שבועות /חודשים = פעם בשבוע / בחודש תקפוץ למטופל תזכורת  (ביום בשבוע בו הוגדרה המשימה) על פי הזמנים שיבחרו מטה"/> 
             <AttributeDefinition id="frequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="יחידות עבור תדירות ביצוע המדד">     
                 <EnumerationOption value="DAYS" description="ימים"/>
                 <EnumerationOption value="WEEKS" description="שבועות"/>
@@ -1189,7 +1187,7 @@
                 <EnumerationOption value="VISIT_DOCTOR_AT_CLINIC" description="ביקור אצל הופא במרפאה"/>
                 <EnumerationOption value="OTHER" description="Other"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="freq" type="number" multiplicity="exactlyOne" description="תדירות לביצוע" additionalDescription="מספר חזרות ביום/שבוע/חודש"/> 
+            <AttributeDefinition id="freq" type="number" multiplicity="exactlyOne" description="תדירות לביצוע" additionalDescription="1 ימים = כל יום תקפוץ למטופל תזכורת על פי הזמנים שיבחרו מטה .  2 ימים = אחת ליומיים תקפוץ למטופל תזכורת (יום כן / יום לא) על פי הזמנים שיבחרו מטה.  1 שבועות /חודשים = פעם בשבוע / בחודש תקפוץ למטופל תזכורת  (ביום בשבוע בו הוגדרה המשימה) על פי הזמנים שיבחרו מטה"/> 
             <AttributeDefinition id="freqqunit" type="enumeration" multiplicity="exactlyOne" description="יחידות תדירות">     
                 <EnumerationOption value="DAYS" description="ימים"/>
                 <EnumerationOption value="WEEKS" description="שבועות"/>
@@ -1246,7 +1244,7 @@
 
 
             <StageDefinition id="ICS1_CaseIdentification" description="זיהוי המטופל" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS1_Identification" entityAttachPath="ICS1_Identification">
-                <HumanTaskDefinition id="ICS1_SelectPatient" externalId="SelectPatient" description="בחירת מטופל" ownerPath="ICS1_CaseManager" isMandatory="true" repeatable="ONCE"> 
+                <HumanTaskDefinition id="ICS1_SelectPatient" externalId="SelectPatient" description="בחירת מטופל" ownerPath="ICS1_Nurse" isMandatory="true" repeatable="ONCE"> 
                     <HttpHookDefinition on="COMPLETE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/case/patient/inclusion" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition path="ICS1_Patient" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS1_CaseManager" isReadOnly="false" isMandatory="true"/>
@@ -1258,7 +1256,7 @@
                     <TaskParamDefinition path="ICS1_CaseData2" isReadOnly="false" isMandatory="true"/>          
                 </HumanTaskDefinition>
 
-				 <HumanTaskDefinition id="ICS1_Lace" description="LACE" ownerPath="ICS1_CaseManager" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS1_Lace" entityAttachPath="ICS1_Identification.ICS1_Lace">     
+				 <HumanTaskDefinition id="ICS1_Lace" description="LACE" ownerPath="ICS1_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS1_Lace" entityAttachPath="ICS1_Identification.ICS1_Lace">     
                     <TaskParamDefinition path="ICS1_Identification.ICS1_Lace.LACE1" isReadOnly="false" isMandatory="true"/>
 				    <TaskParamDefinition path="ICS1_Identification.ICS1_Lace.LACE2" isReadOnly="false" isMandatory="true"/>
 				    <TaskParamDefinition path="ICS1_Identification.ICS1_Lace.LACE3" isReadOnly="false" isMandatory="true"/>
@@ -1277,9 +1275,10 @@
 					<TaskParamDefinition path="ICS1_Identification.ICS1_Lace.LACE16" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="ICS1_Identification.ICS1_Lace.LACE17" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="ICS1_Identification.ICS1_Lace.LACE18" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="ICS1_Identification.ICS1_Lace.LaceScore" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition> 
 				
-                <HumanTaskDefinition id="ICS1_InclusionCriteria" description="קריטריוני הכללה" ownerPath="ICS1_CaseManager" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS1_InclusionCriteria" entityAttachPath="ICS1_Identification.ICS1_InclusionCriteria">     
+                <HumanTaskDefinition id="ICS1_InclusionCriteria" description="קריטריוני הכללה" ownerPath="ICS1_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS1_InclusionCriteria" entityAttachPath="ICS1_Identification.ICS1_InclusionCriteria">     
                     <TaskParamDefinition path="ICS1_Identification.ICS1_InclusionCriteria.BasicAge" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS1_Identification.ICS1_InclusionCriteria.BasicResidantual" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS1_Identification.ICS1_InclusionCriteria.BasicLace" isReadOnly="false" isMandatory="true"/>
@@ -1290,7 +1289,7 @@
                     <TaskParamDefinition path="ICS1_Identification.ICS1_InclusionCriteria.BasicLanguegue" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>   
 
-                <HumanTaskDefinition id="ICS1_ThechTest" description="יכולות טכנולוגיות" ownerPath="ICS1_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS1_ThechTest" entityAttachPath="ICS1_Identification.ICS1_ThechTest">                
+                <HumanTaskDefinition id="ICS1_ThechTest" description="יכולות טכנולוגיות" ownerPath="ICS1_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS1_ThechTest" entityAttachPath="ICS1_Identification.ICS1_ThechTest">                
                     <SentryDefinition>
                         <precondition processDefinitionId="ICS1_InclusionCriteria"/>
                     </SentryDefinition>
@@ -1299,7 +1298,7 @@
                     <TaskParamDefinition path="ICS1_Identification.ICS1_ThechTest.TechInternet" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="ICS1_PatientsConsent" description="הסכמת המטופל" ownerPath="ICS1_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS1_PatientsConsent" entityAttachPath="ICS1_Identification.ICS1_PatientsConsent">                
+                <HumanTaskDefinition id="ICS1_PatientsConsent" description="הסכמת המטופל" ownerPath="ICS1_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS1_PatientsConsent" entityAttachPath="ICS1_Identification.ICS1_PatientsConsent">                
                     <SentryDefinition>
                         <precondition processDefinitionId="ICS1_InclusionCriteria"/>
                     </SentryDefinition>
@@ -1543,7 +1542,7 @@
                     <TaskParamDefinition path="ICS1_Evaluation.ICS1_DischargePlan.HDPlan1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS1_Evaluation.ICS1_DischargePlan.HDPlan2" isReadOnly="false" isMandatory="false"/>
                     <TaskParamDefinition path="ICS1_Evaluation.ICS1_DischargePlan.HDPlan3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="ICS1_Evaluation.ICS1_DischargePlan.HDPlan4" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="ICS1_Evaluation.ICS1_DischargePlan.HDPlan4" isReadOnly="false" isMandatory="false"/>
 					<TaskParamDefinition path="ICS1_Evaluation.ICS1_DischargePlan.HDPlan5" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="ICS1_Evaluation.ICS1_DischargePlan.HDPlan6" isReadOnly="false" isMandatory="false"/>
 					<TaskParamDefinition path="ICS1_Evaluation.ICS1_DischargePlan.HDPlan7" isReadOnly="false" isMandatory="true"/>
