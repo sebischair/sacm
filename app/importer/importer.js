@@ -785,6 +785,12 @@ module.exports = class Importer {
               newEntityDefinition: newEntityDefinitionIdPersisted,
               newEntityAttachPath: cd.$.newEntityAttachPath,
               notesDefaultValue: cd.$.notesDefaultValue,
+              onAvailableHTTPHookURL: cd.$.onAvailableHTTPHookURL,
+              onEnableHttpHTTPHookURL: cd.$.onEnableHttpHTTPHookURL,
+              onActivateHTTPHookURL: cd.$.onActivateHTTPHookURL,
+              onCompleteHTTPHookURL: cd.$.onCompleteHTTPHookURL,
+              onTerminateHTTPHookURL: cd.$.onTerminateHTTPHookURL,
+              onDeleteHTTPHookURL: cd.$.onDeleteHTTPHookURL,              
               version: this.version
             };
             return CaseDefinition.create(this.jwt, data)

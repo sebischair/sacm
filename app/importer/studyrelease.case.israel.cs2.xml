@@ -8,6 +8,8 @@
     <Group staticId="6c6865a9922811e7bd0c0242ac120002" id="AssutaLabTechnicians"/>
     <Group staticId="6c6865ad922811e7bd0c0242ac120002" id="AssutaLocalPulmonologists"/>
     <Group staticId="6c686569922811e7bd0c0242ac120002" id="AssutaNurses"/>
+	 <Group staticId="6c686569922811e7bd0c0242ac120002" id="AssutaNurses1"/>
+	  <Group staticId="6c686569922811e7bd0c0242ac120002" id="AssutaNurses2"/>
     <Group staticId="6c686592922811e7bd0c0242ac120002" id="AssutaNutritionists"/>
     <Group staticId="6c686578922811e7bd0c0242ac120002" id="AssutaPhysicians"/>
     <Group staticId="6c686589922811e7bd0c0242ac120002" id="AssutaPhysiotherapists"/>
@@ -29,8 +31,8 @@
     <Workspace staticId="2c9480885d1737ef015d74deeac90000" id="Assuta">
 
         <EntityDefinition id="ICS2_CaseData" description="Case Data">
-            <AttributeDefinition id="ICS2_Patient" type="Link.Users(AssutaPatients)" multiplicity="exactlyOne" description="Patient"/>
-            <AttributeDefinition id="ICS2_CaseManager" type="Link.Users(AssutaProfessionals)" multiplicity="exactlyOne" description="מנהל הטיפול"/> <!-- AssutaCaseManagers to AssutaProfessionals -->
+            <AttributeDefinition id="ICS2_Patient" type="Link.Users(AssutaPatients)" multiplicity="exactlyOne" description="מטופל"/>
+            <AttributeDefinition id="ICS2_CaseManager" type="Link.Users(AssutaProfessionals)" multiplicity="exactlyOne" description="אחראי מאסותא"/> <!-- AssutaCaseManagers to AssutaProfessionals -->
             <AttributeDefinition id="ICS2_EvaluationDueDate" type="date.after(TODAY)" multiplicity="exactlyOne" description="תאריך סיום לביצוע הערכה"/>
             <AttributeDefinition id="ICS2_WorkplanDueDate" type="date.after(TODAY)" multiplicity="exactlyOne" description="תאריך סיום לתוכנית הטיפול"/>
 			<AttributeDefinition id="ICS2_CaseData1" type="string" multiplicity="exactlyOne" description="אבחנה ראשית" />
@@ -40,8 +42,10 @@
 			  <EnumerationOption value="2" description="ארוע אקוטי"/>
             </AttributeDefinition>   
 
-            <AttributeDefinition id="ICS2_Clinician" type="Link.Users(AssutaClinicians)" multiplicity="exactlyOne" description="Clinician"/>
-            <AttributeDefinition id="ICS2_Nurse" type="Link.Users(AssutaNurses)" multiplicity="exactlyOne" description="אחות CM"/>
+            <AttributeDefinition id="ICS2_Clinician" type="Link.Users(AssutaClinicians)" multiplicity="exactlyOne" description="פיזיותרפיסט"/>
+            <AttributeDefinition id="ICS2_Nurse" type="Link.Users(AssutaNurses)" multiplicity="exactlyOne" description="אחות מאסותא"/>
+			<AttributeDefinition id="ICS2_Nurse1" type="Link.Users(AssutaNurses1)" multiplicity="exactlyOne" description="אחות מעקב מכבי"/>
+			<AttributeDefinition id="ICS2_Nurse2" type="Link.Users(AssutaNurses2)" multiplicity="exactlyOne" description="אחות מעקב מכבי נוספת"/>
             <AttributeDefinition id="ICS2_SocialCareer" type="Link.Users(AssutaSocialCareers)" multiplicity="exactlyOne" description="Social carer"/>
             <AttributeDefinition id="ICS2_Professional" type="Link.Users(AssutaProfessionals)" multiplicity="exactlyOne" description="Professional"/>
 
@@ -1095,6 +1099,8 @@
                     <TaskParamDefinition path="ICS2_CaseManager" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Clinician" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Nurse" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="ICS2_Nurse1" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="ICS2_Nurse2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_EvaluationDueDate" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_WorkplanDueDate" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_CaseData1" isReadOnly="false" isMandatory="true"/>
@@ -1111,7 +1117,7 @@
                     <TaskParamDefinition path="ICS2_Identification.ICS2_InclusionCriteria.BasicLanguegue" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>   
 
-                <HumanTaskDefinition id="ICS2_ThechTest" description="יכולות טכנולוגיות" ownerPath="ICS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_ThechTest" entityAttachPath="ICS2_Identification.ICS2_ThechTest">                
+                <HumanTaskDefinition id="ICS2_ThechTest" description="יכולות טכנולוגיות" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_ThechTest" entityAttachPath="ICS2_Identification.ICS2_ThechTest">                
                     <SentryDefinition>
                         <precondition processDefinitionId="ICS2_InclusionCriteria"/>
                     </SentryDefinition>
@@ -1120,7 +1126,7 @@
                     <TaskParamDefinition path="ICS2_Identification.ICS2_ThechTest.TechInternet" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="ICS2_PatientsConsent" description="הסכמת המטופל" ownerPath="ICS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PatientsConsent" entityAttachPath="ICS2_Identification.ICS2_PatientsConsent">                
+                <HumanTaskDefinition id="ICS2_PatientsConsent" description="הסכמת המטופל" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PatientsConsent" entityAttachPath="ICS2_Identification.ICS2_PatientsConsent">                
                     <SentryDefinition>
                         <precondition processDefinitionId="ICS2_InclusionCriteria"/>
                     </SentryDefinition>                    
@@ -1359,21 +1365,21 @@
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_MUST.MustScore" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
       
-                <HumanTaskDefinition id="ICS2_PhysiotherapistEvaluationDataBeforeTest" description="נתונים התחלתיים" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluationDataBeforeTest" entityAttachPath="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest">                
+                <HumanTaskDefinition id="ICS2_PhysiotherapistEvaluationDataBeforeTest" description="נתונים התחלתיים" ownerPath="ICS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluationDataBeforeTest" entityAttachPath="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest">                
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.PulseRest" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.Age" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.MaxPulse" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationDataBeforeTest.PhysioRemarks" isReadOnly="false" isMandatory="false"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="ICS2_PhysiotherapistEvaluationTimedUp" description="Time up and go" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluationTimedUp" entityAttachPath="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationTimedUp">                
+                <HumanTaskDefinition id="ICS2_PhysiotherapistEvaluationTimedUp" description="Time up and go" ownerPath="ICS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluationTimedUp" entityAttachPath="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationTimedUp">                
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUG0" isReadOnly="true" isMandatory="false"/>
 					<TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUG1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUG2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluationTimedUp.TUGRemarks" isReadOnly="false" isMandatory="false"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="ICS2_PhysiotherapistEvaluation6MWT" description="6MWT" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluation6MWT" entityAttachPath="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT">
+                <HumanTaskDefinition id="ICS2_PhysiotherapistEvaluation6MWT" description="6MWT" ownerPath="ICS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluation6MWT" entityAttachPath="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT">
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT0" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWT2" isReadOnly="false" isMandatory="true"/>
@@ -1384,7 +1390,7 @@
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation6MWT.6MWTRemarks" isReadOnly="false" isMandatory="false"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="ICS2_PhysiotherapistEvaluation30SSTS" description="30s STS" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluation30SSTS" entityAttachPath="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS"> 
+                <HumanTaskDefinition id="ICS2_PhysiotherapistEvaluation30SSTS" description="30s STS" ownerPath="ICS2_Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_PhysiotherapistEvaluation30SSTS" entityAttachPath="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS"> 
 				    <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS0" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_PhysiotherapistEvaluation30SSTS.30sSTS2" isReadOnly="false" isMandatory="true"/>
