@@ -58,7 +58,7 @@
 		    <AttributeDefinition id="LCS1_Lace" type="Link.EntityDefinition.LCS1_Lace" multiplicity="any" description="LACE"/>
 		    <AttributeDefinition id="LCS1_GlobalDeteriorationScale" type="Link.EntityDefinition.LCS1_GlobalDeteriorationScale" multiplicity="any" description="GDS"/>			
         </EntityDefinition>			
-				
+					
 		<EntityDefinition id="LCS1_TechnologicalTest" >
 			<AttributeDefinition id="tech1" type="enumeration" multiplicity="exactlyOne" description="Vosté o el seu cuidador tenen connexió a Internet?">
 				<EnumerationOption value="0" description="No"/>
@@ -1178,8 +1178,8 @@
             <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="Data de fi"/> 
             <AttributeDefinition id="timeslot" type="enumeration" defaultValues="['BREAKFAST','ANYTIMEDURINGDAY']" multiplicity="atLeastOne" description="Franges per prendre les mesures" additionalDescription="Es poden seleccionar múltiples franges, cal seleccionar-ne almenys una">     
                 <EnumerationOption value="BREAKFAST" description="Abans d'esmorzar"/>
-                <EnumerationOption value="ANYTIMEDURINGDAY" description="En qualsevol moment del dia, si es troba pitjor (sota símptomes). La presa ha de ser en respòs" additionalDescription="Seleccioneu aquesta opció quan el temps del dia no importa"/>
-				<!--<EnumerationOption value="OPTIONAL" description="En qualsevol moment del dia, si es troba pitjor (sota símptomes). La presa ha de ser en respòs"/>-->
+                <!--<EnumerationOption value="ANYTIMEDURINGDAY" description="En qualsevol moment del dia, si es troba pitjor (sota símptomes). La presa ha de ser en respòs" additionalDescription="Seleccioneu aquesta opció quan el temps del dia no importa"/>-->
+				<EnumerationOption value="OPTIONAL" description="En qualsevol moment del dia, si es troba pitjor (sota símptomes). La presa ha de ser en respòs"/>
             </AttributeDefinition>
             <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comentaris" additionalDescription="Proporcioneu suggeriments addicionals pel pacient"/>   
             <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Mesures"/>                      
@@ -1206,8 +1206,8 @@
             <AttributeDefinition id="enddate" type="date.after(tartdate)" multiplicity="exactlyOne" description="Data de fi"/> 
             <AttributeDefinition id="timeslot" type="enumeration" defaultValues="['BREAKFAST', 'ANYTIMEDURINGDAY']" multiplicity="atLeastOne" description="Franges per prendre les mesures" additionalDescription="Es poden seleccionar múltiples franges, cal seleccionar-ne almenys una">     
                 <EnumerationOption value="BREAKFAST" description="Abans d'esmorzar"/>
-                <EnumerationOption value="ANYTIMEDURINGDAY" description="En qualsevol moment del dia, si es troba pitjor (sota símptomes). La presa ha de ser en respòs" additionalDescription="Seleccioneu aquesta opció quan el temps del dia no importa"/>
-				<!--<EnumerationOption value="OPTIONAL" description="En qualsevol moment del dia, si es troba pitjor (sota símptomes). La presa ha de ser en respòs"/>-->
+                <!--<EnumerationOption value="ANYTIMEDURINGDAY" description="En qualsevol moment del dia, si es troba pitjor (sota símptomes). La presa ha de ser en respòs" additionalDescription="Seleccioneu aquesta opció quan el temps del dia no importa"/>-->
+				<EnumerationOption value="OPTIONAL" description="En qualsevol moment del dia, si es troba pitjor (sota símptomes). La presa ha de ser en respòs"/>
             </AttributeDefinition>
             <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comentaris" additionalDescription="Proporcioneu suggeriments addicionals pel pacient"/>   
             <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Mesures"/>                      
@@ -1239,10 +1239,9 @@
             <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Data d'inici"/> 
             <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="Data de fi"/> 
             <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="Franges per prendre les mesures" additionalDescription="Es poden seleccionar múltiples franges, cal seleccionar-ne almenys una">     
-                <EnumerationOption value="BREAKFAST" description="Esmorzar"/>
-				
-				<EnumerationOption value="ANYTIMEDURINGDAY" description="En qualsevol moment del dia, si es troba pitjor en respòs (sota símptomes)" additionalDescription="Seleccioneu aquesta opció quan el temps del dia no importa"/>
-				<!--<EnumerationOption value="OPTIONAL" description="Sota símptomes" additionalDescription="Seleccioneu aquesta opció si es troba pitjor en respòs"/>-->
+                <EnumerationOption value="BREAKFAST" description="Esmorzar"/>			
+				<!--<EnumerationOption value="ANYTIMEDURINGDAY" description="En qualsevol moment del dia, si es troba pitjor en respòs (sota símptomes)" additionalDescription="Seleccioneu aquesta opció quan el temps del dia no importa"/>-->
+				<EnumerationOption value="OPTIONAL" description="Sota símptomes" additionalDescription="Seleccioneu aquesta opció si es troba pitjor en respòs"/>
             </AttributeDefinition>
             <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comentaris" additionalDescription="Proporcioneu suggeriments addicionals pel pacient"/>   
             <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Mesures"/>                      
@@ -1845,4 +1844,29 @@
 	
 	</Workspace>
 
+	<Execution> 
+		<Action id="CompleteHumanTask" processId="LCS1_SelectPatient">  
+			<TaskParam path="LCS1_SelectPatient.Patient" userValue="davidsonj"/> 
+			<TaskParam path="LCS1_SelectPatient.Clinician" userValue="castrot"/> 
+			<TaskParam path="LCS1_SelectPatient.Nurse" userValue="noahs"/>   
+			<TaskParam path="LCS1_SelectPatient.CaseManager" userValue="werners"/>   
+			<TaskParam path="LCS1_SelectPatient.SocialCareer" userValue="kuhnl"/>    
+		</Action>  
+		
+		<Action id="CompleteHumanTask" processId="LCS1_TechnologicalTest" breakpoint="true">  
+			<TaskParam path="LCS1_Identification.LCS1_TechnologicalTest.tech1" values="['0']"/> 
+			<TaskParam path="LCS1_Identification.LCS1_TechnologicalTest.tech2" values="['1']"/> 
+			<TaskParam path="LCS1_Identification.LCS1_TechnologicalTest.tech3" values="['1']"/> 
+			<TaskParam path="LCS1_Identification.LCS1_TechnologicalTest.tech4" values="['2']"/> 
+		</Action>
+	
+		<Action id="CompleteHumanTask" processId="LCS1_PatientsConsent" breakpoint="true">  
+			<TaskParam path="LCS1_Identification.LCS1_PatientsConsent.pConsent1" values="['1']"/> 
+		</Action>
+
+
+	
+	
+	</Execution> 		
+	
 </SACMDefinition>
