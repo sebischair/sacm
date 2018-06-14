@@ -52,6 +52,7 @@ module.exports = class Importer {
       this.stageDefinitionMap = new Map(); //<xmlId, sociocortexId>
       this.humanTaskDefinitionMap = new Map(); //<xmlId, sociocortexId>
       this.automatedTaskDefinitionMap = new Map(); //<xmlId, sociocortexId>
+      this.dualTaskDefinitionMap = new Map(); //<xmlId, sociocortexId>
     }
 
     getWorkspaceIdByXMLId(workspaceXMLId){
@@ -190,6 +191,10 @@ module.exports = class Importer {
           }
           if(this.automatedTaskDefinitionMap.has(processDefinitionXMLId)){
             processDefinitionId = this.automatedTaskDefinitionMap.get(processDefinitionXMLId);
+            count++;
+          }
+          if(this.dualTaskDefinitionMap.has(processDefinitionXMLId)){
+            processDefinitionId = this.dualTaskDefinitionMap.get(processDefinitionXMLId);
             count++;
           }
           if(count == 1)
@@ -572,6 +577,7 @@ module.exports = class Importer {
             this.stageDefinitionMap = new Map(); 
             this.humanTaskDefinitionMap = new Map(); 
             this.automatedTaskDefinitionMap = new Map(); 
+            this.dualTaskDefinitionMap = new Map();
 
             return this.createWorkspaceElements(w);
           });
@@ -957,6 +963,8 @@ module.exports = class Importer {
               this.humanTaskDefinitionMap.set(td.$.id, persistedTaskDef.id);
             if(isAutomatedTaskDefinition)
               this.automatedTaskDefinitionMap.set(td.$.id, persistedTaskDef.id);  
+            if(isDualTaskDefinition)
+              this.dualTaskDefinitionMap.set(td.$.id, persistedTaskDef.id);  
             taskDefinitionId = persistedTaskDef.id;
             return this.createTaskParamDefinitions(persistedTaskDef.id, td.TaskParamDefinition);
           })
@@ -1166,6 +1174,9 @@ module.exports = class Importer {
         })
       })
       .then(()=>{
+        this.printHumanTaskDefinitionExecutionCoverage(actions);
+        this.printAutomatedTaskDefinitionExecutionCoverage(actions);
+        this.printDualTaskDefinitionExecutionCoverage(actions);
         return Case.findTreeById(this.executionJwt, caseId);
       })
     }
@@ -1176,6 +1187,51 @@ module.exports = class Importer {
       }else{
         return action.$.id+'('+action.$.ms+')';
       }
+    }
+
+    getProcessDefinitionXMLIds(actions){
+      let XMLIds = new Set();
+      actions.forEach(action=>{
+        if(action.$.id != 'Delay')
+          XMLIds.add(action.$.processId);
+      });
+      return XMLIds;
+    }
+
+    printHumanTaskDefinitionExecutionCoverage(actions){
+      let XMLIds = this.getProcessDefinitionXMLIds(actions);
+      let humanTaskDefinitionSet = this.humanTaskDefinitionMap.keys();
+      let nrCovered = 0;
+      let nrTotal = this.humanTaskDefinitionMap.size;
+      for(let XMLId of humanTaskDefinitionSet){
+        if(XMLIds.has(XMLId))
+          nrCovered++;
+      }
+      console.log("The execution definition covers "+nrCovered+" / "+nrTotal+" HumanTaskDefinitions!");
+    }
+
+    printAutomatedTaskDefinitionExecutionCoverage(actions){
+      let XMLIds = this.getProcessDefinitionXMLIds(actions);
+      let automatedTaskDefinitionSet = this.automatedTaskDefinitionMap.keys();
+      let nrCovered = 0;
+      let nrTotal = this.automatedTaskDefinitionMap.size;
+      for(let XMLId of automatedTaskDefinitionSet){
+        if(XMLIds.has(XMLId))
+          nrCovered++;
+      }
+      console.log("The execution definition covers "+nrCovered+" / "+nrTotal+" AutomatedTaskDefinitions!");
+    }
+
+    printDualTaskDefinitionExecutionCoverage(actions){
+      let XMLIds = this.getProcessDefinitionXMLIds(actions);
+      let dualTaskDefinitionSet = this.dualTaskDefinitionMap.keys();
+      let nrCovered = 0;
+      let nrTotal = this.dualTaskDefinitionMap.size;
+      for(let XMLId of dualTaskDefinitionSet){
+        if(XMLIds.has(XMLId))
+          nrCovered++;
+      }
+      console.log("The execution definition covers "+nrCovered+" / "+nrTotal+" DualTaskDefinitions!");
     }
 
     getParms(action){
