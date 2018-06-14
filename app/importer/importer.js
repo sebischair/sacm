@@ -1166,6 +1166,8 @@ module.exports = class Importer {
         })
       })
       .then(()=>{
+        this.printHumanTaskDefinitionExecutionCoverage(actions);
+        this.printAutomatedTaskDefinitionExecutionCoverage(actions);
         return Case.findTreeById(this.executionJwt, caseId);
       })
     }
@@ -1176,6 +1178,39 @@ module.exports = class Importer {
       }else{
         return action.$.id+'('+action.$.ms+')';
       }
+    }
+
+    getProcessDefinitionXMLIds(actions){
+      let XMLIds = new Set();
+      actions.forEach(action=>{
+        if(action.$.id != 'Delay')
+          XMLIds.add(action.$.processId);
+      });
+      return XMLIds;
+    }
+
+    printHumanTaskDefinitionExecutionCoverage(actions){
+      let XMLIds = this.getProcessDefinitionXMLIds(actions);
+      let humanTaskDefinitionSet = this.humanTaskDefinitionMap.keys();
+      let nrCovered = 0;
+      let nrTotal = this.humanTaskDefinitionMap.size;
+      for(let XMLId of humanTaskDefinitionSet){
+        if(XMLIds.has(XMLId))
+          nrCovered++;
+      }
+      console.log("The execution definition covers "+nrCovered+" / "+nrTotal+" HumanTaskDefinitions!");
+    }
+
+    printAutomatedTaskDefinitionExecutionCoverage(actions){
+      let XMLIds = this.getProcessDefinitionXMLIds(actions);
+      let automatedTaskDefinitionSet = this.automatedTaskDefinitionMap.keys();
+      let nrCovered = 0;
+      let nrTotal = this.automatedTaskDefinitionMap.size;
+      for(let XMLId of automatedTaskDefinitionSet){
+        if(XMLIds.has(XMLId))
+          nrCovered++;
+      }
+      console.log("The execution definition covers "+nrCovered+" / "+nrTotal+" AutomatedTaskDefinitions!");
     }
 
     getParms(action){
