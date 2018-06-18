@@ -95,7 +95,7 @@
         <!-- Evaluation Entity Definitions -->
         <EntityDefinition id="GCS1_Evaluation" description="Evaluation">
             <AttributeDefinition id="GCS1_Charlson" type="Link.EntityDefinition.GCS1_Charlson" description="Charlson"/>   
-            <AttributeDefinition id="GCS1_GFI" type="Link.EntityDefinition.GCS1_GFI" description="Groningen Frailty Indicator (GFI)"/>   
+            <AttributeDefinition id="CCQ" type="Link.EntityDefinition.CCQ" description="CCQ"/>   
             <AttributeDefinition id="GCS1_ADL" type="Link.EntityDefinition.GCS1_ADL" description="Activities of Daily Living (ADL)"/>   
             <AttributeDefinition id="GCS1_iADL" type="Link.EntityDefinition.GCS1_iADL" description="Instrumental Activities of Daily Living (iADL)"/>   
             <AttributeDefinition id="GCS1_NRS" type="Link.EntityDefinition.GCS1_NRS" description="Nutritional Risk Screening (NRS)"/>   
@@ -191,83 +191,102 @@
             <DerivedAttributeDefinition id="ch22" expression="number(ch1,0) + number(ch2,0) + number(ch3,0) + number(ch4,0) + number(ch5,0) + number(ch6,0) + number(ch7,0) + number(ch8,0) + number(ch9,0) + number(ch10,0) + number(ch11,0)*2 + number(ch12,0)*2 + number(ch13,0)*2 + number(ch14,0)*2 + number(ch15,0)*2 + number(ch16,0)*2 + number(ch17,0)*3 + number(ch18,0)*6 + number(ch19,0)*6" description="Charlson Comorbidity Index (unadjusted)" uiReference="colors(1<=green<=2<orange<=4<red<100)"/>     
         </EntityDefinition>
     
-        <EntityDefinition id="GCS1_GFI" description="Groningen Frailty Indicator (GFI)">
-            <AttributeDefinition id="gfi1" type="enumeration" multiplicity="exactlyOne" description="Kan patiënt zonder enige hulp van iemand anders zelfstandig deze taak uitvoeren? - Boodschappen doen?">
-                <EnumerationOption value="1" description="No"/>
-                <EnumerationOption value="0" description="Yes"/>
+        <EntityDefinition id="CCQ" description="COPD health status">
+            <AttributeDefinition id="CCQ1" type="enumeration" multiplicity="exactlyOne" description="Hoe vaak voelde u zich in de afgelopen week kortademig in rust?">
+                <EnumerationOption value="0" description="Nooit|"/>
+                <EnumerationOption value="1" description="Zelden|"/>
+				<EnumerationOption value="2" description="Af en toe|"/>
+				<EnumerationOption value="3" description="Regelmatig|"/>
+				<EnumerationOption value="4" description="Heel vaak|"/>
+				<EnumerationOption value="5" description="Meestal|"/>
+				<EnumerationOption value="6" description="Altijd|"/>			
             </AttributeDefinition> 
-            <AttributeDefinition id="gfi2" type="enumeration" multiplicity="exactlyOne" description="Kan patiënt zonder enige hulp van iemand anders zelfstandig deze taak uitvoeren? Buitenshuis rondlopen?">
-                <EnumerationOption value="1" description="No"/>
-                <EnumerationOption value="0" description="Yes"/>
+            <AttributeDefinition id="CCQ2" type="enumeration" multiplicity="exactlyOne" description="Hoe vaak voelde u zich in de afgelopen week kortademig gedurende lichamelijke inspanning?">
+                <EnumerationOption value="0" description="Nooit|"/>
+                <EnumerationOption value="1" description="Zelden|"/>
+				<EnumerationOption value="2" description="Af en toe|"/>
+				<EnumerationOption value="3" description="Regelmatig|"/>
+				<EnumerationOption value="4" description="Heel vaak|"/>
+				<EnumerationOption value="5" description="Meestal|"/>
+				<EnumerationOption value="6" description="Altijd|"/>
             </AttributeDefinition>
-            <AttributeDefinition id="gfi3" type="enumeration" multiplicity="exactlyOne" description="Kan patiënt zonder enige hulp van iemand anders zelfstandig deze taak uitvoeren? - Aan - en uitkleden?">
-                <EnumerationOption value="1" description="No"/>
-                <EnumerationOption value="0" description="Yes"/>
+            <AttributeDefinition id="CCQ3" type="enumeration" multiplicity="exactlyOne" description="Hoe vaak voelde u zich in de afgelopen week angstig/bezorgd voor de volgende benauwdheidsaanval?">
+                <EnumerationOption value="0" description="Nooit|"/>
+                <EnumerationOption value="1" description="Zelden|"/>
+				<EnumerationOption value="2" description="Af en toe|"/>
+				<EnumerationOption value="3" description="Regelmatig|"/>
+				<EnumerationOption value="4" description="Heel vaak|"/>
+				<EnumerationOption value="5" description="Meestal|"/>
+				<EnumerationOption value="6" description="Altijd|"/>
             </AttributeDefinition>
-            <AttributeDefinition id="gfi4" type="enumeration" multiplicity="exactlyOne" description="Kan patiënt zonder enige hulp van iemand anders zelfstandig deze taak uitvoeren? Toiletbezoek?">
-                <EnumerationOption value="1" description="No"/>
-                <EnumerationOption value="0" description="Yes"/>
+            <AttributeDefinition id="CCQ4" type="enumeration" multiplicity="exactlyOne" description="Hoe vaak voelde u zich in de afgelopen week neerslachtig vanwege uw ademhalingsproblemen?">
+                <EnumerationOption value="0" description="Nooit|"/>
+                <EnumerationOption value="1" description="Zelden|"/>
+				<EnumerationOption value="2" description="Af en toe|"/>
+				<EnumerationOption value="3" description="Regelmatig|"/>
+				<EnumerationOption value="4" description="Heel vaak|"/>
+				<EnumerationOption value="5" description="Meestal|"/>
+				<EnumerationOption value="6" description="Altijd|"/>
             </AttributeDefinition>
-            <AttributeDefinition id="gfi5" type="enumeration" multiplicity="exactlyOne" description="Ondervindt patiënt problemen in het dagelijks leven door slecht zien?">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Yes"/>
+			
+			  <AttributeDefinition id="CCQ5" type="enumeration" multiplicity="exactlyOne" description=" In de afgelopen week, hoe vaak heeft u gehoest?">
+                <EnumerationOption value="0" description="Nooit|"/>
+                <EnumerationOption value="1" description="Zelden|"/>
+				<EnumerationOption value="2" description="Af en toe|"/>
+				<EnumerationOption value="3" description="Regelmatig|"/>
+				<EnumerationOption value="4" description="Heel vaak|"/>
+				<EnumerationOption value="5" description="Meestal|"/>
+				<EnumerationOption value="6" description="Altijd|"/>
             </AttributeDefinition>
-            <AttributeDefinition id="gfi6" type="enumeration" multiplicity="exactlyOne" description="Ondervindt patiënt problemen in het dagelijks leven door slecht horen?">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Yes"/>
+			  <AttributeDefinition id="CCQ6" type="enumeration" multiplicity="exactlyOne" description="In de afgelopen week, hoe vaak heeft u slijm opgehoest?">
+                <EnumerationOption value="0" description="Nooit|"/>
+                <EnumerationOption value="1" description="Zelden|"/>
+				<EnumerationOption value="2" description="Af en toe|"/>
+				<EnumerationOption value="3" description="Regelmatig|"/>
+				<EnumerationOption value="4" description="Heel vaak|"/>
+				<EnumerationOption value="5" description="Meestal|"/>
+				<EnumerationOption value="6" description="Altijd|"/>
             </AttributeDefinition>
-            <AttributeDefinition id="gfi7" type="enumeration" multiplicity="exactlyOne" description="Is patiënt afgelopen 6 maanden veel (6kg) afgevallen zonder dit zelf te willen? (of 3 kg in een maand)">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Yes"/>
+			  <AttributeDefinition id="CCQ7" type="enumeration" multiplicity="exactlyOne" description=" In welke mate voelde u zich in de afgelopen week beperkt door uw adem halingsproble men bij het uitvoeren van zware lichamelijke activiteiten (trap lopen, haasten, sporten)?">
+                <EnumerationOption value="0" description="Helemaal niet beperkt|"/>
+                <EnumerationOption value="1" description="Heel weinig beperkt|"/>
+				<EnumerationOption value="2" description="Een beetje beperkt|"/>
+				<EnumerationOption value="3" description="Tamelijk beperkt|"/>
+				<EnumerationOption value="4" description=" Erg beperkt|"/>
+				<EnumerationOption value="5" description="Heel erg beperkt|"/>
+				<EnumerationOption value="6" description="Volledg beperkt of niet mogelijk |"/>
             </AttributeDefinition>
-            <AttributeDefinition id="gfi8" type="enumeration" multiplicity="exactlyOne" description="Gebruikt patiënt momenteel 4 of meer verschillende soorten medicijnen?">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Yes"/>
+			  <AttributeDefinition id="CCQ8" type="enumeration" multiplicity="exactlyOne" description=" In welke mate voelde u zich in de afgelopen week beperkt door uw adem halingsproble men bij het uitvoeren van matige lichamelijke activiteiten (wandelen, huishoudelijk werk, boodschappen doen)?">
+                <EnumerationOption value="0" description="Helemaal niet beperkt|"/>
+                <EnumerationOption value="1" description="Heel weinig beperkt|"/>
+				<EnumerationOption value="2" description="Een beetje beperkt|"/>
+				<EnumerationOption value="3" description="Tamelijk beperkt|"/>
+				<EnumerationOption value="4" description=" Erg beperkt|"/>
+				<EnumerationOption value="5" description="Heel erg beperkt|"/>
+				<EnumerationOption value="6" description="Volledg beperkt of niet mogelijk |"/>
             </AttributeDefinition>
-            <AttributeDefinition id="gfi9" type="enumeration" multiplicity="exactlyOne" description="Heeft patiënt momenteel klachten over zijn geheugen (of bekend met dementie)?">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Yes"/>
-                <EnumerationOption value="2" description="Sometimes"/>
+			  <AttributeDefinition id="CCQ9" type="enumeration" multiplicity="exactlyOne" description="  In welke mate voelde u zich in de afgelopen week beperkt door uw adem halingsproble men bij het uitvoeren van dagelijkse activiteiten (u zelf aankleden, wassen)?">
+                <EnumerationOption value="0" description="Helemaal niet beperkt|"/>
+                <EnumerationOption value="1" description="Heel weinig beperkt|"/>
+				<EnumerationOption value="2" description="Een beetje beperkt|"/>
+				<EnumerationOption value="3" description="Tamelijk beperkt|"/>
+				<EnumerationOption value="4" description=" Erg beperkt|"/>
+				<EnumerationOption value="5" description="Heel erg beperkt|"/>
+				<EnumerationOption value="6" description="Volledg beperkt of niet mogelijk |"/>
             </AttributeDefinition>
-            <AttributeDefinition id="gfi10" type="enumeration" multiplicity="exactlyOne" description="Ervaart patiënt wel eens een leegte om zich heen?">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Yes"/>
-                <EnumerationOption value="2" description="Sometimes"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="gfi11" type="enumeration" multiplicity="exactlyOne" description="Mist patiënt wel eens mensen om zich heen?">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Yes"/>
-                <EnumerationOption value="2" description="Sometimes"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="gfi12" type="enumeration" multiplicity="exactlyOne" description="Voelt patiënt zich wel eens in de steek gelaten?">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Yes"/>
-                <EnumerationOption value="2" description="Sometimes"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="gfi13" type="enumeration" multiplicity="exactlyOne" description="Heeft patiënt zich de laatste tijd somber of neerslachtig gevoeld?">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Yes"/>
-                <EnumerationOption value="2" description="Sometimes"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="gfi14" type="enumeration" multiplicity="exactlyOne" description="Heeft patiënt zich de laatste tijd nerveus of angstig gevoeld?">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Yes"/>
-                <EnumerationOption value="2" description="Sometimes"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="gfi15" type="enumeration" multiplicity="exactlyOne" description="Welk rapportcijfer geeft patiënt zichzelf voor lichamelijke fitheid? (0-10, 0 is erg slecht, 10 is erg goed).">
-                <EnumerationOption value="1.0001" description="0"/>
-                <EnumerationOption value="1.0002" description="1"/>
-                <EnumerationOption value="1.0003" description="2"/>
-                <EnumerationOption value="1.0004" description="3"/>
-                <EnumerationOption value="1.0005" description="4"/>
-                <EnumerationOption value="1.0006" description="5"/>
-                <EnumerationOption value="1.0007" description="6"/>
-                <EnumerationOption value="0.0001" description="7"/>
-                <EnumerationOption value="0.0002" description="8"/>
-                <EnumerationOption value="0.0003" description="9"/>
-                <EnumerationOption value="0.0004" description="10"/>
-            </AttributeDefinition>                  
-            <DerivedAttributeDefinition id="gfi16" expression="floor(number(gfi1,0) + number(gfi2,0) + number(gfi3,0) + number(gfi4,0) + number(gfi5,0) + number(gfi6,0) + number(gfi7,0) + number(gfi8,0) + number(gfi9,0) + number(gfi10,0) + number(gfi11,0) + number(gfi12,0) + number(gfi13,0) + number(gfi14,0) + number(gfi15,0))" description="Groningen Frailty Indicator" uiReference="colors(0<=green<=0<orange<=4<red<100)"/>     
+			  <AttributeDefinition id="CCQ10" type="enumeration" multiplicity="exactlyOne" description=" :In welke mate voelde u zich in de afgelopen week beperkt door uw adem halingsproble men bij het uitvoeren van sociale activiteiten (praten, omgaan met kinderen, vrienden/familie bezoeken)?">
+                <EnumerationOption value="0" description="Helemaal niet beperkt|"/>
+                <EnumerationOption value="1" description="Heel weinig beperkt|"/>
+				<EnumerationOption value="2" description="Een beetje beperkt|"/>
+				<EnumerationOption value="3" description="Tamelijk beperkt|"/>
+				<EnumerationOption value="4" description=" Erg beperkt|"/>
+				<EnumerationOption value="5" description="Heel erg beperkt|"/>
+				<EnumerationOption value="6" description="Volledg beperkt of niet mogelijk |"/>
+            </AttributeDefinition>		
+			<DerivedAttributeDefinition id="CCQSYMP" expression="(number(CCQ1,0) + number(CCQ2,0) + number(CCQ6,0) + number(CCQ5,0))/4" description="CCQ subschaal symptomen"/>
+			<DerivedAttributeDefinition id="CCQFUNC" expression="(number(CCQ7,0) + number(CCQ8,0) + number(CCQ9,0) + number(CCQ10,0))/4" description="CCQ subschaal functionele status"/>
+			<DerivedAttributeDefinition id="CCQMENT" expression="(number(CCQ3,0) + number(CCQ4,0))/2" description="CCQ subschaal mentale status"/>
+			<DerivedAttributeDefinition id="CCQTOTAL" expression="((CCQSYMP * 4) + (CCQFUNC * 4) + (CCQMENT * 2))/10" description="CCQ totaal"  uiReference="colors(0<=green<=1<orange<=2<red<100)/>
         </EntityDefinition>
 
         <EntityDefinition id="GCS1_ADL" description="Activities of Daily Living (ADL)">
@@ -646,7 +665,7 @@
                 <SummaryParamDefinition path="GCS1_Evaluation.GCS1_MNASF.mnasf9"/>
             </SummarySectionDefinition>
             <SummarySectionDefinition id="GCS1_Frailty" description="Frailty" position="LEFT">  
-                <SummaryParamDefinition path="GCS1_Evaluation.GCS1_GFI.gfi16"/>          
+                <SummaryParamDefinition path="GCS1_Evaluation.CCQ.CCQTOTAL"/>          
                 <SummaryParamDefinition path="GCS1_Identification.GCS1_ASA.asa"/>
                 <!--<SummaryParamDefinition path="GCS1_Evaluation.GCS1_Charlson.ch21"/>-->
                 <SummaryParamDefinition path="GCS1_Evaluation.GCS1_Charlson.ch22"/>
@@ -739,26 +758,24 @@
                     <TaskParamDefinition path="GCS1_Evaluation.GCS1_Charlson.ch21" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="GCS1_Evaluation.GCS1_Charlson.ch22" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>                
-                <HumanTaskDefinition id="GCS1_GFI" description="Groningen Frailty Indicator (GFI)" ownerPath="GCS1_Settings.Clinician" dueDatePath="GCS1_Settings.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS1_GFI" entityAttachPath="GCS1_Evaluation.GCS1_GFI">
+                <HumanTaskDefinition id="CCQ" description="Groningen Frailty Indicator (GFI)" ownerPath="GCS1_Settings.Clinician" dueDatePath="GCS1_Settings.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="CCQ" entityAttachPath="GCS1_Evaluation.CCQ">
                     <SentryDefinition>
                         <precondition processDefinitionId="GCS1_SetEvaluationDueDate"/>
                     </SentryDefinition>  
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_GFI.gfi1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_GFI.gfi2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_GFI.gfi3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_GFI.gfi4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_GFI.gfi5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_GFI.gfi6" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_GFI.gfi7" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_GFI.gfi8" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_GFI.gfi9" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_GFI.gfi10" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_GFI.gfi11" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_GFI.gfi12" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_GFI.gfi13" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_GFI.gfi14" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_GFI.gfi15" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_GFI.gfi16" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS1_Evaluation.CCQ.CCQ1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS1_Evaluation.CCQ.CCQ2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS1_Evaluation.CCQ.CCQ3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS1_Evaluation.CCQ.CCQ4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS1_Evaluation.CCQ.CCQ5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS1_Evaluation.CCQ.CCQ6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS1_Evaluation.CCQ.CCQ7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS1_Evaluation.CCQ.CCQ8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS1_Evaluation.CCQ.CCQ9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS1_Evaluation.CCQ.CCQ10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS1_Evaluation.CCQ.CCQSYMP" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS1_Evaluation.CCQ.CCQFUNC" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS1_Evaluation.CCQ.CCQMENT" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS1_Evaluation.CCQ.CCQTOTAL" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>                
                 <HumanTaskDefinition id="GCS1_ADL" description="Activities of Daily Living (ADL)" ownerPath="GCS1_Settings.Clinician" dueDatePath="GCS1_Settings.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS1_ADL" entityAttachPath="GCS1_Evaluation.GCS1_ADL">
                     <SentryDefinition>
@@ -955,22 +972,21 @@
             <TaskParam path="GCS1_Evaluation.GCS1_Charlson.ch19"  values="['0']"/>
             <TaskParam path="GCS1_Evaluation.GCS1_Charlson.ch20"  values="['1']"/>
         </Action>
-        <Action id="CompleteHumanTask" processId="GCS1_GFI">
-            <TaskParam path="GCS1_Evaluation.GCS1_GFI.gfi1"  values="['0']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_GFI.gfi2"  values="['1']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_GFI.gfi3"  values="['1']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_GFI.gfi4"  values="['0']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_GFI.gfi5"  values="['1']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_GFI.gfi6"  values="['0']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_GFI.gfi7"  values="['1']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_GFI.gfi8"  values="['0']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_GFI.gfi9"  values="['0']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_GFI.gfi10"  values="['0']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_GFI.gfi11"  values="['1']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_GFI.gfi12"  values="['0']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_GFI.gfi13"  values="['1']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_GFI.gfi14"  values="['0']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_GFI.gfi15"  values="['1.0001']"/>
+        <Action id="CompleteHumanTask" processId="CCQ">
+            <TaskParam path="GCS1_Evaluation.CCQ.CCQ1"  values="['0']"/>
+            <TaskParam path="GCS1_Evaluation.CCQ.CCQ2"  values="['1']"/>
+            <TaskParam path="GCS1_Evaluation.CCQ.CCQ3"  values="['1']"/>
+            <TaskParam path="GCS1_Evaluation.CCQ.CCQ4"  values="['0']"/>
+            <TaskParam path="GCS1_Evaluation.CCQ.CCQ5"  values="['1']"/>
+            <TaskParam path="GCS1_Evaluation.CCQ.CCQ6"  values="['0']"/>
+            <TaskParam path="GCS1_Evaluation.CCQ.CCQ7"  values="['1']"/>
+            <TaskParam path="GCS1_Evaluation.CCQ.CCQ8"  values="['0']"/>
+            <TaskParam path="GCS1_Evaluation.CCQ.CCQ9"  values="['0']"/>
+            <TaskParam path="GCS1_Evaluation.CCQ.CCQ10"  values="['0']"/>
+            <TaskParam path="GCS1_Evaluation.CCQ.CCQSYMP"  values="['1']"/>
+            <TaskParam path="GCS1_Evaluation.CCQ.CCQFUNC"  values="['0']"/>
+            <TaskParam path="GCS1_Evaluation.CCQ.CCQMENT"  values="['1']"/>
+            <TaskParam path="GCS1_Evaluation.CCQ.CCQTOTAL"  values="['0']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="GCS1_ADL">
             <TaskParam path="GCS1_Evaluation.GCS1_ADL.adl1"  values="['0']"/>
