@@ -21,8 +21,8 @@ export default class Case extends Model{
     return http.get(jwt, '/cases/'+caseId);
   }
 
-  static findByWorkspaceId(jwt, workspaceId){
-    return http.get(jwt, '/workspaces/'+workspaceId+'/cases');
+  static findByWorkspaceId(jwt, workspaceId, params){
+    return http.get(jwt, '/workspaces/'+workspaceId+'/cases', params);
   }
 
   static findbyCaseDefinitionId(jwt, caseDefinitionId){

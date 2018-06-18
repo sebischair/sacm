@@ -123,6 +123,9 @@ router.get('/:id/cases/client/search', (req, res, next)=>{
  * @apiName GetCasesByWorkspaceID
  * @apiGroup Cases
  * @apiParam {String} ID The ID of the the Workspace
+ * @apiParam {int} offset The offset for the pagination
+ * @apiParam {int} limit The limit per page for the pagination
+ * @apiParam {String} searchQuery The search query for result filtering
  * @apiSampleRequest /workspaces/:id/cases
  * @apiSuccessExample {json} Success-Response:
  * [{
@@ -145,7 +148,7 @@ router.get('/:id/cases/client/search', (req, res, next)=>{
  * }]
  */
 router.get('/:id/cases', (req, res, next)=>{
-  Case.findByWorkspaceId(req.jwt, req.params.id)
+  Case.findByWorkspaceId(req.jwt, req.params.id, req.query)
     .then(cd=>{
         res.status(200).send(cd);
     })
