@@ -274,7 +274,7 @@
 				<EnumerationOption value="5" description="Heel erg beperkt|"/>
 				<EnumerationOption value="6" description="Volledg beperkt of niet mogelijk |"/>
             </AttributeDefinition>
-			  <AttributeDefinition id="CCQ10" type="enumeration" multiplicity="exactlyOne" description=" :In welke mate voelde u zich in de afgelopen week beperkt door uw adem halingsproble men bij het uitvoeren van sociale activiteiten (praten, omgaan met kinderen, vrienden/familie bezoeken)?">
+			 <AttributeDefinition id="CCQ10" type="enumeration" multiplicity="exactlyOne" description=" :In welke mate voelde u zich in de afgelopen week beperkt door uw adem halingsproble men bij het uitvoeren van sociale activiteiten (praten, omgaan met kinderen, vrienden/familie bezoeken)?">
                 <EnumerationOption value="0" description="Helemaal niet beperkt|"/>
                 <EnumerationOption value="1" description="Heel weinig beperkt|"/>
 				<EnumerationOption value="2" description="Een beetje beperkt|"/>
@@ -286,7 +286,7 @@
 			<DerivedAttributeDefinition id="CCQSYMP" expression="(number(CCQ1,0) + number(CCQ2,0) + number(CCQ6,0) + number(CCQ5,0))/4" description="CCQ subschaal symptomen"/>
 			<DerivedAttributeDefinition id="CCQFUNC" expression="(number(CCQ7,0) + number(CCQ8,0) + number(CCQ9,0) + number(CCQ10,0))/4" description="CCQ subschaal functionele status"/>
 			<DerivedAttributeDefinition id="CCQMENT" expression="(number(CCQ3,0) + number(CCQ4,0))/2" description="CCQ subschaal mentale status"/>
-			<DerivedAttributeDefinition id="CCQTOTAL" expression="((CCQSYMP * 4) + (CCQFUNC * 4) + (CCQMENT * 2))/10" description="CCQ totaal"  uiReference="colors(0<=green<=1<orange<=2<red<100)/>
+			<DerivedAttributeDefinition id="CCQTOTAL" expression="((CCQSYMP*4)+(CCQFUNC*4)+(CCQMENT*2))/10" description="CCQ totaal"  uiReference="colors(0<=green<=1<orange<=2<red<100)/>
         </EntityDefinition>
 
         <EntityDefinition id="GCS1_ADL" description="Activities of Daily Living (ADL)">
@@ -758,7 +758,7 @@
                     <TaskParamDefinition path="GCS1_Evaluation.GCS1_Charlson.ch21" isReadOnly="true" isMandatory="false"/>
                     <TaskParamDefinition path="GCS1_Evaluation.GCS1_Charlson.ch22" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>                
-                <HumanTaskDefinition id="CCQ" description="Groningen Frailty Indicator (GFI)" ownerPath="GCS1_Settings.Clinician" dueDatePath="GCS1_Settings.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="CCQ" entityAttachPath="GCS1_Evaluation.CCQ">
+                <HumanTaskDefinition id="CCQ" description="CCQ" ownerPath="GCS1_Settings.Clinician" dueDatePath="GCS1_Settings.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="CCQ" entityAttachPath="GCS1_Evaluation.CCQ">
                     <SentryDefinition>
                         <precondition processDefinitionId="GCS1_SetEvaluationDueDate"/>
                     </SentryDefinition>  
@@ -983,10 +983,6 @@
             <TaskParam path="GCS1_Evaluation.CCQ.CCQ8"  values="['0']"/>
             <TaskParam path="GCS1_Evaluation.CCQ.CCQ9"  values="['0']"/>
             <TaskParam path="GCS1_Evaluation.CCQ.CCQ10"  values="['0']"/>
-            <TaskParam path="GCS1_Evaluation.CCQ.CCQSYMP"  values="['1']"/>
-            <TaskParam path="GCS1_Evaluation.CCQ.CCQFUNC"  values="['0']"/>
-            <TaskParam path="GCS1_Evaluation.CCQ.CCQMENT"  values="['1']"/>
-            <TaskParam path="GCS1_Evaluation.CCQ.CCQTOTAL"  values="['0']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="GCS1_ADL">
             <TaskParam path="GCS1_Evaluation.GCS1_ADL.adl1"  values="['0']"/>
