@@ -95,7 +95,7 @@ app.use(function(req, res, next) {
     });
     req.on('end', function() {
       req.rawBody = data;
-      //console.log(data.toString('utf-8'))
+      //winston.debug(data.toString('utf-8'))
       next();
     });
   }

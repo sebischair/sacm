@@ -86,7 +86,7 @@ function ip2Location(ip){
     r.zip = l.postal.code;
   if(l && l.country)
     r.countryCode = l.country.iso_code;
-  //console.log(ip+" "+r.country+" ("+r.countryCode+") "+r.zip+" "+r.city+" "+r.latitude+" "+r.longitude+" "+r.accuracy)
+  //winston.debug(ip+" "+r.country+" ("+r.countryCode+") "+r.zip+" "+r.city+" "+r.latitude+" "+r.longitude+" "+r.accuracy)
   return r; 
 }
 

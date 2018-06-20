@@ -88,32 +88,32 @@ module.exports = class Importer {
 
     getUserAttributeDefinitionIdByXMLId(userAttributeDefinitionXMLId){
       if(userAttributeDefinitionXMLId == null)
-        console.error('User attribute definition Id can not be null!');
+        winston.error('User attribute definition Id can not be null!');
       else if(!this.userAttributeDefinitionMap.has(userAttributeDefinitionXMLId))
-        console.error('ERROR: User attribute definition ID "'+userAttributeDefinitionXMLId+'" not found');
+        winston.error('ERROR: User attribute definition ID "'+userAttributeDefinitionXMLId+'" not found');
       else
         return this.userAttributeDefinitionMap.get(userAttributeDefinitionXMLId);  
     }
 
     getGroupIdByXMLId(groupXMLId){
       if(groupXMLId == null)
-        console.error('Group Id can not be null!');
+        winston.error('Group Id can not be null!');
       else if(!this.groupMap.has(groupXMLId))
-        console.error('ERROR: Group ID "'+groupXMLId+'" not found');
+        winston.error('ERROR: Group ID "'+groupXMLId+'" not found');
       else
         return this.groupMap.get(groupXMLId);  
     }
 
     isGroupByXMLId(groupXMLId){
       if(groupXMLId == null)
-        console.error('Group Id can not be null!');
+        winston.error('Group Id can not be null!');
       else 
         return this.groupMap.has(groupXMLId);
     }
 
     getPrincipalIdByXMLId(principalXMLId){
       if(principalXMLId == null)
-          console.error('Principal Id can not be null!');
+        winston.error('Principal Id can not be null!');
       else{
         let principalId = null;
         let count = 0;
@@ -147,7 +147,7 @@ module.exports = class Importer {
       if(entityDefinitionXMLId == null)
         return null;
       if(!this.entityDefinitionMap.has(entityDefinitionXMLId)){
-        console.log('EntityDefintion ID "'+entityDefinitionXMLId+'" not found');
+        winston.error('EntityDefintion ID "'+entityDefinitionXMLId+'" not found');
         throw new Error('EntityDefintion ID "'+entityDefinitionXMLId+'" not found');
       }else
         return this.entityDefinitionMap.get(entityDefinitionXMLId);     
@@ -488,7 +488,7 @@ module.exports = class Importer {
         });
         
       }).catch(err=>{
-        console.log(err);
+        winston.error(err);
         return Promise.reject(err);
       })
     }
