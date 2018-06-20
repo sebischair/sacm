@@ -10,5 +10,14 @@ module.exports = {
     logging:{
         isEnabled: isLoggingEnabled,
         mongoUrl: process.env.MONGO_URL || 'Mongo DB for logging not set!'
+    },
+    winston:{
+        console:{
+            level: process.env.WINSTON_CONSOLE_LEVEL || 'info'
+        },
+        file:{
+            level: process.env.WINSTON_FILE_LEVEL || 'error',
+            path: process.env.WINSTON_FILE_PATH || 'sacm.backend.log'
+        }
     }
  };

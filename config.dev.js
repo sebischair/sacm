@@ -10,5 +10,14 @@ if(process.env.LOGGING_ENABLED)
     logging:{
         isEnabled: isLoggingEnabled,
         mongoUrl: process.env.MONGO_URL || 'mongodb://localhost:27017/sacmlog'
+    },
+    winston:{
+        console:{
+            level: process.env.WINSTON_CONSOLE_LEVEL || 'info'
+        },
+        file:{
+            level: process.env.WINSTON_FILE_LEVEL || 'error',
+            path: process.env.WINSTON_FILE_PATH || 'sacm.backend.log'
+        }
     }
  };

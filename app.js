@@ -44,8 +44,8 @@ const logTimestamp = function() {
 };
 
 winston.clear()
-winston.add(winston.transports.Console, {json:false, formatter:logFormatterConsole, timestamp:logTimestamp, level: 'info'});
-winston.add(winston.transports.File, { filename: 'sacm.backend.log', json:false, formatter:logFormatterFile, timestamp:logTimestamp, level: 'error'});
+winston.add(winston.transports.Console, {json:false, formatter:logFormatterConsole, timestamp:logTimestamp, level: config.winston.console.level});
+winston.add(winston.transports.File, { filename: config.winston.file.path, json:false, formatter:logFormatterFile, timestamp:logTimestamp, level: config.winston.file.level});
 
 
 winston.error('test')
