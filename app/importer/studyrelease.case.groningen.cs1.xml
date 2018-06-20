@@ -97,7 +97,7 @@
             <AttributeDefinition id="GCS1_Charlson" type="Link.EntityDefinition.GCS1_Charlson" description="Charlson"/>   
             <AttributeDefinition id="CCQ" type="Link.EntityDefinition.CCQ" description="CCQ"/>   
             <AttributeDefinition id="GCS1_ACQ" type="Link.EntityDefinition.GCS1_ACQ" description=": Asthma control (ACQ)"/>   
-            <AttributeDefinition id="GCS1_iADL" type="Link.EntityDefinition.GCS1_iADL" description="Instrumental Activities of Daily Living (iADL)"/>   
+            <AttributeDefinition id="GCS1_SpirometryL" type="Link.EntityDefinition.GCS1_Spirometry" description=" lung function - Spirometry"/>   
             <AttributeDefinition id="GCS1_NRS" type="Link.EntityDefinition.GCS1_NRS" description="Nutritional Risk Screening (NRS)"/>   
             <AttributeDefinition id="GCS1_MNASF" type="Link.EntityDefinition.GCS1_MNASF" description="Mini Nutritional Assesment (MNA-SF)"/> 
             <AttributeDefinition id="GCS1_HospitalAnxietyAndDepressionScale" type="Link.EntityDefinition.GCS1_HospitalAnxietyAndDepressionScale" description="Hospital Anxiety and Depression Scale (HADS)"/> 
@@ -343,54 +343,13 @@
             </AttributeDefinition>  
         </EntityDefinition>
 
-        <EntityDefinition id="GCS1_iADL" description="Instrumental Activities of Daily Living (iADL)">
-            <AttributeDefinition id="iadl1" type="enumeration" multiplicity="exactlyOne" description="Telephoning">
-                <EnumerationOption value="1.0001" description="Uses the telephone, dials the numbers without help"/>
-                <EnumerationOption value="1.0002" description="only calls some known numbers"/>
-                <EnumerationOption value="1.0003" description="Answers the phone, but does not call"/>
-                <EnumerationOption value="0" description="Doest not use the telephone"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="iadl2" type="enumeration" multiplicity="exactlyOne" description="Shopping / Doing groceries">
-                <EnumerationOption value="1" description="Does all groceries independently"/>
-                <EnumerationOption value="0.0001" description="Does some groceries independetly"/>
-                <EnumerationOption value="0.0002" description="Needs hepl with doing groceries"/>
-                <EnumerationOption value="0.0003" description="Is not able to do groceries"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="iadl3" type="enumeration" multiplicity="exactlyOne" description="Cooking">
-                <EnumerationOption value="1" description="Is able to cook and serve"/>	
-                <EnumerationOption value="0.0001" description="Cooks dinner, but ingredients are delivered"/>
-                <EnumerationOption value="0.0002" description="Heatens meals, but diet is insufficient"/>
-                <EnumerationOption value="0.0003" description="Needs pre-cooked meals"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="iadl4" type="enumeration" multiplicity="exactlyOne" description="Housekeeping">
-                <EnumerationOption value="1.0001" description="Runs the household without help"/>
-                <EnumerationOption value="1.0002" description="Does light tasks in the household independent"/>
-                <EnumerationOption value="1.0003" description="Does light tasks independent, but is not able to maintain the household"/>
-                <EnumerationOption value="1.0004" description="Needs help with all housekeeping"/>
-                <EnumerationOption value="1.0005" description="Does not maintain the household"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="iadl5" type="enumeration" multiplicity="exactlyOne" description="Laundry">
-                <EnumerationOption value="1.0001" description="Does all laundry"/>
-                <EnumerationOption value="1.0002" description="Does only little laundry (socks etc.)"/>
-                <EnumerationOption value="1.0003" description="All laundry is done by others"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="iadl6" type="enumeration" multiplicity="exactlyOne" description="Transport">
-                <EnumerationOption value="1.0001" description="Travels by car or public transport without help "/>
-                <EnumerationOption value="1.0002" description="Organizes taxi but does not travel with public transport"/>
-                <EnumerationOption value="1.0003" description="Needs help with public transport"/>
-                <EnumerationOption value="0" description="Travels by taxi, by car with help, or does not travel"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="iadl7" type="enumeration" multiplicity="exactlyOne" description="Responsibility for medication">
-                <EnumerationOption value="1" description="Takes medication according to prescription "/>
-                <EnumerationOption value="0.0001" description="Takes medication if prepared by someone"/>
-                <EnumerationOption value="0.0002" description="Is not able to bear responsibility for medication"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="iadl8" type="enumeration" multiplicity="exactlyOne" description="Finances">
-                <EnumerationOption value="1.0001" description="Is able to handle own finances"/>
-                <EnumerationOption value="1.0002" description="Needs help with finances"/>
-                <EnumerationOption value="0" description="Is not able to deal with money"/>
-            </AttributeDefinition>
-            <DerivedAttributeDefinition id="iadl9" expression="floor(number(iadl1,0) + number(iadl2,0) + number(iadl3,0) + number(iadl4,0) + number(iadl5,0) + number(iadl6,0) + number(iadl7,0) + number(iadl8,0))" description="iADL Score" uiReference="colors(0<=red<=3<orange<=7<green<9)"/> 
+        <EntityDefinition id="GCS1_Spirometry" description="ung function - Spirometry">
+            <AttributeDefinition id="spiro1" type="number" multiplicity="exactlyOne" description="FEV1 post in Liters" />
+			<AttributeDefinition id="spiro2" type="number" multiplicity="exactlyOne" description="FEV1 post in %" />
+			<AttributeDefinition id="spiro3" type="number" multiplicity="exactlyOne" description="FVC post in Liters" />
+			<AttributeDefinition id="spiro4" type="number" multiplicity="exactlyOne" description="FVC post in %" />
+			<AttributeDefinition id="spiro5" type="number" multiplicity="exactlyOne" description="FEV1/FVC in %" />
+		    <AttributeDefinition id="spiro6" type="number" multiplicity="exactlyOne" description="Reversibiliteit in %" />
         </EntityDefinition>
 
         <EntityDefinition id="GCS1_NRS" description="Nutritional Risk Screening (NRS)">
@@ -690,7 +649,6 @@
                 <SummaryParamDefinition path="GCS1_Evaluation.GCS1_Charlson.ch22"/>
             </SummarySectionDefinition>
             <SummarySectionDefinition id="GCS1_Functional" description="Functional" position="CENTER">   
-                <SummaryParamDefinition path="GCS1_Evaluation.GCS1_iADL.iadl9"/>
                 <SummaryParamDefinition path="GCS1_Evaluation.GCS1_ACQ.ACQ6"/>
             </SummarySectionDefinition>
             <SummarySectionDefinition id="GCS1_Cognitive" description="Cognitive" position="RIGHT">    
@@ -803,19 +761,16 @@
                     <TaskParamDefinition path="GCS1_Evaluation.GCS1_ACQ.ACQ5" isReadOnly="false" isMandatory="false"/>
                     <TaskParamDefinition path="GCS1_Evaluation.GCS1_ACQ.ACQ6" isReadOnly="false" isMandatory="false"/>
                 </HumanTaskDefinition>
-                <HumanTaskDefinition id="GCS1_iADL" description="Instrumental Activities of Daily Living (iADL)" ownerPath="GCS1_Settings.Clinician" dueDatePath="GCS1_Settings.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS1_iADL" entityAttachPath="GCS1_Evaluation.GCS1_iADL">
+                <HumanTaskDefinition id="GCS1_Spirometry" description="Spirometry" ownerPath="GCS1_Settings.Clinician" dueDatePath="GCS1_Settings.EvaluationDueDate" isMandatory="false" repeatable="ONCE" entityDefinitionId="GCS1_Spirometry" entityAttachPath="GCS1_Evaluation.GCS1_Spirometry">
                     <SentryDefinition>
                         <precondition processDefinitionId="GCS1_SetEvaluationDueDate"/>
                     </SentryDefinition>  
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_iADL.iadl1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_iADL.iadl2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_iADL.iadl3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_iADL.iadl4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_iADL.iadl5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_iADL.iadl6" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_iADL.iadl7" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_iADL.iadl8" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_iADL.iadl9" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_Spirometry.spiro1" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_Spirometry.spiro2" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_Spirometry.spiro3" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_Spirometry.spiro4" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_Spirometry.spiro5" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_Spirometry.spiro6" isReadOnly="false" isMandatory="false"/>
                 </HumanTaskDefinition>
                 <HumanTaskDefinition id="GCS1_NRS" description="Nutritional Risk Screening (NRS)" ownerPath="GCS1_Settings.Clinician" dueDatePath="GCS1_Settings.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS1_NRS" entityAttachPath="GCS1_Evaluation.GCS1_NRS"
                     footnote="Reference: Kondrup, J., Rasmussen, H. H., Hamberg, O. L. E., and STANGA, Z. (2003). Nutritional risk screening (NRS 2002): a new method based on an analysis of controlled clinical trials. Clinical nutrition, 22(3), 321-336.">
@@ -1006,15 +961,13 @@
             <TaskParam path="GCS1_Evaluation.GCS1_ACQ.ACQ5"  values="['0']"/>
             <TaskParam path="GCS1_Evaluation.GCS1_ACQ.ACQ6"  values="['0']"/>
         </Action>
-        <Action id="CompleteHumanTask" processId="GCS1_iADL">
-            <TaskParam path="GCS1_Evaluation.GCS1_iADL.iadl1"  values="['1.0001']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_iADL.iadl2"  values="['1']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_iADL.iadl3"  values="['0.0001']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_iADL.iadl4"  values="['1.0003']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_iADL.iadl5"  values="['1.0003']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_iADL.iadl6"  values="['0']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_iADL.iadl7"  values="['1']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_iADL.iadl8"  values="['0']"/>
+        <Action id="CompleteHumanTask" processId="GCS1_Spirometry">
+            <TaskParam path="GCS1_Evaluation.GCS1_Spirometry.spiro1"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_Spirometry.spiro2"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_Spirometry.spiro3"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_Spirometry.spiro4"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_Spirometry.spiro5"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_Spirometry.spiro6"  values="['1']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="GCS1_NRS">
             <TaskParam path="GCS1_Evaluation.GCS1_NRS.nrs1"  values="['1']"/>
