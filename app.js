@@ -1,4 +1,5 @@
 import express from 'express';
+import colors from 'colors';
 import path from 'path';
 import favicon from 'serve-favicon';
 import logger from 'morgan';
@@ -18,8 +19,32 @@ import uuid from 'uuid/v1';
 import maxmind from 'maxmind';
 import winston from 'winston';
 
-winston.add(winston.transports.File, { filename: 'sacm.backend.log' });
+const logFormatterConsole = function(options) {
+  let log = '['+options.level.toUpperCase() + '] '+ (options.message ? options.message : '') +
+      (options.meta && Object.keys(options.meta).length ? '\n\t'+ JSON.stringify(options.meta) : '');
+  if(options.level == 'error')
+    log = colors.red(log);
+  if(options.level == 'warn')
+    log = colors.yellow(log); 
+  return log;
+};
 
+const logFormatterFile = function(options) {
+  return '['+options.timestamp() +'] '+ options.level.toUpperCase() + ' '+ (options.message ? options.message : '') +
+      (options.meta && Object.keys(options.meta).length ? '\n\t'+ JSON.stringify(options.meta) : '');
+};
+
+const logTimestamp = function() {
+  return new Date().toISOString();
+};
+
+winston.clear()
+winston.add(winston.transports.Console, {json:false, formatter:logFormatterConsole, timestamp:logTimestamp});
+winston.add(winston.transports.File, { filename: 'sacm.backend.log', json:false, formatter:logFormatterFile, timestamp:logTimestamp});
+winston.level = 'debug';
+
+
+winston.error('test')
 const secret = fs.readFileSync('public.key.pem')+'';
 
 if(config.logging.isEnabled){
@@ -88,14 +113,14 @@ app.use('/api/v1', (req, res, next)=>{
   /** Use different user for test execution as for import */
   if(req.headers.executionuser != null){
     req.executionJwt = http.generateJWT(req.headers.executionuser, config.sociocortex.defaultPassword);
-    console.log(req.executionJwt);    
+    winston.debug(req.executionJwt);    
   }
 
   /** Testing Simulate User Authorization */
   if(req.headers.simulateuser != null && req.headers.authorization == null){
     req.jwt = http.generateJWT(req.headers.simulateuser, config.sociocortex.defaultPassword);
-    console.log('simulate user '+req.headers.simulateuser);
-    console.log(req.jwt);    
+    winston.debug('simulate user '+req.headers.simulateuser);
+    winston.debug(req.jwt);    
     Log.simulateUserLog(req, req.headers.simulateuser);
     next();
   }else{
@@ -112,7 +137,7 @@ app.use('/api/v1', (req, res, next)=>{
         const token = authorization.replace('Bearer ','');
         jwt.verify(token, secret, {algorithms: ['RS256']}, (err, decoded)=> {
           if(err){
-            console.log('err: '+err);
+            winston.error('err: '+err);
             res.status(403).send(err);
           }else{
             req.jwt = 'conecarebearer '+token;  

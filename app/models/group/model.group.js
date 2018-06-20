@@ -1,4 +1,5 @@
 import Promise from 'bluebird';
+import winston from 'winston';
 import http from '../http';
 import Model from '../model';
 
@@ -43,7 +44,7 @@ export default class Group extends Model{
           return Group.deleteById(jwt, group.id);
         })
         .catch(err=>{
-          console.log(err);
+          winston.error(err);
         })
       });
   }

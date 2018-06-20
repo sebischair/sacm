@@ -30,7 +30,6 @@ router.get('/me/unseen', (req, res, next)=>{
  *   {}
  */
 router.post('/me/seen', (req, res, next)=>{
-  console.log('here')
   Message.seenByMe(req.jwt)
     .then(c=>{
       res.status(200).send(c);

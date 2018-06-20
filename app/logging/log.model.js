@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import Promise from 'bluebird';
 import maxmind from 'maxmind';
+import winston from 'winston';
 import config from './../../config';
 
 const ObjectId = mongoose.Schema.Types.ObjectId;
@@ -179,7 +180,7 @@ LogSchema.statics.setStatus = (uuid, status, duration, resBody)=>{
   const data = {status:status, duration:duration, resBody:resBody};
   Log.update({uuid:uuid, status:null}, {$set: data}, function (err){
     if (err)
-      console.log(err);    
+      winston.error(err);    
   });
 }
 
