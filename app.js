@@ -44,11 +44,12 @@ const logTimestamp = function() {
 };
 
 winston.clear()
-winston.add(winston.transports.Console, {json:false, formatter:logFormatterConsole, timestamp:logTimestamp});
-winston.add(winston.transports.File, { filename: 'sacm.backend.log', json:false, formatter:logFormatterFile, timestamp:logTimestamp});
-winston.level = 'debug';
+winston.add(winston.transports.Console, {json:false, formatter:logFormatterConsole, timestamp:logTimestamp, level: 'info'});
+winston.add(winston.transports.File, { filename: 'sacm.backend.log', json:false, formatter:logFormatterFile, timestamp:logTimestamp, level: 'error'});
+
 
 winston.error('test')
+winston.debug('test2')
 const secret = fs.readFileSync('public.key.pem')+'';
 
 if(config.logging.isEnabled){
