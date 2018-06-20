@@ -389,7 +389,7 @@ module.exports = class Importer {
             return Promise.resolve();
           })
           .catch(err=>{
-            console.error(err);
+            winston.error(err);
             return Promise.reject(err);
           });
       });
@@ -436,7 +436,7 @@ module.exports = class Importer {
             return Promise.resolve();
           })
           .catch(err=>{
-            console.error(err);
+            winston.error(err);
           })
       });
     }
