@@ -30,7 +30,12 @@ const logFormatterConsole = function(options) {
 };
 
 const logFormatterFile = function(options) {
-  return '['+options.timestamp() +'] '+ options.level.toUpperCase() + ' '+ (options.message ? options.message : '') +
+  let colorCharacters = (colors.green('#')+'#'+colors.red('#')).split('#');
+  if(options.message)
+    for(let i=0; i<colorCharacters.length; i++){
+      options.message = options.message.replace(colorCharacters[i],'');
+    }    
+  return options.timestamp() +' ['+ options.level.toUpperCase() + '] '+ (options.message ? options.message : '') +
       (options.meta && Object.keys(options.meta).length ? '\n\t'+ JSON.stringify(options.meta) : '');
 };
 
@@ -42,7 +47,6 @@ winston.clear()
 winston.add(winston.transports.Console, {json:false, formatter:logFormatterConsole, timestamp:logTimestamp});
 winston.add(winston.transports.File, { filename: 'sacm.backend.log', json:false, formatter:logFormatterFile, timestamp:logTimestamp});
 winston.level = 'debug';
-
 
 winston.error('test')
 const secret = fs.readFileSync('public.key.pem')+'';
