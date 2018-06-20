@@ -13,7 +13,7 @@ if(process.env.LOGGING_ENABLED)
     },
     winston:{
         console:{
-            level: process.env.WINSTON_CONSOLE_LEVEL || 'info'
+            level: process.env.WINSTON_CONSOLE_LEVEL || 'silly'
         },
         file:{
             level: process.env.WINSTON_FILE_LEVEL || 'error',

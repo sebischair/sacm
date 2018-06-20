@@ -13,7 +13,7 @@ module.exports = {
     },
     winston:{
         console:{
-            level: process.env.WINSTON_CONSOLE_LEVEL || 'info'
+            level: process.env.WINSTON_CONSOLE_LEVEL || 'silly'
         },
         file:{
             level: process.env.WINSTON_FILE_LEVEL || 'error',

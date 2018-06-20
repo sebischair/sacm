@@ -47,9 +47,12 @@ winston.clear()
 winston.add(winston.transports.Console, {json:false, formatter:logFormatterConsole, timestamp:logTimestamp, level: config.winston.console.level});
 winston.add(winston.transports.File, { filename: config.winston.file.path, json:false, formatter:logFormatterFile, timestamp:logTimestamp, level: config.winston.file.level});
 
+winston.stream = {
+  write: function(message, encoding) {
+    winston.debug(message.replace('\n',''));
+  },
+};
 
-winston.error('test')
-winston.debug('test2')
 const secret = fs.readFileSync('public.key.pem')+'';
 
 if(config.logging.isEnabled){
@@ -106,7 +109,7 @@ app.use(function(req, res, next) {
   }
 });
 
-app.use(logger('dev'));
+app.use(logger('dev', { stream: winston.stream }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false, limit:'5mb'}));
 app.use(cookieParser());
