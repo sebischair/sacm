@@ -20,12 +20,12 @@ import maxmind from 'maxmind';
 import winston from 'winston';
 
 const logFormatterConsole = function(options) {
-  let log = '['+options.level.toUpperCase() + '] '+ (options.message ? options.message : '') +
-      (options.meta && Object.keys(options.meta).length ? '\n\t'+ JSON.stringify(options.meta) : '');
-  if(options.level == 'error')
-    log = colors.red(log);
-  if(options.level == 'warn')
-    log = colors.yellow(log); 
+  let log = (options.message ? options.message : '') +
+      (options.meta && Object.keys(options.meta).length ? ''+ JSON.stringify(options.meta) : '');
+  //if(options.level == 'error')
+  //  log = colors.red(log);
+  //if(options.level == 'warn')
+  //  log = colors.yellow(log); 
   return log;
 };
 
@@ -178,7 +178,7 @@ app.use((err, req, res, next)=>{
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
+  
   // render the error page
   res.status(err.status || 500);
   res.status(500).send(err);
