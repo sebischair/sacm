@@ -49,7 +49,10 @@ winston.add(winston.transports.File, { filename: config.winston.file.path, json:
 
 winston.stream = {
   write: function(message, encoding) {
-    winston.debug(message.replace('\n',''));
+    if(message.includes('[31m500'))
+      winston.error(message.replace('\n',''));
+    else  
+      winston.debug(message.replace('\n',''));
   },
 };
 
