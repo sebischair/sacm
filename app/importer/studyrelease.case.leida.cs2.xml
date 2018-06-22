@@ -955,30 +955,40 @@
         </EntityDefinition>		
 		
 		<EntityDefinition id="LCS2_SelfCareAuto">
-           <AttributeDefinition id="sca1" type="enumeration" multiplicity="exactlyOne" description="Quants cops he de realitzar els exercicis de rehabilitació?">
-                <EnumerationOption value="1" description="Un cop al dia"/>
-				<EnumerationOption value="0.002" description="No s'han de fer"/>		       
-				<EnumerationOption value="0.001" description="4 cops al dia"/>	                           
-            </AttributeDefinition>        
-            <AttributeDefinition id="sca2" type="enumeration" multiplicity="exactlyOne" description="Que he de fer si s'inflama la cama?">
-                <EnumerationOption value="1" description="Estirar la cama en una cadira"/>
-                <EnumerationOption value="0.0001" description="Estirar-me, aixecar les cames i moure els peus cap endavant i endarrera"/>
-                <EnumerationOption value="0.0002" description="Sentar-me, fer repòs en una cadira"/>
-            </AttributeDefinition>      
-            <AttributeDefinition id="sca3" type="enumeration" multiplicity="exactlyOne" description="Que és millor per a la meva recuperació?">
+		    <AttributeDefinition id="sca1" type="enumeration" multiplicity="exactlyOne" description="Que és millor per a la meva recuperació?">
 			    <EnumerationOption value="1" description="Circuit durant el dia: caminar, repòs cadira o llit, exercicis"/>
-                <EnumerationOption value="0.0001" description="Fer repòs al llit"/>
-                <EnumerationOption value="0.0002" description="Aguantar el dolor"/>
-            </AttributeDefinition>   
-            <AttributeDefinition id="sca4" type="enumeration" multiplicity="exactlyOne" description="I si tinc molt dolor, tot i prendre correctament la pauta analgèsica?">
+                <EnumerationOption value="0.01" description="Fer repòs al llit"/>
+                <EnumerationOption value="0.02" description="Aguantar el dolor"/>
+            </AttributeDefinition> 
+           <AttributeDefinition id="sca2" type="enumeration" multiplicity="exactlyOne" description="Com controlo el dolor?">
+                <EnumerationOption value="1" description="Prenent doble dosi de calmant"/>
+				<EnumerationOption value="0.002" description="Seguir la pauta mèdica d'analgèsia i aplicant gel en el cas de pròtesi de genoll"/>		       
+				<EnumerationOption value="0.001" description="Aguantar el dolor"/>	                           
+            </AttributeDefinition>  	
+            <AttributeDefinition id="sca3" type="enumeration" multiplicity="exactlyOne" description="I si tinc molt dolor, tot i prendre correctament la pauta analgèsica?">
                 <EnumerationOption value="1" description="Ho comunicaré al meu metge de capçalera"/>
 				<EnumerationOption value="0.00000001" description="Aguantar el dolor"/>
                 <EnumerationOption value="0.00000003" description="Prenent el doble dosi de calmant"/>
-            </AttributeDefinition>   
-			<DerivedAttributeDefinition id="sca5" 
-			uiReference="colors(0<=green<1<=orange<2<=red<=10000)"
-			additionalDescription="si 0 (Verd)|| si 1 (Taronja)|| si &gt;= 2 (Vermell)" 
-			expression="round(number(sca1,0))+round(number(sca2,0))+round(number(sca3,0))+round(number(sca4,0))" 
+            </AttributeDefinition>  		
+           <AttributeDefinition id="sca4" type="enumeration" multiplicity="exactlyOne" description="Quants cops he de realitzar els exercicis de rehabilitació?">
+                <EnumerationOption value="1" description="Un cop al dia"/>
+				<EnumerationOption value="0.0002" description="No s'han de fer"/>		       
+				<EnumerationOption value="0.0001" description="4 cops al dia"/>	                           
+            </AttributeDefinition>        
+            <AttributeDefinition id="sca5" type="enumeration" multiplicity="exactlyOne" description="Que he de fer si s'inflama la cama?">
+                <EnumerationOption value="1" description="Estirar la cama en una cadira"/>
+                <EnumerationOption value="0.00001" description="Estirar-me, aixecar les cames i moure els peus cap endavant i endarrera"/>
+                <EnumerationOption value="0.00002" description="Sentar-me, fer repòs en una cadira"/>
+            </AttributeDefinition>      
+             <AttributeDefinition id="sca6" type="enumeration" multiplicity="exactlyOne" description="Quan s'ha de curar la ferida?">
+                <EnumerationOption value="1" description="Cada dia"/>
+                <EnumerationOption value="0.000001" description="En cas de sagnat o deteriorament de l'apòsit aniré el meu CAP de referència"/>
+                <EnumerationOption value="0.000002" description="Mai"/>
+            </AttributeDefinition>  
+			<DerivedAttributeDefinition id="sca7" 
+			uiReference="colors(0<=red<1<=orange<4<=green<=10000)"
+			additionalDescription="si 0 (Vermell)|| si 1 (Taronja)|| si &gt;= 5 (Verd)" 
+			expression="round(number(sca1,0))+round(number(sca2,0))+round(number(sca3,0))+round(number(sca4,0))+round(number(sca5,0))+round(number(sca6,0))" 
 			description="Capacitat d'autocura"/> 			
 		</EntityDefinition>		
 
@@ -993,7 +1003,7 @@
                 <EnumerationOption value="0.0001" description="Amb el seu cònjuge"/>
                 <EnumerationOption value="0.0002" description="Amb fills"/>
                 <EnumerationOption value="0.0003" description="Amb altres familiars"/>
-                <EnumerationOption value="0.0004" description="Sense familiars"/>
+                <EnumerationOption value="0.0004" description="Sense familiars (altres)"/>
             </AttributeDefinition>
             <AttributeDefinition id="dwelling3" type="enumeration" multiplicity="exactlyOne" description="Condició de la vivenda (Accesibilitat)"> 
                 <EnumerationOption value="1" description="Pobre (Pobre: incluo ausecencia d'ascensor a l'edifici del pacient en pacientss amb un dolent estatus funcional)"/>
@@ -1208,7 +1218,7 @@
             <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="exactlyOne" description="Retard màxim en minuts" additionalDescription="Retard màxim perque el pacient es prengui la mesura"/> 
             <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Data d'inici"/> 
             <AttributeDefinition id="enddate" type="date.after(tartdate)" multiplicity="exactlyOne" description="Data de fi (Exactament 10 dies desprès de la data inicial)"/> 
-            <AttributeDefinition id="timeslot" type="enumeration" defaultValues="['BREAKFAST','ANYTIMEDURINGDAY']" multiplicity="atLeastOne" description="Franges per prendre les mesures" additionalDescription="Es poden seleccionar múltiples franges, cal seleccionar-ne almenys una">     
+            <AttributeDefinition id="timeslot" type="enumeration" defaultValues="['BREAKFAST','OPTIONAL']" multiplicity="atLeastOne" description="Franges per prendre les mesures" additionalDescription="Es poden seleccionar múltiples franges, cal seleccionar-ne almenys una">     
                 <EnumerationOption value="BREAKFAST" description="Abans d'esmorzar"/>
                 <!--<EnumerationOption value="ANYTIMEDURINGDAY" description="En qualsevol moment del dia, si es troba pitjor (sota símptomes). La presa ha de ser en respòs" additionalDescription="Seleccioneu aquesta opció quan el temps del dia no importa"/>-->
 				<EnumerationOption value="OPTIONAL" description="En qualsevol moment del dia, si es troba pitjor (sota símptomes). La presa ha de ser en respòs"/>
@@ -1277,7 +1287,7 @@
             <SummarySectionDefinition id="LCS2_Barriers" description="Barreres" position="RIGHT">   			
 				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_MedicationFollowing.medication2"/>
 				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_Medication.Medication5"/>
-				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_SelfCareAuto.sca5"/>
+				<SummaryParamDefinition path="LCS2_Evaluation.LCS2_SelfCareAuto.sca6"/>
                 <SummaryParamDefinition path="LCS2_Evaluation.LCS2_SocialDwelling.dwelling5"/>	
                 <SummaryParamDefinition path="LCS2_Evaluation.LCS2_SocialSelfCareCareerAbility.career5"/>				
             </SummarySectionDefinition>
@@ -1632,7 +1642,9 @@
                     <TaskParamDefinition path="LCS2_Evaluation.LCS2_SelfCareAuto.sca2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS2_Evaluation.LCS2_SelfCareAuto.sca3" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS2_Evaluation.LCS2_SelfCareAuto.sca4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS2_Evaluation.LCS2_SelfCareAuto.sca5" isReadOnly="true" isMandatory="false"/>
+					<TaskParamDefinition path="LCS2_Evaluation.LCS2_SelfCareAuto.sca5" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS2_Evaluation.LCS2_SelfCareAuto.sca6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Evaluation.LCS2_SelfCareAuto.sca7" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
 
                 <!-- Cirugia/ infermera/ Treballador social  -->    
@@ -1664,7 +1676,7 @@
                 </SentryDefinition> 
 
                 <!-- Gerard no ho vol pq ho hauria de fer el metge de primaria pero no ho vol fer  LCS2_MonitoringHospitalizationMeasureDHHT -->
-                <HumanTaskDefinition id="LCS2_AnaemiaAssessmentAndManagementNutritionBHHT" description="Anemia, proteínes" ownerPath="LCS2_Settings.AnesClinic" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS2_AnaemiaAssessmentAndManagementNutritionDef" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_AnaemiaAssessmentAndManagementNutritionBH">
+                <HumanTaskDefinition id="LCS2_AnaemiaAssessmentAndManagementNutritionBHHT" description="Anemia. Tractament Ferro" ownerPath="LCS2_Settings.AnesClinic" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS2_AnaemiaAssessmentAndManagementNutritionDef" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_AnaemiaAssessmentAndManagementNutritionBH">
                     <!-- Test Felix - KitiaraJuanma
                     <SentryDefinition>
                         <precondition expression = "LCS2_Evaluation.LCS2_DiagnosisNutritionEvaluation.nutrition1>0"/>
