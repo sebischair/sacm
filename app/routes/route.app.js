@@ -25,7 +25,6 @@ import userdefinition from './group/route.userdefinition';
 import user from './group/route.user';
 import group from './group/route.group';
 import importer from './route.import';
-import test from './route.test';
 import job from './route.job';
 import context from './route.context';
 
@@ -72,9 +71,6 @@ function routes(){
 
     /** Import route */
     router.use('/import', importer);
-
-    /** Other routes */
-    router.use('/test', test);
 
     /** Jobs route */
     router.use('/jobs', job);
