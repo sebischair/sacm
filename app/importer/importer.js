@@ -1,5 +1,6 @@
 'use strict';
 import Promise from 'bluebird';
+import winston from 'winston';
 import request from 'request-promise';
 import colors from 'colors';
 import xml2js from 'xml2js';
@@ -57,9 +58,9 @@ module.exports = class Importer {
 
     getWorkspaceIdByXMLId(workspaceXMLId){
       if(workspaceXMLId == null)
-        console.error('Workspace Id can not be null!');
+        winston.error('Workspace Id can not be null!');
       else if(!this.workspaceMap.has(workspaceXMLId))
-        console.error('ERROR: Workspace ID "'+workspaceXMLId+'" not found');
+        winston.error('ERROR: Workspace ID "'+workspaceXMLId+'" not found');
       else
         return this.workspaceMap.get(workspaceXMLId);  
     }
@@ -79,7 +80,7 @@ module.exports = class Importer {
         if(userXMLId == null)
           return null
         else if(!this.userMap.has(userXMLId)){
-          console.log('ERROR: User ID "'+userXMLId+'" not found');
+          winston.error('ERROR: User ID "'+userXMLId+'" not found');
           return new Error('ERROR: User ID "'+userXMLId+'" not found');
         }else
           return this.userMap.get(userXMLId);  
@@ -87,32 +88,32 @@ module.exports = class Importer {
 
     getUserAttributeDefinitionIdByXMLId(userAttributeDefinitionXMLId){
       if(userAttributeDefinitionXMLId == null)
-        console.error('User attribute definition Id can not be null!');
+        winston.error('User attribute definition Id can not be null!');
       else if(!this.userAttributeDefinitionMap.has(userAttributeDefinitionXMLId))
-        console.error('ERROR: User attribute definition ID "'+userAttributeDefinitionXMLId+'" not found');
+        winston.error('ERROR: User attribute definition ID "'+userAttributeDefinitionXMLId+'" not found');
       else
         return this.userAttributeDefinitionMap.get(userAttributeDefinitionXMLId);  
     }
 
     getGroupIdByXMLId(groupXMLId){
       if(groupXMLId == null)
-        console.error('Group Id can not be null!');
+        winston.error('Group Id can not be null!');
       else if(!this.groupMap.has(groupXMLId))
-        console.error('ERROR: Group ID "'+groupXMLId+'" not found');
+        winston.error('ERROR: Group ID "'+groupXMLId+'" not found');
       else
         return this.groupMap.get(groupXMLId);  
     }
 
     isGroupByXMLId(groupXMLId){
       if(groupXMLId == null)
-        console.error('Group Id can not be null!');
+        winston.error('Group Id can not be null!');
       else 
         return this.groupMap.has(groupXMLId);
     }
 
     getPrincipalIdByXMLId(principalXMLId){
       if(principalXMLId == null)
-          console.error('Principal Id can not be null!');
+        winston.error('Principal Id can not be null!');
       else{
         let principalId = null;
         let count = 0;
@@ -127,7 +128,7 @@ module.exports = class Importer {
         if(count == 1)
           return principalId;
         else
-          console.error('ERROR: PrincipalId "'+principalXMLId+'" not found or not unique! Found count: '+count);
+          winston.error('ERROR: PrincipalId "'+principalXMLId+'" not found or not unique! Found count: '+count);
       }
     }
 
@@ -146,7 +147,7 @@ module.exports = class Importer {
       if(entityDefinitionXMLId == null)
         return null;
       if(!this.entityDefinitionMap.has(entityDefinitionXMLId)){
-        console.log('EntityDefintion ID "'+entityDefinitionXMLId+'" not found');
+        winston.error('EntityDefintion ID "'+entityDefinitionXMLId+'" not found');
         throw new Error('EntityDefintion ID "'+entityDefinitionXMLId+'" not found');
       }else
         return this.entityDefinitionMap.get(entityDefinitionXMLId);     
@@ -217,7 +218,7 @@ module.exports = class Importer {
         }
       })
       .catch(err=>{
-        console.log(err);
+        winston.error(err);
         return Promise.reject(err);
       })
     }
@@ -388,7 +389,7 @@ module.exports = class Importer {
             return Promise.resolve();
           })
           .catch(err=>{
-            console.error(err);
+            winston.error(err);
             return Promise.reject(err);
           });
       });
@@ -435,7 +436,7 @@ module.exports = class Importer {
             return Promise.resolve();
           })
           .catch(err=>{
-            console.error(err);
+            winston.error(err);
           })
       });
     }
@@ -467,7 +468,7 @@ module.exports = class Importer {
         if(g.$.staticId != null)
           data.id = g.$.staticId;
         if(g.Administrator == null){
-          console.error('No administrator defined for group!');
+          winston.error('No administrator defined for group!');
           return Promise.reject('No administrator defined for group!');
         }
         return Promise.each(g.Administrator, a=>{  
@@ -482,12 +483,12 @@ module.exports = class Importer {
           return Promise.resolve();
         })
         .catch(err=>{
-          console.log(err);
+          winston.error(err);
           return Promise.reject(err);
         });
         
       }).catch(err=>{
-        console.log(err);
+        winston.error(err);
         return Promise.reject(err);
       })
     }
@@ -583,7 +584,7 @@ module.exports = class Importer {
           });
       })
       .catch(err=>{
-        console.log(err);
+        winston.error(err);
         return Promise.reject(err);
       })
     }
@@ -678,7 +679,7 @@ module.exports = class Importer {
       const ref = type.split('.');   
       const validTypes = ['link', 'notype', 'string', 'longtext', 'boolean', 'number', 'enumeration', 'date', 'json'];
       if(validTypes.indexOf(ref[0].toLowerCase()) == -1){        
-        console.log('Could not resolve attribute "'+type+'" type!');
+        winston.error('Could not resolve attribute "'+type+'" type!');
         throw new Error('Could not resolve attribute type!');
       }else{
         attrDef.attributeType = ref[0].toLowerCase();
@@ -722,7 +723,7 @@ module.exports = class Importer {
       } 
       if(attrDef.attributeType == 'enumeration'){
         if(AttributeDefinition.EnumerationOption == null){
-          console.log('A Enumeration should provide at least one value!');
+          winston.error('A Enumeration should provide at least one value!');
           throw new Error('A Enumeration should provide at least one value!');
         }else{
           attrDef.attributeTypeConstraints.enumerationValues = []; 
@@ -806,7 +807,7 @@ module.exports = class Importer {
             return this.createSummarySectionDefinitions(cd.SummarySectionDefinition, persistedCaseDefinition.id);
           })
           .catch(err=>{
-            console.log(err);
+            winston.error(err);
             return Promise.reject(err);
           });
       });
@@ -975,7 +976,7 @@ module.exports = class Importer {
             return Promise.resolve();
           })
           .catch(err=>{
-            console.log(err)
+            winston.error(err)
             return Promise.reject(err);
           });
       });
@@ -1015,7 +1016,7 @@ module.exports = class Importer {
           resolve()
         })
         .catch(err=>{
-          console.log(err);
+          winston.error(err);
           reject(err);
         });
       });
@@ -1115,17 +1116,16 @@ module.exports = class Importer {
       const actions = execution[0].Action;
       if(actions == null)
         return Promise.resolve('No Action Element Defined!');
-      //console.log(JSON.stringify(actions,null,2))
-      console.log(colors.green('Execute following actions: '))
+      winston.debug(colors.green('Execute following actions: '))
       actions.forEach(action=>{
-        console.log(this.getActionConsoleString(action))
+        winston.debug(this.getActionConsoleString(action))
       });
       return Promise.each(actions, action=>{
         let p = Promise.resolve();
         if(isDebug && action.$.breakpoint)
           p = prompt('Press enter to continue with action "'+action.$.id+'('+action.$.processId+')": ')
         return p.then(()=>{
-          console.log(colors.green('Start '+this.getActionConsoleString(action)));          
+          winston.debug(colors.green('Start '+this.getActionConsoleString(action)));          
           if(action.$.id == "ActivateStage"){
             return this.activateStageWithName(caseId, action.$.processId);
 
@@ -1207,7 +1207,7 @@ module.exports = class Importer {
         if(XMLIds.has(XMLId))
           nrCovered++;
       }
-      console.log("The execution definition covers "+nrCovered+" / "+nrTotal+" HumanTaskDefinitions!");
+      winston.debug("The execution definition covers "+nrCovered+" / "+nrTotal+" HumanTaskDefinitions!");
     }
 
     printAutomatedTaskDefinitionExecutionCoverage(actions){
@@ -1219,7 +1219,7 @@ module.exports = class Importer {
         if(XMLIds.has(XMLId))
           nrCovered++;
       }
-      console.log("The execution definition covers "+nrCovered+" / "+nrTotal+" AutomatedTaskDefinitions!");
+      winston.debug("The execution definition covers "+nrCovered+" / "+nrTotal+" AutomatedTaskDefinitions!");
     }
 
     printDualTaskDefinitionExecutionCoverage(actions){
@@ -1231,7 +1231,7 @@ module.exports = class Importer {
         if(XMLIds.has(XMLId))
           nrCovered++;
       }
-      console.log("The execution definition covers "+nrCovered+" / "+nrTotal+" DualTaskDefinitions!");
+      winston.debug("The execution definition covers "+nrCovered+" / "+nrTotal+" DualTaskDefinitions!");
     }
 
     getParms(action){

@@ -1,4 +1,5 @@
 import express from 'express';
+import winston from 'winston';
 import Importer from './../importer/importer';
 import WorkspaceImporter from './../importer/importer.workspace';
 import CaseDefinitionImporter from './../importer/importer.casedefinition';
@@ -35,7 +36,7 @@ router.post('/all', (req, res, next)=>{
       res.status(200).send(case1);
     })
     .catch(err=>{
-      console.log(err);
+      winston.error(err);
       res.status(500).send(err)
     });
 });
@@ -73,7 +74,7 @@ router.post('/workspaces', (req, res, next)=>{
       res.status(200).send(workspaces);
     })
     .catch(err=>{
-      console.log(err);
+      winston.error(err);
       res.status(500).send(err.toString())
     });
     

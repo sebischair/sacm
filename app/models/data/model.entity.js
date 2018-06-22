@@ -1,4 +1,5 @@
 import Promise from 'bluebird';
+import winston from 'winston';
 import http from '../http';
 import Model from '../model';
 import colors from 'colors';
@@ -24,9 +25,9 @@ export default class Entity extends Model{
 
   static printEntityWithDeepLinks(entity){
     try{
-      console.log('\n'+this.entityWithDeepLinksToString(entity, ''));
+      winston.debug('\n'+this.entityWithDeepLinksToString(entity, ''));
     }catch(e){
-      console.error(e);
+      winston.error(e);
     };
   }
 

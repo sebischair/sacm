@@ -6,6 +6,7 @@ import colors from 'colors';
 import atob from 'atob';
 import jwt from 'jsonwebtoken';
 import fs from 'fs';
+import winston from 'winston';
 
 const secret = fs.readFileSync('public.key.pem')+'';
 
@@ -47,17 +48,17 @@ function getEmailFromJWT(jwtToken){
 function successRequest(method, url, reqBody, resBody, statusCode, start, jwt){
     const durationInMs = +(new Date().getTime()-start.getTime())+"ms";
     getEmailFromJWT(jwt).then(email=>{
-        console.log('SC-'+method+': '+ url + " "+colors.green(statusCode)+" "+durationInMs +" "+email);
+        winston.debug('SC-'+method+': '+ url + " "+colors.green(statusCode)+" "+durationInMs +" "+email);
     });    
 }
 
 function errorRequest(method, url, reqBody, resBody, statusCode, start, jwt){
     const durationInMs = +(new Date().getTime()-start.getTime())+"ms";
     getEmailFromJWT(jwt).then(email=>{
-        console.log('email: '+email)
-        console.log(colors.red('SC-'+method+': '+ url + " "+colors.green(statusCode))+" "+durationInMs+" "+email);
-        console.log(reqBody);
-        console.log(resBody);
+        winston.error('email: '+email)
+        winston.error(colors.red('SC-'+method+': '+ url + " "+colors.green(statusCode))+" "+durationInMs+" "+email);
+        winston.error(reqBody);
+        winston.error(resBody);
     }); 
 }
 
@@ -91,9 +92,9 @@ module.exports = {
     },
     post: function(jwt, path, data){
         const start = new Date();
-        //console.log('###### POST 2 #######');
-        console.log(JSON.stringify(data));
-        //console.log('###### POST 2 END #######');
+        //winston.debug('###### POST 2 #######');
+        winston.debug(JSON.stringify(data));
+        //winston.debug('###### POST 2 END #######');
         return new Promise(function (resolve, reject){
             rq.post({
                 uri: config.sociocortex.url +path,

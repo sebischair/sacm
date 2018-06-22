@@ -1,4 +1,5 @@
 import express from 'express';
+import colors from 'colors';
 import path from 'path';
 import favicon from 'serve-favicon';
 import logger from 'morgan';
@@ -18,7 +19,42 @@ import uuid from 'uuid/v1';
 import maxmind from 'maxmind';
 import winston from 'winston';
 
-winston.add(winston.transports.File, { filename: 'sacm.backend.log' });
+const logFormatterConsole = function(options) {
+  let log = (options.message ? options.message : '') +
+      (options.meta && Object.keys(options.meta).length ? ''+ JSON.stringify(options.meta) : '');
+  //if(options.level == 'error')
+  //  log = colors.red(log);
+  //if(options.level == 'warn')
+  //  log = colors.yellow(log); 
+  return log;
+};
+
+const logFormatterFile = function(options) {
+  let colorCharacters = (colors.green('#')+'#'+colors.red('#')).split('#');
+  if(options.message)
+    for(let i=0; i<colorCharacters.length; i++){
+      options.message = options.message.replace(colorCharacters[i],'');
+    }    
+  return options.timestamp() +' ['+ options.level.toUpperCase() + '] '+ (options.message ? options.message : '') +
+      (options.meta && Object.keys(options.meta).length ? '\n\t'+ JSON.stringify(options.meta) : '');
+};
+
+const logTimestamp = function() {
+  return new Date().toISOString();
+};
+
+winston.clear()
+winston.add(winston.transports.Console, {json:false, formatter:logFormatterConsole, timestamp:logTimestamp, level: config.winston.console.level});
+winston.add(winston.transports.File, { filename: config.winston.file.path, json:false, formatter:logFormatterFile, timestamp:logTimestamp, level: config.winston.file.level});
+
+winston.stream = {
+  write: function(message, encoding) {
+    if(message.includes('[31m500'))
+      winston.error(message.replace('\n',''));
+    else  
+      winston.debug(message.replace('\n',''));
+  },
+};
 
 const secret = fs.readFileSync('public.key.pem')+'';
 
@@ -70,13 +106,13 @@ app.use(function(req, res, next) {
     });
     req.on('end', function() {
       req.rawBody = data;
-      //console.log(data.toString('utf-8'))
+      //winston.debug(data.toString('utf-8'))
       next();
     });
   }
 });
 
-app.use(logger('dev'));
+app.use(logger('dev', { stream: winston.stream }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false, limit:'5mb'}));
 app.use(cookieParser());
@@ -88,14 +124,14 @@ app.use('/api/v1', (req, res, next)=>{
   /** Use different user for test execution as for import */
   if(req.headers.executionuser != null){
     req.executionJwt = http.generateJWT(req.headers.executionuser, config.sociocortex.defaultPassword);
-    console.log(req.executionJwt);    
+    winston.debug(req.executionJwt);    
   }
 
   /** Testing Simulate User Authorization */
   if(req.headers.simulateuser != null && req.headers.authorization == null){
     req.jwt = http.generateJWT(req.headers.simulateuser, config.sociocortex.defaultPassword);
-    console.log('simulate user '+req.headers.simulateuser);
-    console.log(req.jwt);    
+    winston.debug('simulate user '+req.headers.simulateuser);
+    winston.debug(req.jwt);    
     Log.simulateUserLog(req, req.headers.simulateuser);
     next();
   }else{
@@ -112,7 +148,7 @@ app.use('/api/v1', (req, res, next)=>{
         const token = authorization.replace('Bearer ','');
         jwt.verify(token, secret, {algorithms: ['RS256']}, (err, decoded)=> {
           if(err){
-            console.log('err: '+err);
+            winston.error('err: '+err);
             res.status(403).send(err);
           }else{
             req.jwt = 'conecarebearer '+token;  
@@ -142,7 +178,7 @@ app.use((err, req, res, next)=>{
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
+  
   // render the error page
   res.status(err.status || 500);
   res.status(500).send(err);

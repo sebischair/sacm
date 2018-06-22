@@ -1,4 +1,5 @@
 import Promise from 'bluebird';
+import winston from 'winston';
 import http from '../http';
 import Model from '../model';
 import config from '../../../config';
@@ -60,7 +61,7 @@ export default class User extends Model{
           return User.deleteById(jwt, user.id);
         })
         .catch(err=>{
-          console.log(err);
+          winston.error(err);
         })
       });
   }

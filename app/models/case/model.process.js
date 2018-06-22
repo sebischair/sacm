@@ -39,7 +39,6 @@ export default class Process extends Model{
   static findByCaseQueryLast(jwt, caseId, query){
     return this.findByCaseQuery(jwt, caseId, query)
       .then(processes=>{
-        console.log(process.length)
         if(processes.length == 0)
           return Promise.reject('No process for caseId: "'+caseId+'" and query: "'+JSON.stringify(query)+'" found');
         else 
