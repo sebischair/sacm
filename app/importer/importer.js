@@ -608,6 +608,9 @@ module.exports = class Importer {
         })
         .then(() => {
           return this.createSentryDefinitions(Workspace);
+        })
+        .then(() => {
+          return this.setCaseDefinitionAsInstantiable();
         });
     }
 
@@ -1097,6 +1100,10 @@ module.exports = class Importer {
           return SentryDefinition.create(this.jwt, data);
         });
       });
+    }
+
+    setCaseDefinitionAsInstantiable(){
+      return CaseDefinition.updateById(this.jwt, {id: this.caseDefinitionMap.values().next().value, isInstantiable:true});
     }
 
     createCase(){
