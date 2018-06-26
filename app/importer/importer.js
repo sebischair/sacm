@@ -1,7 +1,6 @@
 'use strict';
 import Promise from 'bluebird';
 import winston from 'winston';
-import request from 'request-promise';
 import colors from 'colors';
 import xml2js from 'xml2js';
 import prompt from 'prompt-promise';
@@ -30,7 +29,6 @@ import Process from '../models/case/model.process';
 import Alert from '../models/case/model.alert';
 import Settings from '../models/settings/model.settings';
 import config from '../../config';
-import { deprecate } from 'util';
 const xml2jspromise = Promise.promisifyAll(xml2js);
 const fs = Promise.promisifyAll(require("fs"));
 
@@ -225,84 +223,6 @@ module.exports = class Importer {
 
     parseXMLString(xmlString){
       return xml2jspromise.parseStringAsync(xmlString, {explicitChildren:true, preserveChildrenOrder:true});
-    }
-
-    import(jwt, file, isExecuteCase, executionJwt){ 
-      let path = 'app/importer/';
-      let filePath = path+file;
-      this.jwt = jwt;     
-      this.executionJwt = executionJwt;
-      return this.fileExists(filePath)
-        .then(exist =>{
-          if(!exist)
-            throw new Error('File does not exist' + filePath);
-          else {         
-            //return xml.parseStringAsync(fs.readFileSync(filePath).toString());
-            let xml = fs.readFileSync(filePath).toString();
-            let includes = xml.match(/<include.*>/g);
-            if(includes)
-              includes.forEach(include=> {
-                let href = include.match(/src=".*"/g);
-                if(href !== null){
-                  href = href[0];
-                  href = href.replace('src="','').replace('"','');
-                  if(!fs.existsSync(path+'/'+href))
-                    throw new Error('Could not find include file: '+path+'/'+href);
-                  let incXml = fs.readFileSync(path+'/'+href).toString();  
-                  xml = xml.replace(include, incXml);
-                }
-              });
-            fs.writeFileSync(filePath+'.merged.xml.tmp',xml);
-            return xml2jspromise.parseStringAsync(xml);
-          }
-        })
-        .then(json=>{
-          this.json = json.SACMDefinition;
-          fs.writeFileSync(filePath+'.merged.json.tmp',JSON.stringify(this.json,null,3));
-          return this.initializeMaps();
-        })
-        .then(()=>{
-          return Workspace.deleteAll(this.jwt);
-        })
-        .then(()=>{
-          return this.deleteUserDefinitionAttributeDefinitions();
-        })
-        .then(()=>{
-          return this.createUserDefinition();
-        })
-        .then(()=>{
-          return Group.deleteAll(this.jwt);                  
-        })
-        .then(()=>{
-          return User.deleteAll(this.jwt);  
-        })
-        .then(()=>{
-          return this.createUsers();
-        })
-        .then(()=>{
-          return this.createGroups();
-        })
-        .then(()=>{
-          return this.createMemberships();
-        })
-        .then(()=>{
-          return this.createAdminMemberships();
-        })
-        .then(()=>{
-          return this.updateSettings();
-        })
-        .then(()=>{
-          return this.createWorkspaces();
-        })            
-        .then(() => {
-          return this.createCase();
-        })      
-        .then(caseInstance => {
-          if(!isExecuteCase)
-            return Promise.resolve(caseInstance);
-          else
-            return this.executeCase();
-        });            
     }
 
     fileExists(filePath) {
