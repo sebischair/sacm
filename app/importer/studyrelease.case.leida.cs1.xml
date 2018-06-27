@@ -337,7 +337,10 @@
 			<DerivedAttributeDefinition id="bodysvg" explicitType="String" expression='replace(replace(bodytemplate, "#dynamicstylevars{}", bodystyle), "#charlsonscorevar", (if ch21=0 then "N.A." else string(ch21)))' description="" uiReference="svg"/>     
 		</EntityDefinition>			
 		
-        <EntityDefinition id="LCS1_ComorbidityPfeiffer">					
+        <EntityDefinition id="LCS1_ComorbidityPfeiffer">	
+			<AttributeDefinition id="pfeiffer0" uiReference="link" type="string" multiplicity="exactlyOne" description="Enllaç al test de Pfeiffer (versió en castellà)"   			
+			defaultValue="https://www.hvn.es/enfermeria/ficheros/test_de_pfeiffer_version_espanola.pdf"/>
+			
             <AttributeDefinition id="pfeiffer1" type="enumeration" multiplicity="exactlyOne" description="Número de errades">
                 <EnumerationOption value="0" description="0"/>
                 <EnumerationOption value="1" description="1"/>
@@ -1477,6 +1480,7 @@
                 <HumanTaskDefinition id="LCS1_ComorbidityPfeifferHT" description="Estat cognitiu/mental - Pfeiffer" 
 				footnote="Pfeiffer, E. (1975). A short portable mental status questionnaire for the assessment of organic brain deficit in elderly patients. Journal of American Geriatrics Society. 23, 433-41."
 				ownerPath="LCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1_ComorbidityPfeiffer" entityAttachPath="LCS1_Evaluation.LCS1_ComorbidityPfeiffer">
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_ComorbidityPfeiffer.pfeiffer0" isReadOnly="true" isMandatory="false"/>
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_ComorbidityPfeiffer.pfeiffer1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS1_Evaluation.LCS1_ComorbidityPfeiffer.pfeiffer2" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>        
