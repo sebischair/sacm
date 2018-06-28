@@ -99,13 +99,14 @@
             <AttributeDefinition id="GCS1_ACQ" type="Link.EntityDefinition.GCS1_ACQ" description=": Asthma control (ACQ)"/>   
             <AttributeDefinition id="GCS1_Spirometry" type="Link.EntityDefinition.GCS1_Spirometry" description=" lung function - Spirometry"/> 
             <AttributeDefinition id="GCS1_Demographics" type="Link.EntityDefinition.GCS1_Demographics" description=" Demographics"/> 
-            <AttributeDefinition id="GCS1_medication_overview" type="Link.EntityDefinition.GCS1_medication_overview" description=" medication overview"/> 			
+            <AttributeDefinition id="GCS1_medication_overview" type="Link.EntityDefinition.GCS1_medication_overview" description=" medication overview"/>
+            <AttributeDefinition id="GCS1_Previous_exacerbations" type="Link.EntityDefinition.GCS1_Previous_exacerbations" description=" Previous exacerbations"/>  			
             <AttributeDefinition id="GCS1_NRS" type="Link.EntityDefinition.GCS1_NRS" description="Nutritional Risk Screening (NRS)"/>   
             <AttributeDefinition id="GCS1_MNASF" type="Link.EntityDefinition.GCS1_MNASF" description="Mini Nutritional Assesment (MNA-SF)"/> 
             <AttributeDefinition id="GCS1_HospitalAnxietyAndDepressionScale" type="Link.EntityDefinition.GCS1_HospitalAnxietyAndDepressionScale" description="Hospital Anxiety and Depression Scale (HADS)"/> 
         </EntityDefinition>
 
-        <EntityDefinition id="GCS1_Charlson" description="Charlson">
+        <EntityDefinition id="GCS1_Charlson" description="Charlson ">
             <AttributeDefinition id="ch1" type="enumeration" multiplicity="exactlyOne" description="Myocardial infarct">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
@@ -401,6 +402,11 @@
 				<EnumerationOption value="2" description="other"/>
             </AttributeDefinition>
         </EntityDefinition>
+	    <EntityDefinition id="GCS1_Previous_exacerbations" description="Previous exacerbations">
+            <AttributeDefinition id="prev1" type="number" multiplicity="exactlyOne" description="Exacerbaties per jaar" />
+			<AttributeDefinition id="prev2" type="number" multiplicity="exactlyOne" description="Exacerbaties Sinds laatste visite" />
+        </EntityDefinition>	
+		
         <EntityDefinition id="GCS1_NRS" description="Nutritional Risk Screening (NRS)">
             <AttributeDefinition id="nrs1" type="enumeration" multiplicity="exactlyOne" description="Is BMI <20,5?">
                 <EnumerationOption value="0" description="No"/>
@@ -853,7 +859,13 @@
 					<TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication14" isReadOnly="false" isMandatory="false"/>
 					<TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication15" isReadOnly="false" isMandatory="false"/>
                 </HumanTaskDefinition>
-				
+				<HumanTaskDefinition id="GCS1_Previous_exacerbations" description="Previous exacerbations" ownerPath="GCS1_Settings.Clinician" dueDatePath="GCS1_Settings.EvaluationDueDate" isMandatory="false" repeatable="ONCE" entityDefinitionId="GCS1_Previous_exacerbations" entityAttachPath="GCS1_Evaluation.GCS1_Previous_exacerbations">
+                    <SentryDefinition>
+                        <precondition processDefinitionId="GCS1_SetEvaluationDueDate"/>
+                    </SentryDefinition>  
+                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_Previous_exacerbations.prev1" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_Previous_exacerbations.prev12" isReadOnly="false" isMandatory="false"/>
+                </HumanTaskDefinition>
 				
 				
                 <HumanTaskDefinition id="GCS1_NRS" description="Nutritional Risk Screening (NRS)" ownerPath="GCS1_Settings.Clinician" dueDatePath="GCS1_Settings.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS1_NRS" entityAttachPath="GCS1_Evaluation.GCS1_NRS"
@@ -1079,7 +1091,10 @@
 			<TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication15"  values="['1']"/>
         </Action>
 		
-		
+		 <Action id="CompleteHumanTask" processId="GCS1_Previous_exacerbations">
+            <TaskParam path="GCS1_Evaluation.GCS1_Previous_exacerbations.prev1"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_Previous_exacerbations.prev2"  values="['1']"/>
+        </Action>
         <Action id="CompleteHumanTask" processId="GCS1_NRS">
             <TaskParam path="GCS1_Evaluation.GCS1_NRS.nrs1"  values="['1']"/>
             <TaskParam path="GCS1_Evaluation.GCS1_NRS.nrs2"  values="['0']"/>
