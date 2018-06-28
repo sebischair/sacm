@@ -97,7 +97,9 @@
             <AttributeDefinition id="GCS1_Charlson" type="Link.EntityDefinition.GCS1_Charlson" description="Charlson"/>   
             <AttributeDefinition id="CCQ" type="Link.EntityDefinition.CCQ" description="CCQ"/>   
             <AttributeDefinition id="GCS1_ACQ" type="Link.EntityDefinition.GCS1_ACQ" description=": Asthma control (ACQ)"/>   
-            <AttributeDefinition id="GCS1_Spirometry" type="Link.EntityDefinition.GCS1_Spirometry" description=" lung function - Spirometry"/>   
+            <AttributeDefinition id="GCS1_Spirometry" type="Link.EntityDefinition.GCS1_Spirometry" description=" lung function - Spirometry"/> 
+            <AttributeDefinition id="GCS1_Demographics" type="Link.EntityDefinition.GCS1_Demographics" description=" Demographics"/> 
+            <AttributeDefinition id="GCS1_medication_overview" type="Link.EntityDefinition.GCS1_medication_overview" description=" medication overview"/> 			
             <AttributeDefinition id="GCS1_NRS" type="Link.EntityDefinition.GCS1_NRS" description="Nutritional Risk Screening (NRS)"/>   
             <AttributeDefinition id="GCS1_MNASF" type="Link.EntityDefinition.GCS1_MNASF" description="Mini Nutritional Assesment (MNA-SF)"/> 
             <AttributeDefinition id="GCS1_HospitalAnxietyAndDepressionScale" type="Link.EntityDefinition.GCS1_HospitalAnxietyAndDepressionScale" description="Hospital Anxiety and Depression Scale (HADS)"/> 
@@ -351,7 +353,54 @@
 			<AttributeDefinition id="spiro5" type="number" multiplicity="exactlyOne" description="FEV1/FVC in %" />
 		    <AttributeDefinition id="spiro6" type="number" multiplicity="exactlyOne" description="Reversibiliteit in %" />
         </EntityDefinition>
-
+		 <EntityDefinition id="GCS1_Demographics" description="Demographics">
+            <AttributeDefinition id="demog1" type="number" multiplicity="exactlyOne" description="Leeftijd" />
+			<AttributeDefinition id="demog2" type="number" multiplicity="exactlyOne" description="Lengte" />
+			<AttributeDefinition id="demog3" type="number" multiplicity="exactlyOne" description="Gewicht" />
+			<AttributeDefinition id="demog4" type="number" multiplicity="exactlyOne" description="BMI" />
+			<AttributeDefinition id="demog5" type="enumeration" multiplicity="exactlyOne" description="Rookstatus" >
+			    <EnumerationOption value="0" description="Never smoked"/>
+                <EnumerationOption value="1" description="Yes, current smoker"/>
+				<EnumerationOption value="2" description="quit < 12 months ago"/>
+            </AttributeDefinition>
+		    <AttributeDefinition id="demog6" type="enumeration" multiplicity="exactlyOne" description="Anamnese" >
+                <EnumerationOption value="1" description="Asthma"/>
+				<EnumerationOption value="2" description="COPD"/>
+				<EnumerationOption value="3" description="ACO"/>
+                <EnumerationOption value="4" description="Allergy"/>
+				<EnumerationOption value="5" description="Hyperreactivity "/>
+				<EnumerationOption value="6" description="Eczema"/>
+            </AttributeDefinition>
+        </EntityDefinition>	
+        <EntityDefinition id="GCS1_medication_overview" description="medication overview">
+            <AttributeDefinition id="medication1" type="string" multiplicity="exactlyOne" description="Medicatie (stofnaam) 1" />
+			<AttributeDefinition id="medication2" type="string" multiplicity="exactlyOne" description="Medicatie (inhalator) 1" />
+			<AttributeDefinition id="medication3" type="string" multiplicity="exactlyOne" description="Dosis 1" />
+			<AttributeDefinition id="medication4" type="string" multiplicity="exactlyOne" description="Frequentie 1" />
+			<AttributeDefinition id="medication5" type="enumeration" multiplicity="exactlyOne" description="Soort 1" >
+			    <EnumerationOption value="0" description=" reliever"/>
+                <EnumerationOption value="1" description="maintenance"/>
+				<EnumerationOption value="2" description="other"/>
+			</AttributeDefinition>
+			<AttributeDefinition id="medication6" type="string" multiplicity="exactlyOne" description="Medicatie (stofnaam) 2" />
+			<AttributeDefinition id="medication7" type="string" multiplicity="exactlyOne" description="Medicatie (inhalator) 2" />
+			<AttributeDefinition id="medication8" type="string" multiplicity="exactlyOne" description="Dosis 2" />
+			<AttributeDefinition id="medication9" type="string" multiplicity="exactlyOne" description="Frequentie 2" />
+			<AttributeDefinition id="medication10" type="enumeration" multiplicity="exactlyOne" description="Soort 2" >
+			    <EnumerationOption value="0" description=" reliever"/>
+                <EnumerationOption value="1" description="maintenance"/>
+				<EnumerationOption value="2" description="other"/>
+            </AttributeDefinition>
+			<AttributeDefinition id="medication11" type="string" multiplicity="exactlyOne" description="Medicatie (stofnaam) 3" />
+			<AttributeDefinition id="medication12" type="string" multiplicity="exactlyOne" description="Medicatie (inhalator) 3" />
+			<AttributeDefinition id="medication13" type="string" multiplicity="exactlyOne" description="Dosis 3" />
+			<AttributeDefinition id="medication14" type="string" multiplicity="exactlyOne" description="Frequentie 3" />
+			<AttributeDefinition id="medication15" type="enumeration" multiplicity="exactlyOne" description="Soort 3" >
+			    <EnumerationOption value="0" description=" reliever"/>
+                <EnumerationOption value="1" description="maintenance"/>
+				<EnumerationOption value="2" description="other"/>
+            </AttributeDefinition>
+        </EntityDefinition>
         <EntityDefinition id="GCS1_NRS" description="Nutritional Risk Screening (NRS)">
             <AttributeDefinition id="nrs1" type="enumeration" multiplicity="exactlyOne" description="Is BMI <20,5?">
                 <EnumerationOption value="0" description="No"/>
@@ -772,6 +821,41 @@
 					<TaskParamDefinition path="GCS1_Evaluation.GCS1_Spirometry.spiro5" isReadOnly="false" isMandatory="false"/>
 					<TaskParamDefinition path="GCS1_Evaluation.GCS1_Spirometry.spiro6" isReadOnly="false" isMandatory="false"/>
                 </HumanTaskDefinition>
+				 <HumanTaskDefinition id="GCS1_Demographics" description="Demographics" ownerPath="GCS1_Settings.Clinician" dueDatePath="GCS1_Settings.EvaluationDueDate" isMandatory="false" repeatable="ONCE" entityDefinitionId="GCS1_Demographics" entityAttachPath="GCS1_Evaluation.GCS1_Demographics">
+                    <SentryDefinition>
+                        <precondition processDefinitionId="GCS1_SetEvaluationDueDate"/>
+                    </SentryDefinition>  
+                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_Demographics.demog1" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_Demographics.demog2" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_Demographics.demog3" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_Demographics.demog4" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_Demographics.demog5" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_Demographics.demog6" isReadOnly="false" isMandatory="false"/>
+                </HumanTaskDefinition>
+				 
+				 <HumanTaskDefinition id="GCS1_medication_overview" description="medication overview" ownerPath="GCS1_Settings.Clinician" dueDatePath="GCS1_Settings.EvaluationDueDate" isMandatory="false" repeatable="ONCE" entityDefinitionId="GCS1_medication_overview" entityAttachPath="GCS1_Evaluation.GCS1_medication_overview">
+                    <SentryDefinition>
+                        <precondition processDefinitionId="GCS1_SetEvaluationDueDate"/>
+                    </SentryDefinition>  
+                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication1" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication2" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication3" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication4" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication5" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication6" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication7" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication8" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication9" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication10" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication11" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication12" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication13" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication14" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication15" isReadOnly="false" isMandatory="false"/>
+                </HumanTaskDefinition>
+				
+				
+				
                 <HumanTaskDefinition id="GCS1_NRS" description="Nutritional Risk Screening (NRS)" ownerPath="GCS1_Settings.Clinician" dueDatePath="GCS1_Settings.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS1_NRS" entityAttachPath="GCS1_Evaluation.GCS1_NRS"
                     footnote="Reference: Kondrup, J., Rasmussen, H. H., Hamberg, O. L. E., and STANGA, Z. (2003). Nutritional risk screening (NRS 2002): a new method based on an analysis of controlled clinical trials. Clinical nutrition, 22(3), 321-336.">
                     <SentryDefinition>
@@ -969,6 +1053,33 @@
 			<TaskParam path="GCS1_Evaluation.GCS1_Spirometry.spiro5"  values="['1']"/>
 			<TaskParam path="GCS1_Evaluation.GCS1_Spirometry.spiro6"  values="['1']"/>
         </Action>
+		  <Action id="CompleteHumanTask" processId="GCS1_Demographics">
+            <TaskParam path="GCS1_Evaluation.GCS1_Demographics.demog1"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_Demographics.demog2"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_Demographics.demog3"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_Demographics.demog4"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_Demographics.demog5"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_Demographics.demog6"  values="['1']"/>
+        </Action>
+		<Action id="CompleteHumanTask" processId="GCS1_medication_overview">
+            <TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication1"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication2"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication3"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication4"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication5"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication6"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication7"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication8"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication9"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication10"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication11"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication12"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication13"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication14"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication15"  values="['1']"/>
+        </Action>
+		
+		
         <Action id="CompleteHumanTask" processId="GCS1_NRS">
             <TaskParam path="GCS1_Evaluation.GCS1_NRS.nrs1"  values="['1']"/>
             <TaskParam path="GCS1_Evaluation.GCS1_NRS.nrs2"  values="['0']"/>
