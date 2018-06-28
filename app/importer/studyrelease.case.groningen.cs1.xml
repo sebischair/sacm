@@ -100,7 +100,8 @@
             <AttributeDefinition id="GCS1_Spirometry" type="Link.EntityDefinition.GCS1_Spirometry" description=" lung function - Spirometry"/> 
             <AttributeDefinition id="GCS1_Demographics" type="Link.EntityDefinition.GCS1_Demographics" description=" Demographics"/> 
             <AttributeDefinition id="GCS1_medication_overview" type="Link.EntityDefinition.GCS1_medication_overview" description=" medication overview"/>
-            <AttributeDefinition id="GCS1_Previous_exacerbations" type="Link.EntityDefinition.GCS1_Previous_exacerbations" description=" Previous exacerbations"/>  			
+            <AttributeDefinition id="GCS1_Previous_exacerbations" type="Link.EntityDefinition.GCS1_Previous_exacerbations" description=" Previous exacerbations"/>
+            <AttributeDefinition id="GCS1_conclusion" type="Link.EntityDefinition.GCS1_conclusion" description=" conclusion"/>  			
             <AttributeDefinition id="GCS1_NRS" type="Link.EntityDefinition.GCS1_NRS" description="Nutritional Risk Screening (NRS)"/>   
             <AttributeDefinition id="GCS1_MNASF" type="Link.EntityDefinition.GCS1_MNASF" description="Mini Nutritional Assesment (MNA-SF)"/> 
             <AttributeDefinition id="GCS1_HospitalAnxietyAndDepressionScale" type="Link.EntityDefinition.GCS1_HospitalAnxietyAndDepressionScale" description="Hospital Anxiety and Depression Scale (HADS)"/> 
@@ -405,6 +406,54 @@
 	    <EntityDefinition id="GCS1_Previous_exacerbations" description="Previous exacerbations">
             <AttributeDefinition id="prev1" type="number" multiplicity="exactlyOne" description="Exacerbaties per jaar" />
 			<AttributeDefinition id="prev2" type="number" multiplicity="exactlyOne" description="Exacerbaties Sinds laatste visite" />
+        </EntityDefinition>	
+		
+		<EntityDefinition id="GCS1_conclusion" description="conclusion">
+			<AttributeDefinition id="conclusion1" type="enumeration" multiplicity="exactlyOne" description="Werk diagnose" >
+			    <EnumerationOption value="1" description="Asthma"/>
+                <EnumerationOption value="2" description="COPD"/>
+				<EnumerationOption value="3" description="ACO"/>
+				<EnumerationOption value="4" description="unknown"/>
+			    <EnumerationOption value="5" description="No obstructive lung disease "/>
+            </AttributeDefinition>
+		    <AttributeDefinition id="conclusion2" type="enumeration" multiplicity="exactlyOne" description="Ernst COPD longfunctie" >
+			    <EnumerationOption value="1" description="GOLD"/>
+                <EnumerationOption value="2" description="GOLD2"/>
+				<EnumerationOption value="3" description="GOLD3"/>
+				<EnumerationOption value="4" description="GOLD4"/>
+            </AttributeDefinition>
+			<AttributeDefinition id="conclusion3" type="enumeration" multiplicity="exactlyOne" description="Ernst COPD symptomen" >
+			    <EnumerationOption value="1" description="stabiel "/>
+                <EnumerationOption value="2" description="'Niet volledig stabiel' "/>
+				<EnumerationOption value="3" description="onstabiel"/>
+				<EnumerationOption value="4" description="Erg onstabiel"/>
+            </AttributeDefinition>
+			<AttributeDefinition id="conclusion4" type="enumeration" multiplicity="exactlyOne" description="Ernst astma controle" >
+			    <EnumerationOption value="1" description="Controlled   "/>
+                <EnumerationOption value="2" description="Partially controlled"/>
+				<EnumerationOption value="3" description="Uncontrolled"/>
+            </AttributeDefinition>
+			<AttributeDefinition id="conclusion5" type="enumeration" multiplicity="exactlyOne" description="Conclusie Longfunctie" >
+			    <EnumerationOption value="1" description="Well assessabl"/>
+                <EnumerationOption value="2" description="Indication for restriction"/>
+				<EnumerationOption value="3" description="Normal, reversible"/>
+				<EnumerationOption value="4" description="Normal, not reversible"/>
+			    <EnumerationOption value="5" description="Light, reversible"/>
+				<EnumerationOption value="6" description="Moderate, reversible"/>
+                <EnumerationOption value="7" description="Serious, reversible"/>
+				<EnumerationOption value="8" description="Very serious reversible"/>
+				<EnumerationOption value="9" description="Light,not reversible"/>
+			    <EnumerationOption value="10" description="Serious not reversible"/>
+				<EnumerationOption value="11" description="Very serious, not reversible"/>
+                <EnumerationOption value="12" description="Normal"/>
+				<EnumerationOption value="13" description="Light obstruction"/>
+				<EnumerationOption value="14" description="Moderate obstruction"/>
+			    <EnumerationOption value="15" description="Serious obstruction"/>
+				<EnumerationOption value="16" description="Indication for restriction"/>
+				<EnumerationOption value="17" description="Very serious obstruction"/>
+				<EnumerationOption value="18" description="Devious, See remarks"/>
+			    <EnumerationOption value="19" description="Bronchusobstruction"/>
+            </AttributeDefinition>
         </EntityDefinition>	
 		
         <EntityDefinition id="GCS1_NRS" description="Nutritional Risk Screening (NRS)">
@@ -866,6 +915,16 @@
                     <TaskParamDefinition path="GCS1_Evaluation.GCS1_Previous_exacerbations.prev1" isReadOnly="false" isMandatory="false"/>
 					<TaskParamDefinition path="GCS1_Evaluation.GCS1_Previous_exacerbations.prev12" isReadOnly="false" isMandatory="false"/>
                 </HumanTaskDefinition>
+				<HumanTaskDefinition id="GCS1_conclusion" description="conclusion" ownerPath="GCS1_Settings.Clinician" dueDatePath="GCS1_Settings.EvaluationDueDate" isMandatory="false" repeatable="ONCE" entityDefinitionId="GCS1_Demographics" entityAttachPath="GCS1_Evaluation.GCS1_conclusion">
+                    <SentryDefinition>
+                        <precondition processDefinitionId="GCS1_SetEvaluationDueDate"/>
+                    </SentryDefinition>  
+                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_conclusion.conclusion1" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_conclusion.conclusion2" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_conclusion.conclusion3" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_conclusion.conclusion4" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_conclusion.conclusion5" isReadOnly="false" isMandatory="false"/>
+                </HumanTaskDefinition>
 				
 				
                 <HumanTaskDefinition id="GCS1_NRS" description="Nutritional Risk Screening (NRS)" ownerPath="GCS1_Settings.Clinician" dueDatePath="GCS1_Settings.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS1_NRS" entityAttachPath="GCS1_Evaluation.GCS1_NRS"
@@ -1094,6 +1153,13 @@
 		 <Action id="CompleteHumanTask" processId="GCS1_Previous_exacerbations">
             <TaskParam path="GCS1_Evaluation.GCS1_Previous_exacerbations.prev1"  values="['1']"/>
 			<TaskParam path="GCS1_Evaluation.GCS1_Previous_exacerbations.prev2"  values="['1']"/>
+        </Action>
+		  <Action id="CompleteHumanTask" processId="GCS1_Demographics">
+            <TaskParam path="GCS1_Evaluation.GCS1_conclusion.conclusion1"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_conclusion.conclusion2"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_conclusion.conclusion3"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_conclusion.conclusion4"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_conclusion.conclusion5"  values="['1']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="GCS1_NRS">
             <TaskParam path="GCS1_Evaluation.GCS1_NRS.nrs1"  values="['1']"/>
