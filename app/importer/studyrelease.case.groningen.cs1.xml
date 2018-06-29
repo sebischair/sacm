@@ -96,14 +96,15 @@
         <EntityDefinition id="GCS1_Evaluation" description="Evaluation">
             <AttributeDefinition id="GCS1_Charlson" type="Link.EntityDefinition.GCS1_Charlson" description="Charlson"/>   
             <AttributeDefinition id="CCQ" type="Link.EntityDefinition.CCQ" description="CCQ"/>   
-            <AttributeDefinition id="GCS1_ACQ" type="Link.EntityDefinition.GCS1_ACQ" description=": Asthma control (ACQ)"/>   
-            <AttributeDefinition id="GCS1_Spirometry" type="Link.EntityDefinition.GCS1_Spirometry" description=" lung function - Spirometry"/>   
-            <AttributeDefinition id="GCS1_NRS" type="Link.EntityDefinition.GCS1_NRS" description="Nutritional Risk Screening (NRS)"/>   
-            <AttributeDefinition id="GCS1_MNASF" type="Link.EntityDefinition.GCS1_MNASF" description="Mini Nutritional Assesment (MNA-SF)"/> 
-            <AttributeDefinition id="GCS1_HospitalAnxietyAndDepressionScale" type="Link.EntityDefinition.GCS1_HospitalAnxietyAndDepressionScale" description="Hospital Anxiety and Depression Scale (HADS)"/> 
+            <AttributeDefinition id="GCS1_ACQ" type="Link.EntityDefinition.GCS1_ACQ" description="Asthma control (ACQ)"/>   
+            <AttributeDefinition id="GCS1_Spirometry" type="Link.EntityDefinition.GCS1_Spirometry" description=" lung function - Spirometry"/> 
+            <AttributeDefinition id="GCS1_Demographics" type="Link.EntityDefinition.GCS1_Demographics" description=" Demographics"/> 
+            <AttributeDefinition id="GCS1_medication_overview" type="Link.EntityDefinition.GCS1_medication_overview" description=" medication overview"/>
+            <AttributeDefinition id="GCS1_Previous_exacerbations" type="Link.EntityDefinition.GCS1_Previous_exacerbations" description=" Previous exacerbations"/>
+            <AttributeDefinition id="GCS1_conclusion" type="Link.EntityDefinition.GCS1_conclusion" description=" conclusion"/>  			
         </EntityDefinition>
 
-        <EntityDefinition id="GCS1_Charlson" description="Charlson">
+        <EntityDefinition id="GCS1_Charlson" description="Charlson ">
             <AttributeDefinition id="ch1" type="enumeration" multiplicity="exactlyOne" description="Myocardial infarct">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
@@ -287,7 +288,7 @@
         </EntityDefinition>
 
         <EntityDefinition id="GCS1_ACQ" description="Asthma control (ACQ)">
-            <AttributeDefinition id="ACQ1" type="enumeration" multiplicity="exactlyOne" description="Hoe vaak bent u per nacht gemiddeld">
+            <AttributeDefinition id="ACQ1" type="enumeration" multiplicity="exactlyOne" description="Hoe vaak bent u per nacht gemiddeld wakker geworden door uw Astma in de afgelopen week?">
                 <EnumerationOption value="0" description="nooit"/>
                 <EnumerationOption value="1" description="Bijna nooit"/>
                 <EnumerationOption value="2" description="Een paar keer"/>
@@ -296,7 +297,7 @@
 				<EnumerationOption value="5" description="Heel vaak"/>
 				<EnumerationOption value="6" description="Kon niet slapen vanwege astma"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ACQ2" type="enumeration" multiplicity="exactlyOne" description="Hoe ernstig waren uw astmaklachten bij">
+            <AttributeDefinition id="ACQ2" type="enumeration" multiplicity="exactlyOne" description="Hoe ernstig waren uw astmaklachten bij het 's morgens wakker worden gemiddeld in de afgelopen week?">
                 <EnumerationOption value="0" description="Geen klachten"/>
                 <EnumerationOption value="1" description="Heel lichte klachten"/>
                 <EnumerationOption value="2" description="Lichte klachten"/>
@@ -314,7 +315,7 @@
 				<EnumerationOption value="5" description=" Heel erg beperkt"/>
 				<EnumerationOption value="6" description="Volledig beperkt"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ACQ4" type="enumeration" multiplicity="exactlyOne" description=":In welke mate heeft u zich over het algemeen">
+            <AttributeDefinition id="ACQ4" type="enumeration" multiplicity="exactlyOne" description=":In welke mate heeft u zich over het algemeen kortademig gevoeld in de afgelopen week tengevolge van uw astma?">
                 <EnumerationOption value="0" description=" Helemaal niet"/>
                 <EnumerationOption value="1" description="Nauwelijks"/>
                 <EnumerationOption value="2" description="Een beetje "/>
@@ -323,7 +324,7 @@
 				<EnumerationOption value="5" description=" Ernstig"/>
 				<EnumerationOption value="6" description="Heel ernstig"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ACQ5" type="enumeration" multiplicity="exactlyOne" description="Hoe vaak had u in de afgelopen week over">
+            <AttributeDefinition id="ACQ5" type="enumeration" multiplicity="exactlyOne" description="Hoe vaak had u in de afgelopen week over het algemeen een piepende ademhaling?">
                 <EnumerationOption value="0" description="Nooit"/>
                 <EnumerationOption value="1" description=" Zelden"/>
                 <EnumerationOption value="2" description="Af en toe "/>
@@ -332,7 +333,7 @@
 				<EnumerationOption value="5" description=" Meestal"/>
 				<EnumerationOption value="6" description="Altijd"/>
             </AttributeDefinition>
-            <AttributeDefinition id="ACQ6" type="enumeration" multiplicity="exactlyOne" description="Hoe veel puffs/inhalaties van een">
+            <AttributeDefinition id="ACQ6" type="enumeration" multiplicity="exactlyOne" description="Hoe veel puffs/inhalaties van een kortwerkend luchtwegverwijdend middel (bijv. ventolin,bricanyl, salbutamol of airomir) heeft u op de meeste dagen genomen in de afgelopen week?">
                 <EnumerationOption value="0" description="Geen"/>
                 <EnumerationOption value="1" description="1-2 puffs/inhalaties"/>
                 <EnumerationOption value="2" description="3-4 puffs/inhalaties"/>
@@ -351,174 +352,106 @@
 			<AttributeDefinition id="spiro5" type="number" multiplicity="exactlyOne" description="FEV1/FVC in %" />
 		    <AttributeDefinition id="spiro6" type="number" multiplicity="exactlyOne" description="Reversibiliteit in %" />
         </EntityDefinition>
-
-        <EntityDefinition id="GCS1_NRS" description="Nutritional Risk Screening (NRS)">
-            <AttributeDefinition id="nrs1" type="enumeration" multiplicity="exactlyOne" description="Is BMI <20,5?">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Yes"/>
+		 <EntityDefinition id="GCS1_Demographics" description="Demographics">
+            <AttributeDefinition id="demog1" type="number" multiplicity="exactlyOne" description="Leeftijd" />
+			<AttributeDefinition id="demog2" type="number" multiplicity="exactlyOne" description="Lengte" />
+			<AttributeDefinition id="demog3" type="number" multiplicity="exactlyOne" description="Gewicht" />
+			<AttributeDefinition id="demog4" type="number" multiplicity="exactlyOne" description="BMI" />
+			<AttributeDefinition id="demog5" type="enumeration" multiplicity="exactlyOne" description="Rookstatus" >
+			    <EnumerationOption value="0" description="Never smoked"/>
+                <EnumerationOption value="1" description="Yes, current smoker"/>
+				<EnumerationOption value="2" description="quit < 12 months ago"/>
             </AttributeDefinition>
-            <AttributeDefinition id="nrs2" type="enumeration" multiplicity="exactlyOne" description="Has the patient lost weight within the last 3 months?">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Yes"/>
+		    <AttributeDefinition id="demog6" type="enumeration" multiplicity="exactlyOne" description="Anamnese" >
+                <EnumerationOption value="1" description="Asthma"/>
+				<EnumerationOption value="2" description="COPD"/>
+				<EnumerationOption value="3" description="ACO"/>
+                <EnumerationOption value="4" description="Allergy"/>
+				<EnumerationOption value="5" description="Hyperreactivity "/>
+				<EnumerationOption value="6" description="Eczema"/>
             </AttributeDefinition>
-            <AttributeDefinition id="nrs3" type="enumeration" multiplicity="exactlyOne" description="Has the patient had a reduced dietary intake in the last week?">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Yes"/>
+        </EntityDefinition>	
+        <EntityDefinition id="GCS1_medication_overview" description="medication overview">
+            <AttributeDefinition id="medication1" type="string" multiplicity="exactlyOne" description="Medicatie (stofnaam) 1" />
+			<AttributeDefinition id="medication2" type="string" multiplicity="exactlyOne" description="Medicatie (inhalator) 1" />
+			<AttributeDefinition id="medication3" type="string" multiplicity="exactlyOne" description="Dosis 1" />
+			<AttributeDefinition id="medication4" type="string" multiplicity="exactlyOne" description="Frequentie 1" />
+			<AttributeDefinition id="medication5" type="enumeration" multiplicity="exactlyOne" description="Soort 1" >
+			    <EnumerationOption value="0" description=" reliever"/>
+                <EnumerationOption value="1" description="maintenance"/>
+				<EnumerationOption value="2" description="other"/>
+			</AttributeDefinition>
+			<AttributeDefinition id="medication6" type="string" multiplicity="exactlyOne" description="Medicatie (stofnaam) 2" />
+			<AttributeDefinition id="medication7" type="string" multiplicity="exactlyOne" description="Medicatie (inhalator) 2" />
+			<AttributeDefinition id="medication8" type="string" multiplicity="exactlyOne" description="Dosis 2" />
+			<AttributeDefinition id="medication9" type="string" multiplicity="exactlyOne" description="Frequentie 2" />
+			<AttributeDefinition id="medication10" type="enumeration" multiplicity="exactlyOne" description="Soort 2" >
+			    <EnumerationOption value="0" description=" reliever"/>
+                <EnumerationOption value="1" description="maintenance"/>
+				<EnumerationOption value="2" description="other"/>
             </AttributeDefinition>
-            <AttributeDefinition id="nrs4" type="enumeration" multiplicity="exactlyOne" description="Is the patient severely ill?">
-                <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Yes"/>
+			<AttributeDefinition id="medication11" type="string" multiplicity="exactlyOne" description="Medicatie (stofnaam) 3" />
+			<AttributeDefinition id="medication12" type="string" multiplicity="exactlyOne" description="Medicatie (inhalator) 3" />
+			<AttributeDefinition id="medication13" type="string" multiplicity="exactlyOne" description="Dosis 3" />
+			<AttributeDefinition id="medication14" type="string" multiplicity="exactlyOne" description="Frequentie 3" />
+			<AttributeDefinition id="medication15" type="enumeration" multiplicity="exactlyOne" description="Soort 3" >
+			    <EnumerationOption value="0" description=" reliever"/>
+                <EnumerationOption value="1" description="maintenance"/>
+				<EnumerationOption value="2" description="other"/>
             </AttributeDefinition>
-            <AttributeDefinition id="nrs5" type="enumeration" multiplicity="exactlyOne" description="Impared nutritional status">
-                <EnumerationOption value="0" description="Absent"/>
-                <EnumerationOption value="1" description="Weightloss > 5% in 3 months or food intake below 50-7% of normal requierement"/>
-                <EnumerationOption value="2" description="Weightloss > 5% in 2 months or BMI 18.5-20.5 + impaired general condition or food intake 25-60% of normal requirement"/>
-                <EnumerationOption value="3" description="Weightloss > 5% in 1 month (> 15% in 3 months) or BMI < 18.5 + impaired general condition or food intake 0-25% of normal requirement."/>
-            </AttributeDefinition>
-            <AttributeDefinition id="nrs6" type="enumeration" multiplicity="exactlyOne" description="Severity of disease">
-                <EnumerationOption value="0" description="Absent"/>
-                <EnumerationOption value="1" description="Hip fracture * chronic patients with acute complications, COPD, cirrhosis *"/>
-                <EnumerationOption value="2" description="Major Abdominal Surgery * Stroke"/>
-                <EnumerationOption value="3" description="Head injury * Bone marrow transplantation"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="nrs7" type="enumeration" multiplicity="exactlyOne" description="Age">
-                <EnumerationOption value="0" description="< 70 years"/>
-                <EnumerationOption value="1" description="≥ 70 years"/>	
-            </AttributeDefinition>
-            <DerivedAttributeDefinition id="nrs8" expression="number(nrs5,0) + number(nrs6,0) + number(nrs7,0)" description="NRS Score" uiReference="colors(0<=green<=0<orange<=4<red<11)"/>            
         </EntityDefinition>
-
-        <EntityDefinition id="GCS1_MNASF" description="Mini Nutritional Assesment (MNA-SF®)">
-            <AttributeDefinition id="mnasf1" type="enumeration" multiplicity="exactlyOne" description="Has food intake declined over the past 3 months due to loss of appetite, digestive problems, chewing or swallowingen difficulties?" additionalDescription="0 = Severe decrease in food intake | 1 = Moderate decrease in food intake | 2 = no decrease in food intake">
-                <EnumerationOption value="0" description="Severe decrease in food intake"/>	
-                <EnumerationOption value="1" description="Moderate decrease in food intake"/>
-                <EnumerationOption value="2" description="no decrease in food intake"/>
-            </AttributeDefinition> 
-            <AttributeDefinition id="mnasf2" type="enumeration" multiplicity="exactlyOne" description="Weight loss during the last 3 months" additionalDescription="0 = Weight loss greater than 3 kg | 1 = Does not know | 2 = Weight loss between 1 and 3 kg | 3 = No weight loss">
-                <EnumerationOption value="0" description="Weight loss greater than 3 kg"/>
-                <EnumerationOption value="1" description="Does not know"/>
-                <EnumerationOption value="2" description="Weight loss between 1 and 3 kg"/>
-                <EnumerationOption value="3" description="No weight loss"/>
-            </AttributeDefinition> 
-            <AttributeDefinition id="mnasf3" type="enumeration" multiplicity="exactlyOne" description="Mobility" additionalDescription="0 = Bed or chair bound | 1 = Able to get out of bed / chair but does not go out | 2 = Goes out">
-                <EnumerationOption value="0" description="Bed or chair bound"/>	
-                <EnumerationOption value="1" description="Able to get out of bed / chair but does not go out"/>
-                <EnumerationOption value="2" description=" Goes out"/>
+	    <EntityDefinition id="GCS1_Previous_exacerbations" description="Previous exacerbations">
+            <AttributeDefinition id="prev1" type="number" multiplicity="exactlyOne" description="Exacerbaties per jaar" />
+			<AttributeDefinition id="prev2" type="number" multiplicity="exactlyOne" description="Exacerbaties Sinds laatste visite" />
+        </EntityDefinition>	
+		
+		<EntityDefinition id="GCS1_conclusion" description="conclusion">
+			<AttributeDefinition id="conclusion1" type="enumeration" multiplicity="exactlyOne" description="Werk diagnose" >
+			    <EnumerationOption value="1" description="Asthma"/>
+                <EnumerationOption value="2" description="COPD"/>
+				<EnumerationOption value="3" description="ACO"/>
+				<EnumerationOption value="4" description="unknown"/>
+			    <EnumerationOption value="5" description="No obstructive lung disease "/>
             </AttributeDefinition>
-            <AttributeDefinition id="mnasf4" type="enumeration" multiplicity="exactlyOne" description="Has suffered psychological stress or acute disease in the past 3 months" additionalDescription="0 = Yes | 2 = No">
-                <EnumerationOption value="0" description="Yes"/>
-                <EnumerationOption value="2" description="No"/>
-            </AttributeDefinition> 
-            <AttributeDefinition id="mnasf5" type="enumeration" multiplicity="exactlyOne" description="Neuropsychological problems" additionalDescription="0 = Severe dementia or depression | 1 = Mild dementia | 2 = No psychological problems">
-                <EnumerationOption value="0" description="Severe dementia or depression"/>	
-                <EnumerationOption value="1" description="Mild dementia"/>
-                <EnumerationOption value="2" description="No psychological problems"/>
-            </AttributeDefinition> 
-            <AttributeDefinition id="mnasf6" type="number" multiplicity="exactlyOne" description="Weight in kg"/>
-            <AttributeDefinition id="mnasf7" type="number" multiplicity="exactlyOne" description="Length in cm"/>
-            <DerivedAttributeDefinition id="mnasf8" expression="round((mnasf6 / ((mnasf7/100) * (mnasf7/100))), 2)" description="BMI raw"/>  
-            <DerivedAttributeDefinition id="mnasf9" expression="if mnasf8 < 19 then 0 else if mnasf8 >= 19 and mnasf8 < 21 then 1 else if mnasf8 >= 21 and mnasf8 < 23 then 2 else 3" description="BMI range indicator" additionalDescription="0 = BMI less than 19 | 1 = BMI 19 to less than 21 | 2 = BMI 21 to less than 23 | 3 = BMI 23 or greater" uiReference="colors(14>=green>=12>orange>=8>red>=0)"/>  
-            <AttributeDefinition id="mnasf10" type="enumeration" multiplicity="exactlyOne" description="Calf circumference (CC) in cm " additionalDescription="ANSWER ONLY IF BMI IS NOT AVAILABLE">
-                <EnumerationOption value="0.0001" description="No Answer"/>
-                <EnumerationOption value="0" description="CC less than 31"/>	
-                <EnumerationOption value="3" description="CC 31 or greater"/>
-            </AttributeDefinition>       
-            <DerivedAttributeDefinition id="mnasf11" expression="number(mnasf1,0) + number(mnasf2,0) + number(mnasf3,0) + number(mnasf4,0) + mnasf9 + round(number(mnasf10,0))" description="MNA-SF Score" additionalDescription="12-14 Normal nutritional status | 8-11 At risk of malnutrition | 0-7 Malnourished" uiReference="colors(0<=red<=8<orange<=11<green<15)"/>            
-        </EntityDefinition>
-
-
-        <!-- HAD -->
-        <EntityDefinition id="GCS1_HospitalAnxietyAndDepressionScale">
-            <AttributeDefinition id="hadA1" type="enumeration" multiplicity="exactlyOne" description="I feel tense or 'wound up'"> 
-                <EnumerationOption value="0" description="Not at all"/>
-                <EnumerationOption value="1" description="From time to time, occasionally"/>
-                <EnumerationOption value="2" description="A lot of the time"/>
-                <EnumerationOption value="3" description="Most of the time "/>
+		    <AttributeDefinition id="conclusion2" type="enumeration" multiplicity="exactlyOne" description="Ernst COPD longfunctie" >
+			    <EnumerationOption value="1" description="GOLD"/>
+                <EnumerationOption value="2" description="GOLD2"/>
+				<EnumerationOption value="3" description="GOLD3"/>
+				<EnumerationOption value="4" description="GOLD4"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadD1" type="enumeration" multiplicity="exactlyOne" description="I still enjoy the things I used to enjoy:"> 
-                <EnumerationOption value="0" description="Definitely as much"/>
-                <EnumerationOption value="1" description="Not quite so much"/>
-                <EnumerationOption value="2" description="Only a little"/>
-                <EnumerationOption value="3" description="Hardly at all"/>
+			<AttributeDefinition id="conclusion3" type="enumeration" multiplicity="exactlyOne" description="Ernst COPD symptomen" >
+			    <EnumerationOption value="1" description="stabiel "/>
+                <EnumerationOption value="2" description="'Niet volledig stabiel' "/>
+				<EnumerationOption value="3" description="onstabiel"/>
+				<EnumerationOption value="4" description="Erg onstabiel"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadA2" type="enumeration" multiplicity="exactlyOne" description="I get a sort of frightened feeling as if  something awful is about to  happen:"> 
-                <EnumerationOption value="0" description="Not at all"/>
-                <EnumerationOption value="1" description="A little, but it doesn't worry me"/>
-                <EnumerationOption value="2" description="Yes, but not too badly"/>
-                <EnumerationOption value="3" description="Very definitely and quite badly"/>
+			<AttributeDefinition id="conclusion4" type="enumeration" multiplicity="exactlyOne" description="Ernst astma controle" >
+			    <EnumerationOption value="1" description="Controlled   "/>
+                <EnumerationOption value="2" description="Partially controlled"/>
+				<EnumerationOption value="3" description="Uncontrolled"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadD2" type="enumeration" multiplicity="exactlyOne" description="I can laugh and see the funny side of things:"> 
-                <EnumerationOption value="0" description="As much as I always could"/>
-                <EnumerationOption value="1" description="Not quite so much now"/>
-                <EnumerationOption value="2" description="Definitely not so much now"/>
-                <EnumerationOption value="3" description="Not at all"/>
+			<AttributeDefinition id="conclusion5" type="enumeration" multiplicity="exactlyOne" description="Conclusie Longfunctie" >
+			    <EnumerationOption value="1" description="Well assessabl"/>
+                <EnumerationOption value="2" description="Indication for restriction"/>
+				<EnumerationOption value="3" description="Normal, reversible"/>
+				<EnumerationOption value="4" description="Normal, not reversible"/>
+			    <EnumerationOption value="5" description="Light, reversible"/>
+				<EnumerationOption value="6" description="Moderate, reversible"/>
+                <EnumerationOption value="7" description="Serious, reversible"/>
+				<EnumerationOption value="8" description="Very serious reversible"/>
+				<EnumerationOption value="9" description="Light,not reversible"/>
+			    <EnumerationOption value="10" description="Serious not reversible"/>
+				<EnumerationOption value="11" description="Very serious, not reversible"/>
+                <EnumerationOption value="12" description="Normal"/>
+				<EnumerationOption value="13" description="Light obstruction"/>
+				<EnumerationOption value="14" description="Moderate obstruction"/>
+			    <EnumerationOption value="15" description="Serious obstruction"/>
+				<EnumerationOption value="16" description="Indication for restriction"/>
+				<EnumerationOption value="17" description="Very serious obstruction"/>
+				<EnumerationOption value="18" description="Devious, See remarks"/>
+			    <EnumerationOption value="19" description="Bronchusobstruction"/>
             </AttributeDefinition>
-            <AttributeDefinition id="hadA3" type="enumeration" multiplicity="exactlyOne" description="Worrying thoughts go through my mind:"> 
-                <EnumerationOption value="0" description="Only occasionally"/>
-                <EnumerationOption value="1" description="From time to time, but not too often"/>
-                <EnumerationOption value="2" description="A lot of the time"/>
-                <EnumerationOption value="3" description="A great deal of the time"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="hadD3" type="enumeration" multiplicity="exactlyOne" description="I feel cheerful:"> 
-                <EnumerationOption value="0" description="Most of the time"/>
-                <EnumerationOption value="1" description="Sometimes"/>
-                <EnumerationOption value="2" description="Not often"/>
-                <EnumerationOption value="3" description="Not at all"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="hadA4" type="enumeration" multiplicity="exactlyOne" description="I can sit at ease and feel relaxed:"> 
-                <EnumerationOption value="0" description="Definitely"/>
-                <EnumerationOption value="1" description="Usually"/>
-                <EnumerationOption value="2" description="Not often"/>
-                <EnumerationOption value="3" description="Not at all"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="hadD4" type="enumeration" multiplicity="exactlyOne" description="I feel as if I am slowed down:"> 
-                <EnumerationOption value="0" description="Not at all"/>
-                <EnumerationOption value="1" description="Sometimes"/>
-                <EnumerationOption value="2" description="Very often"/>
-                <EnumerationOption value="3" description="Nearly all the time"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="hadA5" type="enumeration" multiplicity="exactlyOne" description="I get a sort of frightened feeling like 'butterflies' in the stomach:">
-                <EnumerationOption value="0" description="Not at all"/>
-                <EnumerationOption value="1" description="Occasionally"/>
-                <EnumerationOption value="2" description="Quite often"/>
-                <EnumerationOption value="3" description="Very often"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="hadD5" type="enumeration" multiplicity="exactlyOne" description="I have lost interest in my appearance:"> 
-                <EnumerationOption value="0" description="I take just as much care as ever"/>
-                <EnumerationOption value="1" description="I may not take quite as much care"/>
-                <EnumerationOption value="2" description="I don't take as much care as I should"/>
-                <EnumerationOption value="3" description="Definitely"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="hadA6" type="enumeration" multiplicity="exactlyOne" description="I feel restless as I have to be on the move:"> 
-                <EnumerationOption value="0" description="Not at all"/>
-                <EnumerationOption value="1" description="Quite a lot"/>
-                <EnumerationOption value="2" description="Not very much"/>
-                <EnumerationOption value="3" description="Very much indeed "/>
-            </AttributeDefinition>
-            <AttributeDefinition id="hadD6" type="enumeration" multiplicity="exactlyOne" description="I look forward with enjoyment to things:"> 
-                <EnumerationOption value="0" description="As much as I ever did"/>
-                <EnumerationOption value="1" description="Rather less than I used to"/>
-                <EnumerationOption value="2" description="Definitely less than I used to"/>
-                <EnumerationOption value="3" description="Hardly at all"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="hadA7" type="enumeration" multiplicity="exactlyOne" description="I get sudden feelings of panic"> 
-                <EnumerationOption value="0" description="Not at all"/>
-                <EnumerationOption value="1" description="Not very often"/>
-                <EnumerationOption value="2" description="Quite often"/>
-                <EnumerationOption value="3" description="Hardly at all"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="hadD7" type="enumeration" multiplicity="exactlyOne" description="I can enjoy a good book or radio or TV program:"> 
-                <EnumerationOption value="0" description="Often"/>
-                <EnumerationOption value="1" description="Sometimes"/>
-                <EnumerationOption value="2" description="Not often"/>
-                <EnumerationOption value="3" description="Very seldom"/>
-            </AttributeDefinition>
-             <DerivedAttributeDefinition id="hadA8" expression="number(hadA1,0)+number(hadA2,0)+number(hadA3,0)+number(hadA4,0)+number(hadA5,0)+number(hadA6,0)+number(hadA7,0)" description="Anxiety Score"/> 
-             <DerivedAttributeDefinition id="hadD8" expression="number(hadD1,0)+number(hadD2,0)+number(hadD3,0)+number(hadD4,0)+number(hadD5,0)+number(hadD6,0)+number(hadD7,0)" description="Depression Score"/> 
-             <DerivedAttributeDefinition id="hadA9" expression='if hadA8 < 8 then "Normal" else if hadA8 > 7 and hadA8 < 11 then "Borderline abnormal" else "Abnormal case"' description="Anxiety Result"/> 
-             <DerivedAttributeDefinition id="hadD9" expression='if hadD8 < 8 then "Normal" else if hadD8 > 7 and hadD8 < 11 then "Borderline abnormal" else "Abnormal case"' description="Depression Result"/> 
-        </EntityDefinition>
-
+        </EntityDefinition>	
         
         <!-- Workplan Entity Definitions -->
         <EntityDefinition id="GCS1_Workplan" description="Workplan">
@@ -639,9 +572,9 @@
         <!-- Case Definition -->
         <CaseDefinition id="GCS1_Groningen" description="Groningen CS1" ownerPath="GCS1_Settings.CaseOwner" clientPath="GCS1_Settings.Patient" entityDefinitionId="GCS1_CaseData" newEntityDefinitionId="GCS1_Settings" newEntityAttachPath="GCS1_Settings">
            
-            <SummarySectionDefinition id="GCS1_Nutritional" description="Nutritional" position="LEFT">    
-                <SummaryParamDefinition path="GCS1_Evaluation.GCS1_NRS.nrs8"/>
-                <SummaryParamDefinition path="GCS1_Evaluation.GCS1_MNASF.mnasf9"/>
+            
+			<SummarySectionDefinition id="GCS1_Nutritional" description="Nutritional" position="LEFT">
+              	<SummaryParamDefinition path="GCS1_Evaluation.GCS1_Spirometry.spiro1"/>
             </SummarySectionDefinition>
             <SummarySectionDefinition id="GCS1_Frailty" description="Frailty" position="LEFT">           
                 <SummaryParamDefinition path="GCS1_Identification.GCS1_ASA.asa"/>
@@ -649,13 +582,14 @@
                 <SummaryParamDefinition path="GCS1_Evaluation.GCS1_Charlson.ch22"/>
             </SummarySectionDefinition>
             <SummarySectionDefinition id="GCS1_Functional" description="Functional" position="CENTER">   
-                <SummaryParamDefinition path="GCS1_Evaluation.GCS1_ACQ.ACQ6"/>
+              <SummaryParamDefinition path="GCS1_Evaluation.GCS1_conclusion.conclusion1"/>
             </SummarySectionDefinition>
             <SummarySectionDefinition id="GCS1_Cognitive" description="Cognitive" position="RIGHT">    
-                
+                <SummaryParamDefinition path="GCS1_Evaluation.GCS1_ACQ.ACQ6"/> 
             </SummarySectionDefinition>
-                <SummarySectionDefinition id="GCS1_QOL" description="QOL" position="RIGHT">    
+            <SummarySectionDefinition id="GCS1_QOL" description="QOL" position="RIGHT">    
             </SummarySectionDefinition>
+			
             <!---
             <SummarySectionDefinition id="GCS1_PhysicalActivity" description="Physical Activity" position="STRETCHED">
                 <SummaryParamDefinition path="GCS1_Workplan.GCS1_PhysicalActivity.startdate"/>
@@ -750,7 +684,7 @@
                     <TaskParamDefinition path="GCS1_Evaluation.CCQ.CCQ9" isReadOnly="false" isMandatory="false"/>
                     <TaskParamDefinition path="GCS1_Evaluation.CCQ.CCQ10" isReadOnly="false" isMandatory="false"/>
                 </HumanTaskDefinition>                
-                <HumanTaskDefinition id="GCS1_ACQ" description=": Asthma control (ACQ)" ownerPath="GCS1_Settings.Clinician" dueDatePath="GCS1_Settings.EvaluationDueDate" isMandatory="false" repeatable="ONCE" entityDefinitionId="GCS1_ACQ" entityAttachPath="GCS1_Evaluation.GCS1_ACQ">
+                <HumanTaskDefinition id="GCS1_ACQ" description="Asthma control (ACQ)" ownerPath="GCS1_Settings.Clinician" dueDatePath="GCS1_Settings.EvaluationDueDate" isMandatory="false" repeatable="ONCE" entityDefinitionId="GCS1_ACQ" entityAttachPath="GCS1_Evaluation.GCS1_ACQ">
                     <SentryDefinition>
                         <precondition processDefinitionId="GCS1_SetEvaluationDueDate"/>
                     </SentryDefinition>  
@@ -772,61 +706,56 @@
 					<TaskParamDefinition path="GCS1_Evaluation.GCS1_Spirometry.spiro5" isReadOnly="false" isMandatory="false"/>
 					<TaskParamDefinition path="GCS1_Evaluation.GCS1_Spirometry.spiro6" isReadOnly="false" isMandatory="false"/>
                 </HumanTaskDefinition>
-                <HumanTaskDefinition id="GCS1_NRS" description="Nutritional Risk Screening (NRS)" ownerPath="GCS1_Settings.Clinician" dueDatePath="GCS1_Settings.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS1_NRS" entityAttachPath="GCS1_Evaluation.GCS1_NRS"
-                    footnote="Reference: Kondrup, J., Rasmussen, H. H., Hamberg, O. L. E., and STANGA, Z. (2003). Nutritional risk screening (NRS 2002): a new method based on an analysis of controlled clinical trials. Clinical nutrition, 22(3), 321-336.">
+				 <HumanTaskDefinition id="GCS1_Demographics" description="Demographics" ownerPath="GCS1_Settings.Clinician" dueDatePath="GCS1_Settings.EvaluationDueDate" isMandatory="false" repeatable="ONCE" entityDefinitionId="GCS1_Demographics" entityAttachPath="GCS1_Evaluation.GCS1_Demographics">
                     <SentryDefinition>
                         <precondition processDefinitionId="GCS1_SetEvaluationDueDate"/>
                     </SentryDefinition>  
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_NRS.nrs1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_NRS.nrs2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_NRS.nrs3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_NRS.nrs4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_NRS.nrs5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_NRS.nrs6" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_NRS.nrs7" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_NRS.nrs8" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_Demographics.demog1" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_Demographics.demog2" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_Demographics.demog3" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_Demographics.demog4" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_Demographics.demog5" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_Demographics.demog6" isReadOnly="false" isMandatory="false"/>
                 </HumanTaskDefinition>
-                <HumanTaskDefinition id="GCS1_MNASF" description="Mini Nutritional Assesment (MNA-SF®)" ownerPath="GCS1_Settings.Clinician" dueDatePath="GCS1_Settings.EvaluationDueDate" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS1_MNASF" entityAttachPath="GCS1_Evaluation.GCS1_MNASF" 
-                    footnote="Copyright statement: © Nestlé, 1994, Revision 2009. N67200 12/99 10M  | References: Vellas B, Villars H, Abellan G, et al. Overview of the MNA® - Its History and Challenges. J Nutr Health Aging 2006;10:456-465. | Rubenstein LZ, Harker JO, Salva A, Guigoz Y, Vellas B. Screening for Undernutrition in Geriatric Practice: Developing the Short-Form Mini Nutritional Assessment (MNA-SF). J Geront 2001; 56A: M366-377. | Guigoz Y. The Mini-Nutritional Assessment (MNA®) Review of the Literature - What does it tell us? J Nutr Health Aging 2006; 10:466-487. | Kaiser MJ, Bauer JM, Ramsch C, et al.  Validation of the Mini Nutritional Assessment Short-Form (MNA®-SF): A practical tool for identification of nutritional status.  J Nutr Health Aging 2009; 13:782-788.  (MNA®-Short Form only)">
+				 
+				 <HumanTaskDefinition id="GCS1_medication_overview" description="medication overview" ownerPath="GCS1_Settings.Clinician" dueDatePath="GCS1_Settings.EvaluationDueDate" isMandatory="false" repeatable="ONCE" entityDefinitionId="GCS1_medication_overview" entityAttachPath="GCS1_Evaluation.GCS1_medication_overview">
                     <SentryDefinition>
                         <precondition processDefinitionId="GCS1_SetEvaluationDueDate"/>
                     </SentryDefinition>  
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_MNASF.mnasf1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_MNASF.mnasf2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_MNASF.mnasf3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_MNASF.mnasf4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_MNASF.mnasf5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_MNASF.mnasf6" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_MNASF.mnasf7" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_MNASF.mnasf8" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_MNASF.mnasf9" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_MNASF.mnasf10" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_MNASF.mnasf11" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication1" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication2" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication3" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication4" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication5" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication6" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication7" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication8" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication9" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication10" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication11" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication12" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication13" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication14" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_medication_overview.medication15" isReadOnly="false" isMandatory="false"/>
                 </HumanTaskDefinition>
-
-                <HumanTaskDefinition id="GCS1_HospitalAnxietyAndDepressionScale" description="Hospital Anxiety and Depression Scale (HADS)" ownerPath="GCS1_Settings.Clinician" isMandatory="true" repeatable="ONCE"  entityDefinitionId="GCS1_HospitalAnxietyAndDepressionScale" entityAttachPath="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale">
+				<HumanTaskDefinition id="GCS1_Previous_exacerbations" description="Previous exacerbations" ownerPath="GCS1_Settings.Clinician" dueDatePath="GCS1_Settings.EvaluationDueDate" isMandatory="false" repeatable="ONCE" entityDefinitionId="GCS1_Previous_exacerbations" entityAttachPath="GCS1_Evaluation.GCS1_Previous_exacerbations">
                     <SentryDefinition>
                         <precondition processDefinitionId="GCS1_SetEvaluationDueDate"/>
                     </SentryDefinition>  
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadA1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadD1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadA2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadD2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadA3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadD3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadA4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadD4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadA5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadD5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadA6" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadD6" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadA7" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadD7" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadA8" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadD8" isReadOnly="true" isMandatory="false"/>        
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadA9" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadD9" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_Previous_exacerbations.prev1" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_Previous_exacerbations.prev12" isReadOnly="false" isMandatory="false"/>
                 </HumanTaskDefinition>
+				<HumanTaskDefinition id="GCS1_conclusion" description="conclusion" ownerPath="GCS1_Settings.Clinician" dueDatePath="GCS1_Settings.EvaluationDueDate" isMandatory="false" repeatable="ONCE" entityDefinitionId="GCS1_Demographics" entityAttachPath="GCS1_Evaluation.GCS1_conclusion">
+                    <SentryDefinition>
+                        <precondition processDefinitionId="GCS1_SetEvaluationDueDate"/>
+                    </SentryDefinition>  
+                    <TaskParamDefinition path="GCS1_Evaluation.GCS1_conclusion.conclusion1" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_conclusion.conclusion2" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_conclusion.conclusion3" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_conclusion.conclusion4" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_conclusion.conclusion5" isReadOnly="false" isMandatory="false"/>
+                </HumanTaskDefinition>
+			
             </StageDefinition>
 
             <StageDefinition id="GCS1_Workplan" description="Workplan" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS1_Workplan" entityAttachPath="GCS1_Workplan">
@@ -969,42 +898,44 @@
 			<TaskParam path="GCS1_Evaluation.GCS1_Spirometry.spiro5"  values="['1']"/>
 			<TaskParam path="GCS1_Evaluation.GCS1_Spirometry.spiro6"  values="['1']"/>
         </Action>
-        <Action id="CompleteHumanTask" processId="GCS1_NRS">
-            <TaskParam path="GCS1_Evaluation.GCS1_NRS.nrs1"  values="['1']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_NRS.nrs2"  values="['0']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_NRS.nrs3"  values="['1']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_NRS.nrs4"  values="['0']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_NRS.nrs5"  values="['3']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_NRS.nrs6"  values="['2']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_NRS.nrs7"  values="['1']"/>
+		  <Action id="CompleteHumanTask" processId="GCS1_Demographics">
+            <TaskParam path="GCS1_Evaluation.GCS1_Demographics.demog1"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_Demographics.demog2"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_Demographics.demog3"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_Demographics.demog4"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_Demographics.demog5"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_Demographics.demog6"  values="['1']"/>
         </Action>
-        <Action id="CompleteHumanTask" processId="GCS1_MNASF">
-            <TaskParam path="GCS1_Evaluation.GCS1_MNASF.mnasf1"  values="['0']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_MNASF.mnasf2"  values="['2']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_MNASF.mnasf3"  values="['2']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_MNASF.mnasf4"  values="['0']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_MNASF.mnasf5"  values="['1']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_MNASF.mnasf6"  values="[70]"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_MNASF.mnasf7"  values="[180]"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_MNASF.mnasf10"  values="['0.0001']"/>
+		<Action id="CompleteHumanTask" processId="GCS1_medication_overview">
+            <TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication1"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication2"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication3"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication4"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication5"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication6"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication7"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication8"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication9"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication10"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication11"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication12"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication13"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication14"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_medicationoverview.medication15"  values="['1']"/>
         </Action>
-        <Action id="CompleteHumanTask" processId="GCS1_HospitalAnxietyAndDepressionScale" breakpoint="true">
-            <TaskParam path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadA1" values="['1']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadA2" values="['1']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadA3" values="['1']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadA4" values="['1']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadA5" values="['1']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadA6" values="['1']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadA7" values="['1']"/>
-
-            <TaskParam path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadD1" values="['1']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadD2" values="['1']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadD3" values="['1']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadD4" values="['1']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadD5" values="['1']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadD6" values="['1']"/>
-            <TaskParam path="GCS1_Evaluation.GCS1_HospitalAnxietyAndDepressionScale.hadD7" values="['1']"/>
+		
+		 <Action id="CompleteHumanTask" processId="GCS1_Previous_exacerbations">
+            <TaskParam path="GCS1_Evaluation.GCS1_Previous_exacerbations.prev1"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_Previous_exacerbations.prev2"  values="['1']"/>
         </Action>
+		  <Action id="CompleteHumanTask" processId="GCS1_conclusion">
+            <TaskParam path="GCS1_Evaluation.GCS1_conclusion.conclusion1"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_conclusion.conclusion2"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_conclusion.conclusion3"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_conclusion.conclusion4"  values="['1']"/>
+			<TaskParam path="GCS1_Evaluation.GCS1_conclusion.conclusion5"  values="['1']"/>
+        </Action>
+ 
         <!--
         <Action id="CreateAlert" 
             processId="GCS1_SF12" 
