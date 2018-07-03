@@ -743,7 +743,7 @@
                         <precondition processDefinitionId="GCS1_SetEvaluationDueDate"/>
                     </SentryDefinition>  
                     <TaskParamDefinition path="GCS1_Evaluation.GCS1_Previous_exacerbations.prev1" isReadOnly="false" isMandatory="false"/>
-					<TaskParamDefinition path="GCS1_Evaluation.GCS1_Previous_exacerbations.prev12" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="GCS1_Evaluation.GCS1_Previous_exacerbations.prev2" isReadOnly="false" isMandatory="false"/>
                 </HumanTaskDefinition>
 				<HumanTaskDefinition id="GCS1_conclusion" description="conclusion" ownerPath="GCS1_Settings.Clinician" dueDatePath="GCS1_Settings.EvaluationDueDate" isMandatory="false" repeatable="ONCE" entityDefinitionId="GCS1_conclusion" entityAttachPath="GCS1_Evaluation.GCS1_conclusion">
                     <SentryDefinition>
@@ -882,7 +882,7 @@
             <TaskParam path="GCS1_Evaluation.CCQ.CCQ9"  values="['0']"/>
             <TaskParam path="GCS1_Evaluation.CCQ.CCQ10"  values="['0']"/>
         </Action>
-        <Action id="CompleteHumanTask" processId="ACQ">
+        <Action id="CompleteHumanTask" processId="GCS1_ACQ">
             <TaskParam path="GCS1_Evaluation.GCS1_ACQ.ACQ1"  values="['0']"/>
             <TaskParam path="GCS1_Evaluation.GCS1_ACQ.ACQ2"  values="['0']"/>
             <TaskParam path="GCS1_Evaluation.GCS1_ACQ.ACQ3"  values="['0']"/>
@@ -928,7 +928,7 @@
             <TaskParam path="GCS1_Evaluation.GCS1_Previous_exacerbations.prev1"  values="['1']"/>
 			<TaskParam path="GCS1_Evaluation.GCS1_Previous_exacerbations.prev2"  values="['1']"/>
         </Action>
-		  <Action id="CompleteHumanTask" processId="GCS1_conclusion">
+		  <Action id="CompleteHumanTask" processId="GCS1_conclusion" breakpoint="true">
             <TaskParam path="GCS1_Evaluation.GCS1_conclusion.conclusion1"  values="['1']"/>
 			<TaskParam path="GCS1_Evaluation.GCS1_conclusion.conclusion2"  values="['1']"/>
 			<TaskParam path="GCS1_Evaluation.GCS1_conclusion.conclusion3"  values="['1']"/>
