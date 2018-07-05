@@ -1133,6 +1133,8 @@ module.exports = class Importer {
       for(let XMLId of humanTaskDefinitionSet){
         if(XMLIds.has(XMLId))
           nrCovered++;
+        else
+          winston.warn("No test defined for HumanTaskDefinition: "+XMLId);
       }
       winston.debug("The execution definition covers "+nrCovered+" / "+nrTotal+" HumanTaskDefinitions!");
     }
@@ -1145,6 +1147,8 @@ module.exports = class Importer {
       for(let XMLId of automatedTaskDefinitionSet){
         if(XMLIds.has(XMLId))
           nrCovered++;
+        else
+          winston.warn("No test defined for AutomatedTaskDefinition: "+XMLId);
       }
       winston.debug("The execution definition covers "+nrCovered+" / "+nrTotal+" AutomatedTaskDefinitions!");
     }
@@ -1157,6 +1161,8 @@ module.exports = class Importer {
       for(let XMLId of dualTaskDefinitionSet){
         if(XMLIds.has(XMLId))
           nrCovered++;
+        else
+          winston.warn("No test defined for DualTaskDefinition: "+XMLId);
       }
       winston.debug("The execution definition covers "+nrCovered+" / "+nrTotal+" DualTaskDefinitions!");
     }
