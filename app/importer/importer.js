@@ -489,18 +489,7 @@ module.exports = class Importer {
         return Workspace.create(this.jwt, data)
           .then(persistedWorkspace=>{
             this.workspaceMap.set(w.$.id, persistedWorkspace.id);
-
-            /** clean all maps related to workspace elements */
-            this.entityDefinitionMap = new Map(); 
-            this.attributeDefinitionMap = new Map(); 
-            this.derivedAttributeDefinitionMap = new Map(); 
-            this.caseDefinitionMap = new Map(); 
-            this.stageDefinitionMap = new Map(); 
-            this.humanTaskDefinitionMap = new Map(); 
-            this.automatedTaskDefinitionMap = new Map(); 
-            this.dualTaskDefinitionMap = new Map();
-
-            return this.createWorkspaceElements(w);
+            return Promise.resolve(persistedWorkspace);
           });
       })
       .catch(err=>{
