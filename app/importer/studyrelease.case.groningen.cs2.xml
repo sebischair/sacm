@@ -52,6 +52,7 @@
             <AttributeDefinition id="GCS2_PatientsConsent" type="Link.EntityDefinition.GCS2_PatientsConsent" multiplicity="maximalOne" description="Patient's consent"/> 
             <AttributeDefinition id="GCS2_ASA" type="Link.EntityDefinition.GCS2_ASA" multiplicity="maximalOne" description="ASA"/> 
             <AttributeDefinition id="GCS2_ThechTest" type="Link.EntityDefinition.GCS2_ThechTest" multiplicity="maximalOne" description="Technological Test"/> 
+            <AttributeDefinition id="GCS2_SiteOfSurgery" type="Link.EntityDefinition.GCS2_SiteOfSurgery" multiplicity="maximalOne" description="Site of Surgery"/> 
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_PatientsConsent" description="Patient's consent">
@@ -89,6 +90,17 @@
                 <EnumerationOption value="3" description="ASA 3"/>
                 <EnumerationOption value="4" description="ASA 4"/>
                 <EnumerationOption value="5" description="ASA 5"/>
+            </AttributeDefinition> 
+        </EntityDefinition>
+
+        <EntityDefinition id="GCS2_SiteOfSurgery" description="Site of Surgery">
+            <AttributeDefinition id="sos1" type="enumeration" multiplicity="any" description="Sites of Surgery" additionalDescription="Please select sites of Surgery - multiple selections are possible!">
+                <EnumerationOption value="HEADNECK" description="Head/Neck"/>
+                <EnumerationOption value="THORACIC" description="Thoracic"/>
+                <EnumerationOption value="UPPEREXTREMITY" description="Upper Extremity"/>
+                <EnumerationOption value="ABDOMINAL" description="Abdominal"/>
+                <EnumerationOption value="PELVIC" description="Pelvic"/>
+                <EnumerationOption value="LOWEREXTREMITY" description="Lower Extremity"/>                
             </AttributeDefinition> 
         </EntityDefinition>
 
@@ -729,7 +741,14 @@
                         <precondition processDefinitionId="GCS2_SelectPatient"/>
                     </SentryDefinition>
                     <TaskParamDefinition path="GCS2_Identification.GCS2_ASA.asa" isReadOnly="false" isMandatory="true"/>
-                </HumanTaskDefinition>                
+                </HumanTaskDefinition>  
+
+                <HumanTaskDefinition id="GCS2_SiteOfSurgery" description="Site of Surgery" ownerPath="GCS2_Settings.Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_SiteOfSurgery" entityAttachPath="GCS2_Identification.GCS2_SiteOfSurgery">                
+                    <SentryDefinition>
+                        <precondition processDefinitionId="GCS2_SelectPatient"/>
+                    </SentryDefinition>
+                    <TaskParamDefinition path="GCS2_Identification.GCS2_SiteOfSurgery.sos1" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>               
             </StageDefinition>
 
             <StageDefinition id="GCS2_CaseEvaluation" description="Case Evaluation" isMandatory="true" repeatable="SERIAL" activation="EXPRESSION" manualActivationExpression="GCS2_Evaluation.count()>0" entityDefinitionId="GCS2_Evaluation" entityAttachPath="GCS2_Evaluation">
@@ -967,6 +986,9 @@
         </Action>
         <Action id="CompleteHumanTask" processId="GCS2_ASA">
             <TaskParam path="GCS2_Identification.GCS2_ASA.asa" values="['2']"/>
+        </Action>
+        <Action id="CompleteHumanTask" processId="GCS2_SiteOfSurgery">
+            <TaskParam path="GCS2_Identification.GCS2_SiteOfSurgery.sos1" values="['HEADNECK', 'PELVIC']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="GCS2_PatientsConsent">
             <TaskParam path="GCS2_Identification.GCS2_PatientsConsent.pConsent1" values="['1']"/>
