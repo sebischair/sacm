@@ -950,6 +950,70 @@ router.get('/:id/team', (req, res, next)=>{
 });
 
 /**
+ * @api {post} /cases/:id/team/member/:principalId Add a Team Member
+ * @apiName PostTeamMember
+ * @apiGroup Case
+ * @apiParam {String} id ID of the Case
+ * @apiSampleRequest /cases/:id/team/member/:principalId
+ * @apiSuccessExample {json} Success-Response:
+ *   {
+ *     TODO TEAM_OBJ
+ *   }
+ */
+router.post('/:id/team/member/:principalId', (req, res, next)=>{
+  Case.addTeamMember(req.jwt, req.params.id, req.params.principalId, req.body)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+
+/**
+ * @api {patch} /cases/:id/team/member/:principalId Patch a Team Member
+ * @apiName PatchTeamMember
+ * @apiGroup Case
+ * @apiParam {String} id ID of the Case
+ * @apiSampleRequest /cases/:id/team/member/:principalId
+ * @apiSuccessExample {json} Success-Response:
+ *   {
+ *     TODO TEAM_OBJ
+ *   }
+ */
+router.patch('/:id/team/member/:principalId', (req, res, next)=>{
+  Case.updateTeamMember(req.jwt, req.params.id, req.params.principalId, req.body)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
+ * @api {del} /cases/:id/team/member/:principalId Delete a Team Member
+ * @apiName DeleteTeamMember
+ * @apiGroup Case
+ * @apiParam {String} id ID of the Case
+ * @apiSampleRequest /cases/:id/team/member/:principalId
+ * @apiSuccessExample {json} Success-Response:
+ *   {
+ *     TODO TEAM_OBJ
+ *   }
+ */
+router.delete('/:id/team/member/:principalId', (req, res, next)=>{
+  Case.removeTeamMember(req.jwt, req.params.id, req.params.principalId)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
  * @api {get} /cases/:id/messages Get Messages
  * @apiName GetMessages
  * @apiGroup Messages
