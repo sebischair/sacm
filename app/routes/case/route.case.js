@@ -1014,6 +1014,27 @@ router.delete('/:id/team/member/:principalId', (req, res, next)=>{
 });
 
 /**
+ * @api {patch} /cases/:id/team/role/:principalId Set a Team Role
+ * @apiName PatchTeamRole
+ * @apiGroup Case
+ * @apiParam {String} id ID of the Case
+ * @apiSampleRequest /cases/:id/team/role/:principalId
+ * @apiSuccessExample {json} Success-Response:
+ *   {
+ *     TODO TEAM_OBJ
+ *   }
+ */
+router.patch('/:id/team/role/:attributeId', (req, res, next)=>{
+  Case.updateTeamRole(req.jwt, req.params.id, req.params.attributeId, req.body)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
  * @api {get} /cases/:id/messages Get Messages
  * @apiName GetMessages
  * @apiGroup Messages

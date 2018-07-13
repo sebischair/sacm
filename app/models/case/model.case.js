@@ -117,6 +117,10 @@ export default class Case extends Model{
     return http.del(jwt, '/cases/'+caseId+'/team/member/'+principalId);
   }
 
+  static updateTeamRole(jwt, caseId, principalId, data){
+    return http.put(jwt, '/cases/'+caseId+'/team/role/'+principalId, data);
+  }
+
   static addUiVisibility(children, isParentVisible){
     children.forEach(child => {
       child.forEach(iteration => {
