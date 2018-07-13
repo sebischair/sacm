@@ -101,6 +101,10 @@ export default class Case extends Model{
     return http.get(jwt, '/workspaces/'+workspaceId+'/cases/client/search?query='+query);
   }
 
+  static findTeamById(jwt, caseId){
+    return http.get(jwt, '/cases/'+caseId+'/team');
+  }
+
   static addUiVisibility(children, isParentVisible){
     children.forEach(child => {
       child.forEach(iteration => {

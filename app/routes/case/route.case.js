@@ -928,7 +928,26 @@ router.get('/:id/automatedtasks/all', (req, res, next)=>{
 });
 
 
-// messages
+/**
+ * @api {get} /cases/:id/team Get Team
+ * @apiName GetTeam
+ * @apiGroup Case
+ * @apiParam {String} id ID of the Case
+ * @apiSampleRequest /cases/:id/team
+ * @apiSuccessExample {json} Success-Response:
+ *   {
+ *     TODO TEAM_OBJ
+ *   }
+ */
+router.get('/:id/team', (req, res, next)=>{
+  Case.findTeamById(req.jwt, req.params.id)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
 
 /**
  * @api {get} /cases/:id/messages Get Messages
