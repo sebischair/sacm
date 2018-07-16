@@ -105,12 +105,12 @@ export default class Case extends Model{
     return http.get(jwt, '/cases/'+caseId+'/team');
   }
 
-  static addTeamMember(jwt, caseId, principalId, data){
-    return http.post(jwt, '/cases/'+caseId+'/team/member/'+principalId, data);
+  static teamMemberAutocomplete(jwt, caseId) {
+    return http.get(jwt, '/cases/'+caseId+'/team/member/autocomplete');
   }
 
-  static updateTeamMember(jwt, caseId, principalId, data){
-    return http.put(jwt, '/cases/'+caseId+'/team/member/'+principalId, data);
+  static addTeamMember(jwt, caseId, principalId, data){
+    return http.post(jwt, '/cases/'+caseId+'/team/member/'+principalId, data);
   }
 
   static removeTeamMember(jwt, caseId, principalId){
