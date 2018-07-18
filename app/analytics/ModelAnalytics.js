@@ -63,6 +63,8 @@ module.exports = class ModelAnalytics{
     result.attributeDefinitions = {
       nr:0,
       typeLink: 0,
+      typeLinkUser: 0,
+      typeLinkEntityDefinition: 0,
       typeNoType: 0,
       typeString: 0,
       typeLongText: 0,
@@ -70,7 +72,11 @@ module.exports = class ModelAnalytics{
       typeNumber: 0,
       typeEnumeration: 0,
       typeDate: 0,
-      typeJson: 0
+      typeJson: 0,
+      multiplicityAny: 0,
+      multiplicityExactlyOne: 0,
+      multiplicityMaximalOne: 0,
+      multiplicityAtLeastOne: 0
     } 
 
     //validTypes = ['link', 'notype', 'string', 'longtext', 'boolean', 'number', 'enumeration', 'date', 'json']
@@ -79,9 +85,15 @@ module.exports = class ModelAnalytics{
       if(ed.AttributeDefinition)
         ed.AttributeDefinition.forEach(ad=>{
           result.attributeDefinitions.nr++;
+         
           let type = ad.$.type.toLowerCase();
-          if(type.startsWith('link'))
+          if(type.startsWith('link')){
             result.attributeDefinitions.typeLink++;
+            if(type.startsWith('link.user'))
+              result.attributeDefinitions.typeLinkUser++;
+            if(type.startsWith('link.entitydefinition'))
+              result.attributeDefinitions.typeLinkEntityDefinition++;
+          }
           if(type.startsWith('notype'))
             result.attributeDefinitions.typeNoType++;
           if(type.startsWith('string'))
@@ -98,6 +110,20 @@ module.exports = class ModelAnalytics{
             result.attributeDefinitions.typeDate++;
           if(type.startsWith('json'))
             result.attributeDefinitions.typeJson++;
+
+          let multiplicity = ad.$.multiplicity;
+          if(!multiplicity)
+            multiplicity = 'any';
+          multiplicity = multiplicity.toLowerCase();
+          if(multiplicity == 'exactlyone'){
+            result.attributeDefinitions.multiplicityExactlyOne++;
+          }else if(multiplicity == 'maximalone'){
+            result.attributeDefinitions.multiplicityMaximalOne++;
+          }else if(multiplicity == 'atleastone'){
+            result.attributeDefinitions.multiplicityAtLeastOne++;
+          }else if(multiplicity == 'any'){
+            result.attributeDefinitions.multiplicityAny++;
+          }
         });
     });
     //result.attributeDefinitions.avgNrAttributeDefinitions = helperSumAttributeDefinitions/Workspace.EntityDefinition.length;
