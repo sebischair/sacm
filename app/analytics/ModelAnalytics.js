@@ -11,6 +11,7 @@ module.exports = class ModelAnalytics{
 
   static analyze(){    
     let result = {
+      attributeDefinitions:{},
       entityDefinitions:{},
       stageDefinitions:{}
     };
@@ -21,7 +22,8 @@ module.exports = class ModelAnalytics{
         let Workspace =  xml.SACMDefinition.Workspace[0];
         let CaseDefinition = Workspace.CaseDefinition[0];
 
-              
+        this.analyzeAttributeDefinitions(result, Workspace);
+       
         let helperSumAttributeDefinitions = 0;
         let helperSumDerivedAttributeDefinitions = 0;
         Workspace.EntityDefinition.forEach(ed => {
@@ -55,6 +57,54 @@ module.exports = class ModelAnalytics{
     }
     return Promise.resolve(result);
   }
+
+
+  static analyzeAttributeDefinitions(result, Workspace){
+    result.attributeDefinitions = {
+      nr:0,
+      typeLink: 0,
+      typeNoType: 0,
+      typeString: 0,
+      typeLongText: 0,
+      typeBoolean: 0,
+      typeNumber: 0,
+      typeEnumeration: 0,
+      typeDate: 0,
+      typeJson: 0
+    } 
+
+    //validTypes = ['link', 'notype', 'string', 'longtext', 'boolean', 'number', 'enumeration', 'date', 'json']
+
+    Workspace.EntityDefinition.forEach(ed => {
+      if(ed.AttributeDefinition)
+        ed.AttributeDefinition.forEach(ad=>{
+          result.attributeDefinitions.nr++;
+          let type = ad.$.type.toLowerCase();
+          if(type.startsWith('link'))
+            result.attributeDefinitions.typeLink++;
+          if(type.startsWith('notype'))
+            result.attributeDefinitions.typeNoType++;
+          if(type.startsWith('string'))
+            result.attributeDefinitions.typeString++;
+          if(type.startsWith('longtext'))
+            result.attributeDefinitions.typeLongText++;
+          if(type.startsWith('boolean'))
+            result.attributeDefinitions.typeBoolean++;
+          if(type.startsWith('number'))
+            result.attributeDefinitions.typeNumber++;
+          if(type.startsWith('enumeration'))
+            result.attributeDefinitions.typeEnumeration++;
+          if(type.startsWith('date'))
+            result.attributeDefinitions.typeDate++;
+          if(type.startsWith('json'))
+            result.attributeDefinitions.typeJson++;
+        });
+    });
+    //result.attributeDefinitions.avgNrAttributeDefinitions = helperSumAttributeDefinitions/Workspace.EntityDefinition.length;
+  }
+
 }
+
+
 
 
