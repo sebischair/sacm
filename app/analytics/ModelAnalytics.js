@@ -11,7 +11,6 @@ module.exports = class ModelAnalytics{
 
   static analyze(){    
     let result = {
-      entityDefinitions:{},
       stageDefinitions:{}
     };
     try{
@@ -23,19 +22,8 @@ module.exports = class ModelAnalytics{
 
         this.analyzeAttributeDefinitions(result, Workspace);
         this.analyzeDerivedAttributeDefinitions(result, Workspace);
-
-        let helperSumAttributeDefinitions = 0;
-        let helperSumDerivedAttributeDefinitions = 0;
-        Workspace.EntityDefinition.forEach(ed => {
-          if(ed.AttributeDefinition)
-            helperSumAttributeDefinitions += ed.AttributeDefinition.length;
-          if(ed.DerivedAttributeDefinition)
-            helperSumDerivedAttributeDefinitions += ed.DerivedAttributeDefinition.length;
-        });
-        result.entityDefinitions.nr = Workspace.EntityDefinition.length;
-        result.entityDefinitions.avgNrAttributeDefinitions = helperSumAttributeDefinitions/Workspace.EntityDefinition.length;
-        result.entityDefinitions.avgNrDerivedAttributeDefinitions = helperSumDerivedAttributeDefinitions/Workspace.EntityDefinition.length;
-
+        this.analyzeEntityDefinitions(result, Workspace);
+        
         
         let helperSumHumanTaskDefinitions = 0;
         let helperSumDualTaskDefinitions = 0;
@@ -213,6 +201,26 @@ module.exports = class ModelAnalytics{
             
         });
     });
+  }
+
+  static analyzeEntityDefinitions(result, Workspace){
+    result.entityDefinitions = {
+      nr:0,
+      avgNrAttributeDefinitions: 0,
+      avgNrDerivedAttributeDefinitions: 0
+    }     
+
+    let helperSumAttributeDefinitions = 0;
+    let helperSumDerivedAttributeDefinitions = 0;
+    Workspace.EntityDefinition.forEach(ed => {
+      result.entityDefinitions.nr++;
+      if(ed.AttributeDefinition)
+        helperSumAttributeDefinitions += ed.AttributeDefinition.length;
+      if(ed.DerivedAttributeDefinition)
+        helperSumDerivedAttributeDefinitions += ed.DerivedAttributeDefinition.length;
+    });
+    result.entityDefinitions.avgNrAttributeDefinitions = helperSumAttributeDefinitions/Workspace.EntityDefinition.length;
+    result.entityDefinitions.avgNrDerivedAttributeDefinitions = helperSumDerivedAttributeDefinitions/Workspace.EntityDefinition.length;
   }
 
 }
