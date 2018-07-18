@@ -11,7 +11,6 @@ module.exports = class ModelAnalytics{
 
   static analyze(){    
     let result = {
-      attributeDefinitions:{},
       entityDefinitions:{},
       stageDefinitions:{}
     };
@@ -23,7 +22,8 @@ module.exports = class ModelAnalytics{
         let CaseDefinition = Workspace.CaseDefinition[0];
 
         this.analyzeAttributeDefinitions(result, Workspace);
-       
+        this.analyzeDerivedAttributeDefinitions(result, Workspace);
+
         let helperSumAttributeDefinitions = 0;
         let helperSumDerivedAttributeDefinitions = 0;
         Workspace.EntityDefinition.forEach(ed => {
@@ -177,6 +177,42 @@ module.exports = class ModelAnalytics{
     });
     if(result.attributeDefinitions.typeEnumeration != 0)
       result.attributeDefinitions.typeEnumerationOptionsAvg = result.attributeDefinitions.typeEnumerationOptions/result.attributeDefinitions.typeEnumeration;
+  }
+
+  static analyzeDerivedAttributeDefinitions(result, Workspace){
+    result.derivedAttributeDefinitions = {
+      nr:0,
+      explicitType: 0,            
+      additionalDescription: 0,
+      uiReference: 0,
+      uiReferenceLineDiagram: 0,
+      uiReferenceColors: 0,
+      uiReferenceSvg: 0
+    } 
+
+    Workspace.EntityDefinition.forEach(ed => {
+      if(ed.DerivedAttributeDefinition)
+        ed.DerivedAttributeDefinition.forEach(ad=>{
+          result.derivedAttributeDefinitions.nr++;
+
+          if(ad.$.explicitAttributeType)
+            result.derivedAttributeDefinitions.explicitType++;
+          if(ad.$.additionalDescription)
+            result.derivedAttributeDefinitions.additionalDescription++;
+
+          if(ad.$.uiReference){
+            result.derivedAttributeDefinitions.uiReference++;
+            let uiReference = ad.$.uiReference.toLowerCase();
+            if(uiReference.startsWith('colors'))
+              result.derivedAttributeDefinitions.uiReferenceColors++;
+            if(uiReference.startsWith('linediagram'))
+              result.derivedAttributeDefinitions.uiReferenceLineDiagram++;
+            if(uiReference.startsWith('svg'))
+              result.derivedAttributeDefinitions.uiReferenceLineSvg++;
+          }
+            
+        });
+    });
   }
 
 }
