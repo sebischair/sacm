@@ -9,45 +9,34 @@ const Git = require('simple-git/promise')('D:/Projekte/CONNECARE/Technical/repos
 module.exports = class ModelAnalytics{
 
   static async repo(){
-
     await Git.checkout(['master']);
     console.log('git checkout master completed')
     let data = await Git.log(['-m', '--follow', '*.xml']);
     console.log('git log completed');
     console.log(data.all)
     await Git.checkout([data.all[0].hash]);
-    console.log('checkout completed');
-      
-
+    console.log('checkout completed');     
   }
 
-  static analyze(){    
+  static async analyze(){    
    
-    this.repo();
+    await this.repo();
 
-    
-
-
-    let result = {
-      stageDefinitions:{}
-    };
+    let result = {};
     try{
-      let filePath = 'app/importer/studyrelease.case.groningen.cs2.xml';
-      //filePath = 'D:/Projekte/CONNECARE/Technical/repos/sacm.backend.analytics/app/importer'
-      xml2jspromise.parseStringAsync(fs.readFileSync(filePath).toString(), {explicitChildren:true, preserveChildrenOrder:true})
-      .then(xml=>{
-        let Workspace =  xml.SACMDefinition.Workspace[0];
+      const filePath = 'app/importer/studyrelease.case.groningen.cs2.xml';
+      const fileContent = fs.readFileSync(filePath).toString();
+      const xml = await xml2jspromise.parseStringAsync(fileContent, {explicitChildren:true, preserveChildrenOrder:true});     
+      const Workspace =  xml.SACMDefinition.Workspace[0];
 
-        this.analyzeAttributeDefinitions(result, Workspace);
-        this.analyzeDerivedAttributeDefinitions(result, Workspace);
-        this.analyzeEntityDefinitions(result, Workspace);
-        this.analyzeStageDefinitions(result, Workspace);
-
-      });
+      this.analyzeAttributeDefinitions(result, Workspace);
+      this.analyzeDerivedAttributeDefinitions(result, Workspace);
+      this.analyzeEntityDefinitions(result, Workspace);
+      this.analyzeStageDefinitions(result, Workspace);
     }catch(e){
       console.log(e);
     }
-    return Promise.resolve(result);
+    return result;
   }
 
 
