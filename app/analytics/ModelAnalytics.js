@@ -18,28 +18,13 @@ module.exports = class ModelAnalytics{
       xml2jspromise.parseStringAsync(fs.readFileSync(filePath).toString(), {explicitChildren:true, preserveChildrenOrder:true})
       .then(xml=>{
         let Workspace =  xml.SACMDefinition.Workspace[0];
-        let CaseDefinition = Workspace.CaseDefinition[0];
 
         this.analyzeAttributeDefinitions(result, Workspace);
         this.analyzeDerivedAttributeDefinitions(result, Workspace);
         this.analyzeEntityDefinitions(result, Workspace);
-        
-        
-        let helperSumHumanTaskDefinitions = 0;
-        let helperSumDualTaskDefinitions = 0;
-        CaseDefinition.StageDefinition.forEach(sd => {
-          if(sd.HumanTaskDefinition)
-            helperSumHumanTaskDefinitions += sd.HumanTaskDefinition.length;
-          if(sd.DualTaskDefinition)
-            helperSumDualTaskDefinitions += sd.DualTaskDefinition.length;
-        });
-        result.stageDefinitions.nr = CaseDefinition.StageDefinition.length;
-        result.stageDefinitions.avgNrHumanTaskDefinitions = helperSumHumanTaskDefinitions/CaseDefinition.StageDefinition.length;
-        result.stageDefinitions.avgNrDualTaskDefinitions = helperSumDualTaskDefinitions/CaseDefinition.StageDefinition.length;
+        this.analyzeStageDefinitions(result, Workspace);
 
-        
-
-      })
+      });
     }catch(e){
       console.log(e);
     }
@@ -221,6 +206,33 @@ module.exports = class ModelAnalytics{
     });
     result.entityDefinitions.avgNrAttributeDefinitions = helperSumAttributeDefinitions/Workspace.EntityDefinition.length;
     result.entityDefinitions.avgNrDerivedAttributeDefinitions = helperSumDerivedAttributeDefinitions/Workspace.EntityDefinition.length;
+  }
+
+  static analyzeStageDefinitions(result, Workspace){
+    result.stageDefinitions = {
+      nr: 0,
+      avgNrHumanTaskDefinitions: 0,
+      avgNrAutomatedTaskDefinitions: 0,
+      avgNrDualTaskDefinitions: 0
+    }
+    let helperSumHumanTaskDefinitions = 0;
+    let helperSumAutomatedTaskDefinitions = 0;
+    let helperSumDualTaskDefinitions = 0;
+
+    let CaseDefinition = Workspace.CaseDefinition[0];
+
+    CaseDefinition.StageDefinition.forEach(sd => {
+      result.stageDefinitions.nr++;
+      if(sd.HumanTaskDefinition)
+        helperSumHumanTaskDefinitions += sd.HumanTaskDefinition.length;
+      if(sd.AutomatedTaskDefinition)
+        helperSumAutomatedTaskDefinitions += sd.AutomatedTaskDefinition.length;
+      if(sd.DualTaskDefinition)
+        helperSumDualTaskDefinitions += sd.DualTaskDefinition.length;
+    });
+    result.stageDefinitions.avgNrHumanTaskDefinitions = helperSumHumanTaskDefinitions/CaseDefinition.StageDefinition.length;
+    result.stageDefinitions.avgNrAutomatedTaskDefinitions = helperSumAutomatedTaskDefinitions/CaseDefinition.StageDefinition.length;
+    result.stageDefinitions.avgNrDualTaskDefinitions = helperSumDualTaskDefinitions/CaseDefinition.StageDefinition.length;
   }
 
 }
