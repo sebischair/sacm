@@ -70,8 +70,14 @@ module.exports = class ModelAnalytics{
       typeLongText: 0,
       typeBoolean: 0,
       typeNumber: 0,
+      typeNumberMin: 0,
+      typeNumberMax: 0,
       typeEnumeration: 0,
+      typeEnumerationOptions: 0,
+      typeEnumerationOptionsAvg: 0,
       typeDate: 0,
+      typeDateBefore: 0,
+      typeDateAfter: 0,
       typeJson: 0,
       multiplicityAny: 0,
       multiplicityExactlyOne: 0,
@@ -85,10 +91,9 @@ module.exports = class ModelAnalytics{
       uiReferenceConditionalMultiplicity: 0,
       uiReferencePatientQuestionnaires: 0,
       uiReferenceLink: 0,
-      uiReferencePrivateLink: 0
+      uiReferencePrivateLink: 0,
+      uiReferenceSvg: 0
     } 
-
-    //validTypes = ['link', 'notype', 'string', 'longtext', 'boolean', 'number', 'enumeration', 'date', 'json']
 
     Workspace.EntityDefinition.forEach(ed => {
       if(ed.AttributeDefinition)
@@ -102,23 +107,33 @@ module.exports = class ModelAnalytics{
               result.attributeDefinitions.typeLinkUser++;
             if(type.startsWith('link.entitydefinition'))
               result.attributeDefinitions.typeLinkEntityDefinition++;
-          }
-          if(type.startsWith('notype'))
+          }else if(type.startsWith('notype')){
             result.attributeDefinitions.typeNoType++;
-          if(type.startsWith('string'))
+          }else if(type.startsWith('string')){
             result.attributeDefinitions.typeString++;
-          if(type.startsWith('longtext'))
+          }else if(type.startsWith('longtext')){
             result.attributeDefinitions.typeLongText++;
-          if(type.startsWith('boolean'))
+          }else if(type.startsWith('boolean')){
             result.attributeDefinitions.typeBoolean++;
-          if(type.startsWith('number'))
+          }else if(type.startsWith('number')){
             result.attributeDefinitions.typeNumber++;
-          if(type.startsWith('enumeration'))
+            if(type.indexOf('min') != -1)
+              result.attributeDefinitions.typeNumberMin++;
+            if(type.indexOf('max') != -1)
+              result.attributeDefinitions.typeNumberMax++;
+          }else if(type.startsWith('enumeration')){
             result.attributeDefinitions.typeEnumeration++;
-          if(type.startsWith('date'))
+            if(ad.EnumerationOption)
+              result.attributeDefinitions.typeEnumerationOptions += ad.EnumerationOption.length;
+          }else if(type.startsWith('date')){
             result.attributeDefinitions.typeDate++;
-          if(type.startsWith('json'))
+            if(type.indexOf('before') != -1)
+              result.attributeDefinitions.typeDateBefore++;
+            if(type.indexOf('after') != -1)
+              result.attributeDefinitions.typeDateAfter++;
+          }else if(type.startsWith('json')){
             result.attributeDefinitions.typeJson++;
+          }
 
           let multiplicity = ad.$.multiplicity;
           if(!multiplicity)
@@ -154,11 +169,14 @@ module.exports = class ModelAnalytics{
               result.attributeDefinitions.uiReferencePrivateLink++;
             if(uiReference.startsWith('linediagram'))
               result.attributeDefinitions.uiReferenceLineDiagram++;
+            if(uiReference.startsWith('svg'))
+              result.attributeDefinitions.uiReferenceLineSvg++;
           }
             
         });
     });
-    //result.attributeDefinitions.avgNrAttributeDefinitions = helperSumAttributeDefinitions/Workspace.EntityDefinition.length;
+    if(result.attributeDefinitions.typeEnumeration != 0)
+      result.attributeDefinitions.typeEnumerationOptionsAvg = result.attributeDefinitions.typeEnumerationOptions/result.attributeDefinitions.typeEnumeration;
   }
 
 }
