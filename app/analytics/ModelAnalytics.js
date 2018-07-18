@@ -4,30 +4,36 @@ import winston from 'winston';
 import xml2js from 'xml2js';
 const fs = Promise.promisifyAll(require("fs"));
 const xml2jspromise = Promise.promisifyAll(xml2js);
-const simpleGit = require('simple-git')('');
+const Git = require('simple-git/promise')('D:/Projekte/CONNECARE/Technical/repos/sacm.backend.analytics');
 
 module.exports = class ModelAnalytics{
 
+  static async repo(){
 
+    await Git.checkout(['master']);
+    console.log('git checkout master completed')
+    let data = await Git.log(['-m', '--follow', '*.xml']);
+    console.log('git log completed');
+    console.log(data.all)
+    await Git.checkout([data.all[0].hash]);
+    console.log('checkout completed');
+      
+
+  }
 
   static analyze(){    
+   
+    this.repo();
 
-    simpleGit.log({file: '*.xml'}, function(err, data){
-      console.log(err)
-      if(!err)
-        data.all.forEach(commit=>{
-          console.log(commit);
-        });
+    
 
-    });
-
-    //checkout()
 
     let result = {
       stageDefinitions:{}
     };
     try{
       let filePath = 'app/importer/studyrelease.case.groningen.cs2.xml';
+      //filePath = 'D:/Projekte/CONNECARE/Technical/repos/sacm.backend.analytics/app/importer'
       xml2jspromise.parseStringAsync(fs.readFileSync(filePath).toString(), {explicitChildren:true, preserveChildrenOrder:true})
       .then(xml=>{
         let Workspace =  xml.SACMDefinition.Workspace[0];
