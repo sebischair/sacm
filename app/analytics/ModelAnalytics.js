@@ -4,12 +4,25 @@ import winston from 'winston';
 import xml2js from 'xml2js';
 const fs = Promise.promisifyAll(require("fs"));
 const xml2jspromise = Promise.promisifyAll(xml2js);
+const simpleGit = require('simple-git')('');
 
 module.exports = class ModelAnalytics{
 
 
 
   static analyze(){    
+
+    simpleGit.log({file: '*.xml'}, function(err, data){
+      console.log(err)
+      if(!err)
+        data.all.forEach(commit=>{
+          console.log(commit);
+        });
+
+    });
+
+    //checkout()
+
     let result = {
       stageDefinitions:{}
     };
