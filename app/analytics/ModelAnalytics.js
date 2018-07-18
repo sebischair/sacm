@@ -76,7 +76,16 @@ module.exports = class ModelAnalytics{
       multiplicityAny: 0,
       multiplicityExactlyOne: 0,
       multiplicityMaximalOne: 0,
-      multiplicityAtLeastOne: 0
+      multiplicityAtLeastOne: 0,
+      defaultValues: 0,
+      additionalDescription: 0,
+      uiReference: 0,
+      uiReferenceLineDiagram: 0,
+      uiReferenceColors: 0,
+      uiReferenceConditionalMultiplicity: 0,
+      uiReferencePatientQuestionnaires: 0,
+      uiReferenceLink: 0,
+      uiReferencePrivateLink: 0
     } 
 
     //validTypes = ['link', 'notype', 'string', 'longtext', 'boolean', 'number', 'enumeration', 'date', 'json']
@@ -124,6 +133,29 @@ module.exports = class ModelAnalytics{
           }else if(multiplicity == 'any'){
             result.attributeDefinitions.multiplicityAny++;
           }
+
+          if(ad.$.defaultValues)
+            result.attributeDefinitions.defaultValues++;
+          if(ad.$.additionalDescription)
+            result.attributeDefinitions.additionalDescription++;
+
+          if(ad.$.uiReference){
+            result.attributeDefinitions.uiReference++;
+            let uiReference = ad.$.uiReference.toLowerCase();
+            if(uiReference.startsWith('colors'))
+              result.attributeDefinitions.uiReferenceColors++;
+            if(uiReference.startsWith('conditonalmultiplicity'))
+              result.attributeDefinitions.uiReferenceConditionalMultiplicity++;
+            if(uiReference.startsWith('patientquestionaires'))
+              result.attributeDefinitions.uiReferencePatientQuestionnaires++;
+            if(uiReference.startsWith('link'))
+              result.attributeDefinitions.uiReferenceLink++;
+            if(uiReference.startsWith('privatelink'))
+              result.attributeDefinitions.uiReferencePrivateLink++;
+            if(uiReference.startsWith('linediagram'))
+              result.attributeDefinitions.uiReferenceLineDiagram++;
+          }
+            
         });
     });
     //result.attributeDefinitions.avgNrAttributeDefinitions = helperSumAttributeDefinitions/Workspace.EntityDefinition.length;
