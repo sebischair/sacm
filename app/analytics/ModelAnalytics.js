@@ -56,33 +56,32 @@ module.exports = class ModelAnalytics{
     await Git.checkout(['master']);
     console.log('git checkout master completed')
     let data = await Git.log(['-m', '--follow', '*.xml']);
-    console.log('git log completed');
-    console.log(data.all.length + ' matching commits!')
+    console.log('git log completed - '+data.all.length + ' matching commits!')
     let allFilePaths = new Set();
     for(let i=0; i<data.all.length; i++){
 
       let c = data.all[i];
       await Git.checkout([c.hash]);
-      console.log('checkout completed! '+c.hash+' ');     //+c.message
+      console.log((i+1)+'/'+data.all.length +' checkout '+c.hash+' completed! ');//+c.message
       
       let findPath = repositoryPath;
       if(await fs.exists(repositoryPath+'/app'))  
         findPath +='/app';
       let files = await find.file(/\.xml$/, findPath);
       
-      console.log('find completed!')
+      console.log('--find completed!')
       if(files)
         for(let f of files)
           allFilePaths.add(f.replace(/\\/g,'/').replace(repositoryPath,''));
 
       files = this.filterFiles(files);
-      console.log('nr files after filter: '+files.length);
+      console.log('--files after filter: '+files.length);
       //if(i==10)
         break;
     }
 
 
-    console.log('all file names');
+    console.log('Set of all file names:');
     console.log(allFilePaths)
 
   }
