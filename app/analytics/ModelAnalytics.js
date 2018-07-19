@@ -49,6 +49,7 @@ module.exports = class ModelAnalytics{
   }
 
   static async analyzeRepository(){
+    let result = [];
     try{
       await Git.checkout(['master']);
       console.log('git checkout master completed')
@@ -60,39 +61,55 @@ module.exports = class ModelAnalytics{
         let c = data.all[i];
         await Git.checkout([c.hash]);
         console.log('\n'+(i+1)+'/'+data.all.length +' checkout '+c.hash+' completed! ');
-        console.log('---'+c.message)
+        console.log('---Message: '+c.message)
+        console.log('---Date: '+c.date)
         let findPath = repositoryPath;
         if(await fs.exists(repositoryPath+'/app'))  
           findPath +='/app';
         let files = await find.file(/\.xml$/, findPath);
         
-        console.log('---find completed!')
         if(files)
           for(let f of files)
             allFilePaths.add(f.replace(/\\/g,'/').replace(repositoryPath,''));
 
         files = this.filterFiles(files);
-        console.log('---files after filter: '+files.length);
-        
+        console.log('---found '+files.length+' files!');
+        console.log(c);
+        let commitResult = {
+          hash: c.hash,
+          date: c.date,
+          message: c.message,
+          author_name: c.author_name,
+          author_email: c.author_email,
+          files: []
+        };
         for(let file of files){
-          
+          console.log('---analyze  ...'+file.replace(repositoryPath,'')) 
+          commitResult.files.push({
+            file: file.replace(repositoryPath,''),
+            case: this.translatePathToCS(file),
+            result: this.analyzeFile(file)
+          });
+          console.log(commitResult)
+          break;
         }
+        result.push(commitResult);
         //if(i==10)
           break;
-      
+        
       }
       console.log('\nSet of all repository file names:');
       console.log(allFilePaths)
     }catch(e){
       console.log(e);
     }
+    return result;
   }
 
-  static async analyze(){    
-   
+  static async analyzeFile(filePath){   
     let result = {};
     try{
-      const filePath = 'app/importer/studyrelease.case.groningen.cs2.xml';
+      //const filePath = 'app/importer/studyrelease.case.groningen.cs2.xml';
       const fileContent = fs.readFileSync(filePath).toString();
       const xml = await xml2js.parseStringAsync(fileContent, {explicitChildren:true, preserveChildrenOrder:true});     
       const Workspace =  xml.SACMDefinition.Workspace[0];
