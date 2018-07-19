@@ -11,60 +11,79 @@ module.exports = class ModelAnalytics{
 
   static translatePathToCS(filePath){
     let map = new Map();
-    map.put('importer/studyrelease.case.barcelona.cs1.xml', 'BCS1');
-    map.put('importer/studyrelease.case.barcelona.cs2.xml', 'BCS2');
-    map.put('importer/studyrelease.case.groningen.cs1.xml', 'GCS1');
-    map.put('importer/studyrelease.case.groningen.cs2.xml', 'GCS2');
-    map.put('importer/studyrelease.case.israel.cs1.xml', 'ICS1');
-    map.put('importer/studyrelease.case.israel.cs2.xml', 'ICS2');
-    map.put('importer/studyrelease.case.leida.cs1.xml', 'LCS1');
-    map.put('importer/studyrelease.case.leida.cs2.xml', 'LCS2');
-    map.put('importer/studyrelease.case.isreal.cs1.xml', 'ICS1');
-    map.put('importer/case.barcelona.cs1.xml', 'BCS1');
-    map.put('importer/case.groningen.cs2.review.2.xml', 'GCS2');
-    map.put('importer/case.groningen.cs2.review.xml', 'GCS2');
-    map.put('importer/case.groningen.cs2.xml', 'GCS2');
-    map.put('importer/case.israel.cs2.xml', 'ICS2');
-    map.put('importer/case.leida.cs1.xml', 'ICS1');
-    map.put('importer/case.leida.cs2.xml', 'LCS2');
-    map.put('importer/cs1.barcelona.v1.xml', 'BCS1');
-    map.put('importer/barcelona.cs3.xml', 'BCS2');
-    map.put('importer/barcelona.cs3.xml', 'BCS2');
+    map.set('importer/studyrelease.case.barcelona.cs1.xml', 'BCS1');
+    map.set('importer/studyrelease.case.barcelona.cs2.xml', 'BCS2');
+    map.set('importer/studyrelease.case.groningen.cs1.xml', 'GCS1');
+    map.set('importer/studyrelease.case.groningen.cs2.xml', 'GCS2');
+    map.set('importer/studyrelease.case.israel.cs1.xml', 'ICS1');
+    map.set('importer/studyrelease.case.israel.cs2.xml', 'ICS2');
+    map.set('importer/studyrelease.case.leida.cs1.xml', 'LCS1');
+    map.set('importer/studyrelease.case.leida.cs2.xml', 'LCS2');
+    map.set('importer/studyrelease.case.isreal.cs1.xml', 'ICS1');
+    map.set('importer/case.barcelona.cs1.xml', 'BCS1');
+    map.set('importer/case.groningen.cs2.review.2.xml', 'GCS2');
+    map.set('importer/case.groningen.cs2.review.xml', 'GCS2');
+    map.set('importer/case.groningen.cs2.xml', 'GCS2');
+    map.set('importer/case.israel.cs2.xml', 'ICS2');
+    map.set('importer/case.leida.cs1.xml', 'ICS1');
+    map.set('importer/case.leida.cs2.xml', 'LCS2');
+    map.set('importer/cs1.barcelona.v1.xml', 'BCS1');
+    map.set('importer/barcelona.cs3.xml', 'BCS2');
+    map.set('importer/barcelona.cs3.xml', 'BCS2');
 
-    for(let path of map.keys())
+    for(let path of map.keys()){
       if(filePath.endsWith(path))
         return map.get(path);
+    }
     return null;
   }
 
+  static filterFiles(files){
+    let matches = [];
+    for(let file of files){
+      file = file.replace(/\\/g,'/');
+      if(this.translatePathToCS(file) != null)
+        matches.push(file);
+    }
+    return matches;
+  }
+
   static async repo(){
+
+   // console.log(this.filterFiles(['add/importer/studyrelease.case.barcelona.cs1.xml']));
+    //return '';
+    
     await Git.checkout(['master']);
     console.log('git checkout master completed')
     let data = await Git.log(['-m', '--follow', '*.xml']);
     console.log('git log completed');
     console.log(data.all.length + ' matching commits!')
-    let fileNames = new Set();
+    let allFilePaths = new Set();
     for(let i=0; i<data.all.length; i++){
-      console.log('----------------------------------')
+
       let c = data.all[i];
-      console.log(c)
       await Git.checkout([c.hash]);
-      console.log('checkout '+c.hash+' completed!');     
+      console.log('checkout completed! '+c.hash+' ');     //+c.message
       
-      let files = null;
+      let findPath = repositoryPath;
       if(await fs.exists(repositoryPath+'/app'))  
-        files = await find.file(/\.xml$/, repositoryPath+'/app');
-      else
-        files = await find.file(/\.xml$/, repositoryPath);
+        findPath +='/app';
+      let files = await find.file(/\.xml$/, findPath);
+      
+      console.log('find completed!')
       if(files)
         for(let f of files)
-          fileNames.add(f);
-      console.log(files);
+          allFilePaths.add(f.replace(/\\/g,'/').replace(repositoryPath,''));
+
+      files = this.filterFiles(files);
+      console.log('nr files after filter: '+files.length);
       //if(i==10)
-        //break;
+        break;
     }
 
-    console.log(fileNames)
+
+    console.log('all file names');
+    console.log(allFilePaths)
 
   }
 
