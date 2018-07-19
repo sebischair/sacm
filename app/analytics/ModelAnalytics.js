@@ -48,45 +48,48 @@ module.exports = class ModelAnalytics{
     return matches;
   }
 
-  static async repo(){
+  static async analyzeRepository(){
+    try{
+      await Git.checkout(['master']);
+      console.log('git checkout master completed')
+      let data = await Git.log(['-m', '--follow', '*.xml']);
+      console.log('git log completed - '+data.all.length + ' matching commits!')
+      let allFilePaths = new Set();
+      for(let i=0; i<data.all.length; i++){
 
-    await Git.checkout(['master']);
-    console.log('git checkout master completed')
-    let data = await Git.log(['-m', '--follow', '*.xml']);
-    console.log('git log completed - '+data.all.length + ' matching commits!')
-    let allFilePaths = new Set();
-    for(let i=0; i<data.all.length; i++){
+        let c = data.all[i];
+        await Git.checkout([c.hash]);
+        console.log('\n'+(i+1)+'/'+data.all.length +' checkout '+c.hash+' completed! ');
+        console.log('---'+c.message)
+        let findPath = repositoryPath;
+        if(await fs.exists(repositoryPath+'/app'))  
+          findPath +='/app';
+        let files = await find.file(/\.xml$/, findPath);
+        
+        console.log('---find completed!')
+        if(files)
+          for(let f of files)
+            allFilePaths.add(f.replace(/\\/g,'/').replace(repositoryPath,''));
 
-      let c = data.all[i];
-      await Git.checkout([c.hash]);
-      console.log('\n'+(i+1)+'/'+data.all.length +' checkout '+c.hash+' completed! ');
-      console.log('---'+c.message)
-      let findPath = repositoryPath;
-      if(await fs.exists(repositoryPath+'/app'))  
-        findPath +='/app';
-      let files = await find.file(/\.xml$/, findPath);
+        files = this.filterFiles(files);
+        console.log('---files after filter: '+files.length);
+        
+        for(let file of files){
+          
+        }
+        //if(i==10)
+          break;
       
-      console.log('---find completed!')
-      if(files)
-        for(let f of files)
-          allFilePaths.add(f.replace(/\\/g,'/').replace(repositoryPath,''));
-
-      files = this.filterFiles(files);
-      console.log('---files after filter: '+files.length);
-      //if(i==10)
-        break;
+      }
+      console.log('\nSet of all repository file names:');
+      console.log(allFilePaths)
+    }catch(e){
+      console.log(e);
     }
-
-
-    console.log('Set of all file names:');
-    console.log(allFilePaths)
-
   }
 
   static async analyze(){    
    
-    await this.repo();
-
     let result = {};
     try{
       const filePath = 'app/importer/studyrelease.case.groningen.cs2.xml';
