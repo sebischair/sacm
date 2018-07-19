@@ -9,17 +9,63 @@ const Git = require('simple-git/promise')(repositoryPath);
 
 module.exports = class ModelAnalytics{
 
+  static translatePathToCS(filePath){
+    let map = new Map();
+    map.put('importer/studyrelease.case.barcelona.cs1.xml', 'BCS1');
+    map.put('importer/studyrelease.case.barcelona.cs2.xml', 'BCS2');
+    map.put('importer/studyrelease.case.groningen.cs1.xml', 'GCS1');
+    map.put('importer/studyrelease.case.groningen.cs2.xml', 'GCS2');
+    map.put('importer/studyrelease.case.israel.cs1.xml', 'ICS1');
+    map.put('importer/studyrelease.case.israel.cs2.xml', 'ICS2');
+    map.put('importer/studyrelease.case.leida.cs1.xml', 'LCS1');
+    map.put('importer/studyrelease.case.leida.cs2.xml', 'LCS2');
+    map.put('importer/studyrelease.case.isreal.cs1.xml', 'ICS1');
+    map.put('importer/case.barcelona.cs1.xml', 'BCS1');
+    map.put('importer/case.groningen.cs2.review.2.xml', 'GCS2');
+    map.put('importer/case.groningen.cs2.review.xml', 'GCS2');
+    map.put('importer/case.groningen.cs2.xml', 'GCS2');
+    map.put('importer/case.israel.cs2.xml', 'ICS2');
+    map.put('importer/case.leida.cs1.xml', 'ICS1');
+    map.put('importer/case.leida.cs2.xml', 'LCS2');
+    map.put('importer/cs1.barcelona.v1.xml', 'BCS1');
+    map.put('importer/barcelona.cs3.xml', 'BCS2');
+    map.put('importer/barcelona.cs3.xml', 'BCS2');
+
+    for(let path of map.keys())
+      if(filePath.endsWith(path))
+        return map.get(path);
+    return null;
+  }
+
   static async repo(){
     await Git.checkout(['master']);
     console.log('git checkout master completed')
     let data = await Git.log(['-m', '--follow', '*.xml']);
     console.log('git log completed');
-    console.log(data.all)
-    await Git.checkout([data.all[0].hash]);
-    console.log('checkout completed');     
-    
-    let files = await find.file(/\.xml$/, repositoryPath+'/app');
-    console.log(files);
+    console.log(data.all.length + ' matching commits!')
+    let fileNames = new Set();
+    for(let i=0; i<data.all.length; i++){
+      console.log('----------------------------------')
+      let c = data.all[i];
+      console.log(c)
+      await Git.checkout([c.hash]);
+      console.log('checkout '+c.hash+' completed!');     
+      
+      let files = null;
+      if(await fs.exists(repositoryPath+'/app'))  
+        files = await find.file(/\.xml$/, repositoryPath+'/app');
+      else
+        files = await find.file(/\.xml$/, repositoryPath);
+      if(files)
+        for(let f of files)
+          fileNames.add(f);
+      console.log(files);
+      //if(i==10)
+        //break;
+    }
+
+    console.log(fileNames)
+
   }
 
   static async analyze(){    
