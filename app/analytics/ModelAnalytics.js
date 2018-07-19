@@ -2,9 +2,11 @@
 import Promise from 'bluebird';
 import winston from 'winston';
 import xml2js from 'xml2js';
+import find from 'find';
 const fs = Promise.promisifyAll(require("fs"));
 const xml2jspromise = Promise.promisifyAll(xml2js);
-const Git = require('simple-git/promise')('D:/Projekte/CONNECARE/Technical/repos/sacm.backend.analytics');
+const repoPath = 'D:/Projekte/CONNECARE/Technical/repos/sacm.backend.analytics';
+const Git = require('simple-git/promise')(repoPath);
 
 module.exports = class ModelAnalytics{
 
@@ -16,6 +18,10 @@ module.exports = class ModelAnalytics{
     console.log(data.all)
     await Git.checkout([data.all[0].hash]);
     console.log('checkout completed');     
+    
+    find.file(/\.xml$/, repoPath+'/app', function(files) {
+      console.log(files);
+    })
   }
 
   static async analyze(){    
