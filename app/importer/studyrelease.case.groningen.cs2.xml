@@ -539,7 +539,7 @@
             <AttributeDefinition id="GCS2_PhysicalActivity" type="Link.EntityDefinition.GCS2_PhysicalActivity" description="Physical Activity" multiplicity="any"/>
             <AttributeDefinition id="GCS2_MonitoringPrescription" type="Link.EntityDefinition.GCS2_MonitoringPrescription" description="Monitoring Prescription" multiplicity="any"/> 
             <!--<AttributeDefinition id="GCS2_SimpleTask" type="Link.EntityDefinition.GCS2_SimpleTask" description="Simple Task" multiplicity="any"/>-->
-			<AttributeDefinition id="GSC2_MonitoringPrescriptionHeartPulseAH" type="Link.EntityDefinition.GSC2_MonitoringPrescriptionHeartPulse" multiplicity="any" />	
+			<AttributeDefinition id="GCS2_MonitoringPrescriptionHeartPulseAH" type="Link.EntityDefinition.GCS2_MonitoringPrescriptionHeartPulse" multiplicity="any" />	
             <AttributeDefinition id="GCS2_PatientQuestionaire" type="Link.EntityDefinition.GCS2_PatientQuestionaire" description="Patient Questionaire" multiplicity="any"/>
         </EntityDefinition>
 
@@ -588,7 +588,7 @@
             <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comments" additionalDescription="Please provide additional hints for the patient."/>   
             <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Measurement"/>                      
         </EntityDefinition>
-			<EntityDefinition id="GSC2_MonitoringPrescriptionHeartPulse">
+			<EntityDefinition id="GCS2_MonitoringPrescriptionHeartPulse">
             <AttributeDefinition id="type" type="enumeration" defaultValues="['HEARTPULSE']" multiplicity="exactlyOne" description="Meuserement type" additionalDescription="Selecteer het type moderatie voor de supervisie van de patiënt">
                 <EnumerationOption value="HEARTPULSE" description="hartslag"/>
             </AttributeDefinition>   
@@ -956,23 +956,23 @@
                     <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_MonitoringPrescription.comments" isReadOnly="false" isMandatory="true"/>                    
                     <TaskParamDefinition part="AUTOMATED" path="GCS2_Workplan.GCS2_MonitoringPrescription.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>
-				   <DualTaskDefinition id="GSC2_MonitoringPrescriptionHeartPulseAHWP" externalId="MonitoringPrescription"
+				   <DualTaskDefinition id="GCS2_MonitoringPrescriptionHeartPulseAHWP" externalId="MonitoringPrescription"
 				description="Recept van de bewaking - Hartslag"
-				ownerPath="GCS2_Settings.Clinician" dueDatePath="GSC2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="GSC2_MonitoringPrescriptionHeartPulse" entityAttachPath="GSC2_Workplan.GSC2_MonitoringPrescriptionHeartPulseAH">
+				ownerPath="GCS2_Settings.Clinician" dueDatePath="GCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="GCS2_MonitoringPrescriptionHeartPulse" entityAttachPath="GCS2_Workplan.GCS2_MonitoringPrescriptionHeartPulseAH">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="GSC2_Workplan.GSC2_MonitoringPrescriptionHeartPulseAH.type" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="GSC2_Workplan.GSC2_MonitoringPrescriptionHeartPulseAH.alertmin" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="GSC2_Workplan.GSC2_MonitoringPrescriptionHeartPulseAH.alertmax" isReadOnly="false" isMandatory="true"/>
-                    <!-- <TaskParamDefinition part="HUMAN" path="GSC2_Workplan.GSC2_MonitoringPrescriptionHeartPulseAH.alertfreq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="GSC2_Workplan.GSC2_MonitoringPrescriptionHeartPulseAH.alertfrequnit" isReadOnly="false" isMandatory="true"/>-->
-                    <TaskParamDefinition part="HUMAN" path="GSC2_Workplan.GSC2_MonitoringPrescriptionHeartPulseAH.freq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="GSC2_Workplan.GSC2_MonitoringPrescriptionHeartPulseAH.frequnit" isReadOnly="false" isMandatory="true"/>   
-                    <TaskParamDefinition part="HUMAN" path="GSC2_Workplan.GSC2_MonitoringPrescriptionHeartPulseAH.maxdelay" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="GSC2_Workplan.GSC2_MonitoringPrescriptionHeartPulseAH.startdate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="GSC2_Workplan.GSC2_MonitoringPrescriptionHeartPulseAH.enddate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="GSC2_Workplan.GSC2_MonitoringPrescriptionHeartPulseAH.timeslot" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="GSC2_Workplan.GSC2_MonitoringPrescriptionHeartPulseAH.comments" isReadOnly="false" isMandatory="false"/>                                        <TaskParamDefinition part="AUTOMATED" path="GSC2_Workplan.GSC2_MonitoringPrescriptionHeartPulseAH.measurement" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_MonitoringPrescriptionHeartPulseAH.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_MonitoringPrescriptionHeartPulseAH.alertmin" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_MonitoringPrescriptionHeartPulseAH.alertmax" isReadOnly="false" isMandatory="true"/>
+                    <!-- <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_MonitoringPrescriptionHeartPulseAH.alertfreq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_MonitoringPrescriptionHeartPulseAH.alertfrequnit" isReadOnly="false" isMandatory="true"/>-->
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_MonitoringPrescriptionHeartPulseAH.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_MonitoringPrescriptionHeartPulseAH.frequnit" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_MonitoringPrescriptionHeartPulseAH.maxdelay" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_MonitoringPrescriptionHeartPulseAH.startdate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_MonitoringPrescriptionHeartPulseAH.enddate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_MonitoringPrescriptionHeartPulseAH.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_MonitoringPrescriptionHeartPulseAH.comments" isReadOnly="false" isMandatory="false"/>                                        <TaskParamDefinition part="AUTOMATED" path="GCS2_Workplan.GCS2_MonitoringPrescriptionHeartPulseAH.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>	
 
                 <!-- Simple Task
@@ -1181,24 +1181,24 @@
             <TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescription.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
         </Action>
 		
-		  <Action id="ActivateDualTask" processId="GSC2_MonitoringPrescriptionHeartPulseAHWP" breakpoint="true"/>
-		<Action id="CompleteDualTaskHumanPart" processId="GSC2_MonitoringPrescriptionHeartPulseAHWP" breakpoint="true">
-			<TaskParam path="GSC2_Workplan.GSC2_MonitoringPrescriptionHeartPulseAH.type"  values="['HEARTPULSE']"/>
-			<TaskParam path="GSC2_Workplan.GSC2_MonitoringPrescriptionHeartPulseAH.alertmin"  values="[77]"/>
-			<TaskParam path="GSC2_Workplan.GSC2_MonitoringPrescriptionHeartPulseAH.alertmax"  values="[99]"/>
-			<TaskParam path="GSC2_Workplan.GSC2_MonitoringPrescriptionHeartPulseAH.alertfreq"  values="[1]"/>
-			<TaskParam path="GSC2_Workplan.GSC2_MonitoringPrescriptionHeartPulseAH.alertfrequnit"  values="['DAYS']"/>
-			<TaskParam path="GSC2_Workplan.GSC2_MonitoringPrescriptionHeartPulseAH.comments"  values="['Some random comment HEARTPULSE']"/>
-			<TaskParam path="GSC2_Workplan.GSC2_MonitoringPrescriptionHeartPulseAH.freq"  values="[5]"/>
-			<TaskParam path="GSC2_Workplan.GSC2_MonitoringPrescriptionHeartPulseAH.freqqunit"  values="['WEEKS']"/>
-			<TaskParam path="GSC2_Workplan.GSC2_MonitoringPrescriptionHeartPulseAH.maxdelay"  values="[100]"/>
-			<TaskParam path="GSC2_Workplan.GSC2_MonitoringPrescriptionHeartPulseAH.startdate"  values="['2017-06-09T00:00:00.0']"/>
-			<TaskParam path="GSC2_Workplan.GSC2_MonitoringPrescriptionHeartPulseAH.enddate"  values="['2019-06-09T00:00:00.0']"/>
-			<TaskParam path="GSC2_Workplan.GSC2_MonitoringPrescriptionHeartPulseAH.timeslot"  values="['BREAKFAST']"/>
+		  <Action id="ActivateDualTask" processId="GCS2_MonitoringPrescriptionHeartPulseAHWP" breakpoint="true"/>
+		<Action id="CompleteDualTaskHumanPart" processId="GCS2_MonitoringPrescriptionHeartPulseAHWP" breakpoint="true">
+			<TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescriptionHeartPulseAH.type"  values="['HEARTPULSE']"/>
+			<TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescriptionHeartPulseAH.alertmin"  values="[77]"/>
+			<TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescriptionHeartPulseAH.alertmax"  values="[99]"/>
+			<TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescriptionHeartPulseAH.alertfreq"  values="[1]"/>
+			<TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescriptionHeartPulseAH.alertfrequnit"  values="['DAYS']"/>
+			<TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescriptionHeartPulseAH.comments"  values="['Some random comment HEARTPULSE']"/>
+			<TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescriptionHeartPulseAH.freq"  values="[5]"/>
+			<TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescriptionHeartPulseAH.freqqunit"  values="['WEEKS']"/>
+			<TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescriptionHeartPulseAH.maxdelay"  values="[100]"/>
+			<TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescriptionHeartPulseAH.startdate"  values="['2017-06-09T00:00:00.0']"/>
+			<TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescriptionHeartPulseAH.enddate"  values="['2019-06-09T00:00:00.0']"/>
+			<TaskParam path="GCS2_Workplan.GCS2_MonitoringPrescriptionHeartPulseAH.timeslot"  values="['BREAKFAST']"/>
 		</Action>
 			
 		<Action id="CompleteDualTaskAutomatedPart" processId="GCS2_MonitoringPrescriptionHeartPulseAHWP" breakpoint="true">
-			<TaskParam path="GSC2_Workplan.LCS1_MonitoringPrescriptionHeartPulseAH.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
+			<TaskParam path="GCS2_Workplan.LCS1_MonitoringPrescriptionHeartPulseAH.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
 		</Action>
 
         <!-- Simple Task 
