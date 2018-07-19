@@ -2,7 +2,7 @@
 import Promise from 'bluebird';
 import winston from 'winston';
 import xml2js from 'xml2js';
-import find from 'find';
+import find from 'find-promise';
 const fs = Promise.promisifyAll(require("fs"));
 const xml2jspromise = Promise.promisifyAll(xml2js);
 const repoPath = 'D:/Projekte/CONNECARE/Technical/repos/sacm.backend.analytics';
@@ -19,9 +19,8 @@ module.exports = class ModelAnalytics{
     await Git.checkout([data.all[0].hash]);
     console.log('checkout completed');     
     
-    find.file(/\.xml$/, repoPath+'/app', function(files) {
-      console.log(files);
-    })
+    let files = await find.file(/\.xml$/, repoPath+'/app');
+    console.log(files);
   }
 
   static async analyze(){    
