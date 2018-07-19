@@ -1,12 +1,11 @@
 'use strict';
 import Promise from 'bluebird';
 import winston from 'winston';
-import xml2js from 'xml2js';
 import find from 'find-promise';
 const fs = Promise.promisifyAll(require("fs"));
-const xml2jspromise = Promise.promisifyAll(xml2js);
-const repoPath = 'D:/Projekte/CONNECARE/Technical/repos/sacm.backend.analytics';
-const Git = require('simple-git/promise')(repoPath);
+const xml2js = Promise.promisifyAll(require("xml2js"));
+const repositoryPath = 'D:/Projekte/CONNECARE/Technical/repos/sacm.backend.analytics';
+const Git = require('simple-git/promise')(repositoryPath);
 
 module.exports = class ModelAnalytics{
 
@@ -19,7 +18,7 @@ module.exports = class ModelAnalytics{
     await Git.checkout([data.all[0].hash]);
     console.log('checkout completed');     
     
-    let files = await find.file(/\.xml$/, repoPath+'/app');
+    let files = await find.file(/\.xml$/, repositoryPath+'/app');
     console.log(files);
   }
 
@@ -31,7 +30,7 @@ module.exports = class ModelAnalytics{
     try{
       const filePath = 'app/importer/studyrelease.case.groningen.cs2.xml';
       const fileContent = fs.readFileSync(filePath).toString();
-      const xml = await xml2jspromise.parseStringAsync(fileContent, {explicitChildren:true, preserveChildrenOrder:true});     
+      const xml = await xml2js.parseStringAsync(fileContent, {explicitChildren:true, preserveChildrenOrder:true});     
       const Workspace =  xml.SACMDefinition.Workspace[0];
 
       this.analyzeAttributeDefinitions(result, Workspace);
