@@ -50,9 +50,6 @@ module.exports = class ModelAnalytics{
 
   static async repo(){
 
-   // console.log(this.filterFiles(['add/importer/studyrelease.case.barcelona.cs1.xml']));
-    //return '';
-    
     await Git.checkout(['master']);
     console.log('git checkout master completed')
     let data = await Git.log(['-m', '--follow', '*.xml']);
@@ -62,20 +59,20 @@ module.exports = class ModelAnalytics{
 
       let c = data.all[i];
       await Git.checkout([c.hash]);
-      console.log((i+1)+'/'+data.all.length +' checkout '+c.hash+' completed! ');//+c.message
-      
+      console.log('\n'+(i+1)+'/'+data.all.length +' checkout '+c.hash+' completed! ');
+      console.log('---'+c.message)
       let findPath = repositoryPath;
       if(await fs.exists(repositoryPath+'/app'))  
         findPath +='/app';
       let files = await find.file(/\.xml$/, findPath);
       
-      console.log('--find completed!')
+      console.log('---find completed!')
       if(files)
         for(let f of files)
           allFilePaths.add(f.replace(/\\/g,'/').replace(repositoryPath,''));
 
       files = this.filterFiles(files);
-      console.log('--files after filter: '+files.length);
+      console.log('---files after filter: '+files.length);
       //if(i==10)
         break;
     }
