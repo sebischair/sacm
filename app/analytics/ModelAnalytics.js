@@ -88,7 +88,7 @@ module.exports = class ModelAnalytics{
           commitResult.files.push({
             file: file.replace(repositoryPath,''),
             case: this.translatePathToCS(file),
-            result: this.analyzeFile(file)
+            result: await this.analyzeFile(file)
           });
           console.log(commitResult)
           break;
@@ -114,10 +114,10 @@ module.exports = class ModelAnalytics{
       const xml = await xml2js.parseStringAsync(fileContent, {explicitChildren:true, preserveChildrenOrder:true});     
       const Workspace =  xml.SACMDefinition.Workspace[0];
 
-      this.analyzeAttributeDefinitions(result, Workspace);
-      this.analyzeDerivedAttributeDefinitions(result, Workspace);
-      this.analyzeEntityDefinitions(result, Workspace);
-      this.analyzeStageDefinitions(result, Workspace);
+      result.attributeDefinitions = this.analyzeAttributeDefinitions(Workspace);      
+      result.derivedAttributeDefinitions = this.analyzeDerivedAttributeDefinitions(Workspace);
+      result.entityDefinitions = this.analyzeEntityDefinitions(Workspace);
+      result.stageDefinitions = this.analyzeStageDefinitions(Workspace);
     }catch(e){
       console.log(e);
     }
@@ -125,8 +125,8 @@ module.exports = class ModelAnalytics{
   }
 
 
-  static analyzeAttributeDefinitions(result, Workspace){
-    result.attributeDefinitions = {
+  static analyzeAttributeDefinitions(Workspace){
+    let result = {
       nr:0,
       typeLink: 0,
       typeLinkUser: 0,
@@ -164,41 +164,41 @@ module.exports = class ModelAnalytics{
     Workspace.EntityDefinition.forEach(ed => {
       if(ed.AttributeDefinition)
         ed.AttributeDefinition.forEach(ad=>{
-          result.attributeDefinitions.nr++;
+          result.nr++;
          
           let type = ad.$.type.toLowerCase();
           if(type.startsWith('link')){
-            result.attributeDefinitions.typeLink++;
+            result.typeLink++;
             if(type.startsWith('link.user'))
-              result.attributeDefinitions.typeLinkUser++;
+              result.typeLinkUser++;
             if(type.startsWith('link.entitydefinition'))
-              result.attributeDefinitions.typeLinkEntityDefinition++;
+              result.typeLinkEntityDefinition++;
           }else if(type.startsWith('notype')){
-            result.attributeDefinitions.typeNoType++;
+            result.typeNoType++;
           }else if(type.startsWith('string')){
-            result.attributeDefinitions.typeString++;
+            result.typeString++;
           }else if(type.startsWith('longtext')){
-            result.attributeDefinitions.typeLongText++;
+            result.typeLongText++;
           }else if(type.startsWith('boolean')){
-            result.attributeDefinitions.typeBoolean++;
+            result.typeBoolean++;
           }else if(type.startsWith('number')){
-            result.attributeDefinitions.typeNumber++;
+            result.typeNumber++;
             if(type.indexOf('min') != -1)
-              result.attributeDefinitions.typeNumberMin++;
+              result.typeNumberMin++;
             if(type.indexOf('max') != -1)
-              result.attributeDefinitions.typeNumberMax++;
+              result.typeNumberMax++;
           }else if(type.startsWith('enumeration')){
-            result.attributeDefinitions.typeEnumeration++;
+            result.typeEnumeration++;
             if(ad.EnumerationOption)
-              result.attributeDefinitions.typeEnumerationOptions += ad.EnumerationOption.length;
+              result.typeEnumerationOptions += ad.EnumerationOption.length;
           }else if(type.startsWith('date')){
-            result.attributeDefinitions.typeDate++;
+            result.typeDate++;
             if(type.indexOf('before') != -1)
-              result.attributeDefinitions.typeDateBefore++;
+              result.typeDateBefore++;
             if(type.indexOf('after') != -1)
-              result.attributeDefinitions.typeDateAfter++;
+              result.typeDateAfter++;
           }else if(type.startsWith('json')){
-            result.attributeDefinitions.typeJson++;
+            result.typeJson++;
           }
 
           let multiplicity = ad.$.multiplicity;
@@ -206,47 +206,48 @@ module.exports = class ModelAnalytics{
             multiplicity = 'any';
           multiplicity = multiplicity.toLowerCase();
           if(multiplicity == 'exactlyone'){
-            result.attributeDefinitions.multiplicityExactlyOne++;
+            result.multiplicityExactlyOne++;
           }else if(multiplicity == 'maximalone'){
-            result.attributeDefinitions.multiplicityMaximalOne++;
+            result.multiplicityMaximalOne++;
           }else if(multiplicity == 'atleastone'){
-            result.attributeDefinitions.multiplicityAtLeastOne++;
+            result.multiplicityAtLeastOne++;
           }else if(multiplicity == 'any'){
-            result.attributeDefinitions.multiplicityAny++;
+            result.multiplicityAny++;
           }
 
           if(ad.$.defaultValues)
-            result.attributeDefinitions.defaultValues++;
+            result.defaultValues++;
           if(ad.$.additionalDescription)
-            result.attributeDefinitions.additionalDescription++;
+            result.additionalDescription++;
 
           if(ad.$.uiReference){
-            result.attributeDefinitions.uiReference++;
+            result.uiReference++;
             let uiReference = ad.$.uiReference.toLowerCase();
             if(uiReference.startsWith('colors'))
-              result.attributeDefinitions.uiReferenceColors++;
+              result.uiReferenceColors++;
             if(uiReference.startsWith('conditonalmultiplicity'))
-              result.attributeDefinitions.uiReferenceConditionalMultiplicity++;
+              result.uiReferenceConditionalMultiplicity++;
             if(uiReference.startsWith('patientquestionaires'))
-              result.attributeDefinitions.uiReferencePatientQuestionnaires++;
+              result.uiReferencePatientQuestionnaires++;
             if(uiReference.startsWith('link'))
-              result.attributeDefinitions.uiReferenceLink++;
+              result.uiReferenceLink++;
             if(uiReference.startsWith('privatelink'))
-              result.attributeDefinitions.uiReferencePrivateLink++;
+              result.uiReferencePrivateLink++;
             if(uiReference.startsWith('linediagram'))
-              result.attributeDefinitions.uiReferenceLineDiagram++;
+              result.uiReferenceLineDiagram++;
             if(uiReference.startsWith('svg'))
-              result.attributeDefinitions.uiReferenceLineSvg++;
+              result.uiReferenceLineSvg++;
           }
             
         });
     });
-    if(result.attributeDefinitions.typeEnumeration != 0)
-      result.attributeDefinitions.typeEnumerationOptionsAvg = result.attributeDefinitions.typeEnumerationOptions/result.attributeDefinitions.typeEnumeration;
+    if(result.typeEnumeration != 0)
+      result.typeEnumerationOptionsAvg = result.typeEnumerationOptions/result.typeEnumeration;
+    return result;
   }
 
-  static analyzeDerivedAttributeDefinitions(result, Workspace){
-    result.derivedAttributeDefinitions = {
+  static analyzeDerivedAttributeDefinitions(Workspace){
+    let result = {
       nr:0,
       explicitType: 0,            
       additionalDescription: 0,
@@ -259,30 +260,31 @@ module.exports = class ModelAnalytics{
     Workspace.EntityDefinition.forEach(ed => {
       if(ed.DerivedAttributeDefinition)
         ed.DerivedAttributeDefinition.forEach(ad=>{
-          result.derivedAttributeDefinitions.nr++;
+          result.nr++;
 
           if(ad.$.explicitAttributeType)
-            result.derivedAttributeDefinitions.explicitType++;
+            result.explicitType++;
           if(ad.$.additionalDescription)
-            result.derivedAttributeDefinitions.additionalDescription++;
+            result.additionalDescription++;
 
           if(ad.$.uiReference){
-            result.derivedAttributeDefinitions.uiReference++;
+            result.uiReference++;
             let uiReference = ad.$.uiReference.toLowerCase();
             if(uiReference.startsWith('colors'))
-              result.derivedAttributeDefinitions.uiReferenceColors++;
+              result.uiReferenceColors++;
             if(uiReference.startsWith('linediagram'))
-              result.derivedAttributeDefinitions.uiReferenceLineDiagram++;
+              result.uiReferenceLineDiagram++;
             if(uiReference.startsWith('svg'))
-              result.derivedAttributeDefinitions.uiReferenceLineSvg++;
+              result.uiReferenceLineSvg++;
           }
             
         });
     });
+    return result;
   }
 
-  static analyzeEntityDefinitions(result, Workspace){
-    result.entityDefinitions = {
+  static analyzeEntityDefinitions(Workspace){
+    let result = {
       nr:0,
       avgNrAttributeDefinitions: 0,
       avgNrDerivedAttributeDefinitions: 0
@@ -291,18 +293,20 @@ module.exports = class ModelAnalytics{
     let helperSumAttributeDefinitions = 0;
     let helperSumDerivedAttributeDefinitions = 0;
     Workspace.EntityDefinition.forEach(ed => {
-      result.entityDefinitions.nr++;
+      result.nr++;
       if(ed.AttributeDefinition)
         helperSumAttributeDefinitions += ed.AttributeDefinition.length;
       if(ed.DerivedAttributeDefinition)
         helperSumDerivedAttributeDefinitions += ed.DerivedAttributeDefinition.length;
     });
-    result.entityDefinitions.avgNrAttributeDefinitions = helperSumAttributeDefinitions/Workspace.EntityDefinition.length;
-    result.entityDefinitions.avgNrDerivedAttributeDefinitions = helperSumDerivedAttributeDefinitions/Workspace.EntityDefinition.length;
+    result.avgNrAttributeDefinitions = helperSumAttributeDefinitions/Workspace.EntityDefinition.length;
+    result.avgNrDerivedAttributeDefinitions = helperSumDerivedAttributeDefinitions/Workspace.EntityDefinition.length;
+
+    return result;
   }
 
-  static analyzeStageDefinitions(result, Workspace){
-    result.stageDefinitions = {
+  static analyzeStageDefinitions(Workspace){
+    let result = {
       nr: 0,
       avgNrHumanTaskDefinitions: 0,
       avgNrAutomatedTaskDefinitions: 0,
@@ -315,7 +319,7 @@ module.exports = class ModelAnalytics{
     let CaseDefinition = Workspace.CaseDefinition[0];
 
     CaseDefinition.StageDefinition.forEach(sd => {
-      result.stageDefinitions.nr++;
+      result.nr++;
       if(sd.HumanTaskDefinition)
         helperSumHumanTaskDefinitions += sd.HumanTaskDefinition.length;
       if(sd.AutomatedTaskDefinition)
@@ -323,9 +327,11 @@ module.exports = class ModelAnalytics{
       if(sd.DualTaskDefinition)
         helperSumDualTaskDefinitions += sd.DualTaskDefinition.length;
     });
-    result.stageDefinitions.avgNrHumanTaskDefinitions = helperSumHumanTaskDefinitions/CaseDefinition.StageDefinition.length;
-    result.stageDefinitions.avgNrAutomatedTaskDefinitions = helperSumAutomatedTaskDefinitions/CaseDefinition.StageDefinition.length;
-    result.stageDefinitions.avgNrDualTaskDefinitions = helperSumDualTaskDefinitions/CaseDefinition.StageDefinition.length;
+    result.avgNrHumanTaskDefinitions = helperSumHumanTaskDefinitions/CaseDefinition.StageDefinition.length;
+    result.avgNrAutomatedTaskDefinitions = helperSumAutomatedTaskDefinitions/CaseDefinition.StageDefinition.length;
+    result.avgNrDualTaskDefinitions = helperSumDualTaskDefinitions/CaseDefinition.StageDefinition.length;
+
+    return result;
   }
 
 }
