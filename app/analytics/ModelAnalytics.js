@@ -90,11 +90,9 @@ module.exports = class ModelAnalytics{
             case: this.translatePathToCS(file),
             result: await this.analyzeFile(file)
           });
-          console.log(commitResult)
-          break;
         }
         result.push(commitResult);
-        //if(i==10)
+        if(i==100)
           break;
         
       }
