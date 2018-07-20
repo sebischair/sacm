@@ -80,8 +80,8 @@ module.exports = class ModelAnalytics{
           hash: c.hash,
           date: c.date,
           message: c.message,
-          author_name: c.author_name,
-          author_email: c.author_email,
+          authorName: c.author_name,
+          authorEmail: c.author_email,
           files: []
         };
         for(let file of files){
@@ -114,6 +114,9 @@ module.exports = class ModelAnalytics{
     worksheet.columns = [
       { key: 'commitHash', header: 'Hash', width:40},
       { key: 'commitDate', header: 'Date', width:25},
+      { key: 'commitAuthorName', header: 'Author Name', width:10},
+      { key: 'commitAuthorEmail', header: 'Author Email', width:10},
+      { key: 'commitMessage', header: 'Message', width:10},
       { key: 'case', header: 'Case', width:6},
       { key: 'attributeDefinitionsNr', header: 'Nr', width:5},
       { key: 'attributeDefinitionsTypeLink', header: 'TypeLink', width:5},
@@ -163,10 +166,10 @@ module.exports = class ModelAnalytics{
     }
     worksheet.getRow(2).values = worksheet.getRow(1).values;
     worksheet.getRow(1).values = [];
-    worksheet.mergeCells('A1:C1');
+    worksheet.mergeCells('A1:E1');
     worksheet.getCell('A1').value = 'Commit'
-    worksheet.mergeCells('D1:AI1');
-    worksheet.getCell('D1').value = 'AttributeDefinitions'
+    worksheet.mergeCells('F1:AL1');
+    worksheet.getCell('F1').value = 'AttributeDefinitions'
     worksheet.getRow(1).fill = fillTemplate;
     worksheet.getRow(1).font = fontTemplate;
     worksheet.getRow(2).fill = fillTemplate;
@@ -183,6 +186,9 @@ module.exports = class ModelAnalytics{
         worksheet.addRow({
           commitHash: commit.hash,
           commitDate: commit.date,
+          commitAuthorName: commit.authorName,
+          commitAuthorEmail: commit.authorEmail,
+          commitMessage: commit.message,
           case: file.case,
           attributeDefinitionsNr: ad ? ad.nr : '',
           attributeDefinitionsTypeLink: ad ? ad.typeLink : '',
@@ -222,6 +228,9 @@ module.exports = class ModelAnalytics{
       let from = to - (commit.files.length-1);
       worksheet.mergeCells('A'+from+':A'+to);
       worksheet.mergeCells('B'+from+':B'+to);
+      worksheet.mergeCells('C'+from+':C'+to);
+      worksheet.mergeCells('D'+from+':D'+to);
+      worksheet.mergeCells('E'+from+':E'+to);
     }
 
     await workbook.xlsx.writeFile(new Date().getTime()+'.xlsx');
