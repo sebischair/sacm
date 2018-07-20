@@ -114,8 +114,8 @@ module.exports = class ModelAnalytics{
     worksheet.columns = [
       { key: 'commitHash', header: 'Hash', width:40},
       { key: 'commitDate', header: 'Date', width:25},
-      { key: 'commitAuthorName', header: 'Author Name', width:10},
-      { key: 'commitAuthorEmail', header: 'Author Email', width:10},
+      { key: 'commitAuthorName', header: 'Author Name', width:5},
+      { key: 'commitAuthorEmail', header: 'Author Email', width:5},
       { key: 'commitMessage', header: 'Message', width:10},
       { key: 'case', header: 'Case', width:6},
       { key: 'attributeDefinitionsNr', header: 'Nr', width:5},
@@ -231,6 +231,11 @@ module.exports = class ModelAnalytics{
       worksheet.mergeCells('C'+from+':C'+to);
       worksheet.mergeCells('D'+from+':D'+to);
       worksheet.mergeCells('E'+from+':E'+to);
+      worksheet.getCell('A'+from).alignment = {vertical:'middle'};
+      worksheet.getCell('B'+from).alignment = {vertical:'middle'};
+      worksheet.getCell('C'+from).alignment = {vertical:'middle'};
+      worksheet.getCell('D'+from).alignment = {vertical:'middle'};
+      worksheet.getCell('E'+from).alignment = {vertical:'middle', wrapText: true};
     }
 
     await workbook.xlsx.writeFile(new Date().getTime()+'.xlsx');
