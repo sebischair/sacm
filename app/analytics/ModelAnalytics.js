@@ -205,13 +205,13 @@ module.exports = class ModelAnalytics{
           attributeDefinitionsMultiplicityAny: ad ? ad.multiplicityAny : '',
           attributeDefinitionsMultiplicityExactlyOne: ad ? ad.multiplicityExactlyOne : '',
           attributeDefinitionsMultiplicityMaximalOne: ad ? ad.multiplicityMaximalOne : '',
-          attributeDefinitionsMultiplicityAtLeastOne: ad ? ad.MultiplicityAtLeastOne : '',
+          attributeDefinitionsMultiplicityAtLeastOne: ad ? ad.multiplicityAtLeastOne : '',
           attributeDefinitionsDefaultValues: ad ? ad.defaultValues : '',
           attributeDefinitionsAdditionalDescription: ad ? ad.additionalDescription : '',
           attributeDefinitionsUiReference: ad ? ad.uiReference : '',
           attributeDefinitionsUiReferenceLineDiagram: ad ? ad.uiReferenceLineDiagram : '',
           attributeDefinitionsUiReferenceColors: ad ? ad.uiReferenceColors : '',
-          attributeDefinitionsUiReferenceConditionalMultiplicity: ad ? ad.conditionalMultiplicity : '',
+          attributeDefinitionsUiReferenceConditionalMultiplicity: ad ? ad.uiReferenceConditionalMultiplicity : '',
           attributeDefinitionsUiReferencePatientQuestionnaires: ad ? ad.uiReferencePatientQuestionnaires : '',
           attributeDefinitionsUiReferenceLink: ad ? ad.uiReferenceLink : '',
           attributeDefinitionsUiReferencePrivateLink: ad ? ad.uiReferencePrivateLink : '',
@@ -354,7 +354,7 @@ module.exports = class ModelAnalytics{
             if(uiReference.startsWith('linediagram'))
               result.uiReferenceLineDiagram++;
             if(uiReference.startsWith('svg'))
-              result.uiReferenceLineSvg++;
+              result.uiReferenceSvg++;
           }
             
         });
