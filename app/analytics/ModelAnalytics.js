@@ -147,26 +147,22 @@ module.exports = class ModelAnalytics{
     ignoreList.add('fa83fa5e213bb31a4cbeb6bbec8f2329a9d838d1'); //XML parse error
     ignoreList.add('7d48fee1b770b383a4d54feb7a0be95418e979d5'); //XML parse error
     ignoreList.add('990519e62935d2e31ecdc0aeea814204a75b5629'); //XML parse error
-    ignoreList.add(''); //XML parse error
-    ignoreList.add(''); //XML parse error
-    ignoreList.add(''); //XML parse error
-    ignoreList.add(''); //XML parse error
-    ignoreList.add(''); //XML parse error
-    ignoreList.add(''); //XML parse error
-    ignoreList.add(''); //XML parse error
+    ignoreList.add('8bcd62072be4711c43b97bb2dc2e868dea1531af'); //XML parse error
+    ignoreList.add('7d96f318cc89a87e8618319a77d118a546deecb5'); //XML parse error
+    ignoreList.add('c3f7321a674ddcd191b76a2b360b4250d5e5a329'); //XML parse error
 
     let result = [];
    // try{
       await Git.checkout(['master']);
       console.log('git checkout master completed')
-      let data = await Git.log(['-m', '--follow', '*.xml']);
+      let data = await Git.log(['-m', '--after', '2017-10-04', '--follow', '*.xml']);
       console.log('git log completed - '+data.all.length + ' matching commits!')
       let allFilePaths = new Set();
       let isStarted = false;
       for(let i=0; i<data.all.length; i++){
         
         let c = data.all[i];
-        if(c.hash == '990519e62935d2e31ecdc0aeea814204a75b5629')
+        if(c.hash == '7d96f318cc89a87e8618319a77d118a546deecb5')
           isStarted = true;
         if(!isStarted)
           continue;
@@ -359,13 +355,19 @@ module.exports = class ModelAnalytics{
     //try{
       //const filePath = 'app/importer/studyrelease.case.groningen.cs2.xml';
       const fileContent = fs.readFileSync(filePath).toString();
+      console.log('a')
       const xml = await xml2js.parseStringAsync(fileContent, {explicitChildren:true, preserveChildrenOrder:true});  
+      console.log('b')
       const Workspace =  xml.SACMDefinition.Workspace[0];
-
-      result.attributeDefinitions = this.analyzeAttributeDefinitions(Workspace);    
+      console.log('c')
+      result.attributeDefinitions = this.analyzeAttributeDefinitions(Workspace); 
+      console.log('d')   
       result.derivedAttributeDefinitions = this.analyzeDerivedAttributeDefinitions(Workspace);
+      console.log('e')
       result.entityDefinitions = this.analyzeEntityDefinitions(Workspace);
+      console.log('f')
       result.stageDefinitions = this.analyzeStageDefinitions(Workspace);
+      console.log('c')
    /*
     }catch(e){
       console.log(e);
