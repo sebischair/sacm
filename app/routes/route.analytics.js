@@ -12,6 +12,7 @@ const router = express.Router();
  * {}
  */
 router.get('/repository', (req, res, next)=>{
+  res.connection.setTimeout(100*60*1000);
   ModelAnalytics.analyzeRepository()
     .then(c=>{
       res.status(200).send(c);

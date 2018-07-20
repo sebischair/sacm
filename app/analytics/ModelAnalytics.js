@@ -158,14 +158,16 @@ module.exports = class ModelAnalytics{
       let data = await Git.log(['-m', '--after', '2017-10-04', '--follow', '*.xml']);
       console.log('git log completed - '+data.all.length + ' matching commits!')
       let allFilePaths = new Set();
-      let isStarted = false;
+      //let isStarted = false;
       for(let i=0; i<data.all.length; i++){
         
         let c = data.all[i];
-        if(c.hash == '7d96f318cc89a87e8618319a77d118a546deecb5')
+        /*
+        if(c.hash == 'e6110f59afd7d8e1a4efd7c9af5fa3397f149ab6')
           isStarted = true;
         if(!isStarted)
           continue;
+          */
         if(ignoreList.has(c.hash))
           continue;
 
@@ -416,8 +418,10 @@ module.exports = class ModelAnalytics{
       if(ed.AttributeDefinition)
         ed.AttributeDefinition.forEach(ad=>{
           result.nr++;
-         
-          let type = ad.$.type.toLowerCase();
+
+          let type = 'notype'
+          if(ad.$.type)
+            type = ad.$.type.toLowerCase();
           if(type.startsWith('link')){
             result.typeLink++;
             if(type.startsWith('link.user'))
@@ -465,12 +469,12 @@ module.exports = class ModelAnalytics{
           }else if(multiplicity == 'any'){
             result.multiplicityAny++;
           }
-
+          
           if(ad.$.defaultValues)
             result.defaultValues++;
           if(ad.$.additionalDescription)
             result.additionalDescription++;
-
+            
           if(ad.$.uiReference){
             result.uiReference++;
             let uiReference = ad.$.uiReference.toLowerCase();
@@ -492,6 +496,7 @@ module.exports = class ModelAnalytics{
             
         });
     });
+    
     if(result.typeEnumeration != 0)
       result.typeEnumerationOptionsAvg = result.typeEnumerationOptions/result.typeEnumeration;
     return result;
