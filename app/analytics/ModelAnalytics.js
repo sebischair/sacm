@@ -2,6 +2,7 @@
 import Promise from 'bluebird';
 import winston from 'winston';
 import find from 'find-promise';
+import Excel from 'exceljs';
 const fs = Promise.promisifyAll(require("fs"));
 const xml2js = Promise.promisifyAll(require("xml2js"));
 const repositoryPath = 'D:/Projekte/CONNECARE/Technical/repos/sacm.backend.analytics';
@@ -92,16 +93,171 @@ module.exports = class ModelAnalytics{
           });
         }
         result.push(commitResult);
-        if(i==100)
+        if(i==2)
           break;
         
       }
       console.log('\nSet of all repository file names:');
       console.log(allFilePaths)
+
+      await this.saveAsExcel(result);
     }catch(e){
       console.log(e);
-    }
+    }    
     return result;
+  }
+
+  static async saveAsExcel(commits){
+    var workbook = new Excel.Workbook();
+    var worksheet = workbook.addWorksheet('Analytics');
+       
+    worksheet.columns = [
+      { key: 'commitHash', header: 'Hash', width:40},
+      { key: 'commitDate', header: 'Date', width:25},
+      { key: 'case', header: 'Case', width:6},
+      { key: 'attributeDefinitionsNr', header: 'Nr', width:5},
+      { key: 'attributeDefinitionsTypeLink', header: 'TypeLink', width:5},
+      { key: 'attributeDefinitionsTypeLinkUser', header: 'TypeLinkUser', width:5},
+      { key: 'attributeDefinitionsTypeLinkEntityDefinition', header: 'TypeLinkEntityDefinition', width:5},
+      { key: 'attributeDefinitionsTypeNoType', header: 'TypeNoType', width:5},
+      { key: 'attributeDefinitionsTypeString', header: 'TypeString', width:5},
+      { key: 'attributeDefinitionsTypeLongText', header: 'TypeLongText', width:5},
+      { key: 'attributeDefinitionsTypeBoolean', header: 'TypeBoolean', width:5},
+      { key: 'attributeDefinitionsTypeNumber', header: 'TypeNumber', width:5},
+      { key: 'attributeDefinitionsTypeNumberMin', header: 'TypeNumberMin', width:5},
+      { key: 'attributeDefinitionsTypeNumberMax', header: 'TypeNumberMax', width:5},
+      { key: 'attributeDefinitionsTypeEnumeration', header: 'TypeEnumeration', width:5},
+      { key: 'attributeDefinitionsTypeEnumerationOptions', header: 'EnumerationOptions', width:5},
+      { key: 'attributeDefinitionsTypeEnumerationOptionsAvg', header: 'EnumerationOptionsAvg', width:5},
+      { key: 'attributeDefinitionsTypeDate', header: 'TypeDate', width:5},
+      { key: 'attributeDefinitionsTypeDateBefore', header: 'TypeDateBefore', width:5},
+      { key: 'attributeDefinitionsTypeDateAfter', header: 'TypeDateAfter', width:5},
+      { key: 'attributeDefinitionsTypeJson', header: 'TypeJson', width:5},
+      { key: 'attributeDefinitionsMultiplicityAny', header: 'MultiplicityAny', width:5},
+      { key: 'attributeDefinitionsMultiplicityExactlyOne', header: 'MultiplicityExactlyOne', width:5},
+      { key: 'attributeDefinitionsMultiplicityMaximalOne', header: 'MultiplicityMaximalOne', width:5},
+      { key: 'attributeDefinitionsMultiplicityAtLeastOne', header: 'MultiplicityAtLeastOne', width:5},
+      { key: 'attributeDefinitionsDefaultValues', header: 'DefaultValues', width:5},
+      { key: 'attributeDefinitionsAdditionalDescription', header: 'AdditionalDescription', width:5},
+      { key: 'attributeDefinitionsUiReference', header: 'UiReference', width:5},
+      { key: 'attributeDefinitionsUiReferenceLineDiagram', header: 'UiReferenceLineDiagram', width:5},
+      { key: 'attributeDefinitionsUiReferenceColors', header: 'UiReferenceColors', width:5},
+      { key: 'attributeDefinitionsUiReferenceConditionalMultiplicity', header: 'UiReferenceConditionalMultiplicity', width:5},
+      { key: 'attributeDefinitionsUiReferencePatientQuestionnaires', header: 'UiReferencePatientQuestionnaires', width:5},
+      { key: 'attributeDefinitionsUiReferenceLink', header: 'UiReferenceLink', width:5},
+      { key: 'attributeDefinitionsUiReferencePrivateLink', header: 'UiReferencePrivateLink', width:5},
+      { key: 'attributeDefinitionsUiReferenceSvg', header: 'UiReferenceSvg', width:5},
+    ]
+    const fontTemplate = {
+      color: { argb: 'FFFFFF' },
+      size: 14,
+      bold:true
+    };
+    const fontTemplate2 = {
+      color: { argb: 'FFFFFF' }
+    };
+    const fillTemplate = {
+      type: 'pattern',
+      pattern:'solid',
+      fgColor:{argb:'FF5733'}
+    }
+    worksheet.getRow(2).values = worksheet.getRow(1).values;
+    worksheet.getRow(1).values = [];
+    worksheet.mergeCells('A1:C1');
+    worksheet.getCell('A1').value = 'Commit'
+    worksheet.mergeCells('D1:AI1');
+    worksheet.getCell('D1').value = 'AttributeDefinitions'
+    worksheet.getRow(1).fill = fillTemplate;
+    worksheet.getRow(1).font = fontTemplate;
+    worksheet.getRow(2).fill = fillTemplate;
+    worksheet.getRow(2).font = fontTemplate2;
+    worksheet.getRow(2).alignment = { textRotation: 45 };
+    for(let commit of commits){
+      for(let file of commit.files){
+
+        let ad = null
+        if(file.result && file.result.attributeDefinitions)
+          ad = file.result.attributeDefinitions;
+
+        worksheet.addRow({
+          commitHash: commit.hash,
+          commitDate: commit.date,
+          case: file.case,
+          attributeDefinitionsNr: ad ? ad.nr : '',
+          attributeDefinitionsTypeLink: ad ? ad.nr : '',
+          attributeDefinitionsTypeLinkUser: ad ? ad.nr : '',
+          attributeDefinitionsTypeLinkEntityDefinition: ad ? ad.nr : '',
+          attributeDefinitionsTypeNoType: ad ? ad.nr : '',
+          attributeDefinitionsTypeString: ad ? ad.nr : '',
+          attributeDefinitionsTypeLongText: ad ? ad.nr : '',
+          attributeDefinitionsTypeBoolean: ad ? ad.nr : '',
+          attributeDefinitionsTypeNumber: ad ? ad.nr : '',
+          attributeDefinitionsTypeNumberMin: ad ? ad.nr : '',
+          attributeDefinitionsTypeNumberMax: ad ? ad.nr : '',
+          attributeDefinitionsTypeEnumeration: ad ? ad.nr : '',
+          attributeDefinitionsTypeEnumerationOptions: ad ? ad.nr : '',
+          attributeDefinitionsTypeEnumerationOptionsAvg: ad ? ad.nr : '',
+          attributeDefinitionsTypeDate: ad ? ad.nr : '',
+          attributeDefinitionsTypeDateBefore: ad ? ad.nr : '',
+          attributeDefinitionsTypeDateAfter: ad ? ad.nr : '',
+          attributeDefinitionsTypeJson: ad ? ad.nr : '',
+          attributeDefinitionsMultiplicityAny: ad ? ad.nr : '',
+          attributeDefinitionsMultiplicityExactlyOne: ad ? ad.nr : '',
+          attributeDefinitionsMultiplicityMaximalOne: ad ? ad.nr : '',
+          attributeDefinitionsMultiplicityAtLeastOne: ad ? ad.nr : '',
+          attributeDefinitionsDefaultValues: ad ? ad.nr : '',
+          attributeDefinitionsAdditionalDescription: ad ? ad.nr : '',
+          attributeDefinitionsUiReference: ad ? ad.nr : '',
+          attributeDefinitionsUiReferenceLineDiagram: ad ? ad.nr : '',
+          attributeDefinitionsUiReferenceColors: ad ? ad.nr : '',
+          attributeDefinitionsUiReferenceConditionalMultiplicity: ad ? ad.nr : '',
+          attributeDefinitionsUiReferencePatientQuestionnaires: ad ? ad.nr : '',
+          attributeDefinitionsUiReferenceLink: ad ? ad.nr : '',
+          attributeDefinitionsUiReferencePrivateLink: ad ? ad.nr : '',
+          attributeDefinitionsUiReferenceSvg: ad ? ad.nr : '',
+        })
+          /*
+        worksheet.addRow([
+          commit.hash, 
+          commit.date, 
+          file.case, 
+          attributeDefinitions ? attributeDefinitions.nr : '',
+          attributeDefinitions ? attributeDefinitions.typeLink : '',
+          attributeDefinitions ? attributeDefinitions.typeLinkUser : '',
+          attributeDefinitions ? attributeDefinitions.typeLinkEntityDefinition : '',
+          attributeDefinitions ? attributeDefinitions.typeNoType : '',
+          attributeDefinitions ? attributeDefinitions.typeString : '',
+          attributeDefinitions ? attributeDefinitions.typeLongText : '',
+          attributeDefinitions ? attributeDefinitions.typeBoolean : '',
+          attributeDefinitions ? attributeDefinitions.typeNumber : '',
+          attributeDefinitions ? attributeDefinitions.typeNumberMin : '',
+          attributeDefinitions ? attributeDefinitions.typeNumberMax : '',
+          attributeDefinitions ? attributeDefinitions.typeEnumeration : '',
+          attributeDefinitions ? attributeDefinitions.typeEnumerationOptions : '',
+          attributeDefinitions ? attributeDefinitions.typeEnumerationOptionsAvg : '',
+          attributeDefinitions ? attributeDefinitions.typeDate : '',
+          attributeDefinitions ? attributeDefinitions.typeDateBefore : '',
+          attributeDefinitions ? attributeDefinitions.typeDateAfter : '',
+          attributeDefinitions ? attributeDefinitions.typeJson : '',
+          attributeDefinitions ? attributeDefinitions.multiplicityAny : '',
+          attributeDefinitions ? attributeDefinitions.multiplicityExactlyOne : '',
+          attributeDefinitions ? attributeDefinitions.multiplicityMaximalOne : '',
+          attributeDefinitions ? attributeDefinitions.multiplicityAtLeastOne : '',
+          attributeDefinitions ? attributeDefinitions.defaultValues : '',
+          attributeDefinitions ? attributeDefinitions.additionalDescription : '',
+          attributeDefinitions ? attributeDefinitions.uiReference : '',
+          attributeDefinitions ? attributeDefinitions.uiReferenceLineDiagram : '',
+          attributeDefinitions ? attributeDefinitions.uiReferenceColors : '',
+          attributeDefinitions ? attributeDefinitions.uiReferenceConditionalMultiplicity : '',
+          attributeDefinitions ? attributeDefinitions.uiReferencePatientQuestionnaires : '',
+          attributeDefinitions ? attributeDefinitions.uiReferenceLink : '',
+          attributeDefinitions ? attributeDefinitions.uiReferencePrivateLink : '',
+          attributeDefinitions ? attributeDefinitions.uiReferenceSvg : '' 
+        ]);*/
+      }
+    }
+
+    await workbook.xlsx.writeFile(new Date().getTime()+'.xlsx');
   }
 
   static async analyzeFile(filePath){   
