@@ -217,8 +217,11 @@ module.exports = class ModelAnalytics{
           attributeDefinitionsUiReferencePrivateLink: ad ? ad.uiReferencePrivateLink : '',
           attributeDefinitionsUiReferenceSvg: ad ? ad.uiReferenceSvg : '',
         })
-      
       }
+      let to = worksheet.lastRow._number;
+      let from = to - (commit.files.length-1);
+      worksheet.mergeCells('A'+from+':A'+to);
+      worksheet.mergeCells('B'+from+':B'+to);
     }
 
     await workbook.xlsx.writeFile(new Date().getTime()+'.xlsx');
