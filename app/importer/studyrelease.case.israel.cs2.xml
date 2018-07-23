@@ -950,7 +950,7 @@
             <AttributeDefinition id="ICS2_PhysicalActivity" type="Link.EntityDefinition.ICS2_PhysicalActivity" description="הנחיות הליכה" multiplicity="any"/>
             <AttributeDefinition id="ICS2_MonitoringPrescription" type="Link.EntityDefinition.ICS2_MonitoringPrescription" description="הנחיות למדידות רפואיות" multiplicity="any"/> 
             <AttributeDefinition id="ICS2_SimpleTask" type="Link.EntityDefinition.ICS2_SimpleTask" description="משימות לביצוע" multiplicity="any"/>
-            <AttributeDefinition id="ICS2_PatientQuestionaire" type="Link.EntityDefinition.ICS2_PatientQuestionaire" description="Patient Questionaire" multiplicity="any"/>
+            <AttributeDefinition id="ICS2_PatientQuestionaire" type="Link.EntityDefinition.ICS2_PatientQuestionaire" description="שאלון למילוי על ידי המטופל" multiplicity="any"/>
         </EntityDefinition>
 
         <EntityDefinition id="ICS2_PhysicalActivity" description="הנחיות הליכה">
@@ -1052,29 +1052,29 @@
             <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Measurement"/>      
         </EntityDefinition>
 
-        <EntityDefinition id="ICS2_PatientQuestionaire" description="Patient Questionaire">
-            <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Questionaire type" additionalDescription="Select questionaire type for patient.">
+        <EntityDefinition id="ICS2_PatientQuestionaire" description="שאלון למילוי על ידי המטופל">
+            <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="סוג השאלון" additionalDescription="בחר סוג שאלון למילוי על ידי המטופל">
                 <EnumerationOption value="SF12" description="SF12"/>
                 <EnumerationOption value="EQ5D" description="EQ5D"/>
             </AttributeDefinition>   
-            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Start date"/> 
-            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="End date"/> 
-            <AttributeDefinition id="freq" type="number.min(0)" defaultValues="[1]" multiplicity="exactlyOne" description="Questionaire Frecuency"/> 
-            <AttributeDefinition id="frequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Questionaire Frecuency Unit">     
-                <EnumerationOption value="DAYS" description="Days"/>
-                <EnumerationOption value="WEEKS" description="Weeks"/>
-                <EnumerationOption value="MONTHS" description="Months"/>
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="תאריך התחלה/> 
+            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="תאריך סיום"/> 
+            <AttributeDefinition id="freq" type="number.min(0)" defaultValues="[1]" multiplicity="exactlyOne" description="תדירות מילוי השאלון"/> 
+            <AttributeDefinition id="frequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="יחידות תדירות מילוי השאלון
+			    <EnumerationOption value="DAYS" description="ימים"/>
+                <EnumerationOption value="WEEKS" description="שבועות"/>
+                <EnumerationOption value="MONTHS" description="חודשים"/>
             </AttributeDefinition> 
             <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="exactlyOne" description="Max delay in minutes" additionalDescription="Maximum delay to fullfill the prescription by the patient"/> 
-            <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="Slots to take the measurements" additionalDescription="Multiple slots can be selected, at least one slot need to be selected">     
-                <EnumerationOption value="BREAKFAST" description="Breakfast"/>
-                <EnumerationOption value="LUNCH" description="Lunch"/>
-                <EnumerationOption value="AFTERNOONSNACK" description="Afternoon Snack"/>
-                <EnumerationOption value="DINNER" description="Dinner"/>
-                <EnumerationOption value="BEFORESLEEP" description="Before Sleep"/>
-                <EnumerationOption value="ANYTIMEDURINGDAY" description="Any time a day" additionalDescription="Please select this option when the timeslot of a day doesn't matter."/>
+            <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="זמן למילוי השאלון" additionalDescription="יש לבחור לפחות אפשרות אחת>     
+                <EnumerationOption value="BREAKFAST" description="בוקר"/>
+                <EnumerationOption value="LUNCH" description="צהריים"/>
+                <EnumerationOption value="AFTERNOONSNACK" description="אחר הצהריים"/>
+                <EnumerationOption value="DINNER" description="ערב"/>
+                <EnumerationOption value="BEFORESLEEP" description="לפני השינה"/>
+                <EnumerationOption value="ANYTIMEDURINGDAY" description="אין חשיבות לזמן" additionalDescription="כאשר אין חשיבות לזמן מילוי השאלון"/>
             </AttributeDefinition>
-            <AttributeDefinition id="repetitionsperday" type="number.min(0)" multiplicity="exactlyOne" description="Max. Repetitions per Day" additionalDescription="Maximun repetitions of the questionaire per day."/>   
+            <AttributeDefinition id="repetitionsperday" type="number.min(0)" multiplicity="exactlyOne" description="כמות פעמים למילוי השאלון ביום" additionalDescription="Maximun repetitions of the questionaire per day."/>   
             <AttributeDefinition id="questionaires" type="json" multiplicity="any" uiReference="patientquestionaires" description="Patient Questionaires"/>                      
         </EntityDefinition>
 
@@ -1483,7 +1483,7 @@
                     <TaskParamDefinition part="AUTOMATED" path="ICS2_Workplan.ICS2_SimpleTask.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>     
 
-                <DualTaskDefinition id="ICS2_PatientQuestionaire" externalId="PatientQuestionaire" description="Patient Questionaire" dynamicDescriptionPath="ICS2_Workplan.ICS2_PatientQuestionaire.type" ownerPath="ICS2_CaseManager" dueDatePath="ICS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="ICS2_PatientQuestionaire" entityAttachPath="ICS2_Workplan.ICS2_PatientQuestionaire">
+                <DualTaskDefinition id="ICS2_PatientQuestionaire" externalId="PatientQuestionaire" description="שאלון למילוי על ידי המטופל" dynamicDescriptionPath="ICS2_Workplan.ICS2_PatientQuestionaire.type" ownerPath="ICS2_CaseManager" dueDatePath="ICS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="ICS2_PatientQuestionaire" entityAttachPath="ICS2_Workplan.ICS2_PatientQuestionaire">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/questionnaires" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/questionnaires/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_PatientQuestionaire.type" isReadOnly="false" isMandatory="true"/>
