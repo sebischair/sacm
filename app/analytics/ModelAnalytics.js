@@ -647,7 +647,7 @@ module.exports = class ModelAnalytics{
     });
 
     if(helperSumSummaryParamDefinitions != 0)
-      result.avgNrSummaryParamDefinitions = result.nr / helperSumSummaryParamDefinitions;
+      result.avgNrSummaryParamDefinitions = helperSumSummaryParamDefinitions / result.nr;
 
     return result;
   }
