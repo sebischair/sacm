@@ -23,16 +23,19 @@ router.get('/repository', (req, res, next)=>{
 });
 
 /**
- * @api {get} /analytics
+ * @api {get} /analytics/file
  * @apiName GetAnalytics
  * @apiGroup Analytics
  * @apiSampleRequest /analytics
  * @apiSuccessExample {json} Success-Response:
  * {}
  */
-router.get('/', (req, res, next)=>{
-  ModelAnalytics.analyze()
+router.get('/file', (req, res, next)=>{
+  console.log('h')
+  res.connection.setTimeout(100*60*1000);
+  ModelAnalytics.tryToAnalyzeFile()
     .then(c=>{
+      console.log('hr')
       res.status(200).send(c);
     })
     .catch(err=>{

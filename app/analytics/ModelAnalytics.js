@@ -352,6 +352,10 @@ module.exports = class ModelAnalytics{
     await workbook.xlsx.writeFile(new Date().getTime()+'.xlsx');
   }
 
+  static async tryToAnalyzeFile(){
+    return await this.analyzeFile('app/importer/studyrelease.case.groningen.cs2.xml');
+  }
+
   static async analyzeFile(filePath){   
     let result = {};
     //try{
@@ -368,8 +372,10 @@ module.exports = class ModelAnalytics{
       console.log('e')
       result.entityDefinitions = this.analyzeEntityDefinitions(Workspace);
       console.log('f')
+      result.summarySectionDefinitions = this.analyzeSummarySectionDefinitions(Workspace);
+      console.log('g')
       result.stageDefinitions = this.analyzeStageDefinitions(Workspace);
-      console.log('c')
+      console.log('h')
    /*
     }catch(e){
       console.log(e);
@@ -557,6 +563,42 @@ module.exports = class ModelAnalytics{
     });
     result.avgNrAttributeDefinitions = helperSumAttributeDefinitions/Workspace.EntityDefinition.length;
     result.avgNrDerivedAttributeDefinitions = helperSumDerivedAttributeDefinitions/Workspace.EntityDefinition.length;
+
+    return result;
+  }
+
+  static analyzeSummarySectionDefinitions(Workspace){
+    let result = {
+      nr: 0,
+      avgNrSummaryParamDefinitions: 0,
+      positionLeft: 0,
+      positionCenter: 0,
+      positionRight: 0,
+      positionStretched: 0
+    };
+    let helperSumSummaryParamDefinitions = 0;
+
+    let CaseDefinition = Workspace.CaseDefinition[0];
+    
+    if(!CaseDefinition.SummarySectionDefinition)
+      return result;
+
+    CaseDefinition.SummarySectionDefinition.forEach(ssd => {
+      result.nr++;
+      if(ssd.$.position == 'LEFT')
+        result.positionLeft++;
+      if(ssd.$.position == 'CENTER')
+        result.positionCenter++;  
+      if(ssd.$.position == 'RIGHT')
+        result.positionRight++;
+      if(ssd.$.position == 'STRETCHED')
+        result.positionStretched++;
+      if(ssd.SummaryParamDefinition)
+        helperSumSummaryParamDefinitions += ssd.SummaryParamDefinition.length;
+    });
+
+    if(helperSumSummaryParamDefinitions != 0)
+      result.avgNrSummaryParamDefinitions = result.nr / helperSumSummaryParamDefinitions;
 
     return result;
   }
