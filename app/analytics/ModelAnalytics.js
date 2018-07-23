@@ -707,6 +707,16 @@ module.exports = class ModelAnalytics{
       footnote: 0,
       avgNrTaskParamDefinitions: 0,
     }
+
+    if(isHumanTaskDefinition){   
+      result.dueDatePath = 0;
+    }else if(isDualTaskDefinition){   
+      result.dueDatePath = 0;
+      result.automaticCompleteOnPath = 0;
+    }else if(isAutomatedTaskDefinition){
+      result.automaticCompleteOnPath = 0;
+    }
+    
     let helperSumTaskParamDefinitions = 0;
     let CaseDefinition = Workspace.CaseDefinition[0];
     CaseDefinition.StageDefinition.forEach(sd => {
@@ -762,7 +772,19 @@ module.exports = class ModelAnalytics{
             result.dynamicDescriptionPath++;
           if(td.$.footnote)
             result.footnote++;
-
+          
+          if(isHumanTaskDefinition){  
+            if(td.$.dueDatePath) 
+              result.dueDatePath++;
+          }else if(isDualTaskDefinition){   
+            if(td.$.dueDatePath) 
+              result.dueDatePath++;
+            if(td.$.automaticCompleteOnPath) 
+              result.automaticCompleteOnPath++;
+          }else if(isAutomatedTaskDefinition){
+            if(td.$.automaticCompleteOnPath) 
+              result.automaticCompleteOnPath++;
+          }
         });
     });
 
