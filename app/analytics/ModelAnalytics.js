@@ -371,7 +371,9 @@ module.exports = class ModelAnalytics{
       result.derivedAttributeDefinitions = this.analyzeDerivedAttributeDefinitions(Workspace);
       console.log('e')
       result.entityDefinitions = this.analyzeEntityDefinitions(Workspace);
-      console.log('f')
+      console.log('f')      
+      result.caseDefinition = this.analyzeCaseDefinition(Workspace);
+      console.log('g')
       result.summarySectionDefinitions = this.analyzeSummarySectionDefinitions(Workspace);
       console.log('g')
       result.stageDefinitions = this.analyzeStageDefinitions(Workspace);
@@ -564,6 +566,51 @@ module.exports = class ModelAnalytics{
     result.avgNrAttributeDefinitions = helperSumAttributeDefinitions/Workspace.EntityDefinition.length;
     result.avgNrDerivedAttributeDefinitions = helperSumDerivedAttributeDefinitions/Workspace.EntityDefinition.length;
 
+    return result;
+  }
+
+  static analyzeCaseDefinition(Workspace){
+    let result = {
+      hasClientPath: false,
+      hasOwnerPath: false,
+      hasNewEntityDefinitionId: false,
+      hasNewEntityAttachPath: false,
+      hasNotesDefaultValue: false,
+      hasOnAvailableHTTPHookURL: false,
+      hasOnEnableHttpHTTPHookURL: false,
+      hasOnActivateHTTPHookURL: false,
+      hasOnCompleteHTTPHookURL: false,
+      hasOnTerminateHTTPHookURL: false,
+      hasOnDeleteHTTPHookURL: false
+    };
+
+    let CaseDefinition = Workspace.CaseDefinition[0];
+    if(CaseDefinition.$.clientPath)
+      result.hasClientPath = true;
+    if(CaseDefinition.$.ownerPath)
+      result.hasOwnerPath = true;
+    if(CaseDefinition.$.clientPath)
+      result.hasClientPath = true;
+    if(CaseDefinition.$.newEntityDefinitionId)
+      result.hasNewEntityDefinitionId = true;
+    if(CaseDefinition.$.newEntityAttachPath)
+      result.hasNewEntityAttachPath = true;
+    if(CaseDefinition.$.notesDefaultValue)
+      result.hasNotesDefaultValue = true;
+
+    if(CaseDefinition.$.onAvailableHTTPHookURL)
+      result.hasOnAvailableHTTPHookURL = true;
+    if(CaseDefinition.$.onEnableHttpHTTPHookURL)
+      result.hasOnEnableHttpHTTPHookURL = true;
+    if(CaseDefinition.$.onActivateHTTPHookURL)
+      result.hasOnActivateHTTPHookURL = true;
+    if(CaseDefinition.$.onCompleteHTTPHookURL)
+      result.hasOnCompleteHTTPHookURL = true;
+    if(CaseDefinition.$.onTerminateHTTPHookURL)
+      result.hasOnTerminateHTTPHookURL = true;
+    if(CaseDefinition.$.onDeleteHTTPHookURL)
+      result.hasOnDeleteHTTPHookURL = true;
+    
     return result;
   }
 
