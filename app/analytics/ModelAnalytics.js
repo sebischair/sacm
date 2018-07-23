@@ -204,8 +204,8 @@ module.exports = class ModelAnalytics{
           });
         }
         result.push(commitResult);
-        if(i==3)
-          break;
+        //if(i==3)
+        //  break;
         
       }
       console.log('\nSet of all repository file names:');
@@ -367,31 +367,31 @@ module.exports = class ModelAnalytics{
     //try{
       //const filePath = 'app/importer/studyrelease.case.groningen.cs2.xml';
       const fileContent = fs.readFileSync(filePath).toString();
-      console.log('a')
+      console.log('            ... parse!')
       const xml = await xml2js.parseStringAsync(fileContent, {explicitChildren:true, preserveChildrenOrder:true});  
-      console.log('b')
+      console.log('            ... workspace!')
       const Workspace =  xml.SACMDefinition.Workspace[0];
-      console.log('c')
+      console.log('            ... attribute definitions!')
       result.attributeDefinitions = this.analyzeAttributeDefinitions(Workspace); 
-      console.log('d')   
+      console.log('            ... derived attribute definitions!') 
       result.derivedAttributeDefinitions = this.analyzeDerivedAttributeDefinitions(Workspace);
-      console.log('e')
+      console.log('            ... entity definitions!')
       result.entityDefinitions = this.analyzeEntityDefinitions(Workspace);
-      console.log('f')      
+      console.log('            ... case definitions!')    
       result.caseDefinition = this.analyzeCaseDefinition(Workspace);
-      console.log('g')
+      console.log('            ... summary section definitions!')
       result.summarySectionDefinitions = this.analyzeSummarySectionDefinitions(Workspace);
-      console.log('g')
+      console.log('            ... stage definitions!')
       result.stageDefinitions = this.analyzeStageDefinitions(Workspace);
-      console.log('h')
+      console.log('            ... human task definitions!')
       result.humanTaskDefinitions = this.analyzeTaskDefinitions(Workspace, true, false, false);
-      console.log('h')
+      console.log('            ... automated task definitions!')
       result.automatedTaskDefinitions = this.analyzeTaskDefinitions(Workspace, false, true, false);
-      console.log('h')
+      console.log('            ... dual task definitions!')
       result.dualTaskDefinitions = this.analyzeTaskDefinitions(Workspace, false, false, true);
-      console.log('h')
+      console.log('            ... execution actions!')
       result.actions = this.analyzeActionsExecution(xml.SACMDefinition.Execution);
-      console.log('i')
+      console.log('            ... complete!')
    /*
     }catch(e){
       console.log(e);
