@@ -674,17 +674,27 @@ module.exports = class ModelAnalytics{
       if(sd.DualTaskDefinition)
         helperSumDualTaskDefinitions += sd.DualTaskDefinition.length;
     });
-    result.avgNrHumanTaskDefinitions = helperSumHumanTaskDefinitions/CaseDefinition.StageDefinition.length;
-    result.avgNrAutomatedTaskDefinitions = helperSumAutomatedTaskDefinitions/CaseDefinition.StageDefinition.length;
-    result.avgNrDualTaskDefinitions = helperSumDualTaskDefinitions/CaseDefinition.StageDefinition.length;
+    result.avgNrHumanTaskDefinitions = helperSumHumanTaskDefinitions/result.nr;
+    result.avgNrAutomatedTaskDefinitions = helperSumAutomatedTaskDefinitions/result.nr;
+    result.avgNrDualTaskDefinitions = helperSumDualTaskDefinitions/result.nr;
 
     return result;
   }
 
-/*
-  static analyzeTaskDefinitions(Workspace, taskType){
+
+  static analyzeTaskDefinitions(Workspace, isHumanTaskDefinition, isAutomatedTaskDefinition, isDualTaskDefinition){
     let result = {
-      nr: 0
+      nr: 0,                     
+      ownerPath: 0,
+      repeatable: 0,
+      isMandatory: 0,             
+      activation: 0,
+      manualActivationExpression: 0,                          
+      newEntityDefinition: 0,
+      newEntityAttachPath: 0,
+      externalId: 0,
+      dynamicDescriptionPath: 0,
+      footnote: 0,
     }
     let helperSumHumanTaskDefinitions = 0;
 
