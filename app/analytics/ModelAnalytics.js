@@ -378,6 +378,12 @@ module.exports = class ModelAnalytics{
       console.log('g')
       result.stageDefinitions = this.analyzeStageDefinitions(Workspace);
       console.log('h')
+      result.humanTaskDefinitions = this.analyzeTaskDefinitions(Workspace, true, false, false);
+      console.log('h')
+      result.automatedTaskDefinitions = this.analyzeTaskDefinitions(Workspace, false, true, false);
+      console.log('h')
+      result.dualTaskDefinitions = this.analyzeTaskDefinitions(Workspace, false, false, true);
+      console.log('h')
       result.actions = this.analyzeActionsExecution(xml.SACMDefinition.Execution);
       console.log('i')
    /*
@@ -686,9 +692,13 @@ module.exports = class ModelAnalytics{
     let result = {
       nr: 0,                     
       ownerPath: 0,
-      repeatable: 0,
+      repeatableOnce: 0,
+      repeatableSerial: 0,
+      repeatableParallel: 0,
       isMandatory: 0,             
-      activation: 0,
+      activationAutomatic: 0,
+      activationManual: 0,
+      activationExpression: 0,
       manualActivationExpression: 0,                          
       newEntityDefinition: 0,
       newEntityAttachPath: 0,
@@ -701,14 +711,63 @@ module.exports = class ModelAnalytics{
     let CaseDefinition = Workspace.CaseDefinition[0];
 
     CaseDefinition.StageDefinition.forEach(sd => {
-      result.nr++;
-      if(sd.HumanTaskDefinition)
-        helperSumHumanTaskDefinitions += sd.HumanTaskDefinition.length;
+            
+      let TaskDefinition = null;
+      if(isHumanTaskDefinition)
+        TaskDefinition = sd.HumanTaskDefinition;
+      if(isAutomatedTaskDefinition)
+        TaskDefinition = sd.AutomatedTaskDefinition;
+      if(isDualTaskDefinition)
+        TaskDefinition = sd.DualTaskDefinition;
+      
+      if(TaskDefinition)
+        TaskDefinition.forEach(td=>{
+          result.nr++;
+          if(td.$.ownerPath)
+            result.ownerPath++;
+          
+          if(td.$.repeatable == 'ONCE')
+            result.repeatableOnce++;
+          else if(td.$.repeatable == 'SERIAL')
+            result.repeatableSerial++;
+          else if(td.$.repeatable == 'PARALLEL')
+            result.repeatableParallel++;
+          else
+            result.repeatableOnce++;
+          
+
+          if(td.$.isMandatory == 'true')
+            result.repeatableOnce++;
+
+          if(td.$.activation == 'AUTOMATIC')
+            result.activationAutomatic++;
+          else if(td.$.activation == 'MANUAL')
+            result.activationManual++;
+          else if(td.$.activation == 'EXPRESSION')
+            result.activationExpression++;
+          else
+            result.activationAutomatic++;
+          
+          if(td.$.manualActivationExpression)
+            result.manualActivationExpression++;
+
+          if(td.$.entityDefinitionId)
+            result.newEntityDefinition++;          
+          if(td.$.entityAttachPath)
+            result.newEntityAttachPath++;
+          if(td.$.externalId)
+            result.externalId++;
+          if(td.$.dynamicDescriptionPath)
+            result.dynamicDescriptionPath++;
+          if(td.$.footnote)
+            result.footnote++;
+
+        });
     });
 
     return result;
   }
-*/
+
 
   static analyzeActionsExecution(Execution){
     let result = {
