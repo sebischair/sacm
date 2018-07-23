@@ -378,6 +378,8 @@ module.exports = class ModelAnalytics{
       console.log('g')
       result.stageDefinitions = this.analyzeStageDefinitions(Workspace);
       console.log('h')
+      result.actions = this.analyzeActionsExecution(xml.SACMDefinition.Execution);
+      console.log('i')
    /*
     }catch(e){
       console.log(e);
@@ -675,6 +677,74 @@ module.exports = class ModelAnalytics{
     result.avgNrHumanTaskDefinitions = helperSumHumanTaskDefinitions/CaseDefinition.StageDefinition.length;
     result.avgNrAutomatedTaskDefinitions = helperSumAutomatedTaskDefinitions/CaseDefinition.StageDefinition.length;
     result.avgNrDualTaskDefinitions = helperSumDualTaskDefinitions/CaseDefinition.StageDefinition.length;
+
+    return result;
+  }
+
+/*
+  static analyzeTaskDefinitions(Workspace, taskType){
+    let result = {
+      nr: 0
+    }
+    let helperSumHumanTaskDefinitions = 0;
+
+    let CaseDefinition = Workspace.CaseDefinition[0];
+
+    CaseDefinition.StageDefinition.forEach(sd => {
+      result.nr++;
+      if(sd.HumanTaskDefinition)
+        helperSumHumanTaskDefinitions += sd.HumanTaskDefinition.length;
+    });
+
+    return result;
+  }
+*/
+
+  static analyzeActionsExecution(Execution){
+    let result = {
+      nr: 0,
+      activateStage: 0,
+      completeStage: 0,
+      activateHumanTask: 0,
+      activateDualTask: 0,
+      completeHumanTask: 0,
+      completeAutomatedTask: 0,
+      completeDualTaskHumanPart: 0,
+      completeDualTaskAutomatedPart: 0,
+      correctHumanTask: 0,
+      correctDualTaskHumanPart: 0,
+      createAlert: 0,
+      breakpoint: 0
+    }
+    if(!Execution || !Execution[0] || !Execution[0].Action)
+      return result;
+    Execution[0].Action.forEach(a => {
+      result.nr++;
+      if(a.$.id == 'ActivateStage')
+        result.activateStage++;
+      if(a.$.id == 'CompleteStage')
+        result.completeStage++;
+      if(a.$.id == 'ActivateHumanTask')
+        result.activateHumanTask++;
+      if(a.$.id == 'ActivateDualTask')
+        result.activateDualTask++;
+      if(a.$.id == 'CompleteHumanTask')
+        result.completeHumanTask++;
+      if(a.$.id == 'CompleteAutomatedTask')
+        result.completeAutomatedTask++;
+      if(a.$.id == 'CompleteDualTaskHumanPart')
+        result.completeDualTaskHumanPart++;
+      if(a.$.id == 'CompleteDualTaskAutomatedPart')
+        result.completeDualTaskAutomatedPart++;
+      if(a.$.id == 'CorrectHumanTask')
+        result.correctHumanTask++;
+      if(a.$.id == 'CorrectDualTaskHumanPart')
+        result.correctDualTaskHumanPart++;
+      if(a.$.id == 'CreateAlert')
+        result.createAlert++;      
+      if(a.$.breakpoint)
+        result.breakpoint++;
+    });
 
     return result;
   }
