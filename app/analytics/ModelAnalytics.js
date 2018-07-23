@@ -204,21 +204,27 @@ module.exports = class ModelAnalytics{
           });
         }
         result.push(commitResult);
-        //if(i==100)
-         // break;
+        if(i==3)
+          break;
         
       }
       console.log('\nSet of all repository file names:');
       console.log(allFilePaths)
-
-      await this.saveAsExcel(result);
+      
+      const filename = 'model-analytics-'+new Date().getTime();
+      await this.saveAsExcel(result, filename);
+      await this.saveAsJSON(result, filename);
     //}catch(e){
     //  console.log(e);
    // }    
     return result;
   }
 
-  static async saveAsExcel(commits){
+  static async saveAsJSON(commits, filename){
+    await fs.writeFile(filename+'.json', JSON.stringify(commits,null,3));
+  }
+
+  static async saveAsExcel(commits, filename){
     var workbook = new Excel.Workbook();
     var worksheet = workbook.addWorksheet('Analytics');
        
@@ -349,7 +355,7 @@ module.exports = class ModelAnalytics{
       worksheet.getCell('E'+from).alignment = {vertical:'middle', wrapText: true};
     }
 
-    await workbook.xlsx.writeFile(new Date().getTime()+'.xlsx');
+    await workbook.xlsx.writeFile(filename+'.xlsx');
   }
 
   static async tryToAnalyzeFile(){
@@ -716,7 +722,7 @@ module.exports = class ModelAnalytics{
     }else if(isAutomatedTaskDefinition){
       result.automaticCompleteOnPath = 0;
     }
-    
+
     let helperSumTaskParamDefinitions = 0;
     let CaseDefinition = Workspace.CaseDefinition[0];
     CaseDefinition.StageDefinition.forEach(sd => {
