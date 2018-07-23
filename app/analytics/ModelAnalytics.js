@@ -705,13 +705,12 @@ module.exports = class ModelAnalytics{
       externalId: 0,
       dynamicDescriptionPath: 0,
       footnote: 0,
+      avgNrTaskParamDefinitions: 0,
     }
-    let helperSumHumanTaskDefinitions = 0;
-
+    let helperSumTaskParamDefinitions = 0;
     let CaseDefinition = Workspace.CaseDefinition[0];
-
     CaseDefinition.StageDefinition.forEach(sd => {
-            
+
       let TaskDefinition = null;
       if(isHumanTaskDefinition)
         TaskDefinition = sd.HumanTaskDefinition;
@@ -723,6 +722,8 @@ module.exports = class ModelAnalytics{
       if(TaskDefinition)
         TaskDefinition.forEach(td=>{
           result.nr++;
+          if(td.TaskParamDefinition)
+            helperSumTaskParamDefinitions += td.TaskParamDefinition.length;
           if(td.$.ownerPath)
             result.ownerPath++;
           
@@ -764,6 +765,9 @@ module.exports = class ModelAnalytics{
 
         });
     });
+
+    if(result.nr != 0)
+      result.avgNrTaskParamDefinitions = helperSumTaskParamDefinitions/result.nr;
 
     return result;
   }
