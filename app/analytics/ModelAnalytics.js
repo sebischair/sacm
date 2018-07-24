@@ -726,6 +726,8 @@ module.exports = class ModelAnalytics{
       dynamicDescriptionPath: 0,
       footnote: 0,
       avgNrTaskParamDefinitions: 0,
+      avgNrTaskParamDefinitionsIsMandatory: 0,
+      avgNrTaskParamDefinitionsIsReadOnly: 0,
     }
 
     if(isHumanTaskDefinition){   
@@ -738,6 +740,8 @@ module.exports = class ModelAnalytics{
     }
 
     let helperSumTaskParamDefinitions = 0;
+    let helperSumTaskParamDefinitionsIsMandaotry = 0;
+    let helperSumTaskParamDefinitionsIsReadOnly = 0;
     let CaseDefinition = Workspace.CaseDefinition[0];
     CaseDefinition.StageDefinition.forEach(sd => {
 
@@ -753,7 +757,13 @@ module.exports = class ModelAnalytics{
         TaskDefinition.forEach(td=>{
           result.nr++;
           if(td.TaskParamDefinition)
-            helperSumTaskParamDefinitions += td.TaskParamDefinition.length;
+            td.TaskParamDefinition.forEach(tpd=>{
+              helperSumTaskParamDefinitions++;
+              if(tpd.$.isMandatory && tpd.$.isMandatory == 'true')
+                helperSumTaskParamDefinitionsIsMandaotry++
+              if(tpd.$.isReadOnly && tpd.$.isReadOnly == 'true')
+                helperSumTaskParamDefinitionsIsReadOnly++
+            });
           if(td.$.ownerPath)
             result.ownerPath++;
           
@@ -808,8 +818,11 @@ module.exports = class ModelAnalytics{
         });
     });
 
-    if(result.nr != 0)
+    if(result.nr != 0){
       result.avgNrTaskParamDefinitions = helperSumTaskParamDefinitions/result.nr;
+      result.avgNrTaskParamDefinitionsIsMandatory = helperSumTaskParamDefinitionsIsMandaotry/result.nr;
+      result.avgNrTaskParamDefinitionsIsReadOnly = helperSumTaskParamDefinitionsIsReadOnly/result.nr;
+    }
 
     return result;
   }
