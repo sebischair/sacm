@@ -3,10 +3,12 @@ import Promise from 'bluebird';
 import winston from 'winston';
 import find from 'find-promise';
 import Excel from 'exceljs';
+import sizeof from 'object-sizeof';
 const fs = Promise.promisifyAll(require("fs"));
 const xml2js = Promise.promisifyAll(require("xml2js"));
 const repositoryPath = 'D:/Projekte/CONNECARE/Technical/repos/sacm.backend.analytics';
 const Git = require('simple-git/promise')(repositoryPath);
+const {gzip, ungzip} = require('node-gzip');
 
 module.exports = class ModelAnalytics{
 
@@ -204,14 +206,17 @@ module.exports = class ModelAnalytics{
           });
         }
         result.push(commitResult);
-        //if(i==3)
-        //  break;
+        if(i==400)
+          break;
         
       }
       console.log('\nSet of all repository file names:');
       console.log(allFilePaths)
       
-      const filename = 'model-analytics-'+new Date().getTime();
+      //console.log(sizeof(JSON.stringify(result, null, 4)))
+      //console.log(sizeof(await gzip(JSON.stringify(result, null, 4))));
+
+      const filename = 'modelanalytics'+new Date().getTime();
       await this.saveAsExcel(result, filename);
       await this.saveAsJSON(result, filename);
     //}catch(e){
@@ -220,8 +225,17 @@ module.exports = class ModelAnalytics{
     return result;
   }
 
+
+
   static async saveAsJSON(commits, filename){
-    await fs.writeFile(filename+'.json', JSON.stringify(commits,null,3));
+    try{
+      console.log('save as *.plain.json')
+      await fs.writeFile(filename+'.plain.json.gz', await gzip(JSON.stringify(commits)));
+      console.log('save as *.formatted.json')
+      await fs.writeFile(filename+'.formatted.json.gz', await gzip(JSON.stringify(commits, null, 4)));
+    }catch(e){
+      console.log(e)
+    }
   }
 
   static async saveAsExcel(commits, filename){
@@ -354,7 +368,7 @@ module.exports = class ModelAnalytics{
       worksheet.getCell('D'+from).alignment = {vertical:'middle'};
       worksheet.getCell('E'+from).alignment = {vertical:'middle', wrapText: true};
     }
-
+    console.log('save as *.xlsx')
     await workbook.xlsx.writeFile(filename+'.xlsx');
   }
 
