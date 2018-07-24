@@ -728,6 +728,7 @@ module.exports = class ModelAnalytics{
       avgNrTaskParamDefinitions: 0,
       avgNrTaskParamDefinitionsIsMandatory: 0,
       avgNrTaskParamDefinitionsIsReadOnly: 0,
+      avgNrSentryDefinitions: 0
     }
 
     if(isHumanTaskDefinition){   
@@ -741,6 +742,7 @@ module.exports = class ModelAnalytics{
       result.automaticCompleteOnPath = 0;
     }
 
+    let helperSumSentryDefinitions = 0;
     let helperSumTaskParamDefinitions = 0;
     let helperSumTaskParamDefinitionsIsMandaotry = 0;
     let helperSumTaskParamDefinitionsIsReadOnly = 0;
@@ -760,6 +762,8 @@ module.exports = class ModelAnalytics{
       if(TaskDefinition)
         TaskDefinition.forEach(td=>{
           result.nr++;
+          if(td.SentryDefinition)
+            helperSumSentryDefinitions += td.SentryDefinition.length;
           if(td.TaskParamDefinition)
             td.TaskParamDefinition.forEach(tpd=>{
               helperSumTaskParamDefinitions++;
@@ -832,6 +836,7 @@ module.exports = class ModelAnalytics{
     });
 
     if(result.nr != 0){
+      result.avgNrSentryDefinitions = helperSumSentryDefinitions/result.nr;
       result.avgNrTaskParamDefinitions = helperSumTaskParamDefinitions/result.nr;
       result.avgNrTaskParamDefinitionsIsMandatory = helperSumTaskParamDefinitionsIsMandaotry/result.nr;
       result.avgNrTaskParamDefinitionsIsReadOnly = helperSumTaskParamDefinitionsIsReadOnly/result.nr;
