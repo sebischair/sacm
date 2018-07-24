@@ -735,6 +735,8 @@ module.exports = class ModelAnalytics{
     }else if(isDualTaskDefinition){   
       result.dueDatePath = 0;
       result.automaticCompleteOnPath = 0;
+      result.avgNrTaskParamDefinitionsHumanPart = 0;
+      result.avgNrTaskParamDefinitionsAutomatedPart = 0;
     }else if(isAutomatedTaskDefinition){
       result.automaticCompleteOnPath = 0;
     }
@@ -742,6 +744,8 @@ module.exports = class ModelAnalytics{
     let helperSumTaskParamDefinitions = 0;
     let helperSumTaskParamDefinitionsIsMandaotry = 0;
     let helperSumTaskParamDefinitionsIsReadOnly = 0;
+    let helperSumTaskParamDefinitionsIsHumanPart = 0;
+    let helperSumTaskParamDefinitionsIsAutomatedPart = 0;
     let CaseDefinition = Workspace.CaseDefinition[0];
     CaseDefinition.StageDefinition.forEach(sd => {
 
@@ -810,7 +814,16 @@ module.exports = class ModelAnalytics{
             if(td.$.dueDatePath) 
               result.dueDatePath++;
             if(td.$.automaticCompleteOnPath) 
-              result.automaticCompleteOnPath++;
+              result.automaticCompleteOnPath++;            
+            if(td.TaskParamDefinition)
+              td.TaskParamDefinition.forEach(tpd=>{
+                if(tpd.$.part && tpd.$.part == 'HUMAN')
+                  helperSumTaskParamDefinitionsIsHumanPart++
+                else if(tpd.$.part && tpd.$.part == 'AUTOMATED')
+                  helperSumTaskParamDefinitionsIsAutomatedPart++
+                else
+                  helperSumTaskParamDefinitionsIsHumanPart++;
+              });
           }else if(isAutomatedTaskDefinition){
             if(td.$.automaticCompleteOnPath) 
               result.automaticCompleteOnPath++;
@@ -822,6 +835,10 @@ module.exports = class ModelAnalytics{
       result.avgNrTaskParamDefinitions = helperSumTaskParamDefinitions/result.nr;
       result.avgNrTaskParamDefinitionsIsMandatory = helperSumTaskParamDefinitionsIsMandaotry/result.nr;
       result.avgNrTaskParamDefinitionsIsReadOnly = helperSumTaskParamDefinitionsIsReadOnly/result.nr;
+      if(isDualTaskDefinition){
+        result.avgNrTaskParamDefinitionsHumanPart = helperSumTaskParamDefinitionsIsHumanPart/result.nr;
+        result.avgNrTaskParamDefinitionsAutomatedPart = helperSumTaskParamDefinitionsIsAutomatedPart/result.nr;
+      }
     }
 
     return result;
