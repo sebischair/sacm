@@ -728,7 +728,8 @@ module.exports = class ModelAnalytics{
       avgNrTaskParamDefinitions: 0,
       avgNrTaskParamDefinitionsIsMandatory: 0,
       avgNrTaskParamDefinitionsIsReadOnly: 0,
-      avgNrSentryDefinitions: 0
+      avgNrSentryDefinitions: 0,
+      avgNrHttpHookDefinitions: 0
     }
 
     if(isHumanTaskDefinition){   
@@ -742,6 +743,7 @@ module.exports = class ModelAnalytics{
       result.automaticCompleteOnPath = 0;
     }
 
+    let helperSumHttpHookDefinitions = 0;
     let helperSumSentryDefinitions = 0;
     let helperSumTaskParamDefinitions = 0;
     let helperSumTaskParamDefinitionsIsMandaotry = 0;
@@ -762,6 +764,8 @@ module.exports = class ModelAnalytics{
       if(TaskDefinition)
         TaskDefinition.forEach(td=>{
           result.nr++;
+          if(td.HttpHookDefinition)
+            helperSumHttpHookDefinitions += td.HttpHookDefinition.length;
           if(td.SentryDefinition)
             helperSumSentryDefinitions += td.SentryDefinition.length;
           if(td.TaskParamDefinition)
@@ -836,6 +840,7 @@ module.exports = class ModelAnalytics{
     });
 
     if(result.nr != 0){
+      result.avgNrHttpHookDefinitionDefinitions = helperSumHttpHookDefinitions/result.nr;
       result.avgNrSentryDefinitions = helperSumSentryDefinitions/result.nr;
       result.avgNrTaskParamDefinitions = helperSumTaskParamDefinitions/result.nr;
       result.avgNrTaskParamDefinitionsIsMandatory = helperSumTaskParamDefinitionsIsMandaotry/result.nr;
