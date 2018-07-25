@@ -684,17 +684,33 @@ module.exports = class ModelAnalytics{
 
   static analyzeStageDefinitions(Workspace){
     let result = {
-      nr: 0,
+      nr: 0,                     
+      ownerPath: 0,
+      repeatableOnce: 0,
+      repeatableSerial: 0,
+      repeatableParallel: 0,
+      isMandatory: 0,             
+      activationAutomatic: 0,
+      activationManual: 0,
+      activationExpression: 0,
+      manualActivationExpression: 0,                          
+      newEntityDefinition: 0,
+      newEntityAttachPath: 0,
+      externalId: 0,
+      dynamicDescriptionPath: 0,
       avgNrHumanTaskDefinitions: 0,
       avgNrAutomatedTaskDefinitions: 0,
-      avgNrDualTaskDefinitions: 0
+      avgNrDualTaskDefinitions: 0,
+      avgNrSentryDefinitions: 0,
+      avgNrHttpHookDefinitions: 0
     }
+
     let helperSumHumanTaskDefinitions = 0;
     let helperSumAutomatedTaskDefinitions = 0;
     let helperSumDualTaskDefinitions = 0;
-
+    let helperSumHttpHookDefinitions = 0;
+    let helperSumSentryDefinitions = 0;
     let CaseDefinition = Workspace.CaseDefinition[0];
-
     CaseDefinition.StageDefinition.forEach(sd => {
       result.nr++;
       if(sd.HumanTaskDefinition)
@@ -702,15 +718,61 @@ module.exports = class ModelAnalytics{
       if(sd.AutomatedTaskDefinition)
         helperSumAutomatedTaskDefinitions += sd.AutomatedTaskDefinition.length;
       if(sd.DualTaskDefinition)
-        helperSumDualTaskDefinitions += sd.DualTaskDefinition.length;
+        helperSumDualTaskDefinitions += sd.DualTaskDefinition.length;      
+      if(sd.HttpHookDefinition)
+        helperSumHttpHookDefinitions += sd.HttpHookDefinition.length;
+      if(sd.SentryDefinition)
+        helperSumSentryDefinitions += sd.SentryDefinition.length;
+      
+      if(sd.$.ownerPath)
+        result.ownerPath++;
+      
+      if(sd.$.repeatable == 'ONCE')
+        result.repeatableOnce++;
+      else if(sd.$.repeatable == 'SERIAL')
+        result.repeatableSerial++;
+      else if(sd.$.repeatable == 'PARALLEL')
+        result.repeatableParallel++;
+      else
+        result.repeatableOnce++;
+      
+
+      if(sd.$.isMandatory == 'true')
+        result.repeatableOnce++;
+
+      if(sd.$.activation == 'AUTOMATIC')
+        result.activationAutomatic++;
+      else if(sd.$.activation == 'MANUAL')
+        result.activationManual++;
+      else if(sd.$.activation == 'EXPRESSION')
+        result.activationExpression++;
+      else
+        result.activationAutomatic++;
+      
+      if(sd.$.manualActivationExpression)
+        result.manualActivationExpression++;
+
+      if(sd.$.entityDefinitionId)
+        result.newEntityDefinition++;          
+      if(sd.$.entityAttachPath)
+        result.newEntityAttachPath++;
+      if(sd.$.externalId)
+        result.externalId++;
+      if(sd.$.dynamicDescriptionPath)
+        result.dynamicDescriptionPath++;              
+     
     });
-    result.avgNrHumanTaskDefinitions = helperSumHumanTaskDefinitions/result.nr;
-    result.avgNrAutomatedTaskDefinitions = helperSumAutomatedTaskDefinitions/result.nr;
-    result.avgNrDualTaskDefinitions = helperSumDualTaskDefinitions/result.nr;
+
+    if(result.nr != 0){
+      result.avgNrHumanTaskDefinitions = helperSumHumanTaskDefinitions/result.nr;
+      result.avgNrAutomatedTaskDefinitions = helperSumAutomatedTaskDefinitions/result.nr;
+      result.avgNrDualTaskDefinitions = helperSumDualTaskDefinitions/result.nr;
+      result.avgNrHttpHookDefinitions = helperSumHttpHookDefinitions/result.nr;
+      result.avgNrSentryDefinitions = helperSumSentryDefinitions/result.nr;
+    }
 
     return result;
   }
-
 
   static analyzeTaskDefinitions(Workspace, isHumanTaskDefinition, isAutomatedTaskDefinition, isDualTaskDefinition){
     let result = {
@@ -844,7 +906,7 @@ module.exports = class ModelAnalytics{
     });
 
     if(result.nr != 0){
-      result.avgNrHttpHookDefinitionDefinitions = helperSumHttpHookDefinitions/result.nr;
+      result.avgNrHttpHookDefinitions = helperSumHttpHookDefinitions/result.nr;
       result.avgNrSentryDefinitions = helperSumSentryDefinitions/result.nr;
       result.avgNrTaskParamDefinitions = helperSumTaskParamDefinitions/result.nr;
       result.avgNrTaskParamDefinitionsIsMandatory = helperSumTaskParamDefinitionsIsMandaotry/result.nr;
