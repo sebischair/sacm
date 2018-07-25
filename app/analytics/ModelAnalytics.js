@@ -327,6 +327,27 @@ module.exports = class ModelAnalytics{
       { key: 'stageDefinitionsAvgNrDualTaskDefinitions', header: 'AvgNrDualTaskDefinitions', width: 5 },
       { key: 'stageDefinitionsAvgNrSentryDefinitions', header: 'AvgNrSentryDefinitions', width: 5 },
       { key: 'stageDefinitionsAvgNrHttpHookDefinitions', header: 'AvgNrHttpHookDefinitions', width: 5 },
+      { key: 'humanTaskDefinitionsNr', header: 'Nr', width: 5, group:'HumanTaskDefinitions'},
+      { key: 'humanTaskDefinitionsOwnerPath', header: 'OwnerPath', width: 5 },
+      { key: 'humanTaskDefinitionsRepeatableOnce', header: 'RepeatableOnce', width: 5 },
+      { key: 'humanTaskDefinitionsRepeatableSerial', header: 'RepeatableSerial', width: 5 },
+      { key: 'humanTaskDefinitionsRepeatableParallel', header: 'RepeatableParallel', width: 5 },
+      { key: 'humanTaskDefinitionsIsMandatory', header: 'IsMandatory', width: 5 },
+      { key: 'humanTaskDefinitionsActivationAutomatic', header: 'ActivationAutomatic', width: 5 },
+      { key: 'humanTaskDefinitionsActivationManual', header: 'ActivationManual', width: 5 },
+      { key: 'humanTaskDefinitionsActivationExpression', header: 'ActivationExpression', width: 5 },
+      { key: 'humanTaskDefinitionsManualActivationExpression', header: 'ManualActivationExpression', width: 5 },
+      { key: 'humanTaskDefinitionsNewEntityDefinition', header: 'NewEntityDefinition', width: 5 },
+      { key: 'humanTaskDefinitionsNewEntityAttachPath', header: 'NewEntityAttachPath', width: 5 },
+      { key: 'humanTaskDefinitionsExternalId', header: 'ExternalId', width: 5 },
+      { key: 'humanTaskDefinitionsDynamicDescriptionPath', header: 'DynamicDescriptionPath', width: 5 },
+      { key: 'humanTaskDefinitionsFootnote', header: 'Footnote', width: 5 },
+      { key: 'humanTaskDefinitionsAvgNrTaskParamDefinitions', header: 'AvgNrTaskParamDefinitions', width: 5 },
+      { key: 'humanTaskDefinitionsAvgNrTaskParamDefinitionsIsMandatory', header: 'AvgNrTaskParamDefinitionsIsMandatory', width: 5 },
+      { key: 'humanTaskDefinitionsAvgNrTaskParamDefinitionsIsReadOnly', header: 'AvgNrTaskParamDefinitionsIsReadOnly', width: 5 },
+      { key: 'humanTaskDefinitionsAvgNrSentryDefinitions', header: 'AvgNrSentryDefinitions', width: 5 },
+      { key: 'humanTaskDefinitionsAvgNrHttpHookDefinitions', header: 'AvgNrHttpHookDefinitions', width: 5 },
+      { key: 'humanTaskDefinitionsDueDatePath', header: 'DueDatePath', width: 5 },
       
     ]
     worksheet.columns = columns;
@@ -399,14 +420,32 @@ module.exports = class ModelAnalytics{
         if(file.result && file.result.entityDefinitions)
           ed = file.result.entityDefinitions;
         let cd = null
-          if(file.result && file.result.caseDefinition)
-            cd = file.result.caseDefinition;
+        if(file.result && file.result.caseDefinition)
+          cd = file.result.caseDefinition;
         let ssd = null
-          if(file.result && file.result.summarySectionDefinitions)
-            ssd = file.result.summarySectionDefinitions;
+        if(file.result && file.result.summarySectionDefinitions)
+          ssd = file.result.summarySectionDefinitions;
         let sd = null
-          if(file.result && file.result.stageDefinitions)
-            sd = file.result.stageDefinitions;
+        if(file.result && file.result.stageDefinitions)
+          sd = file.result.stageDefinitions;
+        let htd = null
+        if(file.result && file.result.humanTaskDefinitions)
+          htd = file.result.humanTaskDefinitions;
+        let atd = null
+        if(file.result && file.result.automatedTaskDefinitions)
+          atd = file.result.automatedTaskDefinitions;
+        let dtd = null
+        if(file.result && file.result.dualTaskDefinitions)
+          dtd = file.result.dualTaskDefinitions;
+        let syd = null
+        if(file.result && file.result.sentryDefinitions)
+          syd = file.result.sentryDefinitions;
+        let hd = null
+        if(file.result && file.result.httpHookDefinitions)
+          hd = file.result.httpHookDefinitions;
+        let a = null
+        if(file.result && file.result.actions)
+          a = file.result.actions;
 
         worksheet.addRow({
           commitHash: commit.hash,
@@ -493,6 +532,27 @@ module.exports = class ModelAnalytics{
           stageDefinitionsAvgNrDualTaskDefinitions: sd ? sd.avgNrDualTaskDefinitions : '',
           stageDefinitionsAvgNrSentryDefinitions: sd ? sd.avgNrSentryDefinitions : '',
           stageDefinitionsAvgNrHttpHookDefinitions: sd ? sd.avgNrHttpHookDefinitions : '',
+          humanTaskDefinitionsNr: htd ? htd.nr : '',
+          humanTaskDefinitionsOwnerPath: htd ? htd.ownerPath : '',
+          humanTaskDefinitionsRepeatableOnce: htd ? htd.repeatableOnce : '',
+          humanTaskDefinitionsRepeatableSerial: htd ? htd.repeatableSerial : '',
+          humanTaskDefinitionsRepeatableParallel: htd ? htd.repeatableParallel : '',
+          humanTaskDefinitionsIsMandatory: htd ? htd.isMandatory : '',
+          humanTaskDefinitionsActivationAutomatic: htd ? htd.activationAutomatic : '',
+          humanTaskDefinitionsActivationManual: htd ? htd.activationManual : '',
+          humanTaskDefinitionsActivationExpression: htd ? htd.activationExpression : '',
+          humanTaskDefinitionsManualActivationExpression: htd ? htd.manualActivationExpression : '',
+          humanTaskDefinitionsNewEntityDefinition: htd ? htd.newEntityDefinition : '',
+          humanTaskDefinitionsNewEntityAttachPath: htd ? htd.newEntityAttachPath : '',
+          humanTaskDefinitionsExternalId: htd ? htd.externalId : '',
+          humanTaskDefinitionsDynamicDescriptionPath: htd ? htd.dynamicDescriptionPath : '',
+          humanTaskDefinitionsFootnote: htd ? htd.footnote : '',
+          humanTaskDefinitionsAvgNrTaskParamDefinitions: htd ? htd.avgNrTaskParamDefinitions : '',
+          humanTaskDefinitionsAvgNrTaskParamDefinitionsIsMandatory: htd ? htd.avgNrTaskParamDefinitionsIsMandatory : '',
+          humanTaskDefinitionsAvgNrTaskParamDefinitionsIsReadOnly: htd ? htd.avgNrTaskParamDefinitionsIsReadOnly : '',
+          humanTaskDefinitionsAvgNrSentryDefinitions: htd ? htd.avgNrSentryDefinitions : '',
+          humanTaskDefinitionsAvgNrHttpHookDefinitions: htd ? htd.avgNrHttpHookDefinitions : '',
+          humanTaskDefinitionsDueDatePath: htd ? htd.dueDatePath : '',
         })
       }
       let to = worksheet.lastRow._number;
