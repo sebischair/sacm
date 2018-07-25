@@ -308,6 +308,25 @@ module.exports = class ModelAnalytics{
       { key: 'summarySectionDefinitionsPositionCenter', header: 'PositionCenter', width:5},
       { key: 'summarySectionDefinitionsPositionRight', header: 'PositionRight', width:5},
       { key: 'summarySectionDefinitionsPositionStretched', header: 'PositionStretched', width:5},
+      { key: 'stageDefinitionsNr', header: 'Nr', width: 5, group: 'StageDefinitions'},
+      { key: 'stageDefinitionsOwnerPath', header: 'OwnerPath', width: 5 },
+      { key: 'stageDefinitionsRepeatableOnce', header: 'RepeatableOnce', width: 5 },
+      { key: 'stageDefinitionsRepeatableSerial', header: 'RepeatableSerial',  width: 5 },
+      { key: 'stageDefinitionsRepeatableParallel', header: 'RepeatableParallel', width: 5 },
+      { key: 'stageDefinitionsIsMandatory', header: 'IsMandatory', width: 5 },
+      { key: 'stageDefinitionsActivationAutomatic', header: 'ActivationAutomatic', width: 5 },
+      { key: 'stageDefinitionsActivationManual', header: 'ActivationManual', width: 5 },
+      { key: 'stageDefinitionsActivationExpression', header: 'ActivationExpression', width: 5 },
+      { key: 'stageDefinitionsManualActivationExpression', header: 'ManualActivationExpression', width: 5 },
+      { key: 'stageDefinitionsNewEntityDefinition', header: 'NewEntityDefinition', width: 5 },
+      { key: 'stageDefinitionsNewEntityAttachPath', header: 'NewEntityAttachPath', width: 5 },
+      { key: 'stageDefinitionsExternalId', header: 'ExternalId', width: 5 },
+      { key: 'stageDefinitionsDynamicDescriptionPath', header: 'DynamicDescriptionPath', width: 5 },
+      { key: 'stageDefinitionsAvgNrHumanTaskDefinitions', header: 'AvgNrHumanTaskDefinitions', width: 5 },
+      { key: 'stageDefinitionsAvgNrAutomatedTaskDefinitions', header: 'AvgNrAutomatedTaskDefinitions', width: 5 },
+      { key: 'stageDefinitionsAvgNrDualTaskDefinitions', header: 'AvgNrDualTaskDefinitions', width: 5 },
+      { key: 'stageDefinitionsAvgNrSentryDefinitions', header: 'AvgNrSentryDefinitions', width: 5 },
+      { key: 'stageDefinitionsAvgNrHttpHookDefinitions', header: 'AvgNrHttpHookDefinitions', width: 5 },
       
     ]
     worksheet.columns = columns;
@@ -385,6 +404,9 @@ module.exports = class ModelAnalytics{
         let ssd = null
           if(file.result && file.result.summarySectionDefinitions)
             ssd = file.result.summarySectionDefinitions;
+        let sd = null
+          if(file.result && file.result.stageDefinitions)
+            sd = file.result.stageDefinitions;
 
         worksheet.addRow({
           commitHash: commit.hash,
@@ -452,6 +474,25 @@ module.exports = class ModelAnalytics{
           summarySectionDefinitionsPositionCenter: ssd ? ssd.positionCenter : '',
           summarySectionDefinitionsPositionRight: ssd ? ssd.positionRight : '',
           summarySectionDefinitionsPositionStretched: ssd ? ssd.positionStretched : '',
+          stageDefinitionsNr: sd ? sd.nr : '',
+          stageDefinitionsOwnerPath: sd ? sd.ownerPath : '',
+          stageDefinitionsRepeatableOnce: sd ? sd.repeatableOnce : '',
+          stageDefinitionsRepeatableSerial: sd ? sd.repeatableSerial : '',
+          stageDefinitionsRepeatableParallel: sd ? sd.repeatableParallel : '',
+          stageDefinitionsIsMandatory: sd ? sd.isMandatory : '',
+          stageDefinitionsActivationAutomatic: sd ? sd.activationAutomatic : '',
+          stageDefinitionsActivationManual: sd ? sd.activationManual : '',
+          stageDefinitionsActivationExpression: sd ? sd.activationExpression : '',
+          stageDefinitionsManualActivationExpression: sd ? sd.manualActivationExpression : '',
+          stageDefinitionsNewEntityDefinition: sd ? sd.newEntityDefinition : '',
+          stageDefinitionsNewEntityAttachPath: sd ? sd.newEntityAttachPath : '',
+          stageDefinitionsExternalId: sd ? sd.externalId : '',
+          stageDefinitionsDynamicDescriptionPath: sd ? sd.dynamicDescriptionPath : '',
+          stageDefinitionsAvgNrHumanTaskDefinitions: sd ? sd.avgNrHumanTaskDefinitions : '',
+          stageDefinitionsAvgNrAutomatedTaskDefinitions: sd ? sd.avgNrAutomatedTaskDefinitions : '',
+          stageDefinitionsAvgNrDualTaskDefinitions: sd ? sd.avgNrDualTaskDefinitions : '',
+          stageDefinitionsAvgNrSentryDefinitions: sd ? sd.avgNrSentryDefinitions : '',
+          stageDefinitionsAvgNrHttpHookDefinitions: sd ? sd.avgNrHttpHookDefinitions : '',
         })
       }
       let to = worksheet.lastRow._number;
