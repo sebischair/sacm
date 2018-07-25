@@ -403,6 +403,8 @@ module.exports = class ModelAnalytics{
       result.automatedTaskDefinitions = this.analyzeTaskDefinitions(Workspace, false, true, false);
       console.log('            ... dual task definitions!')
       result.dualTaskDefinitions = this.analyzeTaskDefinitions(Workspace, false, false, true);
+      console.log('            ... sentry definitions!')
+      result.sentryDefinitions = this.analyzeSentryDefinitions(Workspace);
       console.log('            ... http hook definitions!')
       result.httpHookDefinitions = this.analyzeHttpHookDefinitions(Workspace);
       console.log('            ... execution actions!')
@@ -856,6 +858,21 @@ module.exports = class ModelAnalytics{
     return result;
   }
 
+  static getAllProcessDefinitions(Workspace){
+    let ProcessDefinitions = [];
+    let CaseDefinition = Workspace.CaseDefinition[0];
+    CaseDefinition.StageDefinition.forEach(sd => {      
+      ProcessDefinitions.push(sd);
+      if(sd.HumanTaskDefinition)
+        ProcessDefinitions = ProcessDefinitions.concat(sd.HumanTaskDefinition);       
+      if(sd.DualTaskDefinition)
+        ProcessDefinitions = ProcessDefinitions.concat(sd.DualTaskDefinition);
+      if(sd.AutomatedTaskDefinition)
+        ProcessDefinitions = ProcessDefinitions.concat(sd.AutomatedTaskDefinition);   
+    });
+    return ProcessDefinitions;
+  }
+
   static analyzeHttpHookDefinitions(Workspace){
     let result = {
       nr: 0,       
@@ -875,19 +892,7 @@ module.exports = class ModelAnalytics{
       onCompleteAutomatedPart: 0 
     }
 
-    let ProcessDefinitions = [];
-    let CaseDefinition = Workspace.CaseDefinition[0];
-    CaseDefinition.StageDefinition.forEach(sd => {      
-      ProcessDefinitions.push(sd);
-      if(sd.HumanTaskDefinition)
-        ProcessDefinitions = ProcessDefinitions.concat(sd.HumanTaskDefinition);       
-      if(sd.DualTaskDefinition)
-        ProcessDefinitions = ProcessDefinitions.concat(sd.DualTaskDefinition);
-      if(sd.AutomatedTaskDefinition)
-        ProcessDefinitions = ProcessDefinitions.concat(sd.AutomatedTaskDefinition);   
-    });
-
-    ProcessDefinitions.forEach(pd=>{
+    this.getAllProcessDefinitions(Workspace).forEach(pd=>{
       if(pd.HttpHookDefinition)
         pd.HttpHookDefinition.forEach(hhd=>{
           result.nr++;         
@@ -929,85 +934,31 @@ module.exports = class ModelAnalytics{
   static analyzeSentryDefinitions(Workspace){
     let result = {
       nr: 0,       
-      methodGET: 0,              
-      methodPOST: 0,
-      methodPUT: 0,
-      methodDEL: 0,
-      failureMessage: 0,      
-      onAvailable: 0,
-      onEnable: 0,
-      onActivate: 0,
-      onComplete: 0,
-      onTerminate: 0,      
-      onActivateHumanPart: 0,
-      onCompleteHumanPart: 0,
-      onActivateAutomatedPart: 0,
-      onCompleteAutomatedPart: 0,
-      avgNrPreconditions: 0      
+      avgNrPreconditions: 0,         
+      avgNrExpressionsPerPrecondition: 0       
     }
 
     let helperSumPreconditions = 0;
+    let helperSumExpressions = 0;
 
-    let ProcessDefinitions = [];
-    let CaseDefinition = Workspace.CaseDefinition[0];
-    CaseDefinition.StageDefinition.forEach(sd => {      
-      ProcessDefinitions.push(sd);
-      if(sd.HumanTaskDefinition)
-        ProcessDefinitions = ProcessDefinitions.concat(sd.HumanTaskDefinition);       
-      if(sd.DualTaskDefinition)
-        ProcessDefinitions = ProcessDefinitions.concat(sd.DualTaskDefinition);
-      if(sd.AutomatedTaskDefinition)
-        ProcessDefinitions = ProcessDefinitions.concat(sd.AutomatedTaskDefinition);   
-    });
-
-    ProcessDefinitions.forEach(pd=>{
-      if(pd.HttpHookDefinition)
-        pd.HttpHookDefinition.forEach(hhd=>{
+    this.getAllProcessDefinitions(Workspace).forEach(pd=>{
+      if(pd.SentryDefinition)
+        pd.SentryDefinition.forEach(sd=>{
           result.nr++;
-          console.log(hhd)
-          if(hhd.precondition){
-            helperSumPreconditions += hhd.precondition.length;
-            console.log('sum helüer')
-          }
-         
-          if(hhd.$.method == 'GET')
-            result.methodGET++;
-          else if(hhd.$.method == 'POST')
-            result.methodPOST++;  
-          else if(hhd.$.method == 'PUT')
-            result.methodPUT++;  
-          else if(hhd.$.method == 'DEL')
-            result.methodDEL++;  
-          
-          if(hhd.$.failureMessage)
-            result.failureMessage++;  
-          
-          if(hhd.$.onAvailable)
-            result.onAvailable++;  
-          else if(hhd.$.onEnable)
-            result.onEnable++;
-          else if(hhd.$.onActivate)
-            result.onActivate++;   
-          else if(hhd.$.onComplete)
-            result.onComplete++;  
-          else if(hhd.$.onTerminate)
-            result.onTerminate++;             
-          else if(hhd.$.onActivateHumanPart)
-            result.onActivateHumanPart++;               
-          else if(hhd.$.onCompleteHumanPart)
-            result.onCompleteHumanPart++; 
-          else if(hhd.$.onActivateAutomatedPart)
-            result.onActivateAutomatedPart++; 
-          else if(hhd.$.onCompleteAutomatedPart)
-            result.onCompleteAutomatedPart++; 
+          if(sd.precondition){
+            helperSumPreconditions += sd.precondition.length;
+            sd.precondition.forEach(p=>{
+              if(p.$.expression)
+                helperSumExpressions++;
+            });
+          }         
         });
     });
 
     if(result.nr != 0){
-      console.log(helperSumPreconditions)
       result.avgNrPreconditions = helperSumPreconditions/result.nr;
+      result.avgNrExpressionsPerPrecondition = helperSumExpressions/result.nr;
     }
-
     return result;
   }
 
