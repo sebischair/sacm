@@ -35,7 +35,7 @@
             <AttributeDefinition id="ICS2_CaseManager" type="Link.Users(AssutaProfessionals)" multiplicity="exactlyOne" description="אחראי מאסותא"/> <!-- AssutaCaseManagers to AssutaProfessionals -->
             <AttributeDefinition id="ICS2_EvaluationDueDate" type="date.after(TODAY)" multiplicity="exactlyOne" description="תאריך סיום לביצוע הערכה"/>
             <AttributeDefinition id="ICS2_WorkplanDueDate" type="date.after(TODAY)" multiplicity="exactlyOne" description="תאריך סיום לתוכנית הטיפול"/>
-			<AttributeDefinition id="ICS2_CaseData1" type="string" multiplicity="exactlyOne" description="אבחנה ראשית" />
+			<AttributeDefinition id="ICS2_CaseData1" type="string" multiplicity="exactlyOne" description="אבחנה ראשית / מחלות רקע" />
 			<AttributeDefinition id="ICS2_CaseData2" type="enumeration" multiplicity="exactlyOne" description="סיבת האשפוז" >
 			  <EnumerationOption value="0" description="ניתוח אלקטיבי"/>
               <EnumerationOption value="1" description="החמרת מחלה"/>
@@ -716,6 +716,8 @@
                 <EnumerationOption value="0" description="תמיכה חלקית בתדירות שבועית"/>
                 <EnumerationOption value="1" description="תמיכה חלקית בתדירות יום-יומית"/>
                 <EnumerationOption value="1" description="תמיכה מלאה 24 שעות"/>
+				<EnumerationOption value="2" description="עצמאי לרוב – תמיכה של בן משפחה אחת לכמה זמן"/>
+				<EnumerationOption value="3" description="עצמאי - ללא תמיכה כלל"/>
             </AttributeDefinition>
             <AttributeDefinition id="ResidenceAbuse" type="string" multiplicity="exactlyOne" description="הערת טקסט לגבי חשש להתעללות פיזית או מילולית:"/>
             <DerivedAttributeDefinition id="ResidenceSituationOfDwelling_Score" expression="number(ResidenceType,0)+number(ResidenceArrangements,0)+number(ResidenceAccessibility,0)+number(ResidenceTidiness,0)+number(ResidenceSupport,0)+number(ResidenceSupportType,0)" description="ציון כללי לשאלון מגורים"/> 
@@ -853,6 +855,8 @@
                 <EnumerationOption value="0" description="לא"/>
                 <EnumerationOption value="1" description="כן"/>
             </AttributeDefinition> 
+			<AttributeDefinition id="sleeping5" type="string" multiplicity="exactlyOne" description="הערות"/>
+			
         </EntityDefinition>
 
         <EntityDefinition id="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist" description="הערכה רפואית של מחלקת הכירורגיה או המרדים"> 
@@ -898,14 +902,14 @@
         <EntityDefinition id="ICS2_PhysiotherapistEvaluationDataBeforeTest" description="הערכת פיזיותרפיסט - נתוני התחלה"> 
             <AttributeDefinition id="PulseRest" type="number" multiplicity="exactlyOne" description="דופק במנוחה"/>
             <AttributeDefinition id="Age" type="number" multiplicity="exactlyOne" description="גיל המטופל היום"/>
-            <DerivedAttributeDefinition id="MaxPulse" expression="round((0.8 * (220 - Age) - PulseRest) + PulseRest)" description="דופק מקסימאלי להפסקת בדיקה"/>
+            <DerivedAttributeDefinition id="MaxPulse" expression="round((0.8 * (220 - Age) - PulseRest) + PulseRest)" description="דופק מטרה"/>
             <AttributeDefinition id="PhysioRemarks" type="string" multiplicity="exactlyOne" description="הערות"/>
         </EntityDefinition>
 
         <EntityDefinition id="ICS2_PhysiotherapistEvaluationTimedUp" description="Time up and go"> 
 		    <AttributeDefinition id="TUG0" type="string" multiplicity="exactlyOne" description="הוראות ביצוע: הנבדק יושב על כיסא סטנדרטי בגובה 47-44 סנטימטר, כשהוא נשען על משענת הגב. במתן הוראה על ידי הבודק: קום, הנבדק מתרומם מהכיסא, הולך למרחק של שלושה מטר בקצב הליכה שנוח לו, מסתובב, הולך חזרה לכיסא ומתיישב. המדידה מתחילה עם מתן ההוראה: קום ומסתיימת עם הישיבה חזרה על הכיסא בעמדת המוצא. יש לבצע ניסיון אחד שנחשב לאימון כאשר הציון המתקבל בו לא נכלל בחישוב הציון. במידה והנבדק משתמש באביזר עזר להליכה יש לבצע את הבדיקה תוך שימוש באביזר העזר."/>
-            <AttributeDefinition id="TUG1" type="number" multiplicity="exactlyOne" description="זמן ביצוע ממוצע (בדקות)"/>
-            <AttributeDefinition id="TUG2" type="number" multiplicity="exactlyOne" description="מס' צעדים ממוצע"/>
+            <AttributeDefinition id="TUG1" type="number" multiplicity="exactlyOne" description="זמן ביצוע (בשניות)"/>
+            <AttributeDefinition id="TUG2" type="number" multiplicity="exactlyOne" description="מספר צעדים"/>
             <AttributeDefinition id="TUGRemarks" type="string" multiplicity="exactlyOne" description="הערות" additionalDescription="בקשישים, ציון מעל 13.5 שניות מעיד על סיכון מוגבר לנפילה."/>
         </EntityDefinition>
 
@@ -916,7 +920,7 @@
             <AttributeDefinition id="6MWT2" type="number" multiplicity="exactlyOne" description="דופק ממוצע"/>
             <AttributeDefinition id="6MWT3" type="number" multiplicity="exactlyOne" description="דופק בסיום"/>
             <AttributeDefinition id="6MWT4" type="number" multiplicity="exactlyOne" description="דופק דקה לאחר מנוחה"/>
-            <AttributeDefinition id="6MWT5" type="number" multiplicity="exactlyOne" description="מרחק הליכה בשש דקות"/>
+            <AttributeDefinition id="6MWT5" type="number" multiplicity="exactlyOne" description="מרחק הליכה בשש דקות (במטרים)"/>
             <AttributeDefinition id="6MWT6" type="enumeration" multiplicity="exactlyOne" description="רמת קושי (יש לשאול את המטופל)">
                 <EnumerationOption value="0" description="קשה מאוד"/>
                 <EnumerationOption value="1" description="קשה"/>
@@ -1374,6 +1378,7 @@
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sleeping.sleeping2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sleeping.sleeping3" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS2_Evaluation.ICS2_Sleeping.sleeping4" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="ICS2_Evaluation.ICS2_Sleeping.sleeping5" isReadOnly="false" isMandatory="false"/>
                 </HumanTaskDefinition>
 
                 <HumanTaskDefinition id="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist" description="הערכה רפואית של מחלקת הכירורגיה או המרדים" ownerPath="ICS2_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist" entityAttachPath="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist">                
@@ -1712,6 +1717,7 @@
             <TaskParam path="ICS2_Evaluation.ICS2_Sleeping.sleeping2" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_Sleeping.sleeping3" values="['1']"/>
             <TaskParam path="ICS2_Evaluation.ICS2_Sleeping.sleeping4" values="['1']"/>
+			<TaskParam path="ICS2_Evaluation.ICS2_Sleeping.sleeping5" values="['1']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist">
             <TaskParam path="ICS2_Evaluation.ICS2_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist.CDHealthAss1" values="['2018-05-26T00:00:00.000']"/>
