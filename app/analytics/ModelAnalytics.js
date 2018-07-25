@@ -206,7 +206,7 @@ module.exports = class ModelAnalytics{
           });
         }
         result.push(commitResult);
-        if(i==400)
+        if(i==3)
           break;
         
       }
@@ -243,13 +243,13 @@ module.exports = class ModelAnalytics{
     var worksheet = workbook.addWorksheet('Analytics');
        
     worksheet.columns = [
-      { key: 'commitHash', header: 'Hash', width:40},
+      { key: 'commitHash', header: 'Hash', width:40, group: 'Commit'},
       { key: 'commitDate', header: 'Date', width:25},
       { key: 'commitAuthorName', header: 'Author Name', width:5},
       { key: 'commitAuthorEmail', header: 'Author Email', width:5},
       { key: 'commitMessage', header: 'Message', width:10},
       { key: 'case', header: 'Case', width:6},
-      { key: 'attributeDefinitionsNr', header: 'Nr', width:5},
+      { key: 'attributeDefinitionsNr', header: 'Nr', width:5, group: 'AttributeDefinitions'},
       { key: 'attributeDefinitionsTypeLink', header: 'TypeLink', width:5},
       { key: 'attributeDefinitionsTypeLinkUser', header: 'TypeLinkUser', width:5},
       { key: 'attributeDefinitionsTypeLinkEntityDefinition', header: 'TypeLinkEntityDefinition', width:5},
@@ -281,6 +281,13 @@ module.exports = class ModelAnalytics{
       { key: 'attributeDefinitionsUiReferenceLink', header: 'UiReferenceLink', width:5},
       { key: 'attributeDefinitionsUiReferencePrivateLink', header: 'UiReferencePrivateLink', width:5},
       { key: 'attributeDefinitionsUiReferenceSvg', header: 'UiReferenceSvg', width:5},
+      { key: 'derivedAttributeDefinitionsNr', header: 'Nr', width:5},
+      { key: 'derivedAttributeDefinitionsExplicitType', header: 'ExplicitType', width:5},
+      { key: 'derivedAttributeDefinitionsAdditionalDescription', header: 'AdditionalDescription', width:5},
+      { key: 'derivedAttributeDefinitionsUiReference', header: 'UiReference', width:5},
+      { key: 'derivedAttributeDefinitionsUiReferenceLineDiagram', header: 'UiReferenceLineDiagram', width:5},
+      { key: 'derivedAttributeDefinitionsUiReferenceColors', header: 'UiReferenceColors', width:5},
+      { key: 'derivedAttributeDefinitionsUiReferenceSvg', header: 'UiReferenceSvg', width:5},
     ]
     const fontTemplate = {
       color: { argb: 'FFFFFF' },
@@ -313,6 +320,10 @@ module.exports = class ModelAnalytics{
         let ad = null
         if(file.result && file.result.attributeDefinitions)
           ad = file.result.attributeDefinitions;
+        
+        let dad = null
+        if(file.result && file.result.derivedAttributeDefinitions)
+          dad = file.result.derivedAttributeDefinitions;
 
         worksheet.addRow({
           commitHash: commit.hash,
@@ -353,6 +364,13 @@ module.exports = class ModelAnalytics{
           attributeDefinitionsUiReferenceLink: ad ? ad.uiReferenceLink : '',
           attributeDefinitionsUiReferencePrivateLink: ad ? ad.uiReferencePrivateLink : '',
           attributeDefinitionsUiReferenceSvg: ad ? ad.uiReferenceSvg : '',
+          derivedAttributeDefinitionsNr: dad ? dad.nr : '',
+          derivedAttributeDefinitionsExplicitType: dad ? dad.explicitType : '',
+          derivedAttributeDefinitionsAdditionalDescription: dad ? dad.additionalDescription : '',
+          derivedAttributeDefinitionsUiReference: dad ? dad.uiReference : '',
+          derivedAttributeDefinitionsUiReferenceLineDiagram: dad ? dad.uiReferenceLineDiagram : '',
+          derivedAttributeDefinitionsUiReferenceColors: dad ? dad.uiReferenceColors : '',
+          derivedAttributeDefinitionsUiReferenceSvg: dad ? dad.uiReferenceSvg : '',
         })
       }
       let to = worksheet.lastRow._number;
