@@ -393,6 +393,37 @@ module.exports = class ModelAnalytics{
       { key: 'dualTaskDefinitionsAutomaticCompleteOnPath', header: 'AutomaticCompleteOnPath', width: 5 },
       { key: 'dualTaskDefinitionsAvgNrTaskParamDefinitionsHumanPart', header: 'AvgNrTaskParamDefinitionsHumanPart', width: 5 },
       { key: 'dualTaskDefinitionsAvgNrTaskParamDefinitionsAutomatedPart', header: 'AvgNrTaskParamDefinitionsAutomatedPart', width: 5 },
+      { key: 'sentryDefinitionsNr', header: 'Nr', width: 5, group: 'SentryDefinitions' },
+      { key: 'sentryDefinitionsAvgNrPreconditions', header: 'AvgNrPreconditions', width: 5 },
+      { key: 'sentryDefinitionsAvgNrExpressionsPerPrecondition', header: 'AvgNrExpressionsPerPrecondition', width: 5 },
+      { key: 'httpHookDefinitionsNr', header: 'Nr', width: 5, group: 'HttpHookDefinitions'},
+      { key: 'httpHookDefinitionsMethodGET', header: 'MethodGET', width: 5},
+      { key: 'httpHookDefinitionsMethodPOST', header: 'MethodPOST', width: 5 },
+      { key: 'httpHookDefinitionsMethodPUT', header: 'MethodPUT', width: 5 },
+      { key: 'httpHookDefinitionsMethodDEL', header: 'MethodDEL', width: 5 },
+      { key: 'httpHookDefinitionsFailureMessage', header: 'FailureMessage', width: 5 },
+      { key: 'httpHookDefinitionsOnAvailable', header: 'OnAvailable', width: 5 },
+      { key: 'httpHookDefinitionsOnEnable', header: 'OnEnable', width: 5 },
+      { key: 'httpHookDefinitionsOnActivate', header: 'OnActivate', width: 5 },
+      { key: 'httpHookDefinitionsOnComplete', header: 'OnComplete', width: 5 },
+      { key: 'httpHookDefinitionsOnTerminate', header: 'OnTerminate', width: 5 },
+      { key: 'httpHookDefinitionsOnActivateHumanPart', header: 'OnActivateHumanPart', width: 5 },
+      { key: 'httpHookDefinitionsOnCompleteHumanPart', header: 'OnCompleteHumanPart', width: 5 },
+      { key: 'httpHookDefinitionsOnActivateAutomatedPart', header: 'OnActivateAutomatedPart', width: 5 },
+      { key: 'httpHookDefinitionsOnCompleteAutomatedPart', header: 'OnCompleteAutomatedPart', width: 5 },
+      { key: 'actionsNr', header: 'Nr', width: 5, group: 'Actions' },
+      { key: 'actionsActivateStage', header: 'ActivateStage', width: 5 },
+      { key: 'actionsCompleteStage', header: 'CompleteStage', width: 5 },
+      { key: 'actionsActivateHumanTask', header: 'ActivateHumanTask', width: 5 },
+      { key: 'actionsActivateDualTask', header: 'ActivateDualTask', width: 5 },
+      { key: 'actionsCompleteHumanTask', header: 'CompleteHumanTask', width: 5 },
+      { key: 'actionsCompleteAutomatedTask', header: 'CompleteAutomatedTask', width: 5 },
+      { key: 'actionsCompleteDualTaskHumanPart', header: 'CompleteDualTaskHumanPart', width: 5 },
+      { key: 'actionsCompleteDualTaskAutomatedPart', header: 'CompleteDualTaskAutomatedPart', width: 5 },
+      { key: 'actionsCorrectHumanTask', header: 'CorrectHumanTask', width: 5 },
+      { key: 'actionsCorrectDualTaskHumanPart', header: 'CorrectDualTaskHumanPart', width: 5 },
+      { key: 'actionsCreateAlert', header: 'CreateAlert', width: 5 },
+      { key: 'actionsBreakpoint', header: 'Breakpoint', width: 5 },
     ]
     worksheet.columns = columns;
     worksheet.getRow(2).values = worksheet.getRow(1).values;
@@ -484,9 +515,9 @@ module.exports = class ModelAnalytics{
         let syd = null
         if(file.result && file.result.sentryDefinitions)
           syd = file.result.sentryDefinitions;
-        let hd = null
+        let hhd = null
         if(file.result && file.result.httpHookDefinitions)
-          hd = file.result.httpHookDefinitions;
+          hhd = file.result.httpHookDefinitions;
         let a = null
         if(file.result && file.result.actions)
           a = file.result.actions;
@@ -642,6 +673,37 @@ module.exports = class ModelAnalytics{
           dualTaskDefinitionsAutomaticCompleteOnPath: dtd ? dtd.automaticCompleteOnPath : '',
           dualTaskDefinitionsAvgNrTaskParamDefinitionsHumanPart: dtd ? dtd.avgNrTaskParamDefinitionsHumanPart : '',
           dualTaskDefinitionsAvgNrTaskParamDefinitionsAutomatedPart: dtd ? dtd.avgNrTaskParamDefinitionsAutomatedPart : '',
+          sentryDefinitionsNr: syd ? syd.nr : '',
+          sentryDefinitionsAvgNrPreconditions: syd ? syd.avgNrPreconditions : '',
+          sentryDefinitionsAvgNrExpressionsPerPrecondition: syd ? syd.avgNrExpressionsPerPrecondition : '',
+          httpHookDefinitionsNr: hhd ? hhd.nr : '',
+          httpHookDefinitionsMethodGET: hhd ? hhd.methodGET : '',
+          httpHookDefinitionsMethodPOST: hhd ? hhd.methodPOST : '',
+          httpHookDefinitionsMethodPUT: hhd ? hhd.methodPUT : '',
+          httpHookDefinitionsMethodDEL: hhd ? hhd.methodDEL : '',
+          httpHookDefinitionsFailureMessage: hhd ? hhd.failureMessage : '',
+          httpHookDefinitionsOnAvailable: hhd ? hhd.onAvailable : '',
+          httpHookDefinitionsOnEnable: hhd ? hhd.onEnable : '',
+          httpHookDefinitionsOnActivate: hhd ? hhd.onActivate : '',
+          httpHookDefinitionsOnComplete: hhd ? hhd.onComplete : '',
+          httpHookDefinitionsOnTerminate: hhd ? hhd.onTerminate : '',
+          httpHookDefinitionsOnActivateHumanPart: hhd ? hhd.onActivateHumanPart : '',
+          httpHookDefinitionsOnCompleteHumanPart: hhd ? hhd.onCompleteHumanPart : '',
+          httpHookDefinitionsOnActivateAutomatedPart: hhd ? hhd.onActivateAutomatedPart : '',
+          httpHookDefinitionsOnCompleteAutomatedPart: hhd ? hhd.onCompleteAutomatedPart : '',
+          actionsNr: a ? a.nr : '',
+          actionsActivateStage: a ? a.activateStage : '',
+          actionsCompleteStage: a ? a.completeStage : '',
+          actionsActivateHumanTask: a ? a.activateHumanTask : '',
+          actionsActivateDualTask: a ? a.activateDualTask : '',
+          actionsCompleteHumanTask: a ? a.completeHumanTask : '',
+          actionsCompleteAutomatedTask: a ? a.completeAutomatedTask : '',
+          actionsCompleteDualTaskHumanPart: a ? a.completeDualTaskHumanPart : '',
+          actionsCompleteDualTaskAutomatedPart: a ? a.completeDualTaskAutomatedPart : '',
+          actionsCorrectHumanTask: a ? a.correctHumanTask : '',
+          actionsCorrectDualTaskHumanPart: a ? a.correctDualTaskHumanPart : '',
+          actionsCreateAlert: a ? a.createAlert : '',
+          actionsBreakpoint: a ? a.breakpoint : '',
         })
       }
       let to = worksheet.lastRow._number;
