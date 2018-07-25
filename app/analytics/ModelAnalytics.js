@@ -291,6 +291,17 @@ module.exports = class ModelAnalytics{
       { key: 'entityDefinitionsNr', header: 'Nr', width:5, group: 'EntityDefinitions'},
       { key: 'entityDefinitionsAvgNrAttributeDefinitions', header: 'AvgNrAttributeDefinitions', width:5},
       { key: 'entityDefinitionsAvgNrDerivedAttributeDefinitions', header: 'AvgNrDerivedAttributeDefinitions', width:5},
+      { key: 'caseDefinitionHasClientPath', header: 'HasClientPath', width:5, group: 'CaseDefinition'},
+      { key: 'caseDefinitionHasOwnerPath', header: 'hasOwnerPath', width:7},
+      { key: 'caseDefinitionHasNewEntityDefinitionId', header: 'HasNewEntityDefinitionId', width:7},
+      { key: 'caseDefinitionHasNewEntityAttachPath', header: 'HasNewEntityAttachPath', width:7},
+      { key: 'caseDefinitionHasNotesDefaultValue', header: 'HasNotesDefaultValue', width:7},
+      { key: 'caseDefinitionHasOnAvailableHTTPHookURL', header: 'HasOnAvailableHTTPHookURL', width:7},
+      { key: 'caseDefinitionHasOnEnableHttpHTTPHookURL', header: 'HasOnEnableHttpHTTPHookURL', width:7},
+      { key: 'caseDefinitionHasOnActivateHTTPHookURL', header: 'HasOnActivateHTTPHookURL', width:7},
+      { key: 'caseDefinitionHasOnCompleteHTTPHookURL', header: 'HasOnCompleteHTTPHookURL', width:7},
+      { key: 'caseDefinitionHasOnTerminateHTTPHookURL', header: 'HasOnTerminateHTTPHookURL', width:7},
+      { key: 'caseDefinitionHasOnDeleteHTTPHookURL', header: 'HasOnDeleteHTTPHookURL', width:7},
     ]
     worksheet.columns = columns;
     worksheet.getRow(2).values = worksheet.getRow(1).values;
@@ -354,15 +365,16 @@ module.exports = class ModelAnalytics{
 
         let ad = null
         if(file.result && file.result.attributeDefinitions)
-          ad = file.result.attributeDefinitions;
-        
+          ad = file.result.attributeDefinitions;        
         let dad = null
         if(file.result && file.result.derivedAttributeDefinitions)
-          dad = file.result.derivedAttributeDefinitions;
-        
+          dad = file.result.derivedAttributeDefinitions;        
         let ed = null
         if(file.result && file.result.entityDefinitions)
           ed = file.result.entityDefinitions;
+        let cd = null
+          if(file.result && file.result.caseDefinition)
+            cd = file.result.caseDefinition;
 
         worksheet.addRow({
           commitHash: commit.hash,
@@ -413,6 +425,17 @@ module.exports = class ModelAnalytics{
           entityDefinitionsNr: ed ? ed.nr : '',
           entityDefinitionsAvgNrAttributeDefinitions: ed ? ed.avgNrAttributeDefinitions : '',
           entityDefinitionsAvgNrDerivedAttributeDefinitions: ed ? ed.avgNrDerivedAttributeDefinitions : '',
+          caseDefinitionHasClientPath: cd ? cd.hasClientPath : '',
+          caseDefinitionHasOwnerPath: cd ? cd.hasOwnerPath : '',
+          caseDefinitionHasNewEntityDefinitionId: cd ? cd.hasNewEntityDefinitionId : '',
+          caseDefinitionHasNewEntityAttachPath: cd ? cd.hasNewEntityAttachPath : '',
+          caseDefinitionHasNotesDefaultValue: cd ? cd.hasNotesDefaultValue : '',
+          caseDefinitionHasOnAvailableHTTPHookURL: cd ? cd.hasOnAvailableHTTPHookURL : '',
+          caseDefinitionHasOnEnableHttpHTTPHookURL: cd ? cd.hasOnEnableHttpHTTPHookURL : '',
+          caseDefinitionHasOnActivateHTTPHookURL: cd ? cd.hasOnActivateHTTPHookURL : '',
+          caseDefinitionHasOnCompleteHTTPHookURL: cd ? cd.hasOnCompleteHTTPHookURL : '',
+          caseDefinitionHasOnTerminateHTTPHookURL: cd ? cd.hasOnTerminateHTTPHookURL : '',
+          caseDefinitionHasOnDeleteHTTPHookURL: cd ? cd.hasOnDeleteHTTPHookURL : '',
         })
       }
       let to = worksheet.lastRow._number;
