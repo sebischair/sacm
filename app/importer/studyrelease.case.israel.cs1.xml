@@ -32,7 +32,7 @@
             <AttributeDefinition id="ICS1_CaseManager" type="Link.Users(AssutaProfessionals)" description="אחראי מאסותא"/> <!-- AssutaCaseManagers to AssutaProfessionals -->
             <AttributeDefinition id="ICS1_EvaluationDueDate" type="date.after(TODAY)" description="תאריך סיום לביצוע הערכה"/>
             <AttributeDefinition id="ICS1_WorkplanDueDate" type="date.after(TODAY)" description="תאריך סיום לתוכנית הטיפול"/>
-            <AttributeDefinition id="ICS1_CaseData1" type="string" multiplicity="maximalOne" description="אבחנה ראשית" />
+            <AttributeDefinition id="ICS1_CaseData1" type="string" multiplicity="maximalOne" description="אבחנה ראשית / מחלות רקע" />
             <AttributeDefinition id="ICS1_CaseData2" type="enumeration" multiplicity="maximalOne" description="סיבת האשפוז" >
               <EnumerationOption value="0" description="ניתוח אלקטיבי"/>
               <EnumerationOption value="1" description="החמרת מחלה"/>
@@ -799,7 +799,9 @@
             <AttributeDefinition id="ResidenceSupportType" type="enumeration" multiplicity="maximalOne" description="סוג התמיכה שמקבל המטופל">
                 <EnumerationOption value="0" description="תמיכה חלקית בתדירות שבועית"/>
                 <EnumerationOption value="1" description="תמיכה חלקית בתדירות יום-יומית"/>
-                <EnumerationOption value="1" description="תמיכה מלאה 24 שעות"/>
+                <EnumerationOption value="2" description="תמיכה מלאה 24 שעות"/>
+				<EnumerationOption value="4" description="עצמאי לרוב – תמיכה של בן משפחה אחת לכמה זמן"/>
+				<EnumerationOption value="3" description="עצמאי - ללא תמיכה כלל"/>
             </AttributeDefinition>
             <AttributeDefinition id="ResidenceAbuse" type="string" multiplicity="maximalOne" description="הערת טקסט לגבי חשש להתעללות פיזית או מילולית:"/>
             <DerivedAttributeDefinition id="ResidenceSituationOfDwelling_Score" expression="number(ResidenceType,0)+number(ResidenceArrangements,0)+number(ResidenceAccessibility,0)+number(ResidenceTidiness,0)+number(ResidenceSupport,0)+number(ResidenceSupportType,0)" description="ציון כללי לשאלון מגורים"/> 
@@ -937,6 +939,7 @@
                 <EnumerationOption value="0" description="לא"/>
                 <EnumerationOption value="1" description="כן"/>
             </AttributeDefinition> 
+			 <AttributeDefinition id="sleepingcomments" type="longtext" multiplicity="maximalOne" description="הערות" additionalDescription="הערות"/> 
         </EntityDefinition>
 
         <!-- OUT 
@@ -1539,6 +1542,8 @@
                     <TaskParamDefinition path="ICS1_Evaluation.ICS1_Sleeping.sleeping2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS1_Evaluation.ICS1_Sleeping.sleeping3" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS1_Evaluation.ICS1_Sleeping.sleeping4" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="ICS1_Evaluation.ICS1_Sleeping.sleepingcomments" isReadOnly="false" isMandatory="false"/>
+					
                 </HumanTaskDefinition>
 
                 <!--
@@ -1917,6 +1922,8 @@
             <TaskParam path="ICS1_Evaluation.ICS1_Sleeping.sleeping2" values="['1']"/>
             <TaskParam path="ICS1_Evaluation.ICS1_Sleeping.sleeping3" values="['1']"/>
             <TaskParam path="ICS1_Evaluation.ICS1_Sleeping.sleeping4" values="['1']"/>
+			<TaskParam path="ICS1_Evaluation.ICS1_Sleeping.sleepingcomments" values="['1']"/>
+			
         </Action>
         <!--
         <Action id="CompleteHumanTask" processId="ICS1_HealthAssessmentBySurgicalDepartmentAORAnesthesiologist">
@@ -2007,7 +2014,7 @@
             <TaskParam path="ICS1_Workplan.ICS1_MonitoringPrescription.alertfreq"  values="[2]"/>
             <TaskParam path="ICS1_Workplan.ICS1_MonitoringPrescription.alertfrequnit"  values="['DAYS']"/>
             <TaskParam path="ICS1_Workplan.ICS1_MonitoringPrescription.comments"  values="['Some random comment']"/>
-            <TaskParam path="ICS1_Workplan.ICS1_MonitoringPrescription.freq"  values="[5]"/>
+            <TaskParam path="ICS1_Workplan.ICS1_Monitorאבחנה ראשיתingPrescription.freq"  values="[5]"/>
             <TaskParam path="ICS1_Workplan.ICS1_MonitoringPrescription.freqqunit"  values="['WEEKS']"/>
             <TaskParam path="ICS1_Workplan.ICS1_MonitoringPrescription.maxdelay"  values="[100]"/>
             <TaskParam path="ICS1_Workplan.ICS1_MonitoringPrescription.startdate"  values="['2017-06-09T00:00:00.0']"/>
