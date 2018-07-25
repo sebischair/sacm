@@ -206,7 +206,7 @@ module.exports = class ModelAnalytics{
           });
         }
         result.push(commitResult);
-        if(i==3)
+        //if(i==1)
           break;
         
       }
@@ -242,7 +242,7 @@ module.exports = class ModelAnalytics{
     var workbook = new Excel.Workbook();
     var worksheet = workbook.addWorksheet('Analytics');
        
-    worksheet.columns = [
+    const columns = [
       { key: 'commitHash', header: 'Hash', width:40, group: 'Commit'},
       { key: 'commitDate', header: 'Date', width:25},
       { key: 'commitAuthorName', header: 'Author Name', width:5},
@@ -281,7 +281,7 @@ module.exports = class ModelAnalytics{
       { key: 'attributeDefinitionsUiReferenceLink', header: 'UiReferenceLink', width:5},
       { key: 'attributeDefinitionsUiReferencePrivateLink', header: 'UiReferencePrivateLink', width:5},
       { key: 'attributeDefinitionsUiReferenceSvg', header: 'UiReferenceSvg', width:5},
-      { key: 'derivedAttributeDefinitionsNr', header: 'Nr', width:5},
+      { key: 'derivedAttributeDefinitionsNr', header: 'Nr', width:5, group: 'DerivedAttributeDefinitions'},
       { key: 'derivedAttributeDefinitionsExplicitType', header: 'ExplicitType', width:5},
       { key: 'derivedAttributeDefinitionsAdditionalDescription', header: 'AdditionalDescription', width:5},
       { key: 'derivedAttributeDefinitionsUiReference', header: 'UiReference', width:5},
@@ -289,6 +289,44 @@ module.exports = class ModelAnalytics{
       { key: 'derivedAttributeDefinitionsUiReferenceColors', header: 'UiReferenceColors', width:5},
       { key: 'derivedAttributeDefinitionsUiReferenceSvg', header: 'UiReferenceSvg', width:5},
     ]
+    worksheet.columns = columns;
+    worksheet.getRow(2).values = worksheet.getRow(1).values;
+    worksheet.getRow(1).values = [];
+
+    function toColumnName(num) {
+      for (var ret = '', a = 1, b = 26; (num -= a) >= 0; a = b, b *= 26) {
+        ret = String.fromCharCode(parseInt((num % b) / a) + 65) + ret;
+      }
+      return ret;
+    }
+
+    function mergeCells(worksheet, from, to, name){
+      let fromCell = toColumnName(from)+'1';
+      let toCell = toColumnName(to)+'1';
+      worksheet.mergeCells(fromCell+':'+toCell);
+      worksheet.getCell(fromCell).value = name;
+    }
+
+    function mergeFirstRowColumns(worksheet, columns){
+      let groupName = null;
+      let groupFrom = null;
+      let groupTo = null;
+      columns.forEach((column, i)=>{      
+        if(column.group){        
+          if(groupName)
+            mergeCells(worksheet, groupFrom+1, groupTo+1, groupName)        
+          groupName = column.group;
+          groupFrom = i;   
+          groupTo = i;             
+        }
+        groupTo = i;  
+        if(i == columns.length-1)
+          mergeCells(worksheet, groupFrom+1, groupTo+1, groupName) 
+      });
+    }
+
+    mergeFirstRowColumns(worksheet, columns);
+
     const fontTemplate = {
       color: { argb: 'FFFFFF' },
       size: 14,
@@ -302,12 +340,6 @@ module.exports = class ModelAnalytics{
       pattern:'solid',
       fgColor:{argb:'FF5733'}
     }
-    worksheet.getRow(2).values = worksheet.getRow(1).values;
-    worksheet.getRow(1).values = [];
-    worksheet.mergeCells('A1:E1');
-    worksheet.getCell('A1').value = 'Commit'
-    worksheet.mergeCells('F1:AL1');
-    worksheet.getCell('F1').value = 'AttributeDefinitions'
     worksheet.getRow(1).fill = fillTemplate;
     worksheet.getRow(1).font = fontTemplate;
     worksheet.getRow(2).fill = fillTemplate;
