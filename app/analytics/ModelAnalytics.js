@@ -291,17 +291,24 @@ module.exports = class ModelAnalytics{
       { key: 'entityDefinitionsNr', header: 'Nr', width:5, group: 'EntityDefinitions'},
       { key: 'entityDefinitionsAvgNrAttributeDefinitions', header: 'AvgNrAttributeDefinitions', width:5},
       { key: 'entityDefinitionsAvgNrDerivedAttributeDefinitions', header: 'AvgNrDerivedAttributeDefinitions', width:5},
-      { key: 'caseDefinitionHasClientPath', header: 'HasClientPath', width:5, group: 'CaseDefinition'},
-      { key: 'caseDefinitionHasOwnerPath', header: 'hasOwnerPath', width:7},
-      { key: 'caseDefinitionHasNewEntityDefinitionId', header: 'HasNewEntityDefinitionId', width:7},
-      { key: 'caseDefinitionHasNewEntityAttachPath', header: 'HasNewEntityAttachPath', width:7},
-      { key: 'caseDefinitionHasNotesDefaultValue', header: 'HasNotesDefaultValue', width:7},
-      { key: 'caseDefinitionHasOnAvailableHTTPHookURL', header: 'HasOnAvailableHTTPHookURL', width:7},
-      { key: 'caseDefinitionHasOnEnableHttpHTTPHookURL', header: 'HasOnEnableHttpHTTPHookURL', width:7},
-      { key: 'caseDefinitionHasOnActivateHTTPHookURL', header: 'HasOnActivateHTTPHookURL', width:7},
-      { key: 'caseDefinitionHasOnCompleteHTTPHookURL', header: 'HasOnCompleteHTTPHookURL', width:7},
-      { key: 'caseDefinitionHasOnTerminateHTTPHookURL', header: 'HasOnTerminateHTTPHookURL', width:7},
-      { key: 'caseDefinitionHasOnDeleteHTTPHookURL', header: 'HasOnDeleteHTTPHookURL', width:7},
+      { key: 'caseDefinitionHasClientPath', header: 'HasClientPath', width:8, group: 'CaseDefinition'},
+      { key: 'caseDefinitionHasOwnerPath', header: 'hasOwnerPath', width:8},
+      { key: 'caseDefinitionHasNewEntityDefinitionId', header: 'HasNewEntityDefinitionId', width:8},
+      { key: 'caseDefinitionHasNewEntityAttachPath', header: 'HasNewEntityAttachPath', width:8},
+      { key: 'caseDefinitionHasNotesDefaultValue', header: 'HasNotesDefaultValue', width:8},
+      { key: 'caseDefinitionHasOnAvailableHTTPHookURL', header: 'HasOnAvailableHTTPHookURL', width:8},
+      { key: 'caseDefinitionHasOnEnableHttpHTTPHookURL', header: 'HasOnEnableHttpHTTPHookURL', width:8},
+      { key: 'caseDefinitionHasOnActivateHTTPHookURL', header: 'HasOnActivateHTTPHookURL', width:8},
+      { key: 'caseDefinitionHasOnCompleteHTTPHookURL', header: 'HasOnCompleteHTTPHookURL', width:8},
+      { key: 'caseDefinitionHasOnTerminateHTTPHookURL', header: 'HasOnTerminateHTTPHookURL', width:8},
+      { key: 'caseDefinitionHasOnDeleteHTTPHookURL', header: 'HasOnDeleteHTTPHookURL', width:8},
+      { key: 'summarySectionDefinitionsNr', header: 'Nr', width:5, group: 'SummarySectionDefinitions'},
+      { key: 'summarySectionDefinitionsAvgNrSummaryParamDefinitions', header: 'AvgNrSummaryParamDefinitions', width:5},
+      { key: 'summarySectionDefinitionsPositionLeft', header: 'PositionLeft', width:5},
+      { key: 'summarySectionDefinitionsPositionCenter', header: 'PositionCenter', width:5},
+      { key: 'summarySectionDefinitionsPositionRight', header: 'PositionRight', width:5},
+      { key: 'summarySectionDefinitionsPositionStretched', header: 'PositionStretched', width:5},
+      
     ]
     worksheet.columns = columns;
     worksheet.getRow(2).values = worksheet.getRow(1).values;
@@ -375,6 +382,9 @@ module.exports = class ModelAnalytics{
         let cd = null
           if(file.result && file.result.caseDefinition)
             cd = file.result.caseDefinition;
+        let ssd = null
+          if(file.result && file.result.summarySectionDefinitions)
+            ssd = file.result.summarySectionDefinitions;
 
         worksheet.addRow({
           commitHash: commit.hash,
@@ -436,6 +446,12 @@ module.exports = class ModelAnalytics{
           caseDefinitionHasOnCompleteHTTPHookURL: cd ? cd.hasOnCompleteHTTPHookURL : '',
           caseDefinitionHasOnTerminateHTTPHookURL: cd ? cd.hasOnTerminateHTTPHookURL : '',
           caseDefinitionHasOnDeleteHTTPHookURL: cd ? cd.hasOnDeleteHTTPHookURL : '',
+          summarySectionDefinitionsNr: ssd ? ssd.nr : '',
+          summarySectionDefinitionsAvgNrSummaryParamDefinitions: ssd ? ssd.avgNrSummaryParamDefinitions : '',
+          summarySectionDefinitionsPositionLeft: ssd ? ssd.positionLeft : '',
+          summarySectionDefinitionsPositionCenter: ssd ? ssd.positionCenter : '',
+          summarySectionDefinitionsPositionRight: ssd ? ssd.positionRight : '',
+          summarySectionDefinitionsPositionStretched: ssd ? ssd.positionStretched : '',
         })
       }
       let to = worksheet.lastRow._number;
