@@ -1311,6 +1311,8 @@
                     <TaskParamDefinition path="LCS2_Settings.SocialCareer" isReadOnly="false" isMandatory="true"/>            
                     <TaskParamDefinition path="LCS2_Settings.Anesthesiologist" isReadOnly="false" isMandatory="true"/> 
                     <TaskParamDefinition path="LCS2_Settings.Physiotherapist" isReadOnly="false" isMandatory="true"/> 
+					<TaskParamDefinition path="LCS2_Settings.PrimaryCareClinicians" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition path="LCS2_Settings.PrimaryCareNurse" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>					
                 				
                 <!-- Gestor de Casos -->
@@ -1393,13 +1395,6 @@
                 <SentryDefinition>
                     <precondition processDefinitionId="LCS2_CaseIdentification"/>
                 </SentryDefinition> 
-   
-                <!-- Ara va al principi de la lista pq té una dependència amb una tasca de Pla de treball (PRE) 20180531 -->
-                <HumanTaskDefinition id="LCS2_SelectPatient2" description="Equip de Primària" ownerPath="LCS2_Settings.Nurse" 
-				isMandatory="true" repeatable="ONCE">
-                    <TaskParamDefinition path="LCS2_Settings.PrimaryCareClinicians" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition path="LCS2_Settings.PrimaryCareNurse" isReadOnly="false" isMandatory="true"/>
-                </HumanTaskDefinition>   
 				
                 <HumanTaskDefinition id="LCS2_GMAEvaluationHT" description="Estat comòrbid - GMA [Identificació del Cas]" ownerPath="LCS2_Settings.Nurse" 
 				isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_GMADef" entityAttachPath="LCS2_Evaluation.LCS2_GMAEvaluation">
@@ -1857,7 +1852,9 @@
         <TaskParam path="LCS2_Settings.CaseManager" userValue="werners"/>   
         <TaskParam path="LCS2_Settings.SocialCareer" userValue="kuhnl"/>    
         <TaskParam path="LCS2_Settings.Anesthesiologist" userValue="drudisr"/>  
-        <TaskParam path="LCS2_Settings.Physiotherapist" userValue="bigordaa"/>  
+        <TaskParam path="LCS2_Settings.Physiotherapist" userValue="bigordaa"/>  		
+        <TaskParam path="LCS2_Settings.PrimaryCareClinicians" userValue="sullivanb"/>  
+        <TaskParam path="LCS2_Settings.PrimaryCareNurse" userValue="richardsona"/>  				
     </Action>  
 
     <Action id="CompleteHumanTask" processId="LCS2_TechnologicalTest" breakpoint="true">  
@@ -2130,7 +2127,6 @@
 		<TaskParam path="LCS2_Evaluation.LCS2_SocialDwelling.dwelling5" values="['3']"/>    
     </Action>  
 
-
     <Action id="CompleteHumanTask" processId="LCS2_SocialSelfCareCareerAbility" breakpoint="true">    
         <TaskParam path="LCS2_Evaluation.LCS2_SocialSelfCareCareerAbility.career1" values="['1']"/> 
         <TaskParam path="LCS2_Evaluation.LCS2_SocialSelfCareCareerAbility.career2" values="['1']"/> 
@@ -2138,11 +2134,6 @@
         <TaskParam path="LCS2_Evaluation.LCS2_SocialSelfCareCareerAbility.career4" values="['1']"/> 
 		<TaskParam path="LCS2_Evaluation.LCS2_SocialSelfCareCareerAbility.career5" values="['1']"/> 
     </Action>
-
-    <Action id="CompleteHumanTask" processId="LCS2_SelectPatient2" breakpoint="true">  
-        <TaskParam path="LCS2_Settings.PrimaryCareClinicians" userValue="sullivanb"/> 
-        <TaskParam path="LCS2_Settings.PrimaryCareNurse" userValue="richardsona"/> 
-    </Action>  
 
     <Action id="CompleteHumanTask" processId="LCS2_AnaemiaAssessmentAndManagementNutritionBHHT" breakpoint="true">  
         <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_AnaemiaAssessmentAndManagementNutritionBH.nut0" values="['1']"/> 
