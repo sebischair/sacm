@@ -428,6 +428,7 @@ module.exports = class ModelAnalytics{
     worksheet.columns = columns;
     worksheet.getRow(2).values = worksheet.getRow(1).values;
     worksheet.getRow(1).values = [];
+    worksheet.views = [{state: 'frozen', xSplit: 6, ySplit: 2}];
 
     function toColumnName(num) {
       for (var ret = '', a = 1, b = 26; (num -= a) >= 0; a = b, b *= 26) {
