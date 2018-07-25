@@ -288,6 +288,9 @@ module.exports = class ModelAnalytics{
       { key: 'derivedAttributeDefinitionsUiReferenceLineDiagram', header: 'UiReferenceLineDiagram', width:5},
       { key: 'derivedAttributeDefinitionsUiReferenceColors', header: 'UiReferenceColors', width:5},
       { key: 'derivedAttributeDefinitionsUiReferenceSvg', header: 'UiReferenceSvg', width:5},
+      { key: 'entityDefinitionsNr', header: 'Nr', width:5, group: 'EntityDefinitions'},
+      { key: 'entityDefinitionsAvgNrAttributeDefinitions', header: 'AvgNrAttributeDefinitions', width:5},
+      { key: 'entityDefinitionsAvgNrDerivedAttributeDefinitions', header: 'AvgNrDerivedAttributeDefinitions', width:5},
     ]
     worksheet.columns = columns;
     worksheet.getRow(2).values = worksheet.getRow(1).values;
@@ -356,6 +359,10 @@ module.exports = class ModelAnalytics{
         let dad = null
         if(file.result && file.result.derivedAttributeDefinitions)
           dad = file.result.derivedAttributeDefinitions;
+        
+        let ed = null
+        if(file.result && file.result.entityDefinitions)
+          ed = file.result.entityDefinitions;
 
         worksheet.addRow({
           commitHash: commit.hash,
@@ -403,6 +410,9 @@ module.exports = class ModelAnalytics{
           derivedAttributeDefinitionsUiReferenceLineDiagram: dad ? dad.uiReferenceLineDiagram : '',
           derivedAttributeDefinitionsUiReferenceColors: dad ? dad.uiReferenceColors : '',
           derivedAttributeDefinitionsUiReferenceSvg: dad ? dad.uiReferenceSvg : '',
+          entityDefinitionsNr: ed ? ed.nr : '',
+          entityDefinitionsAvgNrAttributeDefinitions: ed ? ed.avgNrAttributeDefinitions : '',
+          entityDefinitionsAvgNrDerivedAttributeDefinitions: ed ? ed.avgNrDerivedAttributeDefinitions : '',
         })
       }
       let to = worksheet.lastRow._number;
