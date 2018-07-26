@@ -722,7 +722,7 @@ module.exports = class ModelAnalytics{
       worksheet.getCell('B'+from).alignment = {vertical:'middle'};
       worksheet.getCell('C'+from).alignment = {vertical:'middle'};
       worksheet.getCell('D'+from).alignment = {vertical:'middle'};
-      worksheet.getCell('E'+from).alignment = {vertical:'middle', wrapText: true};
+      worksheet.getCell('E'+from).alignment = {vertical:'middle'}; //, wrapText: true};
     }
     console.log('save as *.xlsx')
     await workbook.xlsx.writeFile(filename+'.xlsx');
