@@ -12,7 +12,7 @@ const {gzip, ungzip} = require('node-gzip');
 
 module.exports = class ModelAnalytics{
 
-  static translatePathToCS(filePath){
+  static translationMap(){
     let map = new Map();
     map.set('importer/studyrelease.case.barcelona.cs1.xml', 'BCS1');
     map.set('importer/studyrelease.case.barcelona.cs2.xml', 'BCS2');
@@ -33,7 +33,11 @@ module.exports = class ModelAnalytics{
     map.set('importer/cs1.barcelona.v1.xml', 'BCS1');
     map.set('importer/barcelona.cs3.xml', 'BCS2');
     map.set('importer/barcelona.cs3.xml', 'BCS2');
+    return map;
+  }
 
+  static translatePathToCS(filePath){
+    const map = this.translationMap();
     for(let path of map.keys()){
       if(filePath.endsWith(path))
         return map.get(path);

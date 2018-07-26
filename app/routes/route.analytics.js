@@ -1,5 +1,6 @@
 import express from 'express';
 import ModelAnalytics from './../analytics/ModelAnalytics';
+import ExcelModelAnalytics from './../analytics/ExcelModelAnalytics';
 const router = express.Router();
 
 
@@ -36,6 +37,27 @@ router.get('/file', (req, res, next)=>{
   ModelAnalytics.tryToAnalyzeFile()
     .then(c=>{
       console.log('hr')
+      res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
+ * @api {get} /analytics/postprocessing
+ * @apiName GetAnalyticsPostprocessing
+ * @apiGroup Analytics
+ * @apiSampleRequest /analytics/postprocessing
+ * @apiSuccessExample {json} Success-Response:
+ * {}
+ */
+router.get('/postprocessing', (req, res, next)=>{
+  console.log('h1')
+  res.connection.setTimeout(100*60*1000);
+  ExcelModelAnalytics.postAnalytics()
+    .then(c=>{
+      console.log('hr1')
       res.status(200).send(c);
     })
     .catch(err=>{
