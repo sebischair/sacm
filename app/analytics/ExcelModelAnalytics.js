@@ -21,13 +21,12 @@ module.exports = class ExcelModelAnalytics extends ModelAnalytics{
     console.log('Nr commits to process: '+commits.length);
     
     commits = commits.reverse();
-    this.addTab(commits, 'All')
+    //this.addTab(commits, 'All')
 
-    let cases = new Set(this.constructor.translationMap().values());
-    //console.log(cases);    
+    let cases = new Set(this.constructor.translationMap().values()); 
+    cases = [];
     cases.forEach(c => {
-      //let c = 'GCS2';
-      console.log('Analyzing case: '+c);
+      console.log('Analyzing case '+c);
       let filteredCommits = [];
       let lastFiles = null;
       commits.forEach(commit=>{
@@ -44,7 +43,55 @@ module.exports = class ExcelModelAnalytics extends ModelAnalytics{
       });
       this.addTab(filteredCommits, c);      
     });
-    await this.writeFile('test')
+
+    const lastCommit = commits[commits.length-1];
+    let columns = [
+      {key:'KPI', header:'KPI', width:40}
+    ];    
+    lastCommit.files.forEach(file=>{
+      columns.push({key:file.case, header:file.case, width:7})
+    });
+    let rows = [];
+    let objNrAttributeDefinitions = {KPI:'# AttributeDefinitions'};
+    let objNrDerivedAttributeDefinitions = {KPI:'# DerivedAttributeDefinitions'};
+    let objNrEntityDefinitions = {KPI:'# EntityDefinitions'};
+    let objNrSummarySectionDefinitions = {KPI:'# SummarySectionDefinitions'};
+    let objNrStageDefinitions = {KPI:'# StageDefinitions'};
+    let objNrHumanTaskDefinitions = {KPI:'# HumanTaskDefinitions'};
+    let objNrDualTaskDefinitions = {KPI:'# DualTaskDefinitions'};
+    let objNrAutomatedTaskDefinitions = {KPI:'# AutomatedTaskDefinitions'};
+    let objNrSentryDefinitions = {KPI:'# SentryDefinitions'};
+    let objNrHttpHookDefinitions = {KPI:'# HttpHookDefinitions'};
+    let objNrActions = {KPI:'# Actions'};
+    
+    lastCommit.files.forEach(file=>{
+      objNrAttributeDefinitions[file.case] = file.result.attributeDefinitions.nr;  
+      objNrDerivedAttributeDefinitions[file.case] = file.result.derivedAttributeDefinitions.nr;  
+      objNrEntityDefinitions[file.case] = file.result.entityDefinitions.nr;    
+      objNrSummarySectionDefinitions[file.case] = file.result.summarySectionDefinitions.nr;  
+      objNrStageDefinitions[file.case] = file.result.stageDefinitions.nr;  
+      objNrHumanTaskDefinitions[file.case] = file.result.humanTaskDefinitions.nr; 
+      objNrDualTaskDefinitions[file.case] = file.result.dualTaskDefinitions.nr;  
+      objNrAutomatedTaskDefinitions[file.case] = file.result.automatedTaskDefinitions.nr;  
+      objNrSentryDefinitions[file.case] = file.result.sentryDefinitions.nr;  
+      objNrHttpHookDefinitions[file.case] = file.result.httpHookDefinitions.nr;  
+      objNrActions[file.case] = file.result.actions.nr;     
+    });
+    rows.push(objNrAttributeDefinitions);
+    rows.push(objNrDerivedAttributeDefinitions);
+    rows.push(objNrEntityDefinitions);
+    rows.push(objNrSummarySectionDefinitions);
+    rows.push(objNrStageDefinitions);
+    rows.push(objNrHumanTaskDefinitions);
+    rows.push(objNrDualTaskDefinitions);
+    rows.push(objNrAutomatedTaskDefinitions);
+    rows.push(objNrSentryDefinitions);
+    rows.push(objNrHttpHookDefinitions);
+    rows.push(objNrActions);
+    this.addCustomTab('overview', rows, columns);
+
+
+    await this.writeFile('test');
   } 
 
 
@@ -55,6 +102,16 @@ module.exports = class ExcelModelAnalytics extends ModelAnalytics{
     }catch(e){
       console.log(e)
     }
+  }
+
+  addCustomTab(tabName, rows, columns){
+    console.log(rows);
+    console.log(columns);
+    var worksheet = this.workbook.addWorksheet(tabName);
+    worksheet.columns = columns;
+    rows.forEach(row=>{
+      worksheet.addRow(row); 
+    });
   }
 
   addTab(commits, tabName){    
