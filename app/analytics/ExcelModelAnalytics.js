@@ -44,6 +44,22 @@ module.exports = class ExcelModelAnalytics extends ModelAnalytics{
       this.addTab(filteredCommits, c);      
     });
 
+    this.addOverviewTab(commits);
+
+    await this.writeFile('test');
+  } 
+
+
+  async readJSON(filename){
+    try{
+      console.log('read JSON');
+      return JSON.parse((await ungzip(await fs.readFile(filename))).toString());
+    }catch(e){
+      console.log(e)
+    }
+  }
+
+  addOverviewTab(commits){
     const lastCommit = commits[commits.length-1];
     let columns = [
       {key:'KPI', header:'KPI', width:40}
@@ -89,24 +105,9 @@ module.exports = class ExcelModelAnalytics extends ModelAnalytics{
     rows.push(objNrHttpHookDefinitions);
     rows.push(objNrActions);
     this.addCustomTab('overview', rows, columns);
-
-
-    await this.writeFile('test');
-  } 
-
-
-  async readJSON(filename){
-    try{
-      console.log('read JSON');
-      return JSON.parse((await ungzip(await fs.readFile(filename))).toString());
-    }catch(e){
-      console.log(e)
-    }
   }
 
   addCustomTab(tabName, rows, columns){
-    console.log(rows);
-    console.log(columns);
     var worksheet = this.workbook.addWorksheet(tabName);
     worksheet.columns = columns;
     rows.forEach(row=>{
