@@ -161,12 +161,11 @@ module.exports = class ModelAnalytics{
    // try{
       await Git.checkout(['master']);
       console.log('git checkout master completed')
-      let data = await Git.log(['-m', '--after', '2017-10-04', '--follow', '*.xml']);
+      let data = await Git.log(['-m', '--after', '2017-10-04', '--follow', '*studyrelease.case.israel.cs2.xml']);
       console.log('git log completed - '+data.all.length + ' matching commits!')
       let allFilePaths = new Set();
       //let isStarted = false;
       for(let i=0; i<data.all.length; i++){
-        
         let c = data.all[i];
         /*
         if(c.hash == 'e6110f59afd7d8e1a4efd7c9af5fa3397f149ab6')
@@ -210,8 +209,8 @@ module.exports = class ModelAnalytics{
           });
         }
         result.push(commitResult);
-        //if(i==1)
-          break;
+        //if(i==10)
+        //  break;
         
       }
       console.log('\nSet of all repository file names:');
