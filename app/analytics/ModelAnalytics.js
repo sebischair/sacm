@@ -4,10 +4,12 @@ import winston from 'winston';
 import find from 'find-promise';
 import Excel from 'exceljs';
 import sizeof from 'object-sizeof';
+import GitP from 'simple-git/promise';
 const fs = Promise.promisifyAll(require("fs"));
 const xml2js = Promise.promisifyAll(require("xml2js"));
 const repositoryPath = 'D:/Projekte/CONNECARE/Technical/repos/sacm.backend.analytics';
-const Git = require('simple-git/promise')(repositoryPath);
+
+
 const {gzip, ungzip} = require('node-gzip');
 
 module.exports = class ModelAnalytics{
@@ -159,6 +161,12 @@ module.exports = class ModelAnalytics{
 
     let result = [];
    // try{
+      if(! fs.existsSync(repositoryPath)){
+        console.log('Analytics Repository path not found!');
+        return 'Analytics Repository path not found!'
+      }
+     
+      const Git = GitP(repositoryPath);
       await Git.checkout(['master']);
       console.log('git checkout master completed')
       let data = await Git.log(['-m', '--after', '2017-10-04', '--follow', '*studyrelease.case.israel.cs2.xml']);
