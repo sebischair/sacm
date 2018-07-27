@@ -21,10 +21,10 @@ module.exports = class ExcelModelAnalytics extends ModelAnalytics{
     console.log('Nr commits to process: '+commits.length);
     
     commits = commits.reverse();
-    //this.addTab(commits, 'All')
+    this.addTab(commits, 'All')
 
     let cases = new Set(this.constructor.translationMap().values()); 
-    cases = [];
+    //cases = [];
     cases.forEach(c => {
       console.log('Analyzing case '+c);
       let filteredCommits = [];
