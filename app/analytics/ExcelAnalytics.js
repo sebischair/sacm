@@ -126,6 +126,8 @@ module.exports = class ExcelAnalytics{
       { key: 'commitAuthorEmail', header: 'Author Email', width:5},
       { key: 'commitMessage', header: 'Message', width:10},
       { key: 'case', header: 'Case', width:6},
+      { key: 'changesIsStructural', header: 'isStructural', width:7, group: 'Changes'},
+      { key: 'changesIsRenaming', header: 'isRenaming', width:7},
       { key: 'attributeDefinitionsNr', header: 'Nr', width:5, group: 'AttributeDefinitions'},
       { key: 'attributeDefinitionsTypeLink', header: 'TypeLink', width:5},
       { key: 'attributeDefinitionsTypeLinkUser', header: 'TypeLinkUser', width:5},
@@ -305,7 +307,7 @@ module.exports = class ExcelAnalytics{
     worksheet.columns = columns;
     worksheet.getRow(2).values = worksheet.getRow(1).values;
     worksheet.getRow(1).values = [];
-    worksheet.views = [{state: 'frozen', xSplit: 6, ySplit: 2}];
+    worksheet.views = [{state: 'frozen', xSplit: 7, ySplit: 2}];
 
     function toColumnName(num) {
       for (var ret = '', a = 1, b = 26; (num -= a) >= 0; a = b, b *= 26) {
@@ -363,6 +365,9 @@ module.exports = class ExcelAnalytics{
     for(let commit of commits){
       for(let file of commit.files){
 
+        let ch = null
+        if(file.result && file.result.changes)
+          ch = file.result.changes;   
         let ad = null
         if(file.result && file.result.attributeDefinitions)
           ad = file.result.attributeDefinitions;        
@@ -408,6 +413,8 @@ module.exports = class ExcelAnalytics{
           commitAuthorEmail: commit.authorEmail,
           commitMessage: commit.message,
           case: file.case,
+          changesIsStructural: ch ? ch.isStructural : '',
+          changesIsRenaming: ch ? ch.isRenaming : '',
           attributeDefinitionsNr: ad ? ad.nr : '',
           attributeDefinitionsTypeLink: ad ? ad.typeLink : '',
           attributeDefinitionsTypeLinkUser: ad ? ad.typeLinkUser : '',

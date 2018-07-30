@@ -227,24 +227,34 @@ module.exports = class GitAnalytics{
           authorName: c.author_name,
           authorEmail: c.author_email,
           files: []
-        };
+        };        
         for(let file of files){
           console.log('---analyze  ...'+file.replace(repositoryPath,'')) 
+          let caseId = this.translatePathToCS(file);
+          /** find previous result to compare with */
+          let previousFileResult = null;
+          if(result.length>0){
+            let previousCommitResults = result[result.length-1];
+            previousCommitResults.files.forEach(file=>{
+              if(file.case == caseId)
+              previousFileResult = file.result;
+            });
+          }
           commitResult.files.push({
             file: file.replace(repositoryPath,''),
-            case: this.translatePathToCS(file),
-            result: await this.analyzeFile(file)
+            case: caseId,
+            result: await this.analyzeFile(file, previousFileResult)
           });
         }
         result.push(commitResult);
-       if(i==1)
-          break;
+       //if(i==10)
+       //   break;
         
       }
       console.log('\nSet of all repository file names:');
       console.log(allFilePaths)
       
-      const filename = 'modelanalytics'+new Date().getTime();
+      const filename = 'model.analytics.'+new Date().getTime();
       await this.saveAsExcel(result, filename);
       await this.saveAsJSON(result, filename);
     //}catch(e){
@@ -276,7 +286,7 @@ module.exports = class GitAnalytics{
     return await this.analyzeFile('app/importer/studyrelease.case.groningen.cs2.xml');
   }
 
-  static async analyzeFile(filePath){   
+  static async analyzeFile(filePath, previousFileResult){   
     let result = {};
     //try{
       //const filePath = 'app/importer/studyrelease.case.groningen.cs2.xml';
@@ -311,6 +321,21 @@ module.exports = class GitAnalytics{
       result.actions = this.analyzeActionsExecution(xml.SACMDefinition.Execution);
       //console.log('            ... renaming!')
       //result.renaming = this.analyzeRenaming(Workspace);
+      console.log('            ... compare with previous!')
+      let changes = {
+        isStructural:false,
+        isRenaming:true,
+      }
+      if(previousFileResult){
+        let previousResult = JSON.parse(JSON.stringify(previousFileResult));        
+        delete previousResult.changes;
+        if(JSON.stringify(previousResult) != JSON.stringify(result)){
+          changes.isStructural = true;
+          changes.isRenaming = false;
+        }
+      }
+      result.changes = changes;
+      console.log(changes)
       console.log('            ... complete!')
    /*
     }catch(e){
