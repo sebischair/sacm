@@ -121,6 +121,7 @@ module.exports = class ExcelAnalytics{
     const columns = [
       { key: 'commitHash', header: 'Hash', width:40, group: 'Commit'},
       { key: 'commitDate', header: 'Date', width:25},
+      { key: 'commitTimestamp', header: 'Timestamp', width:15},
       { key: 'commitAuthorName', header: 'Author Name', width:5},
       { key: 'commitAuthorEmail', header: 'Author Email', width:5},
       { key: 'commitMessage', header: 'Message', width:10},
@@ -402,6 +403,7 @@ module.exports = class ExcelAnalytics{
         worksheet.addRow({
           commitHash: commit.hash,
           commitDate: commit.date,
+          commitTimestamp: commit.timestamp,
           commitAuthorName: commit.authorName,
           commitAuthorEmail: commit.authorEmail,
           commitMessage: commit.message,
@@ -590,11 +592,14 @@ module.exports = class ExcelAnalytics{
       worksheet.mergeCells('C'+from+':C'+to);
       worksheet.mergeCells('D'+from+':D'+to);
       worksheet.mergeCells('E'+from+':E'+to);
+      worksheet.mergeCells('F'+from+':F'+to);
       worksheet.getCell('A'+from).alignment = {vertical:'middle'};
       worksheet.getCell('B'+from).alignment = {vertical:'middle'};
       worksheet.getCell('C'+from).alignment = {vertical:'middle'};
+      worksheet.getCell('C'+from).numFmt = '#';
       worksheet.getCell('D'+from).alignment = {vertical:'middle'};
-      worksheet.getCell('E'+from).alignment = {vertical:'middle'}; //, wrapText: true};
+      worksheet.getCell('E'+from).alignment = {vertical:'middle'};
+      worksheet.getCell('F'+from).alignment = {vertical:'middle'}; //, wrapText: true};
     }
     
   }
