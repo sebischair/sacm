@@ -207,6 +207,7 @@ module.exports = class GitAnalytics{
         let commitResult = {
           hash: c.hash,
           date: c.date,
+          timestamp: (new Date(c.date)).getTime(),
           message: c.message,
           authorName: c.author_name,
           authorEmail: c.author_email,
