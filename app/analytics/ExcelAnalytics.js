@@ -7,7 +7,7 @@ import fs from 'fs-extra';
 import GitAnalytics from './GitAnalytics';
 const {gzip, ungzip} = require('node-gzip');
 
-module.exports = class ExcelModelAnalytics{
+module.exports = class ExcelAnalytics{
 
   
   constructor() {

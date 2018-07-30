@@ -1,6 +1,6 @@
 import express from 'express';
 import GitAnalytics from './../analytics/GitAnalytics';
-import ExcelModelAnalytics from './../analytics/ExcelModelAnalytics';
+import ExcelAnalytics from './../analytics/ExcelAnalytics';
 const router = express.Router();
 
 
@@ -55,7 +55,7 @@ router.get('/file', (req, res, next)=>{
 router.get('/postprocessing', (req, res, next)=>{
   console.log('h1')
   res.connection.setTimeout(100*60*1000);
-  new ExcelModelAnalytics().postAnalytics()
+  new ExcelAnalytics().postAnalytics()
     .then(c=>{
       console.log('hr1')
       res.status(200).send(c);

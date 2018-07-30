@@ -1,9 +1,7 @@
 'use strict';
 import Promise from 'bluebird';
-import winston from 'winston';
 import find from 'find-promise';
-import Excel from 'exceljs';
-import ExcelModelAnalytics from './ExcelModelAnalytics';
+import ExcelAnalytics from './ExcelAnalytics';
 import sizeof from 'object-sizeof';
 import GitP from 'simple-git/promise';
 const fs = Promise.promisifyAll(require("fs"));
@@ -58,7 +56,7 @@ module.exports = class GitAnalytics{
     return matches;
   }
 
-  static async analyzeRepository(){
+  static ignoreList(){
     let ignoreList = new Set();
     ignoreList.add('0f26c2ce4af992b5c20b02038615831e8e6034ee'); //XML parse error, only GCS1 changed
     ignoreList.add('13c67d4a43bbb49911742f749331a2c4f1f2e89e'); //XML parse error, only GCS1 changed
@@ -159,6 +157,11 @@ module.exports = class GitAnalytics{
     ignoreList.add('8bcd62072be4711c43b97bb2dc2e868dea1531af'); //XML parse error
     ignoreList.add('7d96f318cc89a87e8618319a77d118a546deecb5'); //XML parse error
     ignoreList.add('c3f7321a674ddcd191b76a2b360b4250d5e5a329'); //XML parse error
+    return ignoreList;
+  }
+
+  static async analyzeRepository(){
+    
 
     let result = [];
    // try{
@@ -182,7 +185,7 @@ module.exports = class GitAnalytics{
         if(!isStarted)
           continue;
           */
-        if(ignoreList.has(c.hash))
+        if(this.ignoreList().has(c.hash))
           continue;
 
         await Git.checkout([c.hash]);
@@ -248,7 +251,7 @@ module.exports = class GitAnalytics{
   }
 
   static async saveAsExcel(commits, filename){
-    let ema = new ExcelModelAnalytics();
+    let ema = new ExcelAnalytics();
     ema.addTab(commits);
     ema.writeFile(filename);
   }
