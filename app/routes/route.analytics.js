@@ -12,9 +12,28 @@ const router = express.Router();
  * @apiSuccessExample {json} Success-Response:
  * {}
  */
-router.get('/repository', (req, res, next)=>{
+router.get('/repository/all', (req, res, next)=>{
   res.connection.setTimeout(100*60*1000);
-  GitAnalytics.analyzeRepository()
+  GitAnalytics.analyzeRepositoryAll()
+    .then(c=>{
+      res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
+ * @api {get} /analytics/repository
+ * @apiName GetAnalytics
+ * @apiGroup Analytics
+ * @apiSampleRequest /analytics
+ * @apiSuccessExample {json} Success-Response:
+ * {}
+ */
+router.get('/repository/files', (req, res, next)=>{
+  res.connection.setTimeout(100*60*1000);
+  GitAnalytics.analyzeRepositoryFiles()
     .then(c=>{
       res.status(200).send(c);
     })

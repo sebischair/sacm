@@ -160,7 +160,15 @@ module.exports = class GitAnalytics{
     return ignoreList;
   }
 
-  static async analyzeRepository(){
+  static async analyzeRepositoryAll(){
+    this.analyzeRepository('.xml', false);
+  }
+
+  static async analyzeRepositoryFiles(){
+    this.analyzeRepository('studyrelease.case.israel.cs2.xml', true);
+  }
+
+  static async analyzeRepository(filePostfix, isSingleFileAnalytics){
     
 
     let result = [];
@@ -173,7 +181,7 @@ module.exports = class GitAnalytics{
       const Git = GitP(repositoryPath);
       await Git.checkout(['master']);
       console.log('git checkout master completed')
-      let data = await Git.log(['-m', '--after', '2017-10-04', '--follow', '*studyrelease.case.israel.cs2.xml']);
+      let data = await Git.log(['-m', '--after', '2017-10-04', '--follow', '*'+filePostfix]);
       console.log('git log completed - '+data.all.length + ' matching commits!')
       let allFilePaths = new Set();
       //let isStarted = false;
@@ -202,7 +210,12 @@ module.exports = class GitAnalytics{
           for(let f of files)
             allFilePaths.add(f.replace(/\\/g,'/').replace(repositoryPath,''));
 
-        files = this.filterFiles(files);
+        if(isSingleFileAnalytics){
+          files = files.filter(file => file.endsWith(filePostfix))
+          if(files.length>1)
+            throw new Error('More than one file matching!')
+        }else
+          files = this.filterFiles(files);
         console.log('---found '+files.length+' files!');
         let commitResult = {
           hash: c.hash,
