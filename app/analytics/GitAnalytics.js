@@ -234,8 +234,8 @@ module.exports = class GitAnalytics{
           /** find previous result to compare with */
           let previousFileResult = null;
           if(result.length>0){
-            let previousCommitResults = result[result.length-1];
-            previousCommitResults.files.forEach(file=>{
+            let previousCommit = result[result.length-1];
+            previousCommit.files.forEach(file=>{
               if(file.case == caseId)
               previousFileResult = file.result;
             });
@@ -324,14 +324,25 @@ module.exports = class GitAnalytics{
       console.log('            ... compare with previous!')
       let changes = {
         isStructural:false,
+        structuralAcc: 0,
         isRenaming:true,
+        renamingAcc: 0
       }
       if(previousFileResult){
-        let previousResult = JSON.parse(JSON.stringify(previousFileResult));        
+        let previousResult = JSON.parse(JSON.stringify(previousFileResult));   
+        let previousChanges = previousResult.changes;     
         delete previousResult.changes;
+        console.log(previousResult)
         if(JSON.stringify(previousResult) != JSON.stringify(result)){
           changes.isStructural = true;
+          changes.structuralAcc = previousChanges.structuralAcc + 1,
           changes.isRenaming = false;
+          changes.renamingAcc = previousChanges.renamingAcc;
+        }else{
+          changes.isStructural = false;
+          changes.structuralAcc = previousChanges.structuralAcc,
+          changes.isRenaming = true;
+          changes.renamingAcc = previousChanges.renamingAcc +1;
         }
       }
       result.changes = changes;
