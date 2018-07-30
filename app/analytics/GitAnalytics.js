@@ -4,6 +4,7 @@ import find from 'find-promise';
 import ExcelAnalytics from './ExcelAnalytics';
 import sizeof from 'object-sizeof';
 import GitP from 'simple-git/promise';
+import { EAGAIN } from 'constants';
 const fs = Promise.promisifyAll(require("fs"));
 const xml2js = Promise.promisifyAll(require("xml2js"));
 const repositoryPath = 'D:/Projekte/CONNECARE/Technical/repos/sacm.backend.analytics';
@@ -185,6 +186,7 @@ module.exports = class GitAnalytics{
       console.log('git log completed - '+data.all.length + ' matching commits!')
       let allFilePaths = new Set();
       //let isStarted = false;
+      data.all = data.all.reverse();
       for(let i=0; i<data.all.length; i++){
         let c = data.all[i];
         /*
@@ -235,7 +237,7 @@ module.exports = class GitAnalytics{
           });
         }
         result.push(commitResult);
-       if(i==2)
+       if(i==1)
           break;
         
       }
@@ -307,6 +309,8 @@ module.exports = class GitAnalytics{
       result.httpHookDefinitions = this.analyzeHttpHookDefinitions(Workspace);
       console.log('            ... execution actions!')
       result.actions = this.analyzeActionsExecution(xml.SACMDefinition.Execution);
+      //console.log('            ... renaming!')
+      //result.renaming = this.analyzeRenaming(Workspace);
       console.log('            ... complete!')
    /*
     }catch(e){
@@ -969,6 +973,16 @@ module.exports = class GitAnalytics{
     });
 
     return result;
+  }
+
+  static analyzeRenaming(Workspace){
+    let map = new Map();
+    if(Workspace.EntityDefinition)
+      Workspace.EntityDefinition.forEach(ed=>{
+        map.set(ed.$.id, ed.$.description);
+      })
+    console.log(map)
+    return {};
   }
 
 }

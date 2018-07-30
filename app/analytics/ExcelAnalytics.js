@@ -19,7 +19,7 @@ module.exports = class ExcelAnalytics{
     let commits = await this.readJSON('modelanalytics1532556405202.plain.json.gz');
     console.log('Nr commits to process: '+commits.length);
     
-    commits = commits.reverse();
+    //commits = commits.reverse();
     this.addTab(commits, 'All')
 
     let cases = new Set(GitAnalytics.translationMap().values()); 
