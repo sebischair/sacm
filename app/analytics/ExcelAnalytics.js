@@ -362,6 +362,16 @@ module.exports = class ExcelAnalytics{
     worksheet.getRow(2).font = fontTemplate2;
     worksheet.getRow(2).alignment = { textRotation: 45 };
     worksheet.autoFilter = 'A2:AAA2';
+
+    function booleanToNr(boolean){
+      if(boolean === true)
+        return 1;
+      else if(boolean === false)
+        return 0;
+      else
+        return boolean;
+    }
+
     for(let commit of commits){
       for(let file of commit.files){
 
@@ -413,8 +423,8 @@ module.exports = class ExcelAnalytics{
           commitAuthorEmail: commit.authorEmail,
           commitMessage: commit.message,
           case: file.case,
-          changesIsStructural: ch ? ch.isStructural : '',
-          changesIsRenaming: ch ? ch.isRenaming : '',
+          changesIsStructural: ch ? booleanToNr(ch.isStructural) : '',
+          changesIsRenaming: ch ? booleanToNr(ch.isRenaming) : '',
           attributeDefinitionsNr: ad ? ad.nr : '',
           attributeDefinitionsTypeLink: ad ? ad.typeLink : '',
           attributeDefinitionsTypeLinkUser: ad ? ad.typeLinkUser : '',
