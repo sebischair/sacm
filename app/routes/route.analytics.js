@@ -1,5 +1,5 @@
 import express from 'express';
-import ModelAnalytics from './../analytics/ModelAnalytics';
+import GitAnalytics from './../analytics/GitAnalytics';
 import ExcelModelAnalytics from './../analytics/ExcelModelAnalytics';
 const router = express.Router();
 
@@ -14,7 +14,7 @@ const router = express.Router();
  */
 router.get('/repository', (req, res, next)=>{
   res.connection.setTimeout(100*60*1000);
-  ModelAnalytics.analyzeRepository()
+  GitAnalytics.analyzeRepository()
     .then(c=>{
       res.status(200).send(c);
     })
@@ -34,7 +34,7 @@ router.get('/repository', (req, res, next)=>{
 router.get('/file', (req, res, next)=>{
   console.log('h')
   res.connection.setTimeout(100*60*1000);
-  ModelAnalytics.tryToAnalyzeFile()
+  GitAnalytics.tryToAnalyzeFile()
     .then(c=>{
       console.log('hr')
       res.status(200).send(c);

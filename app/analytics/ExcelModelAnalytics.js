@@ -4,14 +4,13 @@ import winston from 'winston';
 import Excel from 'exceljs';
 import sizeof from 'object-sizeof';
 import fs from 'fs-extra';
-import ModelAnalytics from './ModelAnalytics';
+import GitAnalytics from './GitAnalytics';
 const {gzip, ungzip} = require('node-gzip');
 
-module.exports = class ExcelModelAnalytics extends ModelAnalytics{
+module.exports = class ExcelModelAnalytics{
 
   
   constructor() {
-    super();
     this.workbook = new Excel.Workbook();
   }
 
@@ -23,7 +22,7 @@ module.exports = class ExcelModelAnalytics extends ModelAnalytics{
     commits = commits.reverse();
     this.addTab(commits, 'All')
 
-    let cases = new Set(this.constructor.translationMap().values()); 
+    let cases = new Set(GitAnalytics.translationMap().values()); 
     //cases = [];
     cases.forEach(c => {
       console.log('Analyzing case '+c);
