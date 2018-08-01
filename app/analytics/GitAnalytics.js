@@ -230,8 +230,13 @@ module.exports = class GitAnalytics{
 
         if(isSingleFileAnalytics){
           files = files.filter(file => file.endsWith(filePostfix))
-          if(files.length>1)
-            throw new Error('More than one file matching!')
+          if(files.length>1){
+            files = files.filter(file => file.endsWith('/app/importer/'+filePostfix)) //prioritize right file
+            if(files.length>1){
+              console.log('More than one file matching!')
+              throw new Error('More than one file matching!')
+            }
+          }
         }else
           files = this.filterFiles(files);
         console.log('---found '+files.length+' files!');
@@ -273,7 +278,7 @@ module.exports = class GitAnalytics{
       
       const filename = 'model.analytics.'+new Date().getTime();
       if(isSingleFileAnalytics)
-        await this.saveAsCSVForDiagram(result, filePostfix+filename);
+        await this.saveAsCSVForDiagram(result, new Date().getTime()+'.model.analytics.'+filePostfix);
       //await this.saveAsExcel(result, filename);
       //await this.saveAsJSON(result, filename);
     //}catch(e){
