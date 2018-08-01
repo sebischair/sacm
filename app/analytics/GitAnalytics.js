@@ -252,7 +252,6 @@ module.exports = class GitAnalytics{
         for(let file of files){
           console.log('---analyze  ...'+file.replace(repositoryPath,'')) 
           let caseId = this.translatePathToCS(file);
-          console.log('caseId: '+caseId)
           /** find previous result to compare with */
           let previousFileResult = null;
           if(result.length>0){
@@ -265,7 +264,7 @@ module.exports = class GitAnalytics{
           commitResult.files.push({
             file: file.replace(repositoryPath,''),
             case: caseId,
-            result: await this.analyzeFile(file, previousFileResult)
+            result: await this.analyzeFile(file, previousFileResult, result.length)
           });
         }
         result.push(commitResult);
@@ -292,17 +291,23 @@ module.exports = class GitAnalytics{
     try{
       console.log('save as *.csv')
       let result = 'hash; date; timestamp; message; author; case; structuralAcc; adaptationAcc; renamingAcc;\n';
-      commits.forEach(commit=>{
-        result += commit.hash +'; '+
-                  commit.date +'; '+
-                  commit.timestamp +'; '+
-                  commit.message.replace(/;/g,'') +'; '+
-                  commit.authorName +'; '+
-                  commit.files[0].case +'; '+
-                  commit.files[0].result.changes.structuralAcc +'; '+
-                  commit.files[0].result.changes.adaptationAcc +'; '+
-                  commit.files[0].result.changes.renamingAcc +'; \n';
-      });
+      if(commits.length>0){
+        result += 'NA; 2017-10-04 00:00:00 +0000; 1507068000000; NA; NA; '+commits[0].files[0].case+'; 0; 0; 0;\n'; 
+        commits.forEach(commit=>{
+          result += commit.hash +'; '+
+                    commit.date +'; '+
+                    commit.timestamp +'; '+
+                    commit.message.replace(/;/g,'') +'; '+
+                    commit.authorName +'; '+
+                    commit.files[0].case +'; '+
+                    commit.files[0].result.changes.structuralAcc +'; '+
+                    commit.files[0].result.changes.adaptationAcc +'; '+
+                    commit.files[0].result.changes.renamingAcc +'; \n';
+        });
+        let lc = commits[commits.length-1];
+        let lcc = lc.files[0].result.changes;
+        result += 'NA; 2018-08-01 00:00:00 +0000; 1533074400000; NA; NA; '+lc.files[0].case+'; '+lcc.structuralAcc+'; '+lcc.adaptationAcc+'; '+lcc.renamingAcc+';\n';
+      }  
       await fs.writeFile(filename+'.csv', result);
     }catch(e){
       console.log(e)
@@ -331,7 +336,7 @@ module.exports = class GitAnalytics{
     return await this.analyzeFile('app/importer/studyrelease.case.groningen.cs2.xml');
   }
 
-  static async analyzeFile(filePath, previousFileResult){   
+  static async analyzeFile(filePath, previousFileResult, commitNr){   
     let result = {};
     //try{
       //const filePath = 'app/importer/studyrelease.case.groningen.cs2.xml';
@@ -372,6 +377,10 @@ module.exports = class GitAnalytics{
         adaptationAcc: 0,
         isRenaming: false,
         renamingAcc: 0
+      }
+      if(commitNr==0){
+        changes.isStructural = true;
+        changes.structuralAcc++;
       }
       if(previousFileResult){
         let previousResult = JSON.parse(JSON.stringify(previousFileResult));   
