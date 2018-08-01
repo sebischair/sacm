@@ -26,6 +26,8 @@
 	<User staticId="2182a02ab7db11e784180242ac120009" id="noahs"/>    
     <User staticId="216b6004b7db11e784180242ac120009" id="werners"/>
     <User staticId="21a6d881b7db11e784180242ac120009" id="kuhnl"/>
+    <User staticId="6efffc6e05cb39318544ea1e6d27d026" id="sullivanb"/>
+    <User staticId="254a64551050587fc86287b67c0cf487" id="richardsona"/>	
 
     <Workspace staticId="2c9480885d1737ef015d74deec7f0002" id="Irbll">
 
@@ -1378,8 +1380,8 @@
                     <TaskParamDefinition path="LCS1_Settings.Clinician" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS1_Settings.Nurse" isReadOnly="false" isMandatory="true"/>                              
                     <TaskParamDefinition path="LCS1_Settings.SocialCareer" isReadOnly="false" isMandatory="true"/>            					
-					<TaskParamDefinition path="LCS1_Settings.PrimaryCareClinicians" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition path="LCS1_Settings.PrimaryCareNurse" isReadOnly="false" isMandatory="true"/>
+<!-- 					<TaskParamDefinition path="LCS1_Settings.PrimaryCareClinicians" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition path="LCS1_Settings.PrimaryCareNurse" isReadOnly="false" isMandatory="true"/> -->
                 </HumanTaskDefinition>					
 				
 			   <HumanTaskDefinition id="LCS1_Lace" description="LACE" ownerPath="LCS1_Settings.Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_Lace" entityAttachPath="LCS1_Identification.LCS1_Lace">                
@@ -1442,13 +1444,12 @@
                 <SentryDefinition>
                     <precondition processDefinitionId="LCS1_CaseIdentification"/>
                 </SentryDefinition> 						
-<!--				
+
                 <HumanTaskDefinition id="LCS1_SelectPatient2" description="Equip de Primària" ownerPath="LCS1_Settings.Nurse" 
 				isMandatory="true" repeatable="ONCE">
                     <TaskParamDefinition path="LCS1_Settings.PrimaryCareClinicians" isReadOnly="false" isMandatory="true"/> 
                     <TaskParamDefinition path="LCS1_Settings.PrimaryCareNurse" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>   				
--->
 				
                 <HumanTaskDefinition id="LCS1_GMAEvaluationHT" description="Estat comòrbid - GMA"
 				ownerPath="LCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_GMADef" entityAttachPath="LCS1_Evaluation.LCS1_GMAEvaluation">
@@ -1879,8 +1880,8 @@
 			<TaskParam path="LCS1_SelectPatient.Nurse" userValue="noahs"/>   
 			<TaskParam path="LCS1_SelectPatient.CaseManager" userValue="werners"/>   
 			<TaskParam path="LCS1_SelectPatient.SocialCareer" userValue="kuhnl"/>    			
-			<TaskParam path="LCS1_SelectPatient.PrimaryCareClinicians" userValue="sullivanb"/> 
-			<TaskParam path="LCS1_SelectPatient.PrimaryCareNurse" userValue="richardsona"/> 				
+<!--			<TaskParam path="LCS1_SelectPatient.PrimaryCareClinicians" userValue="sullivanb"/> 
+			<TaskParam path="LCS1_SelectPatient.PrimaryCareNurse" userValue="richardsona"/> 			-->
 		</Action>
 		
 		<Action id="CompleteHumanTask" processId="LCS1_TechnologicalTest" breakpoint="true">  
@@ -1918,6 +1919,11 @@
 			
 		<Action id="CompleteHumanTask" processId="LCS1_PatientsConsent" breakpoint="true">  
 			<TaskParam path="LCS1_Identification.LCS1_PatientsConsent.pConsent1" values="['1']"/> 
+		</Action>		
+		
+		<Action id="CompleteHumanTask" processId="LCS1_SelectPatient2">  			
+			<TaskParam path="LCS1_SelectPatient.PrimaryCareClinicians" userValue="sullivanb"/> 
+			<TaskParam path="LCS1_SelectPatient.PrimaryCareNurse" userValue="richardsona"/>
 		</Action>		
 		
 		<Action id="CompleteHumanTask" processId="LCS1_GMAEvaluationHT" breakpoint="true">  
