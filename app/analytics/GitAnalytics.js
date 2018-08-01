@@ -47,10 +47,17 @@ module.exports = class GitAnalytics{
     return null;
   }
 
+  static normalizePaths(files){    
+    if(files)
+      for(let i=0; i<files.length; i++)
+        files[i] = files[i].replace(/\\/g,'/');
+    return files;  
+  }
+
   static filterFiles(files){
+    files = this.normalizePaths(files);
     let matches = [];
     for(let file of files){
-      file = file.replace(/\\/g,'/');
       if(this.translatePathToCS(file) != null)
         matches.push(file);
     }
@@ -166,7 +173,7 @@ module.exports = class GitAnalytics{
   }
 
   static async analyzeRepositoryFiles(){
-    this.analyzeRepository('studyrelease.case.israel.cs2.xml', true);
+    this.analyzeRepository('studyrelease.case.groningen.cs2.xml', true);
   }
 
   static async analyzeRepository(filePostfix, isSingleFileAnalytics){
@@ -182,7 +189,7 @@ module.exports = class GitAnalytics{
       const Git = GitP(repositoryPath);
       await Git.checkout(['master']);
       console.log('git checkout master completed')
-      let data = await Git.log(['-m', '--after', '2017-10-04', '--follow', '*'+filePostfix]);
+      let data = await Git.log(['--after', '2017-10-04', '--follow', '*'+filePostfix]); //-'-m' 
       console.log('git log completed - '+data.all.length + ' matching commits!')
       let allFilePaths = new Set();
       //let isStarted = false;
@@ -209,8 +216,9 @@ module.exports = class GitAnalytics{
         let files = await find.file(/\.xml$/, findPath);
         
         if(files)
+          files = this.normalizePaths(files);
           for(let f of files)
-            allFilePaths.add(f.replace(/\\/g,'/').replace(repositoryPath,''));
+            allFilePaths.add(f.replace(repositoryPath,''));
 
         if(isSingleFileAnalytics){
           files = files.filter(file => file.endsWith(filePostfix))
@@ -231,6 +239,7 @@ module.exports = class GitAnalytics{
         for(let file of files){
           console.log('---analyze  ...'+file.replace(repositoryPath,'')) 
           let caseId = this.translatePathToCS(file);
+          console.log('caseId: '+caseId)
           /** find previous result to compare with */
           let previousFileResult = null;
           if(result.length>0){
@@ -248,13 +257,15 @@ module.exports = class GitAnalytics{
         }
         result.push(commitResult);
        //if(i==10)
-       //   break;
+          break;
         
       }
       console.log('\nSet of all repository file names:');
       console.log(allFilePaths)
       
       const filename = 'model.analytics.'+new Date().getTime();
+      if(isSingleFileAnalytics)
+        await this.saveAsCSVForDiagram(result, filename);
       await this.saveAsExcel(result, filename);
       await this.saveAsJSON(result, filename);
     //}catch(e){
@@ -263,6 +274,24 @@ module.exports = class GitAnalytics{
     return result;
   }
 
+
+  static async saveAsCSVForDiagram(commits, filename){
+    try{
+      console.log('save as *.csv')
+      let result = 'hash; timestamp; case; structuralAcc; adaptationAcc; renamingAcc;\n';
+      commits.forEach(commit=>{
+        result += commit.hash +'; '+
+                  commit.timestamp +'; '+
+                  commit.files[0].case +'; '+
+                  commit.files[0].result.changes.structuralAcc +'; '+
+                  commit.files[0].result.changes.adaptationAcc +'; '+
+                  commit.files[0].result.changes.renamingAcc +'; \n';
+      });
+      await fs.writeFile(filename+'.csv', result);
+    }catch(e){
+      console.log(e)
+    }
+  }
 
 
   static async saveAsJSON(commits, filename){
@@ -319,34 +348,44 @@ module.exports = class GitAnalytics{
       result.httpHookDefinitions = this.analyzeHttpHookDefinitions(Workspace);
       console.log('            ... execution actions!')
       result.actions = this.analyzeActionsExecution(xml.SACMDefinition.Execution);
-      //console.log('            ... renaming!')
-      //result.renaming = this.analyzeRenaming(Workspace);
       console.log('            ... compare with previous!')
       let changes = {
-        isStructural:false,
+        isStructural: false,
         structuralAcc: 0,
-        isRenaming:true,
+        isAdaptation: false,
+        adaptationAcc: 0,
+        isRenaming: false,
         renamingAcc: 0
       }
       if(previousFileResult){
         let previousResult = JSON.parse(JSON.stringify(previousFileResult));   
         let previousChanges = previousResult.changes;     
         delete previousResult.changes;
-        console.log(previousResult)
-        if(JSON.stringify(previousResult) != JSON.stringify(result)){
-          changes.isStructural = true;
-          changes.structuralAcc = previousChanges.structuralAcc + 1,
-          changes.isRenaming = false;
-          changes.renamingAcc = previousChanges.renamingAcc;
+
+        changes.structuralAcc = previousChanges.structuralAcc;
+        changes.adaptationAcc = previousChanges.adaptationAcc;
+        changes.renamingAcc = previousChanges.renamingAcc;
+        
+        /** Detect Structural Change */
+        if(result.stageDefinitions.nr != previousResult.stageDefinitions.nr ||
+            result.humanTaskDefinitions.nr != previousResult.humanTaskDefinitions.nr ||
+            result.dualTaskDefinitions.nr != previousResult.dualTaskDefinitions.nr ||
+            result.automatedTaskDefinitions.nr != previousResult.automatedTaskDefinitions.nr){
+            changes.isStructural = true;
+            changes.structuralAcc++;
+
+        /** Detect Adaptation Change */
+        }else if(JSON.stringify(previousResult) != JSON.stringify(result)){
+          changes.isAdaptation = true;
+          changes.adaptationAcc++;
+        
+        /** Detect Simple Changes */
         }else{
-          changes.isStructural = false;
-          changes.structuralAcc = previousChanges.structuralAcc,
           changes.isRenaming = true;
-          changes.renamingAcc = previousChanges.renamingAcc +1;
+          changes.renamingAcc++;
         }
       }
       result.changes = changes;
-      console.log(changes)
       console.log('            ... complete!')
    /*
     }catch(e){
@@ -354,6 +393,10 @@ module.exports = class GitAnalytics{
     }*/
     return result;
   }
+
+  
+
+
 
 
   static analyzeAttributeDefinitions(Workspace){
@@ -1011,6 +1054,7 @@ module.exports = class GitAnalytics{
     return result;
   }
 
+  /** DEPRECATED */
   static analyzeRenaming(Workspace){
     let map = new Map();
     if(Workspace.EntityDefinition)
