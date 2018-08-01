@@ -5,6 +5,7 @@ import ExcelAnalytics from './ExcelAnalytics';
 import sizeof from 'object-sizeof';
 import GitP from 'simple-git/promise';
 import { EAGAIN } from 'constants';
+import { deprecate } from 'util';
 const fs = Promise.promisifyAll(require("fs"));
 const xml2js = Promise.promisifyAll(require("xml2js"));
 const repositoryPath = 'D:/Projekte/CONNECARE/Technical/repos/sacm.backend.analytics';
@@ -169,11 +170,18 @@ module.exports = class GitAnalytics{
   }
 
   static async analyzeRepositoryAll(){
-    this.analyzeRepository('.xml', false);
+    await this.analyzeRepository('.xml', false);
   }
 
   static async analyzeRepositoryFiles(){
-    this.analyzeRepository('studyrelease.case.groningen.cs2.xml', true);
+    await this.analyzeRepository('studyrelease.case.groningen.cs1.xml', true);
+    await this.analyzeRepository('studyrelease.case.groningen.cs2.xml', true);
+    await this.analyzeRepository('studyrelease.case.leida.cs1.xml', true);
+    await this.analyzeRepository('studyrelease.case.leida.cs2.xml', true);
+    await this.analyzeRepository('studyrelease.case.israel.cs1.xml', true);
+    await this.analyzeRepository('studyrelease.case.israel.cs2.xml', true);
+    await this.analyzeRepository('studyrelease.case.barcelona.cs1.xml', true);
+    await this.analyzeRepository('studyrelease.case.barcelona.cs2.xml', true);
   }
 
   static async analyzeRepository(filePostfix, isSingleFileAnalytics){
@@ -257,7 +265,7 @@ module.exports = class GitAnalytics{
         }
         result.push(commitResult);
        //if(i==10)
-          break;
+      // break;
         
       }
       console.log('\nSet of all repository file names:');
@@ -265,9 +273,9 @@ module.exports = class GitAnalytics{
       
       const filename = 'model.analytics.'+new Date().getTime();
       if(isSingleFileAnalytics)
-        await this.saveAsCSVForDiagram(result, filename);
-      await this.saveAsExcel(result, filename);
-      await this.saveAsJSON(result, filename);
+        await this.saveAsCSVForDiagram(result, filePostfix+filename);
+      //await this.saveAsExcel(result, filename);
+      //await this.saveAsJSON(result, filename);
     //}catch(e){
     //  console.log(e);
    // }    
@@ -278,10 +286,13 @@ module.exports = class GitAnalytics{
   static async saveAsCSVForDiagram(commits, filename){
     try{
       console.log('save as *.csv')
-      let result = 'hash; timestamp; case; structuralAcc; adaptationAcc; renamingAcc;\n';
+      let result = 'hash; date; timestamp; message; author; case; structuralAcc; adaptationAcc; renamingAcc;\n';
       commits.forEach(commit=>{
         result += commit.hash +'; '+
+                  commit.date +'; '+
                   commit.timestamp +'; '+
+                  commit.message.replace(/;/g,'') +'; '+
+                  commit.authorName +'; '+
                   commit.files[0].case +'; '+
                   commit.files[0].result.changes.structuralAcc +'; '+
                   commit.files[0].result.changes.adaptationAcc +'; '+
