@@ -729,11 +729,12 @@
 
        <EntityDefinition id="LCS1_DiagnosisNyha"> 
             <AttributeDefinition id="nyha1" type="enumeration" multiplicity="exactlyOne" description="classe funcional NYHA">
-                <EnumerationOption value="0" description="Classe I, No limitació de l'activitat física. L'activitat ordinària no ocasiona excessiva fatiga, palpitacions, dispnea o dolor anginós."/>
-                <EnumerationOption value="1" description="Classe II, Lleugera limitació de l'activitat física. Confortables en repòs. L'activitat ordinària ocasiona fatiga, palpitacions, dispnea o dolor anginós."/>
-                <EnumerationOption value="2" description="Classe III, Marcada limitació de l'activitat física. Confortables en repòs. Activitat física menor que l'ordinària ocasiona fatiga, palpitacions, dispnea o dolor anginós."/>
-                <EnumerationOption value="3" description="Classe IV, Incapacitat per dur a terme qualsevol activitat física sense disconfort. Els símptomes d'insuficiència cardíaca o de síndrome anginós poden estar presents fins i tot en repòs. Si es realitza qualsevol activitat física, el disconfort augmenta."/>
+                <EnumerationOption value="1" description="Classe I, No limitació de l'activitat física. L'activitat ordinària no ocasiona excessiva fatiga, palpitacions, dispnea o dolor anginós."/>
+                <EnumerationOption value="2" description="Classe II, Lleugera limitació de l'activitat física. Confortables en repòs. L'activitat ordinària ocasiona fatiga, palpitacions, dispnea o dolor anginós."/>
+                <EnumerationOption value="3" description="Classe III, Marcada limitació de l'activitat física. Confortables en repòs. Activitat física menor que l'ordinària ocasiona fatiga, palpitacions, dispnea o dolor anginós."/>
+                <EnumerationOption value="4" description="Classe IV, Incapacitat per dur a terme qualsevol activitat física sense disconfort. Els símptomes d'insuficiència cardíaca o de síndrome anginós poden estar presents fins i tot en repòs. Si es realitza qualsevol activitat física, el disconfort augmenta."/>
             </AttributeDefinition>  
+			<DerivedAttributeDefinition id="nyhatotal" expression="number(nyha1,0)" description="NYHA"/> 						
         </EntityDefinition>
 		
 		<EntityDefinition id="LCS1_DiagnosisCodexGold" description="Diagnosis GOLD+CODEX"> 		
@@ -1353,7 +1354,8 @@
 				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodexGold.MMRCTotal"/>					
 				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodexGold.codextotal"/>		
 				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_CardiacRehabilitation.cr7"/>				
-				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_RespiratoryRehabilitation.rr6"/>				
+				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_RespiratoryRehabilitation.rr6"/>			
+				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisNyha.nyhatotal"/>					
 		</SummarySectionDefinition>
 		
 		<SummarySectionDefinition id="LCS1_Body" description="Diagnosis" position="CENTER">   			
@@ -1608,6 +1610,7 @@
 				<HumanTaskDefinition id="LCS1_DiagnosisNyhaHT" description="Diagnòstic - Diagnosis classe funcional NYHA [Diagnosis Rehabilitació-cardíaca]"
 				ownerPath="LCS1_Settings.Clinician" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS1_DiagnosisNyha" entityAttachPath="LCS1_Evaluation.LCS1_DiagnosisNyha">                
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisNyha.nyha1" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisNyha.nyhatotal" isReadOnly="true" isMandatory="false"/>										
 				</HumanTaskDefinition>
 				
 				<HumanTaskDefinition id="LCS1_CardiacRehabilitation" description="Diagnòstic - Diagnosis Rehabilitació-cardíaca [dependència amb NYHA; fer primer la tasca NYHA]" 
@@ -2065,6 +2068,7 @@
 		<Action id="ActivateHumanTask" processId="LCS1_DiagnosisNyhaHT" breakpoint="true"/>
 		<Action id="CompleteHumanTask" processId="LCS1_DiagnosisNyhaHT" breakpoint="true"> 
 			<TaskParam path="LCS1_Evaluation.LCS1_DiagnosisNyha.nyha1" values="['1']"/>    
+			<TaskParam path="LCS1_Evaluation.LCS1_DiagnosisNyha.nyhatotal" values="['1']" />										
 		</Action>
 		
 		<Action id="CompleteHumanTask" processId="LCS1_SF12EvaluationHT" breakpoint="true"> 
