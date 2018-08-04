@@ -197,7 +197,7 @@ module.exports = class GitAnalytics{
       const Git = GitP(repositoryPath);
       await Git.checkout(['master']);
       console.log('git checkout master completed')
-      let data = await Git.log(['--after', '2017-10-04', '--follow', '*'+filePostfix]); //-'-m' 
+      let data = await Git.log(['--after', '2017-10-04', '-m', '--follow', '*'+filePostfix]); //-'-m' 
       console.log('git log completed - '+data.all.length + ' matching commits!')
       let allFilePaths = new Set();
       //let isStarted = false;
@@ -278,15 +278,15 @@ module.exports = class GitAnalytics{
       const filename = 'model.analytics.'+new Date().getTime();
       if(isSingleFileAnalytics)
         await this.saveAsCSVForDiagram(result, new Date().getTime()+'.model.analytics.'+filePostfix);
-      //await this.saveAsExcel(result, filename);
-      //await this.saveAsJSON(result, filename);
+        await this.saveAsExcel(result, filename);
+        await this.saveAsJSON(result, filename);
     //}catch(e){
     //  console.log(e);
    // }    
     return result;
   }
 
-
+  
   static async saveAsCSVForDiagram(commits, filename){
     try{
       console.log('save as *.csv')

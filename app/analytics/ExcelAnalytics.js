@@ -15,10 +15,11 @@ module.exports = class ExcelAnalytics{
   }
 
   async postAnalytics(){
-
-    let commits = await this.readJSON('modelanalytics1532556405202.plain.json.gz');
+    let filename = 'model.analytics.1533400865279.plain.json.gz';
+    let commits = await this.readJSON(filename);
     console.log('Nr commits to process: '+commits.length);
     
+    /*
     //commits = commits.reverse();
     this.addTab(commits, 'All')
 
@@ -42,10 +43,11 @@ module.exports = class ExcelAnalytics{
       });
       this.addTab(filteredCommits, c);      
     });
+    */
 
     this.addOverviewTab(commits);
 
-    await this.writeFile('test');
+    await this.writeFile(filename+'.postprocessed');
   } 
 
 
