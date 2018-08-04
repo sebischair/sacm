@@ -174,19 +174,20 @@ module.exports = class GitAnalytics{
   }
 
   static async analyzeRepositoryFiles(){
-    await this.analyzeRepository('studyrelease.case.groningen.cs1.xml', true);
-    await this.analyzeRepository('studyrelease.case.groningen.cs2.xml', true);
-    await this.analyzeRepository('studyrelease.case.leida.cs1.xml', true);
-    await this.analyzeRepository('studyrelease.case.leida.cs2.xml', true);
-    await this.analyzeRepository('studyrelease.case.israel.cs1.xml', true);
-    await this.analyzeRepository('studyrelease.case.israel.cs2.xml', true);
-    await this.analyzeRepository('studyrelease.case.barcelona.cs1.xml', true);
+    //await this.analyzeRepository('studyrelease.case.groningen.cs1.xml', true);
+    
+    //await this.analyzeRepository('studyrelease.case.groningen.cs2.xml', true);
+    //await this.analyzeRepository('studyrelease.case.leida.cs1.xml', true);
+    //await this.analyzeRepository('studyrelease.case.leida.cs2.xml', true);
+    //await this.analyzeRepository('studyrelease.case.israel.cs1.xml', true);
+    //await this.analyzeRepository('studyrelease.case.israel.cs2.xml', true);
+    //await this.analyzeRepository('studyrelease.case.barcelona.cs1.xml', true);
     await this.analyzeRepository('studyrelease.case.barcelona.cs2.xml', true);
   }
 
   static async analyzeRepository(filePostfix, isSingleFileAnalytics){
     
-
+    let nrIgnoredCommits =0;
     let result = [];
    // try{
       if(! fs.existsSync(repositoryPath)){
@@ -197,7 +198,7 @@ module.exports = class GitAnalytics{
       const Git = GitP(repositoryPath);
       await Git.checkout(['master']);
       console.log('git checkout master completed')
-      let data = await Git.log(['--after', '2017-10-04', '-m', '--follow', '*'+filePostfix]); //-'-m' 
+      let data = await Git.log(['--after', '2017-10-04', '--follow', '*'+filePostfix]); //-'-m' 
       console.log('git log completed - '+data.all.length + ' matching commits!')
       let allFilePaths = new Set();
       //let isStarted = false;
@@ -210,8 +211,10 @@ module.exports = class GitAnalytics{
         if(!isStarted)
           continue;
           */
-        if(this.ignoreList().has(c.hash))
+        if(this.ignoreList().has(c.hash)){
+          nrIgnoredCommits++;
           continue;
+        }
 
         await Git.checkout([c.hash]);
         console.log('\n'+(i+1)+'/'+data.all.length +' checkout '+c.hash+' completed! ');
@@ -274,7 +277,7 @@ module.exports = class GitAnalytics{
       }
       console.log('\nSet of all repository file names:');
       console.log(allFilePaths)
-      
+      console.log('Commits found1: '+result.length)
       const filename = 'model.analytics.'+new Date().getTime();
       if(isSingleFileAnalytics)
         await this.saveAsCSVForDiagram(result, new Date().getTime()+'.model.analytics.'+filePostfix);
@@ -283,6 +286,10 @@ module.exports = class GitAnalytics{
     //}catch(e){
     //  console.log(e);
    // }    
+    console.log('Summary: ')
+    console.log('Commits found: '+result.length)
+    console.log('Ignored Commits: '+nrIgnoredCommits);
+    console.log('Percentage Ignored Commits: '+nrIgnoredCommits/result.length);
     return result;
   }
 
