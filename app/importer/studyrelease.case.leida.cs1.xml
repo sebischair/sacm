@@ -1146,7 +1146,10 @@
 			<AttributeDefinition id="LCS1_PhysicalActivityAH" type="Link.EntityDefinition.LCS1_PhysicalActivity" multiplicity="any" />				
 			<AttributeDefinition id="LCS1_MonitoringPrescriptionHeartPulseAH" type="Link.EntityDefinition.LCS1_MonitoringPrescriptionHeartPulse" multiplicity="any" />							
 			<AttributeDefinition id="LCS1_MonitoringPrescriptionWeightAH" type="Link.EntityDefinition.LCS1_MonitoringPrescriptionWeight" multiplicity="any" />				
-			<AttributeDefinition id="LCS1_MonitoringPrescriptionSP02AH" type="Link.EntityDefinition.LCS1_MonitoringPrescriptionSP02" multiplicity="any" />							
+			<AttributeDefinition id="LCS1_MonitoringPrescriptionSP02AH" type="Link.EntityDefinition.LCS1_MonitoringPrescriptionSP02" multiplicity="any" />	
+			<AttributeDefinition id="LCS1_SocialCareerTask" multiplicity="any" type="Link.EntityDefinition.LCS1_SocialCareerTask" />						
+			<AttributeDefinition id="LCS1_PrimaryCareClinicianTask" multiplicity="any" type="Link.EntityDefinition.LCS1_PrimaryCareClinicianTask"/>						
+			<AttributeDefinition id="LCS1_PrimaryCareNurseTask" multiplicity="any" type="Link.EntityDefinition.LCS1_PrimaryCareNurseTask"/>						
 		</EntityDefinition>				
 		
 		<EntityDefinition id="LCS1_MonitoringPrescriptionWeight">
@@ -1273,9 +1276,18 @@
             <AttributeDefinition id="dailymediumlevel" type="number.min(0).max(1440)" defaultValues="[40]" multiplicity="exactlyOne" description="Mínim de minuts d'intensitat intermitja a fer durant el dia (caminar pas ràpid, bicileta, nadar...)"/>       			
             <AttributeDefinition id="dailyhighlevel" type="number.min(0).max(1440)" defaultValues="[20]" multiplicity="exactlyOne" description="Mínim de minuts d'intensitat alta a fer durant el dia (footing, tasques domèstiques pesades, senderisme, activitats i esports competitius)"/>         
 			<AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Mesures"/>                 
-        </EntityDefinition> 
-		
-		
+        </EntityDefinition> 		                
+
+		<EntityDefinition id="LCS1_SocialCareerTask">
+            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comentaris" additionalDescription=""/>   			
+		</EntityDefinition>			
+		<EntityDefinition id="LCS1_PrimaryCareClinicianTask">
+            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comentaris" additionalDescription=""/>   			
+		</EntityDefinition>	
+		<EntityDefinition id="LCS1_PrimaryCareNurseTask">
+            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comentaris" additionalDescription=""/>   			
+		</EntityDefinition>			
+				
         <!-- Discharge Definitions -->		
 		<EntityDefinition id="LCS1_Discharge">
 			<AttributeDefinition id="LCS1_DischargeTest" type="Link.EntityDefinition.LCS1_DischargeTest" multiplicity="any"/>									
@@ -1438,8 +1450,7 @@
                     <TaskParamDefinition path="LCS1_Identification.LCS1_PatientsConsent.pConsent1" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS1_Identification.LCS1_PatientsConsent.pConsent2" isReadOnly="true" isMandatory="false"/>		
                 </HumanTaskDefinition>	
-			</StageDefinition>
-		  
+			</StageDefinition>		  
 		  
             <StageDefinition id="LCS1_CaseEvaluation" description="Avaluació del cas" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_Evaluation" entityAttachPath="LCS1_Evaluation.LCS1_Evaluation">
 			<!-- ONLY TEST -->		
@@ -1838,7 +1849,22 @@
 					<TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_PhysicalActivityAH.dailyhighlevel" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition part="AUTOMATED" path="LCS1_Workplan.LCS1_PhysicalActivityAH.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>			
-					
+				
+				<HumanTaskDefinition id="LCS1_SocialCareerTask" description="Comentaris del cuidador"
+				ownerPath="LCS1_Settings.SocialCareer" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1_SocialCareerTask" entityAttachPath="LCS1_Workplan.LCS1_SocialCareerTask">
+                    <TaskParamDefinition path="LCS1_Workplan.LCS1_SocialCareerTask.comments" isReadOnly="false" isMandatory="true"/>
+				</HumanTaskDefinition>				
+				
+				<HumanTaskDefinition id="LCS1_PrimaryCareClinicianTask" description="Comentaris del metge de primària"
+				ownerPath="LCS1_Settings.PrimaryCareClinicians" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1_PrimaryCareClinicianTask" entityAttachPath="LCS1_Workplan.LCS1_PrimaryCareClinicianTask">
+                    <TaskParamDefinition path="LCS1_Workplan.LCS1_PrimaryCareClinicianTask.comments" isReadOnly="false" isMandatory="true"/>
+				</HumanTaskDefinition>				
+				
+				<HumanTaskDefinition id="LCS1_PrimaryCareNurseTask" description="Comentaris de la infermera de primària"
+				ownerPath="LCS1_Settings.PrimaryCareNurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1_PrimaryCareNurseTask" entityAttachPath="LCS1_Workplan.LCS1_PrimaryCareNurseTask">
+                    <TaskParamDefinition path="LCS1_Workplan.LCS1_PrimaryCareNurseTask.comments" isReadOnly="false" isMandatory="true"/>
+				</HumanTaskDefinition>				
+								
 			</StageDefinition>			
 		  	 
             <StageDefinition id="LCS1_Discharge" description="Alta del pacient" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS1_Discharge" entityAttachPath="LCS1_Discharge">
@@ -2210,6 +2236,19 @@
 		<Action id="CompleteDualTaskAutomatedPart" processId="LCS1_PhysicalActivityAHWP">
 			<TaskParam path="LCS1_Workplan.LCS1_PhysicalActivityAH.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
 		</Action>  	
+	  
+	  	  
+	  	<Action id="CompleteHumanTask" processId="LCS1_SocialCareerTask" breakpoint="true"> 
+			<TaskParam path="LCS1_Workplan.LCS1_SocialCareerTask.comments"  values="['Some random comment SocialCareerTask']"/>
+		</Action>  
+
+	  	<Action id="CompleteHumanTask" processId="LCS1_PrimaryCareClinicianTask" breakpoint="true"> 
+			<TaskParam path="LCS1_Workplan.LCS1_PrimaryCareClinicianTask.comments"  values="['Some random comment PrimaryCareClinicianTask']"/>
+		</Action>  
+
+	  	<Action id="CompleteHumanTask" processId="LCS1_PrimaryCareNurseTask" breakpoint="true"> 
+			<TaskParam path="LCS1_Workplan.LCS1_PrimaryCareNurseTask.comments"  values="['Some random comment PrimaryCareNurseTask']"/>
+		</Action>  	  
 	  
 	  <Action id="ActivateDualTask" processId="LCS1_MonitoringPrescriptionHeartPulseAHWP" breakpoint="true"/>
 		<Action id="CompleteDualTaskHumanPart" processId="LCS1_MonitoringPrescriptionHeartPulseAHWP" breakpoint="true">
