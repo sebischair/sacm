@@ -1059,8 +1059,10 @@
 			<AttributeDefinition id="LCS2_EVAECNDBH" type="Link.EntityDefinition.LCS2_EVAECNDDef" multiplicity="any"/> 
 		    <AttributeDefinition id="LCS2_SLANSSBH" type="Link.EntityDefinition.LCS2_SLANSSDef" multiplicity="any"/>		
 			-->			
-			<AttributeDefinition id="LCS2_MonitoringPrescriptionBH" type="Link.EntityDefinition.LCS2_MonitoringPrescription" multiplicity="any" /> 
-		</EntityDefinition>
+			<AttributeDefinition id="LCS2_MonitoringPrescriptionBH" type="Link.EntityDefinition.LCS2_MonitoringPrescription" multiplicity="any"/> 			
+			<AttributeDefinition id="LCS2_SocialCareerTask" type="Link.EntityDefinition.LCS2_SocialCareerTask" multiplicity="any"/>						
+			<AttributeDefinition id="LCS2_PrimaryCareNurseTask" type="Link.EntityDefinition.LCS2_PrimaryCareNurseTask" multiplicity="any"/>											
+		</EntityDefinition>			
 			
 		<EntityDefinition id="LCS2_AnaemiaAssessmentAndManagementNutritionDef" > 		
 			<AttributeDefinition id="nut0" type="number.min(0).max(1500)" defaultValues="[0.0]" multiplicity="exactlyOne" description="Valor de la Ferritina (ng/mL)"/>
@@ -1094,6 +1096,14 @@
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>
         </EntityDefinition>
+				
+		<EntityDefinition id="LCS2_PrimaryCareNurseTask">
+            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comentaris" additionalDescription=""/>   			
+		</EntityDefinition>							
+
+		<EntityDefinition id="LCS2_SocialCareerTask">
+            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comentaris" additionalDescription=""/>   			
+		</EntityDefinition>									
 				
 		<!-- Workplan After Hospitalization Entity Definitions -->		
 		<EntityDefinition id="LCS2_WorkplanAfterHospitalization">						    
@@ -1706,7 +1716,17 @@
                     <TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_DiabetesControlBH.DiabetisControl0" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_DiabetesControlBH.DiabetisControl1" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
-                                        
+
+				<HumanTaskDefinition id="LCS2_SocialCareerTask" description="Comentaris del cuidador"
+				ownerPath="LCS2_Settings.SocialCareer" isMandatory="false" repeatable="ONCE"  entityDefinitionId="LCS2_SocialCareerTask" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_SocialCareerTask">
+                    <TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_SocialCareerTask.comments" isReadOnly="false" isMandatory="true"/>
+				</HumanTaskDefinition>												
+				
+				<HumanTaskDefinition id="LCS2_PrimaryCareNurseTask" description="Comentaris de la infermera de primària"
+				ownerPath="LCS2_Settings.PrimaryCareNurse" isMandatory="false" repeatable="ONCE"  entityDefinitionId="LCS2_PrimaryCareNurseTask" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_PrimaryCareNurseTask">
+                    <TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_PrimaryCareNurseTask.comments" isReadOnly="false" isMandatory="true"/>
+				</HumanTaskDefinition>								
+				
                 <DualTaskDefinition id="LCS2_MonitoringPrescriptionBHWP" externalId="MonitoringPrescription"
 				description="Prescripció de la monitorització - Pressió arterial sistòlica\diastòlica - Abans d'hospitalització" 
 				ownerPath="LCS2_Settings.PrimaryCareClinicians" dueDatePath="LCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_MonitoringPrescription" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBH">
@@ -2156,6 +2176,14 @@
         <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_DiabetesControlBH.DiabetisControl0" values="['1']"/>
         <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_DiabetesControlBH.DiabetisControl1" values="['1']"/>
     </Action> 		
+
+	<Action id="CompleteHumanTask" processId="LCS2_SocialCareerTask" breakpoint="true"> 
+		<TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_SocialCareerTask.comments"  values="['Some random comment SocialCareerTask']"/>
+	</Action>  	  
+		
+	<Action id="CompleteHumanTask" processId="LCS2_PrimaryCareNurseTask" breakpoint="true"> 
+		<TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_PrimaryCareNurseTask.comments"  values="['Some random comment PrimaryCareNurseTask']"/>
+	</Action>  	  
 	
     <Action id="ActivateDualTask" processId="LCS2_MonitoringPrescriptionBHWP" breakpoint="true"/>
     <Action id="CompleteDualTaskHumanPart" processId="LCS2_MonitoringPrescriptionBHWP" breakpoint="true">
