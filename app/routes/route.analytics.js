@@ -1,6 +1,6 @@
 import express from 'express';
-import ModelAnalytics from './../analytics/ModelAnalytics';
-import ExcelModelAnalytics from './../analytics/ExcelModelAnalytics';
+import GitAnalytics from './../analytics/GitAnalytics';
+import ExcelAnalytics from './../analytics/ExcelAnalytics';
 const router = express.Router();
 
 
@@ -12,9 +12,28 @@ const router = express.Router();
  * @apiSuccessExample {json} Success-Response:
  * {}
  */
-router.get('/repository', (req, res, next)=>{
+router.get('/repository/all', (req, res, next)=>{
   res.connection.setTimeout(100*60*1000);
-  ModelAnalytics.analyzeRepository()
+  GitAnalytics.analyzeRepositoryAll()
+    .then(c=>{
+      res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
+ * @api {get} /analytics/repository
+ * @apiName GetAnalytics
+ * @apiGroup Analytics
+ * @apiSampleRequest /analytics
+ * @apiSuccessExample {json} Success-Response:
+ * {}
+ */
+router.get('/repository/files', (req, res, next)=>{
+  res.connection.setTimeout(100*60*1000);
+  GitAnalytics.analyzeRepositoryFiles()
     .then(c=>{
       res.status(200).send(c);
     })
@@ -34,7 +53,7 @@ router.get('/repository', (req, res, next)=>{
 router.get('/file', (req, res, next)=>{
   console.log('h')
   res.connection.setTimeout(100*60*1000);
-  ModelAnalytics.tryToAnalyzeFile()
+  GitAnalytics.tryToAnalyzeFile()
     .then(c=>{
       console.log('hr')
       res.status(200).send(c);
@@ -55,7 +74,7 @@ router.get('/file', (req, res, next)=>{
 router.get('/postprocessing', (req, res, next)=>{
   console.log('h1')
   res.connection.setTimeout(100*60*1000);
-  new ExcelModelAnalytics().postAnalytics()
+  new ExcelAnalytics().postAnalytics()
     .then(c=>{
       console.log('hr1')
       res.status(200).send(c);

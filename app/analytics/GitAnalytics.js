@@ -1,10 +1,11 @@
 'use strict';
 import Promise from 'bluebird';
-import winston from 'winston';
 import find from 'find-promise';
-import Excel from 'exceljs';
+import ExcelAnalytics from './ExcelAnalytics';
 import sizeof from 'object-sizeof';
 import GitP from 'simple-git/promise';
+import { EAGAIN } from 'constants';
+import { deprecate } from 'util';
 const fs = Promise.promisifyAll(require("fs"));
 const xml2js = Promise.promisifyAll(require("xml2js"));
 const repositoryPath = 'D:/Projekte/CONNECARE/Technical/repos/sacm.backend.analytics';
@@ -12,7 +13,7 @@ const repositoryPath = 'D:/Projekte/CONNECARE/Technical/repos/sacm.backend.analy
 
 const {gzip, ungzip} = require('node-gzip');
 
-module.exports = class ModelAnalytics{
+module.exports = class GitAnalytics{
 
   static translationMap(){
     let map = new Map();
@@ -47,17 +48,24 @@ module.exports = class ModelAnalytics{
     return null;
   }
 
+  static normalizePaths(files){    
+    if(files)
+      for(let i=0; i<files.length; i++)
+        files[i] = files[i].replace(/\\/g,'/');
+    return files;  
+  }
+
   static filterFiles(files){
+    files = this.normalizePaths(files);
     let matches = [];
     for(let file of files){
-      file = file.replace(/\\/g,'/');
       if(this.translatePathToCS(file) != null)
         matches.push(file);
     }
     return matches;
   }
 
-  static async analyzeRepository(){
+  static ignoreList(){
     let ignoreList = new Set();
     ignoreList.add('0f26c2ce4af992b5c20b02038615831e8e6034ee'); //XML parse error, only GCS1 changed
     ignoreList.add('13c67d4a43bbb49911742f749331a2c4f1f2e89e'); //XML parse error, only GCS1 changed
@@ -158,7 +166,28 @@ module.exports = class ModelAnalytics{
     ignoreList.add('8bcd62072be4711c43b97bb2dc2e868dea1531af'); //XML parse error
     ignoreList.add('7d96f318cc89a87e8618319a77d118a546deecb5'); //XML parse error
     ignoreList.add('c3f7321a674ddcd191b76a2b360b4250d5e5a329'); //XML parse error
+    return ignoreList;
+  }
 
+  static async analyzeRepositoryAll(){
+    await this.analyzeRepository('.xml', false);
+  }
+
+  static async analyzeRepositoryFiles(){
+    //await this.analyzeRepository('studyrelease.case.groningen.cs1.xml', true);
+    
+    //await this.analyzeRepository('studyrelease.case.groningen.cs2.xml', true);
+    //await this.analyzeRepository('studyrelease.case.leida.cs1.xml', true);
+    //await this.analyzeRepository('studyrelease.case.leida.cs2.xml', true);
+    //await this.analyzeRepository('studyrelease.case.israel.cs1.xml', true);
+    //await this.analyzeRepository('studyrelease.case.israel.cs2.xml', true);
+    //await this.analyzeRepository('studyrelease.case.barcelona.cs1.xml', true);
+    await this.analyzeRepository('studyrelease.case.barcelona.cs2.xml', true);
+  }
+
+  static async analyzeRepository(filePostfix, isSingleFileAnalytics){
+    
+    let nrIgnoredCommits =0;
     let result = [];
    // try{
       if(! fs.existsSync(repositoryPath)){
@@ -169,10 +198,11 @@ module.exports = class ModelAnalytics{
       const Git = GitP(repositoryPath);
       await Git.checkout(['master']);
       console.log('git checkout master completed')
-      let data = await Git.log(['-m', '--after', '2017-10-04', '--follow', '*studyrelease.case.israel.cs2.xml']);
+      let data = await Git.log(['--after', '2017-10-04', '--follow', '*'+filePostfix]); //-'-m' 
       console.log('git log completed - '+data.all.length + ' matching commits!')
       let allFilePaths = new Set();
       //let isStarted = false;
+      data.all = data.all.reverse();
       for(let i=0; i<data.all.length; i++){
         let c = data.all[i];
         /*
@@ -181,8 +211,10 @@ module.exports = class ModelAnalytics{
         if(!isStarted)
           continue;
           */
-        if(ignoreList.has(c.hash))
+        if(this.ignoreList().has(c.hash)){
+          nrIgnoredCommits++;
           continue;
+        }
 
         await Git.checkout([c.hash]);
         console.log('\n'+(i+1)+'/'+data.all.length +' checkout '+c.hash+' completed! ');
@@ -195,47 +227,99 @@ module.exports = class ModelAnalytics{
         let files = await find.file(/\.xml$/, findPath);
         
         if(files)
+          files = this.normalizePaths(files);
           for(let f of files)
-            allFilePaths.add(f.replace(/\\/g,'/').replace(repositoryPath,''));
+            allFilePaths.add(f.replace(repositoryPath,''));
 
-        files = this.filterFiles(files);
+        if(isSingleFileAnalytics){
+          files = files.filter(file => file.endsWith(filePostfix))
+          if(files.length>1){
+            files = files.filter(file => file.endsWith('/app/importer/'+filePostfix)) //prioritize right file
+            if(files.length>1){
+              console.log('More than one file matching!')
+              throw new Error('More than one file matching!')
+            }
+          }
+        }else
+          files = this.filterFiles(files);
         console.log('---found '+files.length+' files!');
         let commitResult = {
           hash: c.hash,
           date: c.date,
+          timestamp: (new Date(c.date)).getTime(),
           message: c.message,
           authorName: c.author_name,
           authorEmail: c.author_email,
           files: []
-        };
+        };        
         for(let file of files){
           console.log('---analyze  ...'+file.replace(repositoryPath,'')) 
+          let caseId = this.translatePathToCS(file);
+          /** find previous result to compare with */
+          let previousFileResult = null;
+          if(result.length>0){
+            let previousCommit = result[result.length-1];
+            previousCommit.files.forEach(file=>{
+              if(file.case == caseId)
+              previousFileResult = file.result;
+            });
+          }
           commitResult.files.push({
             file: file.replace(repositoryPath,''),
-            case: this.translatePathToCS(file),
-            result: await this.analyzeFile(file)
+            case: caseId,
+            result: await this.analyzeFile(file, previousFileResult, result.length)
           });
         }
         result.push(commitResult);
-        //if(i==10)
-        //  break;
+       //if(i==10)
+      // break;
         
       }
       console.log('\nSet of all repository file names:');
       console.log(allFilePaths)
-      
-      //console.log(sizeof(JSON.stringify(result, null, 4)))
-      //console.log(sizeof(await gzip(JSON.stringify(result, null, 4))));
-
-      const filename = 'modelanalytics'+new Date().getTime();
-      await this.saveAsExcel(result, filename);
-      await this.saveAsJSON(result, filename);
+      console.log('Commits found1: '+result.length)
+      const filename = 'model.analytics.'+new Date().getTime();
+      if(isSingleFileAnalytics)
+        await this.saveAsCSVForDiagram(result, new Date().getTime()+'.model.analytics.'+filePostfix);
+        await this.saveAsExcel(result, filename);
+        await this.saveAsJSON(result, filename);
     //}catch(e){
     //  console.log(e);
    // }    
+    console.log('Summary: ')
+    console.log('Commits found: '+result.length)
+    console.log('Ignored Commits: '+nrIgnoredCommits);
+    console.log('Percentage Ignored Commits: '+nrIgnoredCommits/result.length);
     return result;
   }
 
+  
+  static async saveAsCSVForDiagram(commits, filename){
+    try{
+      console.log('save as *.csv')
+      let result = 'hash; date; timestamp; message; author; case; structuralAcc; adaptationAcc; renamingAcc;\n';
+      if(commits.length>0){
+        result += 'NA; 2017-10-04 00:00:00 +0000; 1507068000000; NA; NA; '+commits[0].files[0].case+'; 0; 0; 0;\n'; 
+        commits.forEach(commit=>{
+          result += commit.hash +'; '+
+                    commit.date +'; '+
+                    commit.timestamp +'; '+
+                    commit.message.replace(/;/g,'') +'; '+
+                    commit.authorName +'; '+
+                    commit.files[0].case +'; '+
+                    commit.files[0].result.changes.structuralAcc +'; '+
+                    commit.files[0].result.changes.adaptationAcc +'; '+
+                    commit.files[0].result.changes.renamingAcc +'; \n';
+        });
+        let lc = commits[commits.length-1];
+        let lcc = lc.files[0].result.changes;
+        result += 'NA; 2018-08-01 00:00:00 +0000; 1533074400000; NA; NA; '+lc.files[0].case+'; '+lcc.structuralAcc+'; '+lcc.adaptationAcc+'; '+lcc.renamingAcc+';\n';
+      }  
+      await fs.writeFile(filename+'.csv', result);
+    }catch(e){
+      console.log(e)
+    }
+  }
 
 
   static async saveAsJSON(commits, filename){
@@ -250,496 +334,16 @@ module.exports = class ModelAnalytics{
   }
 
   static async saveAsExcel(commits, filename){
-    var workbook = new Excel.Workbook();
-    var worksheet = workbook.addWorksheet('Analytics');
-       
-    const columns = [
-      { key: 'commitHash', header: 'Hash', width:40, group: 'Commit'},
-      { key: 'commitDate', header: 'Date', width:25},
-      { key: 'commitAuthorName', header: 'Author Name', width:5},
-      { key: 'commitAuthorEmail', header: 'Author Email', width:5},
-      { key: 'commitMessage', header: 'Message', width:10},
-      { key: 'case', header: 'Case', width:6},
-      { key: 'attributeDefinitionsNr', header: 'Nr', width:5, group: 'AttributeDefinitions'},
-      { key: 'attributeDefinitionsTypeLink', header: 'TypeLink', width:5},
-      { key: 'attributeDefinitionsTypeLinkUser', header: 'TypeLinkUser', width:5},
-      { key: 'attributeDefinitionsTypeLinkEntityDefinition', header: 'TypeLinkEntityDefinition', width:5},
-      { key: 'attributeDefinitionsTypeNoType', header: 'TypeNoType', width:5},
-      { key: 'attributeDefinitionsTypeString', header: 'TypeString', width:5},
-      { key: 'attributeDefinitionsTypeLongText', header: 'TypeLongText', width:5},
-      { key: 'attributeDefinitionsTypeBoolean', header: 'TypeBoolean', width:5},
-      { key: 'attributeDefinitionsTypeNumber', header: 'TypeNumber', width:5},
-      { key: 'attributeDefinitionsTypeNumberMin', header: 'TypeNumberMin', width:5},
-      { key: 'attributeDefinitionsTypeNumberMax', header: 'TypeNumberMax', width:5},
-      { key: 'attributeDefinitionsTypeEnumeration', header: 'TypeEnumeration', width:5},
-      { key: 'attributeDefinitionsTypeEnumerationOptions', header: 'EnumerationOptions', width:5},
-      { key: 'attributeDefinitionsTypeEnumerationOptionsAvg', header: 'EnumerationOptionsAvg', width:5},
-      { key: 'attributeDefinitionsTypeDate', header: 'TypeDate', width:5},
-      { key: 'attributeDefinitionsTypeDateBefore', header: 'TypeDateBefore', width:5},
-      { key: 'attributeDefinitionsTypeDateAfter', header: 'TypeDateAfter', width:5},
-      { key: 'attributeDefinitionsTypeJson', header: 'TypeJson', width:5},
-      { key: 'attributeDefinitionsMultiplicityAny', header: 'MultiplicityAny', width:5},
-      { key: 'attributeDefinitionsMultiplicityExactlyOne', header: 'MultiplicityExactlyOne', width:5},
-      { key: 'attributeDefinitionsMultiplicityMaximalOne', header: 'MultiplicityMaximalOne', width:5},
-      { key: 'attributeDefinitionsMultiplicityAtLeastOne', header: 'MultiplicityAtLeastOne', width:5},
-      { key: 'attributeDefinitionsDefaultValues', header: 'DefaultValues', width:5},
-      { key: 'attributeDefinitionsAdditionalDescription', header: 'AdditionalDescription', width:5},
-      { key: 'attributeDefinitionsUiReference', header: 'UiReference', width:5},
-      { key: 'attributeDefinitionsUiReferenceLineDiagram', header: 'UiReferenceLineDiagram', width:5},
-      { key: 'attributeDefinitionsUiReferenceColors', header: 'UiReferenceColors', width:5},
-      { key: 'attributeDefinitionsUiReferenceConditionalMultiplicity', header: 'UiReferenceConditionalMultiplicity', width:5},
-      { key: 'attributeDefinitionsUiReferencePatientQuestionnaires', header: 'UiReferencePatientQuestionnaires', width:5},
-      { key: 'attributeDefinitionsUiReferenceLink', header: 'UiReferenceLink', width:5},
-      { key: 'attributeDefinitionsUiReferencePrivateLink', header: 'UiReferencePrivateLink', width:5},
-      { key: 'attributeDefinitionsUiReferenceSvg', header: 'UiReferenceSvg', width:5},
-      { key: 'derivedAttributeDefinitionsNr', header: 'Nr', width:5, group: 'DerivedAttributeDefinitions'},
-      { key: 'derivedAttributeDefinitionsExplicitType', header: 'ExplicitType', width:5},
-      { key: 'derivedAttributeDefinitionsAdditionalDescription', header: 'AdditionalDescription', width:5},
-      { key: 'derivedAttributeDefinitionsUiReference', header: 'UiReference', width:5},
-      { key: 'derivedAttributeDefinitionsUiReferenceLineDiagram', header: 'UiReferenceLineDiagram', width:5},
-      { key: 'derivedAttributeDefinitionsUiReferenceColors', header: 'UiReferenceColors', width:5},
-      { key: 'derivedAttributeDefinitionsUiReferenceSvg', header: 'UiReferenceSvg', width:5},
-      { key: 'entityDefinitionsNr', header: 'Nr', width:5, group: 'EntityDefinitions'},
-      { key: 'entityDefinitionsAvgNrAttributeDefinitions', header: 'AvgNrAttributeDefinitions', width:5},
-      { key: 'entityDefinitionsAvgNrDerivedAttributeDefinitions', header: 'AvgNrDerivedAttributeDefinitions', width:5},
-      { key: 'caseDefinitionHasClientPath', header: 'HasClientPath', width:8, group: 'CaseDefinition'},
-      { key: 'caseDefinitionHasOwnerPath', header: 'hasOwnerPath', width:8},
-      { key: 'caseDefinitionHasNewEntityDefinitionId', header: 'HasNewEntityDefinitionId', width:8},
-      { key: 'caseDefinitionHasNewEntityAttachPath', header: 'HasNewEntityAttachPath', width:8},
-      { key: 'caseDefinitionHasNotesDefaultValue', header: 'HasNotesDefaultValue', width:8},
-      { key: 'caseDefinitionHasOnAvailableHTTPHookURL', header: 'HasOnAvailableHTTPHookURL', width:8},
-      { key: 'caseDefinitionHasOnEnableHttpHTTPHookURL', header: 'HasOnEnableHttpHTTPHookURL', width:8},
-      { key: 'caseDefinitionHasOnActivateHTTPHookURL', header: 'HasOnActivateHTTPHookURL', width:8},
-      { key: 'caseDefinitionHasOnCompleteHTTPHookURL', header: 'HasOnCompleteHTTPHookURL', width:8},
-      { key: 'caseDefinitionHasOnTerminateHTTPHookURL', header: 'HasOnTerminateHTTPHookURL', width:8},
-      { key: 'caseDefinitionHasOnDeleteHTTPHookURL', header: 'HasOnDeleteHTTPHookURL', width:8},
-      { key: 'summarySectionDefinitionsNr', header: 'Nr', width:5, group: 'SummarySectionDefinitions'},
-      { key: 'summarySectionDefinitionsAvgNrSummaryParamDefinitions', header: 'AvgNrSummaryParamDefinitions', width:5},
-      { key: 'summarySectionDefinitionsPositionLeft', header: 'PositionLeft', width:5},
-      { key: 'summarySectionDefinitionsPositionCenter', header: 'PositionCenter', width:5},
-      { key: 'summarySectionDefinitionsPositionRight', header: 'PositionRight', width:5},
-      { key: 'summarySectionDefinitionsPositionStretched', header: 'PositionStretched', width:5},
-      { key: 'stageDefinitionsNr', header: 'Nr', width: 5, group: 'StageDefinitions'},
-      { key: 'stageDefinitionsOwnerPath', header: 'OwnerPath', width: 5 },
-      { key: 'stageDefinitionsRepeatableOnce', header: 'RepeatableOnce', width: 5 },
-      { key: 'stageDefinitionsRepeatableSerial', header: 'RepeatableSerial',  width: 5 },
-      { key: 'stageDefinitionsRepeatableParallel', header: 'RepeatableParallel', width: 5 },
-      { key: 'stageDefinitionsIsMandatory', header: 'IsMandatory', width: 5 },
-      { key: 'stageDefinitionsActivationAutomatic', header: 'ActivationAutomatic', width: 5 },
-      { key: 'stageDefinitionsActivationManual', header: 'ActivationManual', width: 5 },
-      { key: 'stageDefinitionsActivationExpression', header: 'ActivationExpression', width: 5 },
-      { key: 'stageDefinitionsManualActivationExpression', header: 'ManualActivationExpression', width: 5 },
-      { key: 'stageDefinitionsNewEntityDefinition', header: 'NewEntityDefinition', width: 5 },
-      { key: 'stageDefinitionsNewEntityAttachPath', header: 'NewEntityAttachPath', width: 5 },
-      { key: 'stageDefinitionsExternalId', header: 'ExternalId', width: 5 },
-      { key: 'stageDefinitionsDynamicDescriptionPath', header: 'DynamicDescriptionPath', width: 5 },
-      { key: 'stageDefinitionsAvgNrHumanTaskDefinitions', header: 'AvgNrHumanTaskDefinitions', width: 5 },
-      { key: 'stageDefinitionsAvgNrAutomatedTaskDefinitions', header: 'AvgNrAutomatedTaskDefinitions', width: 5 },
-      { key: 'stageDefinitionsAvgNrDualTaskDefinitions', header: 'AvgNrDualTaskDefinitions', width: 5 },
-      { key: 'stageDefinitionsAvgNrSentryDefinitions', header: 'AvgNrSentryDefinitions', width: 5 },
-      { key: 'stageDefinitionsAvgNrHttpHookDefinitions', header: 'AvgNrHttpHookDefinitions', width: 5 },
-      { key: 'humanTaskDefinitionsNr', header: 'Nr', width: 5, group:'HumanTaskDefinitions'},
-      { key: 'humanTaskDefinitionsOwnerPath', header: 'OwnerPath', width: 5 },
-      { key: 'humanTaskDefinitionsRepeatableOnce', header: 'RepeatableOnce', width: 5 },
-      { key: 'humanTaskDefinitionsRepeatableSerial', header: 'RepeatableSerial', width: 5 },
-      { key: 'humanTaskDefinitionsRepeatableParallel', header: 'RepeatableParallel', width: 5 },
-      { key: 'humanTaskDefinitionsIsMandatory', header: 'IsMandatory', width: 5 },
-      { key: 'humanTaskDefinitionsActivationAutomatic', header: 'ActivationAutomatic', width: 5 },
-      { key: 'humanTaskDefinitionsActivationManual', header: 'ActivationManual', width: 5 },
-      { key: 'humanTaskDefinitionsActivationExpression', header: 'ActivationExpression', width: 5 },
-      { key: 'humanTaskDefinitionsManualActivationExpression', header: 'ManualActivationExpression', width: 5 },
-      { key: 'humanTaskDefinitionsNewEntityDefinition', header: 'NewEntityDefinition', width: 5 },
-      { key: 'humanTaskDefinitionsNewEntityAttachPath', header: 'NewEntityAttachPath', width: 5 },
-      { key: 'humanTaskDefinitionsExternalId', header: 'ExternalId', width: 5 },
-      { key: 'humanTaskDefinitionsDynamicDescriptionPath', header: 'DynamicDescriptionPath', width: 5 },
-      { key: 'humanTaskDefinitionsFootnote', header: 'Footnote', width: 5 },
-      { key: 'humanTaskDefinitionsAvgNrTaskParamDefinitions', header: 'AvgNrTaskParamDefinitions', width: 5 },
-      { key: 'humanTaskDefinitionsAvgNrTaskParamDefinitionsIsMandatory', header: 'AvgNrTaskParamDefinitionsIsMandatory', width: 5 },
-      { key: 'humanTaskDefinitionsAvgNrTaskParamDefinitionsIsReadOnly', header: 'AvgNrTaskParamDefinitionsIsReadOnly', width: 5 },
-      { key: 'humanTaskDefinitionsAvgNrSentryDefinitions', header: 'AvgNrSentryDefinitions', width: 5 },
-      { key: 'humanTaskDefinitionsAvgNrHttpHookDefinitions', header: 'AvgNrHttpHookDefinitions', width: 5 },
-      { key: 'humanTaskDefinitionsDueDatePath', header: 'DueDatePath', width: 5 },
-      { key: 'automatedTaskDefinitionsNr', header: 'Nr', width: 5 },
-      { key: 'automatedTaskDefinitionsOwnerPath', header: 'OwnerPath', width: 5, group: 'AutomatedTaskDefinitions' },
-      { key: 'automatedTaskDefinitionsRepeatableOnce', header: 'RepeatableOnce', width: 5 },
-      { key: 'automatedTaskDefinitionsRepeatableSerial', header: 'RepeatableSerial', width: 5 },
-      { key: 'automatedTaskDefinitionsRepeatableParallel', header: 'RepeatableParallel', width: 5 },
-      { key: 'automatedTaskDefinitionsIsMandatory', header: 'IsMandatory', width: 5 },
-      { key: 'automatedTaskDefinitionsActivationAutomatic', header: 'ActivationAutomatic', width: 5 },
-      { key: 'automatedTaskDefinitionsActivationManual', header: 'ActivationManual', width: 5 },
-      { key: 'automatedTaskDefinitionsActivationExpression', header: 'ActivationExpression', width: 5 },
-      { key: 'automatedTaskDefinitionsManualActivationExpression', header: 'ManualActivationExpression', width: 5 },
-      { key: 'automatedTaskDefinitionsNewEntityDefinition', header: 'NewEntityDefinition', width: 5 },
-      { key: 'automatedTaskDefinitionsNewEntityAttachPath', header: 'NewEntityAttachPath', width: 5 },
-      { key: 'automatedTaskDefinitionsExternalId', header: 'ExternalId', width: 5 },
-      { key: 'automatedTaskDefinitionsDynamicDescriptionPath', header: 'DynamicDescriptionPath', width: 5 },
-      { key: 'automatedTaskDefinitionsFootnote', header: 'Footnote', width: 5 },
-      { key: 'automatedTaskDefinitionsAvgNrTaskParamDefinitions', header: 'AvgNrTaskParamDefinitions', width: 5 },
-      { key: 'automatedTaskDefinitionsAvgNrTaskParamDefinitionsIsMandatory', header: 'AvgNrTaskParamDefinitionsIsMandatory', width: 5 },
-      { key: 'automatedTaskDefinitionsAvgNrTaskParamDefinitionsIsReadOnly', header: 'AvgNrTaskParamDefinitionsIsReadOnly', width: 5 },
-      { key: 'automatedTaskDefinitionsAvgNrSentryDefinitions', header: 'AvgNrSentryDefinitions', width: 5 },
-      { key: 'automatedTaskDefinitionsAvgNrHttpHookDefinitions', header: 'AvgNrHttpHookDefinitions', width: 5 },
-      { key: 'automatedTaskDefinitionsAutomaticCompleteOnPath', header: 'AutomaticCompleteOnPath', width: 5 },
-      { key: 'dualTaskDefinitionsNr', header: 'Nr', width: 5, group: 'DualTaskDefinitions'},
-      { key: 'dualTaskDefinitionsOwnerPath', header: 'OwnerPath', width: 5 },
-      { key: 'dualTaskDefinitionsRepeatableOnce', header: 'RepeatableOnce', width: 5 },
-      { key: 'dualTaskDefinitionsRepeatableSerial', header: 'RepeatableSerial', width: 5 },
-      { key: 'dualTaskDefinitionsRepeatableParallel', header: 'RepeatableParallel', width: 5 },
-      { key: 'dualTaskDefinitionsIsMandatory', header: 'IsMandatory', width: 5 },
-      { key: 'dualTaskDefinitionsActivationAutomatic', header: 'ActivationAutomatic', width: 5 },
-      { key: 'dualTaskDefinitionsActivationManual', header: 'ActivationManual', width: 5 },
-      { key: 'dualTaskDefinitionsActivationExpression', header: 'ActivationExpression', width: 5 },
-      { key: 'dualTaskDefinitionsManualActivationExpression', header: 'ManualActivationExpression', width: 5 },
-      { key: 'dualTaskDefinitionsNewEntityDefinition', header: 'NewEntityDefinition', width: 5 },
-      { key: 'dualTaskDefinitionsNewEntityAttachPath', header: 'NewEntityAttachPath', width: 5 },
-      { key: 'dualTaskDefinitionsExternalId', header: 'ExternalId', width: 5 },
-      { key: 'dualTaskDefinitionsDynamicDescriptionPath', header: 'DynamicDescriptionPath', width: 5 },
-      { key: 'dualTaskDefinitionsFootnote', header: 'Footnote', width: 5 },
-      { key: 'dualTaskDefinitionsAvgNrTaskParamDefinitions', header: 'AvgNrTaskParamDefinitions', width: 5 },
-      { key: 'dualTaskDefinitionsAvgNrTaskParamDefinitionsIsMandatory', header: 'AvgNrTaskParamDefinitionsIsMandatory', width: 5 },
-      { key: 'dualTaskDefinitionsAvgNrTaskParamDefinitionsIsReadOnly', header: 'AvgNrTaskParamDefinitionsIsReadOnly', width: 5 },
-      { key: 'dualTaskDefinitionsAvgNrSentryDefinitions', header: 'AvgNrSentryDefinitions', width: 5 },
-      { key: 'dualTaskDefinitionsAvgNrHttpHookDefinitions', header: 'AvgNrHttpHookDefinitions', width: 5 },
-      { key: 'dualTaskDefinitionsDueDatePath', header: 'DueDatePath', width: 5 },
-      { key: 'dualTaskDefinitionsAutomaticCompleteOnPath', header: 'AutomaticCompleteOnPath', width: 5 },
-      { key: 'dualTaskDefinitionsAvgNrTaskParamDefinitionsHumanPart', header: 'AvgNrTaskParamDefinitionsHumanPart', width: 5 },
-      { key: 'dualTaskDefinitionsAvgNrTaskParamDefinitionsAutomatedPart', header: 'AvgNrTaskParamDefinitionsAutomatedPart', width: 5 },
-      { key: 'sentryDefinitionsNr', header: 'Nr', width: 5, group: 'SentryDefinitions' },
-      { key: 'sentryDefinitionsAvgNrPreconditions', header: 'AvgNrPreconditions', width: 5 },
-      { key: 'sentryDefinitionsAvgNrExpressionsPerPrecondition', header: 'AvgNrExpressionsPerPrecondition', width: 5 },
-      { key: 'httpHookDefinitionsNr', header: 'Nr', width: 5, group: 'HttpHookDefinitions'},
-      { key: 'httpHookDefinitionsMethodGET', header: 'MethodGET', width: 5},
-      { key: 'httpHookDefinitionsMethodPOST', header: 'MethodPOST', width: 5 },
-      { key: 'httpHookDefinitionsMethodPUT', header: 'MethodPUT', width: 5 },
-      { key: 'httpHookDefinitionsMethodDEL', header: 'MethodDEL', width: 5 },
-      { key: 'httpHookDefinitionsFailureMessage', header: 'FailureMessage', width: 5 },
-      { key: 'httpHookDefinitionsOnAvailable', header: 'OnAvailable', width: 5 },
-      { key: 'httpHookDefinitionsOnEnable', header: 'OnEnable', width: 5 },
-      { key: 'httpHookDefinitionsOnActivate', header: 'OnActivate', width: 5 },
-      { key: 'httpHookDefinitionsOnComplete', header: 'OnComplete', width: 5 },
-      { key: 'httpHookDefinitionsOnTerminate', header: 'OnTerminate', width: 5 },
-      { key: 'httpHookDefinitionsOnActivateHumanPart', header: 'OnActivateHumanPart', width: 5 },
-      { key: 'httpHookDefinitionsOnCompleteHumanPart', header: 'OnCompleteHumanPart', width: 5 },
-      { key: 'httpHookDefinitionsOnActivateAutomatedPart', header: 'OnActivateAutomatedPart', width: 5 },
-      { key: 'httpHookDefinitionsOnCompleteAutomatedPart', header: 'OnCompleteAutomatedPart', width: 5 },
-      { key: 'actionsNr', header: 'Nr', width: 5, group: 'Actions' },
-      { key: 'actionsActivateStage', header: 'ActivateStage', width: 5 },
-      { key: 'actionsCompleteStage', header: 'CompleteStage', width: 5 },
-      { key: 'actionsActivateHumanTask', header: 'ActivateHumanTask', width: 5 },
-      { key: 'actionsActivateDualTask', header: 'ActivateDualTask', width: 5 },
-      { key: 'actionsCompleteHumanTask', header: 'CompleteHumanTask', width: 5 },
-      { key: 'actionsCompleteAutomatedTask', header: 'CompleteAutomatedTask', width: 5 },
-      { key: 'actionsCompleteDualTaskHumanPart', header: 'CompleteDualTaskHumanPart', width: 5 },
-      { key: 'actionsCompleteDualTaskAutomatedPart', header: 'CompleteDualTaskAutomatedPart', width: 5 },
-      { key: 'actionsCorrectHumanTask', header: 'CorrectHumanTask', width: 5 },
-      { key: 'actionsCorrectDualTaskHumanPart', header: 'CorrectDualTaskHumanPart', width: 5 },
-      { key: 'actionsCreateAlert', header: 'CreateAlert', width: 5 },
-      { key: 'actionsBreakpoint', header: 'Breakpoint', width: 5 },
-    ]
-    worksheet.columns = columns;
-    worksheet.getRow(2).values = worksheet.getRow(1).values;
-    worksheet.getRow(1).values = [];
-    worksheet.views = [{state: 'frozen', xSplit: 6, ySplit: 2}];
-
-    function toColumnName(num) {
-      for (var ret = '', a = 1, b = 26; (num -= a) >= 0; a = b, b *= 26) {
-        ret = String.fromCharCode(parseInt((num % b) / a) + 65) + ret;
-      }
-      return ret;
-    }
-
-    function mergeCells(worksheet, from, to, name){
-      let fromCell = toColumnName(from)+'1';
-      let toCell = toColumnName(to)+'1';
-      worksheet.mergeCells(fromCell+':'+toCell);
-      worksheet.getCell(fromCell).value = name;
-    }
-
-    function mergeFirstRowColumns(worksheet, columns){
-      let groupName = null;
-      let groupFrom = null;
-      let groupTo = null;
-      columns.forEach((column, i)=>{      
-        if(column.group){        
-          if(groupName)
-            mergeCells(worksheet, groupFrom+1, groupTo+1, groupName)        
-          groupName = column.group;
-          groupFrom = i;   
-          groupTo = i;             
-        }
-        groupTo = i;  
-        if(i == columns.length-1)
-          mergeCells(worksheet, groupFrom+1, groupTo+1, groupName) 
-      });
-    }
-
-    mergeFirstRowColumns(worksheet, columns);
-
-    const fontTemplate = {
-      color: { argb: 'FFFFFF' },
-      size: 14,
-      bold:true
-    };
-    const fontTemplate2 = {
-      color: { argb: 'FFFFFF' }
-    };
-    const fillTemplate = {
-      type: 'pattern',
-      pattern:'solid',
-      fgColor:{argb:'FF5733'}
-    }
-    worksheet.getRow(1).fill = fillTemplate;
-    worksheet.getRow(1).font = fontTemplate;
-    worksheet.getRow(2).fill = fillTemplate;
-    worksheet.getRow(2).font = fontTemplate2;
-    worksheet.getRow(2).alignment = { textRotation: 45 };
-    worksheet.autoFilter = 'A2:AAA2';
-    for(let commit of commits){
-      for(let file of commit.files){
-
-        let ad = null
-        if(file.result && file.result.attributeDefinitions)
-          ad = file.result.attributeDefinitions;        
-        let dad = null
-        if(file.result && file.result.derivedAttributeDefinitions)
-          dad = file.result.derivedAttributeDefinitions;        
-        let ed = null
-        if(file.result && file.result.entityDefinitions)
-          ed = file.result.entityDefinitions;
-        let cd = null
-        if(file.result && file.result.caseDefinition)
-          cd = file.result.caseDefinition;
-        let ssd = null
-        if(file.result && file.result.summarySectionDefinitions)
-          ssd = file.result.summarySectionDefinitions;
-        let sd = null
-        if(file.result && file.result.stageDefinitions)
-          sd = file.result.stageDefinitions;
-        let htd = null
-        if(file.result && file.result.humanTaskDefinitions)
-          htd = file.result.humanTaskDefinitions;
-        let atd = null
-        if(file.result && file.result.automatedTaskDefinitions)
-          atd = file.result.automatedTaskDefinitions;
-        let dtd = null
-        if(file.result && file.result.dualTaskDefinitions)
-          dtd = file.result.dualTaskDefinitions;
-        let syd = null
-        if(file.result && file.result.sentryDefinitions)
-          syd = file.result.sentryDefinitions;
-        let hhd = null
-        if(file.result && file.result.httpHookDefinitions)
-          hhd = file.result.httpHookDefinitions;
-        let a = null
-        if(file.result && file.result.actions)
-          a = file.result.actions;
-
-        worksheet.addRow({
-          commitHash: commit.hash,
-          commitDate: commit.date,
-          commitAuthorName: commit.authorName,
-          commitAuthorEmail: commit.authorEmail,
-          commitMessage: commit.message,
-          case: file.case,
-          attributeDefinitionsNr: ad ? ad.nr : '',
-          attributeDefinitionsTypeLink: ad ? ad.typeLink : '',
-          attributeDefinitionsTypeLinkUser: ad ? ad.typeLinkUser : '',
-          attributeDefinitionsTypeLinkEntityDefinition: ad ? ad.typeLinkEntityDefinition : '',
-          attributeDefinitionsTypeNoType: ad ? ad.typeNoType : '',
-          attributeDefinitionsTypeString: ad ? ad.typeString : '',
-          attributeDefinitionsTypeLongText: ad ? ad.typeLongText : '',
-          attributeDefinitionsTypeBoolean: ad ? ad.typeBoolean : '',
-          attributeDefinitionsTypeNumber: ad ? ad.typeNumber : '',
-          attributeDefinitionsTypeNumberMin: ad ? ad.typeNumberMin : '',
-          attributeDefinitionsTypeNumberMax: ad ? ad.typeNumberMax : '',
-          attributeDefinitionsTypeEnumeration: ad ? ad.typeEnumeration : '',
-          attributeDefinitionsTypeEnumerationOptions: ad ? ad.typeEnumerationOptions : '',
-          attributeDefinitionsTypeEnumerationOptionsAvg: ad ? ad.typeEnumerationOptionsAvg : '',
-          attributeDefinitionsTypeDate: ad ? ad.typeDate : '',
-          attributeDefinitionsTypeDateBefore: ad ? ad.typeDateBefore : '',
-          attributeDefinitionsTypeDateAfter: ad ? ad.typeDateAfter : '',
-          attributeDefinitionsTypeJson: ad ? ad.typeJson : '',
-          attributeDefinitionsMultiplicityAny: ad ? ad.multiplicityAny : '',
-          attributeDefinitionsMultiplicityExactlyOne: ad ? ad.multiplicityExactlyOne : '',
-          attributeDefinitionsMultiplicityMaximalOne: ad ? ad.multiplicityMaximalOne : '',
-          attributeDefinitionsMultiplicityAtLeastOne: ad ? ad.multiplicityAtLeastOne : '',
-          attributeDefinitionsDefaultValues: ad ? ad.defaultValues : '',
-          attributeDefinitionsAdditionalDescription: ad ? ad.additionalDescription : '',
-          attributeDefinitionsUiReference: ad ? ad.uiReference : '',
-          attributeDefinitionsUiReferenceLineDiagram: ad ? ad.uiReferenceLineDiagram : '',
-          attributeDefinitionsUiReferenceColors: ad ? ad.uiReferenceColors : '',
-          attributeDefinitionsUiReferenceConditionalMultiplicity: ad ? ad.uiReferenceConditionalMultiplicity : '',
-          attributeDefinitionsUiReferencePatientQuestionnaires: ad ? ad.uiReferencePatientQuestionnaires : '',
-          attributeDefinitionsUiReferenceLink: ad ? ad.uiReferenceLink : '',
-          attributeDefinitionsUiReferencePrivateLink: ad ? ad.uiReferencePrivateLink : '',
-          attributeDefinitionsUiReferenceSvg: ad ? ad.uiReferenceSvg : '',
-          derivedAttributeDefinitionsNr: dad ? dad.nr : '',
-          derivedAttributeDefinitionsExplicitType: dad ? dad.explicitType : '',
-          derivedAttributeDefinitionsAdditionalDescription: dad ? dad.additionalDescription : '',
-          derivedAttributeDefinitionsUiReference: dad ? dad.uiReference : '',
-          derivedAttributeDefinitionsUiReferenceLineDiagram: dad ? dad.uiReferenceLineDiagram : '',
-          derivedAttributeDefinitionsUiReferenceColors: dad ? dad.uiReferenceColors : '',
-          derivedAttributeDefinitionsUiReferenceSvg: dad ? dad.uiReferenceSvg : '',
-          entityDefinitionsNr: ed ? ed.nr : '',
-          entityDefinitionsAvgNrAttributeDefinitions: ed ? ed.avgNrAttributeDefinitions : '',
-          entityDefinitionsAvgNrDerivedAttributeDefinitions: ed ? ed.avgNrDerivedAttributeDefinitions : '',
-          caseDefinitionHasClientPath: cd ? cd.hasClientPath : '',
-          caseDefinitionHasOwnerPath: cd ? cd.hasOwnerPath : '',
-          caseDefinitionHasNewEntityDefinitionId: cd ? cd.hasNewEntityDefinitionId : '',
-          caseDefinitionHasNewEntityAttachPath: cd ? cd.hasNewEntityAttachPath : '',
-          caseDefinitionHasNotesDefaultValue: cd ? cd.hasNotesDefaultValue : '',
-          caseDefinitionHasOnAvailableHTTPHookURL: cd ? cd.hasOnAvailableHTTPHookURL : '',
-          caseDefinitionHasOnEnableHttpHTTPHookURL: cd ? cd.hasOnEnableHttpHTTPHookURL : '',
-          caseDefinitionHasOnActivateHTTPHookURL: cd ? cd.hasOnActivateHTTPHookURL : '',
-          caseDefinitionHasOnCompleteHTTPHookURL: cd ? cd.hasOnCompleteHTTPHookURL : '',
-          caseDefinitionHasOnTerminateHTTPHookURL: cd ? cd.hasOnTerminateHTTPHookURL : '',
-          caseDefinitionHasOnDeleteHTTPHookURL: cd ? cd.hasOnDeleteHTTPHookURL : '',
-          summarySectionDefinitionsNr: ssd ? ssd.nr : '',
-          summarySectionDefinitionsAvgNrSummaryParamDefinitions: ssd ? ssd.avgNrSummaryParamDefinitions : '',
-          summarySectionDefinitionsPositionLeft: ssd ? ssd.positionLeft : '',
-          summarySectionDefinitionsPositionCenter: ssd ? ssd.positionCenter : '',
-          summarySectionDefinitionsPositionRight: ssd ? ssd.positionRight : '',
-          summarySectionDefinitionsPositionStretched: ssd ? ssd.positionStretched : '',
-          stageDefinitionsNr: sd ? sd.nr : '',
-          stageDefinitionsOwnerPath: sd ? sd.ownerPath : '',
-          stageDefinitionsRepeatableOnce: sd ? sd.repeatableOnce : '',
-          stageDefinitionsRepeatableSerial: sd ? sd.repeatableSerial : '',
-          stageDefinitionsRepeatableParallel: sd ? sd.repeatableParallel : '',
-          stageDefinitionsIsMandatory: sd ? sd.isMandatory : '',
-          stageDefinitionsActivationAutomatic: sd ? sd.activationAutomatic : '',
-          stageDefinitionsActivationManual: sd ? sd.activationManual : '',
-          stageDefinitionsActivationExpression: sd ? sd.activationExpression : '',
-          stageDefinitionsManualActivationExpression: sd ? sd.manualActivationExpression : '',
-          stageDefinitionsNewEntityDefinition: sd ? sd.newEntityDefinition : '',
-          stageDefinitionsNewEntityAttachPath: sd ? sd.newEntityAttachPath : '',
-          stageDefinitionsExternalId: sd ? sd.externalId : '',
-          stageDefinitionsDynamicDescriptionPath: sd ? sd.dynamicDescriptionPath : '',
-          stageDefinitionsAvgNrHumanTaskDefinitions: sd ? sd.avgNrHumanTaskDefinitions : '',
-          stageDefinitionsAvgNrAutomatedTaskDefinitions: sd ? sd.avgNrAutomatedTaskDefinitions : '',
-          stageDefinitionsAvgNrDualTaskDefinitions: sd ? sd.avgNrDualTaskDefinitions : '',
-          stageDefinitionsAvgNrSentryDefinitions: sd ? sd.avgNrSentryDefinitions : '',
-          stageDefinitionsAvgNrHttpHookDefinitions: sd ? sd.avgNrHttpHookDefinitions : '',
-          humanTaskDefinitionsNr: htd ? htd.nr : '',
-          humanTaskDefinitionsOwnerPath: htd ? htd.ownerPath : '',
-          humanTaskDefinitionsRepeatableOnce: htd ? htd.repeatableOnce : '',
-          humanTaskDefinitionsRepeatableSerial: htd ? htd.repeatableSerial : '',
-          humanTaskDefinitionsRepeatableParallel: htd ? htd.repeatableParallel : '',
-          humanTaskDefinitionsIsMandatory: htd ? htd.isMandatory : '',
-          humanTaskDefinitionsActivationAutomatic: htd ? htd.activationAutomatic : '',
-          humanTaskDefinitionsActivationManual: htd ? htd.activationManual : '',
-          humanTaskDefinitionsActivationExpression: htd ? htd.activationExpression : '',
-          humanTaskDefinitionsManualActivationExpression: htd ? htd.manualActivationExpression : '',
-          humanTaskDefinitionsNewEntityDefinition: htd ? htd.newEntityDefinition : '',
-          humanTaskDefinitionsNewEntityAttachPath: htd ? htd.newEntityAttachPath : '',
-          humanTaskDefinitionsExternalId: htd ? htd.externalId : '',
-          humanTaskDefinitionsDynamicDescriptionPath: htd ? htd.dynamicDescriptionPath : '',
-          humanTaskDefinitionsFootnote: htd ? htd.footnote : '',
-          humanTaskDefinitionsAvgNrTaskParamDefinitions: htd ? htd.avgNrTaskParamDefinitions : '',
-          humanTaskDefinitionsAvgNrTaskParamDefinitionsIsMandatory: htd ? htd.avgNrTaskParamDefinitionsIsMandatory : '',
-          humanTaskDefinitionsAvgNrTaskParamDefinitionsIsReadOnly: htd ? htd.avgNrTaskParamDefinitionsIsReadOnly : '',
-          humanTaskDefinitionsAvgNrSentryDefinitions: htd ? htd.avgNrSentryDefinitions : '',
-          humanTaskDefinitionsAvgNrHttpHookDefinitions: htd ? htd.avgNrHttpHookDefinitions : '',
-          humanTaskDefinitionsDueDatePath: htd ? htd.dueDatePath : '',
-          automatedTaskDefinitionsNr: atd ? atd.nr : '',
-          automatedTaskDefinitionsOwnerPath: atd ? atd.ownerPath : '',
-          automatedTaskDefinitionsRepeatableOnce: atd ? atd.repeatableOnce : '',
-          automatedTaskDefinitionsRepeatableSerial: atd ? atd.repeatableSerial : '',
-          automatedTaskDefinitionsRepeatableParallel: atd ? atd.repeatableParallel : '',
-          automatedTaskDefinitionsIsMandatory: atd ? atd.isMandatory : '',
-          automatedTaskDefinitionsActivationAutomatic: atd ? atd.activationAutomatic : '',
-          automatedTaskDefinitionsActivationManual: atd ? atd.activationManual : '',
-          automatedTaskDefinitionsActivationExpression: atd ? atd.activationExpression : '',
-          automatedTaskDefinitionsManualActivationExpression: atd ? atd.manualActivationExpression : '',
-          automatedTaskDefinitionsNewEntityDefinition: atd ? atd.newEntityDefinition : '',
-          automatedTaskDefinitionsNewEntityAttachPath: atd ? atd.newEntityAttachPath : '',
-          automatedTaskDefinitionsExternalId: atd ? atd.externalId : '',
-          automatedTaskDefinitionsDynamicDescriptionPath: atd ? atd.dynamicDescriptionPath : '',
-          automatedTaskDefinitionsFootnote: atd ? atd.footnote : '',
-          automatedTaskDefinitionsAvgNrTaskParamDefinitions: atd ? atd.avgNrTaskParamDefinitions : '',
-          automatedTaskDefinitionsAvgNrTaskParamDefinitionsIsMandatory: atd ? atd.avgNrTaskParamDefinitionsIsMandatory : '',
-          automatedTaskDefinitionsAvgNrTaskParamDefinitionsIsReadOnly: atd ? atd.avgNrTaskParamDefinitionsIsReadOnly : '',
-          automatedTaskDefinitionsAvgNrSentryDefinitions: atd ? atd.avgNrSentryDefinitions : '',
-          automatedTaskDefinitionsAvgNrHttpHookDefinitions: atd ? atd.avgNrHttpHookDefinitions : '',
-          automatedTaskDefinitionsAutomaticCompleteOnPath: atd ? atd.automaticCompleteOnPath : '',
-          dualTaskDefinitionsNr: dtd ? dtd.nr : '',
-          dualTaskDefinitionsOwnerPath: dtd ? dtd.ownerPath : '',
-          dualTaskDefinitionsRepeatableOnce: dtd ? dtd.repeatableOnce : '',
-          dualTaskDefinitionsRepeatableSerial: dtd ? dtd.repeatableSerial : '',
-          dualTaskDefinitionsRepeatableParallel: dtd ? dtd.repeatableParallel : '',
-          dualTaskDefinitionsIsMandatory: dtd ? dtd.isMandatory : '',
-          dualTaskDefinitionsActivationAutomatic: dtd ? dtd.activationAutomatic : '',
-          dualTaskDefinitionsActivationManual: dtd ? dtd.activationManual : '',
-          dualTaskDefinitionsActivationExpression: dtd ? dtd.activationExpression : '',
-          dualTaskDefinitionsManualActivationExpression: dtd ? dtd.manualActivationExpression : '',
-          dualTaskDefinitionsNewEntityDefinition: dtd ? dtd.newEntityDefinition : '',
-          dualTaskDefinitionsNewEntityAttachPath: dtd ? dtd.newEntityAttachPath : '',
-          dualTaskDefinitionsExternalId: dtd ? dtd.externalId : '',
-          dualTaskDefinitionsDynamicDescriptionPath: dtd ? dtd.dynamicDescriptionPath : '',
-          dualTaskDefinitionsFootnote: dtd ? dtd.footnote : '',
-          dualTaskDefinitionsAvgNrTaskParamDefinitions: dtd ? dtd.avgNrTaskParamDefinitions : '',
-          dualTaskDefinitionsAvgNrTaskParamDefinitionsIsMandatory: dtd ? dtd.avgNrTaskParamDefinitionsIsMandatory : '',
-          dualTaskDefinitionsAvgNrTaskParamDefinitionsIsReadOnly: dtd ? dtd.avgNrTaskParamDefinitionsIsReadOnly : '',
-          dualTaskDefinitionsAvgNrSentryDefinitions: dtd ? dtd.avgNrSentryDefinitions : '',
-          dualTaskDefinitionsAvgNrHttpHookDefinitions: dtd ? dtd.avgNrHttpHookDefinitions : '',
-          dualTaskDefinitionsDueDatePath: dtd ? dtd.dueDatePath : '',
-          dualTaskDefinitionsAutomaticCompleteOnPath: dtd ? dtd.automaticCompleteOnPath : '',
-          dualTaskDefinitionsAvgNrTaskParamDefinitionsHumanPart: dtd ? dtd.avgNrTaskParamDefinitionsHumanPart : '',
-          dualTaskDefinitionsAvgNrTaskParamDefinitionsAutomatedPart: dtd ? dtd.avgNrTaskParamDefinitionsAutomatedPart : '',
-          sentryDefinitionsNr: syd ? syd.nr : '',
-          sentryDefinitionsAvgNrPreconditions: syd ? syd.avgNrPreconditions : '',
-          sentryDefinitionsAvgNrExpressionsPerPrecondition: syd ? syd.avgNrExpressionsPerPrecondition : '',
-          httpHookDefinitionsNr: hhd ? hhd.nr : '',
-          httpHookDefinitionsMethodGET: hhd ? hhd.methodGET : '',
-          httpHookDefinitionsMethodPOST: hhd ? hhd.methodPOST : '',
-          httpHookDefinitionsMethodPUT: hhd ? hhd.methodPUT : '',
-          httpHookDefinitionsMethodDEL: hhd ? hhd.methodDEL : '',
-          httpHookDefinitionsFailureMessage: hhd ? hhd.failureMessage : '',
-          httpHookDefinitionsOnAvailable: hhd ? hhd.onAvailable : '',
-          httpHookDefinitionsOnEnable: hhd ? hhd.onEnable : '',
-          httpHookDefinitionsOnActivate: hhd ? hhd.onActivate : '',
-          httpHookDefinitionsOnComplete: hhd ? hhd.onComplete : '',
-          httpHookDefinitionsOnTerminate: hhd ? hhd.onTerminate : '',
-          httpHookDefinitionsOnActivateHumanPart: hhd ? hhd.onActivateHumanPart : '',
-          httpHookDefinitionsOnCompleteHumanPart: hhd ? hhd.onCompleteHumanPart : '',
-          httpHookDefinitionsOnActivateAutomatedPart: hhd ? hhd.onActivateAutomatedPart : '',
-          httpHookDefinitionsOnCompleteAutomatedPart: hhd ? hhd.onCompleteAutomatedPart : '',
-          actionsNr: a ? a.nr : '',
-          actionsActivateStage: a ? a.activateStage : '',
-          actionsCompleteStage: a ? a.completeStage : '',
-          actionsActivateHumanTask: a ? a.activateHumanTask : '',
-          actionsActivateDualTask: a ? a.activateDualTask : '',
-          actionsCompleteHumanTask: a ? a.completeHumanTask : '',
-          actionsCompleteAutomatedTask: a ? a.completeAutomatedTask : '',
-          actionsCompleteDualTaskHumanPart: a ? a.completeDualTaskHumanPart : '',
-          actionsCompleteDualTaskAutomatedPart: a ? a.completeDualTaskAutomatedPart : '',
-          actionsCorrectHumanTask: a ? a.correctHumanTask : '',
-          actionsCorrectDualTaskHumanPart: a ? a.correctDualTaskHumanPart : '',
-          actionsCreateAlert: a ? a.createAlert : '',
-          actionsBreakpoint: a ? a.breakpoint : '',
-        })
-      }
-      let to = worksheet.lastRow._number;
-      let from = to - (commit.files.length-1);
-      worksheet.mergeCells('A'+from+':A'+to);
-      worksheet.mergeCells('B'+from+':B'+to);
-      worksheet.mergeCells('C'+from+':C'+to);
-      worksheet.mergeCells('D'+from+':D'+to);
-      worksheet.mergeCells('E'+from+':E'+to);
-      worksheet.getCell('A'+from).alignment = {vertical:'middle'};
-      worksheet.getCell('B'+from).alignment = {vertical:'middle'};
-      worksheet.getCell('C'+from).alignment = {vertical:'middle'};
-      worksheet.getCell('D'+from).alignment = {vertical:'middle'};
-      worksheet.getCell('E'+from).alignment = {vertical:'middle'}; //, wrapText: true};
-    }
-    console.log('save as *.xlsx')
-    await workbook.xlsx.writeFile(filename+'.xlsx');
+    let ema = new ExcelAnalytics();
+    ema.addTab(commits);
+    ema.writeFile(filename);
   }
 
   static async tryToAnalyzeFile(){
     return await this.analyzeFile('app/importer/studyrelease.case.groningen.cs2.xml');
   }
 
-  static async analyzeFile(filePath){   
+  static async analyzeFile(filePath, previousFileResult, commitNr){   
     let result = {};
     //try{
       //const filePath = 'app/importer/studyrelease.case.groningen.cs2.xml';
@@ -772,6 +376,48 @@ module.exports = class ModelAnalytics{
       result.httpHookDefinitions = this.analyzeHttpHookDefinitions(Workspace);
       console.log('            ... execution actions!')
       result.actions = this.analyzeActionsExecution(xml.SACMDefinition.Execution);
+      console.log('            ... compare with previous!')
+      let changes = {
+        isStructural: false,
+        structuralAcc: 0,
+        isAdaptation: false,
+        adaptationAcc: 0,
+        isRenaming: false,
+        renamingAcc: 0
+      }
+      if(commitNr==0){
+        changes.isStructural = true;
+        changes.structuralAcc++;
+      }
+      if(previousFileResult){
+        let previousResult = JSON.parse(JSON.stringify(previousFileResult));   
+        let previousChanges = previousResult.changes;     
+        delete previousResult.changes;
+
+        changes.structuralAcc = previousChanges.structuralAcc;
+        changes.adaptationAcc = previousChanges.adaptationAcc;
+        changes.renamingAcc = previousChanges.renamingAcc;
+        
+        /** Detect Structural Change */
+        if(result.stageDefinitions.nr != previousResult.stageDefinitions.nr ||
+            result.humanTaskDefinitions.nr != previousResult.humanTaskDefinitions.nr ||
+            result.dualTaskDefinitions.nr != previousResult.dualTaskDefinitions.nr ||
+            result.automatedTaskDefinitions.nr != previousResult.automatedTaskDefinitions.nr){
+            changes.isStructural = true;
+            changes.structuralAcc++;
+
+        /** Detect Adaptation Change */
+        }else if(JSON.stringify(previousResult) != JSON.stringify(result)){
+          changes.isAdaptation = true;
+          changes.adaptationAcc++;
+        
+        /** Detect Simple Changes */
+        }else{
+          changes.isRenaming = true;
+          changes.renamingAcc++;
+        }
+      }
+      result.changes = changes;
       console.log('            ... complete!')
    /*
     }catch(e){
@@ -779,6 +425,10 @@ module.exports = class ModelAnalytics{
     }*/
     return result;
   }
+
+  
+
+
 
 
   static analyzeAttributeDefinitions(Workspace){
@@ -1434,6 +1084,17 @@ module.exports = class ModelAnalytics{
     });
 
     return result;
+  }
+
+  /** DEPRECATED */
+  static analyzeRenaming(Workspace){
+    let map = new Map();
+    if(Workspace.EntityDefinition)
+      Workspace.EntityDefinition.forEach(ed=>{
+        map.set(ed.$.id, ed.$.description);
+      })
+    console.log(map)
+    return {};
   }
 
 }

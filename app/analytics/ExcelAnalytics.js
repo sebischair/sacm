@@ -4,26 +4,26 @@ import winston from 'winston';
 import Excel from 'exceljs';
 import sizeof from 'object-sizeof';
 import fs from 'fs-extra';
-import ModelAnalytics from './ModelAnalytics';
+import GitAnalytics from './GitAnalytics';
 const {gzip, ungzip} = require('node-gzip');
 
-module.exports = class ExcelModelAnalytics extends ModelAnalytics{
+module.exports = class ExcelAnalytics{
 
   
   constructor() {
-    super();
     this.workbook = new Excel.Workbook();
   }
 
   async postAnalytics(){
-
-    let commits = await this.readJSON('modelanalytics1532556405202.plain.json.gz');
+    let filename = 'model.analytics.1533400865279.plain.json.gz';
+    let commits = await this.readJSON(filename);
     console.log('Nr commits to process: '+commits.length);
     
-    commits = commits.reverse();
+    /*
+    //commits = commits.reverse();
     this.addTab(commits, 'All')
 
-    let cases = new Set(this.constructor.translationMap().values()); 
+    let cases = new Set(GitAnalytics.translationMap().values()); 
     //cases = [];
     cases.forEach(c => {
       console.log('Analyzing case '+c);
@@ -43,10 +43,11 @@ module.exports = class ExcelModelAnalytics extends ModelAnalytics{
       });
       this.addTab(filteredCommits, c);      
     });
+    */
 
     this.addOverviewTab(commits);
 
-    await this.writeFile('test');
+    await this.writeFile(filename+'.postprocessed');
   } 
 
 
@@ -122,10 +123,17 @@ module.exports = class ExcelModelAnalytics extends ModelAnalytics{
     const columns = [
       { key: 'commitHash', header: 'Hash', width:40, group: 'Commit'},
       { key: 'commitDate', header: 'Date', width:25},
+      { key: 'commitTimestamp', header: 'Timestamp', width:15},
       { key: 'commitAuthorName', header: 'Author Name', width:5},
       { key: 'commitAuthorEmail', header: 'Author Email', width:5},
       { key: 'commitMessage', header: 'Message', width:10},
       { key: 'case', header: 'Case', width:6},
+      { key: 'changesIsStructural', header: 'isStructural', width:5, group: 'Changes'},
+      { key: 'changesStructuralAcc', header: 'structuralAcc', width:5},
+      { key: 'changesIsAdaptation', header: 'isAdaptation', width:5},
+      { key: 'changesAdaptationAcc', header: 'adaptationAcc', width:5},
+      { key: 'changesIsRenaming', header: 'isRenaming', width:5},
+      { key: 'changesRenamingAcc', header: 'renamingAcc', width:5},
       { key: 'attributeDefinitionsNr', header: 'Nr', width:5, group: 'AttributeDefinitions'},
       { key: 'attributeDefinitionsTypeLink', header: 'TypeLink', width:5},
       { key: 'attributeDefinitionsTypeLinkUser', header: 'TypeLinkUser', width:5},
@@ -305,7 +313,7 @@ module.exports = class ExcelModelAnalytics extends ModelAnalytics{
     worksheet.columns = columns;
     worksheet.getRow(2).values = worksheet.getRow(1).values;
     worksheet.getRow(1).values = [];
-    worksheet.views = [{state: 'frozen', xSplit: 6, ySplit: 2}];
+    worksheet.views = [{state: 'frozen', xSplit: 7, ySplit: 2}];
 
     function toColumnName(num) {
       for (var ret = '', a = 1, b = 26; (num -= a) >= 0; a = b, b *= 26) {
@@ -360,9 +368,22 @@ module.exports = class ExcelModelAnalytics extends ModelAnalytics{
     worksheet.getRow(2).font = fontTemplate2;
     worksheet.getRow(2).alignment = { textRotation: 45 };
     worksheet.autoFilter = 'A2:AAA2';
+
+    function booleanToNr(boolean){
+      if(boolean === true)
+        return 1;
+      else if(boolean === false)
+        return 0;
+      else
+        return boolean;
+    }
+
     for(let commit of commits){
       for(let file of commit.files){
 
+        let ch = null
+        if(file.result && file.result.changes)
+          ch = file.result.changes;   
         let ad = null
         if(file.result && file.result.attributeDefinitions)
           ad = file.result.attributeDefinitions;        
@@ -403,10 +424,17 @@ module.exports = class ExcelModelAnalytics extends ModelAnalytics{
         worksheet.addRow({
           commitHash: commit.hash,
           commitDate: commit.date,
+          commitTimestamp: commit.timestamp,
           commitAuthorName: commit.authorName,
           commitAuthorEmail: commit.authorEmail,
           commitMessage: commit.message,
           case: file.case,
+          changesIsStructural: ch ? booleanToNr(ch.isStructural) : '',
+          changesStructuralAcc: ch ? ch.structuralAcc : '',
+          changesIsAdaptation: ch ? booleanToNr(ch.isAdaptation) : '',
+          changesAdaptationAcc: ch ? ch.adaptationAcc : '',
+          changesIsRenaming: ch ? booleanToNr(ch.isRenaming) : '',
+          changesRenamingAcc: ch ? ch.renamingAcc : '',
           attributeDefinitionsNr: ad ? ad.nr : '',
           attributeDefinitionsTypeLink: ad ? ad.typeLink : '',
           attributeDefinitionsTypeLinkUser: ad ? ad.typeLinkUser : '',
@@ -591,11 +619,14 @@ module.exports = class ExcelModelAnalytics extends ModelAnalytics{
       worksheet.mergeCells('C'+from+':C'+to);
       worksheet.mergeCells('D'+from+':D'+to);
       worksheet.mergeCells('E'+from+':E'+to);
+      worksheet.mergeCells('F'+from+':F'+to);
       worksheet.getCell('A'+from).alignment = {vertical:'middle'};
       worksheet.getCell('B'+from).alignment = {vertical:'middle'};
       worksheet.getCell('C'+from).alignment = {vertical:'middle'};
+      worksheet.getCell('C'+from).numFmt = '#';
       worksheet.getCell('D'+from).alignment = {vertical:'middle'};
-      worksheet.getCell('E'+from).alignment = {vertical:'middle'}; //, wrapText: true};
+      worksheet.getCell('E'+from).alignment = {vertical:'middle'};
+      worksheet.getCell('F'+from).alignment = {vertical:'middle'}; //, wrapText: true};
     }
     
   }
