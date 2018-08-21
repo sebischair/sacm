@@ -26,6 +26,8 @@
 	<User staticId="2182a02ab7db11e784180242ac120009" id="noahs"/>    
     <User staticId="216b6004b7db11e784180242ac120009" id="werners"/>
     <User staticId="21a6d881b7db11e784180242ac120009" id="kuhnl"/>
+    <User staticId="6efffc6e05cb39318544ea1e6d27d026" id="sullivanb"/>
+    <User staticId="254a64551050587fc86287b67c0cf487" id="richardsona"/>	
 
     <Workspace staticId="2c9480885d1737ef015d74deec7f0002" id="Irbll">
 
@@ -727,11 +729,12 @@
 
        <EntityDefinition id="LCS1_DiagnosisNyha"> 
             <AttributeDefinition id="nyha1" type="enumeration" multiplicity="exactlyOne" description="classe funcional NYHA">
-                <EnumerationOption value="0" description="Classe I, No limitació de l'activitat física. L'activitat ordinària no ocasiona excessiva fatiga, palpitacions, dispnea o dolor anginós."/>
-                <EnumerationOption value="1" description="Classe II, Lleugera limitació de l'activitat física. Confortables en repòs. L'activitat ordinària ocasiona fatiga, palpitacions, dispnea o dolor anginós."/>
-                <EnumerationOption value="2" description="Classe III, Marcada limitació de l'activitat física. Confortables en repòs. Activitat física menor que l'ordinària ocasiona fatiga, palpitacions, dispnea o dolor anginós."/>
-                <EnumerationOption value="3" description="Classe IV, Incapacitat per dur a terme qualsevol activitat física sense disconfort. Els símptomes d'insuficiència cardíaca o de síndrome anginós poden estar presents fins i tot en repòs. Si es realitza qualsevol activitat física, el disconfort augmenta."/>
+                <EnumerationOption value="1" description="Classe I, No limitació de l'activitat física. L'activitat ordinària no ocasiona excessiva fatiga, palpitacions, dispnea o dolor anginós."/>
+                <EnumerationOption value="2" description="Classe II, Lleugera limitació de l'activitat física. Confortables en repòs. L'activitat ordinària ocasiona fatiga, palpitacions, dispnea o dolor anginós."/>
+                <EnumerationOption value="3" description="Classe III, Marcada limitació de l'activitat física. Confortables en repòs. Activitat física menor que l'ordinària ocasiona fatiga, palpitacions, dispnea o dolor anginós."/>
+                <EnumerationOption value="4" description="Classe IV, Incapacitat per dur a terme qualsevol activitat física sense disconfort. Els símptomes d'insuficiència cardíaca o de síndrome anginós poden estar presents fins i tot en repòs. Si es realitza qualsevol activitat física, el disconfort augmenta."/>
             </AttributeDefinition>  
+			<DerivedAttributeDefinition id="nyhatotal" expression="number(nyha1,0)" description="NYHA"/> 						
         </EntityDefinition>
 		
 		<EntityDefinition id="LCS1_DiagnosisCodexGold" description="Diagnosis GOLD+CODEX"> 		
@@ -1143,7 +1146,10 @@
 			<AttributeDefinition id="LCS1_PhysicalActivityAH" type="Link.EntityDefinition.LCS1_PhysicalActivity" multiplicity="any" />				
 			<AttributeDefinition id="LCS1_MonitoringPrescriptionHeartPulseAH" type="Link.EntityDefinition.LCS1_MonitoringPrescriptionHeartPulse" multiplicity="any" />							
 			<AttributeDefinition id="LCS1_MonitoringPrescriptionWeightAH" type="Link.EntityDefinition.LCS1_MonitoringPrescriptionWeight" multiplicity="any" />				
-			<AttributeDefinition id="LCS1_MonitoringPrescriptionSP02AH" type="Link.EntityDefinition.LCS1_MonitoringPrescriptionSP02" multiplicity="any" />							
+			<AttributeDefinition id="LCS1_MonitoringPrescriptionSP02AH" type="Link.EntityDefinition.LCS1_MonitoringPrescriptionSP02" multiplicity="any" />	
+			<AttributeDefinition id="LCS1_SocialCareerTask" multiplicity="any" type="Link.EntityDefinition.LCS1_SocialCareerTask" />						
+			<AttributeDefinition id="LCS1_PrimaryCareClinicianTask" multiplicity="any" type="Link.EntityDefinition.LCS1_PrimaryCareClinicianTask"/>						
+			<AttributeDefinition id="LCS1_PrimaryCareNurseTask" multiplicity="any" type="Link.EntityDefinition.LCS1_PrimaryCareNurseTask"/>						
 		</EntityDefinition>				
 		
 		<EntityDefinition id="LCS1_MonitoringPrescriptionWeight">
@@ -1266,13 +1272,22 @@
             <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Data d'inici"/>
             <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="Data de fi"/>       
             <AttributeDefinition id="dailysteps" type="number.min(0).max(100000)" defaultValues="[10000]" multiplicity="exactlyOne" description="Número de passos a fer durant el dia"/>       
-            <AttributeDefinition id="dailylowlevel" type="number.min(0).max(1440)" defaultValues="[60]" multiplicity="exactlyOne" description="Mínim de minuts d'intensitat baixa a fer durant el dia (caminar, bicicleta, nadar)"/>       
-            <AttributeDefinition id="dailymediumlevel" type="number.min(0).max(1440)" defaultValues="[40]" multiplicity="exactlyOne" description="Mínim de minuts d'intensitat intermitja a fer durant el dia (caminar pas ràpid, tasques domèstiques lleugeres, jugar amb nens, passejar mascotes)"/>       			
+            <AttributeDefinition id="dailylowlevel" type="number.min(0).max(1440)" defaultValues="[60]" multiplicity="exactlyOne" description="Mínim de minuts d'intensitat baixa a fer durant el dia (caminar, tasques domèstiques lleugeres, jugar amb nens, passejar mascotes...)"/>       
+            <AttributeDefinition id="dailymediumlevel" type="number.min(0).max(1440)" defaultValues="[40]" multiplicity="exactlyOne" description="Mínim de minuts d'intensitat intermitja a fer durant el dia (caminar pas ràpid, bicileta, nadar...)"/>       			
             <AttributeDefinition id="dailyhighlevel" type="number.min(0).max(1440)" defaultValues="[20]" multiplicity="exactlyOne" description="Mínim de minuts d'intensitat alta a fer durant el dia (footing, tasques domèstiques pesades, senderisme, activitats i esports competitius)"/>         
 			<AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Mesures"/>                 
-        </EntityDefinition> 
-		
-		
+        </EntityDefinition> 		                
+
+		<EntityDefinition id="LCS1_SocialCareerTask">
+            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comentaris" additionalDescription=""/>   			
+		</EntityDefinition>			
+		<EntityDefinition id="LCS1_PrimaryCareClinicianTask">
+            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comentaris" additionalDescription=""/>   			
+		</EntityDefinition>	
+		<EntityDefinition id="LCS1_PrimaryCareNurseTask">
+            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comentaris" additionalDescription=""/>   			
+		</EntityDefinition>			
+				
         <!-- Discharge Definitions -->		
 		<EntityDefinition id="LCS1_Discharge">
 			<AttributeDefinition id="LCS1_DischargeTest" type="Link.EntityDefinition.LCS1_DischargeTest" multiplicity="any"/>									
@@ -1351,7 +1366,8 @@
 				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodexGold.MMRCTotal"/>					
 				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisCodexGold.codextotal"/>		
 				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_CardiacRehabilitation.cr7"/>				
-				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_RespiratoryRehabilitation.rr6"/>				
+				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_RespiratoryRehabilitation.rr6"/>			
+				<SummaryParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisNyha.nyhatotal"/>					
 		</SummarySectionDefinition>
 		
 		<SummarySectionDefinition id="LCS1_Body" description="Diagnosis" position="CENTER">   			
@@ -1377,7 +1393,9 @@
                     <TaskParamDefinition path="LCS1_Settings.CaseManager" isReadOnly="false" isMandatory="true"/> 
                     <TaskParamDefinition path="LCS1_Settings.Clinician" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS1_Settings.Nurse" isReadOnly="false" isMandatory="true"/>                              
-                    <TaskParamDefinition path="LCS1_Settings.SocialCareer" isReadOnly="false" isMandatory="true"/>            
+                    <TaskParamDefinition path="LCS1_Settings.SocialCareer" isReadOnly="false" isMandatory="true"/>            					
+<!-- 					<TaskParamDefinition path="LCS1_Settings.PrimaryCareClinicians" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition path="LCS1_Settings.PrimaryCareNurse" isReadOnly="false" isMandatory="true"/> -->
                 </HumanTaskDefinition>					
 				
 			   <HumanTaskDefinition id="LCS1_Lace" description="LACE" ownerPath="LCS1_Settings.Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_Lace" entityAttachPath="LCS1_Identification.LCS1_Lace">                
@@ -1432,15 +1450,14 @@
                     <TaskParamDefinition path="LCS1_Identification.LCS1_PatientsConsent.pConsent1" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS1_Identification.LCS1_PatientsConsent.pConsent2" isReadOnly="true" isMandatory="false"/>		
                 </HumanTaskDefinition>	
-			</StageDefinition>
-		  
+			</StageDefinition>		  
 		  
             <StageDefinition id="LCS1_CaseEvaluation" description="Avaluació del cas" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_Evaluation" entityAttachPath="LCS1_Evaluation.LCS1_Evaluation">
 			<!-- ONLY TEST -->		
                 <SentryDefinition>
                     <precondition processDefinitionId="LCS1_CaseIdentification"/>
                 </SentryDefinition> 						
-				
+
                 <HumanTaskDefinition id="LCS1_SelectPatient2" description="Equip de Primària" ownerPath="LCS1_Settings.Nurse" 
 				isMandatory="true" repeatable="ONCE">
                     <TaskParamDefinition path="LCS1_Settings.PrimaryCareClinicians" isReadOnly="false" isMandatory="true"/> 
@@ -1604,6 +1621,7 @@
 				<HumanTaskDefinition id="LCS1_DiagnosisNyhaHT" description="Diagnòstic - Diagnosis classe funcional NYHA [Diagnosis Rehabilitació-cardíaca]"
 				ownerPath="LCS1_Settings.Clinician" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS1_DiagnosisNyha" entityAttachPath="LCS1_Evaluation.LCS1_DiagnosisNyha">                
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisNyha.nyha1" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1_Evaluation.LCS1_DiagnosisNyha.nyhatotal" isReadOnly="true" isMandatory="false"/>										
 				</HumanTaskDefinition>
 				
 				<HumanTaskDefinition id="LCS1_CardiacRehabilitation" description="Diagnòstic - Diagnosis Rehabilitació-cardíaca [dependència amb NYHA; fer primer la tasca NYHA]" 
@@ -1831,7 +1849,22 @@
 					<TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_PhysicalActivityAH.dailyhighlevel" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition part="AUTOMATED" path="LCS1_Workplan.LCS1_PhysicalActivityAH.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>			
-					
+				
+				<HumanTaskDefinition id="LCS1_SocialCareerTask" description="Comentaris del cuidador"
+				ownerPath="LCS1_Settings.SocialCareer" isMandatory="false" repeatable="ONCE"  entityDefinitionId="LCS1_SocialCareerTask" entityAttachPath="LCS1_Workplan.LCS1_SocialCareerTask">
+                    <TaskParamDefinition path="LCS1_Workplan.LCS1_SocialCareerTask.comments" isReadOnly="false" isMandatory="true"/>
+				</HumanTaskDefinition>				
+				
+				<HumanTaskDefinition id="LCS1_PrimaryCareClinicianTask" description="Comentaris del metge de primària"
+				ownerPath="LCS1_Settings.PrimaryCareClinicians" isMandatory="false" repeatable="ONCE"  entityDefinitionId="LCS1_PrimaryCareClinicianTask" entityAttachPath="LCS1_Workplan.LCS1_PrimaryCareClinicianTask">
+                    <TaskParamDefinition path="LCS1_Workplan.LCS1_PrimaryCareClinicianTask.comments" isReadOnly="false" isMandatory="true"/>
+				</HumanTaskDefinition>				
+				
+				<HumanTaskDefinition id="LCS1_PrimaryCareNurseTask" description="Comentaris de la infermera de primària"
+				ownerPath="LCS1_Settings.PrimaryCareNurse" isMandatory="false" repeatable="ONCE"  entityDefinitionId="LCS1_PrimaryCareNurseTask" entityAttachPath="LCS1_Workplan.LCS1_PrimaryCareNurseTask">
+                    <TaskParamDefinition path="LCS1_Workplan.LCS1_PrimaryCareNurseTask.comments" isReadOnly="false" isMandatory="true"/>
+				</HumanTaskDefinition>				
+								
 			</StageDefinition>			
 		  	 
             <StageDefinition id="LCS1_Discharge" description="Alta del pacient" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS1_Discharge" entityAttachPath="LCS1_Discharge">
@@ -1865,10 +1898,8 @@
                     <TaskParamDefinition path="LCS1_Discharge.LCS1_EQ-5DDischarge.EQ-5D-5" isReadOnly="false" isMandatory="true"/>              
 					<TaskParamDefinition path="LCS1_Discharge.LCS1_EQ-5DDischarge.EQ-5D-6" isReadOnly="false" isMandatory="true"/>              					
                 </HumanTaskDefinition>										
-			</StageDefinition> 						
-			 
-		</CaseDefinition>
-	
+			</StageDefinition> 									 
+		</CaseDefinition>	
 	</Workspace>
 
 	<Execution> 
@@ -1877,8 +1908,10 @@
 			<TaskParam path="LCS1_SelectPatient.Clinician" userValue="castrot"/> 
 			<TaskParam path="LCS1_SelectPatient.Nurse" userValue="noahs"/>   
 			<TaskParam path="LCS1_SelectPatient.CaseManager" userValue="werners"/>   
-			<TaskParam path="LCS1_SelectPatient.SocialCareer" userValue="kuhnl"/>    
-		</Action>  
+			<TaskParam path="LCS1_SelectPatient.SocialCareer" userValue="kuhnl"/>    			
+<!--			<TaskParam path="LCS1_SelectPatient.PrimaryCareClinicians" userValue="sullivanb"/> 
+			<TaskParam path="LCS1_SelectPatient.PrimaryCareNurse" userValue="richardsona"/> 			-->
+		</Action>
 		
 		<Action id="CompleteHumanTask" processId="LCS1_TechnologicalTest" breakpoint="true">  
 			<TaskParam path="LCS1_Identification.LCS1_TechnologicalTest.tech1" values="['0']"/> 
@@ -1915,8 +1948,12 @@
 			
 		<Action id="CompleteHumanTask" processId="LCS1_PatientsConsent" breakpoint="true">  
 			<TaskParam path="LCS1_Identification.LCS1_PatientsConsent.pConsent1" values="['1']"/> 
-		</Action>
+		</Action>		
 		
+		<Action id="CompleteHumanTask" processId="LCS1_SelectPatient2">  			
+			<TaskParam path="LCS1_SelectPatient.PrimaryCareClinicians" userValue="sullivanb"/> 
+			<TaskParam path="LCS1_SelectPatient.PrimaryCareNurse" userValue="richardsona"/>
+		</Action>		
 		
 		<Action id="CompleteHumanTask" processId="LCS1_GMAEvaluationHT" breakpoint="true">  
 			<TaskParam path="LCS1_Evaluation.LCS1_GMAEvaluation.gma" values="['1']"/> 
@@ -2057,6 +2094,7 @@
 		<Action id="ActivateHumanTask" processId="LCS1_DiagnosisNyhaHT" breakpoint="true"/>
 		<Action id="CompleteHumanTask" processId="LCS1_DiagnosisNyhaHT" breakpoint="true"> 
 			<TaskParam path="LCS1_Evaluation.LCS1_DiagnosisNyha.nyha1" values="['1']"/>    
+			<TaskParam path="LCS1_Evaluation.LCS1_DiagnosisNyha.nyhatotal" values="['1']" />										
 		</Action>
 		
 		<Action id="CompleteHumanTask" processId="LCS1_SF12EvaluationHT" breakpoint="true"> 
@@ -2198,6 +2236,19 @@
 		<Action id="CompleteDualTaskAutomatedPart" processId="LCS1_PhysicalActivityAHWP">
 			<TaskParam path="LCS1_Workplan.LCS1_PhysicalActivityAH.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
 		</Action>  	
+	  
+	  	  
+	  	<Action id="CompleteHumanTask" processId="LCS1_SocialCareerTask" breakpoint="true"> 
+			<TaskParam path="LCS1_Workplan.LCS1_SocialCareerTask.comments"  values="['Some random comment SocialCareerTask']"/>
+		</Action>  
+
+	  	<Action id="CompleteHumanTask" processId="LCS1_PrimaryCareClinicianTask" breakpoint="true"> 
+			<TaskParam path="LCS1_Workplan.LCS1_PrimaryCareClinicianTask.comments"  values="['Some random comment PrimaryCareClinicianTask']"/>
+		</Action>  
+
+	  	<Action id="CompleteHumanTask" processId="LCS1_PrimaryCareNurseTask" breakpoint="true"> 
+			<TaskParam path="LCS1_Workplan.LCS1_PrimaryCareNurseTask.comments"  values="['Some random comment PrimaryCareNurseTask']"/>
+		</Action>  	  
 	  
 	  <Action id="ActivateDualTask" processId="LCS1_MonitoringPrescriptionHeartPulseAHWP" breakpoint="true"/>
 		<Action id="CompleteDualTaskHumanPart" processId="LCS1_MonitoringPrescriptionHeartPulseAHWP" breakpoint="true">

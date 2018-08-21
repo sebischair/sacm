@@ -45,8 +45,8 @@ export default class Stage extends Model{
     return http.post(jwt, '/stages/'+stageId+'/owner/'+userId);
   }
 
-  static setExternalId(jwt, stageId, externalId){
-    return http.post(jwt, '/stages/'+stageId+'/externalid/'+externalId);
+  static setExternalId(jwt, stageId, externalId, data){
+    return http.post(jwt, '/stages/'+stageId+'/externalid/'+externalId, data);
   }
 
 }

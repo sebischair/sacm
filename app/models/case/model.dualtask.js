@@ -69,8 +69,8 @@ export default class DualTask extends Model{
     return http.post(jwt, '/dualtasks/'+dualTaskId+'/hideondashboard');
   }
 
-  static setExternalId(jwt, dualTaskId, externalId){
-    return http.post(jwt, '/dualtasks/'+dualTaskId+'/externalid/'+externalId);
+  static setExternalId(jwt, dualTaskId, externalId, data){
+    return http.post(jwt, '/dualtasks/'+dualTaskId+'/externalid/'+externalId, data);
   }
 
   static findMeActive(jwt) {

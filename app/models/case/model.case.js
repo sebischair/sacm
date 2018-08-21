@@ -101,6 +101,26 @@ export default class Case extends Model{
     return http.get(jwt, '/workspaces/'+workspaceId+'/cases/client/search?query='+query);
   }
 
+  static findTeamById(jwt, caseId){
+    return http.get(jwt, '/cases/'+caseId+'/team');
+  }
+
+  static teamMemberAutocomplete(jwt, caseId) {
+    return http.get(jwt, '/cases/'+caseId+'/team/member/autocomplete');
+  }
+
+  static addTeamMember(jwt, caseId, principalId, data){
+    return http.post(jwt, '/cases/'+caseId+'/team/member/'+principalId, data);
+  }
+
+  static removeTeamMember(jwt, caseId, principalId){
+    return http.del(jwt, '/cases/'+caseId+'/team/member/'+principalId);
+  }
+
+  static updateTeamRole(jwt, caseId, principalId, data){
+    return http.put(jwt, '/cases/'+caseId+'/team/role/'+principalId, data);
+  }
+
   static addUiVisibility(children, isParentVisible){
     children.forEach(child => {
       child.forEach(iteration => {

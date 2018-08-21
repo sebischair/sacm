@@ -741,14 +741,17 @@ router.post('/:id/hideondashboard', (req, res, next)=>{
  *     {
  *     }
  */
-router.post('/:id/externalid/:externalid', (req, res, next)=>{
-    DualTask.setExternalId(req.jwt, req.params.id, req.params.externalid)
-      .then(c=>{
-          res.status(200).send(c);
-      })
-      .catch(err=>{
-          res.status(500).send(err);
-      })
-});
+router.post('/:id/externalid', setExternalId);
+router.post('/:id/externalid/:externalid', setExternalId);
+
+function setExternalId(req, res){
+    DualTask.setExternalId(req.jwt, req.params.id, req.params.externalid, req.body)
+        .then(c=>{
+            res.status(200).send(c);
+        })
+        .catch(err=>{
+            res.status(500).send(err);
+        });
+};
 
 module.exports = router;

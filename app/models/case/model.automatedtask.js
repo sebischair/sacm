@@ -49,8 +49,8 @@ export default class AutomatedTask extends Model{
     return http.post(jwt, '/automatedtasks/'+automatedtaskId+'/owner/'+userId);
   }
 
-  static setExternalId(jwt, automatedtaskId, externalId){
-    return http.post(jwt, '/automatedtasks/'+automatedtaskId+'/externalid/'+externalId);
+  static setExternalId(jwt, automatedtaskId, externalId, data){
+    return http.post(jwt, '/automatedtasks/'+automatedtaskId+'/externalid/'+externalId, data);
   }
 
 }

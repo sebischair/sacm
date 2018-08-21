@@ -29,7 +29,9 @@
     <User staticId="216b6004b7db11e784180242ac120009" id="werners"/>
     <User staticId="2c93808260f91e820161084c2f540025" id="drudisr"/>
     <User staticId="2c93808260f91e8201610849939d001e" id="bigordaa"/>
-    <User staticId="21a6d881b7db11e784180242ac120009" id="kuhnl"/>
+    <User staticId="21a6d881b7db11e784180242ac120009" id="kuhnl"/>    
+    <User staticId="6efffc6e05cb39318544ea1e6d27d026" id="sullivanb"/>
+    <User staticId="254a64551050587fc86287b67c0cf487" id="richardsona"/>
 
     <Workspace staticId="2c9480885d1737ef015d74deec7f0002" id="Irbll">
 	
@@ -188,11 +190,11 @@
 		</EntityDefinition>			
 
 		<EntityDefinition id="LCS2_ComplexityRisk" >
-            <AttributeDefinition id="age" type="enumeration" multiplicity="exactlyOne" description="Edat superior als 65 anys?">
+            <AttributeDefinition id="age" type="enumeration" multiplicity="exactlyOne" description="Edat superior als 55 anys?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>
-            <AttributeDefinition id="cd1" type="enumeration" multiplicity="exactlyOne" description="Charlson superior a 3 o, alternativament, pateix una o més malalties cròniques (no artrosis)?">
+            <AttributeDefinition id="cd1" type="enumeration" multiplicity="exactlyOne" description="Charlson superior o igual a 3. Alternativament, pateix una o més malalties cròniques (no artrosis)?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>
@@ -831,7 +833,7 @@
                 <EnumerationOption value="0" description="NO – No tinc dolor ardent"/>
                 <EnumerationOption value="1" description="Sí – Tinc freqüència de dolor ardent"/>
             </AttributeDefinition>
-            <AttributeDefinition id="slanssExec6" type="enumeration" multiplicity="exactlyOne" description="6. Freguis suaument amb el dit índex l'àrea a on li fa mal i despres fagi el mateix en una àrea sense dolor (per exemple, un àrea de la pell allunyadao al canto contrari de la zona del dolor). Com sent el fregament a la zona dolorosa?">
+            <AttributeDefinition id="slanssExec6" type="enumeration" multiplicity="exactlyOne" description="6. Freguis suaument amb el dit índex l'àrea a on li fa mal i després fagi el mateix en una àrea sense dolor (per exemple, un àrea de la pell allunyada o al cantó contrari de la zona del dolor). Com sent el fregament a la zona dolorosa?">
                 <EnumerationOption value="0" description="La zona dolorosa no se sent diferent de l'àrea no dolorosa"/>
                 <EnumerationOption value="5" description="Em sento molest, com agulles, formigueig o ardor a la zona dolorosa que és diferent de la zona no dolorosa."/>
             </AttributeDefinition>
@@ -1057,8 +1059,10 @@
 			<AttributeDefinition id="LCS2_EVAECNDBH" type="Link.EntityDefinition.LCS2_EVAECNDDef" multiplicity="any"/> 
 		    <AttributeDefinition id="LCS2_SLANSSBH" type="Link.EntityDefinition.LCS2_SLANSSDef" multiplicity="any"/>		
 			-->			
-			<AttributeDefinition id="LCS2_MonitoringPrescriptionBH" type="Link.EntityDefinition.LCS2_MonitoringPrescription" multiplicity="any" /> 
-		</EntityDefinition>
+			<AttributeDefinition id="LCS2_MonitoringPrescriptionBH" type="Link.EntityDefinition.LCS2_MonitoringPrescription" multiplicity="any"/> 			
+			<AttributeDefinition id="LCS2_SocialCareerTask" type="Link.EntityDefinition.LCS2_SocialCareerTask" multiplicity="any"/>						
+			<AttributeDefinition id="LCS2_PrimaryCareNurseTask" type="Link.EntityDefinition.LCS2_PrimaryCareNurseTask" multiplicity="any"/>											
+		</EntityDefinition>			
 			
 		<EntityDefinition id="LCS2_AnaemiaAssessmentAndManagementNutritionDef" > 		
 			<AttributeDefinition id="nut0" type="number.min(0).max(1500)" defaultValues="[0.0]" multiplicity="exactlyOne" description="Valor de la Ferritina (ng/mL)"/>
@@ -1092,6 +1096,14 @@
                 <EnumerationOption value="1" description="Sí"/>
             </AttributeDefinition>
         </EntityDefinition>
+				
+		<EntityDefinition id="LCS2_PrimaryCareNurseTask">
+            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comentaris" additionalDescription=""/>   			
+		</EntityDefinition>							
+
+		<EntityDefinition id="LCS2_SocialCareerTask">
+            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comentaris" additionalDescription=""/>   			
+		</EntityDefinition>									
 				
 		<!-- Workplan After Hospitalization Entity Definitions -->		
 		<EntityDefinition id="LCS2_WorkplanAfterHospitalization">						    
@@ -1161,8 +1173,8 @@
             <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Data d'inici"/>
             <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="Data de fi"/>       
             <AttributeDefinition id="dailysteps" type="number.min(0).max(100000)" defaultValues="[10000]" multiplicity="exactlyOne" description="Número de passos a fer durant el dia"/>       
-            <AttributeDefinition id="dailylowlevel" type="number.min(0).max(1440)" defaultValues="[60]" multiplicity="exactlyOne" description="Mínim de minuts d'intensitat baixa a fer durant el dia (caminar, bicicleta, nadar)"/>       
-            <AttributeDefinition id="dailymediumlevel" type="number.min(0).max(1440)" defaultValues="[40]" multiplicity="exactlyOne" description="Mínim de minuts d'intensitat intermitja a fer durant el dia (caminar pas ràpid, tasques domèstiques lleugeres, jugar amb nens, passejar mascotes)"/>       			
+            <AttributeDefinition id="dailylowlevel" type="number.min(0).max(1440)" defaultValues="[60]" multiplicity="exactlyOne" description="Mínim de minuts d'intensitat baixa a fer durant el dia (caminar, tasques domèstiques lleugeres, jugar amb nens, passejar mascotes...)"/>       
+            <AttributeDefinition id="dailymediumlevel" type="number.min(0).max(1440)" defaultValues="[40]" multiplicity="exactlyOne" description="Mínim de minuts d'intensitat intermitja a fer durant el dia (caminar pas ràpid, bicileta, nadar...)"/>       			
             <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Mesures"/>                 
         </EntityDefinition> 				
 		
@@ -1309,6 +1321,8 @@
                     <TaskParamDefinition path="LCS2_Settings.SocialCareer" isReadOnly="false" isMandatory="true"/>            
                     <TaskParamDefinition path="LCS2_Settings.Anesthesiologist" isReadOnly="false" isMandatory="true"/> 
                     <TaskParamDefinition path="LCS2_Settings.Physiotherapist" isReadOnly="false" isMandatory="true"/> 
+					<TaskParamDefinition path="LCS2_Settings.PrimaryCareClinicians" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition path="LCS2_Settings.PrimaryCareNurse" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>					
                 				
                 <!-- Gestor de Casos -->
@@ -1391,13 +1405,6 @@
                 <SentryDefinition>
                     <precondition processDefinitionId="LCS2_CaseIdentification"/>
                 </SentryDefinition> 
-   
-                <!-- Ara va al principi de la lista pq té una dependència amb una tasca de Pla de treball (PRE) 20180531 -->
-                <HumanTaskDefinition id="LCS2_SelectPatient2" description="Equip de Primària" ownerPath="LCS2_Settings.Nurse" 
-				isMandatory="true" repeatable="ONCE">
-                    <TaskParamDefinition path="LCS2_Settings.PrimaryCareClinicians" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition path="LCS2_Settings.PrimaryCareNurse" isReadOnly="false" isMandatory="true"/>
-                </HumanTaskDefinition>   
 				
                 <HumanTaskDefinition id="LCS2_GMAEvaluationHT" description="Estat comòrbid - GMA [Identificació del Cas]" ownerPath="LCS2_Settings.Nurse" 
 				isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS2_GMADef" entityAttachPath="LCS2_Evaluation.LCS2_GMAEvaluation">
@@ -1705,11 +1712,21 @@
                     <TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_BloodPressureControlBH.bloodPControl1" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="LCS2_DiabetesControlWPBH" description="Control de la diabetis" ownerPath="LCS2_Settings.Clinician" isMandatory="false" isRepeatable="false" entityDefinitionId="LCS2_DiabetesControlBH" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_DiabetesControlBH">
+                <HumanTaskDefinition id="LCS2_DiabetesControlWPBH" description="Control de la diabetis" ownerPath="LCS2_Settings.Anesthesiologist" isMandatory="false" isRepeatable="false" entityDefinitionId="LCS2_DiabetesControlBH" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_DiabetesControlBH">
                     <TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_DiabetesControlBH.DiabetisControl0" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_DiabetesControlBH.DiabetisControl1" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
-                                        
+
+				<HumanTaskDefinition id="LCS2_SocialCareerTask" description="Comentaris del cuidador"
+				ownerPath="LCS2_Settings.SocialCareer" isMandatory="false" repeatable="ONCE"  entityDefinitionId="LCS2_SocialCareerTask" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_SocialCareerTask">
+                    <TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_SocialCareerTask.comments" isReadOnly="false" isMandatory="true"/>
+				</HumanTaskDefinition>												
+				
+				<HumanTaskDefinition id="LCS2_PrimaryCareNurseTask" description="Comentaris de la infermera de primària"
+				ownerPath="LCS2_Settings.PrimaryCareNurse" isMandatory="false" repeatable="ONCE"  entityDefinitionId="LCS2_PrimaryCareNurseTask" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_PrimaryCareNurseTask">
+                    <TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_PrimaryCareNurseTask.comments" isReadOnly="false" isMandatory="true"/>
+				</HumanTaskDefinition>								
+				
                 <DualTaskDefinition id="LCS2_MonitoringPrescriptionBHWP" externalId="MonitoringPrescription"
 				description="Prescripció de la monitorització - Pressió arterial sistòlica\diastòlica - Abans d'hospitalització" 
 				ownerPath="LCS2_Settings.PrimaryCareClinicians" dueDatePath="LCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_MonitoringPrescription" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_MonitoringPrescriptionBH">
@@ -1855,7 +1872,9 @@
         <TaskParam path="LCS2_Settings.CaseManager" userValue="werners"/>   
         <TaskParam path="LCS2_Settings.SocialCareer" userValue="kuhnl"/>    
         <TaskParam path="LCS2_Settings.Anesthesiologist" userValue="drudisr"/>  
-        <TaskParam path="LCS2_Settings.Physiotherapist" userValue="bigordaa"/>  
+        <TaskParam path="LCS2_Settings.Physiotherapist" userValue="bigordaa"/>  		
+        <TaskParam path="LCS2_Settings.PrimaryCareClinicians" userValue="sullivanb"/>  
+        <TaskParam path="LCS2_Settings.PrimaryCareNurse" userValue="richardsona"/>  				
     </Action>  
 
 	<Action id="CompleteHumanTask" processId="LCS2_SelectPatient2" breakpoint="true">  
@@ -1917,6 +1936,10 @@
     <Action id="CompleteHumanTask" processId="LCS2_PatientsConsent" breakpoint="true">  
         <TaskParam path="LCS2_Identification.LCS2_PatientsConsent.pConsent1" values="['1']"/> 
     </Action>
+
+    <Action id="CompleteHumanTask" processId="LCS2_GMAEvaluationHT" breakpoint="true">  
+        <TaskParam path="LCS2_Identification.LCS2_GMAIdentification.gma" values="['1']"/> 
+    </Action>   
 	
     <Action id="CompleteHumanTask" processId="LCS2_ComorbidityCharlsonEvaluationHT" breakpoint="true">    
         <TaskParam path="LCS2_Identification.LCS2_ComorbidityCharlsonIdentification.ch1" values="['1']"/> 
@@ -2133,7 +2156,6 @@
 		<TaskParam path="LCS2_Evaluation.LCS2_SocialDwelling.dwelling5" values="['3']"/>    
     </Action>  
 
-
     <Action id="CompleteHumanTask" processId="LCS2_SocialSelfCareCareerAbility" breakpoint="true">    
         <TaskParam path="LCS2_Evaluation.LCS2_SocialSelfCareCareerAbility.career1" values="['1']"/> 
         <TaskParam path="LCS2_Evaluation.LCS2_SocialSelfCareCareerAbility.career2" values="['1']"/> 
@@ -2142,19 +2164,11 @@
 		<TaskParam path="LCS2_Evaluation.LCS2_SocialSelfCareCareerAbility.career5" values="['1']"/> 
     </Action>
 
- <!--
-    Required to add / assign PrimaryCareNurse / PrimaryCareClinicians to workspace
-    <Action id="CompleteHumanTask" processId="LCS2_SelectPatient2" breakpoint="true">  
-        <TaskParam path="LCS2_Settings.PrimaryCareClinicians" userValue="velardem"/> 
-        <TaskParam path="LCS2_Settings.PrimaryCareNurse" userValue="wilsong"/> 
-    </Action>  
--->
-
     <Action id="CompleteHumanTask" processId="LCS2_AnaemiaAssessmentAndManagementNutritionBHHT" breakpoint="true">  
         <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_AnaemiaAssessmentAndManagementNutritionBH.nut0" values="['1']"/> 
         <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_AnaemiaAssessmentAndManagementNutritionBH.nut3" values="['1']"/> 
-        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_AnaemiaAssessmentAndManagementNutritionBH.nut4" values="['1']"/> 
-        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_AnaemiaAssessmentAndManagementNutritionBH.nut5" values="['1']"/> 
+        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_AnaemiaAssessmentAndManagementNutritionBH.nut4" values="['2017-06-09T00:00:00.0']"/> 
+        <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_AnaemiaAssessmentAndManagementNutritionBH.nut5" values="['2017-06-09T00:00:00.0']"/> 
         <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_AnaemiaAssessmentAndManagementNutritionBH.nut6" values="['1']"/> 
         <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_AnaemiaAssessmentAndManagementNutritionBH.nut7" values="['1']"/> 
         <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_AnaemiaAssessmentAndManagementNutritionBH.nut8" values="['1']"/> 
@@ -2171,6 +2185,14 @@
         <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_DiabetesControlBH.DiabetisControl0" values="['1']"/>
         <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_DiabetesControlBH.DiabetisControl1" values="['1']"/>
     </Action> 		
+
+	<Action id="CompleteHumanTask" processId="LCS2_SocialCareerTask" breakpoint="true"> 
+		<TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_SocialCareerTask.comments"  values="['Some random comment SocialCareerTask']"/>
+	</Action>  	  
+		
+	<Action id="CompleteHumanTask" processId="LCS2_PrimaryCareNurseTask" breakpoint="true"> 
+		<TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_PrimaryCareNurseTask.comments"  values="['Some random comment PrimaryCareNurseTask']"/>
+	</Action>  	  
 	
     <Action id="ActivateDualTask" processId="LCS2_MonitoringPrescriptionBHWP" breakpoint="true"/>
     <Action id="CompleteDualTaskHumanPart" processId="LCS2_MonitoringPrescriptionBHWP" breakpoint="true">

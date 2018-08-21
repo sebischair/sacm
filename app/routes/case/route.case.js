@@ -928,7 +928,111 @@ router.get('/:id/automatedtasks/all', (req, res, next)=>{
 });
 
 
-// messages
+/**
+ * @api {get} /cases/:id/team Get Team
+ * @apiName GetTeam
+ * @apiGroup Case
+ * @apiParam {String} id ID of the Case
+ * @apiSampleRequest /cases/:id/team
+ * @apiSuccessExample {json} Success-Response:
+ *   {
+ *     TODO TEAM_OBJ
+ *   }
+ */
+router.get('/:id/team', (req, res, next)=>{
+  Case.findTeamById(req.jwt, req.params.id)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
+ * @api {get} /cases/:id/team/member/autocomplete Case Member autocomplete
+ * @apiName GetCaseTeamMemberAutocomplete
+ * @apiGroup Case
+ * @apiParam {String} id ID of the Case
+ * @apiSampleRequest /cases/:id/team/member/autocomplete
+ * @apiSuccessExample {json} Success-Response:
+ *   {
+ *     TODO TEAM_OBJ
+ *   }
+ */
+router.get('/:id/team/member/autocomplete', (req, res, next)=>{
+  Case.teamMemberAutocomplete(req.jwt, req.params.id, req.body)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
+ * @api {post} /cases/:id/team/member/:principalId Add a Team Member
+ * @apiName PostTeamMember
+ * @apiGroup Case
+ * @apiParam {String} id ID of the Case
+ * @apiSampleRequest /cases/:id/team/member/:principalId
+ * @apiSuccessExample {json} Success-Response:
+ *   {
+ *     TODO TEAM_OBJ
+ *   }
+ */
+router.post('/:id/team/member/:principalId', (req, res, next)=>{
+  Case.addTeamMember(req.jwt, req.params.id, req.params.principalId, req.body)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+
+/**
+ * @api {del} /cases/:id/team/member/:principalId Delete a Team Member
+ * @apiName DeleteTeamMember
+ * @apiGroup Case
+ * @apiParam {String} id ID of the Case
+ * @apiSampleRequest /cases/:id/team/member/:principalId
+ * @apiSuccessExample {json} Success-Response:
+ *   {
+ *     TODO TEAM_OBJ
+ *   }
+ */
+router.delete('/:id/team/member/:principalId', (req, res, next)=>{
+  Case.removeTeamMember(req.jwt, req.params.id, req.params.principalId)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
+ * @api {patch} /cases/:id/team/role/:principalId Set a Team Role
+ * @apiName PatchTeamRole
+ * @apiGroup Case
+ * @apiParam {String} id ID of the Case
+ * @apiSampleRequest /cases/:id/team/role/:principalId
+ * @apiSuccessExample {json} Success-Response:
+ *   {
+ *     TODO TEAM_OBJ
+ *   }
+ */
+router.patch('/:id/team/role/:attributeId', (req, res, next)=>{
+  Case.updateTeamRole(req.jwt, req.params.id, req.params.attributeId, req.body)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
 
 /**
  * @api {get} /cases/:id/messages Get Messages
