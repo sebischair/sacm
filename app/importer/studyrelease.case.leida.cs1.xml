@@ -1147,6 +1147,7 @@
 			<AttributeDefinition id="LCS1_MonitoringPrescriptionHeartPulseAH" type="Link.EntityDefinition.LCS1_MonitoringPrescriptionHeartPulse" multiplicity="any" />							
 			<AttributeDefinition id="LCS1_MonitoringPrescriptionWeightAH" type="Link.EntityDefinition.LCS1_MonitoringPrescriptionWeight" multiplicity="any" />				
 			<AttributeDefinition id="LCS1_MonitoringPrescriptionSP02AH" type="Link.EntityDefinition.LCS1_MonitoringPrescriptionSP02" multiplicity="any" />	
+			<AttributeDefinition id="LCS1_PatientQuestionaireAH" type="Link.EntityDefinition.LCS1_PatientQuestionaire" multiplicity="any" />							
 			<AttributeDefinition id="LCS1_SocialCareerTask" multiplicity="any" type="Link.EntityDefinition.LCS1_SocialCareerTask" />						
 			<AttributeDefinition id="LCS1_PrimaryCareClinicianTask" multiplicity="any" type="Link.EntityDefinition.LCS1_PrimaryCareClinicianTask"/>						
 			<AttributeDefinition id="LCS1_PrimaryCareNurseTask" multiplicity="any" type="Link.EntityDefinition.LCS1_PrimaryCareNurseTask"/>						
@@ -1233,6 +1234,32 @@
             <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comentaris" additionalDescription="Proporcioneu suggeriments addicionals pel pacient"/>   
             <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Mesures"/>                      
         </EntityDefinition>		
+				
+        <EntityDefinition id="LCS1_PatientQuestionaire" description="Qüestionari per omplir el pacient">
+            <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Tipus de qüestionari" additionalDescription="Seleccioneu el tipus de qüestionari que el pacient ha d'omplir">
+                <EnumerationOption value="SF12" description="SF-12"/>
+                <!--<EnumerationOption value="AUTOCHECKHEALTHSTATUSEPOC" description="Autotest pacients amb EPOC"/>-->
+            </AttributeDefinition>   
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Data d'inici"/> 
+            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="Data de fi"/> 
+            <AttributeDefinition id="freq" type="number.min(0)" defaultValues="[1]" multiplicity="exactlyOne" description="Freqüència"/> 
+            <AttributeDefinition id="frequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Unitat de freqüència">     
+                <EnumerationOption value="DAYS" description="Dies"/>
+                <EnumerationOption value="WEEKS" description="Setmanes"/>
+                <EnumerationOption value="MONTHS" description="Mesos"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="exactlyOne" description="Retard màxim en minuts" additionalDescription="Retard màxim perque el pacient es prengui la mesura"/> 
+            <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="Franges per contestar el qüestionari" additionalDescription="Es poden seleccionar múltiples franges, cal seleccionar-ne almenys una">     
+                <EnumerationOption value="BREAKFAST" description="Esmorzar"/>
+                <EnumerationOption value="LUNCH" description="Dinar"/>
+                <EnumerationOption value="AFTERNOONSNACK" description="Berenar"/>
+                <EnumerationOption value="DINNER" description="Sopar"/>
+                <EnumerationOption value="BEFORESLEEP" description="Abans d'anar a dormir"/>
+                <EnumerationOption value="ANYTIMEDURINGDAY" description="En qualsevol moment del dia" additionalDescription="Seleccioneu aquesta opció quan el temps del dia no importa"/>								
+            </AttributeDefinition>
+            <AttributeDefinition id="repetitionsperday" type="number.min(0)" multiplicity="exactlyOne" description="El nombre de vegades que el qüestionari s'omple per dia"/>   
+            <AttributeDefinition id="questionaires" type="json" multiplicity="any" uiReference="patientquestionaires" description="Qüestionari per omplir el pacient"/>                      
+        </EntityDefinition>
 		
 		<EntityDefinition id="LCS1_MonitoringPrescription">
             <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Tipus de mesura"
@@ -1836,6 +1863,22 @@
                     <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionHeartPulseAH.comments" isReadOnly="false" isMandatory="false"/>                                        <TaskParamDefinition part="AUTOMATED" path="LCS1_Workplan.LCS1_MonitoringPrescriptionHeartPulseAH.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>							
 				
+                <DualTaskDefinition id="LCS1_PatientQuestionaireAHWP" externalId="PatientQuestionaire" description="(En proves!!!) Prescripció de qüestionaris al pacient" 
+				ownerPath="LCS1_Settings.CaseManager" dueDatePath="LCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" 
+				entityDefinitionId="LCS1_PatientQuestionaire" entityAttachPath="LCS1_Workplan.LCS1_PatientQuestionaireAH">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/questionnaires" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/questionnaires/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_PatientQuestionaireAH.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_PatientQuestionaireAH.startdate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_PatientQuestionaireAH.enddate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_PatientQuestionaireAH.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_PatientQuestionaireAH.frequnit" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_PatientQuestionaireAH.maxdelay" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_PatientQuestionaireAH.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_PatientQuestionaireAH.repetitionsperday" isReadOnly="false" isMandatory="true"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="LCS1_Workplan.LCS1_PatientQuestionaireAH.questionaires" isReadOnly="false" isMandatory="true"/>
+                </DualTaskDefinition> 												
+				
                 <DualTaskDefinition id="LCS1_PhysicalActivityAHWP" externalId="PhysicalActivity"
 				description="Monitorització d'activitat física - Rehabilitació"
 				ownerPath="LCS1_Settings.Clinician" dueDatePath="LCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS1_PhysicalActivity" entityAttachPath="LCS1_Workplan.LCS1_PhysicalActivityAH">
@@ -2305,6 +2348,21 @@
 			<TaskParam path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
 		</Action>
 		
+        <Action id="ActivateDualTask" processId="LCS1_PatientQuestionaireAHWP" breakpoint="true"/>
+        <Action id="CompleteDualTaskHumanPart" processId="LCS1_PatientQuestionaireAHWP" breakpoint="true">
+            <TaskParam path="LCS1_Workplan.LCS1_PatientQuestionaireAH.type"  values="['SF12']"/>
+            <TaskParam path="LCS1_Workplan.LCS1_PatientQuestionaireAH.startdate"  values="['2017-06-09T00:00:00.0']"/>
+            <TaskParam path="LCS1_Workplan.LCS1_PatientQuestionaireAH.enddate"  values="['2019-06-09T00:00:00.0']"/>
+            <TaskParam path="LCS1_Workplan.LCS1_PatientQuestionaireAH.freq"  values="[5]"/>
+            <TaskParam path="LCS1_Workplan.LCS1_PatientQuestionaireAH.freqqunit"  values="['WEEKS']"/>
+            <TaskParam path="LCS1_Workplan.LCS1_PatientQuestionaireAH.maxdelay"  values="[100]"/>
+            <TaskParam path="LCS1_Workplan.LCS1_PatientQuestionaireAH.timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
+            <TaskParam path="LCS1_Workplan.LCS1_PatientQuestionaireAH.repetitionsperday"  values="[1]"/>
+        </Action>
+        <Action id="CompleteDualTaskAutomatedPart" processId="LCS1_PatientQuestionaireAHWP">
+            <TaskParam path="LCS1_Workplan.LCS1_PatientQuestionaireAH.questionaires"  values='[{"id":"18823iSMSID","lastEdit":"2018-05-15 11:09:23.0","state":"COMPLETED","taskParams":[{"description":"In general, would you say your health is:","values":["Excellent"],"type":"enumeration","isMandatory":true,"additionalDescription":null},{"description":"Moderate activities","values":["YES, limited a lot"],"type":"enumeration","isMandatory":false,"additionalDescription":"Moderate activities such as moving a table, pushing a vacuum cleaner, bowling, or playing golf."}]},{"id":"18824iSMSID","lastEdit":"2018-05-16 11:09:23.0","state":"ACTIVE","taskParams":[{"description":"In general, would you say your health is:","values":["Very good"],"type":"enumeration","isMandatory":true,"additionalDescription":null},{"description":"Moderate activities","values":["YES, limited a little"],"type":"enumeration","isMandatory":false,"additionalDescription":"Moderate activities such as moving a table, pushing a vacuum cleaner, bowling, or playing golf."}]}]'/>
+        </Action>	
+	
 	
 	    <Action id="CompleteHumanTask" processId="LCS1_DischargeTestHT" breakpoint="true">  
 			<TaskParam path="LCS1_Discharge.LCS1_DischargeTest.discharge1" values="['aaa']"/> 

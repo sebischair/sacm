@@ -1112,6 +1112,7 @@
 			<AttributeDefinition id="LCS2_PhysicalActivityAH" type="Link.EntityDefinition.LCS2_PhysicalActivityAH" multiplicity="any" />	
 			<AttributeDefinition id="LCS2_RehabilitationAH" type="Link.EntityDefinition.LCS2_RehabilitationAH" multiplicity="any" />			
 			<AttributeDefinition id="LCS2_MonitoringPrescriptionBodyTemperatureAH" type="Link.EntityDefinition.LCS2_MonitoringPrescriptionBodyTemperatureAH" multiplicity="any"/>							
+			<AttributeDefinition id="LCS2_PatientQuestionaireAH" type="Link.EntityDefinition.LCS2_PatientQuestionaire" multiplicity="any" />							
 		</EntityDefinition>
 
         <EntityDefinition id="LCS2_PatientEducationAndTrainingToTheCaregiverAH">
@@ -1240,6 +1241,32 @@
             <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Mesures"/>                      
         </EntityDefinition>						
 		
+       <EntityDefinition id="LCS2_PatientQuestionaire" description="Qüestionari per omplir el pacient">
+            <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Tipus de qüestionari" additionalDescription="Seleccioneu el tipus de qüestionari que el pacient ha d'omplir">
+                <EnumerationOption value="SF12" description="SF-12"/>
+                <!--<EnumerationOption value="AUTOCHECKHEALTHSTATUSEPOC" description="Autotest pacients amb EPOC"/>-->
+            </AttributeDefinition>   
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Data d'inici"/> 
+            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="Data de fi"/> 
+            <AttributeDefinition id="freq" type="number.min(0)" defaultValues="[1]" multiplicity="exactlyOne" description="Freqüència"/> 
+            <AttributeDefinition id="frequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Unitat de freqüència">     
+                <EnumerationOption value="DAYS" description="Dies"/>
+                <EnumerationOption value="WEEKS" description="Setmanes"/>
+                <EnumerationOption value="MONTHS" description="Mesos"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="exactlyOne" description="Retard màxim en minuts" additionalDescription="Retard màxim perque el pacient es prengui la mesura"/> 
+            <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="Franges per contestar el qüestionari" additionalDescription="Es poden seleccionar múltiples franges, cal seleccionar-ne almenys una">     
+                <EnumerationOption value="BREAKFAST" description="Esmorzar"/>
+                <EnumerationOption value="LUNCH" description="Dinar"/>
+                <EnumerationOption value="AFTERNOONSNACK" description="Berenar"/>
+                <EnumerationOption value="DINNER" description="Sopar"/>
+                <EnumerationOption value="BEFORESLEEP" description="Abans d'anar a dormir"/>
+                <EnumerationOption value="ANYTIMEDURINGDAY" description="En qualsevol moment del dia" additionalDescription="Seleccioneu aquesta opció quan el temps del dia no importa"/>								
+            </AttributeDefinition>
+            <AttributeDefinition id="repetitionsperday" type="number.min(0)" multiplicity="exactlyOne" description="El nombre de vegades que el qüestionari s'omple per dia"/>   
+            <AttributeDefinition id="questionaires" type="json" multiplicity="any" uiReference="patientquestionaires" description="Qüestionari per omplir el pacient"/>                      
+        </EntityDefinition>
+				
         <!-- Discharge Definitions -->		
 		<EntityDefinition id="LCS2_Discharge">
 			<AttributeDefinition id="LCS2_DischargeTest" type="Link.EntityDefinition.LCS2_DischargeTest" multiplicity="any"/>									
@@ -1806,8 +1833,23 @@
                     <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionBodyTemperatureAH.timeslot" isReadOnly="false" isMandatory="true"/> 
                     <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionBodyTemperatureAH.comments" isReadOnly="false" isMandatory="false"/>                    
                     <TaskParamDefinition part="AUTOMATED" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionBodyTemperatureAH.measurement" isReadOnly="false" isMandatory="true"/>
-                </DualTaskDefinition>				
-								
+                </DualTaskDefinition>		
+
+                <DualTaskDefinition id="LCS2_PatientQuestionaireAHWP" externalId="PatientQuestionaire" description="(En proves!!!) Prescripció de qüestionaris al pacient" 
+				ownerPath="LCS2_Settings.CaseManager" dueDatePath="LCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" 
+				entityDefinitionId="LCS2_PatientQuestionaire" entityAttachPath="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/questionnaires" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/questionnaires/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.startdate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.enddate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.frequnit" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.maxdelay" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.repetitionsperday" isReadOnly="false" isMandatory="true"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.questionaires" isReadOnly="false" isMandatory="true"/>
+                </DualTaskDefinition> 																				
 
                 <DualTaskDefinition id="LCS2_PhysicalActivityAHWP" externalId="PhysicalActivity"
 				description="Activitat física - Desprès d'hospitalització" 
@@ -1877,10 +1919,10 @@
         <TaskParam path="LCS2_Settings.PrimaryCareNurse" userValue="richardsona"/>  				
     </Action>  
 
-	<Action id="CompleteHumanTask" processId="LCS2_SelectPatient2" breakpoint="true">  
+<!--	<Action id="CompleteHumanTask" processId="LCS2_SelectPatient2" breakpoint="true">  
         <TaskParam path="LCS2_Settings.PrimaryCareClinicians" userValue="drudisr"/> 
         <TaskParam path="LCS2_Settings.PrimaryCareNurse" userValue="bigordaa"/> 
-    </Action>  	
+    </Action>  	-->	
 	
     <Action id="CompleteHumanTask" processId="LCS2_TechnologicalTest" breakpoint="true">  
         <TaskParam path="LCS2_Identification.LCS2_TechnologicalTest.tech1" values="['0']"/> 
@@ -1929,9 +1971,10 @@
         <TaskParam path="LCS2_Identification.LCS2_GMAIdentification.gma" values="['1']"/> 
     </Action>   
 		
+<!--		
 	<Action id="CompleteHumanTask" processId="LCS2_GMAEvaluationHT" breakpoint="true">  
-        <TaskParam path="LCS2_Identification.LCS2_GMAIdentification.gma" values="['1']"/> 
-    </Action>  				
+        <TaskParam path="LCS2_Evaluation.LCS2_GMAEvaluation.gma" values="['1']"/> 
+    </Action>  				 -->
 
     <Action id="CompleteHumanTask" processId="LCS2_PatientsConsent" breakpoint="true">  
         <TaskParam path="LCS2_Identification.LCS2_PatientsConsent.pConsent1" values="['1']"/> 
@@ -2241,7 +2284,23 @@
     <Action id="CompleteDualTaskAutomatedPart" processId="LCS2_MonitoringPrescriptionAHWP" breakpoint="true">
         <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWP.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
     </Action>
-
+			
+	<Action id="ActivateDualTask" processId="LCS2_PatientQuestionaireAHWP" breakpoint="true"/>
+	<Action id="CompleteDualTaskHumanPart" processId="LCS2_PatientQuestionaireAHWP" breakpoint="true">
+		<TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.type"  values="['SF12']"/>
+		<TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.startdate"  values="['2017-06-09T00:00:00.0']"/>
+		<TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.enddate"  values="['2019-06-09T00:00:00.0']"/>
+		<TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.freq"  values="[5]"/>
+		<TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.freqqunit"  values="['WEEKS']"/>
+		<TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.maxdelay"  values="[100]"/>
+		<TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
+		<TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.repetitionsperday"  values="[1]"/>
+	</Action>
+	
+	<Action id="CompleteDualTaskAutomatedPart" processId="LCS2_PatientQuestionaireAHWP">
+		<TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.questionaires"  values='[{"id":"18823iSMSID","lastEdit":"2018-05-15 11:09:23.0","state":"COMPLETED","taskParams":[{"description":"In general, would you say your health is:","values":["Excellent"],"type":"enumeration","isMandatory":true,"additionalDescription":null},{"description":"Moderate activities","values":["YES, limited a lot"],"type":"enumeration","isMandatory":false,"additionalDescription":"Moderate activities such as moving a table, pushing a vacuum cleaner, bowling, or playing golf."}]},{"id":"18824iSMSID","lastEdit":"2018-05-16 11:09:23.0","state":"ACTIVE","taskParams":[{"description":"In general, would you say your health is:","values":["Very good"],"type":"enumeration","isMandatory":true,"additionalDescription":null},{"description":"Moderate activities","values":["YES, limited a little"],"type":"enumeration","isMandatory":false,"additionalDescription":"Moderate activities such as moving a table, pushing a vacuum cleaner, bowling, or playing golf."}]}]'/>
+	</Action>	
+	
     <Action id="ActivateDualTask" processId="LCS2_MonitoringPrescriptionBodyTemperatureAHWP" breakpoint="true"/>
     <Action id="CompleteDualTaskHumanPart" processId="LCS2_MonitoringPrescriptionBodyTemperatureAHWP" breakpoint="true">
         <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionBodyTemperatureAH.type"  values="['BODYTEMPERATURE']"/>
