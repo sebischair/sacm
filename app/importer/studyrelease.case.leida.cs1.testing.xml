@@ -1294,9 +1294,8 @@
 			<AttributeDefinition id="LCS1__SF12Discharge" type="Link.EntityDefinition.LCS1__SF12Def" multiplicity="any"/> 			
 			<AttributeDefinition id="LCS1__EQ-5DDischarge" type="Link.EntityDefinition.LCS1__EQ-5DDef" multiplicity="any"/> 												
 			<AttributeDefinition id="LCS1__HealthStatusEPOC" type="Link.EntityDefinition.LCS1__HealthStatusEPOCDef" multiplicity="any"/> 												
-			
 			<AttributeDefinition id="LCS1__HealthStatusIC" type="Link.EntityDefinition.LCS1__HealthStatusICDef" multiplicity="any"/> 
-			
+			<AttributeDefinition id="LCS1__PostCirurgical" type="Link.EntityDefinition.LCS1__PostCirurgicalDef" multiplicity="any"/>			
 		</EntityDefinition>						
 				
 		<EntityDefinition id="LCS1__DischargeTest"> 
@@ -1369,7 +1368,87 @@
 			<AttributeDefinition id="HealthStatusEPOC-6" 
 			expression="round(number(HealthStatusEPOC-1,0))+round(number(HealthStatusEPOC-2,0))+round(number(HealthStatusEPOC-3,0))+round(number(HealthStatusEPOC-4,0)+round(number(HealthStatusEPOC-5,0))" 
 			description="HealthStatusEPOC: Si total es &gt;= 2 se debe enviar una alarma"/>       																	
-		</EntityDefinition>			
+		</EntityDefinition>
+
+		<EntityDefinition id="LCS1__HealthStatusICDef">
+			<AttributeDefinition id="HealthStatusIC-1" type="enumeration" multiplicity="exactlyOne" description="Me ahogo">
+				<EnumerationOption value="0"  description="Más o menos igual que siempre"/>
+				<EnumerationOption value="1"  description="Más que en días anteriores"/>
+			</AttributeDefinition>     
+			<AttributeDefinition id="HealthStatusIC-2" type="enumeration" multiplicity="exactlyOne" description="He dormido">
+				<EnumerationOption value="0"  description="Más o menos igual que siempre"/>
+				<EnumerationOption value="1"  description="Peor que días atrás"/>
+			</AttributeDefinition>      
+			<AttributeDefinition id="HealthStatusIC-3"  type="enumeration" multiplicity="exactlyOne" description="Me Siento">
+				<EnumerationOption value="0"  description="Más o menos igual que siempre"/>
+				<EnumerationOption value="1"  description="Más cargado o hinchado que en días anteriores"/>
+			</AttributeDefinition>      
+			<AttributeDefinition id="HealthStatusIC-4"  type="enumeration" multiplicity="exactlyOne" description="Orino">
+				<EnumerationOption value="0"  description="Más o menos igual que siempre"/>
+				<EnumerationOption value="1"  description="Menos que en días anteriores"/>
+			</AttributeDefinition>      
+			<AttributeDefinition id="HealthStatusIC-5"  type="enumeration" multiplicity="exactlyOne" description="Tengo los pies">
+				<EnumerationOption value="0"  description="Más o menos igual que siempre"/>
+				<EnumerationOption value="1"  description="Más hinchados que en días anteriores"/>
+			</AttributeDefinition>       						
+			<AttributeDefinition id="HealthStatusIC-6" 
+			expression="round(number(HealthStatusIC-1,0))+round(number(HealthStatusIC-2,0))+round(number(HealthStatusIC-3,0))+round(number(HealthStatusIC-4,0)+round(number(HealthStatusIC-5,0))" 
+			description="HealthStatusIC: Si total es &gt;= 2 se debe enviar una alarma"/>       																	
+		</EntityDefinition>
+
+		<EntityDefinition id="LCS1__PostCirurgicalDef">
+			<AttributeDefinition id="PostCirurgical-1" type="enumeration" multiplicity="exactlyOne" description="Respirar">
+				<EnumerationOption value="0"  description="Respiro igual"/>
+				<EnumerationOption value="1"  description="Respiro pitjor"/>
+			</AttributeDefinition>     
+			<AttributeDefinition id="PostCirurgical-2" type="enumeration" multiplicity="exactlyOne" description="Vòmit">
+				<EnumerationOption value="0"  description="No he vomitat"/>
+				<EnumerationOption value="1"  description="He vomitat"/>
+			</AttributeDefinition>      
+			<AttributeDefinition id="PostCirurgical-3"  type="enumeration" multiplicity="exactlyOne" description="Mareig">
+				<EnumerationOption value="0"  description="No em marejo"/>
+				<EnumerationOption value="1"  description="Em marejo sovint"/>
+			</AttributeDefinition>      
+			<AttributeDefinition id="PostCirurgical-4"  type="enumeration" multiplicity="exactlyOne" description="Menjar">
+				<EnumerationOption value="0"  description="Menjo igual"/>
+				<EnumerationOption value="1"  description="Menjo menys"/>
+			</AttributeDefinition>      
+			<AttributeDefinition id="PostCirurgical-5"  type="enumeration" multiplicity="exactlyOne" description="Beure">
+				<EnumerationOption value="0"  description="Bec igual"/>
+				<EnumerationOption value="0"  description="Bec menys"/>
+			</AttributeDefinition>
+			<AttributeDefinition id="PostCirurgical-6"  type="enumeration" multiplicity="exactlyOne" description="Orinar">
+				<EnumerationOption value="0"  description="Orino igual"/>
+				<EnumerationOption value="1"  description="Orino menys"/>
+			</AttributeDefinition>
+			<AttributeDefinition id="PostCirurgical-7"  type="enumeration" multiplicity="exactlyOne" description="Defecar">
+				<EnumerationOption value="0"  description="Defeco igual"/>
+				<EnumerationOption value="1"  description="Em costa més"/>
+			</AttributeDefinition>
+			<AttributeDefinition id="PostCirurgical-8"  type="enumeration" multiplicity="exactlyOne" description="Moure's">
+				<EnumerationOption value="0"  description="Em moc menys"/>
+				<EnumerationOption value="0"  description="Em moc igual"/>
+			</AttributeDefinition>
+			<AttributeDefinition id="PostCirurgical-9"  type="enumeration" multiplicity="exactlyOne" description="Temperatura">
+				<EnumerationOption value="0"  description="No tinc febre"/>
+				<EnumerationOption value="1"  description="Tinc febre (&gt;37º)"/>
+			</AttributeDefinition>
+			<AttributeDefinition id="PostCirurgical-10"  type="enumeration" multiplicity="exactlyOne" description="Repòs i son">
+				<EnumerationOption value="0"  description="Em costa més"/>
+				<EnumerationOption value="0"  description="Dormo igual"/>
+			</AttributeDefinition>
+			<AttributeDefinition id="PostCirurgical-11"  type="enumeration" multiplicity="exactlyOne" description="Neteja corporal">
+				<EnumerationOption value="0"  description="Amb ajuda"/>
+				<EnumerationOption value="0"  description="Em netejo sol"/>
+			</AttributeDefinition>
+			<AttributeDefinition id="PostCirurgical-12"  type="enumeration" multiplicity="exactlyOne" description="Vestir-se">
+				<EnumerationOption value="0"  description="Amb ajuda"/>
+				<EnumerationOption value="0"  description="Em vesteixo sol"/>
+			</AttributeDefinition>
+			<AttributeDefinition id="PostCirurgical-13" 
+			expression="round(number(PostCirurgical-1,0))+round(number(PostCirurgical-2,0))+round(number(PostCirurgical-3,0))+round(number(PostCirurgical-4,0)+round(number(PostCirurgical-5,0))+round(number(PostCirurgical-6,0))+round(number(PostCirurgical-7,0))+round(number(PostCirurgical-8,0))+round(number(PostCirurgical-9,0))+round(number(PostCirurgical-10,0))+round(number(PostCirurgical-11,0))+round(number(PostCirurgical-12,0))" 
+			description="PostCirurgical: Si total es &gt;= 0 se debe enviar una alarma"/>       																	
+		</EntityDefinition>
 		
 		
 		
@@ -1936,7 +2015,32 @@
                     <TaskParamDefinition path="LCS1__Discharge.LCS1__HealthStatusEPOC.HealthStatusEPOC-4" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS1__Discharge.LCS1__HealthStatusEPOC.HealthStatusEPOC-5" isReadOnly="false" isMandatory="true"/>              
 					<TaskParamDefinition path="LCS1__Discharge.LCS1__HealthStatusEPOC.HealthStatusEPOC-6" isReadOnly="true" isMandatory="false"/>              					
-                </HumanTaskDefinition>		
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="LCS1__HealthStatusICHT" description="*HealthStatusIC" ownerPath="LCS1__Settings.Clinician" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1__HealthStatusICDef" entityAttachPath="LCS1__Discharge.LCS1__HealthStatusIC">
+                    <TaskParamDefinition path="LCS1__Discharge.LCS1__HealthStatusIC.HealthStatusIC-1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1__Discharge.LCS1__HealthStatusIC.HealthStatusIC-2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1__Discharge.LCS1__HealthStatusIC.HealthStatusIC-3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1__Discharge.LCS1__HealthStatusIC.HealthStatusIC-4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1__Discharge.LCS1__HealthStatusIC.HealthStatusIC-5" isReadOnly="false" isMandatory="true"/>              
+					<TaskParamDefinition path="LCS1__Discharge.LCS1__HealthStatusIC.HealthStatusIC-6" isReadOnly="true" isMandatory="false"/>              					
+                </HumanTaskDefinition>
+
+                 <HumanTaskDefinition id="LCS1__PostCirurgicalHT" description="*PostCirurgical" ownerPath="LCS1__Settings.Clinician" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1__PostCirurgicalDef" entityAttachPath="LCS1__Discharge.LCS1__PostCirurgical">
+                    <TaskParamDefinition path="LCS1__Discharge.LCS1__PostCirurgical.PostCirurgical-1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1__Discharge.LCS1__PostCirurgical.PostCirurgical-2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1__Discharge.LCS1__PostCirurgical.PostCirurgical-3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1__Discharge.LCS1__PostCirurgical.PostCirurgical-4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1__Discharge.LCS1__PostCirurgical.PostCirurgical-5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1__Discharge.LCS1__PostCirurgical.PostCirurgical-6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1__Discharge.LCS1__PostCirurgical.PostCirurgical-7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1__Discharge.LCS1__PostCirurgical.PostCirurgical-8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1__Discharge.LCS1__PostCirurgical.PostCirurgical-9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1__Discharge.LCS1__PostCirurgical.PostCirurgical-10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1__Discharge.LCS1__PostCirurgical.PostCirurgical-11" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS1__Discharge.LCS1__PostCirurgical.PostCirurgical-12" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS1__Discharge.LCS1__PostCirurgical.PostCirurgical-13" isReadOnly="true" isMandatory="false"/>              					
+                </HumanTaskDefinition>
 								
 			</StageDefinition> 									 
 		</CaseDefinition>	
@@ -2383,7 +2487,32 @@
 			<TaskParam path="LCS1__Discharge.LCS1__HealthStatusEPOC.HealthStatusEPOC-4" values="['1']"/> 
 			<TaskParam path="LCS1__Discharge.LCS1__HealthStatusEPOC.HealthStatusEPOC-5" values="['1']"/> 
 			<TaskParam path="LCS1__Discharge.LCS1__HealthStatusEPOC.HealthStatusEPOC-6" values="[5]"/> 
-		</Action> 		
+		</Action>
+
+		<Action id="CompleteHumanTask" processId="LCS1__HealthStatusICHT" breakpoint="true">  
+			<TaskParam path="LCS1__Discharge.LCS1__HealthStatusIC.HealthStatusIC-1" values="['1']"/> 
+			<TaskParam path="LCS1__Discharge.LCS1__HealthStatusIC.HealthStatusIC-2" values="['1']"/> 
+			<TaskParam path="LCS1__Discharge.LCS1__HealthStatusIC.HealthStatusIC-3" values="['1']"/> 
+			<TaskParam path="LCS1__Discharge.LCS1__HealthStatusIC.HealthStatusIC-4" values="['1']"/> 
+			<TaskParam path="LCS1__Discharge.LCS1__HealthStatusIC.HealthStatusIC-5" values="['1']"/> 
+			<TaskParam path="LCS1__Discharge.LCS1__HealthStatusIC.HealthStatusIC-6" values="[5]"/> 
+		</Action>
+
+		<Action id="CompleteHumanTask" processId="LCS1__PostCirurgicalHT" breakpoint="true">  
+			<TaskParam path="LCS1__Discharge.LCS1__PostCirurgical.PostCirurgical-2" values="['1']"/> 
+			<TaskParam path="LCS1__Discharge.LCS1__PostCirurgical.PostCirurgical-1" values="['1']"/> 
+			<TaskParam path="LCS1__Discharge.LCS1__PostCirurgical.PostCirurgical-3" values="['1']"/> 
+			<TaskParam path="LCS1__Discharge.LCS1__PostCirurgical.PostCirurgical-4" values="['1']"/> 
+			<TaskParam path="LCS1__Discharge.LCS1__PostCirurgical.PostCirurgical-5" values="['0']"/>
+			<TaskParam path="LCS1__Discharge.LCS1__PostCirurgical.PostCirurgical-6" values="['1']"/>
+			<TaskParam path="LCS1__Discharge.LCS1__PostCirurgical.PostCirurgical-7" values="['1']"/>
+			<TaskParam path="LCS1__Discharge.LCS1__PostCirurgical.PostCirurgical-8" values="['0']"/>
+			<TaskParam path="LCS1__Discharge.LCS1__PostCirurgical.PostCirurgical-9" values="['1']"/>
+			<TaskParam path="LCS1__Discharge.LCS1__PostCirurgical.PostCirurgical-10" values="['0']"/>
+			<TaskParam path="LCS1__Discharge.LCS1__PostCirurgical.PostCirurgical-11" values="['0']"/>
+			<TaskParam path="LCS1__Discharge.LCS1__PostCirurgical.PostCirurgical-12" values="['0']"/>
+			<TaskParam path="LCS1__Discharge.LCS1__PostCirurgical.PostCirurgical-13" values="[7]"/> 
+		</Action>
 		
 	</Execution> 		
 	
