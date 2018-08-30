@@ -1237,8 +1237,17 @@
 				
         <EntityDefinition id="LCS1_PatientQuestionaire" description="Qüestionari per omplir el pacient">
             <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Tipus de qüestionari" additionalDescription="Seleccioneu el tipus de qüestionari que el pacient ha d'omplir">
+                <EnumerationOption value="STATUSEPOC" description="Autocheck Health Status EPOC"/>
+                <EnumerationOption value="STATUSIC" description="Autocheck Health Status IC"/>
+                <EnumerationOption value="POSTCIRURGICAL" description="Autocheck Health Status post-cirurgical"/>
+                <EnumerationOption value="BARTHEL" description="Barthel autotest"/>
+                <EnumerationOption value="HADS" description="Hospital Anxiety and Depression Scale"/>
+                <EnumerationOption value="EPOC" description="Self-care Auto-test EPOC"/>
+                <EnumerationOption value="IC" description="Self-care Auto-test IC"/>
                 <EnumerationOption value="SF12" description="SF-12"/>
-                <!--<EnumerationOption value="AUTOCHECKHEALTHSTATUSEPOC" description="Autotest pacients amb EPOC"/>-->
+                <EnumerationOption value="SLANSS" description="S-LANSS"/>
+                <EnumerationOption value="EQND" description="Verbal Numerical Rating Scale"/>
+                <EnumerationOption value="WOMAC" description="WOMAC"/>
             </AttributeDefinition>   
             <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Data d'inici"/> 
             <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="Data de fi"/> 
@@ -1863,7 +1872,10 @@
                     <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionHeartPulseAH.comments" isReadOnly="false" isMandatory="false"/>                                        <TaskParamDefinition part="AUTOMATED" path="LCS1_Workplan.LCS1_MonitoringPrescriptionHeartPulseAH.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>							
 				
-                <DualTaskDefinition id="LCS1_PatientQuestionaireAHWP" externalId="PatientQuestionaire" description="(En proves!!!) Prescripció de qüestionaris al pacient" 
+                <!--<DualTaskDefinition id="LCS1_PatientQuestionaireAHWP" externalId="PatientQuestionaire" description="(En proves!!!) Prescripció de qüestionaris al pacient" 
+                ownerPath="LCS1_Settings.CaseManager" dueDatePath="LCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" 
+                entityDefinitionId="LCS1_PatientQuestionaire" entityAttachPath="LCS1_Workplan.LCS1_PatientQuestionaireAH">-->
+                <DualTaskDefinition id="LCS1_PatientQuestionaireAHWP" externalId="PatientQuestionaire" description="(En proves!!!) Prescripció de qüestionaris al pacient" dynamicDescriptionPath="LCS1_Workplan.LCS1_MonitoringPrescriptionAHDiastolic.type"
 				ownerPath="LCS1_Settings.CaseManager" dueDatePath="LCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" 
 				entityDefinitionId="LCS1_PatientQuestionaire" entityAttachPath="LCS1_Workplan.LCS1_PatientQuestionaireAH">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/questionnaires" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
