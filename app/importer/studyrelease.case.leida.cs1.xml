@@ -48,7 +48,8 @@
 		    <AttributeDefinition id="Clinician" type="Link.Users(IrbllClinicians)" description="Metge especialista" multiplicity="exactlyOne"/>
 		    <AttributeDefinition id="Nurse" type="Link.Users(IrbllNurses)" description="Infermera" multiplicity="exactlyOne"/>
 		    <AttributeDefinition id="SocialCareer" type="Link.Users(IrbllSocialCareers)" description="Treballador social" multiplicity="exactlyOne"/>			
-		    <AttributeDefinition id="AnesClinic" type="Link.Users(IrbllAnesthesiologists, IrbllClinicians)" description="Anestesiòleg o Metge especialista" multiplicity="exactlyOne"/>            		  		  
+		    <AttributeDefinition id="AnesClinic" type="Link.Users(IrbllAnesthesiologists, IrbllClinicians)" description="Anestesiòleg o Metge especialista" multiplicity="exactlyOne"/>
+            <AttributeDefinition id="IrbllCS1" type="Link.Users(IrbllClinicians, IrbllPrimaryCareClinicians, IrbllPrimaryCareNurse, IrbllCaseManagers)" description="Prescriptors del Cas d'Estudi 1" multiplicity="exactlyOne"/>            		  		  
 			<AttributeDefinition id="NurseSocial" type="Link.Users(IrbllNurses, IrbllSocialCareers)" description="Infermera o Treballador social" multiplicity="exactlyOne"/>            		  		  			
 			<AttributeDefinition id="NurseSocialClinician" type="Link.Users(IrbllClinicians, IrbllNurses, IrbllSocialCareers)" description="Metge especialista o Infermera o Treballador social" multiplicity="exactlyOne"/>            		  		  			
 		    <AttributeDefinition id="PrimaryCareClinicians" type="Link.Users(IrbllPrimaryCareClinicians)" description="Metge especialista - Atenció Primària" multiplicity="exactlyOne"/>	 
@@ -1051,7 +1052,7 @@
 			description="IC (en %)"/> 			
         </EntityDefinition>
 		
-	<EntityDefinition id="LCS1_MedicationFollowing"> 
+        <EntityDefinition id="LCS1_MedicationFollowing"> 
             <AttributeDefinition id="Medication1" type="enumeration" multiplicity="exactlyOne" description="Supera el 80% de compliment de retirada de la medicació de la oficina de Farmàcia?">
                 <EnumerationOption value="0" description="Sí"/>
 				<EnumerationOption value="1" description="No"/>
@@ -1889,7 +1890,7 @@
                     <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_PatientQuestionaireAH.timeslot" isReadOnly="false" isMandatory="true"/> 
                     <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_PatientQuestionaireAH.repetitionsperday" isReadOnly="false" isMandatory="true"/>                    
                     <TaskParamDefinition part="AUTOMATED" path="LCS1_Workplan.LCS1_PatientQuestionaireAH.questionaires" isReadOnly="false" isMandatory="true"/>
-                </DualTaskDefinition> 												
+                </DualTaskDefinition>
 				
                 <DualTaskDefinition id="LCS1_PhysicalActivityAHWP" externalId="PhysicalActivity"
 				description="Monitorització d'activitat física - Rehabilitació"

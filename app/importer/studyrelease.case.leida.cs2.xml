@@ -54,7 +54,9 @@
 		    <AttributeDefinition id="Clinician" type="Link.Users(IrbllClinicians)" description="Cirurgià" multiplicity="exactlyOne"/> <!-- Metge -->
 		    <AttributeDefinition id="Nurse" type="Link.Users(IrbllNurses)" description="Infermera" multiplicity="exactlyOne"/>
 		    <AttributeDefinition id="SocialCareer" type="Link.Users(IrbllSocialCareers)" description="Treballador social" multiplicity="exactlyOne"/>		 
-			<AttributeDefinition id="AnesClinic" type="Link.Users(IrbllAnesthesiologists, IrbllClinicians)" description="Anestesiòleg o Cirurgià" multiplicity="exactlyOne"/>            		  		  
+			<AttributeDefinition id="AnesClinic" type="Link.Users(IrbllAnesthesiologists, IrbllClinicians)" description="Anestesiòleg o Cirurgià" multiplicity="exactlyOne"/>
+            <AttributeDefinition id="IrbllCS2" type="Link.Users(IrbllAnesthesiologists, IrbllCaseManagers, IrbllClinicians)" description="Prescriptors del Cas d'Estudi 2" multiplicity="exactlyOne"/>		  	
+
 			<AttributeDefinition id="NurseSocial" type="Link.Users(IrbllNurses, IrbllSocialCareers)" description="Infermera o Treballador social" multiplicity="exactlyOne"/>            		  		  			
 			<AttributeDefinition id="NurseSocialClinician" type="Link.Users(IrbllClinicians, IrbllNurses, IrbllSocialCareers)" description="Cirurgià o Infermera o Treballador social" multiplicity="exactlyOne"/>            		  		  			
 		    <AttributeDefinition id="PrimaryCareClinicians" type="Link.Users(IrbllPrimaryCareClinicians)" description="Metge - Atenció Primària" multiplicity="exactlyOne"/>	
@@ -1112,7 +1114,6 @@
 			<AttributeDefinition id="LCS2_PhysicalActivityAH" type="Link.EntityDefinition.LCS2_PhysicalActivityAH" multiplicity="any" />	
 			<AttributeDefinition id="LCS2_RehabilitationAH" type="Link.EntityDefinition.LCS2_RehabilitationAH" multiplicity="any" />			
 			<AttributeDefinition id="LCS2_MonitoringPrescriptionBodyTemperatureAH" type="Link.EntityDefinition.LCS2_MonitoringPrescriptionBodyTemperatureAH" multiplicity="any"/>							
-			<AttributeDefinition id="LCS2_PatientQuestionaireAH" type="Link.EntityDefinition.LCS2_PatientQuestionaire" multiplicity="any" />							
 		</EntityDefinition>
 
         <EntityDefinition id="LCS2_PatientEducationAndTrainingToTheCaregiverAH">
@@ -1241,10 +1242,203 @@
             <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Mesures"/>                      
         </EntityDefinition>						
 		
-       <EntityDefinition id="LCS2_PatientQuestionaire" description="Qüestionari per omplir el pacient">
+        <!-- Discharge Definitions -->
+		<EntityDefinition id="LCS2_Discharge">
+			<AttributeDefinition id="LCS2_DischargeTest" type="Link.EntityDefinition.LCS2_DischargeTest" multiplicity="any"/>									
+			<AttributeDefinition id="LCS2_SF12Discharge" type="Link.EntityDefinition.LCS2_SF12Def" multiplicity="any"/> 			
+			<AttributeDefinition id="LCS2_EQ-5DDischarge" type="Link.EntityDefinition.LCS2_EQ-5DDef" multiplicity="any"/>
+            <AttributeDefinition id="LCS2_PostCirurgical" type="Link.EntityDefinition.LCS2_PostCirurgicalDef" multiplicity="any"/>
+            <AttributeDefinition id="LCS2_SelfCareAutoTestEPOC" type="Link.EntityDefinition.LCS2_SelfCareAutoTestEPOCDef" multiplicity="any"/>
+            <AttributeDefinition id="LCS2_SelfCareAutoTestHF" type="Link.EntityDefinition.LCS2_SelfCareAutoTestHFDef" multiplicity="any"/>
+            <AttributeDefinition id="LCS2_PatientQuestionaireAH" type="Link.EntityDefinition.LCS2_PatientQuestionaireDef" multiplicity="any" />
+		</EntityDefinition>
+		
+		<EntityDefinition id="LCS2_DischargeTest"> 
+			<AttributeDefinition id="discharge1" type="longtext" description="Com ens ha anat?" multiplicity="exactlyOne" /> 
+			<AttributeDefinition id="discharge2" type="longtext" description="Estat actual del pacient" multiplicity="exactlyOne"/> 
+			<AttributeDefinition id="discharge3" type="longtext" description="Pronostic (funcional, assistencial i social)" multiplicity="exactlyOne"/> 
+        </EntityDefinition>
+
+        <EntityDefinition id="LCS2_PostCirurgicalDef">
+            <AttributeDefinition id="PostCirurgical-1" type="enumeration" multiplicity="exactlyOne" description="Respirar">
+                <EnumerationOption value="0"  description="Respiro igual"/>
+                <EnumerationOption value="1"  description="Respiro pitjor"/>
+            </AttributeDefinition>     
+            <AttributeDefinition id="PostCirurgical-2" type="enumeration" multiplicity="exactlyOne" description="Vòmit">
+                <EnumerationOption value="0"  description="No he vomitat"/>
+                <EnumerationOption value="1"  description="He vomitat"/>
+            </AttributeDefinition>      
+            <AttributeDefinition id="PostCirurgical-3"  type="enumeration" multiplicity="exactlyOne" description="Mareig">
+                <EnumerationOption value="0"  description="No em marejo"/>
+                <EnumerationOption value="1"  description="Em marejo sovint"/>
+            </AttributeDefinition>      
+            <AttributeDefinition id="PostCirurgical-4"  type="enumeration" multiplicity="exactlyOne" description="Menjar">
+                <EnumerationOption value="0"  description="Menjo igual"/>
+                <EnumerationOption value="1"  description="Menjo menys"/>
+            </AttributeDefinition>      
+            <AttributeDefinition id="PostCirurgical-5"  type="enumeration" multiplicity="exactlyOne" description="Beure">
+                <EnumerationOption value="0.0001"  description="Bec igual"/>
+                <EnumerationOption value="0.0002"  description="Bec menys"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="PostCirurgical-6"  type="enumeration" multiplicity="exactlyOne" description="Orinar">
+                <EnumerationOption value="0"  description="Orino igual"/>
+                <EnumerationOption value="1"  description="Orino menys"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="PostCirurgical-7"  type="enumeration" multiplicity="exactlyOne" description="Defecar">
+                <EnumerationOption value="0"  description="Defeco igual"/>
+                <EnumerationOption value="1"  description="Em costa més"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="PostCirurgical-8"  type="enumeration" multiplicity="exactlyOne" description="Moure's">
+                <EnumerationOption value="0.0001"  description="Em moc menys"/>
+                <EnumerationOption value="0.0002"  description="Em moc igual"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="PostCirurgical-9"  type="enumeration" multiplicity="exactlyOne" description="Temperatura">
+                <EnumerationOption value="0"  description="No tinc febre"/>
+                <EnumerationOption value="1"  description="Tinc febre (&gt;37º)"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="PostCirurgical-10"  type="enumeration" multiplicity="exactlyOne" description="Repòs i son">
+                <EnumerationOption value="0.0001"  description="Em costa més"/>
+                <EnumerationOption value="0.0002"  description="Dormo igual"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="PostCirurgical-11"  type="enumeration" multiplicity="exactlyOne" description="Neteja corporal">
+                <EnumerationOption value="0.0001"  description="Amb ajuda"/>
+                <EnumerationOption value="0.0002"  description="Em netejo sol"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="PostCirurgical-12"  type="enumeration" multiplicity="exactlyOne" description="Vestir-se">
+                <EnumerationOption value="0.0001"  description="Amb ajuda"/>
+                <EnumerationOption value="0.0002"  description="Em vesteixo sol"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="PostCirurgical-13" 
+            expression="round(number(PostCirurgical-1,0))+round(number(PostCirurgical-2,0))+round(number(PostCirurgical-3,0))+round(number(PostCirurgical-4,0)+round(number(PostCirurgical-5,0))+round(number(PostCirurgical-6,0))+round(number(PostCirurgical-7,0))+round(number(PostCirurgical-8,0))+round(number(PostCirurgical-9,0))+round(number(PostCirurgical-10,0))+round(number(PostCirurgical-11,0))+round(number(PostCirurgical-12,0))" 
+            description="PostCirurgical: Si total es &gt;= 0 se debe enviar una alarma"/>                                                                           
+        </EntityDefinition>
+
+        <EntityDefinition id="LCS2_SelfCareAutoTestEPOCDef" description="Capacitat d'autocura - MPOC">
+            <AttributeDefinition id="scat_epoc1" type="enumeration" multiplicity="exactlyOne" description="1. Em peso cada dia">
+                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="1" description="Dubtós"/>
+            </AttributeDefinition>        
+            <AttributeDefinition id="scat_epoc2" type="enumeration" multiplicity="exactlyOne" description="2. Si tinc dificultat per respirar paro i descanso.">
+                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="1" description="Dubtós"/>
+            </AttributeDefinition>      
+            <AttributeDefinition id="scat_epoc3" type="enumeration" multiplicity="exactlyOne" description="3. Si la meva dificultat per respirar augmenta contacto amb el meu metge o infermera.">
+                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="1" description="Dubtós"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="scat_epoc4" type="enumeration" multiplicity="exactlyOne" description="4. Si els meus peus/cames comencen a inflarse més del habitual, contacto amb el meu metge o infermera">
+                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="1" description="Dubtós"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="scat_epoc5" type="enumeration" multiplicity="exactlyOne" description="5. Si augmento el meu pes 2 kg en una setmana, contacto amb el meu metge o infermera.">
+                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="1" description="Dubtós"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="scat_epoc6" type="enumeration" multiplicity="exactlyOne" description="6. Limito la quantitat de liquids que bec (a meny de 1,5-2 litre diaris)">
+                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="1" description="Dubtós"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="scat_epoc7" type="enumeration" multiplicity="exactlyOne" description="7. Descanso una estona durant el dia.">
+                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="1" description="Dubtós"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="scat_epoc8" type="enumeration" multiplicity="exactlyOne" description="8. Si em sento més fatigat del normal (cansat), contacto amb le meu metge o infermera.">
+                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="1" description="Dubtós"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="scat_epoc9" type="enumeration" multiplicity="exactlyOne" description="9. Faig una dieta baixa en sal.">
+                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="1" description="Dubtós"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="scat_epoc10" type="enumeration" multiplicity="exactlyOne" description="10. Em prenc tota la medicació com m´han dit.">
+                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="1" description="Dubtós"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="scat_epoc11" type="enumeration" multiplicity="exactlyOne" description="11. Em vacuno per la grip tots els anys">
+                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="1" description="Dubtós"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="scat_epoc12" type="enumeration" multiplicity="exactlyOne" description="12. Faig exercici de manera regular">
+                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="1" description="Dubtós"/>
+            </AttributeDefinition>
+                    
+            <DerivedAttributeDefinition id="scat_epocTotal" type="number" multiplicity="exactlyOne" 
+            expression="number(scat_epoc1,0)+number(scat_epoc2,0)+number(scat_epoc3,0)+number(scat_epoc4,0)+number(scat_epoc5,0)+number(scat_epoc6,0)+number(scat_epoc7,0)+number(scat_epoc8,0)+number(scat_epoc9,0)+number(scat_epoc10,0)+number(scat_epoc11,0)+number(scat_epoc12,0)"
+            description="Puntuació MPOC"/> 
+            
+            <DerivedAttributeDefinition id="scat_epocTotalScore" type="number" multiplicity="exactlyOne" 
+            expression="round((( scat_epocTotal/ 36 ) * 100),0)"            
+            description="MPOC (en %)"/>                     
+        </EntityDefinition>
+
+        <EntityDefinition id="LCS2_SelfCareAutoTestHFDef" description="Capacitat d'autocura - IC">
+            <AttributeDefinition id="scat_ic1" type="enumeration" multiplicity="exactlyOne" description="Si tinc dificultat per respirar paro i descanso.">
+                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="1" description="Dubtós"/>
+            </AttributeDefinition>     
+            <AttributeDefinition id="scat_ic2" type="enumeration" multiplicity="exactlyOne" description="Si la meva dificultat per respirar augmenta contacto amb el meu metge o infermera.">
+                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="1" description="Dubtós"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="scat_ic3" type="enumeration" multiplicity="exactlyOne" description="Si la meva tos i espectoració augmenten i/o la mucositat es torna lletja contacto amb el meu metge o infermera.">
+                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="1" description="Dubtós"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="scat_ic4" type="enumeration" multiplicity="exactlyOne" description="Descanso una estona durant el dia.">
+                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="1" description="Dubtós"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="scat_ic5" type="enumeration" multiplicity="exactlyOne" description="Si em sento mes fatigat del normal (cansat), contacto amb le meu metge o infermera.">
+                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="1" description="Dubtós"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="scat_ic6" type="enumeration" multiplicity="exactlyOne" description="Em prenc tota la medicació com m´han dit.">
+                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="1" description="Dubtós"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="scat_ic7" type="enumeration" multiplicity="exactlyOne" description="Em vacuno per la grip tots els anys">
+                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="1" description="Dubtós"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="scat_ic8" type="enumeration" multiplicity="exactlyOne" description="Faig exercici de manera regular">
+                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
+                <EnumerationOption value="2" description="D'acord"/>
+                <EnumerationOption value="1" description="Dubtós"/>
+            </AttributeDefinition>  
+            <DerivedAttributeDefinition id="scat_icTotal" type="number" multiplicity="exactlyOne" 
+            expression="number(scat_ic1,0)+number(scat_ic2,0)+number(scat_ic3,0)+number(scat_ic4,0)+number(scat_ic5,0)+number(scat_ic6,0)+number(scat_ic7,0)+number(scat_ic8,0)"
+            description="Puntuacio IC"/> 
+            
+            <DerivedAttributeDefinition id="scat_icTotalScore" 
+            expression="round(((scat_icTotal / 24) * 100),0)"       
+            description="IC (en %)"/>           
+        </EntityDefinition>
+
+        <EntityDefinition id="LCS2_PatientQuestionaireDef" description="Qüestionari per omplir el pacient">
             <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Tipus de qüestionari" additionalDescription="Seleccioneu el tipus de qüestionari que el pacient ha d'omplir">
-                <EnumerationOption value="SF12" description="SF-12"/>
-                <!--<EnumerationOption value="AUTOCHECKHEALTHSTATUSEPOC" description="Autotest pacients amb EPOC"/>-->
+                <EnumerationOption value="SLANSS" description="S-LANSS"/>
+                <EnumerationOption value="EQND" description="Verbal Numerical Rating Scale"/>
+                <EnumerationOption value="WOMAC" description="WOMAC"/>
             </AttributeDefinition>   
             <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Data d'inici"/> 
             <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="Data de fi"/> 
@@ -1261,23 +1455,10 @@
                 <EnumerationOption value="AFTERNOONSNACK" description="Berenar"/>
                 <EnumerationOption value="DINNER" description="Sopar"/>
                 <EnumerationOption value="BEFORESLEEP" description="Abans d'anar a dormir"/>
-                <EnumerationOption value="ANYTIMEDURINGDAY" description="En qualsevol moment del dia" additionalDescription="Seleccioneu aquesta opció quan el temps del dia no importa"/>								
+                <EnumerationOption value="ANYTIMEDURINGDAY" description="En qualsevol moment del dia" additionalDescription="Seleccioneu aquesta opció quan el temps del dia no importa"/>                              
             </AttributeDefinition>
             <AttributeDefinition id="repetitionsperday" type="number.min(0)" multiplicity="exactlyOne" description="El nombre de vegades que el qüestionari s'omple per dia"/>   
             <AttributeDefinition id="questionaires" type="json" multiplicity="any" uiReference="patientquestionaires" description="Qüestionari per omplir el pacient"/>                      
-        </EntityDefinition>
-				
-        <!-- Discharge Definitions -->		
-		<EntityDefinition id="LCS2_Discharge">
-			<AttributeDefinition id="LCS2_DischargeTest" type="Link.EntityDefinition.LCS2_DischargeTest" multiplicity="any"/>									
-			<AttributeDefinition id="LCS2_SF12Discharge" type="Link.EntityDefinition.LCS2_SF12Def" multiplicity="any"/> 			
-			<AttributeDefinition id="LCS2_EQ-5DDischarge" type="Link.EntityDefinition.LCS2_EQ-5DDef" multiplicity="any"/> 						
-		</EntityDefinition>
-		
-		<EntityDefinition id="LCS2_DischargeTest"> 
-			<AttributeDefinition id="discharge1" type="longtext" description="Com ens ha anat?" multiplicity="exactlyOne" /> 
-			<AttributeDefinition id="discharge2" type="longtext" description="Estat actual del pacient" multiplicity="exactlyOne"/> 
-			<AttributeDefinition id="discharge3" type="longtext" description="Pronostic (funcional, assistencial i social)" multiplicity="exactlyOne"/> 
         </EntityDefinition>
 					
         <EntityDefinition id="LCS2_RehabilitationAH">
@@ -1788,9 +1969,76 @@
                     <TaskParamDefinition path="LCS2_WorkplanAfterHospitalization.LCS2_PatientEducationAndTrainingToTheCaregiverAH.educaExec2" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
 
-                <HumanTaskDefinition id="LCS2_PatientEducationAndTrainingToTheCaregiverWPAH2" description="Educació i formació pel cuidador (fisio)" ownerPath="LCS2_Settings.Physiotherapist" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_PatientEducationAndTrainingToTheCaregiverAH" entityAttachPath="LCS2_WorkplanAfterHospitalization.LCS2_PatientEducationAndTrainingToTheCaregiverAH">
+                <HumanTaskDefinition id="LCS2_PatientEducationAndTrainingToTheCaregiverWPAH2" description="Educació i formació pel cuidador (fisio)" ownerPath="LCS2_Settings.IrbllCS2" isMandatory="true" isRepeatable="false" entityDefinitionId="LCS2_PatientEducationAndTrainingToTheCaregiverAH" entityAttachPath="LCS2_WorkplanAfterHospitalization.LCS2_PatientEducationAndTrainingToTheCaregiverAH">
                     <TaskParamDefinition path="LCS2_WorkplanAfterHospitalization.LCS2_PatientEducationAndTrainingToTheCaregiverAH.educaExec3" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="LCS2_PostCirurgicalHT" description="Prescripció de qüestionaris al pacient (PostCirurgical)" ownerPath="LCS2_Settings.IrbllCS2" isMandatory="true" isRepeatable="ONCE" entityDefinitionId="LCS2_PostCirurgicalDef" entityAttachPath="LCS2_Discharge.LCS2_PostCirurgical">
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_PostCirurgical.PostCirurgical-1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_PostCirurgical.PostCirurgical-2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_PostCirurgical.PostCirurgical-3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_PostCirurgical.PostCirurgical-4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_PostCirurgical.PostCirurgical-5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_PostCirurgical.PostCirurgical-6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_PostCirurgical.PostCirurgical-7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_PostCirurgical.PostCirurgical-8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_PostCirurgical.PostCirurgical-9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_PostCirurgical.PostCirurgical-10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_PostCirurgical.PostCirurgical-11" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_PostCirurgical.PostCirurgical-12" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="LCS2_SelfCareAutoTestEPOCHT" description="*Barreres - Capacitat d'autocura (MPOC)" 
+                ownerPath="LCS2_Settings.IrbllCS2" isMandatory="true" isRepeatable="ONCE" entityDefinitionId="LCS2_SelfCareAutoTestEPOCDef" entityAttachPath="LCS2_Discharge.LCS2_SelfCareAutoTestEPOC">                
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_SelfCareAutoTestEPOC.scat_epoc1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_SelfCareAutoTestEPOC.scat_epoc2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_SelfCareAutoTestEPOC.scat_epoc3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_SelfCareAutoTestEPOC.scat_epoc4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_SelfCareAutoTestEPOC.scat_epoc5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_SelfCareAutoTestEPOC.scat_epoc6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_SelfCareAutoTestEPOC.scat_epoc7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_SelfCareAutoTestEPOC.scat_epoc8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_SelfCareAutoTestEPOC.scat_epoc9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_SelfCareAutoTestEPOC.scat_epoc10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_SelfCareAutoTestEPOC.scat_epoc11" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_SelfCareAutoTestEPOC.scat_epoc12" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_SelfCareAutoTestEPOC.scat_epocTotal" isReadOnly="true" isMandatory="false"/>            
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_SelfCareAutoTestEPOC.scat_epocTotalScore" isReadOnly="true" isMandatory="false"/>                               
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="LCS2_SelfCareAutoTestHFHT" description="*Barreres - Capacitat d'autocura (IC)" 
+                ownerPath="LCS2_Settings.IrbllCS2" isMandatory="true" isRepeatable="ONCE" entityDefinitionId="LCS2_SelfCareAutoTestHFDef" entityAttachPath="LCS2_Discharge.LCS2_SelfCareAutoTestHF">                          
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_SelfCareAutoTestHF.scat_ic1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_SelfCareAutoTestHF.scat_ic2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_SelfCareAutoTestHF.scat_ic3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_SelfCareAutoTestHF.scat_ic4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_SelfCareAutoTestHF.scat_ic5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_SelfCareAutoTestHF.scat_ic6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_SelfCareAutoTestHF.scat_ic7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_SelfCareAutoTestHF.scat_ic8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_SelfCareAutoTestHF.scat_icTotal" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="LCS2_Discharge.LCS2_SelfCareAutoTestHF.scat_icTotalScore" isReadOnly="true" isMandatory="false"/>
+                </HumanTaskDefinition>
+
+<DualTaskDefinition id="LCS1_PatientQuestionaireAHWP" externalId="PatientQuestionaire" description="Prescripció de qüestionaris al pacient" dynamicDescriptionPath="LCS1_Workplan.LCS1_PatientQuestionaireAH.type"
+                ownerPath="LCS1_Settings.CaseManager" dueDatePath="LCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" 
+                entityDefinitionId="LCS1_PatientQuestionaire" entityAttachPath="LCS1_Workplan.LCS1_PatientQuestionaireAH">
+
+
+
+                <DualTaskDefinition id="LCS2_PatientQuestionaireAHWP" externalId="PatientQuestionaire" description="Prescripció de qüestionaris al pacient" dynamicDescriptionPath="LCS2_Discharge.LCS2_PatientQuestionaireAH.type" ownerPath="LCS2_Settings.CaseManager" dueDatePath="LCS2_Settings.WorkplanDueDate" isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_PatientQuestionaireDef" entityAttachPath="LCS2_Discharge.LCS2_PatientQuestionaireAH">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/questionnaires" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/questionnaires/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_Discharge.LCS2_PatientQuestionaireAH.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_Discharge.LCS2_PatientQuestionaireAH.startdate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_Discharge.LCS2_PatientQuestionaireAH.enddate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_Discharge.LCS2_PatientQuestionaireAH.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS2_Discharge.LCS2_PatientQuestionaireAH.frequnit" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition part="HUMAN" path="LCS2_Discharge.LCS2_PatientQuestionaireAH.maxdelay" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS2_Discharge.LCS2_PatientQuestionaireAH.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS2_Discharge.LCS2_PatientQuestionaireAH.repetitionsperday" isReadOnly="false" isMandatory="true"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="LCS2_Discharge.LCS2_PatientQuestionaireAH.questionaires" isReadOnly="false" isMandatory="true"/>
+                </DualTaskDefinition>
             
                 <DualTaskDefinition id="LCS2_MonitoringPrescriptionAHWP" externalId="MonitoringPrescription"
 				description="Prescripció de monitorització - Pressió arterial sistòlica\diastòlica - Desprès l'hospitalització" 
@@ -1833,23 +2081,8 @@
                     <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionBodyTemperatureAH.timeslot" isReadOnly="false" isMandatory="true"/> 
                     <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionBodyTemperatureAH.comments" isReadOnly="false" isMandatory="false"/>                    
                     <TaskParamDefinition part="AUTOMATED" path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionBodyTemperatureAH.measurement" isReadOnly="false" isMandatory="true"/>
-                </DualTaskDefinition>		
-
-                <DualTaskDefinition id="LCS2_PatientQuestionaireAHWP" externalId="PatientQuestionaire" description="(En proves!!!) Prescripció de qüestionaris al pacient" 
-				ownerPath="LCS2_Settings.CaseManager" dueDatePath="LCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" 
-				entityDefinitionId="LCS2_PatientQuestionaire" entityAttachPath="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH">
-                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/questionnaires" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
-                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/questionnaires/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.type" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.startdate" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.enddate" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.freq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.frequnit" isReadOnly="false" isMandatory="true"/>   
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.maxdelay" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.timeslot" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.repetitionsperday" isReadOnly="false" isMandatory="true"/>                    
-                    <TaskParamDefinition part="AUTOMATED" path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.questionaires" isReadOnly="false" isMandatory="true"/>
-                </DualTaskDefinition> 																				
+                </DualTaskDefinition>				
+								
 
                 <DualTaskDefinition id="LCS2_PhysicalActivityAHWP" externalId="PhysicalActivity"
 				description="Activitat física - Desprès d'hospitalització" 
@@ -1919,11 +2152,6 @@
         <TaskParam path="LCS2_Settings.PrimaryCareNurse" userValue="richardsona"/>  				
     </Action>  
 
-<!--	<Action id="CompleteHumanTask" processId="LCS2_SelectPatient2" breakpoint="true">  
-        <TaskParam path="LCS2_Settings.PrimaryCareClinicians" userValue="drudisr"/> 
-        <TaskParam path="LCS2_Settings.PrimaryCareNurse" userValue="bigordaa"/> 
-    </Action>  	-->	
-	
     <Action id="CompleteHumanTask" processId="LCS2_TechnologicalTest" breakpoint="true">  
         <TaskParam path="LCS2_Identification.LCS2_TechnologicalTest.tech1" values="['0']"/> 
         <TaskParam path="LCS2_Identification.LCS2_TechnologicalTest.tech2" values="['1']"/> 
@@ -1970,11 +2198,6 @@
     <Action id="CompleteHumanTask" processId="LCS2_GMAIdentificationHT" breakpoint="true">  
         <TaskParam path="LCS2_Identification.LCS2_GMAIdentification.gma" values="['1']"/> 
     </Action>   
-		
-<!--		
-	<Action id="CompleteHumanTask" processId="LCS2_GMAEvaluationHT" breakpoint="true">  
-        <TaskParam path="LCS2_Evaluation.LCS2_GMAEvaluation.gma" values="['1']"/> 
-    </Action>  				 -->
 
     <Action id="CompleteHumanTask" processId="LCS2_PatientsConsent" breakpoint="true">  
         <TaskParam path="LCS2_Identification.LCS2_PatientsConsent.pConsent1" values="['1']"/> 
@@ -2284,23 +2507,7 @@
     <Action id="CompleteDualTaskAutomatedPart" processId="LCS2_MonitoringPrescriptionAHWP" breakpoint="true">
         <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionAHWP.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
     </Action>
-			
-	<Action id="ActivateDualTask" processId="LCS2_PatientQuestionaireAHWP" breakpoint="true"/>
-	<Action id="CompleteDualTaskHumanPart" processId="LCS2_PatientQuestionaireAHWP" breakpoint="true">
-		<TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.type"  values="['SF12']"/>
-		<TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.startdate"  values="['2017-06-09T00:00:00.0']"/>
-		<TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.enddate"  values="['2019-06-09T00:00:00.0']"/>
-		<TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.freq"  values="[5]"/>
-		<TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.freqqunit"  values="['WEEKS']"/>
-		<TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.maxdelay"  values="[100]"/>
-		<TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
-		<TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.repetitionsperday"  values="[1]"/>
-	</Action>
-	
-	<Action id="CompleteDualTaskAutomatedPart" processId="LCS2_PatientQuestionaireAHWP">
-		<TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PatientQuestionaireAH.questionaires"  values='[{"id":"18823iSMSID","lastEdit":"2018-05-15 11:09:23.0","state":"COMPLETED","taskParams":[{"description":"In general, would you say your health is:","values":["Excellent"],"type":"enumeration","isMandatory":true,"additionalDescription":null},{"description":"Moderate activities","values":["YES, limited a lot"],"type":"enumeration","isMandatory":false,"additionalDescription":"Moderate activities such as moving a table, pushing a vacuum cleaner, bowling, or playing golf."}]},{"id":"18824iSMSID","lastEdit":"2018-05-16 11:09:23.0","state":"ACTIVE","taskParams":[{"description":"In general, would you say your health is:","values":["Very good"],"type":"enumeration","isMandatory":true,"additionalDescription":null},{"description":"Moderate activities","values":["YES, limited a little"],"type":"enumeration","isMandatory":false,"additionalDescription":"Moderate activities such as moving a table, pushing a vacuum cleaner, bowling, or playing golf."}]}]'/>
-	</Action>	
-	
+
     <Action id="ActivateDualTask" processId="LCS2_MonitoringPrescriptionBodyTemperatureAHWP" breakpoint="true"/>
     <Action id="CompleteDualTaskHumanPart" processId="LCS2_MonitoringPrescriptionBodyTemperatureAHWP" breakpoint="true">
         <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_MonitoringPrescriptionBodyTemperatureAH.type"  values="['BODYTEMPERATURE']"/>
@@ -2368,7 +2575,68 @@
         <TaskParam path="LCS2_Discharge.LCS2_EQ-5DDischarge.EQ-5D-4" values="['1']"/> 
         <TaskParam path="LCS2_Discharge.LCS2_EQ-5DDischarge.EQ-5D-5" values="['1']"/> 
 		<TaskParam path="LCS2_Discharge.LCS2_EQ-5DDischarge.EQ-5D-6" values="[51]"/> 
-    </Action> 
+    </Action>
+
+    <Action id="CompleteHumanTask" processId="LCS2_PostCirurgicalHT" breakpoint="true">
+        <TaskParam path="LCS2_Discharge.LCS2_PostCirurgical.PostCirurgical-1" values="['1']"/>
+        <TaskParam path="LCS2_Discharge.LCS2_PostCirurgical.PostCirurgical-2" values="['1']"/>
+        <TaskParam path="LCS2_Discharge.LCS2_PostCirurgical.PostCirurgical-3" values="['1']"/>
+        <TaskParam path="LCS2_Discharge.LCS2_PostCirurgical.PostCirurgical-4" values="['1']"/>
+        <TaskParam path="LCS2_Discharge.LCS2_PostCirurgical.PostCirurgical-5" values="['0.0001']"/>
+        <TaskParam path="LCS2_Discharge.LCS2_PostCirurgical.PostCirurgical-6" values="['1']"/>
+        <TaskParam path="LCS2_Discharge.LCS2_PostCirurgical.PostCirurgical-7" values="['1']"/>
+        <TaskParam path="LCS2_Discharge.LCS2_PostCirurgical.PostCirurgical-8" values="['0.0001']"/>
+        <TaskParam path="LCS2_Discharge.LCS2_PostCirurgical.PostCirurgical-9" values="['1']"/>
+        <TaskParam path="LCS2_Discharge.LCS2_PostCirurgical.PostCirurgical-10" values="['0.0001']"/>
+        <TaskParam path="LCS2_Discharge.LCS2_PostCirurgical.PostCirurgical-11" values="['0.0001']"/>
+        <TaskParam path="LCS2_Discharge.LCS2_PostCirurgical.PostCirurgical-12" values="['0.0001']"/>
+        <TaskParam path="LCS2_Discharge.LCS2_PostCirurgical.PostCirurgical-13" values="[7]"/> 
+    </Action>
+
+    <Action id="CompleteHumanTask" processId="LCS2_SelfCareAutoTestEPOCHT" breakpoint="true"> 
+        <TaskParam path="LCS2_Discharge.LCS2_SelfCareAutoTestEPOC.scat_epoc1" values="['1']"/>    
+        <TaskParam path="LCS2_Discharge.LCS2_SelfCareAutoTestEPOC.scat_epoc2" values="['1']"/>    
+        <TaskParam path="LCS2_Discharge.LCS2_SelfCareAutoTestEPOC.scat_epoc3" values="['1']"/>    
+        <TaskParam path="LCS2_Discharge.LCS2_SelfCareAutoTestEPOC.scat_epoc4" values="['1']"/>    
+        <TaskParam path="LCS2_Discharge.LCS2_SelfCareAutoTestEPOC.scat_epoc5" values="['1']"/>    
+        <TaskParam path="LCS2_Discharge.LCS2_SelfCareAutoTestEPOC.scat_epoc6" values="['1']"/>    
+        <TaskParam path="LCS2_Discharge.LCS2_SelfCareAutoTestEPOC.scat_epoc7" values="['1']"/>    
+        <TaskParam path="LCS2_Discharge.LCS2_SelfCareAutoTestEPOC.scat_epoc8" values="['1']"/>    
+        <TaskParam path="LCS2_Discharge.LCS2_SelfCareAutoTestEPOC.scat_epoc9" values="['1']"/>    
+        <TaskParam path="LCS2_Discharge.LCS2_SelfCareAutoTestEPOC.scat_epoc10" values="['1']"/>   
+        <TaskParam path="LCS2_Discharge.LCS2_SelfCareAutoTestEPOC.scat_epoc11" values="['1']"/>   
+        <TaskParam path="LCS2_Discharge.LCS2_SelfCareAutoTestEPOC.scat_epoc12" values="['1']"/>   
+        <TaskParam path="LCS2_Discharge.LCS2_SelfCareAutoTestEPOC.scat_epocTotal" values="['12']"/>  
+    </Action>
+
+    <Action id="CompleteHumanTask" processId="LCS2_SelfCareAutoTestHFHT" breakpoint="true"> 
+        <TaskParam path="LCS2_Discharge.LCS2_SelfCareAutoTestHF.scat_ic1" values="['1']"/>    
+        <TaskParam path="LCS2_Discharge.LCS2_SelfCareAutoTestHF.scat_ic2" values="['1']"/>    
+        <TaskParam path="LCS2_Discharge.LCS2_SelfCareAutoTestHF.scat_ic3" values="['1']"/>    
+        <TaskParam path="LCS2_Discharge.LCS2_SelfCareAutoTestHF.scat_ic4" values="['1']"/>    
+        <TaskParam path="LCS2_Discharge.LCS2_SelfCareAutoTestHF.scat_ic5" values="['1']"/>    
+        <TaskParam path="LCS2_Discharge.LCS2_SelfCareAutoTestHF.scat_ic6" values="['1']"/>    
+        <TaskParam path="LCS2_Discharge.LCS2_SelfCareAutoTestHF.scat_ic7" values="['1']"/>    
+        <TaskParam path="LCS2_Discharge.LCS2_SelfCareAutoTestHF.scat_ic8" values="['1']"/>    
+        <TaskParam path="LCS2_Discharge.LCS2_SelfCareAutoTestHF.scat_ic9" values="['1']"/>    
+        <TaskParam path="LCS2_Discharge.LCS2_SelfCareAutoTestHF.scat_ic10" values="['1']"/>   
+        <TaskParam path="LCS2_Discharge.LCS2_SelfCareAutoTestHF.scat_ic11" values="['1']"/>   
+        <TaskParam path="LCS2_Discharge.LCS2_SelfCareAutoTestHF.scat_ic12" values="['1']"/>   
+        <TaskParam path="LCS2_Discharge.LCS2_SelfCareAutoTestHF.scat_icTotal" values="['12']"/>  
+    </Action>
+
+    <Action id="ActivateDualTask" processId="LCS2_PatientQuestionaireAHWP" breakpoint="true"/>
+    <Action id="CompleteDualTaskHumanPart" processId="LCS2_PatientQuestionaireAHWP" breakpoint="true">
+        <TaskParam path="LCS2_Discharge.LCS2_PatientQuestionaireAH.type"  values="['SLANSS']"/>
+        <TaskParam path="LCS2_Discharge.LCS2_PatientQuestionaireAH.startdate"  values="['2017-06-09T00:00:00.0']"/>
+        <TaskParam path="LCS2_Discharge.LCS2_PatientQuestionaireAH.enddate"  values="['2019-06-09T00:00:00.0']"/>
+        <TaskParam path="LCS2_Discharge.LCS2_PatientQuestionaireAH.freq"  values="[5]"/>
+        <TaskParam path="LCS2_Discharge.LCS2_PatientQuestionaireAH.freqqunit"  values="['WEEKS']"/>
+        <TaskParam path="LCS2_Discharge.LCS2_PatientQuestionaireAH.maxdelay"  values="[100]"/>
+        <TaskParam path="LCS2_Discharge.LCS2_PatientQuestionaireAH.timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
+        <TaskParam path="LCS2_Discharge.LCS2_PatientQuestionaireAH.repetitionsperday"  values="[1]"/>
+    </Action>
+    
 </Execution>
 
 </SACMDefinition>
