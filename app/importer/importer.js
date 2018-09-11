@@ -904,6 +904,7 @@ module.exports = class Importer {
           part: tp.$.part,
           isReadOnly: tp.$.isReadOnly,
           isMandatory: tp.$.isMandatory,
+          position: tp.$.position,
           taskDefinition: taskDefinitionId
         }
         return TaskParamDefinition.create(this.jwt, data);
