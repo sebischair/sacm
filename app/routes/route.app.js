@@ -27,6 +27,7 @@ import group from './group/route.group';
 import importer from './route.import';
 import job from './route.job';
 import analytics from './route.analytics';
+import statistics from './route.statistics';
 import context from './route.context';
 
 function routes(){
@@ -78,6 +79,9 @@ function routes(){
 
     /** Model Analytics */
     router.use('/analytics', analytics);
+
+    /** Model Statistics */
+    router.use('/statistics', statistics);
 
     /** Context route */
     router.use('/', context);
