@@ -1240,6 +1240,7 @@
             <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Tipus de qüestionari" additionalDescription="Seleccioneu el tipus de qüestionari que el pacient ha d'omplir">
                 <EnumerationOption value="STATUSEPOC" description="Autocheck Health Status EPOC"/>
                 <EnumerationOption value="STATUSIC" description="Autocheck Health Status IC"/>
+				<!--
                 <EnumerationOption value="POSTCIRURGICAL" description="Autocheck Health Status post-cirurgical"/>
                 <EnumerationOption value="BARTHEL" description="Barthel autotest"/>
                 <EnumerationOption value="HADS" description="Hospital Anxiety and Depression Scale"/>
@@ -1249,6 +1250,7 @@
                 <EnumerationOption value="SLANSS" description="S-LANSS"/>
                 <EnumerationOption value="EQND" description="Verbal Numerical Rating Scale"/>
                 <EnumerationOption value="WOMAC" description="WOMAC"/>
+				-->
             </AttributeDefinition>   
             <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Data d'inici"/> 
             <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="Data de fi"/> 
@@ -1872,10 +1874,7 @@
                     <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionHeartPulseAH.timeslot" isReadOnly="false" isMandatory="true"/> 
                     <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionHeartPulseAH.comments" isReadOnly="false" isMandatory="false"/>                                        <TaskParamDefinition part="AUTOMATED" path="LCS1_Workplan.LCS1_MonitoringPrescriptionHeartPulseAH.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>							
-
-                <!--<DualTaskDefinition id="LCS1_PatientQuestionaireAHWP" externalId="PatientQuestionaire" description="(En proves!!!) Prescripció de qüestionaris al pacient" 
-                ownerPath="LCS1_Settings.CaseManager" dueDatePath="LCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" 
-                entityDefinitionId="LCS1_PatientQuestionaire" entityAttachPath="LCS1_Workplan.LCS1_PatientQuestionaireAH">-->
+                
                 <DualTaskDefinition id="LCS1_PatientQuestionaireAHWP" externalId="PatientQuestionaire" description="Prescripció de qüestionaris al pacient"
                                     dynamicDescriptionPath="LCS1_Workplan.LCS1_PatientQuestionaireAH.type"
 				ownerPath="LCS1_Settings.CaseManager" dueDatePath="LCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" 
@@ -2363,7 +2362,7 @@
 			<TaskParam path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
 		</Action>
 		
-		<!-- At the moment it is only in testing environment 
+		<!-- At the moment it is only in testing environment -->		
         <Action id="ActivateDualTask" processId="LCS1_PatientQuestionaireAHWP" breakpoint="true"/>
         <Action id="CompleteDualTaskHumanPart" processId="LCS1_PatientQuestionaireAHWP" breakpoint="true">
             <TaskParam path="LCS1_Workplan.LCS1_PatientQuestionaireAH.type"  values="['SF12']"/>
@@ -2377,7 +2376,7 @@
         </Action>
         <Action id="CompleteDualTaskAutomatedPart" processId="LCS1_PatientQuestionaireAHWP">
             <TaskParam path="LCS1_Workplan.LCS1_PatientQuestionaireAH.questionaires"  values='[{"id":"18823iSMSID","lastEdit":"2018-05-15 11:09:23.0","state":"COMPLETED","taskParams":[{"description":"In general, would you say your health is:","values":["Excellent"],"type":"enumeration","isMandatory":true,"additionalDescription":null},{"description":"Moderate activities","values":["YES, limited a lot"],"type":"enumeration","isMandatory":false,"additionalDescription":"Moderate activities such as moving a table, pushing a vacuum cleaner, bowling, or playing golf."}]},{"id":"18824iSMSID","lastEdit":"2018-05-16 11:09:23.0","state":"ACTIVE","taskParams":[{"description":"In general, would you say your health is:","values":["Very good"],"type":"enumeration","isMandatory":true,"additionalDescription":null},{"description":"Moderate activities","values":["YES, limited a little"],"type":"enumeration","isMandatory":false,"additionalDescription":"Moderate activities such as moving a table, pushing a vacuum cleaner, bowling, or playing golf."}]}]'/>
-        </Action>	-->
+        </Action>	
 	
 	
 	    <Action id="CompleteHumanTask" processId="LCS1_DischargeTestHT" breakpoint="true">  
