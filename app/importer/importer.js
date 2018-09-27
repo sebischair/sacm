@@ -222,7 +222,11 @@ module.exports = class Importer {
     }
 
     parseXMLString(xmlString){
-      return xml2jspromise.parseStringAsync(xmlString, {explicitChildren:true, preserveChildrenOrder:true});
+      let s = xml2jspromise.parseStringAsync(xmlString, {explicitChildren:true, preserveChildrenOrder:true});
+      s.catch(e=>{
+        winston.error(e)
+      });
+      return s;
     }
 
     fileExists(filePath) {
@@ -904,6 +908,7 @@ module.exports = class Importer {
           part: tp.$.part,
           isReadOnly: tp.$.isReadOnly,
           isMandatory: tp.$.isMandatory,
+          position: tp.$.position,
           taskDefinition: taskDefinitionId
         }
         return TaskParamDefinition.create(this.jwt, data);

@@ -73,6 +73,7 @@
                 <EnumerationOption value="3" description="כן"/>
             </AttributeDefinition> 
             <AttributeDefinition id="LACE3" type="enumeration" multiplicity="maximalOne" description="ביקורים בחדר מיון בחצי השנה האחרונה">
+			    <EnumerationOption value="0" description="לא היו ביקורים בחצי שנה האחרונה"/>
                 <EnumerationOption value="1" description="ביקור אחד"/>
                 <EnumerationOption value="2" description="שני ביקורים"/>
                 <EnumerationOption value="3" description="שלושה ביקורים"/>
@@ -139,7 +140,7 @@
 		</EntityDefinition> 
 		
         <EntityDefinition id="ICS1_InclusionCriteria" description="קריטריוני הכללה">
-            <AttributeDefinition id="BasicAge" type="enumeration" multiplicity="maximalOne" description="גיל מעל 65?">
+            <AttributeDefinition id="BasicAge" type="enumeration" multiplicity="maximalOne" description="גיל מעל 55?">
                 <EnumerationOption value="0" description="לא"/>
                 <EnumerationOption value="1" description="כן"/>
             </AttributeDefinition>        
@@ -171,7 +172,12 @@
                 <EnumerationOption value="0" description="לא"/>
                 <EnumerationOption value="1" description="כן"/>
             </AttributeDefinition>            
-        </EntityDefinition>       
+			<AttributeDefinition id="BasicRelease" type="enumeration" multiplicity="maximalOne" description="האם דורש התערבות לאחר השחרור של יותר מ-2 גורמים ברפואה הקהילתית?">
+                <EnumerationOption value="0" description="לא"/>
+                <EnumerationOption value="1" description="כן"/>
+            </AttributeDefinition>
+        
+		</EntityDefinition>       
 
         <EntityDefinition id="ICS1_ThechTest" description="יכולות טכנולוגיות">
             <AttributeDefinition id="TechPassword" type="enumeration" multiplicity="maximalOne" description="האם יש למטופל או למטפל העיקרי סיסמה לאתר Maccabi Online?">
@@ -276,7 +282,8 @@
                 <EnumerationOption value="2" description="עצמאי"/>
                 <EnumerationOption value="3" description="בפנסיה מלאה"/>
                 <EnumerationOption value="4" description="בפנסיה ועובד משרה חלקית"/>
-            </AttributeDefinition>  
+				<EnumerationOption value="5" description="לא עובד אך עדיין לא בגיל פנסיה"/>
+		    </AttributeDefinition> 
             <AttributeDefinition id="OldAgeSubsidy" type="enumeration" multiplicity="maximalOne" description="האם הנך מקבל קצבת זקנה?">
                 <EnumerationOption value="0" description="לא"/>
                 <EnumerationOption value="1" description="כן"/>
@@ -1314,6 +1321,8 @@
                     <TaskParamDefinition path="ICS1_Identification.ICS1_InclusionCriteria.BasicMalnutrition" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="ICS1_Identification.ICS1_InclusionCriteria.BasicSocio" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="ICS1_Identification.ICS1_InclusionCriteria.BasicLanguegue" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="ICS1_Identification.ICS1_InclusionCriteria.BasicRelease" isReadOnly="false" isMandatory="true"/>
+					
                 </HumanTaskDefinition>   
 
                 <HumanTaskDefinition id="ICS1_ThechTest" description="יכולות טכנולוגיות" ownerPath="ICS1_Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS1_ThechTest" entityAttachPath="ICS1_Identification.ICS1_ThechTest">                
@@ -1743,6 +1752,7 @@
             <TaskParam path="ICS1_Identification.ICS1_InclusionCriteria.BasicMalnutrition" values="['1']"/>
 			<TaskParam path="ICS1_Identification.ICS1_InclusionCriteria.BasicSocio" values="['1']"/>
             <TaskParam path="ICS1_Identification.ICS1_InclusionCriteria.BasicLanguegue" values="['0']"/>
+			<TaskParam path="ICS1_Identification.ICS1_InclusionCriteria.BasicRelease" values="['0']"/>
         </Action>
         <Action id="CompleteHumanTask" processId="ICS1_ThechTest">
             <TaskParam path="ICS1_Identification.ICS1_ThechTest.TechPassword"  values="['0']"/>
