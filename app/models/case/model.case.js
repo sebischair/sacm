@@ -136,4 +136,8 @@ export default class Case extends Model{
       });
     });
   }
+
+  static export(jwt, id){
+    return Case.findTreeById(jwt, id, {all:true})
+  }
 }

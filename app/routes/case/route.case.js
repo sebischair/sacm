@@ -1486,6 +1486,25 @@ router.patch('/:id/notes', (req, res, next)=>{
 });
 
 /**
+ * @api {get} /cases/:id/export Get Case
+ * @apiName GetCase
+ * @apiGroup Cases
+ * @apiParam {String} id (mandatory) ID of the Case
+ * @apiSampleRequest /cases/:id
+ * @apiSuccessExample {json} Success-Response:
+ * {}
+ */
+router.get('/:id/export', (req, res, next)=>{
+  Case.export(req.jwt, req.params.id)
+    .then(c=>{
+        res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+/**
  * @api {get} /cases/:id Get Case
  * @apiName GetCase
  * @apiGroup Cases
