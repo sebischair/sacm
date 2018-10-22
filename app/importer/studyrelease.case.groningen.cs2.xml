@@ -543,8 +543,9 @@
             <AttributeDefinition id="GCS2_PhysicalActivity" type="Link.EntityDefinition.GCS2_PhysicalActivity" description="Physical Activity" multiplicity="any"/>
             <AttributeDefinition id="GCS2_MonitoringPrescription" type="Link.EntityDefinition.GCS2_MonitoringPrescription" description="Monitoring Prescription" multiplicity="any"/> 
             <!--<AttributeDefinition id="GCS2_SimpleTask" type="Link.EntityDefinition.GCS2_SimpleTask" description="Simple Task" multiplicity="any"/>-->
-			
             <AttributeDefinition id="GCS2_PatientQuestionaire" type="Link.EntityDefinition.GCS2_PatientQuestionaire" description="Patient Questionaire" multiplicity="any"/>
+            <AttributeDefinition id="GCS2_Advice" type="Link.EntityDefinition.GCS2_Advice" description="Advices" multiplicity="any"/>
+            <AttributeDefinition id="GCS2_Drug" type="Link.EntityDefinition.GCS2_Drug" description="Drugs" multiplicity="any"/>       
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_PhysicalActivity" description="Physical Activity">
@@ -676,6 +677,34 @@
             <AttributeDefinition id="questionaires" type="json" multiplicity="any" uiReference="patientquestionaires" description="Patient Questionaires"/>                      
         </EntityDefinition>
 
+        <EntityDefinition id="GCS2_Advice" description="Advice">
+            <AttributeDefinition id="title" type="string" multiplicity="exactlyOne" description="Title"/>   
+            <AttributeDefinition id="expiredate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Expire date"/> 
+            <AttributeDefinition id="explenation" type="longtext" multiplicity="exactlyOne" description="Description"/> 
+        </EntityDefinition>
+
+        <EntityDefinition id="GCS2_Drug" description="Drug">
+            <AttributeDefinition id="drug" type="string" multiplicity="exactlyOne" description="Drug" uiReference="externalEnumeration ..."/>  
+            <AttributeDefinition id="dosage" type="string" multiplicity="exactlyOne" description="Dosage"/>
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Start date"/> 
+            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="End date"/> 
+            <AttributeDefinition id="freq" type="number.min(0)" defaultValues="[1]" multiplicity="exactlyOne" description="Drug Frecuency"/> 
+            <AttributeDefinition id="frequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Drug Frecuency Unit">     
+                <EnumerationOption value="DAYS" description="Days"/>
+                <EnumerationOption value="WEEKS" description="Weeks"/>
+                <EnumerationOption value="MONTHS" description="Months"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="maxdelay" type="number.min(0).max(100)" defaultValues="[1]" multiplicity="exactlyOne" description="Max delay in hours" additionalDescription="Maximum delay to take drugs by the patient"/> 
+            <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="Slots to take the drug" additionalDescription="Multiple slots can be selected, at least one slot need to be selected">     
+                <EnumerationOption value="BREAKFAST" description="Breakfast"/>
+                <EnumerationOption value="LUNCH" description="Lunch"/>
+                <EnumerationOption value="AFTERNOONSNACK" description="Afternoon Snack"/>
+                <EnumerationOption value="DINNER" description="Dinner"/>
+                <EnumerationOption value="BEFORESLEEP" description="Before Sleep"/>
+                <EnumerationOption value="ANYTIMEDURINGDAY" description="Any time a day" additionalDescription="Please select this option when the timeslot of a day doesn't matter."/>
+            </AttributeDefinition>
+            <AttributeDefinition id="comment" type="longtext" multiplicity="maximalOne" description="Comments"/>                      
+        </EntityDefinition>
 
         <!-- Discharge Entity Definitions -->
         <EntityDefinition id="GCS2_Discharge" description="GCS2_Discharge">
@@ -971,6 +1000,28 @@
                     <TaskParamDefinition part="AUTOMATED" path="GCS2_Workplan.GCS2_PatientQuestionaire.questionaires" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>
 
+                <HumanTaskDefinition id="GCS2_Advice" externalId="Advice" description="Advice" dynamicDescriptionPath="GCS2_Workplan.GCS2_Advice.title" ownerPath="GCS2_Settings.Clinician" dueDatePath="GCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="GCS2_Advice" entityAttachPath="GCS2_Workplan.GCS2_Advice">
+                    <HttpHookDefinition on="COMPLETE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/advice" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/advice/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_Advice.title" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_Advice.expiredate" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_Advice.explenation" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>
+
+                <HumanTaskDefinition id="GCS2_Drug" externalId="Drug" description="Drug" ownerPath="GCS2_Settings.Clinician" dueDatePath="GCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="GCS2_Drug" entityAttachPath="GCS2_Workplan.GCS2_Drug">
+                    <HttpHookDefinition on="COMPLETE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/drug" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/drug/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_Drug.drug" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_Drug.dosage" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_Drug.startdate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_Drug.enddate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_Drug.freq" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_Drug.frequnit" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_Drug.maxdelay" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_Drug.timeslot" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition path="GCS2_Workplan.GCS2_Drug.comment" isReadOnly="false" isMandatory="false"/>  
+                </HumanTaskDefinition>
+
             </StageDefinition>
             
             <StageDefinition id="GCS2_Discharge" description="Discharge" isMandatory="true" repeatable="ONCE" entityDefinitionId="GCS2_Discharge" entityAttachPath="GCS2_Discharge">
@@ -1177,6 +1228,26 @@
         </Action>
         <Action id="CompleteDualTaskAutomatedPart" processId="GCS2_PatientQuestionaire">
             <TaskParam path="GCS2_Workplan.GCS2_PatientQuestionaire.questionaires"  values='[{"id":"18823iSMSID","lastEdit":"2018-05-15 11:09:23.0","state":"COMPLETED","taskParams":[{"description":"In general, would you say your health is:","values":["Excellent"],"type":"enumeration","isMandatory":true,"additionalDescription":null},{"description":"Moderate activities","values":["YES, limited a lot"],"type":"enumeration","isMandatory":false,"additionalDescription":"Moderate activities such as moving a table, pushing a vacuum cleaner, bowling, or playing golf."}]},{"id":"18824iSMSID","lastEdit":"2018-05-16 11:09:23.0","state":"ACTIVE","taskParams":[{"description":"In general, would you say your health is:","values":["Very good"],"type":"enumeration","isMandatory":true,"additionalDescription":null},{"description":"Moderate activities","values":["YES, limited a little"],"type":"enumeration","isMandatory":false,"additionalDescription":"Moderate activities such as moving a table, pushing a vacuum cleaner, bowling, or playing golf."}]}]'/>
+        </Action>
+
+        <Action id="ActivateHumanTask" processId="GCS2_Advice" breakpoint="true"/>
+        <Action id="CompleteHumanTask" processId="GCS2_Advice" breakpoint="true">
+            <TaskParam path="GCS2_Workplan.GCS2_Advice.title"  values="['My custom advice']"/>
+            <TaskParam path="GCS2_Workplan.GCS2_Advice.expiredate"  values="['2017-06-09T00:00:00.0']"/>
+            <TaskParam path="GCS2_Workplan.GCS2_Advice.explenation"  values="['A long description describing what to do exactly.']"/>
+        </Action>
+
+        <Action id="ActivateHumanTask" processId="GCS2_Drug" breakpoint="true"/>
+        <Action id="CompleteHumanTask" processId="GCS2_Drug" breakpoint="true">
+            <TaskParam path="GCS2_Workplan.GCS2_Drug.drug"  values="['My custom advice']"/>
+            <TaskParam path="GCS2_Workplan.GCS2_Drug.dosage"  values="['5x Day']"/>
+            <TaskParam path="GCS2_Workplan.GCS2_Drug.startdate"  values="['2017-06-09T00:00:00.0']"/>
+            <TaskParam path="GCS2_Workplan.GCS2_Drug.enddate"  values="['2018-06-09T00:00:00.0']"/>
+            <TaskParam path="GCS2_Workplan.GCS2_Drug.freq"  values="[1]"/>
+            <TaskParam path="GCS2_Workplan.GCS2_Drug.frequnit"  values="['DAYS']"/>
+            <TaskParam path="GCS2_Workplan.GCS2_Drug.maxdelay"  values="[1]"/>
+            <TaskParam path="GCS2_Workplan.GCS2_Drug.timeslot"  values="['BREAKFAST', 'DINNER']"/>
+            <TaskParam path="GCS2_Workplan.GCS2_Drug.comment"  values="['Some comment on the drug.']"/>
         </Action>
 
         <Action id="CompleteStage" processId="GCS2_Workplan"/>
