@@ -88,11 +88,8 @@ app.use(function(req, res, next) {
   /** Inject logging responses after send */
   var send = res.send;
   res.send = function(body){
-    const duration = new Date().getTime()-req.start;
-    let resBody = null;
-    if(this.statusCode != 200)
-      resBody = body;
-    Log.setStatus(req.uuid, this.statusCode, duration, res, resBody);
+    const duration = new Date().getTime()-req.start;    
+    Log.setStatus(req.uuid, this.statusCode, duration, body);
     send.call(this, body);
   };
 

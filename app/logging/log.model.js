@@ -109,11 +109,9 @@ const LogSchema = new mongoose.Schema({
   workspaceId: {type: String, index: true},
   status: {type: Number, index: true},
   uuid: {type: String, index: true},
-  duration: {type: Number, index: true},
-  reqSize: Number,
+  duration: {type: Number, index: true},  
   reqBody: Mixed,
   reqBodySize: Number,
-  resSize: Number,
   resBody: Mixed,
   resBodySize: Number,
   location: {
@@ -159,6 +157,10 @@ LogSchema.statics.log = (req, isSimulateUser, userId, userName, email, workspace
   if (userAgent != null && /Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(userAgent))
     isMobile = true;
   
+  let reqBodySize = 0;
+  if(req.body)
+    reqBodySize = sizeof(req.body);
+
   Log.create({
     application: application,
     ip: ip,
@@ -174,18 +176,25 @@ LogSchema.statics.log = (req, isSimulateUser, userId, userName, email, workspace
     userId: userId,
     username: userName,
     email: email,
-    workspaceId: workspaceId,
-    reqSize: sizeof(req),
+    workspaceId: workspaceId, 
     reqBody: req.body,
-    reqBodySize: sizeof(req.body),
+    reqBodySize: reqBodySize,
     uuid: req.uuid,
     location: ip2Location(ip)
   });
 }
 
-LogSchema.statics.setStatus = (uuid, status, duration, res, resBody)=>{
-  winston.log('LOG Size: '+sizeof(res))
-  const data = {status:status, duration:duration, resSize:sizeof(res), resBody:resBody, resBodySize:sizeof(resBody)};
+LogSchema.statics.setStatus = (uuid, status, duration, resBody)=>{
+  
+  let resBodyLog = null;
+  if(status != 200)
+    resBodyLog = resBody;
+  
+  let resBodySize = 0;
+  if(resBody)
+    resBodySize = sizeof(resBody);
+
+  const data = {status:status, duration:duration, resBody:resBodyLog, resBodySize:resBodySize};
   Log.update({uuid:uuid, status:null}, {$set: data}, function (err){
     if (err)
       winston.error(err);    
