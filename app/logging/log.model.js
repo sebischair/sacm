@@ -184,6 +184,7 @@ LogSchema.statics.log = (req, isSimulateUser, userId, userName, email, workspace
 }
 
 LogSchema.statics.setStatus = (uuid, status, duration, res, resBody)=>{
+  console.log('LOG Size: '+sizeof(res))
   const data = {status:status, duration:duration, resSize:sizeof(res), resBody:resBody, resBodySize:sizeof(resBody)};
   Log.update({uuid:uuid, status:null}, {$set: data}, function (err){
     if (err)
