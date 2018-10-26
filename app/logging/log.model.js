@@ -3,6 +3,7 @@ import Promise from 'bluebird';
 import maxmind from 'maxmind';
 import winston from 'winston';
 import config from './../../config';
+import sizeof from 'object-sizeof';
 
 const ObjectId = mongoose.Schema.Types.ObjectId;
 const Mixed = mongoose.Schema.Types.Mixed;
@@ -109,8 +110,12 @@ const LogSchema = new mongoose.Schema({
   status: {type: Number, index: true},
   uuid: {type: String, index: true},
   duration: {type: Number, index: true},
+  reqSize: Number,
   reqBody: Mixed,
+  reqBodySize: Number,
+  resSize: Number,
   resBody: Mixed,
+  resBodySize: Number,
   location: {
     countryCode: {type: String, index: true},
     country: {type: String, index: true},
@@ -170,14 +175,16 @@ LogSchema.statics.log = (req, isSimulateUser, userId, userName, email, workspace
     username: userName,
     email: email,
     workspaceId: workspaceId,
+    reqSize: sizeof(req),
     reqBody: req.body,
+    reqBodySize: sizeof(req.body),
     uuid: req.uuid,
     location: ip2Location(ip)
   });
 }
 
-LogSchema.statics.setStatus = (uuid, status, duration, resBody)=>{
-  const data = {status:status, duration:duration, resBody:resBody};
+LogSchema.statics.setStatus = (uuid, status, duration, res, resBody)=>{
+  const data = {status:status, duration:duration, resSize:sizeof(res), resBody:resBody, resBodySize:sizeof(resBody)};
   Log.update({uuid:uuid, status:null}, {$set: data}, function (err){
     if (err)
       winston.error(err);    

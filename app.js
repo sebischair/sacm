@@ -92,7 +92,7 @@ app.use(function(req, res, next) {
     let resBody = null;
     if(this.statusCode != 200)
       resBody = body;
-    Log.setStatus(req.uuid, this.statusCode, duration, resBody);
+    Log.setStatus(req.uuid, this.statusCode, duration, res, resBody);
     send.call(this, body);
   };
 
