@@ -15,6 +15,10 @@ export default class Entity extends Model{
     return http.get(jwt, '/caseentities/'+entityId);
   }
 
+  static findNavigationTreeById(jwt, entityId){
+    return http.get(jwt, '/caseentities/'+entityId+'/navigationtree');
+  }
+
   static findDeepLinksById(jwt, entityId){
     return http.get(jwt, '/caseentities/'+entityId+'/deeplinks')
     .then(entity=>{

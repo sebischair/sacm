@@ -340,6 +340,27 @@ router.get('/:id/deeplinks', (req, res, next)=>{
 });
 
 
+
+/**
+ * @api {get} /entities/:id/navigationtree Get Entity navigation tree
+ * @apiName GetEntityNavigationTree
+ * @apiGroup Entities
+ * @apiParam {String} id ID of the Entity
+ * @apiSampleRequest /entities/:id/navigationtree
+ * @apiSuccessExample {json} Success-Response:
+ * {}
+ */
+router.get('/:id/navigationtree', (req, res, next)=>{
+  Entity.findNavigationTreeById(req.jwt, req.params.id)
+    .then(c=>{
+      res.status(200).send(c);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
+
 /**
  * @api {get} /entities/:id Get Entity
  * @apiName GetEntity
