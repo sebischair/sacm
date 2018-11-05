@@ -1003,7 +1003,7 @@
                 </DualTaskDefinition>
 
                 <DualTaskDefinition id="GCS2_Advice" externalId="Advice" description="Advice" dynamicDescriptionPath="GCS2_Workplan.GCS2_Advice.title" ownerPath="GCS2_Settings.Clinician" dueDatePath="GCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="GCS2_Advice" entityAttachPath="GCS2_Workplan.GCS2_Advice">
-                    <HttpHookDefinition on="COMPLETE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/advice" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/advice" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/advice/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_Advice.title" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_Advice.expiredate" isReadOnly="false" isMandatory="false"/>
@@ -1012,7 +1012,7 @@
                 </DualTaskDefinition>
 
                 <DualTaskDefinition id="GCS2_Drug" externalId="Drug" description="Drug" ownerPath="GCS2_Settings.Clinician" dueDatePath="GCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="GCS2_Drug" entityAttachPath="GCS2_Workplan.GCS2_Drug">
-                    <HttpHookDefinition on="COMPLETE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/drug" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/drug" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/drug/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_Drug.drug" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_Drug.dosage" isReadOnly="false" isMandatory="false"/>
