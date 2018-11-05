@@ -156,7 +156,7 @@ export default class Case extends Model{
       }else{
         case2.notes = null;
       }
-      case2.teamMessaging = await Message.findByCaseId(jwt, id);
+      case2.messages = await Message.findByCaseId(jwt, id);
     }catch(e) {
       winston.error('Error during export caseId:  '+id+'!');
       winston.error(e);
