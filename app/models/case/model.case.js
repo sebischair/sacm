@@ -2,6 +2,8 @@ import Promise from 'bluebird';
 import http from '../http';
 import Model from '../model';
 import Message from './model.message';
+import User from '../group/model.user';
+import winston from 'winston';
 
 
 export default class Case extends Model{
@@ -138,24 +140,28 @@ export default class Case extends Model{
     });
   }
 
-  static export(jwt, id){
-    let case2 = null;
-    return Case.findTreeById(jwt, id, {all:true})
-      .then( c=> {
-        case2 = c
-        return Case.notes(jwt, id);
-      })
-      .then(notes=>{
-        if(notes){
-          case2.notes = notes.notes;
-        } else {
-          case2.notes = null;
+  static async export(jwt, id){
+    let case2 = {}
+    try{
+      case2 = await Case.findTreeById(jwt, id, {all:true});
+      if(case2.client){
+        let user = await User.findById(jwt, case2.client.id);
+        if(user){
+          case2.client.attributes = user.attributes;
         }
-        return Message.findByCaseId(jwt, id);
-      })
-      .then(messages=>{
-        case2.teamMessaging = messages;
-        return Promise.resolve(case2);
-      });
+      }
+      let notes = await Case.notes(jwt, id);
+      if(notes){
+        case2.notes = notes.notes;
+      }else{
+        case2.notes = null;
+      }
+      case2.teamMessaging = await Message.findByCaseId(jwt, id);
+    }catch(e) {
+      winston.error('Error during export caseId:  '+id+'!');
+      winston.error(e);
+      return Promise.reject(e);
+    }
+    return Promise.resolve(case2);
   }
 }
