@@ -1,6 +1,7 @@
 import Promise from 'bluebird';
 import http from '../http';
 import Model from '../model';
+import Message from './model.message';
 
 
 export default class Case extends Model{
@@ -138,6 +139,23 @@ export default class Case extends Model{
   }
 
   static export(jwt, id){
+    let case2 = null;
     return Case.findTreeById(jwt, id, {all:true})
+      .then( c=> {
+        case2 = c
+        return Case.notes(jwt, id);
+      })
+      .then(notes=>{
+        if(notes){
+          case2.notes = notes.notes;
+        } else {
+          case2.notes = null;
+        }
+        return Message.findByCaseId(jwt, id);
+      })
+      .then(messages=>{
+        case2.teamMessaging = messages;
+        return Promise.resolve(case2);
+      });
   }
 }
