@@ -446,7 +446,7 @@
 
 
         <!-- HAD -->
-        <EntityDefinition id="GCS2_HospitalAnxietyAndDepressionScale">
+        <EntityDefinition id="GCS2_HospitalAnxietyAndDepressionScale" description="Hospital Anxiety And Depression Scale">
             <AttributeDefinition id="hadA1" type="enumeration" multiplicity="exactlyOne" description="I feel tense or 'wound up'"> 
                 <EnumerationOption value="0" description="Not at all"/>
                 <EnumerationOption value="1" description="From time to time, occasionally"/>
@@ -567,7 +567,7 @@
 				<EnumerationOption value="HEARTPULSE" description="hartslag"/>
 				<EnumerationOption value="WEIGHT" description="Weight"/>
             </AttributeDefinition>   
-            <AttributeDefinition id="alertmin" type="number.min(0)" multiplicity="any" uiReference="conditonalmultiplicity(1,type=BLOODPRESSURE=>2)" description="Min value allowed" additionalDescription="Minimum value for this measuremnt greather than 0. If blood pressure is selected, please specify the systolic / diastolic maximum."/>       
+            <AttributeDefinition id="alertmin" type="number.min(0)" multiplicity="any" uiReference="conditonalmultiplicity(1,type=BLOODPRESSURE=>2)" description="Min value allowed." additionalDescription="Minimum value for this measuremnt greather than 0. If blood pressure is selected, please specify the systolic / diastolic maximum."/>       
             <AttributeDefinition id="alertmax" type="number.min(0)" multiplicity="any" uiReference="conditonalmultiplicity(1,type=BLOODPRESSURE=>2)" description="Max value allowed" additionalDescription="Maximum value for this measuremnt greather than 0. If blood pressure is selected, please specify the systolic / diastolic minimum."/>      
             <AttributeDefinition id="alertfreq" type="number" defaultValues="[1]" multiplicity="exactlyOne" description="Alert Frecuency Val ue"/>       
             <AttributeDefinition id="alertfrequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Alert Frecuency Unit">     
@@ -678,7 +678,7 @@
 
 
         <!-- Discharge Entity Definitions -->
-        <EntityDefinition id="GCS2_Discharge" description="GCS2_Discharge">
+        <EntityDefinition id="GCS2_Discharge" description="Discharge">
             <AttributeDefinition id="GCS2_DischargeForm" type="Link.EntityDefinition.GCS2_DischargeForm" description="Discharge From"/> 
         </EntityDefinition>
 
@@ -1113,6 +1113,19 @@
             data="{'alertType':'some type', 'application':'Run App', 'priorityLevel':'LOW', 'status':'ACT', 'paramName':'steps per day', 'paramValue':'12', 'minThreshold':'5',  'maxThreshold':'8'}">
         </Action>
     -->
+        <Action id="ActivateDualTask" processId="GCS2_PhysicalActivity"/>
+        <Action id="CompleteDualTaskHumanPart" processId="GCS2_PhysicalActivity">
+            <TaskParam path="GCS2_Workplan.GCS2_PhysicalActivity.startdate"  values="['2017-09-26T00:00:00.000']"/>
+            <TaskParam path="GCS2_Workplan.GCS2_PhysicalActivity.enddate"  values="['2018-09-27T00:00:00.000']"/>
+            <TaskParam path="GCS2_Workplan.GCS2_PhysicalActivity.dailysteps"  values="[10000]"/>
+            <TaskParam path="GCS2_Workplan.GCS2_PhysicalActivity.dailylowlevel"  values="[15]"/>
+            <TaskParam path="GCS2_Workplan.GCS2_PhysicalActivity.dailymediumlevel"  values="[5]"/>
+            <TaskParam path="GCS2_Workplan.GCS2_PhysicalActivity.dailyhighlevel"  values="[10]"/>
+            <TaskParam path="GCS2_Workplan.GCS2_PhysicalActivity.dailynoactivity"  values="[30]"/>
+        </Action>
+        <Action id="CompleteDualTaskAutomatedPart" processId="GCS2_PhysicalActivity">
+            <TaskParam path="GCS2_Workplan.GCS2_PhysicalActivity.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
+        </Action>
         <Action id="ActivateDualTask" processId="GCS2_PhysicalActivity"/>
         <Action id="CompleteDualTaskHumanPart" processId="GCS2_PhysicalActivity">
             <TaskParam path="GCS2_Workplan.GCS2_PhysicalActivity.startdate"  values="['2017-09-26T00:00:00.000']"/>
