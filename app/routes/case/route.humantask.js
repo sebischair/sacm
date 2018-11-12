@@ -502,6 +502,26 @@ router.post('/:id/hideondashboard', (req, res, next)=>{
       })
   });
 
+/**
+ * @api {post} /humantasks/:id/unhideondashboard Hide HumanTask On Dashboard
+ * @apiName PostHumanTaskOnDashboard
+ * @apiGroup HumanTasks
+ * @apiParam {String} id ID of a HumanTask
+ * @apiParam {String} dueDate 
+ * @apiSampleRequest /humantask/:id/unhideondashboard
+ * {dueDate: 'some date'}
+ * @apiSuccessExample {json} Success-Response:
+ *     {}
+ */
+router.post('/:id/unhideondashboard', (req, res, next)=>{
+    HumanTask.unHideOnDashboard(req.jwt, req.params.id)
+      .then(c=>{
+          res.status(200).send(c);
+      })
+      .catch(err=>{
+          res.status(500).send(err);
+      })
+  });
 
 /**
  * @api {post} /humantasks/:id/externalid/:externalid Set HumanTask ExternalId
