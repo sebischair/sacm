@@ -681,7 +681,7 @@
             <AttributeDefinition id="title" type="string" multiplicity="exactlyOne" description="Title"/>   
             <AttributeDefinition id="expiredate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Expire date"/> 
             <AttributeDefinition id="explenation" type="longtext" multiplicity="exactlyOne" description="Description"/> 
-            <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Measurement"/>                      
+            <AttributeDefinition id="visualizationdate" type="date" multiplicity="exactlyOne" description="Visualization date"/>                      
         </EntityDefinition>
 
         <EntityDefinition id="GCS2_Drug" description="Drug">
@@ -1008,7 +1008,7 @@
                     <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_Advice.title" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_Advice.expiredate" isReadOnly="false" isMandatory="false"/>
                     <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_Advice.explenation" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="AUTOMATED" path="GCS2_Workplan.GCS2_Advice.measurement" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="AUTOMATED" path="GCS2_Workplan.GCS2_Advice.visualizationdate" isReadOnly="false" isMandatory="true"/> 
                 </DualTaskDefinition>
 
                 <DualTaskDefinition id="GCS2_Drug" externalId="Drug" description="Drug" ownerPath="GCS2_Settings.Clinician" dueDatePath="GCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="GCS2_Drug" entityAttachPath="GCS2_Workplan.GCS2_Drug">
@@ -1241,7 +1241,7 @@
             <TaskParam path="GCS2_Workplan.GCS2_Advice.explenation"  values="['A long description describing what to do exactly.']"/>
         </Action>
         <Action id="CompleteDualTaskAutomatedPart" processId="GCS2_Advice">
-            <TaskParam path="GCS2_Workplan.GCS2_Advice.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
+            <TaskParam path="GCS2_Workplan.GCS2_Advice.visualizationdate"  values="['2017-12-26T00:00:00.000']"/>
         </Action>
 
         <Action id="ActivateDualTask" processId="GCS2_Drug" breakpoint="true"/>
