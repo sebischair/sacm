@@ -33,7 +33,7 @@ export default class Model{
   }
 
   /** 
-   * should be used for all errors that can be handled natively in SocioCortex 
+   * This error should be used for all errors that can not be handled natively in SocioCortex 
    * e.g. ensure that EntityDefinition description is set can not be checked 
    * in SocioCortex due to legacy constraints
   */
