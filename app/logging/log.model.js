@@ -45,15 +45,20 @@ function allApplications(){
 }
 
 function extractUrlPattern(url){
+  let urlPattern = "";
   if (url == null)
-    return null;
+    return urlPattern;
+  while (url.lastIndexOf('/') === url.length - 1)   // remove trailing slashes
+    url = url.substring(0, url.length - 1);
   let splitUrl = url.split('/');
   routes.forEach(splitRoute => {
-      let differencesDetected = splitRoute.some((path, index) => path.indexOf(':') !== 0 && path !== splitUrl[index]);
-      if (!differencesDetected)
-        return splitRoute.join('/');
+      if (splitRoute.length === splitUrl.length) {
+        let differencesDetected = splitRoute.some((routeSubPath, index) => routeSubPath.indexOf(':') !== 0 && routeSubPath !== splitUrl[index]);
+        if (!differencesDetected)
+          urlPattern = splitRoute.join('/');
+      }
   });
-  return "";
+  return urlPattern;
 }
 
 const resources = new Set(['import', 'workspaces', 'groups', 'users', 'entities', 'alerts', 'automatedtasks', 'cases', 'humantasks', 'dualtasks', 'logs', 'messages', 'processes', 'stages', 'summarysections', 'tasks', 'taskparams']);
