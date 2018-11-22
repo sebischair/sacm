@@ -13,8 +13,7 @@ import jwt from 'jsonwebtoken';
 import fs from 'fs';
 import Promise from 'bluebird'; 
 import config from './config';
-import mongoose from 'mongoose';
-import Log from './app/logging/log.model';
+import RestLogger from './app/logging/rest.logger';
 import uuid from 'uuid/v1';
 import maxmind from 'maxmind';
 import winston from 'winston';
@@ -60,11 +59,7 @@ const secret = fs.readFileSync('public.key.pem')+'';
 
 if(config.logging.isEnabled){
   global.cityLookup = maxmind.openSync( __dirname + '/app/logging/db', {cache: {max: 500}});
-  mongoose.Promise = Promise;
-  mongoose.connect(config.logging.mongoUrl, {useMongoClient: true});
-  mongoose.connection.on('error', () => {
-    throw new Error('unable to connect to SACM log database: '+config.logging.mongoUrl);
-  });
+  RestLogger.establishDBConnection();
 }
 
 var app = express();
@@ -86,10 +81,10 @@ app.use(function(req, res, next) {
   req.start = new Date().getTime();
 
   /** Inject logging responses after send */
-  var send = res.send;
+  const send = res.send;
   res.send = function(body){
     const duration = new Date().getTime()-req.start;    
-    Log.setStatus(req.uuid, this.statusCode, duration, body);
+    RestLogger.setStatus(req.uuid, this.statusCode, duration, body);
     send.call(this, body);
   };
 
@@ -97,7 +92,7 @@ app.use(function(req, res, next) {
   if(req.is('application/json')){
     next();
   }else{
-    var data = new Buffer('');
+    let data = new Buffer('');
     req.on('data', function(chunk) {    
       data = Buffer.concat([data, chunk]);
     });
@@ -129,10 +124,10 @@ app.use('/api/v1', (req, res, next)=>{
     req.jwt = http.generateJWT(req.headers.simulateuser, config.sociocortex.defaultPassword);
     winston.debug('simulate user '+req.headers.simulateuser);
     winston.debug(req.jwt);    
-    Log.simulateUserLog(req, req.headers.simulateuser);
+    RestLogger.simulateUserLog(req, req.headers.simulateuser);
     next();
-  }else{
-    
+  } else {
+
     /** Production JWT Authorization */
     //Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MDA0OTgwNzEsInVzZXJfbmFtZSI6IntcInV1aWRcIjpcIjJjOTQ4MDg0NWJlZTAzZTcwMTViZmNhZDI4OTkwMDEwXCIsXCJ0ZW5hbnRVdWlkXCI6XCIyYzk0ODA4NDViZWUwM2U3MDE1YmZjMDNkYTYxMDAwMVwiLFwiYXBwbGljYXRpb25VdWlkXCI6XCIyYzk0ODA4NDViZWUwM2U3MDE1YmZjMDI2NmQwMDAwMFwifSIsImF1dGhvcml0aWVzIjpbInVzZXIiXSwianRpIjoiNzk2NGFiNTEtYzdhNy00ZWUxLWJiNDgtOTljMThhMTlmNTdhIiwiY2xpZW50X2lkIjoiMmM5NDgwODQ1YmVlMDNlNzAxNWJmYzAyNjZkMDAwMDAiLCJzY29wZSI6WyJwcm9kdWN0aW9uIl19.FhtBWpNCbSyA8980CRof255Ea0Pwyd-AIGe5mBrj3XPHuC_LxEH-_JNcQYl0oanYpR6bbvxXrgCRWK-15kptHd5jPZYwNskADJYE95HHJETnymOuxw8V3e4obBYOwnfhQpQv5JNlXwB2j-EvpwQdf6ECRiwg1bLOBMcjUTDArQ0AunTjVpktN8idh6sKaf7Em1MRXFphYjuLuRkm84iIRG6vFS_gS2lVWpp7xwueY1-bPjdCDLT-jxJe8bqIK0TMRGaYv4rOjG5vgHtSTvvrzsTPoJsWSSdf7F45ncaNtkJY1yNR93wwXS75DRcM2twdsWj8n-Jn1st_mih2zsWi8Q
     if(req.headers.authorization == null){
@@ -150,7 +145,7 @@ app.use('/api/v1', (req, res, next)=>{
           }else{
             req.jwt = 'conecarebearer '+token;  
             let un = JSON.parse(decoded.user_name);         
-            Log.jwtUserLog(req, un.uuid, un.username, un.tenantUuid);
+            RestLogger.jwtUserLog(req, un.uuid, un.username, un.tenantUuid);
             next();
           }
         });
@@ -158,10 +153,10 @@ app.use('/api/v1', (req, res, next)=>{
     }
   }  
 });
-app.use('/api/v1', apiRoutes())
+app.use('/api/v1', apiRoutes());
 
 app.use('/doc/assets', express.static(__dirname + '/doc/assets'));
-app.use('/doc', docRoutes())
+app.use('/doc', docRoutes());
 
 // catch 404 and forward to error handler
 app.use((req, res, next)=>{
