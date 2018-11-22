@@ -126,10 +126,20 @@ app.use('/api/v1', (req, res, next)=>{
 
   /** Testing Simulate User Authorization */
   if(req.headers.simulateuser != null && req.headers.authorization == null){
-    req.jwt = http.generateJWT(req.headers.simulateuser, config.sociocortex.defaultPassword);
-    winston.debug('simulate user '+req.headers.simulateuser);
+    let pw;
+    let user;
+    if(req.headers.simulateuser.indexOf(':') !== -1){
+      const arr = req.headers.simulateuser.split(':');
+      user = arr[0];
+      pw = arr[1];
+    } else{
+      user = req.headers.simulateuser;
+      pw = config.sociocortex.defaultPassword;
+    }
+    req.jwt = http.generateJWT(user, pw);
+    winston.debug('simulate user '+user);
     winston.debug(req.jwt);    
-    Log.simulateUserLog(req, req.headers.simulateuser);
+    Log.simulateUserLog(req, user);
     next();
   }else{
     
