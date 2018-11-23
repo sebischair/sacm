@@ -10,7 +10,6 @@ const LogSchema = new mongoose.Schema({
   url: {type: String, index: true},
   urlPattern: {type: String, index: true},
   resource: {type: String, index: true},
-  body: {type: String, index: true},
   isGzip: {type: String, index: true},
   acceptLanguage: {type: String, index: true},
   isSimulateUser: {type: Boolean, index: true},

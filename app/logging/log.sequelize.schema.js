@@ -30,8 +30,7 @@ const LogSchema = {
   resBody: {type: DataTypes.JSON},
   resBodySize: {type: DataTypes.INTEGER(11)},
   status: {type: DataTypes.INTEGER(11)},
-  acceptLanguage: {type: DataTypes.STRING(500)},
-  body: {type: DataTypes.JSON}
+  acceptLanguage: {type: DataTypes.STRING(500)}
 };
 
 export default LogSchema;
