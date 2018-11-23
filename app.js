@@ -15,7 +15,6 @@ import Promise from 'bluebird';
 import config from './config';
 import RestLogger from './app/logging/rest.logger';
 import uuid from 'uuid/v1';
-import maxmind from 'maxmind';
 import winston from 'winston';
 
 const logFormatterConsole = function(options) {
@@ -58,7 +57,6 @@ winston.stream = {
 const secret = fs.readFileSync('public.key.pem')+'';
 
 if(config.logging.isEnabled){
-  global.cityLookup = maxmind.openSync( __dirname + '/app/logging/db', {cache: {max: 500}});
   RestLogger.establishDBConnection();
 }
 

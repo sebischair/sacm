@@ -15,6 +15,7 @@ const LogSchema = new mongoose.Schema({
   acceptLanguage: {type: String, index: true},
   isSimulateUser: {type: Boolean, index: true},
   userId: {type: String, index: true},
+  username: {type: String, index: true},
   email: {type: String, index: true},
   workspaceId: {type: String, index: true},
   status: {type: Number, index: true},

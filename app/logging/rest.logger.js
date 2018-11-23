@@ -1,3 +1,4 @@
+import maxmind from 'maxmind';
 import mongoose from 'mongoose';
 import Sequelize from 'sequelize';
 import winston from 'winston';
@@ -10,6 +11,7 @@ import LogSchemaSql from "./log.sequelize.schema";
 
 class RestLogger {
 
+  static _cityLookup;
   static _sequelize;
   static _LogSql;
 
@@ -17,6 +19,7 @@ class RestLogger {
    * Establishes the database connection(s). Needs to be called once on init.
    */
   static establishDBConnection() {
+    RestLogger._cityLookup = maxmind.openSync( __dirname + '/app/logging/db', {cache: {max: 500}});
     mongoose.Promise = Promise;
     mongoose.connection.on('error', () => {
       throw new Error('Unable to establishDBConnection to SACM log Mongo database: ' + config.logging.mongoUrl);
@@ -51,6 +54,8 @@ class RestLogger {
    * Updates an existing REST log entry after the request has been served
    */
   static setStatus(uuid, status, duration, resBody) {
+    if (!config.logging.isEnabled)
+      return;
     let resBodyLog = null;
     if (status !== 200)
       resBodyLog = resBody;
@@ -116,6 +121,13 @@ class RestLogger {
       uuid: req.uuid,
       location: RestLogger._ip2Location(ip)
     };
+    logEntry.location_countryCode = location && location.countryCode ? location.countryCode : null;
+    logEntry.location_country     = location && location.country ? location.country : null;
+    logEntry.location_city        = location && location.city ? location.city : null;
+    logEntry.location_zip         = location && location.zip ? location.zip : null;
+    logEntry.location_lat         = location && location.latitude ? location.latitude : null;
+    logEntry.location_lon         = location && location.longitude ? location.longitude : null;
+    logEntry.location_accuracy    = location && location.accuracy ? location.accuracy : null;
     // TODO add some retry logic
     LogMongo.create(logEntry).catch(err => winston.debug(err));
     RestLogger._LogSql.create(logEntry).catch(err => winston.debug(err));
@@ -125,6 +137,8 @@ class RestLogger {
     let urlPattern = "";
     if (url == null)
       return urlPattern;
+    if (url.indexOf('?') > -1)    // remove query params
+      url = url.substring(0, url.indexOf('?'));
     while (url.length > 1 && url.lastIndexOf('/') === url.length - 1)   // remove trailing slashes
       url = url.substring(0, url.length - 1);
     let splitUrl = url.split('/');
@@ -151,7 +165,7 @@ class RestLogger {
   }
 
   static _ip2Location(ip) {
-    let l = cityLookup.get(ip);
+    let l = RestLogger._cityLookup.get(ip);
     let r = {
       countryCode: null,
       country: null,

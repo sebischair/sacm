@@ -13,6 +13,7 @@ const LogSchema = {
   isGzip: {type: DataTypes.BOOLEAN},
   isSimulateUser: {type: DataTypes.BOOLEAN},
   userId: {type: DataTypes.STRING(45)},
+  username: {type: DataTypes.STRING(255)},
   email: {type: DataTypes.STRING(255)},
   workspaceId: {type: DataTypes.STRING(45)},
   reqBody: {type: DataTypes.JSON},
@@ -29,7 +30,7 @@ const LogSchema = {
   resBody: {type: DataTypes.JSON},
   resBodySize: {type: DataTypes.INTEGER(11)},
   status: {type: DataTypes.INTEGER(11)},
-  acceptLanguage: {type: DataTypes.STRING(255)},
+  acceptLanguage: {type: DataTypes.STRING(500)},
   body: {type: DataTypes.JSON}
 };
 
