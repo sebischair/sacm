@@ -121,6 +121,7 @@ class RestLogger {
       uuid: req.uuid,
       location: RestLogger._ip2Location(ip)
     };
+    const location = logEntry.location;
     logEntry.location_countryCode = location && location.countryCode ? location.countryCode : null;
     logEntry.location_country     = location && location.country ? location.country : null;
     logEntry.location_city        = location && location.city ? location.city : null;
