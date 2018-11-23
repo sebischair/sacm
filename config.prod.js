@@ -9,7 +9,8 @@ module.exports = {
     },
     logging:{
         isEnabled: isLoggingEnabled,
-        mongoUrl: process.env.MONGO_URL || 'Mongo DB for logging not set!'
+        mongoUrl: process.env.MONGO_URL || 'Mongo DB for logging not set!',
+        mySqlUrl: process.env.MYSQL_URL || 'MySQL DB for logging not set!',
     },
     winston:{
         console:{
