@@ -19,7 +19,7 @@ class RestLogger {
    * Establishes the database connection(s). Needs to be called once on init.
    */
   static establishDBConnection() {
-    RestLogger._cityLookup = maxmind.openSync( __dirname + '/app/logging/db', {cache: {max: 500}});
+    RestLogger._cityLookup = maxmind.openSync( __dirname + '/db', {cache: {max: 500}});
     mongoose.Promise = Promise;
     mongoose.connection.on('error', () => {
       throw new Error('Unable to establishDBConnection to SACM log Mongo database: ' + config.logging.mongoUrl);
