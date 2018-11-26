@@ -210,6 +210,9 @@
 			<AttributeDefinition id="LCS1__FallRisk" multiplicity="any" type="Link.EntityDefinition.LCS1__FallRisk" />
 			<AttributeDefinition id="LCS1__Sleeping" multiplicity="any" type="Link.EntityDefinition.LCS1__Sleeping"/>			
             <AttributeDefinition id="LCS1__DiagnosisCommunication" type="Link.EntityDefinition.LCS1__DiagnosisCommunication" multiplicity="any" description="Diagnosis Communication"/> 
+						
+			<AttributeDefinition id="LCS1__YALE" type="Link.EntityDefinition.LCS1__YALE" multiplicity="any" description="Discharge - YALE"/> 		
+			
             <AttributeDefinition id="LCS1__AnthropometricVariablesAl" type="Link.EntityDefinition.LCS1__AnthropometricVariablesAl" multiplicity="any" description="Anthropometric variables"/> 			
 			<AttributeDefinition id="LCS1__AnthropometricVariablesGenollHomes" type="Link.EntityDefinition.LCS1__AnthropometricVariablesGenollHomes" multiplicity="any" description="Anthropometric variables"/> 
 			<AttributeDefinition id="LCS1__AnthropometricVariablesGenollDones" type="Link.EntityDefinition.LCS1__AnthropometricVariablesGenollDones" multiplicity="any" description="Anthropometric variables"/> 
@@ -682,6 +685,78 @@
 			additionalDescription="si &lt; 30 Risc no molt alt (Verd)|| si &gt;= 30 Risc molt alt (Taronja)|| si &gt;= 40 Risc extremadament alt (Vermell)" 
 			expression="round(AnWeighAl/(AnHeightAl/100*AnHeightAl/100),2)" />										
 		</EntityDefinition> 
+	
+	
+		<!-- Pendiente probar -->
+        <EntityDefinition id="LCS1__YALE">
+            <AttributeDefinition id="yale1" type="enumeration" multiplicity="exactlyOne" description="¿Aproximadamente cuántas veces durante el último mes ha participado en actividades intensas que duraron al menos 10 minutos y provocaron importantes aumentos en su respiración, pulso, cansancio de piernas o le hacían sudar?" >
+                <EnumerationOption value="0" description="Nunca"/>
+                <EnumerationOption value="1" description="1-3 veces por mes"/>
+                <EnumerationOption value="2" description="1-2 veces por semana"/>
+                <EnumerationOption value="3" description="3-4 veces por semana"/>
+                <EnumerationOption value="4" description="5 o más veces por semana"/>
+            </AttributeDefinition>					
+            <AttributeDefinition id="yale2" type="enumeration" multiplicity="exactlyOne" description="¿Aproximadamente durante cuánto tiempo realizó cada vez esta actividad vigorosa?">
+                <EnumerationOption value="0" description="10-30 min"/>
+                <EnumerationOption value="1" description="31-60 min"/>
+				<EnumerationOption value="2" description="&gt;60 min"/>
+            </AttributeDefinition>
+			
+            <AttributeDefinition id="yale3" type="enumeration" multiplicity="exactlyOne" description="Piense en los paseos que ha realizado durante el último mes. ¿Aproximadamente cuántas veces al mes fue a pasear al menos 10 minutos o más sin parar pero que no fue suficiente para causar grandes incrementos en la respiración, pulso, cansancio de piernas ni le hacía sudar?">
+                <EnumerationOption value="0" description="Nunca"/>
+                <EnumerationOption value="1" description="1-3 veces por mes"/>
+                <EnumerationOption value="2" description="1-2 veces por semana"/>
+                <EnumerationOption value="3" description="3-4 veces por semana"/>
+                <EnumerationOption value="4" description="5 o más veces por semana"/>
+            </AttributeDefinition>
+			
+            <AttributeDefinition id="yale4" type="enumeration" multiplicity="exactlyOne" description="Cuando fue a pasear así, ¿durante cuántos minutos caminó?">
+                <EnumerationOption value="0" description="10-30 min"/>
+                <EnumerationOption value="1" description="31-60 min"/>
+				<EnumerationOption value="2" description="&gt;60 min"/>
+            </AttributeDefinition>
+			
+            <AttributeDefinition id="yale5" type="enumeration" multiplicity="exactlyOne" description="¿Aproximadamente cuántas horas al día pasa moviéndose de un lado a otro mientras hace cosas? (Por favor, insistir sobre el tiempo realmente en movimiento)">
+                <EnumerationOption value="0" description="ninguna" />
+                <EnumerationOption value="1" description="menos de 1 hora al dia"/>
+                <EnumerationOption value="2" description="de 1 a 3 horas al dia"/>
+                <EnumerationOption value="3" description="de 3 a 5 horas al dia"/>
+                <EnumerationOption value="4" description="de 5 a 7 horas al dia"/>
+				<EnumerationOption value="5" description="7 horas o más al dia"/>
+            </AttributeDefinition>			
+			
+            <AttributeDefinition id="yale6" type="enumeration" multiplicity="exactlyOne" description="Piense en cuánto tiempo pasó de pie, como promedio, durante el último mes. ¿Aproximadamente cuántas horas al día está de pie?">
+                <EnumerationOption value="0" description="ninguna" />
+                <EnumerationOption value="1" description="menos de 1 hora al dia"/>
+                <EnumerationOption value="2" description="de 1 a 3 horas al dia"/>
+                <EnumerationOption value="3" description="de 3 a 5 horas al dia"/>
+                <EnumerationOption value="4" description="de 5 a 7 horas al dia"/>
+				<EnumerationOption value="5" description="7 horas o más al dia"/>
+			</AttributeDefinition>			
+			
+            <AttributeDefinition id="yale7" type="enumeration" multiplicity="exactlyOne" description="¿Aproximadamente, en un día típico del último mes, cuántas horas pasó sentado/a?">
+                <EnumerationOption value="0" description="ninguna" />
+                <EnumerationOption value="1" description="menos de 1 hora al dia"/>
+                <EnumerationOption value="2" description="de 1 a 3 horas al dia"/>
+                <EnumerationOption value="3" description="de 3 a 5 horas al dia"/>
+                <EnumerationOption value="4" description="de 5 a 7 horas al dia"/>
+				<EnumerationOption value="5" description="7 horas o más al dia"/>
+			</AttributeDefinition>						
+
+			<DerivedAttributeDefinition id="YPAS_ind_act_vig" type="number" multiplicity="exactlyOne" description="YPAS indice Act Vigorosa" 
+			expression="round(yale1 * (yale2 +1) * 5)" 
+			additionalDescription="[YALE1]*([YALE2]+1)*5"/> 			
+
+			<DerivedAttributeDefinition id="YPAS_ind_pasear" type="number" multiplicity="exactlyOne" description="YPAS indice Pasear" 
+			expression="round(yale3 * (yale4 +1) * 3)" 
+			additionalDescription="[YALE3]*([YALE4]+1)*3"/> 			
+			
+			<DerivedAttributeDefinition id="YPAS_ind_resumen_act_fis" type="number" multiplicity="exactlyOne" description="INDICE RESUMEN DE ACTIVIDAD FISICA " 
+			expression="round(YPAS_ind_act_vig + YPAS_ind_pasear + yale5 * 3 + yale6 * 2 + yale7)" 
+			additionalDescription="[YPAS_ind_act_vig]+[YPAS_ind_pasear]+[YALE5]*3+[YALE6]*2+[YALE7]"/> 						
+						
+		</EntityDefinition>		
+	
 	
 		<EntityDefinition id="LCS1__AnthropometricVariablesGenollHomes">            
 			<AttributeDefinition id="AnKneeGenoll" type="number" multiplicity="exactlyOne" description="Distància entre genoll i turmell (cm)"/>
@@ -1702,6 +1777,22 @@
 				  <TaskParamDefinition path="LCS1__Evaluation.LCS1__AnthropometricVariablesAl.AnHeightAl" isReadOnly="false" isMandatory="true"/>  
 				  <TaskParamDefinition path="LCS1__Evaluation.LCS1__AnthropometricVariablesAl.AnthropometricAl" isReadOnly="true" isMandatory="false"/>
 				</HumanTaskDefinition>  			
+				
+				<HumanTaskDefinition id="LCS1__YALEHT" description="Discharge - YALE"
+						ownerPath="LCS1__Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1__YALE" 
+						entityAttachPath="LCS1__Evaluation.LCS1__DiagnosisCommunication">
+							<TaskParamDefinition path="LCS1__Evaluation.LCS1__YALE.yale1" isReadOnly="false" isMandatory="true"/>
+							<TaskParamDefinition path="LCS1__Evaluation.LCS1__YALE.yale2" isReadOnly="false" isMandatory="true"/>
+							<TaskParamDefinition path="LCS1__Evaluation.LCS1__YALE.yale3" isReadOnly="false" isMandatory="true"/>
+							<TaskParamDefinition path="LCS1__Evaluation.LCS1__YALE.yale4" isReadOnly="false" isMandatory="true"/>
+							<TaskParamDefinition path="LCS1__Evaluation.LCS1__YALE.yale5" isReadOnly="false" isMandatory="true"/>
+							<TaskParamDefinition path="LCS1__Evaluation.LCS1__YALE.yale6" isReadOnly="false" isMandatory="true"/>					
+							<TaskParamDefinition path="LCS1__Evaluation.LCS1__YALE.yale7" isReadOnly="false" isMandatory="true"/>					
+							<TaskParamDefinition path="LCS1__Evaluation.LCS1__YALE.YPAS_ind_act_vig" isReadOnly="true" isMandatory="false"/>				
+							<TaskParamDefinition path="LCS1__Evaluation.LCS1__YALE.YPAS_ind_pasear" isReadOnly="true" isMandatory="false"/>				
+							<TaskParamDefinition path="LCS1__Evaluation.LCS1__YALE.YPAS_ind_resumen_act_fis" isReadOnly="true" isMandatory="false"/>									
+				</HumanTaskDefinition>  		
+						
 				
 				<HumanTaskDefinition id="LCS1__AnthropometricVariablesGenollHomesHT" description="Diagnòstic - Pes i distància (Homes) - Variables antropomètriques"
 				ownerPath="LCS1__Settings.Nurse" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS1__AnthropometricVariablesGenollHomes" entityAttachPath="LCS1__Evaluation.LCS1__AnthropometricVariablesGenollHomes">
