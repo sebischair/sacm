@@ -67,7 +67,8 @@ class RestLogger {
     const data = {status: status, duration: duration, resBody: resBodyLog, resBodySize: resBodySize};
     // TODO add some retry logic
     LogMongo.update({uuid: uuid, status: null}, {$set: data}).catch(err => winston.debug(err));
-    RestLogger._LogSql.update(data, {where: {uuid: uuid, status: null}}).catch(err => winston.debug(err));
+    // TODO @Simon
+    //RestLogger._LogSql.update(data, {where: {uuid: uuid, status: null}}).catch(err => winston.debug(err));
   }
 
   // --------------- HELPER FUNCTIONS --------------- //
@@ -131,7 +132,8 @@ class RestLogger {
     logEntry.location_accuracy    = location && location.accuracy ? location.accuracy : null;
     // TODO add some retry logic
     LogMongo.create(logEntry).catch(err => winston.debug(err));
-    RestLogger._LogSql.create(logEntry).catch(err => winston.debug(err));
+    //TODO @Simon 
+    //RestLogger._LogSql.create(logEntry).catch(err => winston.debug(err));
   }
 
   static _extractUrlPattern(url) {
