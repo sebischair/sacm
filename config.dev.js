@@ -9,7 +9,8 @@ if(process.env.LOGGING_ENABLED)
     },
     logging:{
         isEnabled: isLoggingEnabled,
-        mongoUrl: process.env.MONGO_URL || 'mongodb://localhost:27017/sacmlog'
+        mongoUrl: process.env.MONGO_URL || 'mongodb://localhost:27017/sacmlog',
+        mySqlUrl: process.env.MYSQL_URL || 'mysql://testuser:test123@localhost:3306/sacmlog'
     },
     winston:{
         console:{
