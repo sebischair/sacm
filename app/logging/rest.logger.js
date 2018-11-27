@@ -1,39 +1,27 @@
 import maxmind from 'maxmind';
 import mongoose from 'mongoose';
-import Sequelize from 'sequelize';
 import winston from 'winston';
 import sizeof from 'object-sizeof';
 import Promise from 'bluebird';
 import config from "../../config";
 import RestLoggerConfig from "./rest.logger.config";
 import LogMongo from "./log.mongoose.model";
-import LogSchemaSql from "./log.sequelize.schema";
+import {Log as LogSql} from "./sequelize-models";
 
 class RestLogger {
 
   static _cityLookup;
-  static _sequelize;
-  static _LogSql;
 
   /**
    * Establishes the database connection(s). Needs to be called once on init.
    */
   static establishDBConnection() {
-    RestLogger._cityLookup = maxmind.openSync( __dirname + '/db', {cache: {max: 500}});
+    RestLogger._cityLookup = maxmind.openSync(__dirname + '/db', {cache: {max: 500}});
     mongoose.Promise = Promise;
     mongoose.connection.on('error', () => {
       throw new Error('Unable to establishDBConnection to SACM log Mongo database: ' + config.logging.mongoUrl);
     });
     mongoose.connect(config.logging.mongoUrl, {useMongoClient: true});
-    RestLogger._sequelize = new Sequelize(config.logging.mySqlUrl, {logging: false, operatorsAliases: false});
-    RestLogger._sequelize.Promise = Promise;
-    RestLogger._sequelize.authenticate()
-      .then(() => RestLogger._LogSql = RestLogger._sequelize.define('Log', LogSchemaSql))
-      .then(() => RestLogger._sequelize.sync())
-      .catch((err) => {
-        winston.debug(err);
-        throw new Error('Unable to establishDBConnection to SACM log MySQL database: ' + config.logging.mySqlUrl);
-      });
   }
 
   /**
@@ -67,8 +55,7 @@ class RestLogger {
     const data = {status: status, duration: duration, resBody: resBodyLog, resBodySize: resBodySize};
     // TODO add some retry logic
     LogMongo.update({uuid: uuid, status: null}, {$set: data}).catch(err => winston.debug(err));
-    // TODO @Simon
-    //RestLogger._LogSql.update(data, {where: {uuid: uuid, status: null}}).catch(err => winston.debug(err));
+    LogSql.update(data, {where: {uuid: uuid, status: null}}).catch(err => winston.debug(err));
   }
 
   // --------------- HELPER FUNCTIONS --------------- //
@@ -124,16 +111,15 @@ class RestLogger {
     };
     const location = logEntry.location;
     logEntry.location_countryCode = location && location.countryCode ? location.countryCode : null;
-    logEntry.location_country     = location && location.country ? location.country : null;
-    logEntry.location_city        = location && location.city ? location.city : null;
-    logEntry.location_zip         = location && location.zip ? location.zip : null;
-    logEntry.location_lat         = location && location.latitude ? location.latitude : null;
-    logEntry.location_lon         = location && location.longitude ? location.longitude : null;
-    logEntry.location_accuracy    = location && location.accuracy ? location.accuracy : null;
+    logEntry.location_country = location && location.country ? location.country : null;
+    logEntry.location_city = location && location.city ? location.city : null;
+    logEntry.location_zip = location && location.zip ? location.zip : null;
+    logEntry.location_lat = location && location.latitude ? location.latitude : null;
+    logEntry.location_lon = location && location.longitude ? location.longitude : null;
+    logEntry.location_accuracy = location && location.accuracy ? location.accuracy : null;
     // TODO add some retry logic
     LogMongo.create(logEntry).catch(err => winston.debug(err));
-    //TODO @Simon 
-    //RestLogger._LogSql.create(logEntry).catch(err => winston.debug(err));
+    LogSql.create(logEntry).catch(err => winston.debug(err));
   }
 
   static _extractUrlPattern(url) {
