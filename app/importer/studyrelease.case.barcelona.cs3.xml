@@ -1,0 +1,219 @@
+<SACMDefinition>
+    <Group staticId="2c9480885d1737ef015d74deecbf0004" id="IdibapsProfessionals" />
+    <Group staticId="3a21cc1a923a11e7bd0c0242ac120002" id="IdibapsAdminOfficers" />
+    <Group staticId="3a21cc0a923a11e7bd0c0242ac120002" id="IdibapsAnesthesiologists" />
+    <Group staticId="3a21cbef923a11e7bd0c0242ac120002" id="IdibapsCaseManagers" />
+    <Group staticId="3a21cbc9923a11e7bd0c0242ac120002" id="IdibapsClinicians" />
+    <Group staticId="3a21cc9c923a11e7bd0c0242ac120002" id="IdibapsDataManagers" />
+    <Group staticId="3a21cc8a923a11e7bd0c0242ac120002" id="IdibapsLabTechnicians" />
+    <Group staticId="3a21cc95923a11e7bd0c0242ac120002" id="IdibapsLocalPulmonologists"/>
+    <Group staticId="3a21cbf7923a11e7bd0c0242ac120002" id="IdibapsNurses"/>
+    <Group staticId="3a21cc4d923a11e7bd0c0242ac120002" id="IdibapsNutritionists"/>
+    <Group staticId="3a21cc25923a11e7bd0c0242ac120002" id="IdibapsPhysicians"/>
+    <Group staticId="3a21cc40923a11e7bd0c0242ac120002" id="IdibapsPhysiotherapists"/>
+    <Group staticId="3a21cc73923a11e7bd0c0242ac120002" id="IdibapsPrimaryCareClinicians"/>
+    <Group staticId="3a21cc58923a11e7bd0c0242ac120002" id="IdibapsPsychologists"/>
+    <Group staticId="3a21cc37923a11e7bd0c0242ac120002" id="IdibapsRNSTs"/>
+    <Group staticId="3a21cc64923a11e7bd0c0242ac120002" id="IdibapsSocialCareers"/>
+    <Group staticId="3a21cbd4923a11e7bd0c0242ac120002" id="IdibapsAdmins"/>
+    <Group staticId="3a21c9cb923a11e7bd0c0242ac120002" id="IdibapsPatients"/>
+
+    <User staticId="2c940c085e765068015e7667fc700040" id="salazart"/>
+	<User staticId="2c940c085e765068015e7671fbfc0050" id="mcdonaldr"/>
+    <User staticId="26be3a3605b011e8941d0242ac140002" id="parkerw"/>
+    <User staticId="f0cbee0505b011e8941d0242ac140002" id="velardem"/>
+    <User staticId="c073767705b111e8941d0242ac140002" id="arpl"/>
+    <User staticId="f854153e05b111e8941d0242ac140002" id="wilsong"/>
+
+    <User staticId="2c940c085e765068015e76f92c3a00f0" id="coled"/>
+    <User staticId="2c940c085e765068015e76ff40800100" id="aguilara"/>
+    <User staticId="2c940c085e765068015e770238860110" id="romeroe"/>
+
+    
+    <Workspace staticId="2c9480885d1737ef015d74deecbf0004" id="Idibaps">
+
+        <EntityDefinition id="BCS3_CaseData" description="Case Data">
+            <AttributeDefinition id="BCS3_Identification" type="Link.EntityDefinition.BCS3_Identification" description="Identification" multiplicity="any"/>            
+            <AttributeDefinition id="BCS3_Workplan" type="Link.EntityDefinition.BCS3_Workplan" description="Workplan" multiplicity="any"/> 
+            <AttributeDefinition id="BCS3_Discharge" type="Link.EntityDefinition.BCS3_Discharge" description="Discharge" multiplicity="any"/>  
+            <AttributeDefinition id="BCS3_Settings" type="Link.EntityDefinition.BCS3_Settings" description="Settings" multiplicity="any"/>   
+        </EntityDefinition>
+
+        <!-- Settings Entity Definitions -->
+        <EntityDefinition id="BCS3_Settings" description="Settings">
+            <AttributeDefinition id="Patient" type="Link.Users(IdibapsPatients)" multiplicity="exactlyOne" description="Patient" />            
+			<AttributeDefinition id="Physiotherapist" type="Link.Users(IdibapsPhysiotherapists)" multiplicity="exactlyOne" description="Fisioterapeuta"/>
+			<AttributeDefinition id="Anesthesiologist" type="Link.Users(IdibapsAnesthesiologists)" multiplicity="exactlyOne" description="Anestesista"/>
+			<AttributeDefinition id="CaseManager" type="Link.Users(IdibapsCaseManagers)" multiplicity="exactlyOne" description="Case Manager"/>            
+						
+            <AttributeDefinition id="Nurse" type="Link.Users(IdibapsNurses)" multiplicity="exactlyOne" description="Enfermero"/>
+            <AttributeDefinition id="AnesthesiologistOrNurse" type="Link.Users(IdibapsAnesthesiologists,IdibapsNurses)" multiplicity="exactlyOne" description="Anestesista/Enfermero" additionalDescription="Select a Anestesista or Enfermero!"/>
+            <AttributeDefinition id="Nutritionist" type="Link.Users(IdibapsNutritionists)" multiplicity="exactlyOne" description="Nutricionista"/>
+            <AttributeDefinition id="NutritionistOrNurse" type="Link.Users(IdibapsNutritionists)" multiplicity="exactlyOne" description="Nutricionista/Enfermero" additionalDescription="Select a Nutricionista or Enfermero!"/>
+            <AttributeDefinition id="Psychologists" type="Link.Users(IdibapsPsychologists)" multiplicity="exactlyOne" description="Psicólogo"/>
+            <AttributeDefinition id="Clinicians" type="Link.Users(IdibapsClinicians)" multiplicity="exactlyOne" description="Clinician"/>   
+            <AttributeDefinition id="EvaluationDueDate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Evaluation default due date"/>   
+        </EntityDefinition>
+
+        <!-- Identification Entity Definitions -->
+        <EntityDefinition id="BCS3_Identification" description="Identification">
+            <AttributeDefinition id="BCS3_Inclusion" type="Link.EntityDefinition.BCS3_Inclusion" multiplicity="maximalOne" description="Inclusion"/> 
+        </EntityDefinition>
+
+        <EntityDefinition id="BCS3_Inclusion" description="Patient Selection">
+            <!--<AttributeDefinition id="name" type="string" multiplicity="exactlyOne" description="Nombre"/> -->
+            <AttributeDefinition id="nhc" type="number" multiplicity="exactlyOne" description="Número de história clínica"/>
+            <AttributeDefinition id="age" type="number" multiplicity="exactlyOne" description="Edad"/>
+			<AttributeDefinition id="borndate" type="date" multiplicity="exactlyOne" description="Fecha de nacimiento"/>
+        </EntityDefinition>		
+
+        <!-- Workplan Entity Definitions -->
+        <EntityDefinition id="BCS3_Workplan" description="Workplan">
+			<!-- PENDING Welcome material -->
+            <AttributeDefinition id="BCS3_PhysicalActivity" type="Link.EntityDefinition.BCS3_PhysicalActivity" description="Physical Activity Goals"/>
+        </EntityDefinition>
+
+        <EntityDefinition id="BCS3_PhysicalActivity" description="Physical Activity Goals">
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Start date"/>
+            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="End date"/>       
+            <AttributeDefinition id="dailysteps" type="number.min(0).max(100000)" defaultValues="[10000]" multiplicity="exactlyOne" description="Number of steps daily"/>       
+			<!--
+            <AttributeDefinition id="dailylowlevel" type="number.min(0).max(1440)" defaultValues="[60]" multiplicity="exactlyOne" description="Minutes of low level activity daily"/>       
+            <AttributeDefinition id="dailymediumlevel" type="number.min(0).max(1440)" defaultValues="[40]" multiplicity="exactlyOne" description="Minutes of medium level activity daily"/>       
+            <AttributeDefinition id="dailyhighlevel" type="number.min(0).max(1440)" defaultValues="[20]" multiplicity="exactlyOne" description="Minutes of high level activity daily"/> 
+            <AttributeDefinition id="dailynoactivity" type="number.min(0).max(1440)" defaultValues="[240]" multiplicity="exactlyOne" description="Max minutes without activity allowed daily"/>   
+			-->
+            <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Measurement"/>                 
+        </EntityDefinition>
+        
+
+        
+        <!-- Discharge Entity Definitions -->
+        <EntityDefinition id="BCS3_Discharge" description="BCS3_Discharge">
+            <AttributeDefinition id="BCS3_DischargeForm" type="Link.EntityDefinition.BCS3_DischargeForm" multiplicity="maximalOne" description="Discharge From"/> 
+        </EntityDefinition>
+
+        <EntityDefinition id="BCS3_DischargeForm" description="Discharge From">
+            <AttributeDefinition id="comment" type="longtext" multiplicity="exactlyOne" description="Comment"/>                             
+        </EntityDefinition>
+
+
+        <!-- Case Definition -->
+        <CaseDefinition id="BCS3_Barcelona" description="CS3 Barcelona" ownerPath="BCS3_Settings.CaseManager" clientPath="BCS3_Settings.Patient" entityDefinitionId="BCS3_CaseData" newEntityDefinitionId="BCS3_Settings" newEntityAttachPath="BCS3_Settings"
+            onCompleteHTTPHookURL="http://integration-producer:8081/v1/producer/point-to-point/sacm/case/terminate"
+            onTerminateHTTPHookURL="http://integration-producer:8081/v1/producer/point-to-point/sacm/case/terminate"
+            onDeleteHTTPHookURL="http://integration-producer:8081/v1/producer/point-to-point/sacm/case/terminate">
+
+            <StageDefinition id="BCS3_CaseIdentification" description="Case Identification" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS3_Identification" entityAttachPath="BCS3_Identification">
+                
+				<HumanTaskDefinition id="BCS3_Inclusion" description="Patient Selection" ownerPath="BCS3_Settings.Anesthesiologist" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS3_Inclusion" entityAttachPath="BCS3_Identification.BCS3_Inclusion">
+					<TaskParamDefinition path="BCS3_Settings.Patient" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS3_Identification.BCS3_Inclusion.nhc" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS3_Identification.BCS3_Inclusion.age" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS3_Identification.BCS3_Inclusion.borndate" isReadOnly="false" isMandatory="true"/>
+                </HumanTaskDefinition>
+				
+				<HumanTaskDefinition id="BCS3_AssignPatient" externalId="SelectPatient" description="Clinicians Selection" ownerPath="BCS3_Settings.CaseManager" isMandatory="true" repeatable="ONCE"> 
+                    <HttpHookDefinition on="COMPLETE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/case/patient/inclusion" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <!--<TaskParamDefinition path="BCS3_Settings.Patient" isReadOnly="false" isMandatory="true"/>-->
+                    <TaskParamDefinition path="BCS3_Settings.CaseManager" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS3_Settings.Anesthesiologist" isReadOnly="false" isMandatory="true"/>					
+					<TaskParamDefinition path="BCS3_Settings.Physiotherapist" isReadOnly="false" isMandatory="true"/>
+					<!--
+					<TaskParamDefinition path="BCS3_Settings.Nurse" isReadOnly="false" isMandatory="true"/>                    
+                    <TaskParamDefinition path="BCS3_Settings.AnesthesiologistOrNurse" isReadOnly="false" isMandatory="false"/>              
+                    <TaskParamDefinition path="BCS3_Settings.Nutritionist" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS3_Settings.NutritionistOrNurse" isReadOnly="false" isMandatory="false"/>                                        
+                    <TaskParamDefinition path="BCS3_Settings.Psychologists" isReadOnly="false" isMandatory="true"/>
+					-->
+                </HumanTaskDefinition>
+                
+            </StageDefinition>
+
+            <StageDefinition id="BCS3_Workplan" description="Workplan" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS3_Workplan" entityAttachPath="BCS3_Workplan">
+                <SentryDefinition>
+                    <precondition processDefinitionId="BCS3_CaseIdentification"/>
+                </SentryDefinition>
+
+                <DualTaskDefinition id="BCS3_PhysicalActivity" externalId="PhysicalActivity" description="Physical Activity Goals" ownerPath="BCS3_Settings.Physiotherapist" isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="BCS3_PhysicalActivity" entityAttachPath="BCS3_Workplan.BCS3_PhysicalActivity">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Workplan.BCS3_PhysicalActivity.startdate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Workplan.BCS3_PhysicalActivity.enddate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Workplan.BCS3_PhysicalActivity.dailysteps" isReadOnly="false" isMandatory="true"/>
+					<!--
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Workplan.BCS3_PhysicalActivity.dailylowlevel" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Workplan.BCS3_PhysicalActivity.dailymediumlevel" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Workplan.BCS3_PhysicalActivity.dailyhighlevel" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Workplan.BCS3_PhysicalActivity.dailynoactivity" isReadOnly="false" isMandatory="true"/>                    
+					-->
+                    <TaskParamDefinition part="AUTOMATED" path="BCS3_Workplan.BCS3_PhysicalActivity.measurement" isReadOnly="false" isMandatory="true"/>
+                </DualTaskDefinition>
+                
+            </StageDefinition>
+            
+            <StageDefinition id="BCS3_Discharge" description="Discharge" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS3_Discharge" entityAttachPath="BCS3_Discharge">
+                <SentryDefinition>
+                    <precondition processDefinitionId="BCS3_Workplan"/>
+                </SentryDefinition>
+                <HumanTaskDefinition id="BCS3_DischargeForm" description="Discharge Form" ownerPath="BCS3_Settings.Anesthesiologist" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS3_DischargeForm" entityAttachPath="BCS3_Discharge.BCS3_DischargeForm">
+                    <TaskParamDefinition path="BCS3_Discharge.BCS3_DischargeForm.comment" isReadOnly="false" isMandatory="true"/>                  
+                </HumanTaskDefinition>
+            </StageDefinition>
+
+        </CaseDefinition>
+    </Workspace>
+
+
+
+<!-- ######################################################################################################################################## -->
+<!-- ####### Execution ###################################################################################################################### -->
+<!-- ######################################################################################################################################## -->
+
+    <Execution>
+        <Action id="CompleteHumanTask" processId="BCS3_AssignPatient">
+<!--            <TaskParam path="BCS3_Settings.Patient"  userValue="coled"/>-->
+            <TaskParam path="BCS3_Settings.CaseManager"  userValue="salazart"/>
+            <TaskParam path="BCS3_Settings.Anesthesiologist" userValue="velardem"/>
+			<TaskParam path="BCS3_Settings.Physiotherapist" userValue="arpl"/>
+<!--			
+            <TaskParam path="BCS3_Settings.AnesthesiologistOrNurse" userValue="velardem"/>            
+            <TaskParam path="BCS3_Settings.Nurse" userValue="wilsong"/>
+            <TaskParam path="BCS3_Settings.Nutritionist" userValue="parkerw"/>
+            <TaskParam path="BCS3_Settings.NutritionistOrNurse" userValue="parkerw"/>
+            <TaskParam path="BCS3_Settings.Psychologists" userValue="parkerw"/>-->			
+        </Action>
+        <Action id="CompleteHumanTask" processId="BCS3_Inclusion">            
+			<TaskParam path="BCS3_Settings.Patient"  userValue="coled"/>
+            <TaskParam path="BCS3_Identification.BCS3_Inclusion.name" values="['Test Inclusion']"/>
+            <TaskParam path="BCS3_Identification.BCS3_Inclusion.nhc"  values="['20']"/>
+            <TaskParam path="BCS3_Identification.BCS3_Inclusion.age" values="['80']"/>
+            <TaskParam path="BCS3_Identification.BCS3_Inclusion.borndate" values="['2019-06-09T00:00:00.0']"/>            
+        </Action>
+        <Action id="CompleteHumanTask" processId="BCS3_SetEvaluationDueDate">
+            <TaskParam path="BCS3_Settings.EvaluationDueDate" values="['2019-06-09T00:00:00.0']" />
+        </Action>  
+		
+        <Action id="ActivateDualTask" processId="BCS3_PhysicalActivity" breakpoint="true"/>
+        <Action id="CompleteDualTaskHumanPart" processId="BCS3_PhysicalActivity" breakpoint="true">
+            <TaskParam path="BCS3_Workplan.BCS3_PhysicalActivity.startdate"  values="['2017-09-26T00:00:00.000']"/>
+            <TaskParam path="BCS3_Workplan.BCS3_PhysicalActivity.enddate"  values="['2018-09-27T00:00:00.000']"/>
+            <TaskParam path="BCS3_Workplan.BCS3_PhysicalActivity.dailysteps"  values="[10000]"/>
+			<!--
+            <TaskParam path="BCS3_Workplan.BCS3_PhysicalActivity.dailylowlevel"  values="[15]"/>
+            <TaskParam path="BCS3_Workplan.BCS3_PhysicalActivity.dailymediumlevel"  values="[5]"/>
+            <TaskParam path="BCS3_Workplan.BCS3_PhysicalActivity.dailyhighlevel"  values="[10]"/>
+			-->
+            <TaskParam path="BCS3_Workplan.BCS3_PhysicalActivity.dailynoactivity"  values="[30]"/>
+        </Action>
+        <Action id="CompleteDualTaskAutomatedPart" processId="BCS3_PhysicalActivity">
+            <TaskParam path="BCS3_Workplan.BCS3_PhysicalActivity.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
+        </Action>
+		
+        <Action id="CompleteStage" processId="BCS3_Workplan"/>
+        <Action id="CompleteHumanTask" processId="BCS3_DischargeForm">
+            <TaskParam path="BCS3_Discharge.BCS3_DischargeForm.comment"  values="['The patient was discharged on xxx everything fine.']"/>
+        </Action>
+    </Execution>
+
+</SACMDefinition>
