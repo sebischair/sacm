@@ -2,6 +2,7 @@ import RestLoggerConfig from "../rest.logger.config";
 
 export default (sequelize, DataTypes) => {
   return sequelize.define('Log', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     application: {type: DataTypes.ENUM(Object.values(RestLoggerConfig.applications))},
     ip: {type: DataTypes.STRING(60)},
     userAgent: {type: DataTypes.STRING(500)},
@@ -18,7 +19,7 @@ export default (sequelize, DataTypes) => {
     workspaceId: {type: DataTypes.STRING(45)},
     reqBody: {type: DataTypes.JSON},
     reqBodySize: {type: DataTypes.INTEGER(11)},
-    uuid: {type: DataTypes.STRING(45)},
+    uuid: {type: DataTypes.UUID},
     location_countryCode: {type: DataTypes.STRING(45)},
     location_country: {type: DataTypes.STRING(45)},
     location_city: {type: DataTypes.STRING(45)},
