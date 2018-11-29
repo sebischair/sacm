@@ -68,7 +68,6 @@
             <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Data d'inici"/>
             <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="Data de fi"/>       
             <AttributeDefinition id="dailysteps" type="number.min(0).max(100000)" defaultValues="[10000]" multiplicity="exactlyOne" description="Número de passos a fer durant el dia"/>       
-
             <AttributeDefinition id="dailylowlevel" type="number.min(0).max(1440)" defaultValues="[60]" multiplicity="exactlyOne" description="Minutes of low level activity daily"/>       
             <AttributeDefinition id="dailymediumlevel" type="number.min(0).max(1440)" defaultValues="[40]" multiplicity="exactlyOne" description="Minutes of medium level activity daily"/>       
 			<!--
@@ -162,13 +161,14 @@
                 <DualTaskDefinition id="BCS3_PhysicalActivity" externalId="PhysicalActivity"
 				description="Objectius d'Activitat Física"
 				ownerPath="BCS3_Settings.Physiotherapist" dueDatePath="BCS3_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="BCS3_PhysicalActivity" entityAttachPath="BCS3_Workplan.BCS3_PhysicalActivity">				
-				
+				                    
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="BCS3_Workplan.BCS3_PhysicalActivity.startdate" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition part="HUMAN" path="BCS3_Workplan.BCS3_PhysicalActivity.enddate" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition part="HUMAN" path="BCS3_Workplan.BCS3_PhysicalActivity.dailysteps" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="BCS3_Workplan.BCS3_PhysicalActivity.dailylowlevel" isReadOnly="false" isMandatory="true"/>
+
+					<TaskParamDefinition part="HUMAN" path="BCS3_Workplan.BCS3_PhysicalActivity.dailylowlevel" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition part="HUMAN" path="BCS3_Workplan.BCS3_PhysicalActivity.dailymediumlevel" isReadOnly="false" isMandatory="true"/>					
 					<!--					
                     <TaskParamDefinition part="HUMAN" path="BCS3_Workplan.BCS3_PhysicalActivity.dailyhighlevel" isReadOnly="false" isMandatory="true"/>
@@ -219,42 +219,35 @@
 <!-- ######################################################################################################################################## -->
 
     <Execution>
-        <Action id="CompleteHumanTask" processId="BCS3_AssignPatient">
-<!--            <TaskParam path="BCS3_Settings.Patient"  userValue="coled"/>-->
-            <TaskParam path="BCS3_Settings.CaseManager"  userValue="salazart"/>
-            <TaskParam path="BCS3_Settings.Anesthesiologist" userValue="velardem"/>
-			<TaskParam path="BCS3_Settings.Physiotherapist" userValue="arpl"/>
-<!--			
-            <TaskParam path="BCS3_Settings.AnesthesiologistOrNurse" userValue="velardem"/>            
-            <TaskParam path="BCS3_Settings.Nurse" userValue="wilsong"/>
-            <TaskParam path="BCS3_Settings.Nutritionist" userValue="parkerw"/>
-            <TaskParam path="BCS3_Settings.NutritionistOrNurse" userValue="parkerw"/>
-            <TaskParam path="BCS3_Settings.Psychologists" userValue="parkerw"/>-->			
-        </Action>
         <Action id="CompleteHumanTask" processId="BCS3_SelectPatient">            
 			<TaskParam path="BCS3_Settings.Patient"  userValue="coled"/>
 			<TaskParam path="BCS3_Identification.BCS3_SelectPatient.nhc"  values="['20']"/>
+            <TaskParam path="BCS3_Settings.CaseManager"  userValue="salazart"/>
+            <TaskParam path="BCS3_Settings.Anesthesiologist" userValue="velardem"/>
+			<TaskParam path="BCS3_Settings.Physiotherapist" userValue="arpl"/>
+			
 			<!--
             <TaskParam path="BCS3_Identification.BCS3_SelectPatient.name" values="['Test Inclusion']"/>
             <TaskParam path="BCS3_Identification.BCS3_SelectPatient.age" values="['80']"/>
             <TaskParam path="BCS3_Identification.BCS3_SelectPatient.borndate" values="['2019-06-09T00:00:00.0']"/>            
+			<Action id="CompleteHumanTask" processId="BCS3_SetWorkplanDueDate">
+            <TaskParam path="BCS3_Settings.WorkplanDueDate" values="['2019-06-09T00:00:00.0']" />
+			</Action>  
 			-->
         </Action>
-        <Action id="CompleteHumanTask" processId="BCS3_SetWorkplanDueDate">
-            <TaskParam path="BCS3_Settings.WorkplanDueDate" values="['2019-06-09T00:00:00.0']" />
-        </Action>  
 		
         <Action id="ActivateDualTask" processId="BCS3_PhysicalActivity" breakpoint="true"/>
         <Action id="CompleteDualTaskHumanPart" processId="BCS3_PhysicalActivity" breakpoint="true">
             <TaskParam path="BCS3_Workplan.BCS3_PhysicalActivity.startdate"  values="['2017-09-26T00:00:00.000']"/>
             <TaskParam path="BCS3_Workplan.BCS3_PhysicalActivity.enddate"  values="['2018-09-27T00:00:00.000']"/>
             <TaskParam path="BCS3_Workplan.BCS3_PhysicalActivity.dailysteps"  values="[10000]"/>
-			<!--
+
             <TaskParam path="BCS3_Workplan.BCS3_PhysicalActivity.dailylowlevel"  values="[15]"/>
             <TaskParam path="BCS3_Workplan.BCS3_PhysicalActivity.dailymediumlevel"  values="[5]"/>
+						<!--
             <TaskParam path="BCS3_Workplan.BCS3_PhysicalActivity.dailyhighlevel"  values="[10]"/>
-			-->
             <TaskParam path="BCS3_Workplan.BCS3_PhysicalActivity.dailynoactivity"  values="[30]"/>
+						-->
         </Action>
         <Action id="CompleteDualTaskAutomatedPart" processId="BCS3_PhysicalActivity">
             <TaskParam path="BCS3_Workplan.BCS3_PhysicalActivity.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
