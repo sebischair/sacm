@@ -40,7 +40,7 @@
 
         <!-- Settings Entity Definitions -->
         <EntityDefinition id="GCS2_Settings" description="Settings">
-            <AttributeDefinition id="Patient" type="Link.Users(UmcgPatients)" description="Patient" additionalDescription="Patient that is assigned to this case." multiplicity="exactlyOne"/>
+            <AttributeDefinition id="Patient" type="Link.Users(UmcgPatients)" description="Patient" additionalDescription="Patient that is assigned to this case" multiplicity="exactlyOne"/>
             <AttributeDefinition id="CaseOwner" type="Link.Users(UmcgProfessionals)" description="Case Owner" multiplicity="exactlyOne"/>
             <AttributeDefinition id="Clinician" type="Link.Users(UmcgProfessionals)" description="Clinican" multiplicity="exactlyOne"/>
             <AttributeDefinition id="EvaluationDueDate" type="date.after(TODAY)" description="Evaluation default due date" multiplicity="exactlyOne"/>
@@ -51,7 +51,7 @@
         <EntityDefinition id="GCS2_Identification" description="Identification">
             <AttributeDefinition id="GCS2_PatientsConsent" type="Link.EntityDefinition.GCS2_PatientsConsent" multiplicity="maximalOne" description="Patient's consent"/> 
             <AttributeDefinition id="GCS2_ASA" type="Link.EntityDefinition.GCS2_ASA" multiplicity="maximalOne" description="ASA"/> 
-            <AttributeDefinition id="GCS2_ThechTest" type="Link.EntityDefinition.GCS2_ThechTest" multiplicity="maximalOne" description="Technological Test"/> 
+            <AttributeDefinition id="GCS2_ThechTest" type="Link.EntityDefinition.GCS2_ThechTest" multiplicity="maximalOne" description="Technological Test."/> 
             <AttributeDefinition id="GCS2_SiteOfSurgery" type="Link.EntityDefinition.GCS2_SiteOfSurgery" multiplicity="maximalOne" description="Site of Surgery"/> 
         </EntityDefinition>
 
@@ -446,7 +446,7 @@
 
 
         <!-- HAD -->
-        <EntityDefinition id="GCS2_HospitalAnxietyAndDepressionScale">
+        <EntityDefinition id="GCS2_HospitalAnxietyAndDepressionScale" description="Hospital Anxiety And Depression Scale">
             <AttributeDefinition id="hadA1" type="enumeration" multiplicity="exactlyOne" description="I feel tense or 'wound up'"> 
                 <EnumerationOption value="0" description="Not at all"/>
                 <EnumerationOption value="1" description="From time to time, occasionally"/>
@@ -564,11 +564,11 @@
         <EntityDefinition id="GCS2_MonitoringPrescription" description="Patient Monitory">
             <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Measure type" additionalDescription="Select measure type for patient monitory.">
                 <EnumerationOption value="BLOODPRESSURE" description="Systolic/Diastolic Blood Pressure"/>
-				<EnumerationOption value="TEMPERATURE" description="Temperature"/>
+				<EnumerationOption value="BODYTEMPERATURE" description="Temperature"/>
 				<EnumerationOption value="HEARTPULSE" description="hartslag"/>
 				<EnumerationOption value="WEIGHT" description="Weight"/>
             </AttributeDefinition>   
-            <AttributeDefinition id="alertmin" type="number.min(0)" multiplicity="any" uiReference="conditonalmultiplicity(1,type=BLOODPRESSURE=>2)" description="Min value allowed" additionalDescription="Minimum value for this measuremnt greather than 0. If blood pressure is selected, please specify the systolic / diastolic maximum."/>       
+            <AttributeDefinition id="alertmin" type="number.min(0)" multiplicity="any" uiReference="conditonalmultiplicity(1,type=BLOODPRESSURE=>2)" description="Min value allowed." additionalDescription="Minimum value for this measuremnt greather than 0. If blood pressure is selected, please specify the systolic / diastolic maximum."/>       
             <AttributeDefinition id="alertmax" type="number.min(0)" multiplicity="any" uiReference="conditonalmultiplicity(1,type=BLOODPRESSURE=>2)" description="Max value allowed" additionalDescription="Maximum value for this measuremnt greather than 0. If blood pressure is selected, please specify the systolic / diastolic minimum."/>      
             <AttributeDefinition id="alertfreq" type="number" defaultValues="[1]" multiplicity="exactlyOne" description="Alert Frecuency Val ue"/>       
             <AttributeDefinition id="alertfrequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Alert Frecuency Unit">     
@@ -655,6 +655,9 @@
             <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Questionaire type" additionalDescription="Select questionaire type for patient.">
                 <EnumerationOption value="SF12" description="SF12"/>
                 <EnumerationOption value="EQ5D" description="EQ5D"/>
+				<EnumerationOption value="NPS" description="NPS"/>
+				<EnumerationOption value="SUS" description="SUS"/>
+				<EnumerationOption value="VAS" description="VAS"/>
             </AttributeDefinition>   
             <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Start date"/> 
             <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="End date"/> 
@@ -709,7 +712,7 @@
         </EntityDefinition>
 
         <!-- Discharge Entity Definitions -->
-        <EntityDefinition id="GCS2_Discharge" description="GCS2_Discharge">
+        <EntityDefinition id="GCS2_Discharge" description="Discharge">
             <AttributeDefinition id="GCS2_DischargeForm" type="Link.EntityDefinition.GCS2_DischargeForm" description="Discharge From"/> 
         </EntityDefinition>
 
@@ -1168,6 +1171,19 @@
             data="{'alertType':'some type', 'application':'Run App', 'priorityLevel':'LOW', 'status':'ACT', 'paramName':'steps per day', 'paramValue':'12', 'minThreshold':'5',  'maxThreshold':'8'}">
         </Action>
     -->
+        <Action id="ActivateDualTask" processId="GCS2_PhysicalActivity"/>
+        <Action id="CompleteDualTaskHumanPart" processId="GCS2_PhysicalActivity">
+            <TaskParam path="GCS2_Workplan.GCS2_PhysicalActivity.startdate"  values="['2017-09-26T00:00:00.000']"/>
+            <TaskParam path="GCS2_Workplan.GCS2_PhysicalActivity.enddate"  values="['2018-09-27T00:00:00.000']"/>
+            <TaskParam path="GCS2_Workplan.GCS2_PhysicalActivity.dailysteps"  values="[10000]"/>
+            <TaskParam path="GCS2_Workplan.GCS2_PhysicalActivity.dailylowlevel"  values="[15]"/>
+            <TaskParam path="GCS2_Workplan.GCS2_PhysicalActivity.dailymediumlevel"  values="[5]"/>
+            <TaskParam path="GCS2_Workplan.GCS2_PhysicalActivity.dailyhighlevel"  values="[10]"/>
+            <TaskParam path="GCS2_Workplan.GCS2_PhysicalActivity.dailynoactivity"  values="[30]"/>
+        </Action>
+        <Action id="CompleteDualTaskAutomatedPart" processId="GCS2_PhysicalActivity">
+            <TaskParam path="GCS2_Workplan.GCS2_PhysicalActivity.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
+        </Action>
         <Action id="ActivateDualTask" processId="GCS2_PhysicalActivity"/>
         <Action id="CompleteDualTaskHumanPart" processId="GCS2_PhysicalActivity">
             <TaskParam path="GCS2_Workplan.GCS2_PhysicalActivity.startdate"  values="['2017-09-26T00:00:00.000']"/>

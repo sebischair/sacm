@@ -2,11 +2,13 @@ import Promise from 'bluebird';
 import http from '../http';
 import Model from '../model';
 
-
 export default class EntityDefinition extends Model{
 
   static create(jwt, data){
-    return http.post(jwt, '/workspaces/'+data.workspace+'/entityDefinitions', data);
+    if(data && !data.description)
+      return Model.error('EntityDefinition description missing!', "No description found for '" + data.name + "'!");
+    else
+      return http.post(jwt, '/workspaces/'+data.workspace+'/entityDefinitions', data);
   }
 
   static update(jwt, data){

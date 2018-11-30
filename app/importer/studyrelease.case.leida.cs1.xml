@@ -931,7 +931,7 @@
 			expression="number(rr1,0) + number(rr2,0) + number(rr3,0) + number(rr4,0) + number(rr5,0)" />				
 		</EntityDefinition>				
 		
-        <EntityDefinition id="LCS1_SelfCareAutoTestEPOC" description="Capacitat d'autocura - MPOC">
+        <EntityDefinition id="LCS1_SelfCareAutoTestEPOC" description="Capacitat d'autocura - IC">
             <AttributeDefinition id="scat_epoc1" type="enumeration" multiplicity="exactlyOne" description="1. Em peso cada dia">
                 <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
                 <EnumerationOption value="2" description="D'acord"/>
@@ -995,14 +995,15 @@
 			
             <DerivedAttributeDefinition id="scat_epocTotal" type="number" multiplicity="exactlyOne" 
 			expression="number(scat_epoc1,0)+number(scat_epoc2,0)+number(scat_epoc3,0)+number(scat_epoc4,0)+number(scat_epoc5,0)+number(scat_epoc6,0)+number(scat_epoc7,0)+number(scat_epoc8,0)+number(scat_epoc9,0)+number(scat_epoc10,0)+number(scat_epoc11,0)+number(scat_epoc12,0)"
-			description="Puntuació MPOC"/> 
+			description="Puntuació IC"/> 
 			
 			<DerivedAttributeDefinition id="scat_epocTotalScore" type="number" multiplicity="exactlyOne" 
 			expression="round((( scat_epocTotal/ 36 ) * 100),0)" 			
-			description="MPOC (en %)"/> 					
+			description="IC (en %)"/> 					
         </EntityDefinition>
 		
-        <EntityDefinition id="LCS1_SelfCareAutoTestHF" description="Capacitat d'autocura - IC">
+		<!--  MPOC: Malaltia pulmonar obstructiva crònica -->
+        <EntityDefinition id="LCS1_SelfCareAutoTestHF" description="Capacitat d'autocura - MPOC">
             <AttributeDefinition id="scat_ic1" type="enumeration" multiplicity="exactlyOne" description="Si tinc dificultat per respirar paro i descanso.">
                 <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
                 <EnumerationOption value="2" description="D'acord"/>
@@ -1045,11 +1046,11 @@
             </AttributeDefinition>  
             <DerivedAttributeDefinition id="scat_icTotal" type="number" multiplicity="exactlyOne" 
 			expression="number(scat_ic1,0)+number(scat_ic2,0)+number(scat_ic3,0)+number(scat_ic4,0)+number(scat_ic5,0)+number(scat_ic6,0)+number(scat_ic7,0)+number(scat_ic8,0)"
-			description="Puntuacio IC"/> 
+			description="Puntuacio MPOC"/> 
 			
 			<DerivedAttributeDefinition id="scat_icTotalScore" 
 			expression="round(((scat_icTotal / 24) * 100),0)" 		
-			description="IC (en %)"/> 			
+			description="MPOC (en %)"/> 			
         </EntityDefinition>
 		
         <EntityDefinition id="LCS1_MedicationFollowing"> 
@@ -1770,7 +1771,7 @@
                     <TaskParamDefinition path="LCS1_Evaluation.LCS1_SF12Evaluation.sf12-12" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition> 	
 
-				<HumanTaskDefinition id="LCS1_SelfCareAutoTestEPOCHT" description="*Barreres - Capacitat d'autocura (MPOC)" 
+				<HumanTaskDefinition id="LCS1_SelfCareAutoTestEPOCHT" description="*Barreres - Capacitat d'autocura (IC)" 
 				ownerPath="LCS1_Settings.Nurse" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS1_SelfCareAutoTestEPOC" entityAttachPath="LCS1_Evaluation.LCS1_SelfCareAutoTestEPOC">                
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestEPOC.scat_epoc1" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestEPOC.scat_epoc2" isReadOnly="false" isMandatory="true"/>
@@ -1788,7 +1789,7 @@
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestEPOC.scat_epocTotalScore" isReadOnly="true" isMandatory="false"/>            					
 				</HumanTaskDefinition>       
 		
-				<HumanTaskDefinition id="LCS1_SelfCareAutoTestHFHT" description="*Barreres - Capacitat d'autocura (IC)" 
+				<HumanTaskDefinition id="LCS1_SelfCareAutoTestHFHT" description="*Barreres - Capacitat d'autocura (MPOC)" 
 				ownerPath="LCS1_Settings.Nurse" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS1_SelfCareAutoTestHF" entityAttachPath="LCS1_Evaluation.LCS1_SelfCareAutoTestHF">                			
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestHF.scat_ic1" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS1_Evaluation.LCS1_SelfCareAutoTestHF.scat_ic2" isReadOnly="false" isMandatory="true"/>

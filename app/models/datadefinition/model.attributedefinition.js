@@ -6,7 +6,10 @@ import Model from '../model';
 export default class AttributeDefinition extends Model{
 
   static create(jwt, data) {
-    return http.post(jwt, '/attributeDefinitions', data);
+    if(data && !data.description)
+      return Model.error('AttributeDefinition description missing!', "No description found for '" + data.name + "'!");
+    else
+      return http.post(jwt, '/attributeDefinitions', data);
   }
 
   static deleteById(jwt, adttributeDefinitionId) {

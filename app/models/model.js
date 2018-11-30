@@ -32,4 +32,16 @@ export default class Model{
     return jsonArray;
   }
 
+  /** 
+   * This error should be used for all errors that can not be handled natively in SocioCortex 
+   * e.g. ensure that EntityDefinition description is set can not be checked 
+   * in SocioCortex due to legacy constraints
+  */
+  static error(error, description) {
+    return Promise.reject({
+      error: error,
+      description: description
+    })
+  }
+
 }

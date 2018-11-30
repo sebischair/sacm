@@ -12,7 +12,7 @@ RUN npm install apidoc -g
 # Bundle app source
 COPY . /usr/src/app
 
-EXPOSE 3000
+EXPOSE 8084
 
 RUN apidoc -i app/routes -o doc/assets/api -t doc/sections/api
 CMD [ "npm", "start" ]
