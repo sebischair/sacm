@@ -54,8 +54,14 @@ class RestLogger {
 
     const data = {status: status, duration: duration, resBody: resBodyLog, resBodySize: resBodySize};
     // TODO add some retry logic
-    LogMongo.update({uuid: uuid, status: null}, {$set: data}).catch(err => winston.debug(err));
-    LogSql.update(data, {where: {uuid: uuid, status: null}}).catch(err => winston.debug(err));
+    if (LogMongo)
+      LogMongo.update({uuid: uuid, status: null}, {$set: data}).catch(err => winston.debug(err));
+    else
+      winston.debug("Updating REST log entry prevented, mongoose DAO is undefined");
+    if (LogSql)
+      LogSql.update(data, {where: {uuid: uuid, status: null}}).catch(err => winston.debug(err));
+    else
+      winston.debug("Updating REST log entry prevented, sequelize DAO is undefined");
   }
 
   // --------------- HELPER FUNCTIONS --------------- //
@@ -118,8 +124,14 @@ class RestLogger {
     logEntry.location_lon = location && location.longitude ? location.longitude : null;
     logEntry.location_accuracy = location && location.accuracy ? location.accuracy : null;
     // TODO add some retry logic
-    LogMongo.create(logEntry).catch(err => winston.debug(err));
-    LogSql.create(logEntry).catch(err => winston.debug(err));
+    if (LogMongo)
+      LogMongo.create(logEntry).catch(err => winston.debug(err));
+    else
+      winston.debug("Creating REST log entry prevented, mongoose DAO is undefined");
+    if (LogSql)
+      LogSql.create(logEntry).catch(err => winston.debug(err));
+    else
+      winston.debug("Creating REST log entry prevented, sequelize DAO is undefined");
   }
 
   static _extractUrlPattern(url) {
