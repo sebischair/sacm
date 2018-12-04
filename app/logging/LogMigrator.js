@@ -17,7 +17,7 @@ module.exports = class LogMigrator {
       const millis = Date.now();
       const count = await this._migrateAll(skip, limit);
       winston.debug("Success! Migrated " + count + " records in " + (Date.now() - millis) / 1000 + " seconds.");
-      return "Inserted " + count + " entities.";
+      return "Inserted " + count + " entities without checking for duplicates. Please do so manually by running a query like 'SELECT uuid, COUNT(*) c FROM sacmlog.Logs GROUP BY uuid HAVING c > 1;' and remove any duplicates you find.";
     }
     else
       return "Timestamp check failed. Expected: " + this.timestamp + ". Actual: " + requestTimestamp + ". Please specify the value as query parameter 'timestamp'.";
