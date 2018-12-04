@@ -127,11 +127,11 @@ class RestLogger {
     if (LogMongo)
       LogMongo.create(logEntry).catch(err => winston.debug(err));
     else
-      winston.debug("Creating REST log entry prevented, mongoose DAO is undefined");
+      winston.error("Creating REST log entry prevented, mongoose DAO is undefined");
     if (LogSql)
       LogSql.create(logEntry).catch(err => winston.debug(err));
     else
-      winston.debug("Creating REST log entry prevented, sequelize DAO is undefined");
+      winston.error("Creating REST log entry prevented, sequelize DAO is undefined");
   }
 
   static _extractUrlPattern(url) {
