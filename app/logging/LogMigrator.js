@@ -51,7 +51,7 @@ module.exports = class LogMigrator {
       log.location_accuracy = log.location && log.location.accuracy ? log.location.accuracy : null;
       return log;
     });
-    await LogSql.bulkCreate(logs).catch(err => winston.debug(err));
+    await LogSql.bulkCreate(logs).catch(err => winston.error(err));
     return logs.length;
   }
 
