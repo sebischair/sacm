@@ -31,6 +31,8 @@ export default (sequelize, DataTypes) => {
     resBody: {type: DataTypes.JSON},
     resBodySize: {type: DataTypes.INTEGER(11)},
     status: {type: DataTypes.INTEGER(11)},
-    acceptLanguage: {type: DataTypes.STRING(500)}
+    acceptLanguage: {type: DataTypes.STRING(500)},
+    createdAt: {type: DataTypes.DATE(3)},
+    updatedAt: {type: DataTypes.DATE(3)}
   });
 };
