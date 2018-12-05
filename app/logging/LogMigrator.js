@@ -5,7 +5,7 @@ import winston from "winston/lib/winston";
 module.exports = class LogMigrator {
 
   constructor(timestamp) {
-    this.insertBatchSize = 10000;
+    this.insertBatchSize = 1000;
     this.timestamp = timestamp;
   }
 
