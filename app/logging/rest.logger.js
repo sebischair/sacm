@@ -64,13 +64,26 @@ class RestLogger {
       resBodySize = sizeof(resBody);
 
     const data = {status: status, duration: duration, resBody: resBodyLog, resBodySize: resBodySize};
-    // TODO add some retry logic
     if (LogMongo)
       LogMongo.update({uuid: uuid, status: null}, {$set: data}).catch(err => winston.debug(err));
     else
       winston.debug("Updating REST log entry prevented, mongoose DAO is undefined");
     if (LogSql)
-      LogSql.update(data, {where: {uuid: uuid, status: null}}).catch(err => winston.debug(err));
+      LogSql.update(data, {where: {uuid: uuid, status: null}}).catch(err =>{
+        setTimeout(function(){ 
+          LogSql.update(data, {where: {uuid: uuid, status: null}}).catch(err =>{
+            setTimeout(function(){ 
+              LogSql.update(data, {where: {uuid: uuid, status: null}}).catch(err =>{
+                setTimeout(function(){ 
+                  LogSql.update(data, {where: {uuid: uuid, status: null}}).catch(err =>{
+                    winston.error(err);
+                  });
+                }, 1000);        
+              });
+            }, 100);        
+          });
+        }, 10);        
+      });
     else
       winston.debug("Updating REST log entry prevented, sequelize DAO is undefined");
   }
