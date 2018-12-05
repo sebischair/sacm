@@ -7,6 +7,17 @@ import config from "../../config";
 import RestLoggerConfig from "./rest.logger.config";
 import LogMongo from "./log.mongoose.model";
 import {Log as LogSql} from "./sequelize-models";
+import listEndpoints from "express-list-endpoints";
+import apiRoutes from "../routes/route.app";
+
+const _routes = (function () {
+  let routes = [];
+  listEndpoints(apiRoutes()).forEach(endpoint => {
+    if (routes.indexOf(endpoint.path) < 0)
+      routes.push(endpoint.path);
+  });
+  return routes.sort().reverse().map(endpoint => endpoint.split('/'));
+})();
 
 class RestLogger {
 
@@ -143,7 +154,7 @@ class RestLogger {
     while (url.length > 1 && url.lastIndexOf('/') === url.length - 1)   // remove trailing slashes
       url = url.substring(0, url.length - 1);
     let splitUrl = url.split('/');
-    RestLoggerConfig.routes.some(splitRoute => {
+    _routes.some(splitRoute => {
       if (splitRoute.length === splitUrl.length) {
         let differencesDetected = splitRoute.some((routeSubPath, index) => routeSubPath.indexOf(':') !== 0 && routeSubPath !== splitUrl[index]);
         if (!differencesDetected)
