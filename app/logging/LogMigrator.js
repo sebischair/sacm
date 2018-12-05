@@ -53,8 +53,8 @@ module.exports = class LogMigrator {
       return log;
     });
     await LogSql.bulkCreate(logs).catch(err => {
-      if (err && err.parent)
-        err.parent = undefined;
+      if (err && err.message)
+        err = err.message;
       winston.error(err);
     });
     return logs.length;

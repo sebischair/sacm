@@ -106,8 +106,8 @@ router.get('/logs/migrate', (req, res, next) => {
       res.status(200).send(message);
     })
     .catch(err => {
-      if (err && err.parent)
-        err.parent = undefined;
+      if (err && err.message)
+        err = err.message;
       winston.error(err);
       res.status(500).send(err);
     });
