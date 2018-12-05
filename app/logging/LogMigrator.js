@@ -9,14 +9,14 @@ module.exports = class LogMigrator {
     this.timestamp = timestamp;
   }
 
-  async mongooseToSequelize(requestTimestamp, skip, limit, batchsize) {
+  async mongooseToSequelize(requestTimestamp, skip, limit, batchsize, concurrency) {
     this.insertBatchSize = batchsize;
     // noinspection EqualityComparisonWithCoercionJS
     const timestampCheckOk = this.timestamp == requestTimestamp;
     winston.debug("Got timestamp", requestTimestamp, timestampCheckOk ? " -> Check OK" : " -> Check failed");
     if (timestampCheckOk) {
       const millis = Date.now();
-      const count = await this._migrateAll(skip, limit);
+      const count = concurrency > 1 ? await this._migrateAllParallel(skip, limit, concurrency) : await this._migrateAll(skip, limit);
       winston.debug("Success! Migrated " + count + " records in " + (Date.now() - millis) / 1000 + " seconds.");
       return "Inserted " + count + " entities without checking for duplicates. Please do so manually by running a query like 'SELECT uuid, COUNT(*) c FROM sacmlog.Logs GROUP BY uuid HAVING c > 1;' and remove any duplicates you find.";
     }
@@ -24,22 +24,41 @@ module.exports = class LogMigrator {
       return "Timestamp check failed. Expected: " + this.timestamp + ". Actual: " + requestTimestamp + ". Please specify the value as query parameter 'timestamp'.";
   }
 
+  async _migrateAllParallel(skip, limit, concurrency) {
+    let totalCount = 0;
+    const tableLength = await LogMongo.count();
+    winston.debug("MongoDB table contains " + tableLength + " records.");
+    winston.debug("Migrating records " + skip + " to " + (skip + limit) + " with a batch size of " + this.insertBatchSize + " in parallel insert mode.");
+    const indices = Array.from(Array(limit / this.insertBatchSize), (_, x) => skip + x * this.insertBatchSize);
+    return Promise.map(indices, startIndex => {
+      return LogMongo
+        .find({}).skip(startIndex).limit(this.insertBatchSize).exec()
+        .then(logs => LogMigrator._doMigrate(logs))
+        .then(insertCount => {
+          totalCount += insertCount;
+          const progress = Math.round(totalCount / limit * 100);
+          winston.debug("[" + progress + "%] Inserted " + totalCount + " records.");
+          return totalCount;
+        });
+    }, {concurrency: concurrency});
+  }
+
   async _migrateAll(skip, limit) {
     let totalCount = 0;
     const tableLength = await LogMongo.count();
     winston.debug("MongoDB table contains " + tableLength + " records.");
-    winston.debug("Migrating records " + skip + " to " + (skip + limit) + " with a batch size of " + this.insertBatchSize + ".");
+    winston.debug("Migrating records " + skip + " to " + (skip + limit) + " with a batch size of " + this.insertBatchSize + " in sequential insert mode.");
     for (let i = skip; i < (skip + limit); i += this.insertBatchSize) {
       const millis = Date.now();
       const logs = await LogMongo.find({}).skip(i).limit(this.insertBatchSize).exec();
-      totalCount += await this._doMigrate(logs);
+      totalCount += await LogMigrator._doMigrate(logs);
       const progress = Math.round(totalCount / limit * 100);
       winston.debug("[" + progress + "%] Inserted " + totalCount + " records in " + (Date.now() - millis) / 1000 + " seconds.");
     }
     return totalCount;
   }
 
-  async _doMigrate(logs) {
+  static async _doMigrate(logs) {
     logs = logs.map(log => {
       log.id = null;
       log._id = null;

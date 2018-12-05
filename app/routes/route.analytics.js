@@ -101,7 +101,8 @@ router.get('/logs/migrate', (req, res, next) => {
   const skip = isNaN(req.query.skip) ? 0 : parseInt(req.query.skip);
   const limit = isNaN(req.query.limit) ? 10000 : parseInt(req.query.limit);
   const batchsize = isNaN(req.query.batchsize) ? 1000 : parseInt(req.query.batchsize);
-  new LogMigrator(timestamp).mongooseToSequelize(givenTimestamp, skip, limit, batchsize)
+  const concurrency = isNaN(req.query.concurrency) ? 1 : parseInt(req.query.concurrency);
+  new LogMigrator(timestamp).mongooseToSequelize(givenTimestamp, skip, limit, batchsize, concurrency)
     .then(message => {
       res.status(200).send(message);
     })
