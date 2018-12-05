@@ -100,11 +100,14 @@ router.get('/logs/migrate', (req, res, next) => {
   const givenTimestamp = req.query.timestamp;
   const skip = isNaN(req.query.skip) ? 0 : parseInt(req.query.skip);
   const limit = isNaN(req.query.limit) ? 10000 : parseInt(req.query.limit);
-  new LogMigrator(timestamp).mongooseToSequelize(givenTimestamp, skip, limit)
+  const batchsize = isNaN(req.query.batchsize) ? 1000 : parseInt(req.query.batchsize);
+  new LogMigrator(timestamp).mongooseToSequelize(givenTimestamp, skip, limit, batchsize)
     .then(message => {
       res.status(200).send(message);
     })
     .catch(err => {
+      if (err && err.parent)
+        err.parent = undefined;
       winston.error(err);
       res.status(500).send(err);
     });

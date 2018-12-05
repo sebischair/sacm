@@ -9,7 +9,8 @@ module.exports = class LogMigrator {
     this.timestamp = timestamp;
   }
 
-  async mongooseToSequelize(requestTimestamp, skip, limit) {
+  async mongooseToSequelize(requestTimestamp, skip, limit, batchsize) {
+    this.insertBatchSize = batchsize;
     // noinspection EqualityComparisonWithCoercionJS
     const timestampCheckOk = this.timestamp == requestTimestamp;
     winston.debug("Got timestamp", requestTimestamp, timestampCheckOk ? " -> Check OK" : " -> Check failed");
@@ -51,7 +52,11 @@ module.exports = class LogMigrator {
       log.location_accuracy = log.location && log.location.accuracy ? log.location.accuracy : null;
       return log;
     });
-    await LogSql.bulkCreate(logs).catch(err => winston.error(err));
+    await LogSql.bulkCreate(logs).catch(err => {
+      if (err && err.parent)
+        err.parent = undefined;
+      winston.error(err);
+    });
     return logs.length;
   }
 
