@@ -1,4 +1,5 @@
 import express from 'express';
+import winston from 'winston/lib/winston';
 import GitAnalytics from './../analytics/GitAnalytics';
 import ExcelAnalytics from './../analytics/ExcelAnalytics';
 import LogMigrator from './../logging/LogMigrator';
@@ -104,7 +105,7 @@ router.get('/logs/migrate', (req, res, next) => {
       res.status(200).send(message);
     })
     .catch(err => {
-      console.log(err);
+      winston.error(err);
       res.status(500).send(err);
     });
   timestamp += 1;
