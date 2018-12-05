@@ -1,5 +1,6 @@
 import LogMongo from "./log.mongoose.model";
 import {Log as LogSql} from "./sequelize-models";
+import Promise from "bluebird";
 import winston from "winston/lib/winston";
 
 module.exports = class LogMigrator {
