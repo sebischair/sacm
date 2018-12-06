@@ -36,7 +36,7 @@ module.exports = class LogMigrator {
         .find({}).skip(startIndex).limit(this.insertBatchSize).lean().exec()
         .then(logs => {
           console.log('Map find exec '+startIndex)
-          LogMigrator._doMigrate(logs)
+          return LogMigrator._doMigrate(logs)
         })
         .then(insertCount => {
           totalCount += insertCount;
