@@ -34,5 +34,12 @@ export default (sequelize, DataTypes) => {
     acceptLanguage: {type: DataTypes.STRING(500)},
     createdAt: {type: DataTypes.DATE(3)},
     updatedAt: {type: DataTypes.DATE(3)}
+  }, {
+    indexes: [
+      {
+        name: 'idx_uuid',
+        fields: ['uuid']
+      }
+    ]
   });
 };
