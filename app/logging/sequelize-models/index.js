@@ -6,7 +6,16 @@ import winston from "winston/lib/winston";
 import Promise from "bluebird";
 
 const db = {};
-const sequelize = new Sequelize(config.logging.mySqlUrl, {logging: false, operatorsAliases: false});
+const sequelize = new Sequelize(config.logging.mySqlUrl, {
+  logging: false,
+  operatorsAliases: false,
+  pool: {
+    max: 30,
+    min: 0,
+    acquire: 30000,
+    idle: 10000
+  },
+});
 sequelize.Promise = Promise;
 sequelize.authenticate()
   .then(() => {
