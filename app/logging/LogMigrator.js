@@ -34,10 +34,7 @@ module.exports = class LogMigrator {
     return Promise.map(indices, startIndex => {
       return LogMongo
         .find({}).skip(startIndex).limit(this.insertBatchSize).lean().exec()
-        .then(logs => {
-          console.log('Map find exec '+startIndex)
-          return LogMigrator._doMigrate(logs)
-        })
+        .then(logs => LogMigrator._doMigrate(logs))
         .then(insertCount => {
           totalCount += insertCount;
           const progress = Math.round(totalCount / limit * 100);
