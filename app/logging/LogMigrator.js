@@ -30,7 +30,7 @@ module.exports = class LogMigrator {
     const tableLength = await LogMongo.count();
     winston.debug("MongoDB table contains " + tableLength + " records.");
     winston.debug("Migrating records " + skip + " to " + (skip + limit) + " with a batch size of " + this.insertBatchSize + " in parallel insert mode.");
-    const indices = Array.from(Array(limit / this.insertBatchSize), (_, x) => skip + x * this.insertBatchSize);
+    const indices = Array.from(Array(limit / this.insertBatchSize), (_, x) => skip + x * this.insertBatchSize).reverse();
     return Promise.map(indices, startIndex => {
       return LogMongo
         .find({}).skip(startIndex).limit(this.insertBatchSize).lean().exec()
