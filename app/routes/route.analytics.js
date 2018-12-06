@@ -96,6 +96,8 @@ router.get('/postprocessing', (req, res, next)=>{
  * {}
  */
 router.get('/logs/migrate', (req, res, next) => {
+  // Values used during successful test migration:
+  // skip = 0; limit = 3700000; batchsize = 250; concurrency = 10
   res.connection.setTimeout(100 * 60 * 1000);
   const givenTimestamp = req.query.timestamp;
   const skip = isNaN(req.query.skip) ? 0 : parseInt(req.query.skip);
