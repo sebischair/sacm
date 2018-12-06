@@ -33,8 +33,11 @@ module.exports = class LogMigrator {
     const indices = Array.from(Array(limit / this.insertBatchSize), (_, x) => skip + x * this.insertBatchSize);
     return Promise.map(indices, startIndex => {
       return LogMongo
-        .find({}).skip(startIndex).limit(this.insertBatchSize).exec()
-        .then(logs => LogMigrator._doMigrate(logs))
+        .find({}).skip(startIndex).limit(this.insertBatchSize).lean().exec()
+        .then(logs => {
+          console.log('Map find exec '+startIndex)
+          LogMigrator._doMigrate(logs)
+        })
         .then(insertCount => {
           totalCount += insertCount;
           const progress = Math.round(totalCount / limit * 100);
