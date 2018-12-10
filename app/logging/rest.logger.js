@@ -1,39 +1,38 @@
 import maxmind from 'maxmind';
 import mongoose from 'mongoose';
-import Sequelize from 'sequelize';
 import winston from 'winston';
 import sizeof from 'object-sizeof';
 import Promise from 'bluebird';
 import config from "../../config";
 import RestLoggerConfig from "./rest.logger.config";
 import LogMongo from "./log.mongoose.model";
-import LogSchemaSql from "./log.sequelize.schema";
+import {Log as LogSql} from "./sequelize-models";
+import listEndpoints from "express-list-endpoints";
+import apiRoutes from "../routes/route.app";
+
+const _routes = (function () {
+  let routes = [];
+  listEndpoints(apiRoutes()).forEach(endpoint => {
+    if (routes.indexOf(endpoint.path) < 0)
+      routes.push(endpoint.path);
+  });
+  return routes.sort().reverse().map(endpoint => endpoint.split('/'));
+})();
 
 class RestLogger {
 
   static _cityLookup;
-  static _sequelize;
-  static _LogSql;
 
   /**
    * Establishes the database connection(s). Needs to be called once on init.
    */
   static establishDBConnection() {
-    RestLogger._cityLookup = maxmind.openSync( __dirname + '/db', {cache: {max: 500}});
+    RestLogger._cityLookup = maxmind.openSync(__dirname + '/db', {cache: {max: 500}});
     mongoose.Promise = Promise;
     mongoose.connection.on('error', () => {
       throw new Error('Unable to establishDBConnection to SACM log Mongo database: ' + config.logging.mongoUrl);
     });
     mongoose.connect(config.logging.mongoUrl, {useMongoClient: true});
-    RestLogger._sequelize = new Sequelize(config.logging.mySqlUrl, {logging: false, operatorsAliases: false});
-    RestLogger._sequelize.Promise = Promise;
-    RestLogger._sequelize.authenticate()
-      .then(() => RestLogger._LogSql = RestLogger._sequelize.define('Log', LogSchemaSql))
-      .then(() => RestLogger._sequelize.sync())
-      .catch((err) => {
-        winston.debug(err);
-        throw new Error('Unable to establishDBConnection to SACM log MySQL database: ' + config.logging.mySqlUrl);
-      });
   }
 
   /**
@@ -65,10 +64,28 @@ class RestLogger {
       resBodySize = sizeof(resBody);
 
     const data = {status: status, duration: duration, resBody: resBodyLog, resBodySize: resBodySize};
-    // TODO add some retry logic
-    LogMongo.update({uuid: uuid, status: null}, {$set: data}).catch(err => winston.debug(err));
-    // TODO @Simon
-    //RestLogger._LogSql.update(data, {where: {uuid: uuid, status: null}}).catch(err => winston.debug(err));
+    if (LogMongo)
+      LogMongo.update({uuid: uuid, status: null}, {$set: data}).catch(err => winston.debug(err));
+    else
+      winston.debug("Updating REST log entry prevented, mongoose DAO is undefined");
+    if (LogSql)
+      LogSql.update(data, {where: {uuid: uuid, status: null}}).catch(err =>{
+        setTimeout(function(){ 
+          LogSql.update(data, {where: {uuid: uuid, status: null}}).catch(err =>{
+            setTimeout(function(){ 
+              LogSql.update(data, {where: {uuid: uuid, status: null}}).catch(err =>{
+                setTimeout(function(){ 
+                  LogSql.update(data, {where: {uuid: uuid, status: null}}).catch(err =>{
+                    winston.error(err);
+                  });
+                }, 1000);        
+              });
+            }, 100);        
+          });
+        }, 10);        
+      });
+    else
+      winston.debug("Updating REST log entry prevented, sequelize DAO is undefined");
   }
 
   // --------------- HELPER FUNCTIONS --------------- //
@@ -124,16 +141,21 @@ class RestLogger {
     };
     const location = logEntry.location;
     logEntry.location_countryCode = location && location.countryCode ? location.countryCode : null;
-    logEntry.location_country     = location && location.country ? location.country : null;
-    logEntry.location_city        = location && location.city ? location.city : null;
-    logEntry.location_zip         = location && location.zip ? location.zip : null;
-    logEntry.location_lat         = location && location.latitude ? location.latitude : null;
-    logEntry.location_lon         = location && location.longitude ? location.longitude : null;
-    logEntry.location_accuracy    = location && location.accuracy ? location.accuracy : null;
+    logEntry.location_country = location && location.country ? location.country : null;
+    logEntry.location_city = location && location.city ? location.city : null;
+    logEntry.location_zip = location && location.zip ? location.zip : null;
+    logEntry.location_lat = location && location.latitude ? location.latitude : null;
+    logEntry.location_lon = location && location.longitude ? location.longitude : null;
+    logEntry.location_accuracy = location && location.accuracy ? location.accuracy : null;
     // TODO add some retry logic
-    LogMongo.create(logEntry).catch(err => winston.debug(err));
-    //TODO @Simon 
-    //RestLogger._LogSql.create(logEntry).catch(err => winston.debug(err));
+    if (LogMongo)
+      LogMongo.create(logEntry).catch(err => winston.debug(err));
+    else
+      winston.error("Creating REST log entry prevented, mongoose DAO is undefined");
+    if (LogSql)
+      LogSql.create(logEntry).catch(err => winston.debug(err));
+    else
+      winston.error("Creating REST log entry prevented, sequelize DAO is undefined");
   }
 
   static _extractUrlPattern(url) {
@@ -145,7 +167,7 @@ class RestLogger {
     while (url.length > 1 && url.lastIndexOf('/') === url.length - 1)   // remove trailing slashes
       url = url.substring(0, url.length - 1);
     let splitUrl = url.split('/');
-    RestLoggerConfig.routes.some(splitRoute => {
+    _routes.some(splitRoute => {
       if (splitRoute.length === splitUrl.length) {
         let differencesDetected = splitRoute.some((routeSubPath, index) => routeSubPath.indexOf(':') !== 0 && routeSubPath !== splitUrl[index]);
         if (!differencesDetected)
