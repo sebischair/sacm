@@ -1014,7 +1014,7 @@
                     <TaskParamDefinition part="AUTOMATED" path="GCS2_Workplan.GCS2_Advice.visualizationdate" isReadOnly="false" isMandatory="true"/> 
                 </DualTaskDefinition>
 
-                <DualTaskDefinition id="GCS2_Drug" externalId="Drug" description="Drug" ownerPath="GCS2_Settings.Clinician" dueDatePath="GCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="GCS2_Drug" entityAttachPath="GCS2_Workplan.GCS2_Drug">
+                <DualTaskDefinition id="GCS2_Drug" externalId="Drug" description="Drug" dynamicDescriptionPath="GCS2_Workplan.GCS2_Drug.drug" ownerPath="GCS2_Settings.Clinician" dueDatePath="GCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="GCS2_Drug" entityAttachPath="GCS2_Workplan.GCS2_Drug">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/drug" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/drug/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="GCS2_Workplan.GCS2_Drug.drug" isReadOnly="false" isMandatory="true"/>
@@ -1252,7 +1252,7 @@
 
         <Action id="ActivateDualTask" processId="GCS2_Advice" breakpoint="true"/>
         <Action id="CompleteDualTaskHumanPart" processId="GCS2_Advice" breakpoint="true">
-            <TaskParam path="GCS2_Workplan.GCS2_Advice.title"  values="['My custom advice']"/>
+            <TaskParam path="GCS2_Workplan.GCS2_Advice.title"  values="['Read the news paper']"/>
             <TaskParam path="GCS2_Workplan.GCS2_Advice.expiredate"  values="['2017-06-09T00:00:00.0']"/>
             <TaskParam path="GCS2_Workplan.GCS2_Advice.explenation"  values="['A long description describing what to do exactly.']"/>
         </Action>
