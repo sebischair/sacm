@@ -459,6 +459,7 @@
             <AttributeDefinition id="GCS1_MonitoringPrescription" type="Link.EntityDefinition.GCS1_MonitoringPrescription" description="Monitoring Prescription" multiplicity="any"/> 
             <!--<AttributeDefinition id="GCS1_SimpleTask" type="Link.EntityDefinition.GCS1_SimpleTask" description="Simple Task" multiplicity="any"/>-->
         <AttributeDefinition id="GCS1_PatientQuestionaire" type="Link.EntityDefinition.GCS1_PatientQuestionaire" description="Patient Questionaire" multiplicity="any"/>
+		  <AttributeDefinition id="GCS1_Advice" type="Link.EntityDefinition.GCS1_Advice" description="Advices" multiplicity="any"/>
 		 <AttributeDefinition id="GCS1_Drug" type="Link.EntityDefinition.GCS1_Drug" description="Drugs" multiplicity="any"/>
 		
 		
@@ -563,6 +564,13 @@
             <AttributeDefinition id="measurement" type="json" multiplicity="maximalOne" uiReference="linediagram" description="Measurement"/>      
         </EntityDefinition>
         -->
+		<EntityDefinition id="GCS1_Advice" description="Advice">
+            <AttributeDefinition id="title" type="string" multiplicity="exactlyOne" description="Title"/>   
+            <AttributeDefinition id="expiredate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Expire date"/> 
+            <AttributeDefinition id="explenation" type="longtext" multiplicity="exactlyOne" description="Description"/> 
+            <AttributeDefinition id="visualizationdate" type="date" multiplicity="exactlyOne" description="Visualization date"/>                      
+        </EntityDefinition>
+		
         <EntityDefinition id="GCS1_Drug" description="Drug">
             <AttributeDefinition id="drug" type="json" multiplicity="exactlyOne" description="Drug" uiReference="externalEnumeration({url: '$ENV/pharmaprescription/v1/drugs?countryCode=NL%26name=$SEARCH', searchPlaceholder: '$SEARCH', envPlaceholder: '$ENV'})"/>  
             <AttributeDefinition id="dosage" type="string" multiplicity="exactlyOne" description="Dosage"/>
@@ -890,7 +898,15 @@
                     <TaskParamDefinition part="HUMAN" path="GCS1_Workplan.GCS1_SimpleTask.comments" isReadOnly="false" isMandatory="true"/>                    
                     <TaskParamDefinition part="AUTOMATED" path="GCS1_Workplan.GCS1_SimpleTask.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>  
-                -->   
+                --> 
+                <DualTaskDefinition id="GCS1_Advice" externalId="Advice" description="Advice" dynamicDescriptionPath="GCS1_Workplan.GCS1_Advice.title" ownerPath="GCS1_Settings.Clinician" dueDatePath="GCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="GCS1_Advice" entityAttachPath="GCS1_Workplan.GCS2_Advice">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/advice" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/advice/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition part="HUMAN" path="GCS1_Workplan.GCS1_Advice.title" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="GCS1_Workplan.GCS1_Advice.expiredate" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition part="HUMAN" path="GCS1_Workplan.GCS1_Advice.explenation" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="AUTOMATED" path="GCS1_Workplan.GCS1_Advice.visualizationdate" isReadOnly="false" isMandatory="true"/> 
+                </DualTaskDefinition>				
                 <DualTaskDefinition id="GCS1_Drug" externalId="Drug" description="Drug" dynamicDescriptionPath="GCS1_Workplan.GCS1_Drug.drug" ownerPath="GCS1_Settings.Clinician" dueDatePath="GCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="GCS1_Drug" entityAttachPath="GCS1_Workplan.GCS1_Drug">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/drug" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/drug/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
@@ -1105,6 +1121,16 @@
         <Action id="CompleteDualTaskAutomatedPart" processId="GCS1_PatientQuestionaire">
             <TaskParam path="GCS1_Workplan.GCS1_PatientQuestionaire.questionaires"  values='[{"id":"18823iSMSID","lastEdit":"2018-05-15 11:09:23.0","state":"COMPLETED","taskParams":[{"description":"In general, would you say your health is:","values":["Excellent"],"type":"enumeration","isMandatory":true,"additionalDescription":null},{"description":"Moderate activities","values":["YES, limited a lot"],"type":"enumeration","isMandatory":false,"additionalDescription":"Moderate activities such as moving a table, pushing a vacuum cleaner, bowling, or playing golf."}]},{"id":"18824iSMSID","lastEdit":"2018-05-16 11:09:23.0","state":"ACTIVE","taskParams":[{"description":"In general, would you say your health is:","values":["Very good"],"type":"enumeration","isMandatory":true,"additionalDescription":null},{"description":"Moderate activities","values":["YES, limited a little"],"type":"enumeration","isMandatory":false,"additionalDescription":"Moderate activities such as moving a table, pushing a vacuum cleaner, bowling, or playing golf."}]}]'/>
         </Action>
+		<Action id="ActivateDualTask" processId="GCS1_Advice" breakpoint="true"/>
+        <Action id="CompleteDualTaskHumanPart" processId="GCS2_Advice" breakpoint="true">
+            <TaskParam path="GCS1_Workplan.GCS1_Advice.title"  values="['Read the news paper']"/>
+            <TaskParam path="GCS1_Workplan.GCS1_Advice.expiredate"  values="['2017-06-09T00:00:00.0']"/>
+            <TaskParam path="GCS1_Workplan.GCS1_Advice.explenation"  values="['A long description describing what to do exactly.']"/>
+        </Action>
+        <Action id="CompleteDualTaskAutomatedPart" processId="GCS2_Advice">
+            <TaskParam path="GCS2_Workplan.GCS2_Advice.visualizationdate"  values="['2017-12-26T00:00:00.000']"/>
+        </Action>
+		
 		 <Action id="ActivateDualTask" processId="GCS1_Drug" breakpoint="true"/>
         <Action id="CompleteDualTaskHumanPart" processId="GCS1_Drug" breakpoint="true">
             <TaskParam path="GCS1_Workplan.GCS1_Drug.drug"  values="[{'id':'Paracetamol', 'name':'Paracetamol 500mg'}]"/>
