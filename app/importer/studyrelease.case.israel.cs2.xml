@@ -955,6 +955,8 @@
             <AttributeDefinition id="ICS2_MonitoringPrescription" type="Link.EntityDefinition.ICS2_MonitoringPrescription" description="הנחיות למדידות רפואיות" multiplicity="any"/> 
             <AttributeDefinition id="ICS2_SimpleTask" type="Link.EntityDefinition.ICS2_SimpleTask" description="משימות לביצוע" multiplicity="any"/>
             <AttributeDefinition id="ICS2_PatientQuestionaire" type="Link.EntityDefinition.ICS2_PatientQuestionaire" description="שאלון למילוי על ידי המטופל" multiplicity="any"/>
+			<AttributeDefinition id="ICS2_Advice" type="Link.EntityDefinition.ICS2_Advice" description="המלצות" multiplicity="any"/>
+            <AttributeDefinition id="ICS2_Drug" type="Link.EntityDefinition.ICS2_Drug" description="מרשמי תרופות" multiplicity="any"/> 
         </EntityDefinition>
 
         <EntityDefinition id="ICS2_PhysicalActivity" description="הנחיות הליכה">
@@ -1085,7 +1087,37 @@
             <AttributeDefinition id="repetitionsperday" type="number.min(0)" multiplicity="exactlyOne" description="כמות פעמים למילוי השאלון ביום" additionalDescription="Maximun repetitions of the questionaire per day."/>   
             <AttributeDefinition id="questionaires" type="json" multiplicity="any" uiReference="patientquestionaires" description="Patient Questionaires"/>                      
         </EntityDefinition>
+		
+        <EntityDefinition id="ICS2_Advice" description="המלצות">
+            <AttributeDefinition id="title" type="string" multiplicity="exactlyOne" description="כותרת"/>   
+            <AttributeDefinition id="expiredate" type="date.after(TODAY)" multiplicity="exactlyOne" description="תאריך תפוגה"/> 
+            <AttributeDefinition id="explenation" type="longtext" multiplicity="exactlyOne" description="תיאור"/> 
+            <AttributeDefinition id="visualizationdate" type="date" multiplicity="exactlyOne" description="Visualization date"/>                      
+        </EntityDefinition>
 
+        <EntityDefinition id="ICS2_Drug" description="מרשמים">
+            <AttributeDefinition id="drug" type="json" multiplicity="exactlyOne" description="תרופה" uiReference="externalEnumeration({url: '$ENV/pharmaprescription/v1/drugs?countryCode=NL%26name=$SEARCH', searchPlaceholder: '$SEARCH', envPlaceholder: '$ENV'})"/>  
+            <AttributeDefinition id="dosage" type="string" multiplicity="exactlyOne" description="מינון"/>
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="תאריך התחלה"/> 
+            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="תאריך סיום"/> 
+            <AttributeDefinition id="freq" type="number.min(0)" defaultValues="[1]" multiplicity="exactlyOne" description="תדירות לקיחת התרופה"/> 
+            <AttributeDefinition id="frequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="יחידות תדירות">     
+                <EnumerationOption value="DAYS" description="ימים"/>
+                <EnumerationOption value="WEEKS" description="שבועות"/>
+                <EnumerationOption value="MONTHS" description="חודשים"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="maxdelay" type="number.min(0).max(100)" defaultValues="[1]" multiplicity="exactlyOne" description="איחור מקסימלי" additionalDescription="Maximum delay to take drugs by the patient"/> 
+            <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="זמן לקיחת התרופה" additionalDescription="Multiple slots can be selected, at least one slot need to be selected">     
+                <EnumerationOption value="BREAKFAST" description="בוקר"/>
+                <EnumerationOption value="LUNCH" description="צהריים"/>
+                <EnumerationOption value="AFTERNOONSNACK" description="אחר הצהריים"/>
+                <EnumerationOption value="DINNER" description="ערב"/>
+                <EnumerationOption value="BEFORESLEEP" description="לפני השינה"/>
+                <EnumerationOption value="ANYTIMEDURINGDAY" description="אין חשיבות לזמן" additionalDescription="Please select this option when the timeslot of a day doesn't matter."/>
+            </AttributeDefinition>
+            <AttributeDefinition id="comment" type="longtext" multiplicity="maximalOne" description="הערות"/>    
+            <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Measurement"/>                  
+        </EntityDefinition>
 
         <!-- Discharge Entity Definitions -->
         <EntityDefinition id="ICS2_Discharge" description="ICS2_Discharge">
@@ -1504,7 +1536,32 @@
                     <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_PatientQuestionaire.timeslot" isReadOnly="false" isMandatory="true"/> 
                     <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_PatientQuestionaire.repetitionsperday" isReadOnly="false" isMandatory="true"/>                    
                     <TaskParamDefinition part="AUTOMATED" path="ICS2_Workplan.ICS2_PatientQuestionaire.questionaires" isReadOnly="false" isMandatory="true"/>
-                </DualTaskDefinition>           
+                </DualTaskDefinition> 
+
+                <DualTaskDefinition id="ICS2_Advice" externalId="Advice" description="Advice" dynamicDescriptionPath="ICS2_Workplan.ICS2_Advice.title" ownerPath="ICS2_CaseManager" dueDatePath="ICS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="ICS2_Advice" entityAttachPath="ICS2_Workplan.ICS2_Advice">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/advice" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/advice/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_Advice.title" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_Advice.expiredate" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_Advice.explenation" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="AUTOMATED" path="ICS2_Workplan.ICS2_Advice.visualizationdate" isReadOnly="false" isMandatory="true"/> 
+                </DualTaskDefinition>
+
+                <DualTaskDefinition id="ICS2_Drug" externalId="Drug" description="Drug" dynamicDescriptionPath="ICS2_Workplan.ICS2_Drug.drug" ownerPath="ICS2_CaseManager" dueDatePath="ICS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="ICS2_Drug" entityAttachPath="ICS2_Workplan.ICS2_Drug">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/drug" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/drug/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_Drug.drug" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_Drug.dosage" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_Drug.startdate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_Drug.enddate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_Drug.freq" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_Drug.frequnit" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_Drug.maxdelay" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_Drug.timeslot" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_Drug.comment" isReadOnly="false" isMandatory="false"/>  
+                    <TaskParamDefinition part="AUTOMATED" path="ICS2_Workplan.ICS2_Drug.measurement" isReadOnly="false" isMandatory="true"/> 
+                </DualTaskDefinition>
+				
             </StageDefinition>
     
             <StageDefinition id="ICS2_Discharge" description="יציאה מהמחקר" isMandatory="true" repeatable="ONCE" entityDefinitionId="ICS2_Discharge" entityAttachPath="ICS2_Discharge">
@@ -1827,6 +1884,31 @@
         </Action>
         <Action id="CompleteDualTaskAutomatedPart" processId="ICS2_PatientQuestionaire">
             <TaskParam path="ICS2_Workplan.ICS2_PatientQuestionaire.questionaires"  values='[{"id":"18823iSMSID","lastEdit":"2018-05-15 11:09:23.0","state":"COMPLETED","taskParams":[{"description":"In general, would you say your health is:","values":["Excellent"],"type":"enumeration","isMandatory":true,"additionalDescription":null},{"description":"Moderate activities","values":["YES, limited a lot"],"type":"enumeration","isMandatory":false,"additionalDescription":"Moderate activities such as moving a table, pushing a vacuum cleaner, bowling, or playing golf."}]},{"id":"18824iSMSID","lastEdit":"2018-05-16 11:09:23.0","state":"ACTIVE","taskParams":[{"description":"In general, would you say your health is:","values":["Very good"],"type":"enumeration","isMandatory":true,"additionalDescription":null},{"description":"Moderate activities","values":["YES, limited a little"],"type":"enumeration","isMandatory":false,"additionalDescription":"Moderate activities such as moving a table, pushing a vacuum cleaner, bowling, or playing golf."}]}]'/>
+        </Action>
+		    <Action id="ActivateDualTask" processId="ICS2_Advice" breakpoint="true"/>
+        <Action id="CompleteDualTaskHumanPart" processId="ICS2_Advice" breakpoint="true">
+            <TaskParam path="ICS2_Workplan.ICS2_Advice.title"  values="['Read the news paper']"/>
+            <TaskParam path="ICS2_Workplan.ICS2_Advice.expiredate"  values="['2017-06-09T00:00:00.0']"/>
+            <TaskParam path="ICS2_Workplan.ICS2_Advice.explenation"  values="['A long description describing what to do exactly.']"/>
+        </Action>
+        <Action id="CompleteDualTaskAutomatedPart" processId="ICS2_Advice">
+            <TaskParam path="ICS2_Workplan.ICS2_Advice.visualizationdate"  values="['2017-12-26T00:00:00.000']"/>
+        </Action>
+
+        <Action id="ActivateDualTask" processId="ICS2_Drug" breakpoint="true"/>
+        <Action id="CompleteDualTaskHumanPart" processId="ICS2_Drug" breakpoint="true">
+            <TaskParam path="ICS2_Workplan.ICS2_Drug.drug"  values="[{'id':'Paracetamol', 'name':'Paracetamol 500mg'}]"/>
+            <TaskParam path="ICS2_Workplan.ICS2_Drug.dosage"  values="['5x Day']"/>
+            <TaskParam path="ICS2_Workplan.ICS2_Drug.startdate"  values="['2017-06-09T00:00:00.0']"/>
+            <TaskParam path="ICS2_Workplan.ICS2_Drug.enddate"  values="['2018-06-09T00:00:00.0']"/>
+            <TaskParam path="ICS2_Workplan.ICS2_Drug.freq"  values="[1]"/>
+            <TaskParam path="ICS2_Workplan.ICS2_Drug.frequnit"  values="['DAYS']"/>
+            <TaskParam path="ICS2_Workplan.ICS2_Drug.maxdelay"  values="[1]"/>
+            <TaskParam path="ICS2_Workplan.ICS2_Drug.timeslot"  values="['BREAKFAST', 'DINNER']"/>
+            <TaskParam path="ICS2_Workplan.ICS2_Drug.comment"  values="['Some comment on the drug.']"/>
+        </Action>
+        <Action id="CompleteDualTaskAutomatedPart" processId="ICS2_Drug">
+            <TaskParam path="ICS2_Workplan.ICS2_Drug.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
         </Action>
         <Action id="CompleteStage" processId="ICS2_Workplan"/>
         <Action id="CompleteHumanTask" processId="ICS2_DischargeForm">
