@@ -1538,7 +1538,7 @@
                     <TaskParamDefinition part="AUTOMATED" path="ICS2_Workplan.ICS2_PatientQuestionaire.questionaires" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition> 
 
-                <DualTaskDefinition id="ICS2_Advice" externalId="Advice" description="Advice" dynamicDescriptionPath="ICS2_Workplan.ICS2_Advice.title" ownerPath="ICS2_CaseManager" dueDatePath="ICS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="ICS2_Advice" entityAttachPath="ICS2_Workplan.ICS2_Advice">
+                <DualTaskDefinition id="ICS2_Advice" externalId="Advice" description="Advice" dynamicDescriptionPath="ICS2_Workplan.ICS2_Advice.title" ownerPath="ICS2_CaseManager" dueDatePath="ICS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="ICS2_Advice" entityAttachPath="ICS2_Workplan.ICS2_Advice">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/advice" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/advice/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_Advice.title" isReadOnly="false" isMandatory="true"/>
@@ -1547,7 +1547,7 @@
                     <TaskParamDefinition part="AUTOMATED" path="ICS2_Workplan.ICS2_Advice.visualizationdate" isReadOnly="false" isMandatory="true"/> 
                 </DualTaskDefinition>
 
-                <DualTaskDefinition id="ICS2_Drug" externalId="Drug" description="Drug" dynamicDescriptionPath="ICS2_Workplan.ICS2_Drug.drug" ownerPath="ICS2_CaseManager" dueDatePath="ICS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="ICS2_Drug" entityAttachPath="ICS2_Workplan.ICS2_Drug">
+                <DualTaskDefinition id="ICS2_Drug" externalId="Drug" description="Drug" dynamicDescriptionPath="ICS2_Workplan.ICS2_Drug.drug" ownerPath="ICS2_CaseManager" dueDatePath="ICS2_WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="ICS2_Drug" entityAttachPath="ICS2_Workplan.ICS2_Drug">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/drug" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/drug/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="ICS2_Workplan.ICS2_Drug.drug" isReadOnly="false" isMandatory="true"/>
