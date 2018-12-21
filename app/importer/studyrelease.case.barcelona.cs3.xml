@@ -54,8 +54,11 @@
             <AttributeDefinition id="BCS3_SelectPatient" type="Link.EntityDefinition.BCS3_SelectPatient" multiplicity="maximalOne" description="Selecció del pacient"/> 
         </EntityDefinition>
 
-        <EntityDefinition id="BCS3_SelectPatient" description="Selecció del pacient">
-		    <AttributeDefinition id="nhc" type="number" multiplicity="exactlyOne" description="Número de história clínica"/>
+        <EntityDefinition id="BCS3_SelectPatient" description="Selecció del pacient">		
+		<!--
+			<AttributeDefinition id="nhc" type="number" multiplicity="exactlyOne" description="Número de história clínica"/>
+			<AttributeDefinition id="startdate" type="date" multiplicity="exactlyOne" description="Fecha de nacimiento"/> 
+		-->
         </EntityDefinition>		
 
         <!-- Workplan Entity Definitions -->
@@ -81,19 +84,21 @@
         <!-- Discharge Entity Definitions -->
         <EntityDefinition id="BCS3_Discharge" description="Alta del pacient">
             <AttributeDefinition id="BCS3_DischargeForm" type="Link.EntityDefinition.BCS3_DischargeForm" multiplicity="maximalOne" description="Alta del pacient"/> 
-			<AttributeDefinition id="BCS3_PatientQuestionaire" description="Prescripció de qüestionaris al pacient" type="Link.EntityDefinition.BCS3_PatientQuestionaire" multiplicity="any" />							
+			<AttributeDefinition id="BCS3_PatientQuestionaireSATPAC" description="Prescripció de qüestionaris al pacient (SATPAC)" type="Link.EntityDefinition.BCS3_PatientQuestionaireSATPAC" multiplicity="any" />							
+			<AttributeDefinition id="BCS3_PatientQuestionaireYALE" description="Prescripció de qüestionaris al pacient (YALE)" type="Link.EntityDefinition.BCS3_PatientQuestionaireYALE" multiplicity="any" />							
+			<AttributeDefinition id="BCS3_PatientQuestionaireHADS" description="Prescripció de qüestionaris al pacient (HADS)" type="Link.EntityDefinition.BCS3_PatientQuestionaireHADS" multiplicity="any" />							
         </EntityDefinition>
 
         <EntityDefinition id="BCS3_DischargeForm" description="Alta del pacient">
             <AttributeDefinition id="comment" type="longtext" multiplicity="exactlyOne" description="Comentari"/>                             
         </EntityDefinition>
 
-        <EntityDefinition id="BCS3_PatientQuestionaire" description="Prescripció de qüestionaris al pacient">
-            <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Tipus de qüestionari"
+        <EntityDefinition id="BCS3_PatientQuestionaireSATPAC" description="Prescripció de qüestionaris al pacient (SATPAC)">
+            <AttributeDefinition id="type" type="enumeration" defaultValues="['SATPAC']" multiplicity="exactlyOne" description="Tipus de qüestionari"
 			additionalDescription="Seleccioneu el tipus de qüestionari que el pacient ha d'omplir">
                 <EnumerationOption value="SATPAC" description="Satisfacció del pacient"/>
                 <EnumerationOption value="YALE" description="YALE"/>
-				<EnumerationOption value="HADS" description="Escala d'ansietat i depressió hospitalària (HADS)"/>								
+				<EnumerationOption value="HADS" description="Escala d'ansietat i depressió hospitalària"/>								
             </AttributeDefinition>   
             <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Data d'inici"/> 
             <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="Data de fi"/> 
@@ -104,7 +109,7 @@
                 <EnumerationOption value="MONTHS" description="Mesos"/>
             </AttributeDefinition> 
             <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="exactlyOne" description="Retard màxim en minuts" additionalDescription="Retard màxim perque el pacient es prengui la mesura"/> 
-            <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="Franges per contestar el qüestionari" additionalDescription="Es poden seleccionar múltiples franges, cal seleccionar-ne almenys una">     
+            <AttributeDefinition id="timeslot" type="enumeration" defaultValues="['ANYTIMEDURINGDAY']" multiplicity="atLeastOne" description="Franges per contestar el qüestionari" additionalDescription="Es poden seleccionar múltiples franges, cal seleccionar-ne almenys una">     
                 <EnumerationOption value="BREAKFAST" description="Esmorzar"/>
                 <EnumerationOption value="LUNCH" description="Dinar"/>
                 <EnumerationOption value="AFTERNOONSNACK" description="Berenar"/>
@@ -112,9 +117,65 @@
                 <EnumerationOption value="BEFORESLEEP" description="Abans d'anar a dormir"/>
                 <EnumerationOption value="ANYTIMEDURINGDAY" description="En qualsevol moment del dia" additionalDescription="Seleccioneu aquesta opció quan el temps del dia no importa"/>								
             </AttributeDefinition>
-            <AttributeDefinition id="repetitionsperday" type="number.min(0)" multiplicity="exactlyOne" description="El nombre de vegades que el qüestionari s'omple per dia"/>   
+            <AttributeDefinition id="repetitionsperday" type="number.min(0)" defaultValues="[1]" multiplicity="exactlyOne" description="El nombre de vegades que el qüestionari s'omple per dia"/>   
             <AttributeDefinition id="questionaires" type="json" multiplicity="any" uiReference="patientquestionaires" description="Qüestionari per omplir el pacient"/>                      
         </EntityDefinition>
+		
+        <EntityDefinition id="BCS3_PatientQuestionaireYALE" description="Prescripció de qüestionaris al pacient (YALE)">
+            <AttributeDefinition id="type" type="enumeration" defaultValues="['YALE']" multiplicity="exactlyOne" description="Tipus de qüestionari"
+			additionalDescription="Seleccioneu el tipus de qüestionari que el pacient ha d'omplir">
+                <EnumerationOption value="SATPAC" description="Satisfacció del pacient"/>
+                <EnumerationOption value="YALE" description="YALE"/>
+				<EnumerationOption value="HADS" description="Escala d'ansietat i depressió hospitalària"/>								
+            </AttributeDefinition>   
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Data d'inici"/> 
+            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="Data de fi"/> 
+            <AttributeDefinition id="freq" type="number.min(0)" defaultValues="[1]" multiplicity="exactlyOne" description="Freqüència"/> 
+            <AttributeDefinition id="frequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Unitat de freqüència">     
+                <EnumerationOption value="DAYS" description="Dies"/>
+                <EnumerationOption value="WEEKS" description="Setmanes"/>
+                <EnumerationOption value="MONTHS" description="Mesos"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="exactlyOne" description="Retard màxim en minuts" additionalDescription="Retard màxim perque el pacient es prengui la mesura"/> 
+            <AttributeDefinition id="timeslot" type="enumeration"  defaultValues="['ANYTIMEDURINGDAY']" multiplicity="atLeastOne" description="Franges per contestar el qüestionari" additionalDescription="Es poden seleccionar múltiples franges, cal seleccionar-ne almenys una">     
+                <EnumerationOption value="BREAKFAST" description="Esmorzar"/>
+                <EnumerationOption value="LUNCH" description="Dinar"/>
+                <EnumerationOption value="AFTERNOONSNACK" description="Berenar"/>
+                <EnumerationOption value="DINNER" description="Sopar"/>
+                <EnumerationOption value="BEFORESLEEP" description="Abans d'anar a dormir"/>
+                <EnumerationOption value="ANYTIMEDURINGDAY" description="En qualsevol moment del dia" additionalDescription="Seleccioneu aquesta opció quan el temps del dia no importa"/>								
+            </AttributeDefinition>
+            <AttributeDefinition id="repetitionsperday" type="number.min(0)" defaultValues="[1]" multiplicity="exactlyOne" description="El nombre de vegades que el qüestionari s'omple per dia"/>   
+            <AttributeDefinition id="questionaires" type="json" multiplicity="any" uiReference="patientquestionaires" description="Qüestionari per omplir el pacient"/>                      
+        </EntityDefinition>
+
+        <EntityDefinition id="BCS3_PatientQuestionaireHADS" description="Prescripció de qüestionaris al pacient (HADS)">
+            <AttributeDefinition id="type" type="enumeration" defaultValues="['HADS']" multiplicity="exactlyOne" description="Tipus de qüestionari"
+			additionalDescription="Seleccioneu el tipus de qüestionari que el pacient ha d'omplir">
+                <EnumerationOption value="SATPAC" description="Satisfacció del pacient"/>
+                <EnumerationOption value="YALE" description="YALE"/>
+				<EnumerationOption value="HADS" description="Escala d'ansietat i depressió hospitalària"/>								
+            </AttributeDefinition>   
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Data d'inici"/> 
+            <AttributeDefinition id="enddate" type="date.after(startdate)" defaultValues="['2020-12-31T00:00:00.0']" multiplicity="exactlyOne" description="Data de fi"/> 
+            <AttributeDefinition id="freq" type="number.min(0)" defaultValues="[1]" multiplicity="exactlyOne" description="Freqüència"/> 
+            <AttributeDefinition id="frequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Unitat de freqüència">     
+                <EnumerationOption value="DAYS" description="Dies"/>
+                <EnumerationOption value="WEEKS" description="Setmanes"/>
+                <EnumerationOption value="MONTHS" description="Mesos"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="exactlyOne" description="Retard màxim en minuts" additionalDescription="Retard màxim perque el pacient es prengui la mesura"/> 
+            <AttributeDefinition id="timeslot" type="enumeration"  defaultValues="['ANYTIMEDURINGDAY']" multiplicity="atLeastOne" description="Franges per contestar el qüestionari" additionalDescription="Es poden seleccionar múltiples franges, cal seleccionar-ne almenys una">     
+                <EnumerationOption value="BREAKFAST" description="Esmorzar"/>
+                <EnumerationOption value="LUNCH" description="Dinar"/>
+                <EnumerationOption value="AFTERNOONSNACK" description="Berenar"/>
+                <EnumerationOption value="DINNER" description="Sopar"/>
+                <EnumerationOption value="BEFORESLEEP" description="Abans d'anar a dormir"/>
+                <EnumerationOption value="ANYTIMEDURINGDAY" description="En qualsevol moment del dia" additionalDescription="Seleccioneu aquesta opció quan el temps del dia no importa"/>								
+            </AttributeDefinition>
+            <AttributeDefinition id="repetitionsperday" type="number.min(0)" defaultValues="[1]" multiplicity="exactlyOne" description="El nombre de vegades que el qüestionari s'omple per dia"/>   
+            <AttributeDefinition id="questionaires" type="json" multiplicity="any" uiReference="patientquestionaires" description="Qüestionari per omplir el pacient"/>                      
+        </EntityDefinition>		
 		
         <!-- Case Definition -->
         <CaseDefinition id="BCS3_Barcelona" description="CS3 Barcelona" ownerPath="BCS3_Settings.CaseManager" clientPath="BCS3_Settings.Patient" entityDefinitionId="BCS3_CaseData" newEntityDefinitionId="BCS3_Settings" newEntityAttachPath="BCS3_Settings"
@@ -126,11 +187,15 @@
                 
 				<HumanTaskDefinition id="BCS3_SelectPatient" description="Selecció del pacient" ownerPath="BCS3_Settings.Anesthesiologist" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS3_SelectPatient" entityAttachPath="BCS3_Identification.BCS3_SelectPatient">
 					<HttpHookDefinition on="COMPLETE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/case/patient/inclusion" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>				
-					<TaskParamDefinition path="BCS3_Settings.Patient" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS3_Identification.BCS3_SelectPatient.nhc" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="BCS3_Settings.CaseManager" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS3_Settings.Anesthesiologist" isReadOnly="false" isMandatory="true"/>					
-					<TaskParamDefinition path="BCS3_Settings.Physiotherapist" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="BCS3_Settings.Patient" isReadOnly="false" isMandatory="true"/>					
+                    <!--
+					<TaskParamDefinition path="BCS3_Identification.BCS3_SelectPatient.startdate" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="BCS3_Identification.BCS3_SelectPatient.nhc" isReadOnly="false" isMandatory="true"/>
+					-->						
+							
+					<TaskParamDefinition path="BCS3_Settings.CaseManager" userValue="salazart" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="BCS3_Settings.Anesthesiologist" userValue="velardem" isReadOnly="false" isMandatory="true"/>					
+					<TaskParamDefinition path="BCS3_Settings.Physiotherapist" userValue="arpl" isReadOnly="false" isMandatory="true"/>
 					
 					<!-- <TaskParamDefinition path="BCS3_Identification.BCS3_SelectPatient.age" isReadOnly="false" isMandatory="true"/>
 						<TaskParamDefinition path="BCS3_Identification.BCS3_SelectPatient.borndate" isReadOnly="false" isMandatory="true"/>
@@ -167,9 +232,9 @@
                     <TaskParamDefinition part="HUMAN" path="BCS3_Workplan.BCS3_PhysicalActivity.startdate" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition part="HUMAN" path="BCS3_Workplan.BCS3_PhysicalActivity.enddate" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition part="HUMAN" path="BCS3_Workplan.BCS3_PhysicalActivity.dailysteps" isReadOnly="false" isMandatory="true"/>
+					<!--
 					<TaskParamDefinition part="HUMAN" path="BCS3_Workplan.BCS3_PhysicalActivity.dailylowlevel" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="BCS3_Workplan.BCS3_PhysicalActivity.dailymediumlevel" isReadOnly="false" isMandatory="true"/>					
-					<!--					
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Workplan.BCS3_PhysicalActivity.dailymediumlevel" isReadOnly="false" isMandatory="true"/>									
                     <TaskParamDefinition part="HUMAN" path="BCS3_Workplan.BCS3_PhysicalActivity.dailyhighlevel" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition part="HUMAN" path="BCS3_Workplan.BCS3_PhysicalActivity.dailynoactivity" isReadOnly="false" isMandatory="true"/>                    
 					-->
@@ -179,32 +244,72 @@
             </StageDefinition>
             
             <StageDefinition id="BCS3_Discharge" description="Alta del pacient" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS3_Discharge" entityAttachPath="BCS3_Discharge">                
+				<!--
 				<SentryDefinition>
                     <precondition processDefinitionId="BCS3_Workplan"/>
                 </SentryDefinition>
+				-->
 				
                 <HumanTaskDefinition id="BCS3_DischargeForm" description="Alta del pacient" ownerPath="BCS3_Settings.Anesthesiologist" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS3_DischargeForm" entityAttachPath="BCS3_Discharge.BCS3_DischargeForm">
                     <TaskParamDefinition path="BCS3_Discharge.BCS3_DischargeForm.comment" isReadOnly="false" isMandatory="true"/>                  
                 </HumanTaskDefinition>
+											
 				
-                <DualTaskDefinition id="BCS3_PatientQuestionaire" externalId="PatientQuestionaire" 
-				description="Prescripció de qüestionaris al pacient" 
-				dynamicDescriptionPath="BCS3_Discharge.BCS3_PatientQuestionaire.type" 
+                <DualTaskDefinition id="BCS3_PatientQuestionaireSATPAC" externalId="PatientQuestionaireSATPAC" 
+				description="Prescripció de qüestionaris al pacient (SATPAC)" 
+				dynamicDescriptionPath="BCS3_Discharge.BCS3_PatientQuestionaireSATPAC.type" 
 				ownerPath="BCS3_Settings.CaseManager" dueDatePath="BCS3_Settings.WorkplanDueDate" isMandatory="false" repeatable="PARALLEL" 
-				activation="MANUAL" entityDefinitionId="BCS3_PatientQuestionaire" entityAttachPath="BCS3_Discharge.BCS3_PatientQuestionaire">
+				activation="MANUAL" entityDefinitionId="BCS3_PatientQuestionaireSATPAC" entityAttachPath="BCS3_Discharge.BCS3_PatientQuestionaireSATPAC">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/questionnaires" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/questionnaires/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaire.type" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaire.startdate" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaire.enddate" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaire.freq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaire.frequnit" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaire.maxdelay" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaire.timeslot" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaire.repetitionsperday" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="AUTOMATED" path="BCS3_Discharge.BCS3_PatientQuestionaire.questionaires" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaireSATPAC.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaireSATPAC.startdate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaireSATPAC.enddate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaireSATPAC.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaireSATPAC.frequnit" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaireSATPAC.maxdelay" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaireSATPAC.timeslot" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaireSATPAC.repetitionsperday" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="AUTOMATED" path="BCS3_Discharge.BCS3_PatientQuestionaireSATPAC.questionaires" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>
 				
+
+                <DualTaskDefinition id="BCS3_PatientQuestionaireYALE" externalId="PatientQuestionaireYALE" 
+				description="Prescripció de qüestionaris al pacient (YALE)" 
+				dynamicDescriptionPath="BCS3_Discharge.BCS3_PatientQuestionaireYALE.type" 
+				ownerPath="BCS3_Settings.CaseManager" dueDatePath="BCS3_Settings.WorkplanDueDate" isMandatory="false" repeatable="PARALLEL" 
+				activation="MANUAL" entityDefinitionId="BCS3_PatientQuestionaireYALE" entityAttachPath="BCS3_Discharge.BCS3_PatientQuestionaireYALE">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/questionnaires" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/questionnaires/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaireYALE.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaireYALE.startdate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaireYALE.enddate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaireYALE.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaireYALE.frequnit" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaireYALE.maxdelay" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaireYALE.timeslot" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaireYALE.repetitionsperday" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="AUTOMATED" path="BCS3_Discharge.BCS3_PatientQuestionaireYALE.questionaires" isReadOnly="false" isMandatory="true"/>
+                </DualTaskDefinition>
+
+				
+                <DualTaskDefinition id="BCS3_PatientQuestionaireHADS" externalId="PatientQuestionaireHADS" 
+				description="Prescripció de qüestionaris al pacient (HADS)" 
+				dynamicDescriptionPath="BCS3_Discharge.BCS3_PatientQuestionaireHADS.type" 
+				ownerPath="BCS3_Settings.CaseManager" dueDatePath="BCS3_Settings.WorkplanDueDate" isMandatory="false" repeatable="PARALLEL" 
+				activation="MANUAL" entityDefinitionId="BCS3_PatientQuestionaireHADS" entityAttachPath="BCS3_Discharge.BCS3_PatientQuestionaireHADS">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/questionnaires" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/questionnaires/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaireHADS.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaireHADS.startdate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaireHADS.enddate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaireHADS.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaireHADS.frequnit" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaireHADS.maxdelay" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaireHADS.timeslot" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="BCS3_Discharge.BCS3_PatientQuestionaireHADS.repetitionsperday" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="AUTOMATED" path="BCS3_Discharge.BCS3_PatientQuestionaireHADS.questionaires" isReadOnly="false" isMandatory="true"/>
+                </DualTaskDefinition>				
 				
             </StageDefinition>
 
@@ -220,7 +325,10 @@
     <Execution>
         <Action id="CompleteHumanTask" processId="BCS3_SelectPatient">            
 			<TaskParam path="BCS3_Settings.Patient"  userValue="coled"/>
+			<!--
 			<TaskParam path="BCS3_Identification.BCS3_SelectPatient.nhc"  values="['20']"/>
+			<TaskParam path="BCS3_Identification.BCS3_SelectPatient.startdate" values="['2019-06-09T00:00:00.0']"/>  
+			-->
             <TaskParam path="BCS3_Settings.CaseManager"  userValue="salazart"/>
             <TaskParam path="BCS3_Settings.Anesthesiologist" userValue="velardem"/>
 			<TaskParam path="BCS3_Settings.Physiotherapist" userValue="arpl"/>
@@ -228,7 +336,7 @@
 			<!--
             <TaskParam path="BCS3_Identification.BCS3_SelectPatient.name" values="['Test Inclusion']"/>
             <TaskParam path="BCS3_Identification.BCS3_SelectPatient.age" values="['80']"/>
-            <TaskParam path="BCS3_Identification.BCS3_SelectPatient.borndate" values="['2019-06-09T00:00:00.0']"/>            
+                     
 			<Action id="CompleteHumanTask" processId="BCS3_SetWorkplanDueDate">
             <TaskParam path="BCS3_Settings.WorkplanDueDate" values="['2019-06-09T00:00:00.0']" />
 			</Action>  
@@ -256,18 +364,42 @@
             <TaskParam path="BCS3_Discharge.BCS3_DischargeForm.comment"  values="['The patient was discharged on xxx everything fine.']"/>
         </Action>
 		
-		<Action id="ActivateDualTask" processId="BCS3_PatientQuestionaire" breakpoint="true"/>
-		<Action id="CompleteDualTaskHumanPart" processId="BCS3_PatientQuestionaire" breakpoint="true">
-			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaire.type"  values="['YALE']"/>
-			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaire.startdate"  values="['2017-06-09T00:00:00.0']"/>
-			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaire.enddate"  values="['2019-06-09T00:00:00.0']"/>
-			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaire.freq"  values="[5]"/>
-			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaire.freqqunit"  values="['WEEKS']"/>
-			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaire.maxdelay"  values="[100]"/>
-			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaire.timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
-			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaire.repetitionsperday"  values="[1]"/>
+		<Action id="ActivateDualTask" processId="BCS3_PatientQuestionaireSATPAC" breakpoint="true"/>
+		<Action id="CompleteDualTaskHumanPart" processId="BCS3_PatientQuestionaireSATPAC" breakpoint="true">
+			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaireSATPAC.type"  values="['SATPAC']"/>
+			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaireSATPAC.startdate"  values="['2017-06-09T00:00:00.0']"/>
+			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaireSATPAC.enddate"  values="['2019-06-09T00:00:00.0']"/>
+			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaireSATPAC.freq"  values="[5]"/>
+			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaireSATPAC.freqqunit"  values="['WEEKS']"/>
+			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaireSATPAC.maxdelay"  values="[100]"/>
+			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaireSATPAC.timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
+			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaireSATPAC.repetitionsperday"  values="[1]"/>
 		</Action>	
+
+		<Action id="ActivateDualTask" processId="BCS3_PatientQuestionaireYALE" breakpoint="true"/>
+		<Action id="CompleteDualTaskHumanPart" processId="BCS3_PatientQuestionaireYALE" breakpoint="true">
+			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaireYALE.type"  values="['YALE']"/>
+			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaireYALE.startdate"  values="['2017-06-09T00:00:00.0']"/>
+			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaireYALE.enddate"  values="['2019-06-09T00:00:00.0']"/>
+			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaireYALE.freq"  values="[5]"/>
+			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaireYALE.freqqunit"  values="['WEEKS']"/>
+			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaireYALE.maxdelay"  values="[100]"/>
+			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaireYALE.timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
+			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaireYALE.repetitionsperday"  values="[1]"/>
+		</Action>	
+
 		
+		<Action id="ActivateDualTask" processId="BCS3_PatientQuestionaireHADS" breakpoint="true"/>
+		<Action id="CompleteDualTaskHumanPart" processId="BCS3_PatientQuestionaireHADS" breakpoint="true">
+			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaireHADS.type"  values="['HADS']"/>
+			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaireHADS.startdate"  values="['2017-06-09T00:00:00.0']"/>
+			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaireHADS.enddate"  values="['2019-06-09T00:00:00.0']"/>
+			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaireHADS.freq"  values="[5]"/>
+			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaireHADS.freqqunit"  values="['WEEKS']"/>
+			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaireHADS.maxdelay"  values="[100]"/>
+			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaireHADS.timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
+			<TaskParam path="BCS3_Discharge.BCS3_PatientQuestionaireHADS.repetitionsperday"  values="[1]"/>
+		</Action>			
     </Execution>
 
 </SACMDefinition>
