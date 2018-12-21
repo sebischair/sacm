@@ -1580,11 +1580,13 @@
                     <precondition processDefinitionId="LCS1_CaseIdentification"/>
                 </SentryDefinition> 						
 
+				<!--
                 <HumanTaskDefinition id="LCS1_SelectPatient2" description="Equip de Primària" ownerPath="LCS1_Settings.Nurse" 
 				isMandatory="true" repeatable="ONCE">
                     <TaskParamDefinition path="LCS1_Settings.PrimaryCareClinicians" isReadOnly="false" isMandatory="true"/> 
                     <TaskParamDefinition path="LCS1_Settings.PrimaryCareNurse" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>   				
+				-->
 				
                 <HumanTaskDefinition id="LCS1_GMAEvaluationHT" description="Estat comòrbid - GMA"
 				ownerPath="LCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1_GMADef" entityAttachPath="LCS1_Evaluation.LCS1_GMAEvaluation">
@@ -2075,8 +2077,8 @@
 			<TaskParam path="LCS1_SelectPatient.Nurse" userValue="noahs"/>   
 			<TaskParam path="LCS1_SelectPatient.CaseManager" userValue="werners"/>   
 			<TaskParam path="LCS1_SelectPatient.SocialCareer" userValue="kuhnl"/>    			
-<!--			<TaskParam path="LCS1_SelectPatient.PrimaryCareClinicians" userValue="sullivanb"/> 
-			<TaskParam path="LCS1_SelectPatient.PrimaryCareNurse" userValue="richardsona"/> 			-->
+			<TaskParam path="LCS1_SelectPatient.PrimaryCareClinicians" userValue="sullivanb"/> 
+			<TaskParam path="LCS1_SelectPatient.PrimaryCareNurse" userValue="richardsona"/> 			
 		</Action>
 		
 		<Action id="CompleteHumanTask" processId="LCS1_TechnologicalTest" breakpoint="true">  
@@ -2116,10 +2118,12 @@
 			<TaskParam path="LCS1_Identification.LCS1_PatientsConsent.pConsent1" values="['1']"/> 
 		</Action>		
 		
+		<!--
 		<Action id="CompleteHumanTask" processId="LCS1_SelectPatient2">  			
 			<TaskParam path="LCS1_SelectPatient.PrimaryCareClinicians" userValue="sullivanb"/> 
 			<TaskParam path="LCS1_SelectPatient.PrimaryCareNurse" userValue="richardsona"/>
 		</Action>		
+		-->
 		
 		<Action id="CompleteHumanTask" processId="LCS1_GMAEvaluationHT" breakpoint="true">  
 			<TaskParam path="LCS1_Evaluation.LCS1_GMAEvaluation.gma" values="['1']"/> 
