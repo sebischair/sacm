@@ -43,7 +43,9 @@ function XML2CMNN(sourcePath, sourceFileName){
 }
 
 function printElement(type, elem){
-  return '['+type+']\t' + ' ' + elem.$.id + ' | ' + elem.$.description + '\n';
+  var repeatable = elem.$.repeatable? elem.$.repeatable.substring(0,1) : '';
+  var mandatory = elem.$.isMandatory? 'T': 'F';
+  return '['+type+'] '+repeatable+ ' | '+mandatory+ ' | ' + elem.$.id + ' | ' + elem.$.description + '\n';
 }
 
 function addSentryDefinition(elem){    
