@@ -19,6 +19,7 @@ function XML2CMNN(sourcePath, sourceFileName){
   .then(xml=>{
     var stageDefinitions = xml.SACMDefinition.Workspace[0].CaseDefinition[0].StageDefinition;
     var content = "Created at: "+new Date().toISOString() +' \n';
+    content = "[ElementName] Repeatable | Mandatory | HttpHookDefinition | Name | Description"
     for(var i=0; i< stageDefinitions.length; i++ ){
       var stageDefinition = stageDefinitions[i]
       content += '\n'+printElement('StageDefinition', stageDefinition)
@@ -32,6 +33,8 @@ function XML2CMNN(sourcePath, sourceFileName){
         let isDualTaskDefinition = td['#name']=='DualTaskDefinition';
         if(isHumanTaskDefinition || isAutomatedTaskDefinition || isDualTaskDefinition){
           content += printElement(td['#name'], td)
+          if(td.SentryDefinition)
+            content += addSentryDefinition(td);
         }
       }
 
@@ -45,7 +48,8 @@ function XML2CMNN(sourcePath, sourceFileName){
 function printElement(type, elem){
   var repeatable = elem.$.repeatable? elem.$.repeatable.substring(0,1) : '';
   var mandatory = elem.$.isMandatory? 'T': 'F';
-  return '['+type+'] '+repeatable+ ' | '+mandatory+ ' | ' + elem.$.id + ' | ' + elem.$.description + '\n';
+  var HttpHookDefinition = elem.HttpHookDefinition? 'T': 'F';
+  return '['+type+'] '+repeatable+ ' | '+mandatory+ ' | ' +HttpHookDefinition+ ' | ' + elem.$.id + ' | ' + elem.$.description + '\n';
 }
 
 function addSentryDefinition(elem){    
