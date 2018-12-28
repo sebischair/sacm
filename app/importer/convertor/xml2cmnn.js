@@ -19,7 +19,8 @@ function XML2CMNN(sourcePath, sourceFileName){
   .then(xml=>{
     var stageDefinitions = xml.SACMDefinition.Workspace[0].CaseDefinition[0].StageDefinition;
     var content = "Created at: "+new Date().toISOString() +' \n';
-    content = "[ElementName] Repeatable | Mandatory | HttpHookDefinition | Name | Description"
+    content += "[ElementName] Repeatable | Mandatory | HttpHookDefinition | Name | Description \n"
+    content += "-------------------------------------------------------------------------------\n"
     for(var i=0; i< stageDefinitions.length; i++ ){
       var stageDefinition = stageDefinitions[i]
       content += '\n'+printElement('StageDefinition', stageDefinition)
