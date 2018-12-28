@@ -18,7 +18,7 @@ function XML2CMNN(sourcePath, sourceFileName){
   return xml2jspromise.parseStringAsync(fs.readFileSync(sourcefilePath).toString(), {explicitChildren:true, preserveChildrenOrder:true})
   .then(xml=>{
     var stageDefinitions = xml.SACMDefinition.Workspace[0].CaseDefinition[0].StageDefinition;
-    var content = "";
+    var content = "Created at: "+new Date().toISOString() +' \n';
     for(var i=0; i< stageDefinitions.length; i++ ){
       var stageDefinition = stageDefinitions[i]
       content += '\n'+printElement('StageDefinition', stageDefinition)
