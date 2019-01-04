@@ -48,16 +48,17 @@ function XML2CMNN(sourcePath, sourceFileName){
 
 function printElement(type, elem){
   var repeatable = elem.$.repeatable? elem.$.repeatable.substring(0,1) : '';
-  var mandatory = elem.$.isMandatory? 'T': 'F';
+  var mandatory = elem.$.isMandatory === 'true'? 'T': 'F';
   var HttpHookDefinition = elem.HttpHookDefinition? 'T': 'F';
   return '['+type+'] '+repeatable+ ' | '+mandatory+ ' | ' +HttpHookDefinition+ ' | ' + elem.$.id + ' | ' + elem.$.description + '\n';
 }
 
 function addSentryDefinition(elem){    
   if(elem.SentryDefinition){
+    var content = ''
     for(var i=0; i<elem.SentryDefinition.length; i++){
       var sentryDefinition = elem.SentryDefinition[i];
-      var content = '--[SentryDefinition]\t ';
+      content += '--[SentryDefinition]\t ';
       console.log('i'+i)
       if(sentryDefinition.precondition){
         for(var j=0; j<sentryDefinition.precondition.length; j++){
