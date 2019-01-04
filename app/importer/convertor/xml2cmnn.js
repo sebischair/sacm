@@ -19,7 +19,7 @@ function XML2CMNN(sourcePath, sourceFileName){
   .then(xml=>{
     var stageDefinitions = xml.SACMDefinition.Workspace[0].CaseDefinition[0].StageDefinition;
     var content = "Created at: "+new Date().toISOString() +' \n';
-    content += "[ElementName] Repeatable | Mandatory | HttpHookDefinition | Name | Description \n"
+    content += "[ElementName] Repeatable | Mandatory | Activation | HttpHookDefinition | Name | Description \n"
     content += "-------------------------------------------------------------------------------\n"
     for(var i=0; i< stageDefinitions.length; i++ ){
       var stageDefinition = stageDefinitions[i]
@@ -49,8 +49,9 @@ function XML2CMNN(sourcePath, sourceFileName){
 function printElement(type, elem){
   var repeatable = elem.$.repeatable? elem.$.repeatable.substring(0,1) : '';
   var mandatory = elem.$.isMandatory === 'true'? 'T': 'F';
+  var activation  = !elem.$.activation? 'A': elem.$.activation.substring(0,1);
   var HttpHookDefinition = elem.HttpHookDefinition? 'T': 'F';
-  return '['+type+'] '+repeatable+ ' | '+mandatory+ ' | ' +HttpHookDefinition+ ' | ' + elem.$.id + ' | ' + elem.$.description + '\n';
+  return '['+type+'] '+repeatable+ ' | '+mandatory+ ' | ' + activation + ' | ' +HttpHookDefinition+ ' | ' + elem.$.id + ' | ' + elem.$.description + '\n';
 }
 
 function addSentryDefinition(elem){    
