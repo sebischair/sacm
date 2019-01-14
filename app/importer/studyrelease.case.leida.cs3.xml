@@ -57,7 +57,6 @@
 		    <AttributeDefinition id="LCS3_TechnologicalTest" type="Link.EntityDefinition.LCS3_TechnologicalTest" multiplicity="any" description="Technological test"/> 
 		    <AttributeDefinition id="LCS3_PatientsConsent" type="Link.EntityDefinition.LCS3_PatientsConsent" multiplicity="any" description="Patients consent"/> 		   
 		    <AttributeDefinition id="LCS3_Lace" type="Link.EntityDefinition.LCS3_Lace" multiplicity="any" description="LACE"/>
-		    <!-- <AttributeDefinition id="LCS3_GlobalDeteriorationScale" type="Link.EntityDefinition.LCS3_GlobalDeteriorationScale" multiplicity="any" description="GDS"/> -->			
         </EntityDefinition>			
 		
         <EntityDefinition id="LCS3_TechnologicalTest" description="Technological Test">
@@ -175,24 +174,6 @@
 			additionalDescription="si &lt;= 4 Low risk (Green)|| si &gt;= 5 i &lt;= 9 Moderate risk (Orange)|| si &gt;= 10 High risk of readmission (Red)" 
 			expression="number(lace1,0)+number(lace2,0)+number(lace18,0)+number(lace17total,0)" />			
         </EntityDefinition>					
-
-		<!--
-        <EntityDefinition id="LCS3_GlobalDeteriorationScale" description="Escala de danys globals (GDS)">
-            <AttributeDefinition id="gds1" type="enumeration" multiplicity="exactlyOne" description="Estadi">
-                <EnumerationOption value="0" description="GDS 1. Absència de dèficit funcionals objectius o subjectius" additionalDescription = "" />
-                <EnumerationOption value="1" description="GDS 2. Dèficit funcional subjectiu" additionalDescription = "" />
-				<EnumerationOption value="3" description="GDS 3. Dèficit en tasques ocupacionals i socials complexes i que generalment ho observen familiars i amics" additionalDescription = "" />
-                <EnumerationOption value="4" description="GDS 4. Dèficits observables en tasques complexes com el control dels aspectes econòmics personals o planificació de menjars quan hi ha convidats" additionalDescription = "" />
-				<EnumerationOption value="5" description="GDS 5. Decrement de l'habilitat en escollir la roba adequada a cada estació de l'any o segons les ocasions" additionalDescription = "Necessita assistència en determinades tasques, no en la neteja ni en el menjar, però sí per triar la seva roba. És incapaç de recordar aspectes importants de la seva vida quotidiana. És freqüent certa desorientació en temps o en lloc" />
-                <EnumerationOption value="6" description="GDS 6. Decrement en l'habilitat per vestir-se, banyar-se i rentar-se; disminució de la incontinència urinària i fecal"/>
-				<EnumerationOption value="7" description="GDS 7. Pèrdua de la parla i la capacitat motora; pèrdua de la capacitat de somriure, mantenir el cap dret i / o per caminar sol, seure i aixecar-se sense ajuda"/>
-            </AttributeDefinition>        			
-			<DerivedAttributeDefinition id="gdstotal" description="GDS" 
-			uiReference="colors(0<=green<5<=red<11<=orange<=10000)"
-			additionalDescription="si &gt;= 5 No Apte (Vermell)|| si &lt;= 4 Apte (Verd)" 
-			expression="number(gds1,0)" />					
-        </EntityDefinition>		
-		-->
 		
 		<!-- Case Evaluation Entity Definitions -->		
         <EntityDefinition id="LCS3_Evaluation" description="Case Evaluation">
@@ -205,29 +186,23 @@
 			<AttributeDefinition id="LCS3_FallRisk" description="Functional status - Fall risk" multiplicity="any" type="Link.EntityDefinition.LCS3_FallRisk" />
 			
 			<!--
-			<AttributeDefinition id="LCS3_Sleeping" description="Estat funcional - Avaluació del son" multiplicity="any" type="Link.EntityDefinition.LCS3_Sleeping"/>			
-            <AttributeDefinition id="LCS3_DiagnosisCommunication" description="Estat funcional - Comunicació" type="Link.EntityDefinition.LCS3_DiagnosisCommunication" multiplicity="any" /> 						
             <AttributeDefinition id="LCS3_AnthropometricVariablesAl" description="Diagnòstic - Pes i alçada - Variables antropomètriques" type="Link.EntityDefinition.LCS3_AnthropometricVariablesAl" multiplicity="any" /> 			
 			<AttributeDefinition id="LCS3_AnthropometricVariablesGenollHomes" description="Diagnòstic - Pes i distància (Homes) - Variables antropomètriques" type="Link.EntityDefinition.LCS3_AnthropometricVariablesGenollHomes" multiplicity="any" /> 
 			<AttributeDefinition id="LCS3_AnthropometricVariablesGenollDones" description="Diagnòstic - Pes i distància (Dones) - Variables antropomètriques" type="Link.EntityDefinition.LCS3_AnthropometricVariablesGenollDones" multiplicity="any" /> 
+			<AttributeDefinition id="LCS3_DiagnosisCodexGold" description="Diagnòstic - Funcional MPOC: FEV1/mMRC/GOLD/CODEX [dependència amb Charlson]" type="Link.EntityDefinition.LCS3_DiagnosisCodexGold" multiplicity="any"/>
+			<AttributeDefinition id="LCS3_SF12Evaluation" description="*Diagnòstic - SF-12" type="Link.EntityDefinition.LCS3_SF12Def" multiplicity="any"/> 
 			-->
 			
-			<AttributeDefinition id="LCS3_DiagnosisSmokingAndAlcohol" description="Diagnosis - Tobacco and alcohol consumption" type="Link.EntityDefinition.LCS3_DiagnosisSmokingAndAlcohol" multiplicity="any" /> 			            					
-					            
-			<AttributeDefinition id="LCS3_DiagnosisNyha" description="Diagnosis - Functional class NYHA [Diagnosis - Rehabilitation-cardiac]" type="Link.EntityDefinition.LCS3_DiagnosisNyha" multiplicity="any"/>  
-			<AttributeDefinition id="LCS3_CardiacRehabilitation" description="Diagnòstic - Diagnosis Rehabilitació-cardíaca [dependència amb NYHA; fer primer la tasca NYHA]"  type="Link.EntityDefinition.LCS3_CardiacRehabilitation" multiplicity="any" /> 
-			
-			<!--<AttributeDefinition id="LCS3_DiagnosisCodexGold" description="Diagnòstic - Funcional MPOC: FEV1/mMRC/GOLD/CODEX [dependència amb Charlson]" type="Link.EntityDefinition.LCS3_DiagnosisCodexGold" multiplicity="any"/>-->  			
-			<!--<AttributeDefinition id="LCS3_SF12Evaluation" description="*Diagnòstic - SF-12" type="Link.EntityDefinition.LCS3_SF12Def" multiplicity="any"/> -->			
+			<AttributeDefinition id="LCS3_DiagnosisSmokingAndAlcohol" description="Diagnosis - Tobacco and alcohol consumption" type="Link.EntityDefinition.LCS3_DiagnosisSmokingAndAlcohol" multiplicity="any" />
+			<AttributeDefinition id="LCS3_DiagnosisNyha" description="Diagnosis - Functional class NYHA [Diagnosis - Rehabilitation-cardiac]" type="Link.EntityDefinition.LCS3_DiagnosisNyha" multiplicity="any"/>
+			<AttributeDefinition id="LCS3_CardiacRehabilitation" description="Diagnòstic - Diagnosis Rehabilitació-cardíaca [dependència amb NYHA; fer primer la tasca NYHA]" type="Link.EntityDefinition.LCS3_CardiacRehabilitation" multiplicity="any" /> 
 			<AttributeDefinition id="LCS3_RespiratoryRehabilitation" description="Diagnòstic - Rehabilitació-respiratòria"  type="Link.EntityDefinition.LCS3_RespiratoryRehabilitation" multiplicity="any" /> 
-			
-			<AttributeDefinition id="LCS3_SelfCareAutoTestEPOC" description="*Barreres - Capacitat d'autocura (IC)"  type="Link.EntityDefinition.LCS3_SelfCareAutoTestEPOC" multiplicity="any"/> 
-			<AttributeDefinition id="LCS3_SelfCareAutoTestHF" description="*Barreres - Capacitat d'autocura (MPOC)" type="Link.EntityDefinition.LCS3_SelfCareAutoTestHF" multiplicity="any"/> 			
-			
+						
             <AttributeDefinition id="LCS3_MedicationFollowing" description="Barriers - Pharmacy data Compliance" type="Link.EntityDefinition.LCS3_MedicationFollowing" multiplicity="any" /> 
             <AttributeDefinition id="LCS3_Medication" description="Barriers - Treatment: Compliance / Complexity / Ability to execute it" type="Link.EntityDefinition.LCS3_Medication" multiplicity="any"  /> 
             <AttributeDefinition id="LCS3_SocialDwelling" description="Barriers - Social housing" type="Link.EntityDefinition.LCS3_SocialDwelling" multiplicity="any" /> 
-            <AttributeDefinition id="LCS3_SocialSelfCareCareerAbility" description="Barriers - Carer's capacity" type="Link.EntityDefinition.LCS3_SocialSelfCareCareerAbility" multiplicity="any" />            									
+            <AttributeDefinition id="LCS3_SocialSelfCareCareerAbility" description="Barriers - Carer's capability" type="Link.EntityDefinition.LCS3_SocialSelfCareCareerAbility" multiplicity="any" />            									
+						
 		</EntityDefinition>
 		
 		<EntityDefinition id="LCS3_GMADef" description="Comorbidity - GMA">
@@ -534,7 +509,7 @@
                 <EnumerationOption value="1" description="Yes"/>
 			</AttributeDefinition>  			
 			<AttributeDefinition id="fallRisk3" type="enumeration" multiplicity="exactlyOne" description="Sensory deficits">
-                <EnumerationOption value="0" description="Cap"/>
+                <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Visual or auditory alterations"/>
             </AttributeDefinition>  
 			<AttributeDefinition id="fallRisk40" type="enumeration" multiplicity="exactlyOne" description="Mental state - Oriented">
@@ -567,33 +542,6 @@
 			expression="round(number(fallRisk1,0))+round(number(fallRisk20,0))+round(number(fallRisk21,0))+round(number(fallRisk22,0))+round(number(fallRisk3,0))+round(number(fallRisk40,0))+round(number(fallRisk41,0))+round(number(fallRisk42,0))+round(number(fallRisk50,0))+round(number(fallRisk51,0))+round(number(fallRisk52,0))"
 			description="Fall risk"/>  
 		</EntityDefinition>
-
-		<!--
-		<EntityDefinition id="LCS3_Sleeping" description="Estat funcional - Avaluació del son">
-			<AttributeDefinition id="sleeping1" type="enumeration" multiplicity="exactlyOne" description="Dificultat per dormir o quedar-se dormit/da; es desperta massa aviat; inquietud; somni no reparador">
-                <EnumerationOption value="0" description="No està present"/>
-                <EnumerationOption value="1" description="Present però no exposat en els últims 3 dies"/>
-                <EnumerationOption value="2" description="Present en 1 dels últims 3 dies"/>
-                <EnumerationOption value="3" description="Present en 2 dels últims 3 dies"/>
-                <EnumerationOption value="4" description="Presentat diàriament els últims 3 dies"/>
-            </AttributeDefinition>  
-            <AttributeDefinition id="sleeping2" type="enumeration" multiplicity="exactlyOne" description="Massa son - Somni excessiu que interfereix amb el funcionament normal de la persona">
-                <EnumerationOption value="0" description="No està present"/>
-                <EnumerationOption value="1" description="Present però no exposat en els últims 3 dies"/>
-                <EnumerationOption value="2" description="Present en 1 dels últims 3 dies"/>
-                <EnumerationOption value="3" description="Present en 2 dels últims 3 dies"/>
-                <EnumerationOption value="4" description="Presentat diàriament els últims 3 dies"/>
-            </AttributeDefinition> 
-            <AttributeDefinition id="sleeping3" type="enumeration" multiplicity="exactlyOne" description="Ús de medicaments per dormir">
-                <EnumerationOption value="1" description="Sí"/>
-                <EnumerationOption value="2" description="No"/>
-            </AttributeDefinition> 
-            <AttributeDefinition id="sleeping4" type="enumeration" multiplicity="exactlyOne" description="Fa servir ajudes per al son (BPAP, CPAP)">
-                <EnumerationOption value="1" description="Sí"/>
-                <EnumerationOption value="2" description="No"/>
-            </AttributeDefinition> 
-        </EntityDefinition>
-		-->
 				
         <EntityDefinition id="LCS3_DiagnosisIADL" description="Functional status - Activities of Daily Living (ADL)">
             <AttributeDefinition id="IADL1" type="enumeration" multiplicity="exactlyOne" description="Bathing">
@@ -628,40 +576,6 @@
             </AttributeDefinition>
             <DerivedAttributeDefinition id="IADL7" expression="number(IADL1,0) + number(IADL2,0) + number(IADL3,0) + number(IADL4,0) + number(IADL5,0) + number(IADL6,0)" description="ADL Score" uiReference="colors(0<=green<=0<orange<=6<red<13)"/>     
         </EntityDefinition>
-
-		<!--
-        <EntityDefinition id="LCS3_DiagnosisCommunication" description="Estat funcional - Comunicació">
-            <AttributeDefinition id="comm1" type="enumeration" multiplicity="exactlyOne" description="Audició" >
-                <EnumerationOption value="0.0001" description="Sense audició"/>
-                <EnumerationOption value="0.0002" description="Dificultat severa: Dificultat a totes les situacions"/>
-                <EnumerationOption value="0.0003" description="Dificultat moderada: Problemes escoltant una conversa normal, requereix un entorn silenciós per a escoltar correctament"/>
-                <EnumerationOption value="1.0001" description="Dificultat mínima: Dificultat en alguns entorns | incapacitat"/>
-                <EnumerationOption value="1.0002" description="Adequat: Sense dificultats en situacions normals, interacció social y TV"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="comm2" type="enumeration" multiplicity="exactlyOne" description="Ajut auditiu | aparell audiòfon de manera habitual">
-                <EnumerationOption value="0" description="Sí"/>
-                <EnumerationOption value="1" description="No"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="comm3" type="enumeration" multiplicity="exactlyOne" description="Visió">
-                <EnumerationOption value="0.0001" description="Sense visió"/>
-                <EnumerationOption value="0.0002" description="Dificultat severa: Pot veure només llums, colors o ombres"/>
-                <EnumerationOption value="0.0003" description="Dificultat moderada: visió limitada, no pot veure els titulars del diaris però pot identificar objectes"/>
-                <EnumerationOption value="1.0001" description="Dificultat mínima: Pot veure lletres grans, però no de mida normal en diaris o llibres"/>
-                <EnumerationOption value="1.0002" description="Adequat: Pot veure detalls, incloent lletres de mida normal a diaris i llibres "/>
-            </AttributeDefinition>
-            <AttributeDefinition id="comm4" type="enumeration" multiplicity="exactlyOne" description="Aparell de visió utilitzat | ulleres o un altre aparell de visió que es fa servir normalment">
-                <EnumerationOption value="0" description="Sí"/>
-                <EnumerationOption value="1" description="No"/>
-            </AttributeDefinition>
-            <AttributeDefinition id="comm5" type="enumeration" multiplicity="exactlyOne" description="Capacitat per expressar-se | Expressa el contingut d'informació verbal y no verbal correctament">
-                <EnumerationOption value="0.0001" description="Rarament o mai comprèn" />
-                <EnumerationOption value="0.0002" description="De vegades es fa entendre: La capacitat es limita a fer sol·licituds concretes"/>
-                <EnumerationOption value="1.0001" description="Sovint es fa entendre: dificultat per trobar paraules o acabar pensaments i és necessari donar-li peu habitualment"/>
-                <EnumerationOption value="1.0002" description="Habitualment es fa entendre: Dificultat en trobar les paraules o acabar els pensament però donant-li temps no es necessària donar-li peu o la necessària és molt petita"/>
-                <EnumerationOption value="1.0003" description="Es fa entendre: Expressa idees sense dificultat "/>
-            </AttributeDefinition>			
-		</EntityDefinition>
-		-->
 
 		<!--
 		<EntityDefinition id="LCS3_AnthropometricVariablesAl" description="Diagnòstic - Pes i alçada - Variables antropomètriques">
@@ -923,129 +837,7 @@
 			additionalDescription="Si = 0 Apte (Risc Baix)|| Si &gt; 0 No apte (Risc Moderat o Alt)"
 			expression="number(rr1,0) + number(rr2,0) + number(rr3,0) + number(rr4,0) + number(rr5,0)" />				
 		</EntityDefinition>				
-		
-        <EntityDefinition id="LCS3_SelfCareAutoTestEPOC" description="*Barreres - Capacitat d'autocura (IC)">
-            <AttributeDefinition id="scat_epoc1" type="enumeration" multiplicity="exactlyOne" description="1. Em peso cada dia">
-                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
-                <EnumerationOption value="2" description="D'acord"/>
-                <EnumerationOption value="1" description="Dubtós"/>
-            </AttributeDefinition>        
-            <AttributeDefinition id="scat_epoc2" type="enumeration" multiplicity="exactlyOne" description="2. Si tinc dificultat per respirar paro i descanso.">
-                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
-                <EnumerationOption value="2" description="D'acord"/>
-                <EnumerationOption value="1" description="Dubtós"/>
-            </AttributeDefinition>      
-            <AttributeDefinition id="scat_epoc3" type="enumeration" multiplicity="exactlyOne" description="3. Si la meva dificultat per respirar augmenta contacto amb el meu metge o infermera.">
-                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
-                <EnumerationOption value="2" description="D'acord"/>
-                <EnumerationOption value="1" description="Dubtós"/>
-            </AttributeDefinition>   
-            <AttributeDefinition id="scat_epoc4" type="enumeration" multiplicity="exactlyOne" description="4. Si els meus peus/cames comencen a inflarse més del habitual, contacto amb el meu metge o infermera">
-                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
-                <EnumerationOption value="2" description="D'acord"/>
-                <EnumerationOption value="1" description="Dubtós"/>
-            </AttributeDefinition>   
-            <AttributeDefinition id="scat_epoc5" type="enumeration" multiplicity="exactlyOne" description="5. Si augmento el meu pes 2 kg en una setmana, contacto amb el meu metge o infermera.">
-                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
-                <EnumerationOption value="2" description="D'acord"/>
-                <EnumerationOption value="1" description="Dubtós"/>
-            </AttributeDefinition>  
-            <AttributeDefinition id="scat_epoc6" type="enumeration" multiplicity="exactlyOne" description="6. Limito la quantitat de liquids que bec (a meny de 1,5-2 litre diaris)">
-                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
-                <EnumerationOption value="2" description="D'acord"/>
-                <EnumerationOption value="1" description="Dubtós"/>
-            </AttributeDefinition>  
-            <AttributeDefinition id="scat_epoc7" type="enumeration" multiplicity="exactlyOne" description="7. Descanso una estona durant el dia.">
-                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
-                <EnumerationOption value="2" description="D'acord"/>
-                <EnumerationOption value="1" description="Dubtós"/>
-            </AttributeDefinition>  
-            <AttributeDefinition id="scat_epoc8" type="enumeration" multiplicity="exactlyOne" description="8. Si em sento més fatigat del normal (cansat), contacto amb le meu metge o infermera.">
-                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
-                <EnumerationOption value="2" description="D'acord"/>
-                <EnumerationOption value="1" description="Dubtós"/>
-            </AttributeDefinition>  
-            <AttributeDefinition id="scat_epoc9" type="enumeration" multiplicity="exactlyOne" description="9. Faig una dieta baixa en sal.">
-                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
-                <EnumerationOption value="2" description="D'acord"/>
-                <EnumerationOption value="1" description="Dubtós"/>
-            </AttributeDefinition>  
-            <AttributeDefinition id="scat_epoc10" type="enumeration" multiplicity="exactlyOne" description="10. Em prenc tota la medicació com m´han dit.">
-                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
-                <EnumerationOption value="2" description="D'acord"/>
-                <EnumerationOption value="1" description="Dubtós"/>
-            </AttributeDefinition>  
-            <AttributeDefinition id="scat_epoc11" type="enumeration" multiplicity="exactlyOne" description="11. Em vacuno per la grip tots els anys">
-                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
-                <EnumerationOption value="2" description="D'acord"/>
-                <EnumerationOption value="1" description="Dubtós"/>
-            </AttributeDefinition>  
-            <AttributeDefinition id="scat_epoc12" type="enumeration" multiplicity="exactlyOne" description="12. Faig exercici de manera regular">
-                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
-                <EnumerationOption value="2" description="D'acord"/>
-                <EnumerationOption value="1" description="Dubtós"/>
-            </AttributeDefinition>  
-			
-            <DerivedAttributeDefinition id="scat_epocTotal" type="number" multiplicity="exactlyOne" 
-			expression="number(scat_epoc1,0)+number(scat_epoc2,0)+number(scat_epoc3,0)+number(scat_epoc4,0)+number(scat_epoc5,0)+number(scat_epoc6,0)+number(scat_epoc7,0)+number(scat_epoc8,0)+number(scat_epoc9,0)+number(scat_epoc10,0)+number(scat_epoc11,0)+number(scat_epoc12,0)"
-			description="Puntuació IC"/> 
-			
-			<DerivedAttributeDefinition id="scat_epocTotalScore" type="number" multiplicity="exactlyOne" 
-			expression="round((( scat_epocTotal/ 36 ) * 100),0)" 			
-			description="IC (en %)"/> 					
-        </EntityDefinition>
-		
-		<!--  MPOC: Malaltia pulmonar obstructiva crònica -->
-        <EntityDefinition id="LCS3_SelfCareAutoTestHF" description="*Barreres - Capacitat d'autocura (MPOC)" >
-            <AttributeDefinition id="scat_ic1" type="enumeration" multiplicity="exactlyOne" description="Si tinc dificultat per respirar paro i descanso.">
-                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
-                <EnumerationOption value="2" description="D'acord"/>
-                <EnumerationOption value="1" description="Dubtós"/>
-            </AttributeDefinition>     
-            <AttributeDefinition id="scat_ic2" type="enumeration" multiplicity="exactlyOne" description="Si la meva dificultat per respirar augmenta contacto amb el meu metge o infermera.">
-                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
-                <EnumerationOption value="2" description="D'acord"/>
-                <EnumerationOption value="1" description="Dubtós"/>
-            </AttributeDefinition>  
-            <AttributeDefinition id="scat_ic3" type="enumeration" multiplicity="exactlyOne" description="Si la meva tos i espectoració augmenten i/o la mucositat es torna lletja contacto amb el meu metge o infermera.">
-                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
-                <EnumerationOption value="2" description="D'acord"/>
-                <EnumerationOption value="1" description="Dubtós"/>
-            </AttributeDefinition>  
-            <AttributeDefinition id="scat_ic4" type="enumeration" multiplicity="exactlyOne" description="Descanso una estona durant el dia.">
-                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
-                <EnumerationOption value="2" description="D'acord"/>
-                <EnumerationOption value="1" description="Dubtós"/>
-            </AttributeDefinition>  
-            <AttributeDefinition id="scat_ic5" type="enumeration" multiplicity="exactlyOne" description="Si em sento mes fatigat del normal (cansat), contacto amb le meu metge o infermera.">
-                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
-                <EnumerationOption value="2" description="D'acord"/>
-                <EnumerationOption value="1" description="Dubtós"/>
-            </AttributeDefinition>  
-            <AttributeDefinition id="scat_ic6" type="enumeration" multiplicity="exactlyOne" description="Em prenc tota la medicació com m´han dit.">
-                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
-                <EnumerationOption value="2" description="D'acord"/>
-                <EnumerationOption value="1" description="Dubtós"/>
-            </AttributeDefinition>  
-            <AttributeDefinition id="scat_ic7" type="enumeration" multiplicity="exactlyOne" description="Em vacuno per la grip tots els anys">
-                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
-                <EnumerationOption value="2" description="D'acord"/>
-                <EnumerationOption value="1" description="Dubtós"/>
-            </AttributeDefinition>  
-            <AttributeDefinition id="scat_ic8" type="enumeration" multiplicity="exactlyOne" description="Faig exercici de manera regular">
-                <EnumerationOption value="3" description="Sempre / Totalment d'acord"/>
-                <EnumerationOption value="2" description="D'acord"/>
-                <EnumerationOption value="1" description="Dubtós"/>
-            </AttributeDefinition>  
-            <DerivedAttributeDefinition id="scat_icTotal" type="number" multiplicity="exactlyOne" 
-			expression="number(scat_ic1,0)+number(scat_ic2,0)+number(scat_ic3,0)+number(scat_ic4,0)+number(scat_ic5,0)+number(scat_ic6,0)+number(scat_ic7,0)+number(scat_ic8,0)"
-			description="Puntuacio MPOC"/> 
-			
-			<DerivedAttributeDefinition id="scat_icTotalScore" 
-			expression="round(((scat_icTotal / 24) * 100),0)" 		
-			description="MPOC (en %)"/> 			
-        </EntityDefinition>
-		
+				
         <EntityDefinition id="LCS3_MedicationFollowing" description="Barriers - Pharmacy data Compliance"> 
             <AttributeDefinition id="Medication1" type="enumeration" multiplicity="exactlyOne" description="Do you exceed 80% compliance with the medication withdrawal from the Pharmacy office?">
                 <EnumerationOption value="0" description="Yes"/>
@@ -1087,7 +879,7 @@
                 <EnumerationOption value="0.0002" description="Live at home with partial support"/>
             </AttributeDefinition>
             <AttributeDefinition id="dwelling2" type="enumeration" multiplicity="exactlyOne" description="Situation of the house"> 
-                <EnumerationOption value="1" description="Alone/>
+                <EnumerationOption value="1" description="Alone"/>
                 <EnumerationOption value="0.0001" description="With your spouse"/>
                 <EnumerationOption value="0.0002" description="With children"/>
                 <EnumerationOption value="0.0003" description="With other relatives"/>
@@ -1110,7 +902,7 @@
 			description="Social housing"/> 									
         </EntityDefinition>		
 
-        <EntityDefinition id="LCS3_SocialSelfCareCareerAbility" description="Barriers - Carer's capacity"> 
+        <EntityDefinition id="LCS3_SocialSelfCareCareerAbility" description="Barriers - Carer's capability"> 
             <AttributeDefinition id="career1" type="enumeration" multiplicity="exactlyOne" description="The caregiver is not fit (informed by social services or by health professionals)"> 
                 <EnumerationOption value="1" description="Yes"/>
 				<EnumerationOption value="0" description="No"/>                
@@ -1551,8 +1343,6 @@
 				<SummaryParamDefinition path="LCS3_Evaluation.LCS3_Medication.Medication5"/>
                 <SummaryParamDefinition path="LCS3_Evaluation.LCS3_SocialDwelling.dwelling5"/>	
                 <SummaryParamDefinition path="LCS3_Evaluation.LCS3_SocialSelfCareCareerAbility.career5"/>						
-				<SummaryParamDefinition path="LCS3_Evaluation.LCS3_SelfCareAutoTestEPOC.scat_epocTotalScore"/>		
-				<SummaryParamDefinition path="LCS3_Evaluation.LCS3_SelfCareAutoTestHF.scat_icTotalScore"/>			
         </SummarySectionDefinition>
 	 
 	 
@@ -1596,17 +1386,7 @@
 					<TaskParamDefinition path="LCS3_Identification.LCS3_Lace.lace18" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS3_Identification.LCS3_Lace.lace19" isReadOnly="true" isMandatory="false"/>
 				</HumanTaskDefinition>
-				
-				<!--
-				<HumanTaskDefinition id="LCS3_GlobalDeteriorationScale" description="Escala de danys globals (GDS)" ownerPath="LCS3_Settings.Clinician" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS3_GlobalDeteriorationScale" entityAttachPath="LCS3_Identification.LCS3_GlobalDeteriorationScale">                
-					<SentryDefinition>
-					  <precondition processDefinitionId="LCS3_SelectPatient"/>
-					</SentryDefinition>
-					<TaskParamDefinition path="LCS3_Identification.LCS3_GlobalDeteriorationScale.gds1" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS3_Identification.LCS3_GlobalDeteriorationScale.gdstotal" isReadOnly="true" isMandatory="false"/>
-				</HumanTaskDefinition>
-				-->
-				
+								
 				<HumanTaskDefinition id="LCS3_TechnologicalTest" description="Technological test" ownerPath="LCS3_Settings.CaseManager" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS3_TechnologicalTest" entityAttachPath="LCS3_Identification.LCS3_TechnologicalTest">
                     <SentryDefinition>
                         <precondition processDefinitionId="LCS3_SelectPatient"/>
@@ -1628,18 +1408,9 @@
 			</StageDefinition>				
 		  
             <StageDefinition id="LCS3_CaseEvaluation" description="Case Evaluation" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS3_Evaluation" entityAttachPath="LCS3_Evaluation.LCS3_Evaluation">
-			<!-- ONLY TEST -->		
                 <SentryDefinition>
                     <precondition processDefinitionId="LCS3_CaseIdentification"/>
                 </SentryDefinition> 						
-
-				<!--
-                <HumanTaskDefinition id="LCS3_SelectPatient2" description="Equip de Primària" ownerPath="LCS3_Settings.Nurse" 
-				isMandatory="true" repeatable="ONCE">
-                    <TaskParamDefinition path="LCS3_Settings.PrimaryCareClinicians" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition path="LCS3_Settings.PrimaryCareNurse" isReadOnly="false" isMandatory="true"/>
-                </HumanTaskDefinition>   				
-				-->
 				
                 <HumanTaskDefinition id="LCS3_GMAEvaluationHT" description="Comorbidity - GMA"
 				ownerPath="LCS3_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS3_GMADef" entityAttachPath="LCS3_Evaluation.LCS3_GMAEvaluation">
@@ -1719,28 +1490,7 @@
                     <TaskParamDefinition path="LCS3_Evaluation.LCS3_Barthel.barthel9" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS3_Evaluation.LCS3_Barthel.barthel10" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS3_Evaluation.LCS3_Barthel.barthel11" isReadOnly="true" isMandatory="false"/>
-                </HumanTaskDefinition>
-				
-				<!--
-				<HumanTaskDefinition id="LCS3_Sleeping" description="Estat funcional - Avaluació del son"
-				ownerPath="LCS3_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS3_Sleeping" entityAttachPath="LCS3_Evaluation.LCS3_Sleeping">                
-					<TaskParamDefinition path="LCS3_Evaluation.LCS3_Sleeping.sleeping1" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS3_Evaluation.LCS3_Sleeping.sleeping2" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS3_Evaluation.LCS3_Sleeping.sleeping3" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS3_Evaluation.LCS3_Sleeping.sleeping4" isReadOnly="false" isMandatory="true"/>
-				</HumanTaskDefinition>	
-				-->
-											
-				<!--
-                <HumanTaskDefinition id="LCS3_DiagnosisCommunicationHT" description="Estat funcional - Comunicació"
-				ownerPath="LCS3_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS3_DiagnosisCommunication" entityAttachPath="LCS3_Evaluation.LCS3_DiagnosisCommunication">
-                    <TaskParamDefinition path="LCS3_Evaluation.LCS3_DiagnosisCommunication.comm1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS3_Evaluation.LCS3_DiagnosisCommunication.comm2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS3_Evaluation.LCS3_DiagnosisCommunication.comm3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS3_Evaluation.LCS3_DiagnosisCommunication.comm4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS3_Evaluation.LCS3_DiagnosisCommunication.comm5" isReadOnly="false" isMandatory="true"/>
-                </HumanTaskDefinition>	
-				-->
+                </HumanTaskDefinition>				
 				
 				<HumanTaskDefinition id="LCS3_DiagnosisIADLHT" description="Functional status - Activities of Daily Living (ADL)" 
 				ownerPath="LCS3_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS3_DiagnosisIADL" entityAttachPath="LCS3_Evaluation.LCS3_DiagnosisIADL">                
@@ -1866,6 +1616,7 @@
                 </HumanTaskDefinition> 	
 				-->
 
+				<!--
 				<HumanTaskDefinition id="LCS3_SelfCareAutoTestEPOCHT" description="*Barreres - Capacitat d'autocura (IC)" 
 				ownerPath="LCS3_Settings.Nurse" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS3_SelfCareAutoTestEPOC" entityAttachPath="LCS3_Evaluation.LCS3_SelfCareAutoTestEPOC">                
 					<TaskParamDefinition path="LCS3_Evaluation.LCS3_SelfCareAutoTestEPOC.scat_epoc1" isReadOnly="false" isMandatory="true"/>
@@ -1896,7 +1647,8 @@
 					<TaskParamDefinition path="LCS3_Evaluation.LCS3_SelfCareAutoTestHF.scat_ic8" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS3_Evaluation.LCS3_SelfCareAutoTestHF.scat_icTotal" isReadOnly="true" isMandatory="false"/>
 					<TaskParamDefinition path="LCS3_Evaluation.LCS3_SelfCareAutoTestHF.scat_icTotalScore" isReadOnly="true" isMandatory="false"/>
-				</HumanTaskDefinition>      
+				</HumanTaskDefinition>  
+				-->				
 
                 <HumanTaskDefinition id="LCS3_Medication" description="Barriers - Treatment: Compliance / Complexity / Ability to execute it"
 				ownerPath="LCS3_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS3_Medication" entityAttachPath="LCS3_Evaluation.LCS3_Medication">                
@@ -1922,7 +1674,7 @@
                     <TaskParamDefinition path="LCS3_Evaluation.LCS3_SocialDwelling.dwelling5" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
             
-                <HumanTaskDefinition id="LCS3_SocialSelfCareCareerAbility" description="Barriers - Carer's capacity"
+                <HumanTaskDefinition id="LCS3_SocialSelfCareCareerAbility" description="Barriers - Carer's capability"
 				ownerPath="LCS3_Settings.Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS3_SocialSelfCareCareerAbility" entityAttachPath="LCS3_Evaluation.LCS3_SocialSelfCareCareerAbility">
                     <TaskParamDefinition path="LCS3_Evaluation.LCS3_SocialSelfCareCareerAbility.career1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS3_Evaluation.LCS3_SocialSelfCareCareerAbility.career2" isReadOnly="false" isMandatory="true"/>
@@ -2003,8 +1755,8 @@
 					<TaskParamDefinition part="AUTOMATED" path="LCS3_Workplan.LCS3_MonitoringPrescriptionSP02AH.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>							
 				                
-                <DualTaskDefinition id="LCS3_PatientQuestionaireAHWP" externalId="Prescription - PatientQuestionaire" 
-				description="Patient Questionaire"
+                <DualTaskDefinition id="LCS3_PatientQuestionaireAHWP" externalId="PatientQuestionaire" 
+				description="Prescription - Patient Questionaire"
                                     dynamicDescriptionPath="LCS3_Workplan.LCS3_PatientQuestionaireAH.type"
 				ownerPath="LCS3_Settings.CaseManager" dueDatePath="LCS3_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" 
 				entityDefinitionId="LCS3_PatientQuestionaire" entityAttachPath="LCS3_Workplan.LCS3_PatientQuestionaireAH">
@@ -2087,7 +1839,7 @@
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/simpletask/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"></HttpHookDefinition>
                     <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_SimpleTask.type" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_SimpleTask.freq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_SimpleTask.freqqunit" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_SimpleTask.frequnit" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_SimpleTask.maxdelay" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_SimpleTask.startdate" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_SimpleTask.enddate" isReadOnly="false" isMandatory="true"/>
@@ -2147,492 +1899,4 @@
 		</CaseDefinition>	
 	</Workspace>
 
-	<Execution> 
-		<Action id="CompleteHumanTask" processId="LCS3_SelectPatient">  
-			<TaskParam path="LCS3_SelectPatient.Patient" userValue="davidsonj"/> 
-			<TaskParam path="LCS3_SelectPatient.Clinician" userValue="castrot"/> 
-			<TaskParam path="LCS3_SelectPatient.Nurse" userValue="noahs"/>   
-			<TaskParam path="LCS3_SelectPatient.CaseManager" userValue="werners"/>   
-			<TaskParam path="LCS3_SelectPatient.SocialCareer" userValue="kuhnl"/>    			
-			<TaskParam path="LCS3_SelectPatient.PrimaryCareClinicians" userValue="sullivanb"/> 
-			<TaskParam path="LCS3_SelectPatient.PrimaryCareNurse" userValue="richardsona"/> 			
-		</Action>
-		
-		<Action id="CompleteHumanTask" processId="LCS3_TechnologicalTest" breakpoint="true">  
-			<TaskParam path="LCS3_Identification.LCS3_TechnologicalTest.tech1" values="['0']"/> 
-			<TaskParam path="LCS3_Identification.LCS3_TechnologicalTest.tech2" values="['1']"/> 
-			<TaskParam path="LCS3_Identification.LCS3_TechnologicalTest.tech3" values="['1']"/> 
-			<TaskParam path="LCS3_Identification.LCS3_TechnologicalTest.tech4" values="['2']"/> 
-		</Action>
-		
-		<Action id="CompleteHumanTask" processId="LCS3_Lace" breakpoint="true">  
-			<TaskParam path="LCS3_Identification.LCS3_Lace.lace1" values="['1']"/> 
-			<TaskParam path="LCS3_Identification.LCS3_Lace.lace2" values="['0']"/> 
-			<TaskParam path="LCS3_Identification.LCS3_Lace.lace3" values="['0']"/> 
-			<TaskParam path="LCS3_Identification.LCS3_Lace.lace4" values="['0']"/> 
-			<TaskParam path="LCS3_Identification.LCS3_Lace.lace5" values="['0']"/> 
-			<TaskParam path="LCS3_Identification.LCS3_Lace.lace6" values="['0']"/> 
-			<TaskParam path="LCS3_Identification.LCS3_Lace.lace7" values="['0']"/> 
-			<TaskParam path="LCS3_Identification.LCS3_Lace.lace8" values="['0']"/> 
-			<TaskParam path="LCS3_Identification.LCS3_Lace.lace9" values="['0']"/> 
-			<TaskParam path="LCS3_Identification.LCS3_Lace.lace10" values="['0']"/> 
-			<TaskParam path="LCS3_Identification.LCS3_Lace.lace11" values="['0']"/> 
-			<TaskParam path="LCS3_Identification.LCS3_Lace.lace12" values="['0']"/> 
-			<TaskParam path="LCS3_Identification.LCS3_Lace.lace13" values="['0']"/> 
-			<TaskParam path="LCS3_Identification.LCS3_Lace.lace14" values="['0']"/> 
-			<TaskParam path="LCS3_Identification.LCS3_Lace.lace15" values="['0']"/> 
-			<TaskParam path="LCS3_Identification.LCS3_Lace.lace16" values="['6']"/> 
-			<TaskParam path="LCS3_Identification.LCS3_Lace.lace18" values="['0']"/> 
-			<TaskParam path="LCS3_Identification.LCS3_Lace.lace19" values="['6']"/> 
-		</Action>
-		
-		<!--
-		<Action id="CompleteHumanTask" processId="LCS3_GlobalDeteriorationScale" breakpoint="true">  
-			<TaskParam path="LCS3_Identification.LCS3_lacenologicalTest.gds1" values="['7']"/> 
-			<TaskParam path="LCS3_Identification.LCS3_lacenologicalTest.gdstotal" values="['7']"/> 
-		</Action>
-		-->
-			
-		<Action id="CompleteHumanTask" processId="LCS3_PatientsConsent" breakpoint="true">  
-			<TaskParam path="LCS3_Identification.LCS3_PatientsConsent.pConsent2" values="['1']"/> 
-		</Action>		
-		
-		<!--
-		<Action id="CompleteHumanTask" processId="LCS3_SelectPatient2">  			
-			<TaskParam path="LCS3_SelectPatient.PrimaryCareClinicians" userValue="sullivanb"/> 
-			<TaskParam path="LCS3_SelectPatient.PrimaryCareNurse" userValue="richardsona"/>
-		</Action>		
-		-->
-		
-		<Action id="CompleteHumanTask" processId="LCS3_GMAEvaluationHT" breakpoint="true">  
-			<TaskParam path="LCS3_Evaluation.LCS3_GMAEvaluation.gma" values="['1']"/> 
-		</Action>  
-			
-	   <Action id="CompleteHumanTask" processId="LCS3_ComorbidityCharlsonEvaluationHT" breakpoint="true">    
-			<TaskParam path="LCS3_Evaluation.LCS3_ComorbidityCharlsonIdentification.ch1" values="['1']"/> 
-			<TaskParam path="LCS3_Evaluation.LCS3_ComorbidityCharlsonIdentification.ch2" values="['1']"/> 
-			<TaskParam path="LCS3_Evaluation.LCS3_ComorbidityCharlsonIdentification.ch3" values="['0']"/> 
-			<TaskParam path="LCS3_Evaluation.LCS3_ComorbidityCharlsonIdentification.ch4" values="['0']"/> 
-			<TaskParam path="LCS3_Evaluation.LCS3_ComorbidityCharlsonIdentification.ch5" values="['0']"/> 
-			<TaskParam path="LCS3_Evaluation.LCS3_ComorbidityCharlsonIdentification.ch6" values="['0']"/> 
-			<TaskParam path="LCS3_Evaluation.LCS3_ComorbidityCharlsonIdentification.ch7" values="['0']"/> 
-			<TaskParam path="LCS3_Evaluation.LCS3_ComorbidityCharlsonIdentification.ch8" values="['0']"/> 
-			<TaskParam path="LCS3_Evaluation.LCS3_ComorbidityCharlsonIdentification.ch9" values="['0']"/> 
-			<TaskParam path="LCS3_Evaluation.LCS3_ComorbidityCharlsonIdentification.ch10" values="['0']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_ComorbidityCharlsonIdentification.ch11" values="['0']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_ComorbidityCharlsonIdentification.ch12" values="['0']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_ComorbidityCharlsonIdentification.ch13" values="['0']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_ComorbidityCharlsonIdentification.ch14" values="['0']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_ComorbidityCharlsonIdentification.ch15" values="['0']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_ComorbidityCharlsonIdentification.ch16" values="['0']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_ComorbidityCharlsonIdentification.ch17" values="['0']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_ComorbidityCharlsonIdentification.ch18" values="['0']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_ComorbidityCharlsonIdentification.ch19" values="['0']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_ComorbidityCharlsonIdentification.ch20" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_ComorbidityCharlsonIdentification.ch21" values="['3']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_ComorbidityCharlsonIdentification.ch22" values="['3']"/>   
-		</Action>  	
-				
-		<Action id="CompleteHumanTask" processId="LCS3_ComorbidityPfeifferHT" breakpoint="true">    
-			<TaskParam path="LCS3_Evaluation.LCS3_ComorbidityPfeiffer.pfeiffer1" values="['7']"/>   
-			<TaskParam path="LCS3_Evaluation.LCS3_ComorbidityPfeiffer.pfeiffer2" values="['7']"/>   
-		</Action>    
-			
-	   <Action id="CompleteHumanTask" processId="LCS3_HospitalAnxietyAndDepressionScaleHT" breakpoint="true">  
-			<TaskParam path="LCS3_Evaluation.LCS3_HospitalAnxietyAndDepressionScale.hadA1" values="['1']"/> 
-			<TaskParam path="LCS3_Evaluation.LCS3_HospitalAnxietyAndDepressionScale.hadA2" values="['1']"/> 
-			<TaskParam path="LCS3_Evaluation.LCS3_HospitalAnxietyAndDepressionScale.hadA3" values="['1']"/> 
-			<TaskParam path="LCS3_Evaluation.LCS3_HospitalAnxietyAndDepressionScale.hadA4" values="['0']"/> 
-			<TaskParam path="LCS3_Evaluation.LCS3_HospitalAnxietyAndDepressionScale.hadA5" values="['0']"/> 
-			<TaskParam path="LCS3_Evaluation.LCS3_HospitalAnxietyAndDepressionScale.hadA6" values="['0']"/> 
-			<TaskParam path="LCS3_Evaluation.LCS3_HospitalAnxietyAndDepressionScale.hadA7" values="['0']"/> 
-			<TaskParam path="LCS3_Evaluation.LCS3_HospitalAnxietyAndDepressionScale.hadD1" values="['1']"/> 
-			<TaskParam path="LCS3_Evaluation.LCS3_HospitalAnxietyAndDepressionScale.hadD2" values="['1']"/> 
-			<TaskParam path="LCS3_Evaluation.LCS3_HospitalAnxietyAndDepressionScale.hadD3" values="['1']"/> 
-			<TaskParam path="LCS3_Evaluation.LCS3_HospitalAnxietyAndDepressionScale.hadD4" values="['1']"/> 
-			<TaskParam path="LCS3_Evaluation.LCS3_HospitalAnxietyAndDepressionScale.hadD5" values="['1']"/> 
-			<TaskParam path="LCS3_Evaluation.LCS3_HospitalAnxietyAndDepressionScale.hadD6" values="['1']"/> 
-			<TaskParam path="LCS3_Evaluation.LCS3_HospitalAnxietyAndDepressionScale.hadD7" values="['1']"/> 		
-			<TaskParam path="LCS3_Evaluation.LCS3_HospitalAnxietyAndDepressionScale.hadA8" values="['3']"/> 
-			<TaskParam path="LCS3_Evaluation.LCS3_HospitalAnxietyAndDepressionScale.hadD8" values="['7']"/> 
-		</Action> 
-		
-		<Action id="CompleteHumanTask" processId="LCS3_BarthelHT" breakpoint="true">    
-			<TaskParam path="LCS3_Evaluation.LCS3_Barthel.barthel1" values="['0']"/>
-			<TaskParam path="LCS3_Evaluation.LCS3_Barthel.barthel2" values="['0']"/>
-			<TaskParam path="LCS3_Evaluation.LCS3_Barthel.barthel3" values="['0']"/>
-			<TaskParam path="LCS3_Evaluation.LCS3_Barthel.barthel4" values="['0']"/>
-			<TaskParam path="LCS3_Evaluation.LCS3_Barthel.barthel5" values="['0']"/>
-			<TaskParam path="LCS3_Evaluation.LCS3_Barthel.barthel6" values="['0']"/>
-			<TaskParam path="LCS3_Evaluation.LCS3_Barthel.barthel7" values="['5']"/>
-			<TaskParam path="LCS3_Evaluation.LCS3_Barthel.barthel8" values="['0']"/>
-			<TaskParam path="LCS3_Evaluation.LCS3_Barthel.barthel9" values="['5']"/>
-			<TaskParam path="LCS3_Evaluation.LCS3_Barthel.barthel10" values="['0']"/>
-			<TaskParam path="LCS3_Evaluation.LCS3_Barthel.barthel11" values="['10']"/>
-		</Action> 	
-
-		<Action id="CompleteHumanTask" processId="LCS3_DiagnosisIADLHT" breakpoint="true">    
-			<TaskParam path="LCS3_Evaluation.LCS3_DiagnosisIADL.IADL1" values="['1']"/>
-			<TaskParam path="LCS3_Evaluation.LCS3_DiagnosisIADL.IADL2" values="['1']"/>
-			<TaskParam path="LCS3_Evaluation.LCS3_DiagnosisIADL.IADL3" values="['1']"/>
-			<TaskParam path="LCS3_Evaluation.LCS3_DiagnosisIADL.IADL4" values="['1']"/>
-			<TaskParam path="LCS3_Evaluation.LCS3_DiagnosisIADL.IADL5" values="['1']"/>
-			<TaskParam path="LCS3_Evaluation.LCS3_DiagnosisIADL.IADL6" values="['1']"/>
-			<TaskParam path="LCS3_Evaluation.LCS3_DiagnosisIADL.IADL7" values="['6']"/>
-		</Action> 	
-
-		<Action id="CompleteHumanTask" processId="LCS3_FallRisk" breakpoint="true">   
-			<TaskParam path="LCS3_Evaluation.LCS3_FallRisk.fallRisk1" values="['0']"/>  
-			<TaskParam path="LCS3_Evaluation.LCS3_FallRisk.fallRisk20" values="['0']"/>  
-			<TaskParam path="LCS3_Evaluation.LCS3_FallRisk.fallRisk21" values="['0']"/>  
-			<TaskParam path="LCS3_Evaluation.LCS3_FallRisk.fallRisk22" values="['0']"/>  
-			<TaskParam path="LCS3_Evaluation.LCS3_FallRisk.fallRisk3" values="['0']"/>  
-			<TaskParam path="LCS3_Evaluation.LCS3_FallRisk.fallRisk40" values="['0']"/>  
-			<TaskParam path="LCS3_Evaluation.LCS3_FallRisk.fallRisk41" values="['0']"/>  
-			<TaskParam path="LCS3_Evaluation.LCS3_FallRisk.fallRisk42" values="['0']"/>  
-			<TaskParam path="LCS3_Evaluation.LCS3_FallRisk.fallRisk50" values="['0']"/>  
-			<TaskParam path="LCS3_Evaluation.LCS3_FallRisk.fallRisk51" values="['0']"/>  
-			<TaskParam path="LCS3_Evaluation.LCS3_FallRisk.fallRisk52" values="['0']"/>  
-			<TaskParam path="LCS3_Evaluation.LCS3_FallRisk.fallRisk6" values="['0']"/>  
-		</Action>  
-		
-		<!--
-		<Action id="CompleteHumanTask" processId="LCS3_Sleeping" breakpoint="true">   
-			<TaskParam path="LCS3_Evaluation.LCS3_Sleeping.sleeping1" values="['1']"/>  
-			<TaskParam path="LCS3_Evaluation.LCS3_Sleeping.sleeping2" values="['1']"/>  
-			<TaskParam path="LCS3_Evaluation.LCS3_Sleeping.sleeping3" values="['1']"/>  
-			<TaskParam path="LCS3_Evaluation.LCS3_Sleeping.sleeping4" values="['1']"/>  
-		</Action>  
-		
-		<Action id="CompleteHumanTask" processId="LCS3_DiagnosisCommunicationHT" breakpoint="true"> 
-			<TaskParam path="LCS3_Evaluation.LCS3_DiagnosisCommunication.comm1" values="['0.0001']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_DiagnosisCommunication.comm2" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_DiagnosisCommunication.comm3" values="['0.0001']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_DiagnosisCommunication.comm4" values="['0']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_DiagnosisCommunication.comm5" values="['0.0001']"/>    
-		</Action>  
-		-->
-		
-		<!--
-		<Action id="ActivateHumanTask" processId="LCS3_AnthropometricVariablesAlHT" breakpoint="true"/>
-		<Action id="CompleteHumanTask" processId="LCS3_AnthropometricVariablesAlHT" breakpoint="true">    
-			<TaskParam path="LCS3_Evaluation.LCS3_AnthropometricVariablesAl.AnWeighAl" values="['60']"/> 
-			<TaskParam path="LCS3_Evaluation.LCS3_AnthropometricVariablesAl.AnHeightAl" values="['180']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_AnthropometricVariablesAl.AnthropometricAl" values="['18.51']"/>    
-		</Action>
-
-		<Action id="ActivateHumanTask" processId="LCS3_AnthropometricVariablesGenollHomesHT" breakpoint="true"/>
-		<Action id="CompleteHumanTask" processId="LCS3_AnthropometricVariablesGenollHomesHT" breakpoint="true">    
-			<TaskParam path="LCS3_Evaluation.LCS3_AnthropometricVariablesGenollHomes.AnKneeGenoll" values="['1']"/> 
-			<TaskParam path="LCS3_Evaluation.LCS3_AnthropometricVariablesGenollHomes.AnAgeGenoll" values="['1']"/>    		
-			<TaskParam path="LCS3_Evaluation.LCS3_AnthropometricVariablesGenollHomes.AnthropometricGenollHomes" values="['1']"/>    		
-			<TaskParam path="LCS3_Evaluation.LCS3_AnthropometricVariablesGenollHomes.AnWeighGenoll" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_AnthropometricVariablesGenollHomes.AnthropometricGenollHomesIMC" values="['1']"/>    		
-		</Action>
-
-		<Action id="ActivateHumanTask" processId="LCS3_AnthropometricVariablesGenollDonesHT" breakpoint="true"/>
-		<Action id="CompleteHumanTask" processId="LCS3_AnthropometricVariablesGenollDonesHT" breakpoint="true">    
-			<TaskParam path="LCS3_Evaluation.LCS3_AnthropometricVariablesGenollDones.AnKneeGenoll" values="['1']"/> 
-			<TaskParam path="LCS3_Evaluation.LCS3_AnthropometricVariablesGenollDones.AnAgeGenoll" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_AnthropometricVariablesGenollDones.AnthropometricGenollDones" values="['1']"/>    		
-			<TaskParam path="LCS3_Evaluation.LCS3_AnthropometricVariablesGenollDones.AnWeighGenoll" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_AnthropometricVariablesGenollDones.AnthropometricGenollDonesIMC" values="['1']"/>    		
-		</Action>  	
-		-->
-		
-		<Action id="CompleteHumanTask" processId="LCS3_DiagnosisSmokingAndAlcoholHT" breakpoint="true"> 
-			<TaskParam path="LCS3_Evaluation.LCS3_DiagnosisSmokingAndAlcohol.smalc1" values="['1']"/>   
-			<TaskParam path="LCS3_Evaluation.LCS3_DiagnosisSmokingAndAlcohol.smalc2" values="['1']"/>   
-		</Action>  
-		
-		<Action id="ActivateHumanTask" processId="LCS3_DiagnosisNyhaHT" breakpoint="true"/>
-		<Action id="CompleteHumanTask" processId="LCS3_DiagnosisNyhaHT" breakpoint="true"> 
-			<TaskParam path="LCS3_Evaluation.LCS3_DiagnosisNyha.nyha1" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_DiagnosisNyha.nyhatotal" values="['1']" />										
-		</Action>
-		
-		<!--
-		<Action id="CompleteHumanTask" processId="LCS3_SF12EvaluationHT" breakpoint="true"> 
-			<TaskParam path="LCS3_Evaluation.LCS3_SF12Def.sf12-1" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SF12Def.sf12-2" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SF12Def.sf12-3" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SF12Def.sf12-4" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SF12Def.sf12-5" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SF12Def.sf12-6" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SF12Def.sf12-7" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SF12Def.sf12-8" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SF12Def.sf12-9" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SF12Def.sf12-10" values="['1']"/>   
-			<TaskParam path="LCS3_Evaluation.LCS3_SF12Def.sf12-11" values="['1']"/>   
-			<TaskParam path="LCS3_Evaluation.LCS3_SF12Def.sf12-12" values="['1']"/>   
-		</Action>
-		-->
-		
-		<!--
-		<Action id="ActivateHumanTask" processId="LCS3_DiagnosisCodexGold" breakpoint="true"/>
-		<Action id="CompleteHumanTask" processId="LCS3_DiagnosisCodexGold" breakpoint="true"> 
-			<TaskParam path="LCS3_Evaluation.LCS3_DiagnosisCodexGold.codex1" values="['0']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_DiagnosisCodexGold.FEVNumber" values="['1']"/>    			
-			<TaskParam path="LCS3_Evaluation.LCS3_DiagnosisCodexGold.MMRC" values="['0']"/>
-			<TaskParam path="LCS3_Evaluation.LCS3_DiagnosisCodexGold.exacerbacions" values="['0']"/>      
-		</Action>	
-		-->
-							
- 
-		<Action id="ActivateHumanTask" processId="LCS3_CardiacRehabilitation" breakpoint="true"/>
-		<Action id="CompleteHumanTask" processId="LCS3_CardiacRehabilitation" breakpoint="true"> 
-			<TaskParam path="LCS3_Evaluation.LCS3_CardiacRehabilitation.cr1" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_CardiacRehabilitation.cr2" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_CardiacRehabilitation.cr3" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_CardiacRehabilitation.cr4" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_CardiacRehabilitation.cr5" values="['10']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_CardiacRehabilitation.cr6" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_CardiacRehabilitation.cr7" values="['5']"/>    
-		</Action>
- 
- 		<Action id="ActivateHumanTask" processId="LCS3_RespiratoryRehabilitation" breakpoint="true"/>
-		<Action id="CompleteHumanTask" processId="LCS3_RespiratoryRehabilitation" breakpoint="true"> 
-			<TaskParam path="LCS3_Evaluation.LCS3_RespiratoryRehabilitation.rr1" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_RespiratoryRehabilitation.rr2" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_RespiratoryRehabilitation.rr3" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_RespiratoryRehabilitation.rr4" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_RespiratoryRehabilitation.rr5" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_RespiratoryRehabilitation.rr6" values="['5']"/>     
-		</Action>
- 
- 		<Action id="ActivateHumanTask" processId="LCS3_SelfCareAutoTestEPOCHT" breakpoint="true"/>
-		<Action id="CompleteHumanTask" processId="LCS3_SelfCareAutoTestEPOCHT" breakpoint="true"> 
-			<TaskParam path="LCS3_Evaluation.LCS3_SelfCareAutoTestEPOC.scat_epoc1" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SelfCareAutoTestEPOC.scat_epoc2" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SelfCareAutoTestEPOC.scat_epoc3" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SelfCareAutoTestEPOC.scat_epoc4" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SelfCareAutoTestEPOC.scat_epoc5" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SelfCareAutoTestEPOC.scat_epoc6" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SelfCareAutoTestEPOC.scat_epoc7" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SelfCareAutoTestEPOC.scat_epoc8" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SelfCareAutoTestEPOC.scat_epoc9" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SelfCareAutoTestEPOC.scat_epoc10" values="['1']"/>   
-			<TaskParam path="LCS3_Evaluation.LCS3_SelfCareAutoTestEPOC.scat_epoc11" values="['1']"/>   
-			<TaskParam path="LCS3_Evaluation.LCS3_SelfCareAutoTestEPOC.scat_epoc12" values="['1']"/>   
-			<TaskParam path="LCS3_Evaluation.LCS3_SelfCareAutoTestEPOC.scat_epocTotal" values="['12']"/>  
-		</Action> 
-  
-		<Action id="ActivateHumanTask" processId="LCS3_SelfCareAutoTestHFHT" breakpoint="true"/>
- 		<Action id="CompleteHumanTask" processId="LCS3_SelfCareAutoTestHFHT" breakpoint="true"> 
-			<TaskParam path="LCS3_Evaluation.LCS3_SelfCareAutoTestHF.scat_ic1" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SelfCareAutoTestHF.scat_ic2" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SelfCareAutoTestHF.scat_ic3" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SelfCareAutoTestHF.scat_ic4" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SelfCareAutoTestHF.scat_ic5" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SelfCareAutoTestHF.scat_ic6" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SelfCareAutoTestHF.scat_ic7" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SelfCareAutoTestHF.scat_ic8" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SelfCareAutoTestHF.scat_ic9" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SelfCareAutoTestHF.scat_ic10" values="['1']"/>   
-			<TaskParam path="LCS3_Evaluation.LCS3_SelfCareAutoTestHF.scat_ic11" values="['1']"/>   
-			<TaskParam path="LCS3_Evaluation.LCS3_SelfCareAutoTestHF.scat_ic12" values="['1']"/>   
-			<TaskParam path="LCS3_Evaluation.LCS3_SelfCareAutoTestHF.scat_icTotal" values="['12']"/>  
-		</Action> 
- 
-		<Action id="CompleteHumanTask" processId="LCS3_MedicationFollowing" breakpoint="true"> 
-			<TaskParam path="LCS3_Evaluation.LCS3_MedicationFollowing.Medication1" values="['1']"/>   
-			<TaskParam path="LCS3_Evaluation.LCS3_MedicationFollowing.Medication2" values="['1']"/>   
-		</Action> 
-
-		<Action id="CompleteHumanTask" processId="LCS3_Medication" breakpoint="true"> 
-			<TaskParam path="LCS3_Evaluation.LCS3_Medication.Medication1" values="['1']"/>   
-			<TaskParam path="LCS3_Evaluation.LCS3_Medication.Medication2" values="['1']"/>   
-			<TaskParam path="LCS3_Evaluation.LCS3_Medication.Medication3" values="['1']"/>   
-			<TaskParam path="LCS3_Evaluation.LCS3_Medication.Medication4" values="['1']"/>   
-			<TaskParam path="LCS3_Evaluation.LCS3_Medication.Medication5" values="['4']"/> 
-		</Action> 
-
-		<Action id="CompleteHumanTask" processId="LCS3_SocialDwelling" breakpoint="true"> 
-			<TaskParam path="LCS3_Evaluation.LCS3_SocialDwelling.dwelling1" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SocialDwelling.dwelling2" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SocialDwelling.dwelling3" values="['1']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SocialDwelling.dwelling4" values="['0.0001']"/>    
-			<TaskParam path="LCS3_Evaluation.LCS3_SocialDwelling.dwelling5" values="['3']"/>    
-		</Action>  
-
-		<Action id="CompleteHumanTask" processId="LCS3_SocialSelfCareCareerAbility" breakpoint="true">    
-			<TaskParam path="LCS3_Evaluation.LCS3_SocialSelfCareCareerAbility.career1" values="['1']"/> 
-			<TaskParam path="LCS3_Evaluation.LCS3_SocialSelfCareCareerAbility.career2" values="['1']"/> 
-			<TaskParam path="LCS3_Evaluation.LCS3_SocialSelfCareCareerAbility.career3" values="['1']"/> 
-			<TaskParam path="LCS3_Evaluation.LCS3_SocialSelfCareCareerAbility.career4" values="['1']"/> 
-			<TaskParam path="LCS3_Evaluation.LCS3_SocialSelfCareCareerAbility.career5" values="['1']"/> 
-		</Action>
-
-		
-	    <Action id="ActivateDualTask" processId="LCS3_MonitoringPrescriptionAHWP" breakpoint="true"/>
-		<Action id="CompleteDualTaskHumanPart" processId="LCS3_MonitoringPrescriptionAHWP" breakpoint="true">
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionAH.type"  values="['BLOODPRESSURE']"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionAH.alertmin"  values="[55, 66]"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionAH.alertmax"  values="[155, 166]"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionAH.comments"  values="['Some random comment BLOODPRESSURE']"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionAH.freq"  values="[5]"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionAH.freqqunit"  values="['WEEKS']"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionAH.maxdelay"  values="[100]"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionAH.startdate"  values="['2017-06-09T00:00:00.0']"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionAH.enddate"  values="['2019-06-09T00:00:00.0']"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionAH.timeslot"  values="['BREAKFAST']"/>
-		</Action>
-			
-		<Action id="CompleteDualTaskAutomatedPart" processId="LCS3_MonitoringPrescriptionAHWP" breakpoint="true">
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionAH.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
-		</Action>
-
-	    <Action id="ActivateDualTask" processId="LCS3_PhysicalActivityAHWP" breakpoint="true"/>
-		<Action id="CompleteDualTaskHumanPart" processId="LCS3_PhysicalActivityAHWP" breakpoint="true">
-			<TaskParam path="LCS3_Workplan.LCS3_PhysicalActivityAH.startdate"  values="['2017-09-26T00:00:00.000']"/>
-			<TaskParam path="LCS3_Workplan.LCS3_PhysicalActivityAH.enddate"  values="['2018-09-27T00:00:00.000']"/>
-			<TaskParam path="LCS3_Workplan.LCS3_PhysicalActivityAH.dailysteps"  values="[10000]"/>
-			<TaskParam path="LCS3_Workplan.LCS3_PhysicalActivityAH.dailylowlevel"  values="[15]"/>
-			<TaskParam path="LCS3_Workplan.LCS3_PhysicalActivityAH.dailymediumlevel"  values="[5]"/>
-		</Action>
-		<Action id="CompleteDualTaskAutomatedPart" processId="LCS3_PhysicalActivityAHWP">
-			<TaskParam path="LCS3_Workplan.LCS3_PhysicalActivityAH.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
-		</Action>  	
-	  
-		<Action id="ActivateDualTask" processId="LCS3_Advice" breakpoint="true"/>
-        <Action id="CompleteDualTaskHumanPart" processId="LCS3_Advice" breakpoint="true">
-            <TaskParam path="LCS3_Workplan.LCS3_Advice.title"  values="['Read the news paper']"/>
-            <TaskParam path="LCS3_Workplan.LCS3_Advice.expiredate"  values="['2017-06-09T00:00:00.0']"/>
-            <TaskParam path="LCS3_Workplan.LCS3_Advice.explenation"  values="['A long description describing what to do exactly.']"/>
-        </Action>
-        <Action id="CompleteDualTaskAutomatedPart" processId="LCS3_Advice">
-            <TaskParam path="LCS3_Workplan.LCS3_Advice.visualizationdate"  values="['2017-12-26T00:00:00.000']"/>
-        </Action>
-		
-		 <Action id="ActivateDualTask" processId="LCS3_Drug" breakpoint="true"/>
-        <Action id="CompleteDualTaskHumanPart" processId="LCS3_Drug" breakpoint="true">
-            <TaskParam path="LCS3_Workplan.LCS3_Drug.drug"  values="[{'id':'Paracetamol', 'name':'Paracetamol 500mg'}]"/>
-            <TaskParam path="LCS3_Workplan.LCS3_Drug.dosage"  values="['5x Day']"/>
-            <TaskParam path="LCS3_Workplan.LCS3_Drug.startdate"  values="['2017-06-09T00:00:00.0']"/>
-            <TaskParam path="LCS3_Workplan.LCS3_Drug.enddate"  values="['2018-06-09T00:00:00.0']"/>
-            <TaskParam path="LCS3_Workplan.LCS3_Drug.freq"  values="[1]"/>
-            <TaskParam path="LCS3_Workplan.LCS3_Drug.frequnit"  values="['DAYS']"/>
-            <TaskParam path="LCS3_Workplan.LCS3_Drug.maxdelay"  values="[1]"/>
-            <TaskParam path="LCS3_Workplan.LCS3_Drug.timeslot"  values="['BREAKFAST', 'DINNER']"/>
-            <TaskParam path="LCS3_Workplan.LCS3_Drug.comment"  values="['Some comment on the drug.']"/>
-        </Action>
-        <Action id="CompleteDualTaskAutomatedPart" processId="LCS3_Drug">
-            <TaskParam path="LCS3_Workplan.LCS3_Drug.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
-        </Action>		
-	  
-	  	<Action id="CompleteHumanTask" processId="LCS3_SocialCareerTask" breakpoint="true"> 
-			<TaskParam path="LCS3_Workplan.LCS3_SocialCareerTask.comments"  values="['Some random comment SocialCareerTask']"/>
-		</Action>  
-
-	  	<Action id="CompleteHumanTask" processId="LCS3_PrimaryCareClinicianTask" breakpoint="true"> 
-			<TaskParam path="LCS3_Workplan.LCS3_PrimaryCareClinicianTask.comments"  values="['Some random comment PrimaryCareClinicianTask']"/>
-		</Action>  
-
-	  	<Action id="CompleteHumanTask" processId="LCS3_PrimaryCareNurseTask" breakpoint="true"> 
-			<TaskParam path="LCS3_Workplan.LCS3_PrimaryCareNurseTask.comments"  values="['Some random comment PrimaryCareNurseTask']"/>
-		</Action>  	  
-	  
-	  <Action id="ActivateDualTask" processId="LCS3_MonitoringPrescriptionHeartPulseAHWP" breakpoint="true"/>
-		<Action id="CompleteDualTaskHumanPart" processId="LCS3_MonitoringPrescriptionHeartPulseAHWP" breakpoint="true">
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.type"  values="['HEARTPULSE']"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.alertmin"  values="[77]"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.alertmax"  values="[99]"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.alertfreq"  values="[1]"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.alertfrequnit"  values="['DAYS']"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.comments"  values="['Some random comment HEARTPULSE']"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.freq"  values="[5]"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.freqqunit"  values="['WEEKS']"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.maxdelay"  values="[100]"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.startdate"  values="['2017-06-09T00:00:00.0']"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.enddate"  values="['2019-06-09T00:00:00.0']"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.timeslot"  values="['BREAKFAST']"/>
-		</Action>
-			
-		<Action id="CompleteDualTaskAutomatedPart" processId="LCS3_MonitoringPrescriptionHeartPulseAHWP" breakpoint="true">
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
-		</Action>
-
-
-	  <Action id="ActivateDualTask" processId="LCS3_MonitoringPrescriptionWeightAHWP" breakpoint="true"/>
-		<Action id="CompleteDualTaskHumanPart" processId="LCS3_MonitoringPrescriptionWeightAHWP" breakpoint="true">
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionWeightAH.type"  values="['WEIGHT']"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionWeightAH.comments"  values="['Some random comment WEIGHT']"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionWeightAH.freq"  values="[5]"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionWeightAH.freqqunit"  values="['WEEKS']"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionWeightAH.maxdelay"  values="[100]"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionWeightAH.startdate"  values="['2017-06-09T00:00:00.0']"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionWeightAH.enddate"  values="['2019-06-09T00:00:00.0']"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionWeightAH.timeslot"  values="['BREAKFAST']"/>
-		</Action>
-			
-		<Action id="CompleteDualTaskAutomatedPart" processId="LCS3_MonitoringPrescriptionWeightAHWP" breakpoint="true">
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionWeightAH.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
-		</Action>
-
-		
-	  <Action id="ActivateDualTask" processId="LCS3_MonitoringPrescriptionSP02AHWP" breakpoint="true"/>
-		<Action id="CompleteDualTaskHumanPart" processId="LCS3_MonitoringPrescriptionSP02AHWP" breakpoint="true">
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionSP02AH.type"  values="['SP02']"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionSP02AH.alertmin"  values="[66]"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionSP02AH.comments"  values="['Some random comment SP02']"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionSP02AH.freq"  values="[5]"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionSP02AH.freqqunit"  values="['WEEKS']"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionSP02AH.maxdelay"  values="[100]"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionSP02AH.startdate"  values="['2017-06-09T00:00:00.0']"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionSP02AH.enddate"  values="['2019-06-09T00:00:00.0']"/>
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionSP02AH.timeslot"  values="['BREAKFAST']"/>
-		</Action>
-			
-		<Action id="CompleteDualTaskAutomatedPart" processId="LCS3_MonitoringPrescriptionSP02AHWP" breakpoint="true">
-			<TaskParam path="LCS3_Workplan.LCS3_MonitoringPrescriptionSP02AH.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
-		</Action>
-		
-		<!-- At the moment it is only in testing environment -->		
-        <Action id="ActivateDualTask" processId="LCS3_PatientQuestionaireAHWP" breakpoint="true"/>
-        <Action id="CompleteDualTaskHumanPart" processId="LCS3_PatientQuestionaireAHWP" breakpoint="true">
-            <TaskParam path="LCS3_Workplan.LCS3_PatientQuestionaireAH.type"  values="['STATUSEPOC']"/>
-            <TaskParam path="LCS3_Workplan.LCS3_PatientQuestionaireAH.startdate"  values="['2017-06-09T00:00:00.0']"/>
-            <TaskParam path="LCS3_Workplan.LCS3_PatientQuestionaireAH.enddate"  values="['2019-06-09T00:00:00.0']"/>
-            <TaskParam path="LCS3_Workplan.LCS3_PatientQuestionaireAH.freq"  values="[5]"/>
-            <TaskParam path="LCS3_Workplan.LCS3_PatientQuestionaireAH.freqqunit"  values="['WEEKS']"/>
-            <TaskParam path="LCS3_Workplan.LCS3_PatientQuestionaireAH.maxdelay"  values="[100]"/>
-            <TaskParam path="LCS3_Workplan.LCS3_PatientQuestionaireAH.timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
-            <TaskParam path="LCS3_Workplan.LCS3_PatientQuestionaireAH.repetitionsperday"  values="[1]"/>
-        </Action>
-        <Action id="CompleteDualTaskAutomatedPart" processId="LCS3_PatientQuestionaireAHWP">
-            <TaskParam path="LCS3_Workplan.LCS3_PatientQuestionaireAH.questionaires"  values='[{"id":"18823iSMSID","lastEdit":"2018-05-15 11:09:23.0","state":"COMPLETED","taskParams":[{"description":"In general, would you say your health is:","values":["Excellent"],"type":"enumeration","isMandatory":true,"additionalDescription":null},{"description":"Moderate activities","values":["YES, limited a lot"],"type":"enumeration","isMandatory":false,"additionalDescription":"Moderate activities such as moving a table, pushing a vacuum cleaner, bowling, or playing golf."}]},{"id":"18824iSMSID","lastEdit":"2018-05-16 11:09:23.0","state":"ACTIVE","taskParams":[{"description":"In general, would you say your health is:","values":["Very good"],"type":"enumeration","isMandatory":true,"additionalDescription":null},{"description":"Moderate activities","values":["YES, limited a little"],"type":"enumeration","isMandatory":false,"additionalDescription":"Moderate activities such as moving a table, pushing a vacuum cleaner, bowling, or playing golf."}]}]'/>
-        </Action>	
-	
-	
-	    <Action id="CompleteHumanTask" processId="LCS3_DischargeTestHT" breakpoint="true">  
-			<TaskParam path="LCS3_Discharge.LCS3_DischargeTest.discharge1" values="['aaa']"/> 
-			<TaskParam path="LCS3_Discharge.LCS3_DischargeTest.discharge2" values="['bbb']"/> 
-			<TaskParam path="LCS3_Discharge.LCS3_DischargeTest.discharge3" values="['ccc']"/> 
-		</Action> 
- 
-		<Action id="CompleteHumanTask" processId="LCS3_SF12DischargeHT" breakpoint="true">  
-			<TaskParam path="LCS3_Discharge.LCS3_SF12Discharge.sf12-1" values="['1']"/> 
-			<TaskParam path="LCS3_Discharge.LCS3_SF12Discharge.sf12-2" values="['1']"/> 
-			<TaskParam path="LCS3_Discharge.LCS3_SF12Discharge.sf12-3" values="['1']"/> 
-			<TaskParam path="LCS3_Discharge.LCS3_SF12Discharge.sf12-4" values="['1']"/> 
-			<TaskParam path="LCS3_Discharge.LCS3_SF12Discharge.sf12-5" values="['1']"/> 
-			<TaskParam path="LCS3_Discharge.LCS3_SF12Discharge.sf12-6" values="['1']"/> 
-			<TaskParam path="LCS3_Discharge.LCS3_SF12Discharge.sf12-7" values="['1']"/> 
-			<TaskParam path="LCS3_Discharge.LCS3_SF12Discharge.sf12-8" values="['1']"/> 
-			<TaskParam path="LCS3_Discharge.LCS3_SF12Discharge.sf12-9" values="['1']"/> 
-			<TaskParam path="LCS3_Discharge.LCS3_SF12Discharge.sf12-10" values="['1']"/> 
-			<TaskParam path="LCS3_Discharge.LCS3_SF12Discharge.sf12-11" values="['1']"/> 
-			<TaskParam path="LCS3_Discharge.LCS3_SF12Discharge.sf12-12" values="['1']"/> 
-		</Action> 
-
-		<Action id="CompleteHumanTask" processId="LCS3_EQ-5DDischargeHT" breakpoint="true">  
-			<TaskParam path="LCS3_Discharge.LCS3_EQ-5DDischarge.EQ-5D-1" values="['1']"/> 
-			<TaskParam path="LCS3_Discharge.LCS3_EQ-5DDischarge.EQ-5D-2" values="['1']"/> 
-			<TaskParam path="LCS3_Discharge.LCS3_EQ-5DDischarge.EQ-5D-3" values="['1']"/> 
-			<TaskParam path="LCS3_Discharge.LCS3_EQ-5DDischarge.EQ-5D-4" values="['1']"/> 
-			<TaskParam path="LCS3_Discharge.LCS3_EQ-5DDischarge.EQ-5D-5" values="['1']"/> 
-			<TaskParam path="LCS3_Discharge.LCS3_EQ-5DDischarge.EQ-5D-6" values="[51]"/> 
-		</Action> 			
-	</Execution> 		
-	
 </SACMDefinition>
