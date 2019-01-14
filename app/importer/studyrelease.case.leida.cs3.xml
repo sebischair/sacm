@@ -212,11 +212,13 @@
 			<AttributeDefinition id="LCS3_AnthropometricVariablesGenollDones" description="Diagnòstic - Pes i distància (Dones) - Variables antropomètriques" type="Link.EntityDefinition.LCS3_AnthropometricVariablesGenollDones" multiplicity="any" /> 
 			-->
 			
-			<AttributeDefinition id="LCS3_DiagnosisSmokingAndAlcohol" description="Diagnòstic - Consum de tabac i alcohol" type="Link.EntityDefinition.LCS3_DiagnosisSmokingAndAlcohol" multiplicity="any" /> 			            					
-            <AttributeDefinition id="LCS3_DiagnosisNyha" description="Diagnòstic - Diagnosis classe funcional NYHA [Diagnosis Rehabilitació-cardíaca]" type="Link.EntityDefinition.LCS3_DiagnosisNyha" multiplicity="any"/>  
+			<AttributeDefinition id="LCS3_DiagnosisSmokingAndAlcohol" description="Diagnosis - Tobacco and alcohol consumption" type="Link.EntityDefinition.LCS3_DiagnosisSmokingAndAlcohol" multiplicity="any" /> 			            					
+					            
+			<AttributeDefinition id="LCS3_DiagnosisNyha" description="Diagnosis - Functional class NYHA [Diagnosis - Rehabilitation-cardiac]" type="Link.EntityDefinition.LCS3_DiagnosisNyha" multiplicity="any"/>  
+			<AttributeDefinition id="LCS3_CardiacRehabilitation" description="Diagnòstic - Diagnosis Rehabilitació-cardíaca [dependència amb NYHA; fer primer la tasca NYHA]"  type="Link.EntityDefinition.LCS3_CardiacRehabilitation" multiplicity="any" /> 
+			
 			<!--<AttributeDefinition id="LCS3_DiagnosisCodexGold" description="Diagnòstic - Funcional MPOC: FEV1/mMRC/GOLD/CODEX [dependència amb Charlson]" type="Link.EntityDefinition.LCS3_DiagnosisCodexGold" multiplicity="any"/>-->  			
 			<!--<AttributeDefinition id="LCS3_SF12Evaluation" description="*Diagnòstic - SF-12" type="Link.EntityDefinition.LCS3_SF12Def" multiplicity="any"/> -->			
-			<AttributeDefinition id="LCS3_CardiacRehabilitation" description="Diagnòstic - Diagnosis Rehabilitació-cardíaca [dependència amb NYHA; fer primer la tasca NYHA]"  type="Link.EntityDefinition.LCS3_CardiacRehabilitation" multiplicity="any" /> 
 			<AttributeDefinition id="LCS3_RespiratoryRehabilitation" description="Diagnòstic - Rehabilitació-respiratòria"  type="Link.EntityDefinition.LCS3_RespiratoryRehabilitation" multiplicity="any" /> 
 			
 			<AttributeDefinition id="LCS3_SelfCareAutoTestEPOC" description="*Barreres - Capacitat d'autocura (IC)"  type="Link.EntityDefinition.LCS3_SelfCareAutoTestEPOC" multiplicity="any"/> 
@@ -705,24 +707,24 @@
 		</EntityDefinition> 		
 		-->		
 
-        <EntityDefinition id="LCS3_DiagnosisSmokingAndAlcohol" description="Diagnòstic - Consum de tabac i alcohol"> 
-            <AttributeDefinition id="smalc1" type="enumeration" multiplicity="exactlyOne" description="Consum de tabac">
-                <EnumerationOption value="1" description="Actualment"/>
-                <EnumerationOption value="2" description="Anteriorment"/>
-                <EnumerationOption value="3" description="Mai"/>
+        <EntityDefinition id="LCS3_DiagnosisSmokingAndAlcohol" description="Diagnosis - Tobacco and alcohol consumption"> 
+            <AttributeDefinition id="smalc1" type="enumeration" multiplicity="exactlyOne" description="Tobacco consumption">
+                <EnumerationOption value="1" description="Currently"/>
+                <EnumerationOption value="2" description="Previously"/>
+                <EnumerationOption value="3" description="Never"/>
             </AttributeDefinition>  
-            <AttributeDefinition id="smalc2" type="enumeration" multiplicity="exactlyOne" description="Consum d´alcohol - Més de 2 begudes estàndard (Cada unitat té 10 gr alcohol/dia)">
+            <AttributeDefinition id="smalc2" type="enumeration" multiplicity="exactlyOne" description="Alcohol consumption - More than 2 standard drinks (Each unit has 10 gr alcohol / day)">
                 <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
+                <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>  
         </EntityDefinition>	 	
 
-       <EntityDefinition id="LCS3_DiagnosisNyha" description="Diagnòstic - Diagnosis classe funcional NYHA [Diagnosis Rehabilitació-cardíaca]"> 
-            <AttributeDefinition id="nyha1" type="enumeration" multiplicity="exactlyOne" description="classe funcional NYHA">
-                <EnumerationOption value="1" description="Classe I, No limitació de l'activitat física. L'activitat ordinària no ocasiona excessiva fatiga, palpitacions, dispnea o dolor anginós."/>
-                <EnumerationOption value="2" description="Classe II, Lleugera limitació de l'activitat física. Confortables en repòs. L'activitat ordinària ocasiona fatiga, palpitacions, dispnea o dolor anginós."/>
-                <EnumerationOption value="3" description="Classe III, Marcada limitació de l'activitat física. Confortables en repòs. Activitat física menor que l'ordinària ocasiona fatiga, palpitacions, dispnea o dolor anginós."/>
-                <EnumerationOption value="4" description="Classe IV, Incapacitat per dur a terme qualsevol activitat física sense disconfort. Els símptomes d'insuficiència cardíaca o de síndrome anginós poden estar presents fins i tot en repòs. Si es realitza qualsevol activitat física, el disconfort augmenta."/>
+       <EntityDefinition id="LCS3_DiagnosisNyha" description="Diagnosis - Functional class NYHA [Diagnosis - Rehabilitation-cardiac]"> 
+            <AttributeDefinition id="nyha1" type="enumeration" multiplicity="exactlyOne" description="Class funcional NYHA">
+                <EnumerationOption value="1" description="Classe I: Patient with cardiac disease, but no limitation on ordinary physical activity"/>
+                <EnumerationOption value="2" description="Classe II: Comfortable at rest, ordinary activity results in symptoms (slight limitation)"/>
+                <EnumerationOption value="3" description="Classe III: Comfortable at rest, less than ordinary activity results in symptoms (marked limitation)"/>
+                <EnumerationOption value="4" description="Classe IV: Symptomatic at rest, increased discomfort with any physical activity"/>
             </AttributeDefinition>  
 			<DerivedAttributeDefinition id="nyhatotal" expression="number(nyha1,0)" description="NYHA"/> 						
         </EntityDefinition>
@@ -1045,92 +1047,92 @@
         </EntityDefinition>
 		
         <EntityDefinition id="LCS3_MedicationFollowing" description="Barriers - Pharmacy data Compliance"> 
-            <AttributeDefinition id="Medication1" type="enumeration" multiplicity="exactlyOne" description="Supera el 80% de compliment de retirada de la medicació de la oficina de Farmàcia?">
-                <EnumerationOption value="0" description="Sí"/>
+            <AttributeDefinition id="Medication1" type="enumeration" multiplicity="exactlyOne" description="Do you exceed 80% compliance with the medication withdrawal from the Pharmacy office?">
+                <EnumerationOption value="0" description="Yes"/>
 				<EnumerationOption value="1" description="No"/>
             </AttributeDefinition>  
-			<DerivedAttributeDefinition id="Medication2" description="Compliment farmàcia" 
+			<DerivedAttributeDefinition id="Medication2" description="Pharmacy data Compliance" 
 			uiReference="colors(0<=green<1<=red<2<=orange<=10000)"
-			additionalDescription="si 0 (Verd)|| si 1 (Vermell)" 
+			additionalDescription="If 0 (Green)|| If 1 (Red)" 
 			expression="number(Medication1,0)"/>			
         </EntityDefinition> 
 
 		<EntityDefinition id="LCS3_Medication" description="Barriers - Treatment: Compliance / Complexity / Ability to execute it"> 
-            <AttributeDefinition id="Medication1" type="enumeration" multiplicity="exactlyOne" description="Més de 4 pastilles al dia?">
-                <EnumerationOption value="1" description="Sí"/>
+            <AttributeDefinition id="Medication1" type="enumeration" multiplicity="exactlyOne" description="More than 4 pills a day?">
+                <EnumerationOption value="1" description="Yes"/>
 				<EnumerationOption value="0" description="No"/>
             </AttributeDefinition>  
-            <AttributeDefinition id="Medication2" type="enumeration" multiplicity="exactlyOne" description="Més de 4 tipus de medicaments al dia?">
-                <EnumerationOption value="1" description="Sí"/>
+            <AttributeDefinition id="Medication2" type="enumeration" multiplicity="exactlyOne" description="More than 4 types of medications per day?">
+                <EnumerationOption value="1" description="Yes"/>
 				<EnumerationOption value="0" description="No"/>
             </AttributeDefinition> 
-            <AttributeDefinition id="Medication3" type="enumeration" multiplicity="exactlyOne" description="Hi ha alguna dificultat per preparar el medicament?">
-                <EnumerationOption value="1" description="Sí"/>
+            <AttributeDefinition id="Medication3" type="enumeration" multiplicity="exactlyOne" description="Is there any difficulty preparing the medication?">
+                <EnumerationOption value="1" description="Yes"/>
 				<EnumerationOption value="0" description="No"/>
              </AttributeDefinition> 
-            <AttributeDefinition id="Medication4" type="enumeration" multiplicity="exactlyOne" description="Hi ha alguna dificultat per realitzar l'execució del medicament?">
-                <EnumerationOption value="1" description="Sí"/>
+            <AttributeDefinition id="Medication4" type="enumeration" multiplicity="exactlyOne" description="Is there any difficulty in carrying out the drug?">
+                <EnumerationOption value="1" description="Yes"/>
 				<EnumerationOption value="0" description="No"/>
             </AttributeDefinition> 		
-			<DerivedAttributeDefinition id="Medication5" description="Dificultat tractament" 
+			<DerivedAttributeDefinition id="Medication5" description="Difficulty of treatment" 
 			uiReference="colors(0<=green<1<=orange<2<=red<=10000)"
-			additionalDescription="si 0 (Verd)|| si 1 (Taronja)|| si &gt;= 2 (Vermell)" 
+			additionalDescription="if 0 (Green)|| if 1 (Orange)|| if &gt;= 2 (Red)" 
 			expression="number(Medication1,0)+number(Medication2,0)+number(Medication3,0)+number(Medication4,0)" />						
         </EntityDefinition>		
 		
        <EntityDefinition id="LCS3_SocialDwelling" description="Barriers - Social housing"> 
-            <AttributeDefinition id="dwelling1" type="enumeration" multiplicity="exactlyOne" description="Tipus de vivenda"> 
-			    <EnumerationOption value="1" description="Viu a casa pero necessita suport total"/>
-                <EnumerationOption value="0.0001" description="Viu a casa de manera independent"/>
-                <EnumerationOption value="0.0002" description="Viu a casa amb suport parcial"/>
+            <AttributeDefinition id="dwelling1" type="enumeration" multiplicity="exactlyOne" description="Type of housing"> 
+			    <EnumerationOption value="1" description="Lives at home but needs full support"/>
+                <EnumerationOption value="0.0001" description="Live at home independently"/>
+                <EnumerationOption value="0.0002" description="Live at home with partial support"/>
             </AttributeDefinition>
-            <AttributeDefinition id="dwelling2" type="enumeration" multiplicity="exactlyOne" description="Situació de la vivenda"> 
-                <EnumerationOption value="1" description="Sol/a"/>
-                <EnumerationOption value="0.0001" description="Amb el seu cònjuge"/>
-                <EnumerationOption value="0.0002" description="Amb fills"/>
-                <EnumerationOption value="0.0003" description="Amb altres familiars"/>
-                <EnumerationOption value="0.0004" description="Sense familiars, altres"/>
+            <AttributeDefinition id="dwelling2" type="enumeration" multiplicity="exactlyOne" description="Situation of the house"> 
+                <EnumerationOption value="1" description="Alone/>
+                <EnumerationOption value="0.0001" description="With your spouse"/>
+                <EnumerationOption value="0.0002" description="With children"/>
+                <EnumerationOption value="0.0003" description="With other relatives"/>
+                <EnumerationOption value="0.0004" description="No relatives, others"/>
             </AttributeDefinition>
-            <AttributeDefinition id="dwelling3" type="enumeration" multiplicity="exactlyOne" description="Condició de la vivenda (Accesibilitat)"> 
-                <EnumerationOption value="1" description="Pobre (Pobre: inclou absència d'ascensor a l'edifici del pacient en pacients amb un estat funcional dolent)"/>
-                <EnumerationOption value="0" description="Bé"/>  
+            <AttributeDefinition id="dwelling3" type="enumeration" multiplicity="exactlyOne" description="Housing Condition (Accessibility)"> 
+                <EnumerationOption value="1" description="Poor (Poor: includes absence of a lift in the patient's building in patients with a malfunctioning state)"/>
+                <EnumerationOption value="0" description="Good"/>  
 			</AttributeDefinition>
-            <AttributeDefinition id="dwelling4" type="enumeration" multiplicity="exactlyOne" description="Condición de la vivenda (Neteja)"> 
-				<EnumerationOption value="1" description="Pobre (Pobre: significa poc sa o brut, reportat prèviament pels serveis socials)"/>
-                <EnumerationOption value="0.0001" description="Bé"/>
-                <EnumerationOption value="0.0002" description="Moderadament"/>
-                <EnumerationOption value="0.0003" description="Desconegut"/>
+            <AttributeDefinition id="dwelling4" type="enumeration" multiplicity="exactlyOne" description="Housing Condition (Cleaning up)"> 
+				<EnumerationOption value="1" description="Poor (Poor: it means little healthy or dirty, reported previously by social services)"/>
+                <EnumerationOption value="0.0001" description="Good"/>
+                <EnumerationOption value="0.0002" description="Moderately"/>
+                <EnumerationOption value="0.0003" description="Unknown"/>
             </AttributeDefinition>
 		    <DerivedAttributeDefinition id="dwelling5" 
 			uiReference="colors(0<=green<1<=orange<2<=red<=10000)"
-			additionalDescription="si 0 (Verd)|| si 1 (Taronja)|| si &gt;= 2 (Vermell)" 
+			additionalDescription="if 0 (Green)|| if 1 (Orange)|| if &gt;= 2 (Red)" 
 			expression="round(number(dwelling1,0))+round(number(dwelling2,0))+round(number(dwelling3,0))+round(number(dwelling4,0))" 
-			description="Habitatge Social"/> 									
+			description="Social housing"/> 									
         </EntityDefinition>		
 
         <EntityDefinition id="LCS3_SocialSelfCareCareerAbility" description="Barriers - Carer's capacity"> 
-            <AttributeDefinition id="career1" type="enumeration" multiplicity="exactlyOne" description="El cuidador és no apte (informat per serveis socials o per professionals de la salut)"> 
-                <EnumerationOption value="1" description="Sí"/>
+            <AttributeDefinition id="career1" type="enumeration" multiplicity="exactlyOne" description="The caregiver is not fit (informed by social services or by health professionals)"> 
+                <EnumerationOption value="1" description="Yes"/>
 				<EnumerationOption value="0" description="No"/>                
             </AttributeDefinition>
-            <AttributeDefinition id="career2" type="enumeration" multiplicity="exactlyOne" description="El cuidador també té una malaltia crònica"> 
-			    <EnumerationOption value="1" description="Sí"/>
+            <AttributeDefinition id="career2" type="enumeration" multiplicity="exactlyOne" description="The caregiver also has a chronic illness"> 
+			    <EnumerationOption value="1" description="Yes"/>
                 <EnumerationOption value="0" description="No"/>
             </AttributeDefinition>
-            <AttributeDefinition id="career3" type="enumeration" multiplicity="exactlyOne" description="Percepció del recolzament rebut pel pacient"> 
-                <EnumerationOption value="1" description="Inadequat"/>
-				<EnumerationOption value="0" description="Adequat"/>                
+            <AttributeDefinition id="career3" type="enumeration" multiplicity="exactlyOne" description="Perception of the support received by the patient"> 
+                <EnumerationOption value="1" description="Inadequate"/>
+				<EnumerationOption value="0" description="Adequate"/>                
             </AttributeDefinition>
-            <AttributeDefinition id="career4" type="enumeration" multiplicity="exactlyOne" description="Tipus de recolzament"> 
-                <EnumerationOption value="1" description="Suport parcial setmanal o viu sol/a"/>
-                <EnumerationOption value="0.0001" description="Suport parcial diari"/>
-                <EnumerationOption value="0.0002" description="Suport complert 24h"/>
+            <AttributeDefinition id="career4" type="enumeration" multiplicity="exactlyOne" description="Type of support"> 
+                <EnumerationOption value="1" description="Weekly partial support or live alone"/>
+                <EnumerationOption value="0.0001" description="Partial daily support"/>
+                <EnumerationOption value="0.0002" description="Full support 24h"/>
             </AttributeDefinition>
 			<DerivedAttributeDefinition id="career5" 
 			uiReference="colors(0<=green<1<=orange<2<=red<=10000)"
-			additionalDescription="si 0 (Verd)||si 1 (Taronja)|| si &gt;= 2 (Vermell)" 			
+			additionalDescription="if 0 (Green)||if 1 (Orange)|| if &gt;= 2 (Red)" 			
 			expression="round(number(career1,0))+round(number(career2,0))+round(number(career3,0))+round(number(career4,0))" 
-			description="Capacitat Cuidador"/> 
+			description="Carer's capacity"/> 
         </EntityDefinition>				
 
 		<!-- Workplan Entity Definitions -->			
@@ -1794,13 +1796,13 @@
 				</HumanTaskDefinition>  	
 				-->				
 				
-                <HumanTaskDefinition id="LCS3_DiagnosisSmokingAndAlcoholHT" description="Diagnòstic - Consum de tabac i alcohol"
+                <HumanTaskDefinition id="LCS3_DiagnosisSmokingAndAlcoholHT" description="Diagnosis - Tobacco and alcohol consumption"
 				ownerPath="LCS3_Settings.Clinician" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS3_DiagnosisSmokingAndAlcohol" entityAttachPath="LCS3_Evaluation.LCS3_DiagnosisSmokingAndAlcohol">
                     <TaskParamDefinition path="LCS3_Evaluation.LCS3_DiagnosisSmokingAndAlcohol.smalc1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS3_Evaluation.LCS3_DiagnosisSmokingAndAlcohol.smalc2" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition> 	
 
-				<HumanTaskDefinition id="LCS3_DiagnosisNyhaHT" description="Diagnòstic - Diagnosis classe funcional NYHA [Diagnosis Rehabilitació-cardíaca]"
+				<HumanTaskDefinition id="LCS3_DiagnosisNyhaHT" description="Diagnosis - Functional class NYHA [Diagnosis - Rehabilitation-cardiac]"
 				ownerPath="LCS3_Settings.Clinician" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS3_DiagnosisNyha" entityAttachPath="LCS3_Evaluation.LCS3_DiagnosisNyha">                
 					<TaskParamDefinition path="LCS3_Evaluation.LCS3_DiagnosisNyha.nyha1" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS3_Evaluation.LCS3_DiagnosisNyha.nyhatotal" isReadOnly="true" isMandatory="false"/>										
