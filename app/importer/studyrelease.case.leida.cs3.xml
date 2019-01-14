@@ -194,9 +194,12 @@
 			-->
 			
 			<AttributeDefinition id="LCS3_DiagnosisSmokingAndAlcohol" description="Diagnosis - Tobacco and alcohol consumption" type="Link.EntityDefinition.LCS3_DiagnosisSmokingAndAlcohol" multiplicity="any" />
-			<AttributeDefinition id="LCS3_DiagnosisNyha" description="Diagnosis - Functional class NYHA [Diagnosis - Rehabilitation-cardiac]" type="Link.EntityDefinition.LCS3_DiagnosisNyha" multiplicity="any"/>
+			<AttributeDefinition id="LCS3_DiagnosisNyha" description="Diagnosis - Functional class NYHA" type="Link.EntityDefinition.LCS3_DiagnosisNyha" multiplicity="any"/>
+
+			<!--
 			<AttributeDefinition id="LCS3_CardiacRehabilitation" description="Diagnòstic - Diagnosis Rehabilitació-cardíaca [dependència amb NYHA; fer primer la tasca NYHA]" type="Link.EntityDefinition.LCS3_CardiacRehabilitation" multiplicity="any" /> 
 			<AttributeDefinition id="LCS3_RespiratoryRehabilitation" description="Diagnòstic - Rehabilitació-respiratòria"  type="Link.EntityDefinition.LCS3_RespiratoryRehabilitation" multiplicity="any" /> 
+			-->
 						
             <AttributeDefinition id="LCS3_MedicationFollowing" description="Barriers - Pharmacy data Compliance" type="Link.EntityDefinition.LCS3_MedicationFollowing" multiplicity="any" /> 
             <AttributeDefinition id="LCS3_Medication" description="Barriers - Treatment: Compliance / Complexity / Ability to execute it" type="Link.EntityDefinition.LCS3_Medication" multiplicity="any"  /> 
@@ -633,7 +636,7 @@
             </AttributeDefinition>  
         </EntityDefinition>	 	
 
-       <EntityDefinition id="LCS3_DiagnosisNyha" description="Diagnosis - Functional class NYHA [Diagnosis - Rehabilitation-cardiac]"> 
+       <EntityDefinition id="LCS3_DiagnosisNyha" description="Diagnosis - Functional class NYHA"> 
             <AttributeDefinition id="nyha1" type="enumeration" multiplicity="exactlyOne" description="Class funcional NYHA">
                 <EnumerationOption value="1" description="Classe I: Patient with cardiac disease, but no limitation on ordinary physical activity"/>
                 <EnumerationOption value="2" description="Classe II: Comfortable at rest, ordinary activity results in symptoms (slight limitation)"/>
@@ -784,7 +787,8 @@
                 <EnumerationOption value="5" description="None of the time"/>
             </AttributeDefinition> 
         </EntityDefinition>
-		
+
+		<!--
 		<EntityDefinition id="LCS3_CardiacRehabilitation" description="Diagnòstic - Diagnosis Rehabilitació-cardíaca [dependència amb NYHA; fer primer la tasca NYHA]">
 			<AttributeDefinition id="cr1" type="enumeration" multiplicity="exactlyOne" description="Té el pacient classe funcional III-IV de la NYHA?">
 				<EnumerationOption value="0" description="No"/>
@@ -837,6 +841,7 @@
 			additionalDescription="Si = 0 Apte (Risc Baix)|| Si &gt; 0 No apte (Risc Moderat o Alt)"
 			expression="number(rr1,0) + number(rr2,0) + number(rr3,0) + number(rr4,0) + number(rr5,0)" />				
 		</EntityDefinition>				
+		-->
 				
         <EntityDefinition id="LCS3_MedicationFollowing" description="Barriers - Pharmacy data Compliance"> 
             <AttributeDefinition id="Medication1" type="enumeration" multiplicity="exactlyOne" description="Do you exceed 80% compliance with the medication withdrawal from the Pharmacy office?">
@@ -1442,6 +1447,7 @@
                     <TaskParamDefinition path="LCS3_Evaluation.LCS3_ComorbidityCharlsonEvaluation.ch20" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS3_Evaluation.LCS3_ComorbidityCharlsonEvaluation.ch21" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS3_Evaluation.LCS3_ComorbidityCharlsonEvaluation.ch22" isReadOnly="false" isMandatory="true"/>
+					
                 </HumanTaskDefinition>
 				
                 <HumanTaskDefinition id="LCS3_ComorbidityPfeifferHT" description="Comorbidity - Pfeiffer" 
@@ -1552,35 +1558,11 @@
                     <TaskParamDefinition path="LCS3_Evaluation.LCS3_DiagnosisSmokingAndAlcohol.smalc2" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition> 	
 
-				<HumanTaskDefinition id="LCS3_DiagnosisNyhaHT" description="Diagnosis - Functional class NYHA [Diagnosis - Rehabilitation-cardiac]"
-				ownerPath="LCS3_Settings.Clinician" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS3_DiagnosisNyha" entityAttachPath="LCS3_Evaluation.LCS3_DiagnosisNyha">                
+				<HumanTaskDefinition id="LCS3_DiagnosisNyhaHT" description="Diagnosis - Functional class NYHA"
+				ownerPath="LCS3_Settings.Clinician" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS3_DiagnosisNyha" entityAttachPath="LCS3_Evaluation.LCS3_DiagnosisNyha">                
 					<TaskParamDefinition path="LCS3_Evaluation.LCS3_DiagnosisNyha.nyha1" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS3_Evaluation.LCS3_DiagnosisNyha.nyhatotal" isReadOnly="true" isMandatory="false"/>										
 				</HumanTaskDefinition>
-				
-				<HumanTaskDefinition id="LCS3_CardiacRehabilitation" description="Diagnòstic - Diagnosis Rehabilitació-cardíaca [dependència amb NYHA; fer primer la tasca NYHA]" 
-				ownerPath="LCS3_Settings.Clinician" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS3_CardiacRehabilitation" entityAttachPath="LCS3_Evaluation.LCS3_CardiacRehabilitation">
-                    <!--<SentryDefinition>
-                        <precondition processDefinitionId="LCS3_DiagnosisNyhaHT"/>
-                    </SentryDefinition>-->
-                    <TaskParamDefinition path="LCS3_Evaluation.LCS3_CardiacRehabilitation.cr1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS3_Evaluation.LCS3_CardiacRehabilitation.cr2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS3_Evaluation.LCS3_CardiacRehabilitation.cr3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS3_Evaluation.LCS3_CardiacRehabilitation.cr4" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS3_Evaluation.LCS3_CardiacRehabilitation.cr5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS3_Evaluation.LCS3_CardiacRehabilitation.cr6" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS3_Evaluation.LCS3_CardiacRehabilitation.cr7" isReadOnly="false" isMandatory="true"/>
-                </HumanTaskDefinition>		   				
-
-				<HumanTaskDefinition id="LCS3_RespiratoryRehabilitation" description="Diagnòstic - Rehabilitació-respiratòria" 
-				ownerPath="LCS3_Settings.Clinician" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS3_RespiratoryRehabilitation" entityAttachPath="LCS3_Evaluation.LCS3_RespiratoryRehabilitation">
-                    <TaskParamDefinition path="LCS3_Evaluation.LCS3_RespiratoryRehabilitation.rr1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS3_Evaluation.LCS3_RespiratoryRehabilitation.rr2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS3_Evaluation.LCS3_RespiratoryRehabilitation.rr3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS3_Evaluation.LCS3_RespiratoryRehabilitation.rr4" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS3_Evaluation.LCS3_RespiratoryRehabilitation.rr5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS3_Evaluation.LCS3_RespiratoryRehabilitation.rr6" isReadOnly="false" isMandatory="true"/>
-                </HumanTaskDefinition>		   			
 				
 				<!--
 				<HumanTaskDefinition id="LCS3_DiagnosisCodexGold" description="Diagnòstic - Funcional MPOC: FEV1/mMRC/GOLD/CODEX [dependència amb Charlson]"
@@ -1754,25 +1736,7 @@
                     <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_MonitoringPrescriptionSP02AH.comments" isReadOnly="false" isMandatory="false"/>                    
 					<TaskParamDefinition part="AUTOMATED" path="LCS3_Workplan.LCS3_MonitoringPrescriptionSP02AH.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>							
-				                
-                <DualTaskDefinition id="LCS3_PatientQuestionaireAHWP" externalId="PatientQuestionaire" 
-				description="Prescription - Patient Questionaire"
-                                    dynamicDescriptionPath="LCS3_Workplan.LCS3_PatientQuestionaireAH.type"
-				ownerPath="LCS3_Settings.CaseManager" dueDatePath="LCS3_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" 
-				entityDefinitionId="LCS3_PatientQuestionaire" entityAttachPath="LCS3_Workplan.LCS3_PatientQuestionaireAH">
-                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/questionnaires" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
-                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/questionnaires/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_PatientQuestionaireAH.type" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_PatientQuestionaireAH.startdate" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_PatientQuestionaireAH.enddate" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_PatientQuestionaireAH.freq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_PatientQuestionaireAH.frequnit" isReadOnly="false" isMandatory="true"/>   
-                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_PatientQuestionaireAH.maxdelay" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_PatientQuestionaireAH.timeslot" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_PatientQuestionaireAH.repetitionsperday" isReadOnly="false" isMandatory="true"/>                    
-                    <TaskParamDefinition part="AUTOMATED" path="LCS3_Workplan.LCS3_PatientQuestionaireAH.questionaires" isReadOnly="false" isMandatory="true"/>
-                </DualTaskDefinition> 	
-				
+				                				
                 <DualTaskDefinition id="LCS3_PhysicalActivityAHWP" externalId="PhysicalActivity"
 				description="Monitoring Prescription - Physical Activity"
 				ownerPath="LCS3_Settings.Clinician" dueDatePath="LCS3_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS3_PhysicalActivity" entityAttachPath="LCS3_Workplan.LCS3_PhysicalActivityAH">
@@ -1821,7 +1785,6 @@
                     <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.timeslot" isReadOnly="false" isMandatory="true"/> 
                     <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.comments" isReadOnly="false" isMandatory="false"/>                                        <TaskParamDefinition part="AUTOMATED" path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>							
-
 				
                 <DualTaskDefinition id="LCS3_Advice" externalId="Advice" description="Prescription - Advices" 
 				dynamicDescriptionPath="LCS3_Workplan.LCS3_Advice.title" ownerPath="LCS3_Settings.Clinician" dueDatePath="LCS3_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS3_Advice" entityAttachPath="LCS3_Workplan.LCS3_Advice">
@@ -1832,7 +1795,25 @@
                     <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_Advice.explenation" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition part="AUTOMATED" path="LCS3_Workplan.LCS3_Advice.visualizationdate" isReadOnly="false" isMandatory="true"/> 
                 </DualTaskDefinition>			
-							
+
+                <DualTaskDefinition id="LCS3_PatientQuestionaireAHWP" externalId="PatientQuestionaire" 
+				description="Prescription - Patient Questionaire"
+                                    dynamicDescriptionPath="LCS3_Workplan.LCS3_PatientQuestionaireAH.type"
+				ownerPath="LCS3_Settings.CaseManager" dueDatePath="LCS3_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" 
+				entityDefinitionId="LCS3_PatientQuestionaire" entityAttachPath="LCS3_Workplan.LCS3_PatientQuestionaireAH">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/questionnaires" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/questionnaires/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_PatientQuestionaireAH.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_PatientQuestionaireAH.startdate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_PatientQuestionaireAH.enddate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_PatientQuestionaireAH.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_PatientQuestionaireAH.frequnit" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_PatientQuestionaireAH.maxdelay" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_PatientQuestionaireAH.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_PatientQuestionaireAH.repetitionsperday" isReadOnly="false" isMandatory="true"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="LCS3_Workplan.LCS3_PatientQuestionaireAH.questionaires" isReadOnly="false" isMandatory="true"/>
+                </DualTaskDefinition> 	
+				
                 <DualTaskDefinition id="LCS3_SimpleTask" externalId="SimpleTask" description="Prescription - Simple task" dynamicDescriptionPath="LCS3_Workplan.LCS3_SimpleTask.type" 
 				ownerPath="LCS3_Settings.CaseManager" dueDatePath="LCS3_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS3_SimpleTask" entityAttachPath="LCS3_Workplan.LCS3_SimpleTask">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/simpletask" method="POST" failureMessage="Could not create prescription on Self-Management System!"></HttpHookDefinition>
