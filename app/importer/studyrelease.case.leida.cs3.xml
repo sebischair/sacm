@@ -196,13 +196,13 @@
 		
 		<!-- Case Evaluation Entity Definitions -->		
         <EntityDefinition id="LCS3_Evaluation" description="Case Evaluation">
-			<AttributeDefinition id="LCS3_GMAEvaluation" type="Link.EntityDefinition.LCS3_GMADef" multiplicity="any" description="GMA"/> 
-			<AttributeDefinition id="LCS3_ComorbidityCharlsonEvaluation" type="Link.EntityDefinition.LCS3_ComorbidityCharlsonDef" multiplicity="any" description="Comorbidity Charlson"/> 		
-			<AttributeDefinition id="LCS3_ComorbidityPfeiffer" type="Link.EntityDefinition.LCS3_ComorbidityPfeiffer" multiplicity="any" description="Comorbidity Pfeiffer"/>             
-			<AttributeDefinition id="LCS3_HospitalAnxietyAndDepressionScale" type="Link.EntityDefinition.LCS3_HospitalAnxietyAndDepressionScale" multiplicity="any" description="Hospital anxiety and depression scale"/> 			
-			<AttributeDefinition id="LCS3_Barthel" type="Link.EntityDefinition.LCS3_Barthel" multiplicity="any" description="Barthel"/> 
-			<AttributeDefinition id="LCS3_DiagnosisIADL" type="Link.EntityDefinition.LCS3_DiagnosisIADL" multiplicity="any" description="Activitats instrumentals de la vida diària"/>  
-			<AttributeDefinition id="LCS3_FallRisk" description="Diagnòstic - Risc de caigudes" multiplicity="any" type="Link.EntityDefinition.LCS3_FallRisk" />
+			<AttributeDefinition id="LCS3_GMAEvaluation" type="Link.EntityDefinition.LCS3_GMADef" multiplicity="any" description="Comorbidity - GMA"/> 
+			<AttributeDefinition id="LCS3_ComorbidityCharlsonEvaluation" type="Link.EntityDefinition.LCS3_ComorbidityCharlsonDef" multiplicity="any" description="Comorbidity - Charlson"/> 		
+			<AttributeDefinition id="LCS3_ComorbidityPfeiffer" type="Link.EntityDefinition.LCS3_ComorbidityPfeiffer" multiplicity="any" description="Comorbidity - Pfeiffer"/>             
+			<AttributeDefinition id="LCS3_HospitalAnxietyAndDepressionScale" type="Link.EntityDefinition.LCS3_HospitalAnxietyAndDepressionScale" description="Cognitive status - Hospital Anxiety And Depression Scale (HADS)" multiplicity="any"/> 			
+			<AttributeDefinition id="LCS3_Barthel" type="Link.EntityDefinition.LCS3_Barthel" multiplicity="any" description="Functional status - Barthel"/> 
+			<AttributeDefinition id="LCS3_DiagnosisIADL" type="Link.EntityDefinition.LCS3_DiagnosisIADL" multiplicity="any" description="Functional status - Activities of Daily Living (ADL)"/>  
+			<AttributeDefinition id="LCS3_FallRisk" description="Functional status - Fall risk" multiplicity="any" type="Link.EntityDefinition.LCS3_FallRisk" />
 			
 			<!--
 			<AttributeDefinition id="LCS3_Sleeping" description="Estat funcional - Avaluació del son" multiplicity="any" type="Link.EntityDefinition.LCS3_Sleeping"/>			
@@ -228,12 +228,12 @@
             <AttributeDefinition id="LCS3_SocialSelfCareCareerAbility" description="Barriers - Carer's capacity" type="Link.EntityDefinition.LCS3_SocialSelfCareCareerAbility" multiplicity="any" />            									
 		</EntityDefinition>
 		
-		<EntityDefinition id="LCS3_GMADef" description="GMA">
-            <AttributeDefinition id="gma" type="enumeration" multiplicity="exactlyOne" description="Índex GMA">
-                <EnumerationOption value="1" description="Grup 1"/>
-                <EnumerationOption value="2" description="Grup 2"/>
-                <EnumerationOption value="3" description="Grup 3"/>
-                <EnumerationOption value="4" description="Grup 4"/>
+		<EntityDefinition id="LCS3_GMADef" description="Comorbidity - GMA">
+            <AttributeDefinition id="gma" type="enumeration" multiplicity="exactlyOne" description="Index GMA">
+                <EnumerationOption value="1" description="Group 1"/>
+                <EnumerationOption value="2" description="Group 2"/>
+                <EnumerationOption value="3" description="Group 3"/>
+                <EnumerationOption value="4" description="Group 4"/>
             </AttributeDefinition>
 		</EntityDefinition> 				
 		
@@ -336,7 +336,7 @@
 			<DerivedAttributeDefinition id="bodysvg" explicitType="String" expression='replace(replace(bodytemplate, "#dynamicstylevars{}", bodystyle), "#charlsonscorevar", (if ch21=0 then "N.A." else string(ch21)))' description="" uiReference="svg"/>     
 		</EntityDefinition>			
 		
-        <EntityDefinition id="LCS3_ComorbidityPfeiffer" description="Comorbidity Pfeiffer">	
+        <EntityDefinition id="LCS3_ComorbidityPfeiffer" description="Comorbidity - Pfeiffer">	
 			<AttributeDefinition id="pfeiffer0" uiReference="link" type="string" multiplicity="exactlyOne" description="Link to the Pfeiffer test (English version)"   			
 			defaultValue="http://www.npcrc.org/files/news/short_portable_mental_health_questionnaire.pdf"/>
 			
@@ -356,7 +356,7 @@
 
 			<DerivedAttributeDefinition id="pfeiffer2" description="Pfeiffer" 
 			expression='number(pfeiffer1,0)'
-			additionalDescription="Si &gt;= 3 Sospita de deteriorament cognitiu (Vermell)|| Si &lt;= 2 No hi ha deteriorament cognitiu (Verd)"
+			additionalDescription="If &gt;= 3 suspected cognitive impairment (Red)|| If &lt;= 2 there is no cognitive impairment (Green)"
 			uiReference="colors(0<=green<3<=red<11<=orange<=10000)" />							
         </EntityDefinition>		
 		
@@ -446,124 +446,124 @@
                 <EnumerationOption value="3" description="Very seldom"/>
             </AttributeDefinition>
 
-			<DerivedAttributeDefinition id="hadA8" description="HAD Ansietat" 
+			<DerivedAttributeDefinition id="hadA8" description="HAD Anxiety" 
 			uiReference="colors(0<=green<8<=orange<11<=red<=10000)"
 			additionalDescription="si &lt;= 7 Normal (Verd)|| si &gt;=8 i &lt;= 10 Límit (Taronja)|| si &gt;= 11 Cas anormal (Vermell)" 
 			expression="number(hadA1,0)+number(hadA2,0)+number(hadA3,0)+number(hadA4,0)+number(hadA5,0)+number(hadA6,0)+number(hadA7,0)" />			
 			
-			<DerivedAttributeDefinition id="hadD8" description="HAD Depressió" 
+			<DerivedAttributeDefinition id="hadD8" description="HAD Depression" 
 			uiReference="colors(0<=green<8<=orange<11<=red<=10000)"
 			additionalDescription="si &lt;= 7 Normal (Verd)|| si &gt;=8 i &lt;= 10 Límit (Taronja)|| si &gt;= 11 Cas anormal (Vermell)" 
 			expression="number(hadD1,0)+number(hadD2,0)+number(hadD3,0)+number(hadD4,0)+number(hadD5,0)+number(hadD6,0)+number(hadD7,0)" />						 
         </EntityDefinition> 
-		
-		<EntityDefinition id="LCS3_Barthel" description="Estat funcional - Barthel">
-            <AttributeDefinition id="barthel1" type="enumeration" multiplicity="exactlyOne" description="Menjar">
-                <EnumerationOption value="0" description="dependent"/>
-                <EnumerationOption value="5" description="necessita ajuda per tallar, estendre mantega, etc., o requereix una dieta modificada"/>
-                <EnumerationOption value="10" description="independent"/>
+				
+		<EntityDefinition id="LCS3_Barthel" description="Functional status - Barthel">
+            <AttributeDefinition id="barthel1" type="enumeration" multiplicity="exactlyOne" description="Feeding">
+                <EnumerationOption value="0" description="Unable"/>
+                <EnumerationOption value="5" description="Needs help cutting, spreading butter, etc., or requires modified diet"/>
+                <EnumerationOption value="10" description="Independent"/>
             </AttributeDefinition>        
-            <AttributeDefinition id="barthel2" type="enumeration" multiplicity="exactlyOne" description="Rentar-se - banyar-se">
-                <EnumerationOption value="0" description="dependent"/>
-                <EnumerationOption value="5" description="independent (o fent servir la dutxa)"/>
+            <AttributeDefinition id="barthel2" type="enumeration" multiplicity="exactlyOne" description="Bathing">
+                <EnumerationOption value="0" description="Dependent"/>
+                <EnumerationOption value="5" description="Independent (or in shower)"/>
             </AttributeDefinition>   
-            <AttributeDefinition id="barthel3" type="enumeration" multiplicity="exactlyOne" description="Vestir-se">
-                <EnumerationOption value="0" description="depenent"/>
-                <EnumerationOption value="5" description="necessita ajuda, però pot fer al menys la meitat de les tasques en un temps raonable "/>
-                <EnumerationOption value="10" description="independent (incloent botons, cremalleres, llaços, etc.)"/>
+            <AttributeDefinition id="barthel3" type="enumeration" multiplicity="exactlyOne" description="Dressing">
+                <EnumerationOption value="0" description="Dependent"/>
+                <EnumerationOption value="5" description="Needs help but can do about half unaided"/>
+                <EnumerationOption value="10" description="Independent (including buttons, zips, laces, etc.)"/>
             </AttributeDefinition>   
-            <AttributeDefinition id="barthel4" type="enumeration" multiplicity="exactlyOne" description="Endreçar-se">
-                <EnumerationOption value="0" description="dependent"/>
-                <EnumerationOption value="5" description="independent, incloent rentar-se la cara, mans, dents, afaitar-se i pentinar-se (Els complements necessaris poden ser provistos per altres persones)"/>
+            <AttributeDefinition id="barthel4" type="enumeration" multiplicity="exactlyOne" description="Grooming">
+                <EnumerationOption value="0" description="Needs to help with personal care"/>
+                <EnumerationOption value="5" description="Independent face/hair/teeth/shaving (implements provided)"/>
             </AttributeDefinition>   
-            <AttributeDefinition id="barthel5" type="enumeration" multiplicity="exactlyOne" description="Deposició">
-                <EnumerationOption value="0" description="incontinent (inclou administració d’ènemes o supositoris per una altre persona)"/>
-                <EnumerationOption value="5" description="incontinent ocasional"/>
-                <EnumerationOption value="10" description="continent"/>
+            <AttributeDefinition id="barthel5" type="enumeration" multiplicity="exactlyOne" description="Bowels">
+                <EnumerationOption value="0" description="Incontinent (or needs to be given enemas)"/>
+                <EnumerationOption value="5" description="Occasional accident"/>
+                <EnumerationOption value="10" description="Continent"/>
+            </AttributeDefinition>   					
+            <AttributeDefinition id="barthel6" type="enumeration" multiplicity="exactlyOne" description="Bladder">
+                <EnumerationOption value="0" description="Incontinent, or catheterized and unable to manage alone"/>
+                <EnumerationOption value="5" description="Occasional accident"/>
+                <EnumerationOption value="10" description="Continent"/>
             </AttributeDefinition>   
-            <AttributeDefinition id="barthel6" type="enumeration" multiplicity="exactlyOne" description="Micció-Valorar la situació la setmana prèvia">
-                <EnumerationOption value="0" description="incontinent, (pacients amb sonda incapaços de manejar-se)"/>
-                <EnumerationOption value="5" description="incontinent ocasional"/>
-                <EnumerationOption value="10" description="continent"/>
+            <AttributeDefinition id="barthel7" type="enumeration" multiplicity="exactlyOne" description="Toilet use">
+                <EnumerationOption value="0" description="Dependent"/>
+                <EnumerationOption value="5" description="Needs some help, but can do something alone"/>            
+                <EnumerationOption value="10" description="Independent (on and off, dressing, wiping)"/>
+            </AttributeDefinition>   					
+            <AttributeDefinition id="barthel8" type="enumeration" multiplicity="exactlyOne" description="Transfers (bed to chair and back)">
+                <EnumerationOption value="0" description="Unable, no sitting balance"/>
+                <EnumerationOption value="5" description="Major help (one or two people, physical), can sit"/>
+                <EnumerationOption value="10" description="Minor help"/>
+                <EnumerationOption value="15" description="Independent"/>
             </AttributeDefinition>   
-            <AttributeDefinition id="barthel7" type="enumeration" multiplicity="exactlyOne" description="Anar al lavabo">
-                <EnumerationOption value="0" description="dependent"/>
-                <EnumerationOption value="5" description="necessita alguna ajuda però pot fer coses sol"/>            
-                <EnumerationOption value="10" description="independent (entra i surt sol, es pot vestir i netejar-se)"/>
+            <AttributeDefinition id="barthel9" type="enumeration" multiplicity="exactlyOne" description="Mobility (on level surfaces)">
+                <EnumerationOption value="0" description="Immobile or &lt; 50 yards"/>
+                <EnumerationOption value="5" description="Wheelchair independent, including corners, &gt; 50 yards"/>
+                <EnumerationOption value="10" description="Walks with help of one person (verbal or physical) &gt; 50 yards"/>
+                <EnumerationOption value="15" description="Independent(but may use any aid; for example, stick) &gt; 50 yards"/>
             </AttributeDefinition>   
-            <AttributeDefinition id="barthel8" type="enumeration" multiplicity="exactlyOne" description="Traslladar-se de la cadira/llit">
-                <EnumerationOption value="0" description="incapaç, incapaç de romandre assegut"/>
-                <EnumerationOption value="5" description="ajuda gran (una o dues persones o preparada físicament per poder seure), pot romandre assegut"/>
-                <EnumerationOption value="10" description="ajuda menor (verbal o física)"/>
-                <EnumerationOption value="15" description="independent"/>
-            </AttributeDefinition>   
-            <AttributeDefinition id="barthel9" type="enumeration" multiplicity="exactlyOne" description="Marxa">
-                <EnumerationOption value="0" description="immòbil o incapaç de caminar menys 50 metres"/>
-                <EnumerationOption value="5" description="independent en cadira de rodes, incloent portes i cantonades superant els 50 metres"/>
-                <EnumerationOption value="10" description="camina, amb l'ajuda d'una persona (verbal o física) o elements externs (caminador), 50 metres"/>
-                <EnumerationOption value="15" description="independent (però amb ajudes; com per exemple un bastó) camina al menys 50 metres"/>
-            </AttributeDefinition>   
-            <AttributeDefinition id="barthel10" type="enumeration" multiplicity="exactlyOne" description="Pujar i baixar escales">
-                <EnumerationOption value="0" description="dependent"/>
-                <EnumerationOption value="5" description="necessita ajuda (verbal, física)"/>
-                <EnumerationOption value="10" description="independent"/>
+            <AttributeDefinition id="barthel10" type="enumeration" multiplicity="exactlyOne" description="Stairs">
+                <EnumerationOption value="0" description="Unable"/>
+                <EnumerationOption value="5" description="Needs help (verbal, physical, carrying aid)"/>
+                <EnumerationOption value="10" description="Independent"/>
             </AttributeDefinition>               
 			<DerivedAttributeDefinition id="barthel11" description="Barthel" 
 				uiReference="colors(0<=red<61<=orange<91<=green<=10000)"
-				additionalDescription="Si &lt;= 20 Dependència total (Vermell)|| si &gt; 20 i &lt;= 60 Dependència severa (Vermell)|| si &gt; 61 i &lt;= 90 Dependència moderada (Taronja)|| si &gt; 91 i &lt;= 99 Dependència lleu (Verd)|| si = 100 Independent (Verd)" 
+				additionalDescription="If &lt;= 20 Total dependent (Red)|| if &gt; 20 i &lt;= 60 Severe dependence (Red)|| if &gt; 61 i &lt;= 90 Moderate dependence (Orange)|| si &gt; 91 i &lt;= 99 Slight dependence (Verd)|| if = 100 Independent (Green)" 
 				expression="number(barthel1,0)+number(barthel2,0)+number(barthel3,0)+number(barthel4,0)+number(barthel5,0)+number(barthel6,0)+number(barthel7,0)+number(barthel8,0)+number(barthel9,0)+number(barthel10,0)" />						
         </EntityDefinition>
 		
-		<EntityDefinition id="LCS3_FallRisk" description="Diagnòstic - Risc de caigudes">
-			<AttributeDefinition id="fallRisk1" type="enumeration" multiplicity="exactlyOne" description="Caigudes prèvies">
+		<EntityDefinition id="LCS3_FallRisk" description="Functional status - Fall risk">
+			<AttributeDefinition id="fallRisk1" type="enumeration" multiplicity="exactlyOne" description="Previous falls">
                 <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
+                <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>  
-			<AttributeDefinition id="fallRisk20" type="enumeration" multiplicity="exactlyOne" description="Medicaments - Tranquil·litzants, sedants">
+			<AttributeDefinition id="fallRisk20" type="enumeration" multiplicity="exactlyOne" description="Drugs - Tranquilizers, sedatives">
 				<EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
+                <EnumerationOption value="1" description="Yes"/>
 			</AttributeDefinition>  	
-			<AttributeDefinition id="fallRisk21" type="enumeration" multiplicity="exactlyOne" description="Medicaments - Diürètics hipotensors no diurètics">
+			<AttributeDefinition id="fallRisk21" type="enumeration" multiplicity="exactlyOne" description="Drugs - Diuretics, non-diuretic hypotension">
 				<EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
+                <EnumerationOption value="1" description="Yes"/>
 			</AttributeDefinition>  
-			<AttributeDefinition id="fallRisk22" type="enumeration" multiplicity="exactlyOne" description="Medicaments - Antiparkinsonians, antidepressius, altres">
+			<AttributeDefinition id="fallRisk22" type="enumeration" multiplicity="exactlyOne" description="Drugs - Antiparkinsonians, antidepressants, others">
 				<EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
+                <EnumerationOption value="1" description="Yes"/>
 			</AttributeDefinition>  			
-			<AttributeDefinition id="fallRisk3" type="enumeration" multiplicity="exactlyOne" description="Dèficits sensorials">
+			<AttributeDefinition id="fallRisk3" type="enumeration" multiplicity="exactlyOne" description="Sensory deficits">
                 <EnumerationOption value="0" description="Cap"/>
-                <EnumerationOption value="1" description="Alteracions visuals o auditives"/>
+                <EnumerationOption value="1" description="Visual or auditory alterations"/>
             </AttributeDefinition>  
-			<AttributeDefinition id="fallRisk40" type="enumeration" multiplicity="exactlyOne" description="Estat mental - Orientat">
+			<AttributeDefinition id="fallRisk40" type="enumeration" multiplicity="exactlyOne" description="Mental state - Oriented">
 				<EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="0.001" description="Sí"/>
+                <EnumerationOption value="0.001" description="Yes"/>
             </AttributeDefinition>  
-			<AttributeDefinition id="fallRisk41" type="enumeration" multiplicity="exactlyOne" description="Estat mental - Confús">
+			<AttributeDefinition id="fallRisk41" type="enumeration" multiplicity="exactlyOne" description="Mental state - Confused">
 				<EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
+                <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>  
-			<AttributeDefinition id="fallRisk42" type="enumeration" multiplicity="exactlyOne" description="Estat mental - Agitació psicomotora">
+			<AttributeDefinition id="fallRisk42" type="enumeration" multiplicity="exactlyOne" description="Mental state - Psychomotor agitation">
 				<EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
+                <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>  
-			<AttributeDefinition id="fallRisk50" type="enumeration" multiplicity="exactlyOne" description="Deambulació - Normal">
+			<AttributeDefinition id="fallRisk50" type="enumeration" multiplicity="exactlyOne" description="Deambulation - Normal">
 				<EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="0.001" description="Sí"/>
+                <EnumerationOption value="0.001" description="Yes"/>
             </AttributeDefinition>  
-			<AttributeDefinition id="fallRisk51" type="enumeration" multiplicity="exactlyOne" description="Deambulació - Assitida amb elements de recolzament">
+			<AttributeDefinition id="fallRisk51" type="enumeration" multiplicity="exactlyOne" description="Deambulation - Assisted with support elements">
 				<EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
+                <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>  
-			<AttributeDefinition id="fallRisk52" type="enumeration" multiplicity="exactlyOne" description="Deambulació - Repòs absolut postrat">
+			<AttributeDefinition id="fallRisk52" type="enumeration" multiplicity="exactlyOne" description="Deambulation - Absolute rest">
 				<EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
+                <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>  
 			<DerivedAttributeDefinition id="fallRisk6"
 			uiReference="colors(0<=green<3<=orange<5<=red<=10000)"			
-			additionalDescription="Risc baix si &lt;= 2 (Verd)|| Risc mig si 3 o 4 (Taronja)|| Risc alt si &gt;= 5 i &lt;= 9 (Vermell)" 
+			additionalDescription="Low risk if &lt;= 2 (Green)|| Moderate risk if 3 or 4 (Orange)|| High risk if &gt;= 5 and &lt;= 9 (Red)" 
 			expression="round(number(fallRisk1,0))+round(number(fallRisk20,0))+round(number(fallRisk21,0))+round(number(fallRisk22,0))+round(number(fallRisk3,0))+round(number(fallRisk40,0))+round(number(fallRisk41,0))+round(number(fallRisk42,0))+round(number(fallRisk50,0))+round(number(fallRisk51,0))+round(number(fallRisk52,0))"
-			description="Risc de caigudes"/>  
+			description="Fall risk"/>  
 		</EntityDefinition>
 
 		<!--
@@ -1140,10 +1140,10 @@
 			<AttributeDefinition id="LCS3_MonitoringPrescriptionHeartPulseAH" description="Monitoring Prescription - Heart Pulse" type="Link.EntityDefinition.LCS3_MonitoringPrescriptionHeartPulse" multiplicity="any" />							
 			<AttributeDefinition id="LCS3_MonitoringPrescriptionWeightAH" description="Monitoring Prescription - Weight" type="Link.EntityDefinition.LCS3_MonitoringPrescriptionWeight" multiplicity="any" />				
 			<AttributeDefinition id="LCS3_MonitoringPrescriptionSP02AH" description="Monitoring Prescription - Oxygen saturation" type="Link.EntityDefinition.LCS3_MonitoringPrescriptionSP02" multiplicity="any" />	
-			<AttributeDefinition id="LCS3_PatientQuestionaireAH" description="Patient Questionaire" type="Link.EntityDefinition.LCS3_PatientQuestionaire" multiplicity="any" />							
-			<AttributeDefinition id="LCS3_Advice" type="Link.EntityDefinition.LCS3_Advice" description="Advices" multiplicity="any"/>
-			<AttributeDefinition id="LCS3_Drug" type="Link.EntityDefinition.LCS3_Drug" description="Drugs" multiplicity="any"/>
-			<AttributeDefinition id="LCS3_SimpleTask" type="Link.EntityDefinition.LCS3_SimpleTask" description="Simple task" multiplicity="any"/>
+			<AttributeDefinition id="LCS3_Drug" type="Link.EntityDefinition.LCS3_Drug" description="Monitoring Prescription - Drugs" multiplicity="any"/>			
+			<AttributeDefinition id="LCS3_PatientQuestionaireAH" description="Prescription - Patient Questionaire" type="Link.EntityDefinition.LCS3_PatientQuestionaire" multiplicity="any" />							
+			<AttributeDefinition id="LCS3_Advice" type="Link.EntityDefinition.LCS3_Advice" description="Prescription - Advices" multiplicity="any"/>
+			<AttributeDefinition id="LCS3_SimpleTask" type="Link.EntityDefinition.LCS3_SimpleTask" description="Prescription - Simple task" multiplicity="any"/>
 			<AttributeDefinition id="LCS3_SocialCareerTask" description="Social career comments" multiplicity="any" type="Link.EntityDefinition.LCS3_SocialCareerTask"/>						
 			<AttributeDefinition id="LCS3_PrimaryCareClinicianTask" description="Primary care Clinician comments" multiplicity="any" type="Link.EntityDefinition.LCS3_PrimaryCareClinicianTask"/>						
 			<AttributeDefinition id="LCS3_PrimaryCareNurseTask" description="Primary care Nurse comments" multiplicity="any" type="Link.EntityDefinition.LCS3_PrimaryCareNurseTask"/>									
@@ -1220,7 +1220,7 @@
 		<EntityDefinition id="LCS3_MonitoringPrescriptionSP02" description="Monitoring Prescription - Oxygen saturation">
             <AttributeDefinition id="type" type="enumeration" defaultValues="['SP02']" multiplicity="exactlyOne" 
 			description="Measure type" additionalDescription="Select measure type for patient monitory">
-                <EnumerationOption value="SP02" description="Saturació d'oxigen"/>
+                <EnumerationOption value="SP02" description="Oxygen saturation"/>
             </AttributeDefinition>   
             <AttributeDefinition id="alertmin" type="number.min(0)" defaultValues="[90]" multiplicity="exactlyOne" description="Min value allowed" additionalDescription="Minimum value for this measuremnt greather than 0. If blood pressure is selected, please specify the systolic / diastolic maximum."/>                   
 			<AttributeDefinition id="alertmax" type="number.min(0)" multiplicity="exactlyOne" description="Max value allowed" additionalDescription="Maximum value for this measuremnt greather than 0. If blood pressure is selected, please specify the systolic / diastolic minimum."/>      
@@ -1236,7 +1236,6 @@
                 <EnumerationOption value="WEEKS" description="Weeks"/>
                 <EnumerationOption value="MONTHS" description="Months"/>
             </AttributeDefinition> 
-
             <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="exactlyOne" description="Max delay in minutes" additionalDescription="Maximum delay to fullfill the prescription by the patient"/> 
             <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Start date"/> 
             <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="End date"/> 
@@ -1252,7 +1251,7 @@
             <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Measurement"/>                      
         </EntityDefinition>				
 		
-        <EntityDefinition id="LCS3_PatientQuestionaire" description="Patient Questionaire">
+        <EntityDefinition id="LCS3_PatientQuestionaire" description="Prescription - Patient Questionaire">
 			<AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Questionaire type" additionalDescription="Select questionaire type for patient">               
 				<EnumerationOption value="SF12" description="SF12"/>
                 <EnumerationOption value="EQ5D" description="EQ5D"/>
@@ -1287,15 +1286,14 @@
             <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" 
 			description="Measure type" additionalDescription="Select measure type for patient monitory"
 			defaultValues="['BLOODPRESSURE']">
-                <EnumerationOption value="BLOODPRESSURE" description="Pressió arterial"/>
-            </AttributeDefinition>   
-			
+                <EnumerationOption value="BLOODPRESSURE" description="Blood Pressure"/>
+            </AttributeDefinition>   			
             <AttributeDefinition id="alertmin" type="number.min(0).max(300)" multiplicity="any" 
 			uiReference="conditonalmultiplicity(1,type=BLOODPRESSURE=>2)" 
-			description="Valor mínim permès PAS|PAD" additionalDescription="Min value allowed. Recommended: PAS 90|PAD 60"/>       
+			description="Min value allowed PAS|PAD" additionalDescription="Recommended: PAS 90|PAD 60"/>       
             <AttributeDefinition id="alertmax" type="number.min(0).max(300)" multiplicity="any" 
 			uiReference="conditonalmultiplicity(1,type=BLOODPRESSURE=>2)" 
-			description="Valor màxim permès PAS|PAD" additionalDescription="Max value allowed. Recommended: PAS 180|PAD 100"/>      
+			description="Max value allowed PAS|PAD" additionalDescription="Recommended: PAS 180|PAD 100"/>      
             <AttributeDefinition id="alertfreq" type="number" defaultValues="[1]" multiplicity="exactlyOne" description="Alert Frecuency Value"/>       
             <AttributeDefinition id="alertfrequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Alert Frecuency Unit">     
                 <EnumerationOption value="DAYS" description="Days"/>
@@ -1333,14 +1331,14 @@
             <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Measurement"/>                 
         </EntityDefinition> 		                
 						
-		<EntityDefinition id="LCS3_Advice" description="Advices">				
+		<EntityDefinition id="LCS3_Advice" description="Prescription - Advices">				
 			<AttributeDefinition id="title" type="string" multiplicity="exactlyOne" description="Title"/>   
 			<AttributeDefinition id="expiredate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Expire date"/> 
 			<AttributeDefinition id="explenation" type="longtext" multiplicity="exactlyOne" description="Description"/> 
 			<AttributeDefinition id="visualizationdate" type="date" multiplicity="exactlyOne" description="Visualization date"/>                      				
 		</EntityDefinition>
 			
-			<EntityDefinition id="LCS3_Drug" description="Drugs">
+			<EntityDefinition id="LCS3_Drug" description="Monitoring Prescription - Drugs">
 				<AttributeDefinition id="drug" type="json" multiplicity="exactlyOne" description="Drugs" 
 				uiReference="externalEnumeration({url: '$ENV/pharmaprescription/v1/drugs?countryCode=ES%26name=$SEARCH', searchPlaceholder: '$SEARCH', envPlaceholder: '$ENV'})"/>  
 				<AttributeDefinition id="dosage" type="string" multiplicity="exactlyOne" description="Dosage"/>
@@ -1366,7 +1364,7 @@
 			</EntityDefinition>
 			
 			
-		<EntityDefinition id="LCS3_SimpleTask" description="Simple task">
+		<EntityDefinition id="LCS3_SimpleTask" description="Prescription - Simple task">
             <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Task type" additionalDescription="Select a task to perform">     
                 <EnumerationOption value="STRAIGHTENING_AND_BENDING_KNEE_LYING_ON_BACK" description="Straightening and bending the knee while lying on your back"/>
                 <EnumerationOption value="LEG_AWAY_FROM_BODY_TO_THE_SIDE_LYING_ON_BACK" description="Keep your leg away from the body while lying on your back"/>
@@ -1393,7 +1391,7 @@
 					<EnumerationOption value="ANYTIMEDURINGDAY" description="Any time a day" additionalDescription="Please select this option when the timeslot of a day doesn't matter."/>
 				</AttributeDefinition>
 				<AttributeDefinition id="repetitionseachday" type="number" description="Number of reps at a time"/>
-				<AttributeDefinition id="comment" type="longtext" multiplicity="maximalOne" description="Comments"/>    
+				<AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comments"/>    
 				<AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Measurement"/>                  
          </EntityDefinition>
 			
@@ -1419,7 +1417,6 @@
 		<EntityDefinition id="LCS3_DischargeTest" description="Discharge Form"> 
 			<AttributeDefinition id="comment" type="longtext" multiplicity="exactlyOne" description="Comment"/> 
         </EntityDefinition>		
-
 
 		<EntityDefinition id="LCS3_EQ-5DDef" description="EQ-5D">
 			<AttributeDefinition id="EQ-5D-1" type="enumeration" multiplicity="exactlyOne" description="MOBILITY">
@@ -1642,7 +1639,7 @@
                 </HumanTaskDefinition>   				
 				-->
 				
-                <HumanTaskDefinition id="LCS3_GMAEvaluationHT" description="Estat comòrbid - GMA"
+                <HumanTaskDefinition id="LCS3_GMAEvaluationHT" description="Comorbidity - GMA"
 				ownerPath="LCS3_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS3_GMADef" entityAttachPath="LCS3_Evaluation.LCS3_GMAEvaluation">
                     <TaskParamDefinition path="LCS3_Evaluation.LCS3_GMAEvaluation.gma" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition> 				
@@ -1674,7 +1671,7 @@
 					<TaskParamDefinition path="LCS3_Evaluation.LCS3_ComorbidityCharlsonEvaluation.ch22" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>
 				
-                <HumanTaskDefinition id="LCS3_ComorbidityPfeifferHT" description="Comorbidity Pfeiffer" 
+                <HumanTaskDefinition id="LCS3_ComorbidityPfeifferHT" description="Comorbidity - Pfeiffer" 
 				footnote="Pfeiffer, E. (1975). A short portable mental status questionnaire for the assessment of organic brain deficit in elderly patients. Journal of American Geriatrics Society. 23, 433-41."
 				ownerPath="LCS3_Settings.Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS3_ComorbidityPfeiffer" entityAttachPath="LCS3_Evaluation.LCS3_ComorbidityPfeiffer">
 					<TaskParamDefinition path="LCS3_Evaluation.LCS3_ComorbidityPfeiffer.pfeiffer0" isReadOnly="true" isMandatory="false"/>
@@ -1703,7 +1700,7 @@
                     <TaskParamDefinition path="LCS3_Evaluation.LCS3_HospitalAnxietyAndDepressionScale.hadD8" isReadOnly="true" isMandatory="false"/>        
                 </HumanTaskDefinition>
 				
-                <HumanTaskDefinition id="LCS3_BarthelHT" description="Estat funcional - Barthel" 
+                <HumanTaskDefinition id="LCS3_BarthelHT" description="Functional status - Barthel" 
 				footnote="Mahoney FI, Barthel D. &quot;Functional evaluation: the Barthel Index.&quot;Maryland State Medical Journal 1965;14:56-61. Used with permission.
 				Loewen SC, Anderson BA. &quot;Predictors of stroke outcome using objective measurement scales.&quot; Stroke.1990;21:78-81.
 				Gresham GE, Phillips TF, Labi ML. &quot;ADL status in stroke: relative merits of three standard indexes.&quot; Arch Phys Med
@@ -1754,7 +1751,7 @@
 					<TaskParamDefinition path="LCS3_Evaluation.LCS3_DiagnosisIADL.IADL7" isReadOnly="true" isMandatory="false"/>
 				</HumanTaskDefinition>				
 				
-				<HumanTaskDefinition id="LCS3_FallRisk" description="Diagnòstic - Risc de caigudes"
+				<HumanTaskDefinition id="LCS3_FallRisk" description="Functional status - Fall risk"
 				ownerPath="LCS3_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS3_FallRisk" entityAttachPath="LCS3_Evaluation.LCS3_FallRisk">                
 					<TaskParamDefinition path="LCS3_Evaluation.LCS3_FallRisk.fallRisk1" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS3_Evaluation.LCS3_FallRisk.fallRisk20" isReadOnly="false" isMandatory="true"/>
@@ -2003,27 +2000,8 @@
                     <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_MonitoringPrescriptionSP02AH.comments" isReadOnly="false" isMandatory="false"/>                    
 					<TaskParamDefinition part="AUTOMATED" path="LCS3_Workplan.LCS3_MonitoringPrescriptionSP02AH.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>							
-				
-                <DualTaskDefinition id="LCS3_MonitoringPrescriptionHeartPulseAHWP" externalId="MonitoringPrescription"
-				description="Monitoring Prescription - Heart Pulse"
-				ownerPath="LCS3_Settings.Clinician" dueDatePath="LCS3_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS3_MonitoringPrescriptionHeartPulse" entityAttachPath="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH">
-                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
-                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.type" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.alertmin" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.alertmax" isReadOnly="false" isMandatory="true"/>
-                    <!-- <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.alertfreq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.alertfrequnit" isReadOnly="false" isMandatory="true"/>-->
-                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.freq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.frequnit" isReadOnly="false" isMandatory="true"/>   
-                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.maxdelay" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.startdate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.enddate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.timeslot" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.comments" isReadOnly="false" isMandatory="false"/>                                        <TaskParamDefinition part="AUTOMATED" path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.measurement" isReadOnly="false" isMandatory="true"/>
-                </DualTaskDefinition>							
-                
-                <DualTaskDefinition id="LCS3_PatientQuestionaireAHWP" externalId="PatientQuestionaire" 
+				                
+                <DualTaskDefinition id="LCS3_PatientQuestionaireAHWP" externalId="Prescription - PatientQuestionaire" 
 				description="Patient Questionaire"
                                     dynamicDescriptionPath="LCS3_Workplan.LCS3_PatientQuestionaireAH.type"
 				ownerPath="LCS3_Settings.CaseManager" dueDatePath="LCS3_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" 
@@ -2054,18 +2032,8 @@
 					<TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_PhysicalActivityAH.dailyhighlevel" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition part="AUTOMATED" path="LCS3_Workplan.LCS3_PhysicalActivityAH.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>			
-					
-                <DualTaskDefinition id="LCS3_Advice" externalId="Advice" description="Advices" 
-				dynamicDescriptionPath="LCS3_Workplan.LCS3_Advice.title" ownerPath="LCS3_Settings.Clinician" dueDatePath="LCS3_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS3_Advice" entityAttachPath="LCS3_Workplan.LCS3_Advice">
-                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/advice" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
-                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/advice/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_Advice.title" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_Advice.expiredate" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_Advice.explenation" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="AUTOMATED" path="LCS3_Workplan.LCS3_Advice.visualizationdate" isReadOnly="false" isMandatory="true"/> 
-                </DualTaskDefinition>			
 				
-                <DualTaskDefinition id="LCS3_Drug" externalId="Drug" description="Drugs" 
+                <DualTaskDefinition id="LCS3_Drug" externalId="Drug" description="Monitoring Prescription - Drugs" 
 				dynamicDescriptionPath="LCS3_Workplan.LCS3_Drug.drug" ownerPath="LCS3_Settings.Clinician" dueDatePath="LCS3_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS3_Drug" entityAttachPath="LCS3_Workplan.LCS3_Drug">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/drug" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/drug/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
@@ -2080,8 +2048,38 @@
                     <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_Drug.comment" isReadOnly="false" isMandatory="false"/>  
                     <TaskParamDefinition part="AUTOMATED" path="LCS3_Workplan.LCS3_Drug.measurement" isReadOnly="false" isMandatory="true"/> 
                 </DualTaskDefinition>				
-			
-                <DualTaskDefinition id="LCS3_SimpleTask" externalId="SimpleTask" description="Simple task" dynamicDescriptionPath="LCS3_Workplan.LCS3_SimpleTask.type" 
+				
+                <DualTaskDefinition id="LCS3_MonitoringPrescriptionHeartPulseAHWP" externalId="MonitoringPrescription"
+				description="Monitoring Prescription - Heart Pulse"
+				ownerPath="LCS3_Settings.Clinician" dueDatePath="LCS3_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS3_MonitoringPrescriptionHeartPulse" entityAttachPath="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.alertmin" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.alertmax" isReadOnly="false" isMandatory="true"/>
+                    <!-- <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.alertfreq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.alertfrequnit" isReadOnly="false" isMandatory="true"/>-->
+                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.frequnit" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.maxdelay" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.startdate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.enddate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.comments" isReadOnly="false" isMandatory="false"/>                                        <TaskParamDefinition part="AUTOMATED" path="LCS3_Workplan.LCS3_MonitoringPrescriptionHeartPulseAH.measurement" isReadOnly="false" isMandatory="true"/>
+                </DualTaskDefinition>							
+
+				
+                <DualTaskDefinition id="LCS3_Advice" externalId="Advice" description="Prescription - Advices" 
+				dynamicDescriptionPath="LCS3_Workplan.LCS3_Advice.title" ownerPath="LCS3_Settings.Clinician" dueDatePath="LCS3_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS3_Advice" entityAttachPath="LCS3_Workplan.LCS3_Advice">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/advice" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/advice/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_Advice.title" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_Advice.expiredate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS3_Workplan.LCS3_Advice.explenation" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="AUTOMATED" path="LCS3_Workplan.LCS3_Advice.visualizationdate" isReadOnly="false" isMandatory="true"/> 
+                </DualTaskDefinition>			
+							
+                <DualTaskDefinition id="LCS3_SimpleTask" externalId="SimpleTask" description="Prescription - Simple task" dynamicDescriptionPath="LCS3_Workplan.LCS3_SimpleTask.type" 
 				ownerPath="LCS3_Settings.CaseManager" dueDatePath="LCS3_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS3_SimpleTask" entityAttachPath="LCS3_Workplan.LCS3_SimpleTask">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/simpletask" method="POST" failureMessage="Could not create prescription on Self-Management System!"></HttpHookDefinition>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/simpletask/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"></HttpHookDefinition>
