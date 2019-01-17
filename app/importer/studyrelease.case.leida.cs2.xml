@@ -1137,7 +1137,9 @@
 			<AttributeDefinition id="LCS2_PatientEducationAndTrainingToTheCaregiverAH" description="Educació i formació pel cuidador" type="Link.EntityDefinition.LCS2_PatientEducationAndTrainingToTheCaregiverAH" multiplicity="any"/>
 			<AttributeDefinition id="LCS2_MonitoringPrescriptionAH" description="Prescripció de monitorització - Pressió arterial sistòlica\diastòlica - Desprès l'hospitalització" type="Link.EntityDefinition.LCS2_MonitoringPrescription" multiplicity="any" />
 			<AttributeDefinition id="LCS2_PhysicalActivityAH" description="Activitat física - Desprès d'hospitalització" type="Link.EntityDefinition.LCS2_PhysicalActivityAH" multiplicity="any" />
+			<!--
 			<AttributeDefinition id="LCS2_RehabilitationAH" description="Rehabilitació" type="Link.EntityDefinition.LCS2_RehabilitationAH" multiplicity="any" />
+			-->
 			<AttributeDefinition id="LCS2_MonitoringPrescriptionBodyTemperatureAH" description="Prescripció de la monitorització - Temperatura - Desprès d'hospitalització" type="Link.EntityDefinition.LCS2_MonitoringPrescriptionBodyTemperatureAH" multiplicity="any"/>			
 			<AttributeDefinition id="LCS2_PatientQuestionaireAH" description="Prescripció de qüestionaris al pacient" type="Link.EntityDefinition.LCS2_PatientQuestionaireDef" multiplicity="any" />						
 			<AttributeDefinition id="LCS2_Advice" type="Link.EntityDefinition.LCS2_Advice" description="Prescripció de consells" multiplicity="any"/>
@@ -1256,7 +1258,8 @@
             <AttributeDefinition id="repetitionsperday" type="number.min(0)" multiplicity="exactlyOne" description="El nombre de vegades que el qüestionari s'omple per dia"/>
             <AttributeDefinition id="questionaires" type="json" multiplicity="any" uiReference="patientquestionaires" description="Qüestionari per omplir el pacient"/>
         </EntityDefinition>
-				
+		
+		<!--
         <EntityDefinition id="LCS2_RehabilitationAH" description="Rehabilitació">
             <AttributeDefinition id="rehabExec0" type="enumeration" multiplicity="exactlyOne" description="Quan">
                 <EnumerationOption value="0" description="Matí"/>
@@ -1268,6 +1271,7 @@
             </AttributeDefinition>
 			<AttributeDefinition id="rehabExec2" type="longtext" multiplicity="exactlyOne" description="Comentaris"/>
         </EntityDefinition>		
+		-->
 		
 		<EntityDefinition id="LCS2_Advice" description="Prescripció de consells">
 			<AttributeDefinition id="title" type="string" multiplicity="exactlyOne" description="Títol"/>   
@@ -1991,11 +1995,13 @@
                     <TaskParamDefinition part="AUTOMATED" path="LCS2_WorkplanAfterHospitalization.LCS2_PhysicalActivityAH.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>
 
+				<!--
                 <HumanTaskDefinition id="LCS2_RehabilitationAHWP" description="Rehabilitació" ownerPath="LCS2_Settings.Physiotherapist" isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_RehabilitationAH" entityAttachPath="LCS2_WorkplanAfterHospitalization.LCS2_RehabilitationAH">
                     <TaskParamDefinition path="LCS2_WorkplanAfterHospitalization.LCS2_RehabilitationAH.rehabExec0" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS2_WorkplanAfterHospitalization.LCS2_RehabilitationAH.rehabExec1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="LCS2_WorkplanAfterHospitalization.LCS2_RehabilitationAH.rehabExec2" isReadOnly="false" isMandatory="false"/>
                 </HumanTaskDefinition>
+				-->
 				
                 <DualTaskDefinition id="LCS2_Advice" externalId="Advice" description="Prescripció de consells" 
 				dynamicDescriptionPath="LCS2_WorkplanAfterHospitalization.LCS2_Advice.title" ownerPath="LCS2_Settings.Clinician" dueDatePath="LCS2_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS2_Advice" entityAttachPath="LCS2_WorkplanAfterHospitalization.LCS2_Advice">
@@ -2460,12 +2466,14 @@
         <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_PhysicalActivityAHWP.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
     </Action>
 
+	<!--
     <Action id="ActivateHumanTask" processId="LCS2_RehabilitationAHWP" breakpoint="true"/>
     <Action id="CompleteHumanTask" processId="LCS2_RehabilitationAHWP" breakpoint="true">
         <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_RehabilitationAH.rehabExec0" values="['1']"/>
         <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_RehabilitationAH.rehabExec1" values="['1']"/>
         <TaskParam path="LCS2_WorkplanAfterHospitalization.LCS2_RehabilitationAH.rehabExec2" values="['sss']"/>
     </Action>	
+	-->
 	
 	<Action id="ActivateDualTask" processId="LCS2_PatientQuestionaireAHWP" breakpoint="true"/>
     <Action id="CompleteDualTaskHumanPart" processId="LCS2_PatientQuestionaireAHWP" breakpoint="true">
