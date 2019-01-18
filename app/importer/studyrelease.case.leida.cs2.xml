@@ -54,14 +54,13 @@
 		    <AttributeDefinition id="Clinician" type="Link.Users(IrbllClinicians)" description="Cirurgià" multiplicity="exactlyOne"/> <!-- Metge -->
 		    <AttributeDefinition id="Nurse" type="Link.Users(IrbllNurses)" description="Infermera" multiplicity="exactlyOne"/>
 		    <AttributeDefinition id="SocialCareer" type="Link.Users(IrbllSocialCareers)" description="Treballador social" multiplicity="exactlyOne"/>
-			<AttributeDefinition id="AnesClinic" type="Link.Users(IrbllAnesthesiologists, IrbllClinicians)" description="Anestesiòleg o Cirurgià" multiplicity="exactlyOne"/>
+			<AttributeDefinition id="AnesClinic" type="Link.Users(IrbllAnesthesiologists, IrbllClinicians)" description="Anestesiòleg o Cirurgià" multiplicity="exactlyOne"/>			
+			<AttributeDefinition id="PrimaryCareClinicians" type="Link.Users(IrbllPrimaryCareClinicians)" description="Metge - Atenció Primària" multiplicity="exactlyOne"/>
+			<AttributeDefinition id="PrimaryCareNurse" type="Link.Users(IrbllPrimaryCareNurse)" description="Infermera - Atenció Primària" multiplicity="exactlyOne"/>			
+			<AttributeDefinition id="NurseSocialClinician" type="Link.Users(IrbllClinicians, IrbllNurses, IrbllSocialCareers)" description="Cirurgià o Infermera o Treballador social" multiplicity="exactlyOne"/>		   			
             <AttributeDefinition id="IrbllCS2" type="Link.Users(IrbllAnesthesiologists, IrbllCaseManagers, IrbllClinicians)" description="Prescriptors del Cas d'Estudi 2" multiplicity="exactlyOne"/>
-
-			<AttributeDefinition id="NurseSocial" type="Link.Users(IrbllNurses, IrbllSocialCareers)" description="Infermera o Treballador social" multiplicity="exactlyOne"/>
-			<AttributeDefinition id="NurseSocialClinician" type="Link.Users(IrbllClinicians, IrbllNurses, IrbllSocialCareers)" description="Cirurgià o Infermera o Treballador social" multiplicity="exactlyOne"/>
-		    <AttributeDefinition id="PrimaryCareClinicians" type="Link.Users(IrbllPrimaryCareClinicians)" description="Metge - Atenció Primària" multiplicity="exactlyOne"/>
-			<AttributeDefinition id="PrimaryCareNurse" type="Link.Users(IrbllPrimaryCareNurse)" description="Infermera - Atenció Primària" multiplicity="exactlyOne"/>
-		    <AttributeDefinition id="WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date" multiplicity="exactlyOne"/>
+			<AttributeDefinition id="NurseSocial" type="Link.Users(IrbllNurses, IrbllSocialCareers)" description="Infermera o Treballador social" multiplicity="exactlyOne"/>			
+		    <AttributeDefinition id="WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date" multiplicity="exactlyOne"/>			
         </EntityDefinition>
 
 		<!-- Identification Entity Definitions -->
@@ -1872,12 +1871,12 @@
                 </HumanTaskDefinition>
 
 				<HumanTaskDefinition id="LCS2_SocialCareerTask" description="Comentaris de l'assistent social"
-				ownerPath="LCS2_Settings.SocialCareer" isMandatory="false" repeatable="ONCE"  entityDefinitionId="LCS2_SocialCareerTask" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_SocialCareerTask">
+				ownerPath="LCS2_Settings.SocialCareer" isMandatory="false" activation="MANUAL" repeatable="ONCE" entityDefinitionId="LCS2_SocialCareerTask" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_SocialCareerTask">
                     <TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_SocialCareerTask.comments" isReadOnly="false" isMandatory="true"/>
 				</HumanTaskDefinition>
 
 				<HumanTaskDefinition id="LCS2_PrimaryCareNurseTask" description="Comentaris de la infermera de primària"
-				ownerPath="LCS2_Settings.PrimaryCareNurse" isMandatory="false" repeatable="ONCE"  entityDefinitionId="LCS2_PrimaryCareNurseTask" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_PrimaryCareNurseTask">
+				ownerPath="LCS2_Settings.PrimaryCareNurse" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS2_PrimaryCareNurseTask" entityAttachPath="LCS2_WorkplanBeforeHospitalization.LCS2_PrimaryCareNurseTask">
                     <TaskParamDefinition path="LCS2_WorkplanBeforeHospitalization.LCS2_PrimaryCareNurseTask.comments" isReadOnly="false" isMandatory="true"/>
 				</HumanTaskDefinition>
 
@@ -2362,10 +2361,12 @@
         <TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_DiabetesControlBH.DiabetisControl1" values="['1']"/>
     </Action>
 
+	<Action id="ActivateHumanTask" processId="LCS2_SocialCareerTask" breakpoint="true"/>
 	<Action id="CompleteHumanTask" processId="LCS2_SocialCareerTask" breakpoint="true">
 		<TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_SocialCareerTask.comments"  values="['Some random comment SocialCareerTask']"/>
 	</Action>
 
+	<Action id="ActivateHumanTask" processId="LCS2_PrimaryCareNurseTask" breakpoint="true"/>
 	<Action id="CompleteHumanTask" processId="LCS2_PrimaryCareNurseTask" breakpoint="true">
 		<TaskParam path="LCS2_WorkplanBeforeHospitalization.LCS2_PrimaryCareNurseTask.comments"  values="['Some random comment PrimaryCareNurseTask']"/>
 	</Action>
