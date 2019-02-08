@@ -30,7 +30,6 @@
     <User staticId="254a64551050587fc86287b67c0cf487" id="richardsona"/>	
 
     <Workspace staticId="2c9480885d1737ef015d74deec7f0002" id="Irbll">
-
         <EntityDefinition id="LCS4_CaseData" description="Case Data">
 			<AttributeDefinition id="LCS4_Settings" description="Configuració" type="Link.EntityDefinition.LCS4_Settings" multiplicity="any"/> 
 			<AttributeDefinition id="LCS4_Identification" description="Identificació del cas" type="Link.EntityDefinition.LCS4_Identification" multiplicity="any"/><AttributeDefinition id="LCS4_Workplan" description="Pla de treball" type="Link.EntityDefinition.LCS4_Workplan" multiplicity="any"/> 					
@@ -39,33 +38,37 @@
 			
 		<!-- Settings Entity Definitions -->
         <EntityDefinition id="LCS4_Settings" description="Configuració">                       		
-		    <AttributeDefinition id="Patient" type="Link.Users(IrbllPatients)" description="Patient" additionalDescription="Patient that is assigned to this case" multiplicity="exactlyOne"/>			
-			<AttributeDefinition id="CaseManager" type="Link.Users(IrbllProfessionals)" description="Case Owner" multiplicity="exactlyOne"/>            
 		    <AttributeDefinition id="WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date" multiplicity="exactlyOne"/>
+			<AttributeDefinition id="CaseManager" type="Link.Users(IrbllProfessionals)" description="Case Owner" multiplicity="exactlyOne"/>            
+			<AttributeDefinition id="Patient" type="Link.Users(IrbllPatients)" description="Patient" multiplicity="exactlyOne"/>								    
         </EntityDefinition>
 		
 		<!-- Identification Entity Definitions -->
         <EntityDefinition id="LCS4_Identification" description="Case Identification">
-			<AttributeDefinition id="LCS4_LifeStyleHabits" type="Link.EntityDefinition.LCS4_LifeStyleHabits" multiplicity="any" description="Hábitos de estilo de vida"/> 
+			<AttributeDefinition id="LCS4_LifeStyleHabits" type="Link.EntityDefinition.LCS4_LifeStyleHabits" multiplicity="any" description="Life Style Habits"/> 
         </EntityDefinition>			
 		
-		<EntityDefinition id="LCS4_LifeStyleHabits" description="Hábitos de estilo de vida">		
-			<AttributeDefinition id="lsh1" type="number" multiplicity="exactlyOne" description="Altura(cm)"/>									
-            <AttributeDefinition id="lsh2" type="enumeration" multiplicity="exactlyOne" description="¿Dirías que tu cama es cómoda?">
+		<EntityDefinition id="LCS4_LifeStyleHabits" description="Life Style Habits">		
+			<AttributeDefinition id="lsh1" type="number" multiplicity="exactlyOne" description="Height(cm)"/>									
+            <AttributeDefinition id="lsh2" type="enumeration" multiplicity="exactlyOne" description="Is your bed comfortable?">
                 <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
+                <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>  
-            <AttributeDefinition id="lsh3" type="enumeration" multiplicity="exactlyOne" description="¿Bebes café o té?">
+            <AttributeDefinition id="lsh3" type="enumeration" multiplicity="exactlyOne" description="Do you drink coffee or tea?">
                 <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
+                <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>  			
-			<AttributeDefinition id="lsh4" type="number" multiplicity="exactlyOne" description="¿Cuántos cafés/tes tomas al día?"/>									
-			<AttributeDefinition id="lsh5" type="number" multiplicity="exactlyOne" description="¿Cuántos cigarrillos fumas por día?"/>												
-            <AttributeDefinition id="lsh6" type="enumeration" multiplicity="exactlyOne" description="¿Usas tu móvil/tablet antes de acostarte?">
+			<AttributeDefinition id="lsh4" type="number" multiplicity="exactlyOne" defaultValues="[0]" description="How many cups of coffe/tea do you drink per day?"/>
+            <AttributeDefinition id="lsh5" type="enumeration" multiplicity="exactlyOne" description="Do you smoke?">
                 <EnumerationOption value="0" description="No"/>
-                <EnumerationOption value="1" description="Sí"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>  									
+			<AttributeDefinition id="lsh6" type="number" multiplicity="exactlyOne" defaultValues="[0]" description="How many cigarrettes do you smoke per day?"/>
+			<AttributeDefinition id="lsh7" type="enumeration" multiplicity="exactlyOne" description="Do you use your phone/tablet before bedtime?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
             </AttributeDefinition>  			
-			<AttributeDefinition id="lsh7" type="number" multiplicity="exactlyOne" description="¿Durante cuántos minutos usas tu móvil/tablet antes de acostarte?"/>												
+			<AttributeDefinition id="lsh8" type="number" multiplicity="exactlyOne" defaultValues="[0]" description="How much time (minutes) do you use your phone/tablet before bedtime per day?"/>												
 		</EntityDefinition>			
 				
 		<!-- Workplan Entity Definitions -->			
@@ -129,9 +132,9 @@
 		
         <EntityDefinition id="LCS4_PatientQuestionaire" description="Prescription - Patient Questionaire">
 			<AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Questionaire type" additionalDescription="Select questionaire type for patient">               
-				<EnumerationOption value="PHONEUSAGE" description="Uso del móvil"/>
+				<EnumerationOption value="PHONEUSAGE" description="Phone usage"/>
                 <EnumerationOption value="SMOOKING" description="Tabaco"/>
-				<EnumerationOption value="CAFFEINE" description="Cafeina"/>						
+				<EnumerationOption value="CAFFEINE" description="Caffeine"/>						
 			    <!--<EnumerationOption value="EPWORTH" description="EPWORTH"/>-->
                 <EnumerationOption value="SATED" description="SATED"/>								
             </AttributeDefinition>   			
@@ -181,19 +184,19 @@
                     <TaskParamDefinition path="LCS4_Settings.CaseManager" isReadOnly="false" isMandatory="true"/> 
                 </HumanTaskDefinition>								
 				
-				<HumanTaskDefinition id="LCS4_LifeStyleHabits" description="Hábitos de estilo de vida" ownerPath="LCS3_Settings.CaseManager" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS4_LifeStyleHabits" entityAttachPath="LCS4_Identification.LCS4_LifeStyleHabits">
+				<HumanTaskDefinition id="LCS4_LifeStyleHabits" description="Life Style Habits" ownerPath="LCS4_Settings.CaseManager" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS4_LifeStyleHabits" entityAttachPath="LCS4_Identification.LCS4_LifeStyleHabits">
 					<SentryDefinition>
                         <precondition processDefinitionId="LCS4_SelectPatient"/>
 					</SentryDefinition>
 					<TaskParamDefinition path="LCS4_Identification.LCS4_LifeStyleHabits.lsh1" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS4_Identification.LCS4_LifeStyleHabits.lsh2" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="LCS4_Identification.LCS4_LifeStyleHabits.lsh3" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS4_Identification.LCS4_LifeStyleHabits.lsh4" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS4_Identification.LCS4_LifeStyleHabits.lsh4" isReadOnly="false" isMandatory="false"/>
 					<TaskParamDefinition path="LCS4_Identification.LCS4_LifeStyleHabits.lsh5" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS4_Identification.LCS4_LifeStyleHabits.lsh6" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS4_Identification.LCS4_LifeStyleHabits.lsh6" isReadOnly="false" isMandatory="false"/>
 					<TaskParamDefinition path="LCS4_Identification.LCS4_LifeStyleHabits.lsh7" isReadOnly="false" isMandatory="true"/>
-				</HumanTaskDefinition>			 				
-				
+					<TaskParamDefinition path="LCS4_Identification.LCS4_LifeStyleHabits.lsh8" isReadOnly="false" isMandatory="false"/>
+				</HumanTaskDefinition>			 								
 			</StageDefinition>				
 			
             <!-- STAGEDEFINITION: Workplan -->    
