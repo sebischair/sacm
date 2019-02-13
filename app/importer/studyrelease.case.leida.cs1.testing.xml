@@ -940,7 +940,7 @@
 			<AttributeDefinition id="LCS1__MonitoringPrescriptionWeightAH" description="Monitoring Prescription - Weight" type="Link.EntityDefinition.LCS1__MonitoringPrescriptionWeight" multiplicity="any" />				
 			<AttributeDefinition id="LCS1__MonitoringPrescriptionSP02AH" description="Monitoring Prescription - Oxygen saturation" type="Link.EntityDefinition.LCS1__MonitoringPrescriptionSP02" multiplicity="any" />	
 			<AttributeDefinition id="LCS1__Drug" type="Link.EntityDefinition.LCS1__Drug" description="Monitoring Prescription - Drugs" multiplicity="any"/>			
-			<AttributeDefinition id="LCS1__PatientQuestionaireAH" description="Prescription - Patient Questionaire" type="Link.EntityDefinition.LCS1__PatientQuestionaire" multiplicity="any" />							
+			<AttributeDefinition id="LCS1_PatientQuestionaireAH" description="Prescription - Patient Questionaire" type="Link.EntityDefinition.LCS1_PatientQuestionaire" multiplicity="any" />							
 			<AttributeDefinition id="LCS1__Advice" type="Link.EntityDefinition.LCS1__Advice" description="Prescription - Advices" multiplicity="any"/>
 			<AttributeDefinition id="LCS1__SimpleTask" type="Link.EntityDefinition.LCS1__SimpleTask" description="Prescription - Simple task" multiplicity="any"/>
 			<AttributeDefinition id="LCS1__SocialCareerTask" description="Social career comments" multiplicity="any" type="Link.EntityDefinition.LCS1__SocialCareerTask"/>						
@@ -1050,8 +1050,9 @@
             <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Measurement"/>                      
         </EntityDefinition>				
 		
-        <EntityDefinition id="LCS1__PatientQuestionaire" description="Prescription - Patient Questionaire">
-			<AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Questionaire type" additionalDescription="Select questionaire type for patient">               
+        <EntityDefinition id="LCS1_PatientQuestionaire" description="Prescription - Patient Questionaire">
+			<AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Questionaire type" additionalDescription="Select questionaire type for patient">       
+						
                 <EnumerationOption value="STATUSEPOC" description="Lleida/CS1-Autocheck Health Status EPOC"/>
                 <EnumerationOption value="STATUSIC" description="Lleida/CS1-Autocheck Health Status IC"/>                
                 <EnumerationOption value="SLANSS" description="Lleida/CS2-S-LANSS"/>                
@@ -1821,22 +1822,22 @@
                     <TaskParamDefinition part="AUTOMATED" path="LCS1__Workplan.LCS1__Advice.visualizationdate" isReadOnly="false" isMandatory="true"/> 
                 </DualTaskDefinition>			
 
-                <DualTaskDefinition id="LCS1__PatientQuestionaireAHWP" externalId="PatientQuestionaire" 
+                <DualTaskDefinition id="LCS1_PatientQuestionaireAHWP" externalId="PatientQuestionaire" 
 				description="Prescription - Patient Questionaire"
-                                    dynamicDescriptionPath="LCS1__Workplan.LCS1__PatientQuestionaireAH.type"
+                                    dynamicDescriptionPath="LCS1__Workplan.LCS1_PatientQuestionaireAH.type"
 				ownerPath="LCS1__Settings.CaseManager" dueDatePath="LCS1__Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" 
-				entityDefinitionId="LCS1__PatientQuestionaire" entityAttachPath="LCS1__Workplan.LCS1__PatientQuestionaireAH">
+				entityDefinitionId="LCS1_PatientQuestionaire" entityAttachPath="LCS1__Workplan.LCS1_PatientQuestionaireAH">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/questionnaires" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/questionnaires/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__PatientQuestionaireAH.type" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__PatientQuestionaireAH.startdate" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__PatientQuestionaireAH.enddate" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__PatientQuestionaireAH.freq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__PatientQuestionaireAH.frequnit" isReadOnly="false" isMandatory="true"/>   
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__PatientQuestionaireAH.maxdelay" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__PatientQuestionaireAH.timeslot" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__PatientQuestionaireAH.repetitionsperday" isReadOnly="false" isMandatory="true"/>                    
-                    <TaskParamDefinition part="AUTOMATED" path="LCS1__Workplan.LCS1__PatientQuestionaireAH.questionaires" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1_PatientQuestionaireAH.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1_PatientQuestionaireAH.startdate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1_PatientQuestionaireAH.enddate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1_PatientQuestionaireAH.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1_PatientQuestionaireAH.frequnit" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1_PatientQuestionaireAH.maxdelay" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1_PatientQuestionaireAH.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1_PatientQuestionaireAH.repetitionsperday" isReadOnly="false" isMandatory="true"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="LCS1__Workplan.LCS1_PatientQuestionaireAH.questionaires" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition> 	
 				
                 <DualTaskDefinition id="LCS1__SimpleTask" externalId="SimpleTask" description="Prescription - Simple task" dynamicDescriptionPath="LCS1__Workplan.LCS1__SimpleTask.type" 
