@@ -31,16 +31,16 @@
 
     <Workspace staticId="2c9480885d1737ef015d74deec7f0002" id="Irbll">
 
-        <EntityDefinition id="LCS1__CaseData" description="Case Data">
-			<AttributeDefinition id="LCS1__Settings" description="Configuració" type="Link.EntityDefinition.LCS1__Settings" multiplicity="any"/> 
-			<AttributeDefinition id="LCS1__Identification" description="Identificació del cas" type="Link.EntityDefinition.LCS1__Identification" multiplicity="any"/>  
-			<AttributeDefinition id="LCS1__Evaluation" description="Avaluació del cas" type="Link.EntityDefinition.LCS1__Evaluation" multiplicity="any"/> 		  		
-			<AttributeDefinition id="LCS1__Workplan" description="Pla de treball" type="Link.EntityDefinition.LCS1__Workplan" multiplicity="any"/> 					
-			<AttributeDefinition id="LCS1__Discharge" description="Discharge Form" type="Link.EntityDefinition.LCS1__Discharge" multiplicity="any"/> 		
+        <EntityDefinition id="LCS0_CaseData" description="Case Data">
+			<AttributeDefinition id="LCS0_Settings" description="Configuració" type="Link.EntityDefinition.LCS0_Settings" multiplicity="any"/> 
+			<AttributeDefinition id="LCS0_Identification" description="Identificació del cas" type="Link.EntityDefinition.LCS0_Identification" multiplicity="any"/>  
+			<AttributeDefinition id="LCS0_Evaluation" description="Avaluació del cas" type="Link.EntityDefinition.LCS0_Evaluation" multiplicity="any"/> 		  		
+			<AttributeDefinition id="LCS0_Workplan" description="Pla de treball" type="Link.EntityDefinition.LCS0_Workplan" multiplicity="any"/> 					
+			<AttributeDefinition id="LCS0_Discharge" description="Discharge Form" type="Link.EntityDefinition.LCS0_Discharge" multiplicity="any"/> 		
 		</EntityDefinition>	
 			
 		<!-- Settings Entity Definitions -->
-        <EntityDefinition id="LCS1__Settings" description="Configuració">                       		
+        <EntityDefinition id="LCS0_Settings" description="Configuració">                       		
 		    <AttributeDefinition id="Patient" type="Link.Users(IrbllPatients)" description="Patient" additionalDescription="Patient that is assigned to this case" multiplicity="exactlyOne"/>			
 			<AttributeDefinition id="CaseManager" type="Link.Users(IrbllProfessionals)" description="Case Owner" multiplicity="exactlyOne"/>            
 		    <AttributeDefinition id="Clinician" type="Link.Users(IrbllClinicians)" description="Clinican" multiplicity="exactlyOne"/>
@@ -53,13 +53,13 @@
         </EntityDefinition>
 		
 		<!-- Identification Entity Definitions -->
-        <EntityDefinition id="LCS1__Identification" description="Case Identification">
-		    <AttributeDefinition id="LCS1__TechnologicalTest" type="Link.EntityDefinition.LCS1__TechnologicalTest" multiplicity="any" description="Technological test"/> 
-		    <AttributeDefinition id="LCS1__PatientsConsent" type="Link.EntityDefinition.LCS1__PatientsConsent" multiplicity="any" description="Patients consent"/> 		   
-		    <AttributeDefinition id="LCS1__Lace" type="Link.EntityDefinition.LCS1__Lace" multiplicity="any" description="LACE"/>
+        <EntityDefinition id="LCS0_Identification" description="Case Identification">
+		    <AttributeDefinition id="LCS0_TechnologicalTest" type="Link.EntityDefinition.LCS0_TechnologicalTest" multiplicity="any" description="Technological test"/> 
+		    <AttributeDefinition id="LCS0_PatientsConsent" type="Link.EntityDefinition.LCS0_PatientsConsent" multiplicity="any" description="Patients consent"/> 		   
+		    <AttributeDefinition id="LCS0_Lace" type="Link.EntityDefinition.LCS0_Lace" multiplicity="any" description="LACE"/>
         </EntityDefinition>			
 		
-        <EntityDefinition id="LCS1__TechnologicalTest" description="Technological Test">
+        <EntityDefinition id="LCS0_TechnologicalTest" description="Technological Test">
             <AttributeDefinition id="tech1" type="enumeration" multiplicity="exactlyOne" description="Do you or your carergiver have an internet connection?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
@@ -79,7 +79,7 @@
             <DerivedAttributeDefinition id="tech4" expression='if (number(tech1, 0) + number(tech2, 0) + number(tech3,0)) = 0 then "Not Approved" else "Approved"' description="Technological test result"/>
 	    </EntityDefinition>					
 				
-		<EntityDefinition id="LCS1__PatientsConsent" description="Patient's consent">
+		<EntityDefinition id="LCS0_PatientsConsent" description="Patient's consent">
             <AttributeDefinition id="pConsent1" type="enumeration" multiplicity="exactlyOne" description="Do you agree to participate into the process described in the document?">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
@@ -88,7 +88,7 @@
 			defaultValue="https://system.connecare.eu/static/irbllpatientconsentCS1v1.pdf"/>
 		</EntityDefinition>	
 
-        <EntityDefinition id="LCS1__Lace" description="LACE">
+        <EntityDefinition id="LCS0_Lace" description="LACE">
             <AttributeDefinition id="lace1" type="enumeration" multiplicity="exactlyOne" description="(L) Lengh of stay (including day of admission and discharge))">
                 <EnumerationOption value="1" description="1 day"/>
                 <EnumerationOption value="2" description="2 days"/>
@@ -176,39 +176,39 @@
         </EntityDefinition>					
 		
 		<!-- Case Evaluation Entity Definitions -->		
-        <EntityDefinition id="LCS1__Evaluation" description="Case Evaluation">
-			<AttributeDefinition id="LCS1__GMAEvaluation" type="Link.EntityDefinition.LCS1__GMADef" multiplicity="any" description="Comorbidity - GMA"/> 
-			<AttributeDefinition id="LCS1__ComorbidityCharlsonEvaluation" type="Link.EntityDefinition.LCS1__ComorbidityCharlsonDef" multiplicity="any" description="Comorbidity - Charlson"/> 		
-			<AttributeDefinition id="LCS1__ComorbidityPfeiffer" type="Link.EntityDefinition.LCS1__ComorbidityPfeiffer" multiplicity="any" description="Comorbidity - Pfeiffer"/>             
-			<AttributeDefinition id="LCS1__HospitalAnxietyAndDepressionScale" type="Link.EntityDefinition.LCS1__HospitalAnxietyAndDepressionScale" description="Cognitive status - Hospital Anxiety And Depression Scale (HADS)" multiplicity="any"/> 			
-			<AttributeDefinition id="LCS1__Barthel" type="Link.EntityDefinition.LCS1__Barthel" multiplicity="any" description="Functional status - Barthel"/> 
-			<AttributeDefinition id="LCS1__DiagnosisIADL" type="Link.EntityDefinition.LCS1__DiagnosisIADL" multiplicity="any" description="Functional status - Activities of Daily Living (ADL)"/>  
-			<AttributeDefinition id="LCS1__FallRisk" description="Functional status - Fall risk" multiplicity="any" type="Link.EntityDefinition.LCS1__FallRisk" />
+        <EntityDefinition id="LCS0_Evaluation" description="Case Evaluation">
+			<AttributeDefinition id="LCS0_GMAEvaluation" type="Link.EntityDefinition.LCS0_GMADef" multiplicity="any" description="Comorbidity - GMA"/> 
+			<AttributeDefinition id="LCS0_ComorbidityCharlsonEvaluation" type="Link.EntityDefinition.LCS0_ComorbidityCharlsonDef" multiplicity="any" description="Comorbidity - Charlson"/> 		
+			<AttributeDefinition id="LCS0_ComorbidityPfeiffer" type="Link.EntityDefinition.LCS0_ComorbidityPfeiffer" multiplicity="any" description="Comorbidity - Pfeiffer"/>             
+			<AttributeDefinition id="LCS0_HospitalAnxietyAndDepressionScale" type="Link.EntityDefinition.LCS0_HospitalAnxietyAndDepressionScale" description="Cognitive status - Hospital Anxiety And Depression Scale (HADS)" multiplicity="any"/> 			
+			<AttributeDefinition id="LCS0_Barthel" type="Link.EntityDefinition.LCS0_Barthel" multiplicity="any" description="Functional status - Barthel"/> 
+			<AttributeDefinition id="LCS0_DiagnosisIADL" type="Link.EntityDefinition.LCS0_DiagnosisIADL" multiplicity="any" description="Functional status - Activities of Daily Living (ADL)"/>  
+			<AttributeDefinition id="LCS0_FallRisk" description="Functional status - Fall risk" multiplicity="any" type="Link.EntityDefinition.LCS0_FallRisk" />
 			
 			<!--
-            <AttributeDefinition id="LCS1__AnthropometricVariablesAl" description="Diagnòstic - Pes i alçada - Variables antropomètriques" type="Link.EntityDefinition.LCS1__AnthropometricVariablesAl" multiplicity="any" /> 			
-			<AttributeDefinition id="LCS1__AnthropometricVariablesGenollHomes" description="Diagnòstic - Pes i distància (Homes) - Variables antropomètriques" type="Link.EntityDefinition.LCS1__AnthropometricVariablesGenollHomes" multiplicity="any" /> 
-			<AttributeDefinition id="LCS1__AnthropometricVariablesGenollDones" description="Diagnòstic - Pes i distància (Dones) - Variables antropomètriques" type="Link.EntityDefinition.LCS1__AnthropometricVariablesGenollDones" multiplicity="any" /> 
-			<AttributeDefinition id="LCS1__DiagnosisCodexGold" description="Diagnòstic - Funcional MPOC: FEV1/mMRC/GOLD/CODEX [dependència amb Charlson]" type="Link.EntityDefinition.LCS1__DiagnosisCodexGold" multiplicity="any"/>
-			<AttributeDefinition id="LCS1__SF12Evaluation" description="*Diagnòstic - SF-12" type="Link.EntityDefinition.LCS1__SF12Def" multiplicity="any"/> 
+            <AttributeDefinition id="LCS0_AnthropometricVariablesAl" description="Diagnòstic - Pes i alçada - Variables antropomètriques" type="Link.EntityDefinition.LCS0_AnthropometricVariablesAl" multiplicity="any" /> 			
+			<AttributeDefinition id="LCS0_AnthropometricVariablesGenollHomes" description="Diagnòstic - Pes i distància (Homes) - Variables antropomètriques" type="Link.EntityDefinition.LCS0_AnthropometricVariablesGenollHomes" multiplicity="any" /> 
+			<AttributeDefinition id="LCS0_AnthropometricVariablesGenollDones" description="Diagnòstic - Pes i distància (Dones) - Variables antropomètriques" type="Link.EntityDefinition.LCS0_AnthropometricVariablesGenollDones" multiplicity="any" /> 
+			<AttributeDefinition id="LCS0_DiagnosisCodexGold" description="Diagnòstic - Funcional MPOC: FEV1/mMRC/GOLD/CODEX [dependència amb Charlson]" type="Link.EntityDefinition.LCS0_DiagnosisCodexGold" multiplicity="any"/>
+			<AttributeDefinition id="LCS0_SF12Evaluation" description="*Diagnòstic - SF-12" type="Link.EntityDefinition.LCS0_SF12Def" multiplicity="any"/> 
 			-->
 			
-			<AttributeDefinition id="LCS1__DiagnosisSmokingAndAlcohol" description="Diagnosis - Tobacco and alcohol consumption" type="Link.EntityDefinition.LCS1__DiagnosisSmokingAndAlcohol" multiplicity="any" />
-			<AttributeDefinition id="LCS1__DiagnosisNyha" description="Diagnosis - Functional class NYHA" type="Link.EntityDefinition.LCS1__DiagnosisNyha" multiplicity="any"/>
+			<AttributeDefinition id="LCS0_DiagnosisSmokingAndAlcohol" description="Diagnosis - Tobacco and alcohol consumption" type="Link.EntityDefinition.LCS0_DiagnosisSmokingAndAlcohol" multiplicity="any" />
+			<AttributeDefinition id="LCS0_DiagnosisNyha" description="Diagnosis - Functional class NYHA" type="Link.EntityDefinition.LCS0_DiagnosisNyha" multiplicity="any"/>
 
 			<!--
-			<AttributeDefinition id="LCS1__CardiacRehabilitation" description="Diagnòstic - Diagnosis Rehabilitació-cardíaca [dependència amb NYHA; fer primer la tasca NYHA]" type="Link.EntityDefinition.LCS1__CardiacRehabilitation" multiplicity="any" /> 
-			<AttributeDefinition id="LCS1__RespiratoryRehabilitation" description="Diagnòstic - Rehabilitació-respiratòria"  type="Link.EntityDefinition.LCS1__RespiratoryRehabilitation" multiplicity="any" /> 
+			<AttributeDefinition id="LCS0_CardiacRehabilitation" description="Diagnòstic - Diagnosis Rehabilitació-cardíaca [dependència amb NYHA; fer primer la tasca NYHA]" type="Link.EntityDefinition.LCS0_CardiacRehabilitation" multiplicity="any" /> 
+			<AttributeDefinition id="LCS0_RespiratoryRehabilitation" description="Diagnòstic - Rehabilitació-respiratòria"  type="Link.EntityDefinition.LCS0_RespiratoryRehabilitation" multiplicity="any" /> 
 			-->
 						
-            <AttributeDefinition id="LCS1__MedicationFollowing" description="Barriers - Pharmacy data Compliance" type="Link.EntityDefinition.LCS1__MedicationFollowing" multiplicity="any" /> 
-            <AttributeDefinition id="LCS1__Medication" description="Barriers - Treatment: Compliance / Complexity / Ability to execute it" type="Link.EntityDefinition.LCS1__Medication" multiplicity="any"  /> 
-            <AttributeDefinition id="LCS1__SocialDwelling" description="Barriers - Social housing" type="Link.EntityDefinition.LCS1__SocialDwelling" multiplicity="any" /> 
-            <AttributeDefinition id="LCS1__SocialSelfCareCareerAbility" description="Barriers - Carer's capability" type="Link.EntityDefinition.LCS1__SocialSelfCareCareerAbility" multiplicity="any" />            									
+            <AttributeDefinition id="LCS0_MedicationFollowing" description="Barriers - Pharmacy data Compliance" type="Link.EntityDefinition.LCS0_MedicationFollowing" multiplicity="any" /> 
+            <AttributeDefinition id="LCS0_Medication" description="Barriers - Treatment: Compliance / Complexity / Ability to execute it" type="Link.EntityDefinition.LCS0_Medication" multiplicity="any"  /> 
+            <AttributeDefinition id="LCS0_SocialDwelling" description="Barriers - Social housing" type="Link.EntityDefinition.LCS0_SocialDwelling" multiplicity="any" /> 
+            <AttributeDefinition id="LCS0_SocialSelfCareCareerAbility" description="Barriers - Carer's capability" type="Link.EntityDefinition.LCS0_SocialSelfCareCareerAbility" multiplicity="any" />            									
 						
 		</EntityDefinition>
 		
-		<EntityDefinition id="LCS1__GMADef" description="Comorbidity - GMA">
+		<EntityDefinition id="LCS0_GMADef" description="Comorbidity - GMA">
             <AttributeDefinition id="gma" type="enumeration" multiplicity="exactlyOne" description="Index GMA">
                 <EnumerationOption value="1" description="Group 1"/>
                 <EnumerationOption value="2" description="Group 2"/>
@@ -217,7 +217,7 @@
             </AttributeDefinition>
 		</EntityDefinition> 				
 		
-        <EntityDefinition id="LCS1__ComorbidityCharlsonDef" description="Comorbidity - Charlson">
+        <EntityDefinition id="LCS0_ComorbidityCharlsonDef" description="Comorbidity - Charlson">
             <AttributeDefinition id="ch1" type="enumeration" multiplicity="exactlyOne" description="Myocardial infarct">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
@@ -316,7 +316,7 @@
 			<DerivedAttributeDefinition id="bodysvg" explicitType="String" expression='replace(replace(bodytemplate, "#dynamicstylevars{}", bodystyle), "#charlsonscorevar", (if ch21=0 then "N.A." else string(ch21)))' description="" uiReference="svg"/>     
 		</EntityDefinition>			
 		
-        <EntityDefinition id="LCS1__ComorbidityPfeiffer" description="Comorbidity - Pfeiffer">	
+        <EntityDefinition id="LCS0_ComorbidityPfeiffer" description="Comorbidity - Pfeiffer">	
 			<AttributeDefinition id="pfeiffer0" uiReference="link" type="string" multiplicity="exactlyOne" description="Link to the Pfeiffer test (English version)"   			
 			defaultValue="http://www.npcrc.org/files/news/short_portable_mental_health_questionnaire.pdf"/>
 			
@@ -340,7 +340,7 @@
 			uiReference="colors(0<=green<3<=red<11<=orange<=10000)" />							
         </EntityDefinition>		
 		
-		<EntityDefinition id="LCS1__HospitalAnxietyAndDepressionScale" description="Cognitive status - Hospital Anxiety And Depression Scale (HADS)">
+		<EntityDefinition id="LCS0_HospitalAnxietyAndDepressionScale" description="Cognitive status - Hospital Anxiety And Depression Scale (HADS)">
      <AttributeDefinition id="hadA1" type="enumeration" multiplicity="exactlyOne" description="I feel tense or 'wound up'"> 
                 <EnumerationOption value="0" description="Not at all"/>
                 <EnumerationOption value="1" description="From time to time, occasionally"/>
@@ -437,7 +437,7 @@
 			expression="number(hadD1,0)+number(hadD2,0)+number(hadD3,0)+number(hadD4,0)+number(hadD5,0)+number(hadD6,0)+number(hadD7,0)" />						 
         </EntityDefinition> 
 				
-		<EntityDefinition id="LCS1__Barthel" description="Functional status - Barthel">
+		<EntityDefinition id="LCS0_Barthel" description="Functional status - Barthel">
             <AttributeDefinition id="barthel1" type="enumeration" multiplicity="exactlyOne" description="Feeding">
                 <EnumerationOption value="0" description="Unable"/>
                 <EnumerationOption value="5" description="Needs help cutting, spreading butter, etc., or requires modified diet"/>
@@ -494,7 +494,7 @@
 				expression="number(barthel1,0)+number(barthel2,0)+number(barthel3,0)+number(barthel4,0)+number(barthel5,0)+number(barthel6,0)+number(barthel7,0)+number(barthel8,0)+number(barthel9,0)+number(barthel10,0)" />						
         </EntityDefinition>
 		
-		<EntityDefinition id="LCS1__FallRisk" description="Functional status - Fall risk">
+		<EntityDefinition id="LCS0_FallRisk" description="Functional status - Fall risk">
 			<AttributeDefinition id="fallRisk1" type="enumeration" multiplicity="exactlyOne" description="Previous falls">
                 <EnumerationOption value="0" description="No"/>
                 <EnumerationOption value="1" description="Yes"/>
@@ -546,7 +546,7 @@
 			description="Fall risk"/>  
 		</EntityDefinition>
 				
-        <EntityDefinition id="LCS1__DiagnosisIADL" description="Functional status - Activities of Daily Living (ADL)">
+        <EntityDefinition id="LCS0_DiagnosisIADL" description="Functional status - Activities of Daily Living (ADL)">
             <AttributeDefinition id="IADL1" type="enumeration" multiplicity="exactlyOne" description="Bathing">
                 <EnumerationOption value="0" description="Does not need help"/>
                 <EnumerationOption value="1" description="Needs help with 1 body part"/>
@@ -581,7 +581,7 @@
         </EntityDefinition>
 
 		<!--
-		<EntityDefinition id="LCS1__AnthropometricVariablesAl" description="Diagnòstic - Pes i alçada - Variables antropomètriques">
+		<EntityDefinition id="LCS0_AnthropometricVariablesAl" description="Diagnòstic - Pes i alçada - Variables antropomètriques">
             <AttributeDefinition id="AnWeighAl" type="number" multiplicity="exactlyOne" description="Pes (kg)"/>
 			<AttributeDefinition id="AnHeightAl" type="number" multiplicity="exactlyOne" description="Alçada(cm)"/>							
 
@@ -591,7 +591,7 @@
 			expression="round(AnWeighAl/(AnHeightAl/100*AnHeightAl/100),2)" />										
 		</EntityDefinition> 
 	
-		<EntityDefinition id="LCS1__AnthropometricVariablesGenollHomes" description="Diagnòstic - Pes i distància (Homes) - Variables antropomètriques">            
+		<EntityDefinition id="LCS0_AnthropometricVariablesGenollHomes" description="Diagnòstic - Pes i distància (Homes) - Variables antropomètriques">            
 			<AttributeDefinition id="AnKneeGenoll" type="number" multiplicity="exactlyOne" description="Distància entre genoll i turmell (cm)"/>
 			<AttributeDefinition id="AnAgeGenoll" type="number" multiplicity="exactlyOne" description="Edat (anys)"/>			
 
@@ -607,7 +607,7 @@
 			expression="round(AnWeighGenoll/(AnthropometricGenollHomes/100*AnthropometricGenollHomes/100),2)" />										
 		</EntityDefinition> 
 	
-		<EntityDefinition id="LCS1__AnthropometricVariablesGenollDones" description="Diagnòstic - Pes i distància (Dones) - Variables antropomètriques">            
+		<EntityDefinition id="LCS0_AnthropometricVariablesGenollDones" description="Diagnòstic - Pes i distància (Dones) - Variables antropomètriques">            
 			<AttributeDefinition id="AnKneeGenoll" type="number" multiplicity="exactlyOne" description="Distància entre genoll i turmell (cm)"/>
 			<AttributeDefinition id="AnAgeGenoll" type="number" multiplicity="exactlyOne" description="Edat (anys)"/>			
 
@@ -624,7 +624,7 @@
 		</EntityDefinition> 		
 		-->		
 
-        <EntityDefinition id="LCS1__DiagnosisSmokingAndAlcohol" description="Diagnosis - Tobacco and alcohol consumption"> 
+        <EntityDefinition id="LCS0_DiagnosisSmokingAndAlcohol" description="Diagnosis - Tobacco and alcohol consumption"> 
             <AttributeDefinition id="smalc1" type="enumeration" multiplicity="exactlyOne" description="Tobacco consumption">
                 <EnumerationOption value="1" description="Currently"/>
                 <EnumerationOption value="2" description="Previously"/>
@@ -636,7 +636,7 @@
             </AttributeDefinition>  
         </EntityDefinition>	 	
 
-       <EntityDefinition id="LCS1__DiagnosisNyha" description="Diagnosis - Functional class NYHA"> 
+       <EntityDefinition id="LCS0_DiagnosisNyha" description="Diagnosis - Functional class NYHA"> 
             <AttributeDefinition id="nyha1" type="enumeration" multiplicity="exactlyOne" description="Class funcional NYHA">
                 <EnumerationOption value="1" description="Classe I: Patient with cardiac disease, but no limitation on ordinary physical activity"/>
                 <EnumerationOption value="2" description="Classe II: Comfortable at rest, ordinary activity results in symptoms (slight limitation)"/>
@@ -647,7 +647,7 @@
         </EntityDefinition>
 
 	<!--		
-		<EntityDefinition id="LCS1__DiagnosisCodexGold" description="Diagnòstic - Funcional MPOC: FEV1/mMRC/GOLD/CODEX [dependència amb Charlson]"> 		
+		<EntityDefinition id="LCS0_DiagnosisCodexGold" description="Diagnòstic - Funcional MPOC: FEV1/mMRC/GOLD/CODEX [dependència amb Charlson]"> 		
 			<AttributeDefinition id="codex1result" type="number"  multiplicity="exactlyOne" 
 			description="Comorbididat: Charlson"/>    
             <AttributeDefinition id="codex1" type="enumeration" multiplicity="exactlyOne"
@@ -686,7 +686,7 @@
 		-->
 		
 		<!--
-        <EntityDefinition id="LCS1__DiagnosisGold" description="Diagnosis grau GOLD"> 
+        <EntityDefinition id="LCS0_DiagnosisGold" description="Diagnosis grau GOLD"> 
             <AttributeDefinition id="gold1" type="enumeration" multiplicity="exactlyOne" defaultValues="['1']" description="Indiqui el valor d'obstrucció: FEV1%PBD (Forced Expiratory Volume)"> 
                 <EnumerationOption value="0" description="GOLD1-2 &gt;= 50"/>
                 <EnumerationOption value="1" description="GOLD3-4 &lt;= 49"/>
@@ -714,7 +714,7 @@
 			"No existeix"' description="GOLD"/>									
         </EntityDefinition>    -->
 
-        <EntityDefinition id="LCS1__SF12Def" description="SF-12">
+        <EntityDefinition id="LCS0_SF12Def" description="SF-12">
             <AttributeDefinition id="sf12-1"  type="enumeration" multiplicity="exactlyOne" description="1. In general, would you say your health is:">
                 <EnumerationOption value="1"  description="Excellent"/>
                 <EnumerationOption value="2"  description="Very good"/>
@@ -789,7 +789,7 @@
         </EntityDefinition>
 
 		<!--
-		<EntityDefinition id="LCS1__CardiacRehabilitation" description="Diagnòstic - Diagnosis Rehabilitació-cardíaca [dependència amb NYHA; fer primer la tasca NYHA]">
+		<EntityDefinition id="LCS0_CardiacRehabilitation" description="Diagnòstic - Diagnosis Rehabilitació-cardíaca [dependència amb NYHA; fer primer la tasca NYHA]">
 			<AttributeDefinition id="cr1" type="enumeration" multiplicity="exactlyOne" description="Té el pacient classe funcional III-IV de la NYHA?">
 				<EnumerationOption value="0" description="No"/>
 				<EnumerationOption value="1" description="Sí"/>
@@ -816,7 +816,7 @@
 			expression="number(cr1,0) + number(cr2,0) + number(cr3,0) + number(cr4,0) + number(cr6,0)" />				
 		</EntityDefinition>
 				
-		<EntityDefinition id="LCS1__RespiratoryRehabilitation" description="Diagnòstic - Rehabilitació-respiratòria">
+		<EntityDefinition id="LCS0_RespiratoryRehabilitation" description="Diagnòstic - Rehabilitació-respiratòria">
 			<AttributeDefinition id="rr1" type="enumeration" multiplicity="exactlyOne" description="El/la pacient requereix oxigenoteràpia crònica domiciliària?">
 				<EnumerationOption value="0" description="No"/>
 				<EnumerationOption value="1" description="Sí"/>
@@ -843,7 +843,7 @@
 		</EntityDefinition>				
 		-->
 				
-        <EntityDefinition id="LCS1__MedicationFollowing" description="Barriers - Pharmacy data Compliance"> 
+        <EntityDefinition id="LCS0_MedicationFollowing" description="Barriers - Pharmacy data Compliance"> 
             <AttributeDefinition id="Medication1" type="enumeration" multiplicity="exactlyOne" description="Do you exceed 80% compliance with the medication withdrawal from the Pharmacy office?">
                 <EnumerationOption value="0" description="Yes"/>
 				<EnumerationOption value="1" description="No"/>
@@ -854,7 +854,7 @@
 			expression="number(Medication1,0)"/>			
         </EntityDefinition> 
 
-		<EntityDefinition id="LCS1__Medication" description="Barriers - Treatment: Compliance / Complexity / Ability to execute it"> 
+		<EntityDefinition id="LCS0_Medication" description="Barriers - Treatment: Compliance / Complexity / Ability to execute it"> 
             <AttributeDefinition id="Medication1" type="enumeration" multiplicity="exactlyOne" description="More than 4 pills a day?">
                 <EnumerationOption value="1" description="Yes"/>
 				<EnumerationOption value="0" description="No"/>
@@ -877,7 +877,7 @@
 			expression="number(Medication1,0)+number(Medication2,0)+number(Medication3,0)+number(Medication4,0)" />						
         </EntityDefinition>		
 		
-       <EntityDefinition id="LCS1__SocialDwelling" description="Barriers - Social housing"> 
+       <EntityDefinition id="LCS0_SocialDwelling" description="Barriers - Social housing"> 
             <AttributeDefinition id="dwelling1" type="enumeration" multiplicity="exactlyOne" description="Type of housing"> 
 			    <EnumerationOption value="1" description="Lives at home but needs full support"/>
                 <EnumerationOption value="0.0001" description="Live at home independently"/>
@@ -907,7 +907,7 @@
 			description="Social housing"/> 									
         </EntityDefinition>		
 
-        <EntityDefinition id="LCS1__SocialSelfCareCareerAbility" description="Barriers - Carer's capability"> 
+        <EntityDefinition id="LCS0_SocialSelfCareCareerAbility" description="Barriers - Carer's capability"> 
             <AttributeDefinition id="career1" type="enumeration" multiplicity="exactlyOne" description="The caregiver is not fit (informed by social services or by health professionals)"> 
                 <EnumerationOption value="1" description="Yes"/>
 				<EnumerationOption value="0" description="No"/>                
@@ -933,22 +933,22 @@
         </EntityDefinition>				
 
 		<!-- Workplan Entity Definitions -->			
-		<EntityDefinition id="LCS1__Workplan" description="Workplan">			
-			<AttributeDefinition id="LCS1__MonitoringPrescriptionAH" description="Monitoring Prescription - Blood Pressure" type="Link.EntityDefinition.LCS1__MonitoringPrescription" multiplicity="any" /> 			
-			<AttributeDefinition id="LCS1__PhysicalActivityAH" description="Monitoring Prescription - Physical Activity" type="Link.EntityDefinition.LCS1__PhysicalActivity" multiplicity="any" />				
-			<AttributeDefinition id="LCS1__MonitoringPrescriptionHeartPulseAH" description="Monitoring Prescription - Heart Pulse" type="Link.EntityDefinition.LCS1__MonitoringPrescriptionHeartPulse" multiplicity="any" />							
-			<AttributeDefinition id="LCS1__MonitoringPrescriptionWeightAH" description="Monitoring Prescription - Weight" type="Link.EntityDefinition.LCS1__MonitoringPrescriptionWeight" multiplicity="any" />				
-			<AttributeDefinition id="LCS1__MonitoringPrescriptionSP02AH" description="Monitoring Prescription - Oxygen saturation" type="Link.EntityDefinition.LCS1__MonitoringPrescriptionSP02" multiplicity="any" />	
-			<AttributeDefinition id="LCS1__Drug" type="Link.EntityDefinition.LCS1__Drug" description="Monitoring Prescription - Drugs" multiplicity="any"/>			
-			<AttributeDefinition id="LCS1_PatientQuestionaireAH" description="Prescription - Patient Questionaire" type="Link.EntityDefinition.LCS1_PatientQuestionaire" multiplicity="any" />							
-			<AttributeDefinition id="LCS1__Advice" type="Link.EntityDefinition.LCS1__Advice" description="Prescription - Advices" multiplicity="any"/>
-			<AttributeDefinition id="LCS1__SimpleTask" type="Link.EntityDefinition.LCS1__SimpleTask" description="Prescription - Simple task" multiplicity="any"/>
-			<AttributeDefinition id="LCS1__SocialCareerTask" description="Social career comments" multiplicity="any" type="Link.EntityDefinition.LCS1__SocialCareerTask"/>						
-			<AttributeDefinition id="LCS1__PrimaryCareClinicianTask" description="Primary care Clinician comments" multiplicity="any" type="Link.EntityDefinition.LCS1__PrimaryCareClinicianTask"/>						
-			<AttributeDefinition id="LCS1__PrimaryCareNurseTask" description="Primary care Nurse comments" multiplicity="any" type="Link.EntityDefinition.LCS1__PrimaryCareNurseTask"/>									
+		<EntityDefinition id="LCS0_Workplan" description="Workplan">			
+			<AttributeDefinition id="LCS0_MonitoringPrescriptionAH" description="Monitoring Prescription - Blood Pressure" type="Link.EntityDefinition.LCS0_MonitoringPrescription" multiplicity="any" /> 			
+			<AttributeDefinition id="LCS0_PhysicalActivityAH" description="Monitoring Prescription - Physical Activity" type="Link.EntityDefinition.LCS0_PhysicalActivity" multiplicity="any" />				
+			<AttributeDefinition id="LCS0_MonitoringPrescriptionHeartPulseAH" description="Monitoring Prescription - Heart Pulse" type="Link.EntityDefinition.LCS0_MonitoringPrescriptionHeartPulse" multiplicity="any" />							
+			<AttributeDefinition id="LCS0_MonitoringPrescriptionWeightAH" description="Monitoring Prescription - Weight" type="Link.EntityDefinition.LCS0_MonitoringPrescriptionWeight" multiplicity="any" />				
+			<AttributeDefinition id="LCS0_MonitoringPrescriptionSP02AH" description="Monitoring Prescription - Oxygen saturation" type="Link.EntityDefinition.LCS0_MonitoringPrescriptionSP02" multiplicity="any" />	
+			<AttributeDefinition id="LCS0_Drug" type="Link.EntityDefinition.LCS0_Drug" description="Monitoring Prescription - Drugs" multiplicity="any"/>			
+			<AttributeDefinition id="LCS0_PatientQuestionaireAH" description="Prescription - Patient Questionaire" type="Link.EntityDefinition.LCS0_PatientQuestionaire" multiplicity="any" />							
+			<AttributeDefinition id="LCS0_Advice" type="Link.EntityDefinition.LCS0_Advice" description="Prescription - Advices" multiplicity="any"/>
+			<AttributeDefinition id="LCS0_SimpleTask" type="Link.EntityDefinition.LCS0_SimpleTask" description="Prescription - Simple task" multiplicity="any"/>
+			<AttributeDefinition id="LCS0_SocialCareerTask" description="Social career comments" multiplicity="any" type="Link.EntityDefinition.LCS0_SocialCareerTask"/>						
+			<AttributeDefinition id="LCS0_PrimaryCareClinicianTask" description="Primary care Clinician comments" multiplicity="any" type="Link.EntityDefinition.LCS0_PrimaryCareClinicianTask"/>						
+			<AttributeDefinition id="LCS0_PrimaryCareNurseTask" description="Primary care Nurse comments" multiplicity="any" type="Link.EntityDefinition.LCS0_PrimaryCareNurseTask"/>									
 		</EntityDefinition>				
 		
-		<EntityDefinition id="LCS1__MonitoringPrescriptionWeight" description="Monitoring Prescription - Weight">
+		<EntityDefinition id="LCS0_MonitoringPrescriptionWeight" description="Monitoring Prescription - Weight">
             <AttributeDefinition id="type" type="enumeration" defaultValues="['WEIGHT']" multiplicity="exactlyOne" 
 			description="Measure type" additionalDescription="Select measure type for patient monitory">
                 <EnumerationOption value="WEIGHT" description="Weight"/>
@@ -982,7 +982,7 @@
             <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Measurement"/>                      
         </EntityDefinition>				
 		
-		<EntityDefinition id="LCS1__MonitoringPrescriptionHeartPulse" description="Monitoring Prescription - Heart Pulse">
+		<EntityDefinition id="LCS0_MonitoringPrescriptionHeartPulse" description="Monitoring Prescription - Heart Pulse">
             <AttributeDefinition id="type" type="enumeration" defaultValues="['HEARTPULSE']" multiplicity="exactlyOne" 
 			description="Measure type" additionalDescription="Select measure type for patient monitory">
                 <EnumerationOption value="HEARTPULSE" description="Heart pulse"/>
@@ -1016,7 +1016,7 @@
             <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Measurement"/>                      
         </EntityDefinition>		
 		
-		<EntityDefinition id="LCS1__MonitoringPrescriptionSP02" description="Monitoring Prescription - Oxygen saturation">
+		<EntityDefinition id="LCS0_MonitoringPrescriptionSP02" description="Monitoring Prescription - Oxygen saturation">
             <AttributeDefinition id="type" type="enumeration" defaultValues="['SP02']" multiplicity="exactlyOne" 
 			description="Measure type" additionalDescription="Select measure type for patient monitory">
                 <EnumerationOption value="SP02" description="Oxygen saturation"/>
@@ -1050,7 +1050,7 @@
             <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Measurement"/>                      
         </EntityDefinition>				
 		
-        <EntityDefinition id="LCS1_PatientQuestionaire" description="Prescription - Patient Questionaire">
+        <EntityDefinition id="LCS0_PatientQuestionaire" description="Prescription - Patient Questionaire">
 			<AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Questionaire type" additionalDescription="Select questionaire type for patient">       
 						
                 <EnumerationOption value="STATUSEPOC" description="Lleida/CS1-Autocheck Health Status EPOC"/>
@@ -1108,7 +1108,7 @@
             <AttributeDefinition id="questionaires" type="json" multiplicity="any" uiReference="patientquestionaires" description="Patient Questionaires"/>                      
         </EntityDefinition>
 		
-		<EntityDefinition id="LCS1__MonitoringPrescription" description="Monitoring Prescription - Blood Pressure">
+		<EntityDefinition id="LCS0_MonitoringPrescription" description="Monitoring Prescription - Blood Pressure">
             <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" 
 			description="Measure type" additionalDescription="Select measure type for patient monitory"
 			defaultValues="['BLOODPRESSURE']">
@@ -1147,7 +1147,7 @@
             <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Measurement"/>                      
 		</EntityDefinition>
 		
-		<EntityDefinition id="LCS1__PhysicalActivity" description="Monitoring Prescription - Physical Activity">		
+		<EntityDefinition id="LCS0_PhysicalActivity" description="Monitoring Prescription - Physical Activity">		
             <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Start date"/>
             <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="End date"/>       
             <AttributeDefinition id="dailysteps" type="number.min(0).max(100000)" defaultValues="[10000]" multiplicity="exactlyOne" description="Number of steps daily"/>       
@@ -1157,14 +1157,14 @@
             <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Measurement"/>                 
         </EntityDefinition> 		                
 						
-		<EntityDefinition id="LCS1__Advice" description="Prescription - Advices">				
+		<EntityDefinition id="LCS0_Advice" description="Prescription - Advices">				
 			<AttributeDefinition id="title" type="string" multiplicity="exactlyOne" description="Title"/>   
 			<AttributeDefinition id="expiredate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Expire date"/> 
 			<AttributeDefinition id="explenation" type="longtext" multiplicity="exactlyOne" description="Description"/> 
 			<AttributeDefinition id="visualizationdate" type="date" multiplicity="exactlyOne" description="Visualization date"/>                      				
 		</EntityDefinition>
 			
-			<EntityDefinition id="LCS1__Drug" description="Monitoring Prescription - Drugs">
+			<EntityDefinition id="LCS0_Drug" description="Monitoring Prescription - Drugs">
 				<AttributeDefinition id="drug" type="json" multiplicity="exactlyOne" description="Drugs" 
 				uiReference="externalEnumeration({url: '$ENV/pharmaprescription/v1/drugs?countryCode=ES%26name=$SEARCH', searchPlaceholder: '$SEARCH', envPlaceholder: '$ENV'})"/>  
 				<AttributeDefinition id="dosage" type="string" multiplicity="exactlyOne" description="Dosage"/>
@@ -1189,7 +1189,7 @@
 				<AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Measurement"/>                  
 			</EntityDefinition>
 						
-		<EntityDefinition id="LCS1__SimpleTask" description="Prescription - Simple task">
+		<EntityDefinition id="LCS0_SimpleTask" description="Prescription - Simple task">
             <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Task type" additionalDescription="Select a task to perform">     
                 <EnumerationOption value="STRAIGHTENING_AND_BENDING_KNEE_LYING_ON_BACK" description="Straightening and bending the knee while lying on your back"/>
                 <EnumerationOption value="LEG_AWAY_FROM_BODY_TO_THE_SIDE_LYING_ON_BACK" description="Keep your leg away from the body while lying on your back"/>
@@ -1220,30 +1220,30 @@
 				<AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Measurement"/>                  
          </EntityDefinition>
 			
-		<EntityDefinition id="LCS1__SocialCareerTask" description="Social career comments">
+		<EntityDefinition id="LCS0_SocialCareerTask" description="Social career comments">
             <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comments" additionalDescription=""/>   			
 		</EntityDefinition>			
 		
-		<EntityDefinition id="LCS1__PrimaryCareClinicianTask" description="Primary care Clinician comments" >
+		<EntityDefinition id="LCS0_PrimaryCareClinicianTask" description="Primary care Clinician comments" >
             <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comments" additionalDescription=""/>   			
 		</EntityDefinition>	
 		
-		<EntityDefinition id="LCS1__PrimaryCareNurseTask" description="Primary care Nurse comments" >
+		<EntityDefinition id="LCS0_PrimaryCareNurseTask" description="Primary care Nurse comments" >
             <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comments" additionalDescription=""/>   			
 		</EntityDefinition>
 				
         <!-- Discharge Definitions -->		
-		<EntityDefinition id="LCS1__Discharge" description="Discharge">
-			<AttributeDefinition id="LCS1__DischargeTest" description="Discharge Form" type="Link.EntityDefinition.LCS1__DischargeTest" multiplicity="any"/>									
-			<AttributeDefinition id="LCS1__SF12Discharge" description="SF-12" type="Link.EntityDefinition.LCS1__SF12Def" multiplicity="any"/> 			
-			<AttributeDefinition id="LCS1__EQ-5DDischarge" description="EQ-5D" type="Link.EntityDefinition.LCS1__EQ-5DDef" multiplicity="any"/> 									
+		<EntityDefinition id="LCS0_Discharge" description="Discharge">
+			<AttributeDefinition id="LCS0_DischargeTest" description="Discharge Form" type="Link.EntityDefinition.LCS0_DischargeTest" multiplicity="any"/>									
+			<AttributeDefinition id="LCS0_SF12Discharge" description="SF-12" type="Link.EntityDefinition.LCS0_SF12Def" multiplicity="any"/> 			
+			<AttributeDefinition id="LCS0_EQ-5DDischarge" description="EQ-5D" type="Link.EntityDefinition.LCS0_EQ-5DDef" multiplicity="any"/> 									
 		</EntityDefinition>						
 				
-		<EntityDefinition id="LCS1__DischargeTest" description="Discharge Form"> 
+		<EntityDefinition id="LCS0_DischargeTest" description="Discharge Form"> 
 			<AttributeDefinition id="comment" type="longtext" multiplicity="exactlyOne" description="Comment"/> 
         </EntityDefinition>		
 
-		<EntityDefinition id="LCS1__EQ-5DDef" description="EQ-5D">
+		<EntityDefinition id="LCS0_EQ-5DDef" description="EQ-5D">
 			<AttributeDefinition id="EQ-5D-1" type="enumeration" multiplicity="exactlyOne" description="MOBILITY">
 				<EnumerationOption value="1"  description="I have no problems in walking about"/>
 				<EnumerationOption value="2"  description="I have slight problems in walking about"/>
@@ -1285,7 +1285,7 @@
 					
 		
    <!-- CASE DEFINITION -->				  
-        <CaseDefinition id="LCS1__Leida" description="CS1 Lleida - Versió Eurecat Test" ownerPath="LCS1__Settings.CaseManager" clientPath="LCS1__Settings.Patient" entityDefinitionId="LCS1__CaseData" newEntityDefinitionId="LCS1__Settings" newEntityAttachPath="LCS1__Settings" 
+        <CaseDefinition id="LCS0_Leida" description="CS1 Lleida - Versió Eurecat Test" ownerPath="LCS0_Settings.CaseManager" clientPath="LCS0_Settings.Patient" entityDefinitionId="LCS0_CaseData" newEntityDefinitionId="LCS0_Settings" newEntityAttachPath="LCS0_Settings" 
 		    notesDefaultValue='			
 <table style="border: 0px !important; border-spacing: 20px !important; border-collapse: separate !important; height: 390px; width: 100%; border-color: black;" border="1" width="100%" cellspacing="20">
 <thead>
@@ -1342,565 +1342,565 @@
             onTerminateHTTPHookURL="http://integration-producer:8081/v1/producer/point-to-point/sacm/case/terminate"
             onDeleteHTTPHookURL="http://integration-producer:8081/v1/producer/point-to-point/sacm/case/terminate">	  
      
-	    <SummarySectionDefinition id="LCS1__PatientStatus" description="Patient's status" position="LEFT">    		
-				<SummaryParamDefinition path="LCS1__Identification.LCS1__Lace.lace19"/>  								
-				<!--<SummaryParamDefinition path="LCS1__Identification.LCS1__GlobalDeteriorationScale.gdstotal"/>	-->
-                <SummaryParamDefinition path="LCS1__Evaluation.LCS1__ComorbidityCharlsonEvaluation.ch21"/>  						
-				<SummaryParamDefinition path="LCS1__Evaluation.LCS1__ComorbidityCharlsonEvaluation.ch22"/> 				
-				<SummaryParamDefinition path="LCS1__Evaluation.LCS1__HospitalAnxietyAndDepressionScale.hadA8"/>												
-                <SummaryParamDefinition path="LCS1__Evaluation.LCS1__HospitalAnxietyAndDepressionScale.hadD8"/>					
-				<SummaryParamDefinition path="LCS1__Evaluation.LCS1__ComorbidityPfeiffer.pfeiffer2"/>														
-				<SummaryParamDefinition path="LCS1__Evaluation.LCS1__Barthel.barthel11"/>								
-				<SummaryParamDefinition path="LCS1__Evaluation.LCS1__FallRisk.fallRisk6"/>			
+	    <SummarySectionDefinition id="LCS0_PatientStatus" description="Patient's status" position="LEFT">    		
+				<SummaryParamDefinition path="LCS0_Identification.LCS0_Lace.lace19"/>  								
+				<!--<SummaryParamDefinition path="LCS0_Identification.LCS0_GlobalDeteriorationScale.gdstotal"/>	-->
+                <SummaryParamDefinition path="LCS0_Evaluation.LCS0_ComorbidityCharlsonEvaluation.ch21"/>  						
+				<SummaryParamDefinition path="LCS0_Evaluation.LCS0_ComorbidityCharlsonEvaluation.ch22"/> 				
+				<SummaryParamDefinition path="LCS0_Evaluation.LCS0_HospitalAnxietyAndDepressionScale.hadA8"/>												
+                <SummaryParamDefinition path="LCS0_Evaluation.LCS0_HospitalAnxietyAndDepressionScale.hadD8"/>					
+				<SummaryParamDefinition path="LCS0_Evaluation.LCS0_ComorbidityPfeiffer.pfeiffer2"/>														
+				<SummaryParamDefinition path="LCS0_Evaluation.LCS0_Barthel.barthel11"/>								
+				<SummaryParamDefinition path="LCS0_Evaluation.LCS0_FallRisk.fallRisk6"/>			
 				<!--
-				<SummaryParamDefinition path="LCS1__Evaluation.LCS1__AnthropometricVariablesAl.AnthropometricAl"/>																									
-				<SummaryParamDefinition path="LCS1__Evaluation.LCS1__AnthropometricVariablesGenollHomes.AnthropometricGenollHomesIMC"/>	
-				<SummaryParamDefinition path="LCS1__Evaluation.LCS1__AnthropometricVariablesGenollDones.AnthropometricGenollDonesIMC"/>					
+				<SummaryParamDefinition path="LCS0_Evaluation.LCS0_AnthropometricVariablesAl.AnthropometricAl"/>																									
+				<SummaryParamDefinition path="LCS0_Evaluation.LCS0_AnthropometricVariablesGenollHomes.AnthropometricGenollHomesIMC"/>	
+				<SummaryParamDefinition path="LCS0_Evaluation.LCS0_AnthropometricVariablesGenollDones.AnthropometricGenollDonesIMC"/>					
 				-->
-				<SummaryParamDefinition path="LCS1__Evaluation.LCS1__DiagnosisCodexGold.FEVNumberTotal1"/>	
-				<SummaryParamDefinition path="LCS1__Evaluation.LCS1__DiagnosisCodexGold.MMRCTotal"/>					
-				<SummaryParamDefinition path="LCS1__Evaluation.LCS1__DiagnosisCodexGold.codextotal"/>		
-				<SummaryParamDefinition path="LCS1__Evaluation.LCS1__CardiacRehabilitation.cr7"/>				
-				<SummaryParamDefinition path="LCS1__Evaluation.LCS1__RespiratoryRehabilitation.rr6"/>			
-				<SummaryParamDefinition path="LCS1__Evaluation.LCS1__DiagnosisNyha.nyhatotal"/>					
+				<SummaryParamDefinition path="LCS0_Evaluation.LCS0_DiagnosisCodexGold.FEVNumberTotal1"/>	
+				<SummaryParamDefinition path="LCS0_Evaluation.LCS0_DiagnosisCodexGold.MMRCTotal"/>					
+				<SummaryParamDefinition path="LCS0_Evaluation.LCS0_DiagnosisCodexGold.codextotal"/>		
+				<SummaryParamDefinition path="LCS0_Evaluation.LCS0_CardiacRehabilitation.cr7"/>				
+				<SummaryParamDefinition path="LCS0_Evaluation.LCS0_RespiratoryRehabilitation.rr6"/>			
+				<SummaryParamDefinition path="LCS0_Evaluation.LCS0_DiagnosisNyha.nyhatotal"/>					
 		</SummarySectionDefinition>
 		
-		<SummarySectionDefinition id="LCS1__Body" description="Diagnosis" position="CENTER">   			
-				<SummaryParamDefinition path="LCS1__Evaluation.LCS1__ComorbidityCharlsonEvaluation.bodysvg"/>
+		<SummarySectionDefinition id="LCS0_Body" description="Diagnosis" position="CENTER">   			
+				<SummaryParamDefinition path="LCS0_Evaluation.LCS0_ComorbidityCharlsonEvaluation.bodysvg"/>
         </SummarySectionDefinition>		
 	 
-	    <SummarySectionDefinition id="LCS1__Barriers" description="Barriers" position="RIGHT">   			
-				<SummaryParamDefinition path="LCS1__Evaluation.LCS1__MedicationFollowing.medication2"/>
-				<SummaryParamDefinition path="LCS1__Evaluation.LCS1__Medication.Medication5"/>
-                <SummaryParamDefinition path="LCS1__Evaluation.LCS1__SocialDwelling.dwelling5"/>	
-                <SummaryParamDefinition path="LCS1__Evaluation.LCS1__SocialSelfCareCareerAbility.career5"/>						
+	    <SummarySectionDefinition id="LCS0_Barriers" description="Barriers" position="RIGHT">   			
+				<SummaryParamDefinition path="LCS0_Evaluation.LCS0_MedicationFollowing.medication2"/>
+				<SummaryParamDefinition path="LCS0_Evaluation.LCS0_Medication.Medication5"/>
+                <SummaryParamDefinition path="LCS0_Evaluation.LCS0_SocialDwelling.dwelling5"/>	
+                <SummaryParamDefinition path="LCS0_Evaluation.LCS0_SocialSelfCareCareerAbility.career5"/>						
         </SummarySectionDefinition>
 	 
 	 
 	    <!-- STAGEDEFINITION: CaseIdentification -->	  
-            <StageDefinition id="LCS1__CaseIdentification" description="Case Identification" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1__Identification" entityAttachPath="LCS1__Identification">
+            <StageDefinition id="LCS0_CaseIdentification" description="Case Identification" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS0_Identification" entityAttachPath="LCS0_Identification">
             
-                <HumanTaskDefinition id="LCS1__SelectPatient" externalId="SelectPatient" description="Inclusion" ownerPath="LCS1__Settings.CaseManager" isMandatory="true" repeatable="ONCE">
+                <HumanTaskDefinition id="LCS0_SelectPatient" externalId="SelectPatient" description="Inclusion" ownerPath="LCS0_Settings.CaseManager" isMandatory="true" repeatable="ONCE">
                     <HttpHookDefinition on="COMPLETE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/case/patient/inclusion" method="POST" failureMessage="Could not COMPLETE SelectPatient on Self-Management System!"/>
-                    <TaskParamDefinition path="LCS1__Settings.Patient" isReadOnly="false" isMandatory="true"/>                
-                    <TaskParamDefinition path="LCS1__Settings.CaseManager" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition path="LCS1__Settings.Clinician" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Settings.Nurse" isReadOnly="false" isMandatory="true"/>                              
-                    <TaskParamDefinition path="LCS1__Settings.SocialCareer" isReadOnly="false" isMandatory="true"/>            					
- 					<TaskParamDefinition path="LCS1__Settings.PrimaryCareClinicians" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition path="LCS1__Settings.PrimaryCareNurse" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition path="LCS0_Settings.Patient" isReadOnly="false" isMandatory="true"/>                
+                    <TaskParamDefinition path="LCS0_Settings.CaseManager" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition path="LCS0_Settings.Clinician" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Settings.Nurse" isReadOnly="false" isMandatory="true"/>                              
+                    <TaskParamDefinition path="LCS0_Settings.SocialCareer" isReadOnly="false" isMandatory="true"/>            					
+ 					<TaskParamDefinition path="LCS0_Settings.PrimaryCareClinicians" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition path="LCS0_Settings.PrimaryCareNurse" isReadOnly="false" isMandatory="true"/> 
                 </HumanTaskDefinition>					
 				
-			   <HumanTaskDefinition id="LCS1__Lace" description="LACE" ownerPath="LCS1__Settings.Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1__Lace" entityAttachPath="LCS1__Identification.LCS1__Lace">                
+			   <HumanTaskDefinition id="LCS0_Lace" description="LACE" ownerPath="LCS0_Settings.Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS0_Lace" entityAttachPath="LCS0_Identification.LCS0_Lace">                
 					<SentryDefinition>
-					  <precondition processDefinitionId="LCS1__SelectPatient"/>
+					  <precondition processDefinitionId="LCS0_SelectPatient"/>
 					</SentryDefinition>
-					<TaskParamDefinition path="LCS1__Identification.LCS1__Lace.lace1" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Identification.LCS1__Lace.lace2" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Identification.LCS1__Lace.lace3" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Identification.LCS1__Lace.lace4" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Identification.LCS1__Lace.lace5" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Identification.LCS1__Lace.lace6" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Identification.LCS1__Lace.lace7" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Identification.LCS1__Lace.lace8" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Identification.LCS1__Lace.lace9" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Identification.LCS1__Lace.lace10" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Identification.LCS1__Lace.lace11" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Identification.LCS1__Lace.lace12" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Identification.LCS1__Lace.lace13" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Identification.LCS1__Lace.lace14" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Identification.LCS1__Lace.lace15" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Identification.LCS1__Lace.lace16" isReadOnly="false" isMandatory="true"/>
-					<!--<TaskParamDefinition path="LCS1__Identification.LCS1__Lace.lace17" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Identification.LCS1__Lace.lace17total" isReadOnly="false" isMandatory="true"/>					
+					<TaskParamDefinition path="LCS0_Identification.LCS0_Lace.lace1" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Identification.LCS0_Lace.lace2" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Identification.LCS0_Lace.lace3" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Identification.LCS0_Lace.lace4" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Identification.LCS0_Lace.lace5" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Identification.LCS0_Lace.lace6" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Identification.LCS0_Lace.lace7" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Identification.LCS0_Lace.lace8" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Identification.LCS0_Lace.lace9" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Identification.LCS0_Lace.lace10" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Identification.LCS0_Lace.lace11" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Identification.LCS0_Lace.lace12" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Identification.LCS0_Lace.lace13" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Identification.LCS0_Lace.lace14" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Identification.LCS0_Lace.lace15" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Identification.LCS0_Lace.lace16" isReadOnly="false" isMandatory="true"/>
+					<!--<TaskParamDefinition path="LCS0_Identification.LCS0_Lace.lace17" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Identification.LCS0_Lace.lace17total" isReadOnly="false" isMandatory="true"/>					
 					-->
-					<TaskParamDefinition path="LCS1__Identification.LCS1__Lace.lace18" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Identification.LCS1__Lace.lace19" isReadOnly="true" isMandatory="false"/>
+					<TaskParamDefinition path="LCS0_Identification.LCS0_Lace.lace18" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Identification.LCS0_Lace.lace19" isReadOnly="true" isMandatory="false"/>
 				</HumanTaskDefinition>
 								
-				<HumanTaskDefinition id="LCS1__TechnologicalTest" description="Technological test" ownerPath="LCS1__Settings.CaseManager" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1__TechnologicalTest" entityAttachPath="LCS1__Identification.LCS1__TechnologicalTest">
+				<HumanTaskDefinition id="LCS0_TechnologicalTest" description="Technological test" ownerPath="LCS0_Settings.CaseManager" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS0_TechnologicalTest" entityAttachPath="LCS0_Identification.LCS0_TechnologicalTest">
                     <SentryDefinition>
-                        <precondition processDefinitionId="LCS1__SelectPatient"/>
+                        <precondition processDefinitionId="LCS0_SelectPatient"/>
                     </SentryDefinition>
-                    <TaskParamDefinition path="LCS1__Identification.LCS1__TechnologicalTest.tech1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Identification.LCS1__TechnologicalTest.tech2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Identification.LCS1__TechnologicalTest.tech3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Identification.LCS1__TechnologicalTest.tech4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Identification.LCS0_TechnologicalTest.tech1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Identification.LCS0_TechnologicalTest.tech2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Identification.LCS0_TechnologicalTest.tech3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Identification.LCS0_TechnologicalTest.tech4" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition>			 				
 			
-			    <HumanTaskDefinition id="LCS1__PatientsConsent" description="Patient's consent" ownerPath="LCS1__Settings.Clinician" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1__PatientsConsent" entityAttachPath="LCS1__Identification.LCS1__PatientsConsent">			
+			    <HumanTaskDefinition id="LCS0_PatientsConsent" description="Patient's consent" ownerPath="LCS0_Settings.Clinician" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS0_PatientsConsent" entityAttachPath="LCS0_Identification.LCS0_PatientsConsent">			
                     <SentryDefinition>
-                        <precondition processDefinitionId="LCS1__SelectPatient"/>
+                        <precondition processDefinitionId="LCS0_SelectPatient"/>
                     </SentryDefinition>
-                    <TaskParamDefinition path="LCS1__Identification.LCS1__PatientsConsent.pConsent1" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Identification.LCS1__PatientsConsent.pConsent2" isReadOnly="true" isMandatory="false"/>		
+                    <TaskParamDefinition path="LCS0_Identification.LCS0_PatientsConsent.pConsent1" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Identification.LCS0_PatientsConsent.pConsent2" isReadOnly="true" isMandatory="false"/>		
                 </HumanTaskDefinition>	
 				
 			</StageDefinition>				
 		  
-            <StageDefinition id="LCS1__CaseEvaluation" description="Case Evaluation" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1__Evaluation" entityAttachPath="LCS1__Evaluation.LCS1__Evaluation">
+            <StageDefinition id="LCS0_CaseEvaluation" description="Case Evaluation" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS0_Evaluation" entityAttachPath="LCS0_Evaluation.LCS0_Evaluation">
                 <SentryDefinition>
-                    <precondition processDefinitionId="LCS1__CaseIdentification"/>
+                    <precondition processDefinitionId="LCS0_CaseIdentification"/>
                 </SentryDefinition> 						
 				
-                <HumanTaskDefinition id="LCS1__GMAEvaluationHT" description="Comorbidity - GMA"
-				ownerPath="LCS1__Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1__GMADef" entityAttachPath="LCS1__Evaluation.LCS1__GMAEvaluation">
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__GMAEvaluation.gma" isReadOnly="false" isMandatory="true"/>
+                <HumanTaskDefinition id="LCS0_GMAEvaluationHT" description="Comorbidity - GMA"
+				ownerPath="LCS0_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS0_GMADef" entityAttachPath="LCS0_Evaluation.LCS0_GMAEvaluation">
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_GMAEvaluation.gma" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition> 				
 		  
-		        <HumanTaskDefinition id="LCS1__ComorbidityCharlsonEvaluationHT" description="Comorbidity - Charlson" 
+		        <HumanTaskDefinition id="LCS0_ComorbidityCharlsonEvaluationHT" description="Comorbidity - Charlson" 
 				footnote="Pendent rebre autorització"
-				ownerPath="LCS1__Settings.Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1__ComorbidityCharlsonDef" entityAttachPath="LCS1__Evaluation.LCS1__ComorbidityCharlsonEvaluation"> 			  
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__ComorbidityCharlsonEvaluation.ch1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__ComorbidityCharlsonEvaluation.ch2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__ComorbidityCharlsonEvaluation.ch3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__ComorbidityCharlsonEvaluation.ch4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__ComorbidityCharlsonEvaluation.ch5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__ComorbidityCharlsonEvaluation.ch6" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__ComorbidityCharlsonEvaluation.ch7" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__ComorbidityCharlsonEvaluation.ch8" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__ComorbidityCharlsonEvaluation.ch9" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__ComorbidityCharlsonEvaluation.ch10" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__ComorbidityCharlsonEvaluation.ch11" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__ComorbidityCharlsonEvaluation.ch12" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__ComorbidityCharlsonEvaluation.ch13" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__ComorbidityCharlsonEvaluation.ch14" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__ComorbidityCharlsonEvaluation.ch15" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__ComorbidityCharlsonEvaluation.ch16" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__ComorbidityCharlsonEvaluation.ch17" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__ComorbidityCharlsonEvaluation.ch18" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__ComorbidityCharlsonEvaluation.ch19" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__ComorbidityCharlsonEvaluation.ch20" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__ComorbidityCharlsonEvaluation.ch21" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__ComorbidityCharlsonEvaluation.ch22" isReadOnly="false" isMandatory="true"/>
+				ownerPath="LCS0_Settings.Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS0_ComorbidityCharlsonDef" entityAttachPath="LCS0_Evaluation.LCS0_ComorbidityCharlsonEvaluation"> 			  
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_ComorbidityCharlsonEvaluation.ch1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_ComorbidityCharlsonEvaluation.ch2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_ComorbidityCharlsonEvaluation.ch3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_ComorbidityCharlsonEvaluation.ch4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_ComorbidityCharlsonEvaluation.ch5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_ComorbidityCharlsonEvaluation.ch6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_ComorbidityCharlsonEvaluation.ch7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_ComorbidityCharlsonEvaluation.ch8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_ComorbidityCharlsonEvaluation.ch9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_ComorbidityCharlsonEvaluation.ch10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_ComorbidityCharlsonEvaluation.ch11" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_ComorbidityCharlsonEvaluation.ch12" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_ComorbidityCharlsonEvaluation.ch13" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_ComorbidityCharlsonEvaluation.ch14" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_ComorbidityCharlsonEvaluation.ch15" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_ComorbidityCharlsonEvaluation.ch16" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_ComorbidityCharlsonEvaluation.ch17" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_ComorbidityCharlsonEvaluation.ch18" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_ComorbidityCharlsonEvaluation.ch19" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_ComorbidityCharlsonEvaluation.ch20" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_ComorbidityCharlsonEvaluation.ch21" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_ComorbidityCharlsonEvaluation.ch22" isReadOnly="false" isMandatory="true"/>
 					
                 </HumanTaskDefinition>
 				
-                <HumanTaskDefinition id="LCS1__ComorbidityPfeifferHT" description="Comorbidity - Pfeiffer" 
+                <HumanTaskDefinition id="LCS0_ComorbidityPfeifferHT" description="Comorbidity - Pfeiffer" 
 				footnote="Pfeiffer, E. (1975). A short portable mental status questionnaire for the assessment of organic brain deficit in elderly patients. Journal of American Geriatrics Society. 23, 433-41."
-				ownerPath="LCS1__Settings.Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1__ComorbidityPfeiffer" entityAttachPath="LCS1__Evaluation.LCS1__ComorbidityPfeiffer">
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__ComorbidityPfeiffer.pfeiffer0" isReadOnly="true" isMandatory="false"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__ComorbidityPfeiffer.pfeiffer1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__ComorbidityPfeiffer.pfeiffer2" isReadOnly="true" isMandatory="false"/>
+				ownerPath="LCS0_Settings.Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS0_ComorbidityPfeiffer" entityAttachPath="LCS0_Evaluation.LCS0_ComorbidityPfeiffer">
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_ComorbidityPfeiffer.pfeiffer0" isReadOnly="true" isMandatory="false"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_ComorbidityPfeiffer.pfeiffer1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_ComorbidityPfeiffer.pfeiffer2" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>        
 				
-                <HumanTaskDefinition id="LCS1__HospitalAnxietyAndDepressionScaleHT" description="Cognitive status - Hospital Anxiety And Depression Scale (HADS)" 
+                <HumanTaskDefinition id="LCS0_HospitalAnxietyAndDepressionScaleHT" description="Cognitive status - Hospital Anxiety And Depression Scale (HADS)" 
 				footnote="Zigmond, A. S., &amp; Snaith, R. P. (1983). The hospital anxiety and depression scale. Acta psychiatrica scandinavica, 67(6), 361-370."
-				ownerPath="LCS1__Settings.Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1__HospitalAnxietyAndDepressionScale" entityAttachPath="LCS1__Evaluation.LCS1__HospitalAnxietyAndDepressionScale">
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__HospitalAnxietyAndDepressionScale.hadA1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__HospitalAnxietyAndDepressionScale.hadD1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__HospitalAnxietyAndDepressionScale.hadA2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__HospitalAnxietyAndDepressionScale.hadD2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__HospitalAnxietyAndDepressionScale.hadA3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__HospitalAnxietyAndDepressionScale.hadD3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__HospitalAnxietyAndDepressionScale.hadA4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__HospitalAnxietyAndDepressionScale.hadD4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__HospitalAnxietyAndDepressionScale.hadA5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__HospitalAnxietyAndDepressionScale.hadD5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__HospitalAnxietyAndDepressionScale.hadA6" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__HospitalAnxietyAndDepressionScale.hadD6" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__HospitalAnxietyAndDepressionScale.hadA7" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__HospitalAnxietyAndDepressionScale.hadD7" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__HospitalAnxietyAndDepressionScale.hadA8" isReadOnly="true" isMandatory="false"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__HospitalAnxietyAndDepressionScale.hadD8" isReadOnly="true" isMandatory="false"/>        
+				ownerPath="LCS0_Settings.Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS0_HospitalAnxietyAndDepressionScale" entityAttachPath="LCS0_Evaluation.LCS0_HospitalAnxietyAndDepressionScale">
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_HospitalAnxietyAndDepressionScale.hadA1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_HospitalAnxietyAndDepressionScale.hadD1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_HospitalAnxietyAndDepressionScale.hadA2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_HospitalAnxietyAndDepressionScale.hadD2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_HospitalAnxietyAndDepressionScale.hadA3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_HospitalAnxietyAndDepressionScale.hadD3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_HospitalAnxietyAndDepressionScale.hadA4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_HospitalAnxietyAndDepressionScale.hadD4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_HospitalAnxietyAndDepressionScale.hadA5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_HospitalAnxietyAndDepressionScale.hadD5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_HospitalAnxietyAndDepressionScale.hadA6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_HospitalAnxietyAndDepressionScale.hadD6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_HospitalAnxietyAndDepressionScale.hadA7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_HospitalAnxietyAndDepressionScale.hadD7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_HospitalAnxietyAndDepressionScale.hadA8" isReadOnly="true" isMandatory="false"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_HospitalAnxietyAndDepressionScale.hadD8" isReadOnly="true" isMandatory="false"/>        
                 </HumanTaskDefinition>
 				
-                <HumanTaskDefinition id="LCS1__BarthelHT" description="Functional status - Barthel" 
+                <HumanTaskDefinition id="LCS0_BarthelHT" description="Functional status - Barthel" 
 				footnote="Mahoney FI, Barthel D. &quot;Functional evaluation: the Barthel Index.&quot;Maryland State Medical Journal 1965;14:56-61. Used with permission.
 				Loewen SC, Anderson BA. &quot;Predictors of stroke outcome using objective measurement scales.&quot; Stroke.1990;21:78-81.
 				Gresham GE, Phillips TF, Labi ML. &quot;ADL status in stroke: relative merits of three standard indexes.&quot; Arch Phys Med
 				Rehabil.1980;61:355-358. Collin C, Wade DT, Davies S, Horne V. &quot;The Barthel ADL Index: a reliability study.&quot; Int Disability Study.1988;10:61-63."
-				ownerPath="LCS1__Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1__Barthel" entityAttachPath="LCS1__Evaluation.LCS1__Barthel">
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__Barthel.barthel1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__Barthel.barthel2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__Barthel.barthel3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__Barthel.barthel4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__Barthel.barthel5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__Barthel.barthel6" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__Barthel.barthel7" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__Barthel.barthel8" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__Barthel.barthel9" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__Barthel.barthel10" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__Barthel.barthel11" isReadOnly="true" isMandatory="false"/>
+				ownerPath="LCS0_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS0_Barthel" entityAttachPath="LCS0_Evaluation.LCS0_Barthel">
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_Barthel.barthel1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_Barthel.barthel2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_Barthel.barthel3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_Barthel.barthel4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_Barthel.barthel5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_Barthel.barthel6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_Barthel.barthel7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_Barthel.barthel8" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_Barthel.barthel9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_Barthel.barthel10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_Barthel.barthel11" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>				
 				
-				<HumanTaskDefinition id="LCS1__DiagnosisIADLHT" description="Functional status - Activities of Daily Living (ADL)" 
-				ownerPath="LCS1__Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1__DiagnosisIADL" entityAttachPath="LCS1__Evaluation.LCS1__DiagnosisIADL">                
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__DiagnosisIADL.IADL1" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__DiagnosisIADL.IADL2" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__DiagnosisIADL.IADL3" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__DiagnosisIADL.IADL4" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__DiagnosisIADL.IADL5" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__DiagnosisIADL.IADL6" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__DiagnosisIADL.IADL7" isReadOnly="true" isMandatory="false"/>
+				<HumanTaskDefinition id="LCS0_DiagnosisIADLHT" description="Functional status - Activities of Daily Living (ADL)" 
+				ownerPath="LCS0_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS0_DiagnosisIADL" entityAttachPath="LCS0_Evaluation.LCS0_DiagnosisIADL">                
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_DiagnosisIADL.IADL1" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_DiagnosisIADL.IADL2" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_DiagnosisIADL.IADL3" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_DiagnosisIADL.IADL4" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_DiagnosisIADL.IADL5" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_DiagnosisIADL.IADL6" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_DiagnosisIADL.IADL7" isReadOnly="true" isMandatory="false"/>
 				</HumanTaskDefinition>				
 				
-				<HumanTaskDefinition id="LCS1__FallRisk" description="Functional status - Fall risk"
-				ownerPath="LCS1__Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1__FallRisk" entityAttachPath="LCS1__Evaluation.LCS1__FallRisk">                
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__FallRisk.fallRisk1" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__FallRisk.fallRisk20" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__FallRisk.fallRisk21" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__FallRisk.fallRisk22" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__FallRisk.fallRisk3" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__FallRisk.fallRisk40" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__FallRisk.fallRisk41" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__FallRisk.fallRisk42" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__FallRisk.fallRisk50" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__FallRisk.fallRisk51" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__FallRisk.fallRisk52" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__FallRisk.fallRisk6" isReadOnly="true" isMandatory="false"/>
+				<HumanTaskDefinition id="LCS0_FallRisk" description="Functional status - Fall risk"
+				ownerPath="LCS0_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS0_FallRisk" entityAttachPath="LCS0_Evaluation.LCS0_FallRisk">                
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_FallRisk.fallRisk1" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_FallRisk.fallRisk20" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_FallRisk.fallRisk21" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_FallRisk.fallRisk22" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_FallRisk.fallRisk3" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_FallRisk.fallRisk40" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_FallRisk.fallRisk41" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_FallRisk.fallRisk42" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_FallRisk.fallRisk50" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_FallRisk.fallRisk51" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_FallRisk.fallRisk52" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_FallRisk.fallRisk6" isReadOnly="true" isMandatory="false"/>
 				</HumanTaskDefinition>							
 
 				<!--
-				<HumanTaskDefinition id="LCS1__AnthropometricVariablesAlHT" description="Diagnòstic - Pes i alçada - Variables antropomètriques"
-				ownerPath="LCS1__Settings.Nurse" isMandatory="false" repeatable="ONCE" activation="MANUAL"  entityDefinitionId="LCS1__AnthropometricVariablesAl" entityAttachPath="LCS1__Evaluation.LCS1__AnthropometricVariablesAl">
-				  <TaskParamDefinition path="LCS1__Evaluation.LCS1__AnthropometricVariablesAl.AnWeighAl" isReadOnly="false" isMandatory="true"/>
-				  <TaskParamDefinition path="LCS1__Evaluation.LCS1__AnthropometricVariablesAl.AnHeightAl" isReadOnly="false" isMandatory="true"/>  
-				  <TaskParamDefinition path="LCS1__Evaluation.LCS1__AnthropometricVariablesAl.AnthropometricAl" isReadOnly="true" isMandatory="false"/>
+				<HumanTaskDefinition id="LCS0_AnthropometricVariablesAlHT" description="Diagnòstic - Pes i alçada - Variables antropomètriques"
+				ownerPath="LCS0_Settings.Nurse" isMandatory="false" repeatable="ONCE" activation="MANUAL"  entityDefinitionId="LCS0_AnthropometricVariablesAl" entityAttachPath="LCS0_Evaluation.LCS0_AnthropometricVariablesAl">
+				  <TaskParamDefinition path="LCS0_Evaluation.LCS0_AnthropometricVariablesAl.AnWeighAl" isReadOnly="false" isMandatory="true"/>
+				  <TaskParamDefinition path="LCS0_Evaluation.LCS0_AnthropometricVariablesAl.AnHeightAl" isReadOnly="false" isMandatory="true"/>  
+				  <TaskParamDefinition path="LCS0_Evaluation.LCS0_AnthropometricVariablesAl.AnthropometricAl" isReadOnly="true" isMandatory="false"/>
 				</HumanTaskDefinition>  			
 				
-				<HumanTaskDefinition id="LCS1__AnthropometricVariablesGenollHomesHT" description="Diagnòstic - Pes i distància (Homes) - Variables antropomètriques"
-				ownerPath="LCS1__Settings.Nurse" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS1__AnthropometricVariablesGenollHomes" entityAttachPath="LCS1__Evaluation.LCS1__AnthropometricVariablesGenollHomes">
-				  <TaskParamDefinition path="LCS1__Evaluation.LCS1__AnthropometricVariablesGenollHomes.AnWeighGenoll" isReadOnly="false" isMandatory="true"/>
-				  <TaskParamDefinition path="LCS1__Evaluation.LCS1__AnthropometricVariablesGenollHomes.AnKneeGenoll" isReadOnly="false" isMandatory="true"/>  
-				  <TaskParamDefinition path="LCS1__Evaluation.LCS1__AnthropometricVariablesGenollHomes.AnAgeGenoll" isReadOnly="false" isMandatory="true"/>  				  				  				  
-				  <TaskParamDefinition path="LCS1__Evaluation.LCS1__AnthropometricVariablesGenollHomes.AnthropometricGenollHomes" isReadOnly="true" isMandatory="false"/>
-				  <TaskParamDefinition path="LCS1__Evaluation.LCS1__AnthropometricVariablesGenollHomes.AnthropometricGenollHomesIMC" isReadOnly="true" isMandatory="false"/>
+				<HumanTaskDefinition id="LCS0_AnthropometricVariablesGenollHomesHT" description="Diagnòstic - Pes i distància (Homes) - Variables antropomètriques"
+				ownerPath="LCS0_Settings.Nurse" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS0_AnthropometricVariablesGenollHomes" entityAttachPath="LCS0_Evaluation.LCS0_AnthropometricVariablesGenollHomes">
+				  <TaskParamDefinition path="LCS0_Evaluation.LCS0_AnthropometricVariablesGenollHomes.AnWeighGenoll" isReadOnly="false" isMandatory="true"/>
+				  <TaskParamDefinition path="LCS0_Evaluation.LCS0_AnthropometricVariablesGenollHomes.AnKneeGenoll" isReadOnly="false" isMandatory="true"/>  
+				  <TaskParamDefinition path="LCS0_Evaluation.LCS0_AnthropometricVariablesGenollHomes.AnAgeGenoll" isReadOnly="false" isMandatory="true"/>  				  				  				  
+				  <TaskParamDefinition path="LCS0_Evaluation.LCS0_AnthropometricVariablesGenollHomes.AnthropometricGenollHomes" isReadOnly="true" isMandatory="false"/>
+				  <TaskParamDefinition path="LCS0_Evaluation.LCS0_AnthropometricVariablesGenollHomes.AnthropometricGenollHomesIMC" isReadOnly="true" isMandatory="false"/>
 				</HumanTaskDefinition>  							
 
-				<HumanTaskDefinition id="LCS1__AnthropometricVariablesGenollDonesHT" description="Diagnòstic - Pes i distància (Dones) - Variables antropomètriques"
-				ownerPath="LCS1__Settings.Nurse" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS1__AnthropometricVariablesGenollDones" entityAttachPath="LCS1__Evaluation.LCS1__AnthropometricVariablesGenollDones">
-				  <TaskParamDefinition path="LCS1__Evaluation.LCS1__AnthropometricVariablesGenollDones.AnWeighGenoll" isReadOnly="false" isMandatory="true"/>
-				  <TaskParamDefinition path="LCS1__Evaluation.LCS1__AnthropometricVariablesGenollDones.AnKneeGenoll" isReadOnly="false" isMandatory="true"/>  
-				  <TaskParamDefinition path="LCS1__Evaluation.LCS1__AnthropometricVariablesGenollDones.AnAgeGenoll" isReadOnly="false" isMandatory="true"/>  				  				  				  
-				  <TaskParamDefinition path="LCS1__Evaluation.LCS1__AnthropometricVariablesGenollDones.AnthropometricGenollDones" isReadOnly="true" isMandatory="false"/>
-				  <TaskParamDefinition path="LCS1__Evaluation.LCS1__AnthropometricVariablesGenollDones.AnthropometricGenollDonesIMC" isReadOnly="true" isMandatory="false"/>
+				<HumanTaskDefinition id="LCS0_AnthropometricVariablesGenollDonesHT" description="Diagnòstic - Pes i distància (Dones) - Variables antropomètriques"
+				ownerPath="LCS0_Settings.Nurse" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS0_AnthropometricVariablesGenollDones" entityAttachPath="LCS0_Evaluation.LCS0_AnthropometricVariablesGenollDones">
+				  <TaskParamDefinition path="LCS0_Evaluation.LCS0_AnthropometricVariablesGenollDones.AnWeighGenoll" isReadOnly="false" isMandatory="true"/>
+				  <TaskParamDefinition path="LCS0_Evaluation.LCS0_AnthropometricVariablesGenollDones.AnKneeGenoll" isReadOnly="false" isMandatory="true"/>  
+				  <TaskParamDefinition path="LCS0_Evaluation.LCS0_AnthropometricVariablesGenollDones.AnAgeGenoll" isReadOnly="false" isMandatory="true"/>  				  				  				  
+				  <TaskParamDefinition path="LCS0_Evaluation.LCS0_AnthropometricVariablesGenollDones.AnthropometricGenollDones" isReadOnly="true" isMandatory="false"/>
+				  <TaskParamDefinition path="LCS0_Evaluation.LCS0_AnthropometricVariablesGenollDones.AnthropometricGenollDonesIMC" isReadOnly="true" isMandatory="false"/>
 				</HumanTaskDefinition>  	
 				-->				
 				
-                <HumanTaskDefinition id="LCS1__DiagnosisSmokingAndAlcoholHT" description="Diagnosis - Tobacco and alcohol consumption"
-				ownerPath="LCS1__Settings.Clinician" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1__DiagnosisSmokingAndAlcohol" entityAttachPath="LCS1__Evaluation.LCS1__DiagnosisSmokingAndAlcohol">
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__DiagnosisSmokingAndAlcohol.smalc1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__DiagnosisSmokingAndAlcohol.smalc2" isReadOnly="false" isMandatory="true"/>
+                <HumanTaskDefinition id="LCS0_DiagnosisSmokingAndAlcoholHT" description="Diagnosis - Tobacco and alcohol consumption"
+				ownerPath="LCS0_Settings.Clinician" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS0_DiagnosisSmokingAndAlcohol" entityAttachPath="LCS0_Evaluation.LCS0_DiagnosisSmokingAndAlcohol">
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_DiagnosisSmokingAndAlcohol.smalc1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_DiagnosisSmokingAndAlcohol.smalc2" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition> 	
 
-				<HumanTaskDefinition id="LCS1__DiagnosisNyhaHT" description="Diagnosis - Functional class NYHA"
-				ownerPath="LCS1__Settings.Clinician" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS1__DiagnosisNyha" entityAttachPath="LCS1__Evaluation.LCS1__DiagnosisNyha">                
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__DiagnosisNyha.nyha1" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__DiagnosisNyha.nyhatotal" isReadOnly="true" isMandatory="false"/>										
+				<HumanTaskDefinition id="LCS0_DiagnosisNyhaHT" description="Diagnosis - Functional class NYHA"
+				ownerPath="LCS0_Settings.Clinician" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS0_DiagnosisNyha" entityAttachPath="LCS0_Evaluation.LCS0_DiagnosisNyha">                
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_DiagnosisNyha.nyha1" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_DiagnosisNyha.nyhatotal" isReadOnly="true" isMandatory="false"/>										
 				</HumanTaskDefinition>
 				
 				<!--
-				<HumanTaskDefinition id="LCS1__DiagnosisCodexGold" description="Diagnòstic - Funcional MPOC: FEV1/mMRC/GOLD/CODEX [dependència amb Charlson]"
-				ownerPath="LCS1__Settings.Clinician" isMandatory="false" repeatable="ONCE" activation="MANUAL"  entityDefinitionId="LCS1__DiagnosisCodexGold" entityAttachPath="LCS1__Evaluation.LCS1__DiagnosisCodexGold">                
+				<HumanTaskDefinition id="LCS0_DiagnosisCodexGold" description="Diagnòstic - Funcional MPOC: FEV1/mMRC/GOLD/CODEX [dependència amb Charlson]"
+				ownerPath="LCS0_Settings.Clinician" isMandatory="false" repeatable="ONCE" activation="MANUAL"  entityDefinitionId="LCS0_DiagnosisCodexGold" entityAttachPath="LCS0_Evaluation.LCS0_DiagnosisCodexGold">                
                     <SentryDefinition>
-                        <precondition processDefinitionId="LCS1__ComorbidityCharlsonEvaluationHT"/>
+                        <precondition processDefinitionId="LCS0_ComorbidityCharlsonEvaluationHT"/>
                     </SentryDefinition>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__ComorbidityCharlsonEvaluation.ch21" isReadOnly="true" isMandatory="false"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__DiagnosisCodexGold.codex1" isReadOnly="false" isMandatory="true"/>									
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__DiagnosisCodexGold.FEVNumber" isReadOnly="false" isMandatory="true"/>			
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__DiagnosisCodexGold.MMRC" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__DiagnosisCodexGold.exacerbacions" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__DiagnosisCodexGold.MMRCTotal" isReadOnly="true" isMandatory="false"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__DiagnosisCodexGold.FEVNumberTotal1" isReadOnly="true" isMandatory="false"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__DiagnosisCodexGold.codextotal" isReadOnly="true" isMandatory="false"/>						
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_ComorbidityCharlsonEvaluation.ch21" isReadOnly="true" isMandatory="false"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_DiagnosisCodexGold.codex1" isReadOnly="false" isMandatory="true"/>									
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_DiagnosisCodexGold.FEVNumber" isReadOnly="false" isMandatory="true"/>			
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_DiagnosisCodexGold.MMRC" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_DiagnosisCodexGold.exacerbacions" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_DiagnosisCodexGold.MMRCTotal" isReadOnly="true" isMandatory="false"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_DiagnosisCodexGold.FEVNumberTotal1" isReadOnly="true" isMandatory="false"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_DiagnosisCodexGold.codextotal" isReadOnly="true" isMandatory="false"/>						
 				</HumanTaskDefinition>
 				-->
 				<!--
-                <HumanTaskDefinition id="LCS1__SF12EvaluationHT" description="*Diagnòstic - SF-12"
-				ownerPath="LCS1__Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1__SF12Def" entityAttachPath="LCS1__Evaluation.LCS1__SF12Evaluation">                
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__SF12Evaluation.sf12-1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__SF12Evaluation.sf12-2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__SF12Evaluation.sf12-3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__SF12Evaluation.sf12-4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__SF12Evaluation.sf12-5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__SF12Evaluation.sf12-6" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__SF12Evaluation.sf12-7" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__SF12Evaluation.sf12-8" isReadOnly="false" isMandatory="true"/>    
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__SF12Evaluation.sf12-9" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__SF12Evaluation.sf12-10" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__SF12Evaluation.sf12-11" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__SF12Evaluation.sf12-12" isReadOnly="false" isMandatory="true"/>
+                <HumanTaskDefinition id="LCS0_SF12EvaluationHT" description="*Diagnòstic - SF-12"
+				ownerPath="LCS0_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS0_SF12Def" entityAttachPath="LCS0_Evaluation.LCS0_SF12Evaluation">                
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_SF12Evaluation.sf12-1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_SF12Evaluation.sf12-2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_SF12Evaluation.sf12-3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_SF12Evaluation.sf12-4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_SF12Evaluation.sf12-5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_SF12Evaluation.sf12-6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_SF12Evaluation.sf12-7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_SF12Evaluation.sf12-8" isReadOnly="false" isMandatory="true"/>    
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_SF12Evaluation.sf12-9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_SF12Evaluation.sf12-10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_SF12Evaluation.sf12-11" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_SF12Evaluation.sf12-12" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition> 	
 				-->
 
 				<!--
-				<HumanTaskDefinition id="LCS1__SelfCareAutoTestEPOCHT" description="*Barreres - Capacitat d'autocura (IC)" 
-				ownerPath="LCS1__Settings.Nurse" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS1__SelfCareAutoTestEPOC" entityAttachPath="LCS1__Evaluation.LCS1__SelfCareAutoTestEPOC">                
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__SelfCareAutoTestEPOC.scat_epoc1" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__SelfCareAutoTestEPOC.scat_epoc2" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__SelfCareAutoTestEPOC.scat_epoc3" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__SelfCareAutoTestEPOC.scat_epoc4" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__SelfCareAutoTestEPOC.scat_epoc5" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__SelfCareAutoTestEPOC.scat_epoc6" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__SelfCareAutoTestEPOC.scat_epoc7" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__SelfCareAutoTestEPOC.scat_epoc8" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__SelfCareAutoTestEPOC.scat_epoc9" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__SelfCareAutoTestEPOC.scat_epoc10" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__SelfCareAutoTestEPOC.scat_epoc11" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__SelfCareAutoTestEPOC.scat_epoc12" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__SelfCareAutoTestEPOC.scat_epocTotal" isReadOnly="true" isMandatory="false"/>            
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__SelfCareAutoTestEPOC.scat_epocTotalScore" isReadOnly="true" isMandatory="false"/>            					
+				<HumanTaskDefinition id="LCS0_SelfCareAutoTestEPOCHT" description="*Barreres - Capacitat d'autocura (IC)" 
+				ownerPath="LCS0_Settings.Nurse" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS0_SelfCareAutoTestEPOC" entityAttachPath="LCS0_Evaluation.LCS0_SelfCareAutoTestEPOC">                
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_SelfCareAutoTestEPOC.scat_epoc1" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_SelfCareAutoTestEPOC.scat_epoc2" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_SelfCareAutoTestEPOC.scat_epoc3" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_SelfCareAutoTestEPOC.scat_epoc4" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_SelfCareAutoTestEPOC.scat_epoc5" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_SelfCareAutoTestEPOC.scat_epoc6" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_SelfCareAutoTestEPOC.scat_epoc7" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_SelfCareAutoTestEPOC.scat_epoc8" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_SelfCareAutoTestEPOC.scat_epoc9" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_SelfCareAutoTestEPOC.scat_epoc10" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_SelfCareAutoTestEPOC.scat_epoc11" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_SelfCareAutoTestEPOC.scat_epoc12" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_SelfCareAutoTestEPOC.scat_epocTotal" isReadOnly="true" isMandatory="false"/>            
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_SelfCareAutoTestEPOC.scat_epocTotalScore" isReadOnly="true" isMandatory="false"/>            					
 				</HumanTaskDefinition>       
 		
-				<HumanTaskDefinition id="LCS1__SelfCareAutoTestHFHT" description="*Barreres - Capacitat d'autocura (MPOC)" 
-				ownerPath="LCS1__Settings.Nurse" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS1__SelfCareAutoTestHF" entityAttachPath="LCS1__Evaluation.LCS1__SelfCareAutoTestHF">                			
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__SelfCareAutoTestHF.scat_ic1" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__SelfCareAutoTestHF.scat_ic2" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__SelfCareAutoTestHF.scat_ic3" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__SelfCareAutoTestHF.scat_ic4" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__SelfCareAutoTestHF.scat_ic5" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__SelfCareAutoTestHF.scat_ic6" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__SelfCareAutoTestHF.scat_ic7" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__SelfCareAutoTestHF.scat_ic8" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__SelfCareAutoTestHF.scat_icTotal" isReadOnly="true" isMandatory="false"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__SelfCareAutoTestHF.scat_icTotalScore" isReadOnly="true" isMandatory="false"/>
+				<HumanTaskDefinition id="LCS0_SelfCareAutoTestHFHT" description="*Barreres - Capacitat d'autocura (MPOC)" 
+				ownerPath="LCS0_Settings.Nurse" isMandatory="false" repeatable="ONCE" activation="MANUAL" entityDefinitionId="LCS0_SelfCareAutoTestHF" entityAttachPath="LCS0_Evaluation.LCS0_SelfCareAutoTestHF">                			
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_SelfCareAutoTestHF.scat_ic1" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_SelfCareAutoTestHF.scat_ic2" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_SelfCareAutoTestHF.scat_ic3" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_SelfCareAutoTestHF.scat_ic4" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_SelfCareAutoTestHF.scat_ic5" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_SelfCareAutoTestHF.scat_ic6" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_SelfCareAutoTestHF.scat_ic7" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_SelfCareAutoTestHF.scat_ic8" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_SelfCareAutoTestHF.scat_icTotal" isReadOnly="true" isMandatory="false"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_SelfCareAutoTestHF.scat_icTotalScore" isReadOnly="true" isMandatory="false"/>
 				</HumanTaskDefinition>  
 				-->				
 
-                <HumanTaskDefinition id="LCS1__Medication" description="Barriers - Treatment: Compliance / Complexity / Ability to execute it"
-				ownerPath="LCS1__Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1__Medication" entityAttachPath="LCS1__Evaluation.LCS1__Medication">                
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__Medication.Medication1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__Medication.Medication2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__Medication.Medication3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__Medication.Medication4" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__Medication.Medication5" isReadOnly="true" isMandatory="false"/>
+                <HumanTaskDefinition id="LCS0_Medication" description="Barriers - Treatment: Compliance / Complexity / Ability to execute it"
+				ownerPath="LCS0_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS0_Medication" entityAttachPath="LCS0_Evaluation.LCS0_Medication">                
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_Medication.Medication1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_Medication.Medication2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_Medication.Medication3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_Medication.Medication4" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_Medication.Medication5" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>              
 
-                <HumanTaskDefinition id="LCS1__MedicationFollowing" description="Barriers - Pharmacy data Compliance"
-				ownerPath="LCS1__Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1__MedicationFollowing" entityAttachPath="LCS1__Evaluation.LCS1__MedicationFollowing">                
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__MedicationFollowing.medication1" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="LCS1__Evaluation.LCS1__MedicationFollowing.medication2" isReadOnly="true" isMandatory="false"/>
+                <HumanTaskDefinition id="LCS0_MedicationFollowing" description="Barriers - Pharmacy data Compliance"
+				ownerPath="LCS0_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS0_MedicationFollowing" entityAttachPath="LCS0_Evaluation.LCS0_MedicationFollowing">                
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_MedicationFollowing.medication1" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="LCS0_Evaluation.LCS0_MedicationFollowing.medication2" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
     
-              <HumanTaskDefinition id="LCS1__SocialDwelling" description="Barriers - Social housing"
-			  ownerPath="LCS1__Settings.Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1__SocialDwelling" entityAttachPath="LCS1__Evaluation.LCS1__SocialDwelling">
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__SocialDwelling.dwelling1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__SocialDwelling.dwelling2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__SocialDwelling.dwelling3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__SocialDwelling.dwelling4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__SocialDwelling.dwelling5" isReadOnly="true" isMandatory="false"/>
+              <HumanTaskDefinition id="LCS0_SocialDwelling" description="Barriers - Social housing"
+			  ownerPath="LCS0_Settings.Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS0_SocialDwelling" entityAttachPath="LCS0_Evaluation.LCS0_SocialDwelling">
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_SocialDwelling.dwelling1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_SocialDwelling.dwelling2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_SocialDwelling.dwelling3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_SocialDwelling.dwelling4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_SocialDwelling.dwelling5" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
             
-                <HumanTaskDefinition id="LCS1__SocialSelfCareCareerAbility" description="Barriers - Carer's capability"
-				ownerPath="LCS1__Settings.Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1__SocialSelfCareCareerAbility" entityAttachPath="LCS1__Evaluation.LCS1__SocialSelfCareCareerAbility">
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__SocialSelfCareCareerAbility.career1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__SocialSelfCareCareerAbility.career2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__SocialSelfCareCareerAbility.career3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__SocialSelfCareCareerAbility.career4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Evaluation.LCS1__SocialSelfCareCareerAbility.career5" isReadOnly="true" isMandatory="false"/>
+                <HumanTaskDefinition id="LCS0_SocialSelfCareCareerAbility" description="Barriers - Carer's capability"
+				ownerPath="LCS0_Settings.Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS0_SocialSelfCareCareerAbility" entityAttachPath="LCS0_Evaluation.LCS0_SocialSelfCareCareerAbility">
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_SocialSelfCareCareerAbility.career1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_SocialSelfCareCareerAbility.career2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_SocialSelfCareCareerAbility.career3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_SocialSelfCareCareerAbility.career4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Evaluation.LCS0_SocialSelfCareCareerAbility.career5" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>  											
 			</StageDefinition>
 			
 			
             <!-- STAGEDEFINITION: Workplan -->    
-            <StageDefinition id="LCS1__Workplan" description="Workplan" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1__Workplan" entityAttachPath="LCS1__Workplan">			
+            <StageDefinition id="LCS0_Workplan" description="Workplan" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS0_Workplan" entityAttachPath="LCS0_Workplan">			
                 <SentryDefinition>
-                    <precondition processDefinitionId="LCS1__CaseIdentification"/>
+                    <precondition processDefinitionId="LCS0_CaseIdentification"/>
                 </SentryDefinition> 		
 				
-                <DualTaskDefinition id="LCS1__MonitoringPrescriptionAHWP" externalId="MonitoringPrescription"
+                <DualTaskDefinition id="LCS0_MonitoringPrescriptionAHWP" externalId="MonitoringPrescription"
 				description="Monitoring Prescription - Blood Pressure" 
-				ownerPath="LCS1__Settings.Clinician" dueDatePath="LCS1__Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS1__MonitoringPrescription" entityAttachPath="LCS1__Workplan.LCS1__MonitoringPrescriptionAH">
+				ownerPath="LCS0_Settings.Clinician" dueDatePath="LCS0_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS0_MonitoringPrescription" entityAttachPath="LCS0_Workplan.LCS0_MonitoringPrescriptionAH">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/monitoring/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionAH.type" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionAH.alertmin" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionAH.alertmax" isReadOnly="false" isMandatory="true"/>
-                    <!-- <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionAH.alertfreq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionAH.alertfrequnit" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionAH.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionAH.alertmin" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionAH.alertmax" isReadOnly="false" isMandatory="true"/>
+                    <!-- <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionAH.alertfreq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionAH.alertfrequnit" isReadOnly="false" isMandatory="true"/>
 					-->
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionAH.freq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionAH.frequnit" isReadOnly="false" isMandatory="true"/>   
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionAH.maxdelay" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionAH.startdate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionAH.enddate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionAH.timeslot" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionAH.comments" isReadOnly="false" isMandatory="false"/>                    
-                    <TaskParamDefinition part="AUTOMATED" path="LCS1__Workplan.LCS1__MonitoringPrescriptionAH.measurement" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionAH.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionAH.frequnit" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionAH.maxdelay" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionAH.startdate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionAH.enddate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionAH.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionAH.comments" isReadOnly="false" isMandatory="false"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="LCS0_Workplan.LCS0_MonitoringPrescriptionAH.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>				
 
-                <DualTaskDefinition id="LCS1__MonitoringPrescriptionWeightAHWP" externalId="MonitoringPrescription"
+                <DualTaskDefinition id="LCS0_MonitoringPrescriptionWeightAHWP" externalId="MonitoringPrescription"
 				description="Monitoring Prescription - Weight"
-				ownerPath="LCS1__Settings.Clinician" dueDatePath="LCS1__Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS1__MonitoringPrescriptionWeight" entityAttachPath="LCS1__Workplan.LCS1__MonitoringPrescriptionWeightAH">
+				ownerPath="LCS0_Settings.Clinician" dueDatePath="LCS0_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS0_MonitoringPrescriptionWeight" entityAttachPath="LCS0_Workplan.LCS0_MonitoringPrescriptionWeightAH">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionWeightAH.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionWeightAH.type" isReadOnly="false" isMandatory="true"/>
 					<!--
-					<TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionWeightAH.alertmin" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionWeightAH.alertmax" isReadOnly="false" isMandatory="false"/>
-					<TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionWeightAH.alertfreq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionWeightAH.alertfrequnit" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionWeightAH.alertmin" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionWeightAH.alertmax" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionWeightAH.alertfreq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionWeightAH.alertfrequnit" isReadOnly="false" isMandatory="true"/>
 					-->
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionWeightAH.freq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionWeightAH.frequnit" isReadOnly="false" isMandatory="true"/>   
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionWeightAH.maxdelay" isReadOnly="false" isMandatory="true"/>  	
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionWeightAH.startdate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionWeightAH.enddate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionWeightAH.timeslot" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionWeightAH.comments" isReadOnly="false" isMandatory="false"/>                    
-                    <TaskParamDefinition part="AUTOMATED" path="LCS1__Workplan.LCS1__MonitoringPrescriptionWeightAH.measurement" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionWeightAH.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionWeightAH.frequnit" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionWeightAH.maxdelay" isReadOnly="false" isMandatory="true"/>  	
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionWeightAH.startdate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionWeightAH.enddate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionWeightAH.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionWeightAH.comments" isReadOnly="false" isMandatory="false"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="LCS0_Workplan.LCS0_MonitoringPrescriptionWeightAH.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>							
 
-                <DualTaskDefinition id="LCS1__MonitoringPrescriptionSP02AHWP" externalId="MonitoringPrescription"
+                <DualTaskDefinition id="LCS0_MonitoringPrescriptionSP02AHWP" externalId="MonitoringPrescription"
 				description="Monitoring Prescription - Oxygen saturation"
-				ownerPath="LCS1__Settings.Clinician" dueDatePath="LCS1__Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS1__MonitoringPrescriptionSP02" entityAttachPath="LCS1__Workplan.LCS1__MonitoringPrescriptionSP02AH">
+				ownerPath="LCS0_Settings.Clinician" dueDatePath="LCS0_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS0_MonitoringPrescriptionSP02" entityAttachPath="LCS0_Workplan.LCS0_MonitoringPrescriptionSP02AH">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionSP02AH.type" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionSP02AH.alertmin" isReadOnly="false" isMandatory="true"/>
-                    <!-- <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionSP02AH.alertmax" isReadOnly="false" isMandatory="true"/> -->
-                    <!-- <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionSP02AH.alertfreq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionSP02AH.alertfrequnit" isReadOnly="false" isMandatory="true"/>--> 
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionSP02AH.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionSP02AH.alertmin" isReadOnly="false" isMandatory="true"/>
+                    <!-- <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionSP02AH.alertmax" isReadOnly="false" isMandatory="true"/> -->
+                    <!-- <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionSP02AH.alertfreq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionSP02AH.alertfrequnit" isReadOnly="false" isMandatory="true"/>--> 
 					
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionSP02AH.freq" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionSP02AH.frequnit" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionSP02AH.maxdelay" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionSP02AH.startdate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionSP02AH.enddate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionSP02AH.timeslot" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionSP02AH.comments" isReadOnly="false" isMandatory="false"/>                    
-					<TaskParamDefinition part="AUTOMATED" path="LCS1__Workplan.LCS1__MonitoringPrescriptionSP02AH.measurement" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionSP02AH.freq" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionSP02AH.frequnit" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionSP02AH.maxdelay" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionSP02AH.startdate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionSP02AH.enddate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionSP02AH.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionSP02AH.comments" isReadOnly="false" isMandatory="false"/>                    
+					<TaskParamDefinition part="AUTOMATED" path="LCS0_Workplan.LCS0_MonitoringPrescriptionSP02AH.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>							
 				                				
-                <DualTaskDefinition id="LCS1__PhysicalActivityAHWP" externalId="PhysicalActivity"
+                <DualTaskDefinition id="LCS0_PhysicalActivityAHWP" externalId="PhysicalActivity"
 				description="Monitoring Prescription - Physical Activity"
-				ownerPath="LCS1__Settings.Clinician" dueDatePath="LCS1__Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS1__PhysicalActivity" entityAttachPath="LCS1__Workplan.LCS1__PhysicalActivityAH">
+				ownerPath="LCS0_Settings.Clinician" dueDatePath="LCS0_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS0_PhysicalActivity" entityAttachPath="LCS0_Workplan.LCS0_PhysicalActivityAH">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__PhysicalActivityAH.startdate" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__PhysicalActivityAH.enddate" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__PhysicalActivityAH.dailysteps" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__PhysicalActivityAH.dailylowlevel" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__PhysicalActivityAH.dailymediumlevel" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__PhysicalActivityAH.dailyhighlevel" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="AUTOMATED" path="LCS1__Workplan.LCS1__PhysicalActivityAH.measurement" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_PhysicalActivityAH.startdate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_PhysicalActivityAH.enddate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_PhysicalActivityAH.dailysteps" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_PhysicalActivityAH.dailylowlevel" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_PhysicalActivityAH.dailymediumlevel" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_PhysicalActivityAH.dailyhighlevel" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="AUTOMATED" path="LCS0_Workplan.LCS0_PhysicalActivityAH.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>			
 				
-                <DualTaskDefinition id="LCS1__Drug" externalId="Drug" description="Monitoring Prescription - Drugs" 
-				dynamicDescriptionPath="LCS1__Workplan.LCS1__Drug.drug" ownerPath="LCS1__Settings.Clinician" dueDatePath="LCS1__Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS1__Drug" entityAttachPath="LCS1__Workplan.LCS1__Drug">
+                <DualTaskDefinition id="LCS0_Drug" externalId="Drug" description="Monitoring Prescription - Drugs" 
+				dynamicDescriptionPath="LCS0_Workplan.LCS0_Drug.drug" ownerPath="LCS0_Settings.Clinician" dueDatePath="LCS0_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS0_Drug" entityAttachPath="LCS0_Workplan.LCS0_Drug">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/drug" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/drug/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__Drug.drug" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__Drug.dosage" isReadOnly="false" isMandatory="false"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__Drug.startdate" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__Drug.enddate" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__Drug.freq" isReadOnly="false" isMandatory="true"/>   
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__Drug.frequnit" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__Drug.maxdelay" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__Drug.timeslot" isReadOnly="false" isMandatory="true"/>   
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__Drug.comment" isReadOnly="false" isMandatory="false"/>  
-                    <TaskParamDefinition part="AUTOMATED" path="LCS1__Workplan.LCS1__Drug.measurement" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_Drug.drug" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_Drug.dosage" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_Drug.startdate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_Drug.enddate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_Drug.freq" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_Drug.frequnit" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_Drug.maxdelay" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_Drug.timeslot" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_Drug.comment" isReadOnly="false" isMandatory="false"/>  
+                    <TaskParamDefinition part="AUTOMATED" path="LCS0_Workplan.LCS0_Drug.measurement" isReadOnly="false" isMandatory="true"/> 
                 </DualTaskDefinition>				
 				
-                <DualTaskDefinition id="LCS1__MonitoringPrescriptionHeartPulseAHWP" externalId="MonitoringPrescription"
+                <DualTaskDefinition id="LCS0_MonitoringPrescriptionHeartPulseAHWP" externalId="MonitoringPrescription"
 				description="Monitoring Prescription - Heart Pulse"
-				ownerPath="LCS1__Settings.Clinician" dueDatePath="LCS1__Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS1__MonitoringPrescriptionHeartPulse" entityAttachPath="LCS1__Workplan.LCS1__MonitoringPrescriptionHeartPulseAH">
+				ownerPath="LCS0_Settings.Clinician" dueDatePath="LCS0_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS0_MonitoringPrescriptionHeartPulse" entityAttachPath="LCS0_Workplan.LCS0_MonitoringPrescriptionHeartPulseAH">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionHeartPulseAH.type" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionHeartPulseAH.alertmin" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionHeartPulseAH.alertmax" isReadOnly="false" isMandatory="true"/>
-                    <!-- <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionHeartPulseAH.alertfreq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionHeartPulseAH.alertfrequnit" isReadOnly="false" isMandatory="true"/>-->
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionHeartPulseAH.freq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionHeartPulseAH.frequnit" isReadOnly="false" isMandatory="true"/>   
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionHeartPulseAH.maxdelay" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionHeartPulseAH.startdate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionHeartPulseAH.enddate" isReadOnly="false" isMandatory="true"/>  
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionHeartPulseAH.timeslot" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__MonitoringPrescriptionHeartPulseAH.comments" isReadOnly="false" isMandatory="false"/>                                        <TaskParamDefinition part="AUTOMATED" path="LCS1__Workplan.LCS1__MonitoringPrescriptionHeartPulseAH.measurement" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionHeartPulseAH.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionHeartPulseAH.alertmin" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionHeartPulseAH.alertmax" isReadOnly="false" isMandatory="true"/>
+                    <!-- <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionHeartPulseAH.alertfreq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionHeartPulseAH.alertfrequnit" isReadOnly="false" isMandatory="true"/>-->
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionHeartPulseAH.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionHeartPulseAH.frequnit" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionHeartPulseAH.maxdelay" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionHeartPulseAH.startdate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionHeartPulseAH.enddate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionHeartPulseAH.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_MonitoringPrescriptionHeartPulseAH.comments" isReadOnly="false" isMandatory="false"/>                                        <TaskParamDefinition part="AUTOMATED" path="LCS0_Workplan.LCS0_MonitoringPrescriptionHeartPulseAH.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>							
 				
-                <DualTaskDefinition id="LCS1__Advice" externalId="Advice" description="Prescription - Advices" 
-				dynamicDescriptionPath="LCS1__Workplan.LCS1__Advice.title" ownerPath="LCS1__Settings.Clinician" dueDatePath="LCS1__Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS1__Advice" entityAttachPath="LCS1__Workplan.LCS1__Advice">
+                <DualTaskDefinition id="LCS0_Advice" externalId="Advice" description="Prescription - Advices" 
+				dynamicDescriptionPath="LCS0_Workplan.LCS0_Advice.title" ownerPath="LCS0_Settings.Clinician" dueDatePath="LCS0_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS0_Advice" entityAttachPath="LCS0_Workplan.LCS0_Advice">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/advice" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/advice/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__Advice.title" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__Advice.expiredate" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__Advice.explenation" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="AUTOMATED" path="LCS1__Workplan.LCS1__Advice.visualizationdate" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_Advice.title" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_Advice.expiredate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_Advice.explenation" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="AUTOMATED" path="LCS0_Workplan.LCS0_Advice.visualizationdate" isReadOnly="false" isMandatory="true"/> 
                 </DualTaskDefinition>			
 
-                <DualTaskDefinition id="LCS1_PatientQuestionaireAHWP" externalId="PatientQuestionaire" 
+                <DualTaskDefinition id="LCS0_PatientQuestionaireAHWP" externalId="PatientQuestionaire" 
 				description="Prescription - Patient Questionaire"
-                                    dynamicDescriptionPath="LCS1__Workplan.LCS1_PatientQuestionaireAH.type"
-				ownerPath="LCS1__Settings.CaseManager" dueDatePath="LCS1__Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" 
-				entityDefinitionId="LCS1_PatientQuestionaire" entityAttachPath="LCS1__Workplan.LCS1_PatientQuestionaireAH">
+                                    dynamicDescriptionPath="LCS0_Workplan.LCS0_PatientQuestionaireAH.type"
+				ownerPath="LCS0_Settings.CaseManager" dueDatePath="LCS0_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" 
+				entityDefinitionId="LCS0_PatientQuestionaire" entityAttachPath="LCS0_Workplan.LCS0_PatientQuestionaireAH">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/questionnaires" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/questionnaires/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1_PatientQuestionaireAH.type" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1_PatientQuestionaireAH.startdate" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1_PatientQuestionaireAH.enddate" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1_PatientQuestionaireAH.freq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1_PatientQuestionaireAH.frequnit" isReadOnly="false" isMandatory="true"/>   
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1_PatientQuestionaireAH.maxdelay" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1_PatientQuestionaireAH.timeslot" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1_PatientQuestionaireAH.repetitionsperday" isReadOnly="false" isMandatory="true"/>                    
-                    <TaskParamDefinition part="AUTOMATED" path="LCS1__Workplan.LCS1_PatientQuestionaireAH.questionaires" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_PatientQuestionaireAH.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_PatientQuestionaireAH.startdate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_PatientQuestionaireAH.enddate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_PatientQuestionaireAH.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_PatientQuestionaireAH.frequnit" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_PatientQuestionaireAH.maxdelay" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_PatientQuestionaireAH.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_PatientQuestionaireAH.repetitionsperday" isReadOnly="false" isMandatory="true"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="LCS0_Workplan.LCS0_PatientQuestionaireAH.questionaires" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition> 	
 				
-                <DualTaskDefinition id="LCS1__SimpleTask" externalId="SimpleTask" description="Prescription - Simple task" dynamicDescriptionPath="LCS1__Workplan.LCS1__SimpleTask.type" 
-				ownerPath="LCS1__Settings.CaseManager" dueDatePath="LCS1__Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS1__SimpleTask" entityAttachPath="LCS1__Workplan.LCS1__SimpleTask">
+                <DualTaskDefinition id="LCS0_SimpleTask" externalId="SimpleTask" description="Prescription - Simple task" dynamicDescriptionPath="LCS0_Workplan.LCS0_SimpleTask.type" 
+				ownerPath="LCS0_Settings.CaseManager" dueDatePath="LCS0_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS0_SimpleTask" entityAttachPath="LCS0_Workplan.LCS0_SimpleTask">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/simpletask" method="POST" failureMessage="Could not create prescription on Self-Management System!"></HttpHookDefinition>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/simpletask/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"></HttpHookDefinition>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__SimpleTask.type" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__SimpleTask.freq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__SimpleTask.frequnit" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__SimpleTask.maxdelay" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__SimpleTask.startdate" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__SimpleTask.enddate" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__SimpleTask.timeslot" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__SimpleTask.repetitionseachday" isReadOnly="false" isMandatory="true"/> 
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Workplan.LCS1__SimpleTask.comments" isReadOnly="false" isMandatory="true"/>                    
-                    <TaskParamDefinition part="AUTOMATED" path="LCS1__Workplan.LCS1__SimpleTask.measurement" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_SimpleTask.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_SimpleTask.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_SimpleTask.frequnit" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_SimpleTask.maxdelay" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_SimpleTask.startdate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_SimpleTask.enddate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_SimpleTask.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_SimpleTask.repetitionseachday" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Workplan.LCS0_SimpleTask.comments" isReadOnly="false" isMandatory="true"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="LCS0_Workplan.LCS0_SimpleTask.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>   		
 					
-				<HumanTaskDefinition id="LCS1__SocialCareerTask" description="Social career comments"
-				ownerPath="LCS1__Settings.SocialCareer" isMandatory="false" repeatable="ONCE"  entityDefinitionId="LCS1__SocialCareerTask" entityAttachPath="LCS1__Workplan.LCS1__SocialCareerTask">
-                    <TaskParamDefinition path="LCS1__Workplan.LCS1__SocialCareerTask.comments" isReadOnly="false" isMandatory="true"/>
+				<HumanTaskDefinition id="LCS0_SocialCareerTask" description="Social career comments"
+				ownerPath="LCS0_Settings.SocialCareer" isMandatory="false" repeatable="ONCE"  entityDefinitionId="LCS0_SocialCareerTask" entityAttachPath="LCS0_Workplan.LCS0_SocialCareerTask">
+                    <TaskParamDefinition path="LCS0_Workplan.LCS0_SocialCareerTask.comments" isReadOnly="false" isMandatory="true"/>
 				</HumanTaskDefinition>				
 				
-				<HumanTaskDefinition id="LCS1__PrimaryCareClinicianTask" description="Primary care Clinician comments"
-				ownerPath="LCS1__Settings.PrimaryCareClinicians" isMandatory="false" repeatable="ONCE"  entityDefinitionId="LCS1__PrimaryCareClinicianTask" entityAttachPath="LCS1__Workplan.LCS1__PrimaryCareClinicianTask">
-                    <TaskParamDefinition path="LCS1__Workplan.LCS1__PrimaryCareClinicianTask.comments" isReadOnly="false" isMandatory="true"/>
+				<HumanTaskDefinition id="LCS0_PrimaryCareClinicianTask" description="Primary care Clinician comments"
+				ownerPath="LCS0_Settings.PrimaryCareClinicians" isMandatory="false" repeatable="ONCE"  entityDefinitionId="LCS0_PrimaryCareClinicianTask" entityAttachPath="LCS0_Workplan.LCS0_PrimaryCareClinicianTask">
+                    <TaskParamDefinition path="LCS0_Workplan.LCS0_PrimaryCareClinicianTask.comments" isReadOnly="false" isMandatory="true"/>
 				</HumanTaskDefinition>				
 				
-				<HumanTaskDefinition id="LCS1__PrimaryCareNurseTask" description="Primary care Nurse comments"
-				ownerPath="LCS1__Settings.PrimaryCareNurse" isMandatory="false" repeatable="ONCE"  entityDefinitionId="LCS1__PrimaryCareNurseTask" entityAttachPath="LCS1__Workplan.LCS1__PrimaryCareNurseTask">
-                    <TaskParamDefinition path="LCS1__Workplan.LCS1__PrimaryCareNurseTask.comments" isReadOnly="false" isMandatory="true"/>
+				<HumanTaskDefinition id="LCS0_PrimaryCareNurseTask" description="Primary care Nurse comments"
+				ownerPath="LCS0_Settings.PrimaryCareNurse" isMandatory="false" repeatable="ONCE"  entityDefinitionId="LCS0_PrimaryCareNurseTask" entityAttachPath="LCS0_Workplan.LCS0_PrimaryCareNurseTask">
+                    <TaskParamDefinition path="LCS0_Workplan.LCS0_PrimaryCareNurseTask.comments" isReadOnly="false" isMandatory="true"/>
 				</HumanTaskDefinition>			
 								
 			</StageDefinition>			
 		  	 
-            <StageDefinition id="LCS1__Discharge" description="Discharge" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS1__Discharge" entityAttachPath="LCS1__Discharge">
-                <HumanTaskDefinition id="LCS1__DischargeTestHT" description="Discharge Form"
-				ownerPath="LCS1__Settings.Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1__DischargeTest" entityAttachPath="LCS1__Discharge.LCS1__DischargeTest">									
-                    <TaskParamDefinition part="HUMAN" path="LCS1__Discharge.LCS1__DischargeTest.comment" isReadOnly="false" isMandatory="true"/>                                       
+            <StageDefinition id="LCS0_Discharge" description="Discharge" isMandatory="false" repeatable="ONCE" entityDefinitionId="LCS0_Discharge" entityAttachPath="LCS0_Discharge">
+                <HumanTaskDefinition id="LCS0_DischargeTestHT" description="Discharge Form"
+				ownerPath="LCS0_Settings.Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS0_DischargeTest" entityAttachPath="LCS0_Discharge.LCS0_DischargeTest">									
+                    <TaskParamDefinition part="HUMAN" path="LCS0_Discharge.LCS0_DischargeTest.comment" isReadOnly="false" isMandatory="true"/>                                       
                 </HumanTaskDefinition>		
 				
-                <HumanTaskDefinition id="LCS1__SF12DischargeHT" description="SF-12" ownerPath="LCS1__Settings.Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS1__SF12Def" entityAttachPath="LCS1__Discharge.LCS1__SF12Discharge">                
-                    <TaskParamDefinition path="LCS1__Discharge.LCS1__SF12Discharge.sf12-1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Discharge.LCS1__SF12Discharge.sf12-2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Discharge.LCS1__SF12Discharge.sf12-3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Discharge.LCS1__SF12Discharge.sf12-4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Discharge.LCS1__SF12Discharge.sf12-5" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Discharge.LCS1__SF12Discharge.sf12-6" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Discharge.LCS1__SF12Discharge.sf12-7" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Discharge.LCS1__SF12Discharge.sf12-8" isReadOnly="false" isMandatory="true"/>    
-                    <TaskParamDefinition path="LCS1__Discharge.LCS1__SF12Discharge.sf12-9" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Discharge.LCS1__SF12Discharge.sf12-10" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Discharge.LCS1__SF12Discharge.sf12-11" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Discharge.LCS1__SF12Discharge.sf12-12" isReadOnly="false" isMandatory="true"/>
+                <HumanTaskDefinition id="LCS0_SF12DischargeHT" description="SF-12" ownerPath="LCS0_Settings.Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="LCS0_SF12Def" entityAttachPath="LCS0_Discharge.LCS0_SF12Discharge">                
+                    <TaskParamDefinition path="LCS0_Discharge.LCS0_SF12Discharge.sf12-1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Discharge.LCS0_SF12Discharge.sf12-2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Discharge.LCS0_SF12Discharge.sf12-3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Discharge.LCS0_SF12Discharge.sf12-4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Discharge.LCS0_SF12Discharge.sf12-5" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Discharge.LCS0_SF12Discharge.sf12-6" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Discharge.LCS0_SF12Discharge.sf12-7" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Discharge.LCS0_SF12Discharge.sf12-8" isReadOnly="false" isMandatory="true"/>    
+                    <TaskParamDefinition path="LCS0_Discharge.LCS0_SF12Discharge.sf12-9" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Discharge.LCS0_SF12Discharge.sf12-10" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Discharge.LCS0_SF12Discharge.sf12-11" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Discharge.LCS0_SF12Discharge.sf12-12" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition> 		
 
-                <HumanTaskDefinition id="LCS1__EQ-5DDischargeHT" description="EQ-5D" ownerPath="LCS1__Settings.Clinician" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS1__EQ-5DDef" entityAttachPath="LCS1__Discharge.LCS1__EQ-5DDischarge">
-                    <TaskParamDefinition path="LCS1__Discharge.LCS1__EQ-5DDischarge.EQ-5D-1" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Discharge.LCS1__EQ-5DDischarge.EQ-5D-2" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Discharge.LCS1__EQ-5DDischarge.EQ-5D-3" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Discharge.LCS1__EQ-5DDischarge.EQ-5D-4" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="LCS1__Discharge.LCS1__EQ-5DDischarge.EQ-5D-5" isReadOnly="false" isMandatory="true"/>              
-					<TaskParamDefinition path="LCS1__Discharge.LCS1__EQ-5DDischarge.EQ-5D-6" isReadOnly="false" isMandatory="true"/>              					
+                <HumanTaskDefinition id="LCS0_EQ-5DDischargeHT" description="EQ-5D" ownerPath="LCS0_Settings.Clinician" isMandatory="true" repeatable="ONCE"  entityDefinitionId="LCS0_EQ-5DDef" entityAttachPath="LCS0_Discharge.LCS0_EQ-5DDischarge">
+                    <TaskParamDefinition path="LCS0_Discharge.LCS0_EQ-5DDischarge.EQ-5D-1" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Discharge.LCS0_EQ-5DDischarge.EQ-5D-2" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Discharge.LCS0_EQ-5DDischarge.EQ-5D-3" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Discharge.LCS0_EQ-5DDischarge.EQ-5D-4" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition path="LCS0_Discharge.LCS0_EQ-5DDischarge.EQ-5D-5" isReadOnly="false" isMandatory="true"/>              
+					<TaskParamDefinition path="LCS0_Discharge.LCS0_EQ-5DDischarge.EQ-5D-6" isReadOnly="false" isMandatory="true"/>              					
                 </HumanTaskDefinition>										
 			</StageDefinition> 									 
 		</CaseDefinition>	
