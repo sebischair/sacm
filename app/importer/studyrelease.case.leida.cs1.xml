@@ -1315,9 +1315,18 @@
         </EntityDefinition> 		                
 						
 			<EntityDefinition id="LCS1_Advice" description="Prescripció de consells">
+				<AttributeDefinition id="advicecode" type="enumeration" multiplicity="exactlyOne" description="Escull un consell">
+				<EnumerationOption value="OTHER" description="Indicar consejo específico para el paciente"/>
+				<EnumerationOption value="INSUFCARDIACA" description="Video: ¿Qué es la Insuficiencia Cardíaca?" additionalDescription="https://youtu.be/Sre61s1-c3Y"/>
+				<EnumerationOption value="ALARMAINSUFCARDIACA" description="Video: Signos de alarma de la Insuficiencia Cardíaca" additionalDescription="https://youtu.be/oZND_apKeCQ"/>
+				<EnumerationOption value="ACTFISICA" description="Video: Actividad física" additionalDescription="https://www.youtube.com/watch?v=Q27ztlePMjo"/>				
+				</AttributeDefinition>							
 				<AttributeDefinition id="title" type="string" multiplicity="exactlyOne" description="Títol"/>   
 				<AttributeDefinition id="expiredate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Data d'expiració"/> 
 				<AttributeDefinition id="explenation" type="longtext" multiplicity="exactlyOne" description="Descripció"/> 
+				<!--
+				<AttributeDefinition id="explenation" type="longtext" multiplicity="exactlyOne" description="Descripció" defaultValues="['Haga click en el siguiente enlace para ver el vídeo explicativo']"/> -->
+				
 				<AttributeDefinition id="visualizationdate" type="date" multiplicity="exactlyOne" description="Data de visualització"/>                      
 			</EntityDefinition>
 			
@@ -1993,10 +2002,11 @@
 				dynamicDescriptionPath="LCS1_Workplan.LCS1_Advice.title" ownerPath="LCS1_Settings.Clinician" dueDatePath="LCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS1_Advice" entityAttachPath="LCS1_Workplan.LCS1_Advice">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/advice" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/advice/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_Advice.title" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_Advice.advicecode" isReadOnly="false" isMandatory="true"/>					
+					<TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_Advice.title" isReadOnly="false" isMandatory="true"/>								
                     <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_Advice.expiredate" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_Advice.explenation" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="AUTOMATED" path="LCS1_Workplan.LCS1_Advice.visualizationdate" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_Advice.explenation" isReadOnly="false" isMandatory="true"/>					
+                    <TaskParamDefinition part="AUTOMATED" path="LCS1_Workplan.LCS1_Advice.visualizationdate" isReadOnly="false" isMandatory="true"/> 					
                 </DualTaskDefinition>				
                 <DualTaskDefinition id="LCS1_Drug" externalId="Drug" description="Prescripció de medicació" 
 				dynamicDescriptionPath="LCS1_Workplan.LCS1_Drug.drug" ownerPath="LCS1_Settings.Clinician" dueDatePath="LCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS1_Drug" entityAttachPath="LCS1_Workplan.LCS1_Drug">
