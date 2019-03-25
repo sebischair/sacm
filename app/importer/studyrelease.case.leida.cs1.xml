@@ -1142,7 +1142,11 @@
 			<AttributeDefinition id="LCS1_PhysicalActivityAH" description="Monitorització d'activitat física - Rehabilitació" type="Link.EntityDefinition.LCS1_PhysicalActivity" multiplicity="any" />				
 			<AttributeDefinition id="LCS1_MonitoringPrescriptionHeartPulseAH" description="Prescripció de la monitorització - Pols cardíac" type="Link.EntityDefinition.LCS1_MonitoringPrescriptionHeartPulse" multiplicity="any" />							
 			<AttributeDefinition id="LCS1_MonitoringPrescriptionWeightAH" description="Prescripció de la monitorització - Pes" type="Link.EntityDefinition.LCS1_MonitoringPrescriptionWeight" multiplicity="any" />				
-			<AttributeDefinition id="LCS1_MonitoringPrescriptionSP02AH" description="Prescripció de la monitorització - Saturació d'oxigen" type="Link.EntityDefinition.LCS1_MonitoringPrescriptionSP02" multiplicity="any" />	
+			
+			<AttributeDefinition id="LCS1_MonitoringPrescriptionSP02AH" description="Prescripció de la monitorització - Saturació d'oxigen AMB O2" type="Link.EntityDefinition.LCS1_MonitoringPrescriptionSP02" multiplicity="any" />	
+
+			<AttributeDefinition id="LCS1_MonitoringPrescriptionSENSEAH" description="Prescripció de la monitorització - Saturació d'oxigen SENSE O2" type="Link.EntityDefinition.LCS1_MonitoringPrescriptionSENSE" multiplicity="any" />	
+			
 			<AttributeDefinition id="LCS1_PatientQuestionaireAH" description="Prescripció de qüestionaris al pacient" type="Link.EntityDefinition.LCS1_PatientQuestionaire" multiplicity="any" />							
 			<AttributeDefinition id="LCS1_Advice" type="Link.EntityDefinition.LCS1_Advice" description="Prescripció de consells" multiplicity="any"/>
 			<AttributeDefinition id="LCS1_Drug" type="Link.EntityDefinition.LCS1_Drug" description="Prescripció de medicació" multiplicity="any"/>
@@ -1205,9 +1209,9 @@
             <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Mesures"/>                      
         </EntityDefinition>		
 		
-		<EntityDefinition id="LCS1_MonitoringPrescriptionSP02" description="Prescripció de la monitorització - Saturació d'oxigen">
+		<EntityDefinition id="LCS1_MonitoringPrescriptionSP02" description="Prescripció de la monitorització - Saturació d'oxigen AMB O2">
             <AttributeDefinition id="type" type="enumeration" defaultValues="['SP02']" multiplicity="exactlyOne" description="Tipus de mesura" additionalDescription="Seleccioneu el tipus de mesura per a la supervisió del pacient">
-                <EnumerationOption value="SP02" description="Saturació d'oxigen"/>
+                <EnumerationOption value="SP02" description="Saturació d'oxigen AMB O2"/>
             </AttributeDefinition>   
             <AttributeDefinition id="alertmin" type="number.min(0)" defaultValues="[90]" multiplicity="exactlyOne" description="Valor mínim permès" additionalDescription="Valor mínim per a aquesta mesura, ha de ser superior a 0"/>       
             <AttributeDefinition id="alertmax" type="number.min(0)" multiplicity="exactlyOne" description="Valor màxim permès" additionalDescription="El valor màxim d'aquesta mesura, ha de ser superior a 0"/>      
@@ -1232,7 +1236,35 @@
             <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comentaris" additionalDescription="Proporcioneu suggeriments addicionals pel pacient"/>   
             <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Mesures"/>                      
         </EntityDefinition>				
-		
+				
+		<EntityDefinition id="LCS1_MonitoringPrescriptionSENSE" description="Prescripció de la monitorització - Saturació d'oxigen SENSE O2">
+            <AttributeDefinition id="type" type="enumeration" defaultValues="['SP02']" multiplicity="exactlyOne" description="Tipus de mesura" additionalDescription="Seleccioneu el tipus de mesura per a la supervisió del pacient">
+                <EnumerationOption value="SP02SENSE" description="Saturació d'oxigen SENSE O2"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="alertmin" type="number.min(0)" defaultValues="[90]" multiplicity="exactlyOne" description="Valor mínim permès" additionalDescription="Valor mínim per a aquesta mesura, ha de ser superior a 0"/>       
+            <AttributeDefinition id="alertmax" type="number.min(0)" multiplicity="exactlyOne" description="Valor màxim permès" additionalDescription="El valor màxim d'aquesta mesura, ha de ser superior a 0"/>      
+            <AttributeDefinition id="alertfreq" type="number.min(0)" defaultValues="[1]" multiplicity="exactlyOne" description="Valor de freqüència d'alerta"/>       
+            <AttributeDefinition id="alertfrequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Unitat de freqüència d'alerta">     
+                <EnumerationOption value="DAYS" description="Dies"/>
+                <EnumerationOption value="WEEKS" description="Setmanes"/>
+                <EnumerationOption value="MONTHS" description="Mesos"/>				
+            </AttributeDefinition>
+            <AttributeDefinition id="freq" type="number.min(0)" defaultValues="[1]" multiplicity="exactlyOne" description="Freqüència"/> 
+            <AttributeDefinition id="frequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Unitat de freqüència">     
+                <EnumerationOption value="DAYS" description="Dies"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="exactlyOne" description="Retard màxim en minuts" additionalDescription="Retard màxim perque el pacient es prengui la mesura"/> 
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Data d'inici"/> 
+            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="Data de fi"/> 
+            <AttributeDefinition id="timeslot" type="enumeration" defaultValues="['BREAKFAST','OPTIONAL']" multiplicity="atLeastOne" description="Franges per prendre les mesures" additionalDescription="Es poden seleccionar múltiples franges, cal seleccionar-ne almenys una">     
+                <EnumerationOption value="BREAKFAST" description="Abans d'esmorzar"/>
+                <!--<EnumerationOption value="ANYTIMEDURINGDAY" description="En qualsevol moment del dia, si es troba pitjor (sota símptomes). La presa ha de ser en respòs" additionalDescription="Seleccioneu aquesta opció quan el temps del dia no importa"/>-->
+				<EnumerationOption value="OPTIONAL" description="En qualsevol moment del dia, si es troba pitjor (sota símptomes). La presa ha de ser en respòs"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comentaris" additionalDescription="Proporcioneu suggeriments addicionals pel pacient"/>   
+            <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Mesures"/>                      
+        </EntityDefinition>				
+	
         <EntityDefinition id="LCS1_PatientQuestionaire" description="Prescripció de qüestionaris al pacient">
             <AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Tipus de qüestionari" additionalDescription="Seleccioneu el tipus de qüestionari que el pacient ha d'omplir">
                 <EnumerationOption value="STATUSEPOC" description="Autocheck Health Status EPOC"/>
@@ -1318,9 +1350,10 @@
 				<AttributeDefinition id="advicecode" type="enumeration" multiplicity="exactlyOne" description="Escull un consell">
 				<EnumerationOption value="OTHER" description="Indicar consejo específico para el paciente"/>
 				<EnumerationOption value="INSUFCARDIACA" description="Video: ¿Qué es la Insuficiencia Cardíaca?" additionalDescription="https://youtu.be/Sre61s1-c3Y"/>
-				<EnumerationOption value="ALARMAINSUFCARDIACA" description="Video: Signos de alarma de la Insuficiencia Cardíaca" additionalDescription="https://youtu.be/oZND_apKeCQ"/>
+				<EnumerationOption value="ALIMSALUDABLE" description="Video: Alimentación saludable y dieta sin sal" additionalDescription="https://youtu.be/WAIQQoOdOMU"/>
 				<EnumerationOption value="ACTFISICA" description="Video: Actividad física" additionalDescription="https://www.youtube.com/watch?v=Q27ztlePMjo"/>				
 				</AttributeDefinition>							
+				<EnumerationOption value="ALARMAINSUFCARDIACA" description="Video: Signos de alarma de la Insuficiencia Cardíaca" additionalDescription="https://youtu.be/oZND_apKeCQ"/>
 				<AttributeDefinition id="title" type="string" multiplicity="exactlyOne" description="Títol"/>   
 				<AttributeDefinition id="expiredate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Data d'expiració"/> 
 				<AttributeDefinition id="explenation" type="longtext" multiplicity="exactlyOne" description="Descripció"/> 
@@ -1424,7 +1457,7 @@
    <!-- CASE DEFINITION -->				  
         <CaseDefinition id="LCS1_Leida" description="CS1 Lleida - Versió OK" ownerPath="LCS1_Settings.CaseManager" clientPath="LCS1_Settings.Patient" entityDefinitionId="LCS1_CaseData" newEntityDefinitionId="LCS1_Settings" newEntityAttachPath="LCS1_Settings" 
 		    notesDefaultValue='			
-<table style="border: 0px !important; border-spacing: 20px !important; border-collapse: separate !important; height: 390px; width: 100%; border-color: black;" border="1" width="100%" cellspacing="20">
+<table style="border: 0px !important; border-spacing: 20px !important; border-collapse: separate !important; height: 390px; width: 100%; border-color: black; table-layout:fixed !important;" border="1" width="100%" cellspacing="20">
 <thead>
 <tr>
 <th style="width: 50%; color: white; background-color: #7c3aac;">HOSPITAL</th>
@@ -1473,8 +1506,7 @@
 <td style="border: 0px !important;">&nbsp;</td>
 </tr>
 </tbody>
-</table>
-<p>&nbsp;</p>'									
+</table><p>&nbsp;</p>'									
             onCompleteHTTPHookURL="http://integration-producer:8081/v1/producer/point-to-point/sacm/case/terminate"
             onTerminateHTTPHookURL="http://integration-producer:8081/v1/producer/point-to-point/sacm/case/terminate"
             onDeleteHTTPHookURL="http://integration-producer:8081/v1/producer/point-to-point/sacm/case/terminate">	  
@@ -1925,19 +1957,34 @@
                     <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionWeightAH.timeslot" isReadOnly="false" isMandatory="true"/> 
                     <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionWeightAH.comments" isReadOnly="false" isMandatory="false"/>                    
                     <TaskParamDefinition part="AUTOMATED" path="LCS1_Workplan.LCS1_MonitoringPrescriptionWeightAH.measurement" isReadOnly="false" isMandatory="true"/>
-                </DualTaskDefinition>							
+                </DualTaskDefinition>											
+				
+                <DualTaskDefinition id="LCS1_MonitoringPrescriptionSENSEAHWP" externalId="MonitoringPrescription"
+				description="Prescripció de la monitorització - Saturació d'oxigen SENSE O2"
+				ownerPath="LCS1_Settings.Clinician" dueDatePath="LCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS1_MonitoringPrescriptionSENSE" entityAttachPath="LCS1_Workplan.LCS1_MonitoringPrescriptionSENSEAH">
+				
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSENSEAH.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSENSEAH.alertmin" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSENSEAH.freq" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSENSEAH.frequnit" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSENSEAH.maxdelay" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSENSEAH.startdate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSENSEAH.enddate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSENSEAH.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSENSEAH.comments" isReadOnly="false" isMandatory="false"/>                    
+					<TaskParamDefinition part="AUTOMATED" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSENSEAH.measurement" isReadOnly="false" isMandatory="true"/>
+                </DualTaskDefinition>					
 
                 <DualTaskDefinition id="LCS1_MonitoringPrescriptionSP02AHWP" externalId="MonitoringPrescription"
-				description="Prescripció de la monitorització - Saturació d'oxigen"
+				description="Prescripció de la monitorització - Saturació d'oxigen AMB O2"
 				ownerPath="LCS1_Settings.Clinician" dueDatePath="LCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS1_MonitoringPrescriptionSP02" entityAttachPath="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH">
+				
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
                     <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.type" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.alertmin" isReadOnly="false" isMandatory="true"/>
-                    <!-- <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.alertmax" isReadOnly="false" isMandatory="true"/> -->
-                    <!-- <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.alertfreq" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.alertfrequnit" isReadOnly="false" isMandatory="true"/>--> 
-					
                     <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.freq" isReadOnly="false" isMandatory="true"/> 
                     <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.frequnit" isReadOnly="false" isMandatory="true"/>  
                     <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.maxdelay" isReadOnly="false" isMandatory="true"/>
@@ -1946,8 +1993,8 @@
                     <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.timeslot" isReadOnly="false" isMandatory="true"/> 
                     <TaskParamDefinition part="HUMAN" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.comments" isReadOnly="false" isMandatory="false"/>                    
 					<TaskParamDefinition part="AUTOMATED" path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.measurement" isReadOnly="false" isMandatory="true"/>
-                </DualTaskDefinition>							
-				
+                </DualTaskDefinition>			
+								
                 <DualTaskDefinition id="LCS1_MonitoringPrescriptionHeartPulseAHWP" externalId="MonitoringPrescription"
 				description="Prescripció de la monitorització - Pols cardíac"
 				ownerPath="LCS1_Settings.Clinician" dueDatePath="LCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="LCS1_MonitoringPrescriptionHeartPulse" entityAttachPath="LCS1_Workplan.LCS1_MonitoringPrescriptionHeartPulseAH">
@@ -2412,17 +2459,7 @@
 			<TaskParam path="LCS1_Workplan.LCS1_PhysicalActivityAH.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
 		</Action>  	
 	  
-		<Action id="ActivateDualTask" processId="LCS1_Advice" breakpoint="true"/>
-        <Action id="CompleteDualTaskHumanPart" processId="LCS1_Advice" breakpoint="true">
-            <TaskParam path="LCS1_Workplan.LCS1_Advice.title"  values="['Read the news paper']"/>
-            <TaskParam path="LCS1_Workplan.LCS1_Advice.expiredate"  values="['2017-06-09T00:00:00.0']"/>
-            <TaskParam path="LCS1_Workplan.LCS1_Advice.explenation"  values="['A long description describing what to do exactly.']"/>
-        </Action>
-        <Action id="CompleteDualTaskAutomatedPart" processId="LCS1_Advice">
-            <TaskParam path="LCS1_Workplan.LCS1_Advice.visualizationdate"  values="['2017-12-26T00:00:00.000']"/>
-        </Action>
-		
-		 <Action id="ActivateDualTask" processId="LCS1_Drug" breakpoint="true"/>
+     	 <Action id="ActivateDualTask" processId="LCS1_Drug" breakpoint="true"/>
         <Action id="CompleteDualTaskHumanPart" processId="LCS1_Drug" breakpoint="true">
             <TaskParam path="LCS1_Workplan.LCS1_Drug.drug"  values="[{'id':'Paracetamol', 'name':'Paracetamol 500mg'}]"/>
             <TaskParam path="LCS1_Workplan.LCS1_Drug.dosage"  values="['5x Day']"/>
@@ -2495,7 +2532,7 @@
 		<Action id="CompleteDualTaskHumanPart" processId="LCS1_MonitoringPrescriptionSP02AHWP" breakpoint="true">
 			<TaskParam path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.type"  values="['SP02']"/>
 			<TaskParam path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.alertmin"  values="[66]"/>
-			<TaskParam path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.comments"  values="['Some random comment SP02']"/>
+			<TaskParam path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.comments"  values="['Some random comment SP02 AMB O2']"/>
 			<TaskParam path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.freq"  values="[5]"/>
 			<TaskParam path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.freqqunit"  values="['WEEKS']"/>
 			<TaskParam path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.maxdelay"  values="[100]"/>
@@ -2508,6 +2545,25 @@
 			<TaskParam path="LCS1_Workplan.LCS1_MonitoringPrescriptionSP02AH.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
 		</Action>
 		
+		
+	  <Action id="ActivateDualTask" processId="LCS1_MonitoringPrescriptionSENSEAHWP" breakpoint="true"/>
+		<Action id="CompleteDualTaskHumanPart" processId="LCS1_MonitoringPrescriptionSENSEAHWP" breakpoint="true">
+			<TaskParam path="LCS1_Workplan.LCS1_MonitoringPrescriptionSENSEAH.type"  values="['SP02SENSE']"/>
+			<TaskParam path="LCS1_Workplan.LCS1_MonitoringPrescriptionSENSEAH.alertmin"  values="[66]"/>
+			<TaskParam path="LCS1_Workplan.LCS1_MonitoringPrescriptionSENSEAH.comments"  values="['Some random comment SP02 SENSE O2']"/>
+			<TaskParam path="LCS1_Workplan.LCS1_MonitoringPrescriptionSENSEAH.freq"  values="[5]"/>
+			<TaskParam path="LCS1_Workplan.LCS1_MonitoringPrescriptionSENSEAH.freqqunit"  values="['WEEKS']"/>
+			<TaskParam path="LCS1_Workplan.LCS1_MonitoringPrescriptionSENSEAH.maxdelay"  values="[100]"/>
+			<TaskParam path="LCS1_Workplan.LCS1_MonitoringPrescriptionSENSEAH.startdate"  values="['2017-06-09T00:00:00.0']"/>
+			<TaskParam path="LCS1_Workplan.LCS1_MonitoringPrescriptionSENSEAH.enddate"  values="['2019-06-09T00:00:00.0']"/>
+			<TaskParam path="LCS1_Workplan.LCS1_MonitoringPrescriptionSENSEAH.timeslot"  values="['BREAKFAST']"/>
+		</Action>
+			
+		<Action id="CompleteDualTaskAutomatedPart" processId="LCS1_MonitoringPrescriptionSENSEAHWP" breakpoint="true">
+			<TaskParam path="LCS1_Workplan.LCS1_MonitoringPrescriptionSENSEAH.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
+		</Action>		
+
+
 		<!-- At the moment it is only in testing environment -->		
         <Action id="ActivateDualTask" processId="LCS1_PatientQuestionaireAHWP" breakpoint="true"/>
         <Action id="CompleteDualTaskHumanPart" processId="LCS1_PatientQuestionaireAHWP" breakpoint="true">
@@ -2523,7 +2579,6 @@
         <Action id="CompleteDualTaskAutomatedPart" processId="LCS1_PatientQuestionaireAHWP">
             <TaskParam path="LCS1_Workplan.LCS1_PatientQuestionaireAH.questionaires"  values='[{"id":"18823iSMSID","lastEdit":"2018-05-15 11:09:23.0","state":"COMPLETED","taskParams":[{"description":"In general, would you say your health is:","values":["Excellent"],"type":"enumeration","isMandatory":true,"additionalDescription":null},{"description":"Moderate activities","values":["YES, limited a lot"],"type":"enumeration","isMandatory":false,"additionalDescription":"Moderate activities such as moving a table, pushing a vacuum cleaner, bowling, or playing golf."}]},{"id":"18824iSMSID","lastEdit":"2018-05-16 11:09:23.0","state":"ACTIVE","taskParams":[{"description":"In general, would you say your health is:","values":["Very good"],"type":"enumeration","isMandatory":true,"additionalDescription":null},{"description":"Moderate activities","values":["YES, limited a little"],"type":"enumeration","isMandatory":false,"additionalDescription":"Moderate activities such as moving a table, pushing a vacuum cleaner, bowling, or playing golf."}]}]'/>
         </Action>	
-	
 	
 	    <Action id="CompleteHumanTask" processId="LCS1_DischargeTestHT" breakpoint="true">  
 			<TaskParam path="LCS1_Discharge.LCS1_DischargeTest.discharge1" values="['aaa']"/> 
@@ -2554,7 +2609,19 @@
 			<TaskParam path="LCS1_Discharge.LCS1_EQ-5DDischarge.EQ-5D-5" values="['1']"/> 
 			<TaskParam path="LCS1_Discharge.LCS1_EQ-5DDischarge.EQ-5D-6" values="[51]"/> 
 		</Action> 
-			
+		
+		<Action id="ActivateDualTask" processId="LCS1_Advice" breakpoint="true"/>
+        <Action id="CompleteDualTaskHumanPart" processId="LCS1_Advice" breakpoint="true">
+            <TaskParam path="LCS1_Workplan.LCS1_Advice.title"  values="['Read the news paper']"/>
+			<TaskParam path="LCS1_Workplan.LCS1_Advice.advicecode"  values="['INSUFCARDIACA']"/>
+            <TaskParam path="LCS1_Workplan.LCS1_Advice.expiredate"  values="['2017-06-09T00:00:00.0']"/>
+            <TaskParam path="LCS1_Workplan.LCS1_Advice.explenation"  values="['A long description describing what to do exactly.']"/>
+        </Action>
+        <Action id="CompleteDualTaskAutomatedPart" processId="LCS1_Advice">
+            <TaskParam path="LCS1_Workplan.LCS1_Advice.visualizationdate"  values="['2017-12-26T00:00:00.000']"/>
+        </Action>
+		
+	
 	</Execution> 		
 	
 	
