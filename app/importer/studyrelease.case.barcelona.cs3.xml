@@ -12,7 +12,7 @@
     <Group staticId="3a21cc25923a11e7bd0c0242ac120002" id="IdibapsPhysicians"/>
     <Group staticId="3a21cc40923a11e7bd0c0242ac120002" id="IdibapsPhysiotherapists"/>
     <Group staticId="3a21cc73923a11e7bd0c0242ac120002" id="IdibapsPrimaryCareClinicians"/>
-    <Group staticId="3a21cc58923a11e7bd0c0242ac120002" id="IdibapsPsychologists"/>7
+    <Group staticId="3a21cc58923a11e7bd0c0242ac120002" id="IdibapsPsychologists"/>
     <Group staticId="3a21cc37923a11e7bd0c0242ac120002" id="IdibapsRNSTs"/>
     <Group staticId="3a21cc64923a11e7bd0c0242ac120002" id="IdibapsSocialCareers"/>
     <Group staticId="3a21cbd4923a11e7bd0c0242ac120002" id="IdibapsAdmins"/>
@@ -45,7 +45,6 @@
 			<AttributeDefinition id="Physiotherapist" type="Link.Users(IdibapsPhysiotherapists)" multiplicity="exactlyOne" description="Fisioterapeuta"/>
 			<AttributeDefinition id="Anesthesiologist" type="Link.Users(IdibapsAnesthesiologists)" multiplicity="exactlyOne" description="Anestesista"/>
 			<AttributeDefinition id="CaseManager" type="Link.Users(IdibapsCaseManagers)" multiplicity="exactlyOne" description="Gestor de casos"/>            						
-            <!--<AttributeDefinition id="EvaluationDueDate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Evaluation default due date"/>   -->
 			<AttributeDefinition id="WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date" multiplicity="exactlyOne"/>
         </EntityDefinition>
 
@@ -200,22 +199,7 @@
 					<!-- <TaskParamDefinition path="BCS3_Identification.BCS3_SelectPatient.age" isReadOnly="false" isMandatory="true"/>
 						<TaskParamDefinition path="BCS3_Identification.BCS3_SelectPatient.borndate" isReadOnly="false" isMandatory="true"/>
 					-->
-                </HumanTaskDefinition>
-				
-				<!--
-				<HumanTaskDefinition id="BCS3_SelectPatient" externalId="SelectPatient" description="Selecció de clínics" ownerPath="BCS3_Settings.CaseManager" isMandatory="true" repeatable="ONCE"> 
-                    <TaskParamDefinition path="BCS3_Settings.Patient" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS3_Settings.CaseManager" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS3_Settings.Anesthesiologist" isReadOnly="false" isMandatory="true"/>					
-					<TaskParamDefinition path="BCS3_Settings.Physiotherapist" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition path="BCS3_Settings.Nurse" isReadOnly="false" isMandatory="true"/>                    
-                    <TaskParamDefinition path="BCS3_Settings.AnesthesiologistOrNurse" isReadOnly="false" isMandatory="false"/>              
-                    <TaskParamDefinition path="BCS3_Settings.Nutritionist" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition path="BCS3_Settings.NutritionistOrNurse" isReadOnly="false" isMandatory="false"/>                                        
-                    <TaskParamDefinition path="BCS3_Settings.Psychologists" isReadOnly="false" isMandatory="true"/>
-					
-                </HumanTaskDefinition>-->
-                				
+                </HumanTaskDefinition>				                				
             </StageDefinition>
 
             <StageDefinition id="BCS3_Workplan" description="Pla de treball" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS3_Workplan" entityAttachPath="BCS3_Workplan">
@@ -331,15 +315,10 @@
 			-->
             <TaskParam path="BCS3_Settings.CaseManager"  userValue="salazart"/>
             <TaskParam path="BCS3_Settings.Anesthesiologist" userValue="velardem"/>
-			<TaskParam path="BCS3_Settings.Physiotherapist" userValue="arpl"/>
-			
+			<TaskParam path="BCS3_Settings.Physiotherapist" userValue="arpl"/>			
 			<!--
             <TaskParam path="BCS3_Identification.BCS3_SelectPatient.name" values="['Test Inclusion']"/>
-            <TaskParam path="BCS3_Identification.BCS3_SelectPatient.age" values="['80']"/>
-                     
-			<Action id="CompleteHumanTask" processId="BCS3_SetWorkplanDueDate">
-            <TaskParam path="BCS3_Settings.WorkplanDueDate" values="['2019-06-09T00:00:00.0']" />
-			</Action>  
+            <TaskParam path="BCS3_Identification.BCS3_SelectPatient.age" values="['80']"/>                     
 			-->
         </Action>
 		
