@@ -996,7 +996,7 @@ module.exports = class Importer {
         const data = {
           enablesProcessDefinition: enablesProcessDefinitionId,
           completedProcessDefinitions: [],
-          expression: null
+          expression: sd.$.expression
         };
         return Promise.each(sd.precondition, p=>{
           if(p.$.processDefinitionId != null){
