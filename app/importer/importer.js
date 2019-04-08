@@ -692,10 +692,10 @@ module.exports = class Importer {
         return Promise.resolve();
       return Promise.each(Workspace.CaseDefinition, cd=>{
         let entityDefinitionId = null;
-        return this.getEntityDefinitionIdByXMLId(cd.$.entityDefinitionId)
+        return this.getEntityDefinitionIdByXMLId(this.getCurrentOrDeprecatedXMLAttribute(cd.$.rootEntityDefinitionId, cd.$.entityDefinitionId))
           .then(entityDefinitionIdPersisted=>{    
             entityDefinitionId = entityDefinitionIdPersisted;
-            return this.getEntityDefinitionIdByXMLId(cd.$.newEntityDefinitionId);
+            return this.getEntityDefinitionIdByXMLId(this.getCurrentOrDeprecatedXMLAttribute(cd.$.entityDefinitionId, cd.$.newEntityDefinitionId));
           })
           .then(newEntityDefinitionIdPersisted=>{     
             const data = {
@@ -706,7 +706,7 @@ module.exports = class Importer {
               clientPath: cd.$.clientPath,
               entityDefinition: entityDefinitionId,
               newEntityDefinition: newEntityDefinitionIdPersisted,
-              newEntityAttachPath: cd.$.newEntityAttachPath,
+              newEntityAttachPath: this.getCurrentOrDeprecatedXMLAttribute(cd.$.entityAttachPath, cd.$.newEntityAttachPath),
               notesDefaultValue: cd.$.notesDefaultValue,
               onAvailableHTTPHookURL: cd.$.onAvailableHTTPHookURL,
               onEnableHttpHTTPHookURL: cd.$.onEnableHttpHTTPHookURL,
