@@ -996,8 +996,11 @@ module.exports = class Importer {
         const data = {
           enablesProcessDefinition: enablesProcessDefinitionId,
           completedProcessDefinitions: [],
-          expression: sd.$.expression
+          expression: null
         };
+        if(sd.$ && sd.$.expression != null){
+          data.expression = sd.$.expression.replace(/'/g,'"');
+        }
         return Promise.each(sd.precondition, p=>{
           if(p.$.processDefinitionId != null){
             return this.getProcessDefinitionIdByXMLId(p.$.processDefinitionId)
@@ -1043,54 +1046,56 @@ module.exports = class Importer {
       });
       return Promise.each(actions, action=>{
         let p = Promise.resolve();
+        let actionType = this.getCurrentOrDeprecatedXMLAttribute(action.$.type, action.$.id);
+        let processDefinitionId = this.getCurrentOrDeprecatedXMLAttribute(action.$.processDefinitionId, action.$.processId);
         if(isDebug && action.$.breakpoint)
-          p = prompt('Press enter to continue with action "'+action.$.id+'('+action.$.processId+')": ')
+          p = prompt('Press enter to continue with action "'+actionType+'('+processDefinitionId+')": ')
         return p.then(()=>{
           winston.debug(colors.green('Start '+this.getActionConsoleString(action)));          
-          if(action.$.id == "ActivateStage"){
-            return this.activateStageWithName(caseId, action.$.processId);
+          if(actionType == "ActivateStage"){
+            return this.activateStageWithName(caseId, processDefinitionId);
 
-          }else if(action.$.id == "CompleteStage"){
-            return this.completeStageWithName(caseId, action.$.processId);
+          }else if(actionType == "CompleteStage"){
+            return this.completeStageWithName(caseId, processDefinitionId);
   
-          }else if(action.$.id == "ActivateHumanTask"){
-            return this.activateHumanTaskWithName(caseId, action.$.processId);
+          }else if(actionType == "ActivateHumanTask"){
+            return this.activateHumanTaskWithName(caseId, processDefinitionId);
 
-          }else if(action.$.id == "ActivateDualTask"){
-            return this.activateDualTaskWithName(caseId, action.$.processId);
+          }else if(actionType == "ActivateDualTask"){
+            return this.activateDualTaskWithName(caseId, processDefinitionId);
 
-          }else if(action.$.id == "CompleteHumanTask"){
+          }else if(actionType == "CompleteHumanTask"){
             const params = this.getParms(action);
-            return this.completeHumanTaskWithName(caseId, action.$.processId, params)
+            return this.completeHumanTaskWithName(caseId, processDefinitionId, params)
           
-          }else if(action.$.id == "CompleteAutomatedTask"){
+          }else if(actionType == "CompleteAutomatedTask"){
             const params = this.getParms(action);
-            return this.completeAutomatedTaskWithName(caseId, action.$.processId, params)
+            return this.completeAutomatedTaskWithName(caseId, processDefinitionId, params)
          
-          }else if(action.$.id == "CompleteDualTaskHumanPart"){
+          }else if(actionType == "CompleteDualTaskHumanPart"){
             const params = this.getParms(action);
-            return this.completeDualTaskHumanPartWithName(caseId, action.$.processId, params)
+            return this.completeDualTaskHumanPartWithName(caseId, processDefinitionId, params)
           
-          }else if(action.$.id == "CompleteDualTaskAutomatedPart"){
+          }else if(actionType == "CompleteDualTaskAutomatedPart"){
             const params = this.getParms(action);
-            return this.completeDualTaskAutomatedPartWithName(caseId, action.$.processId, params)
+            return this.completeDualTaskAutomatedPartWithName(caseId, processDefinitionId, params)
           
-          }else if(action.$.id == "CorrectHumanTask"){
+          }else if(actionType == "CorrectHumanTask"){
             const params = this.getParms(action);
-            return this.correctHumanTaskWithName(caseId, action.$.processId, params)
+            return this.correctHumanTaskWithName(caseId, processDefinitionId, params)
 
-          }else if(action.$.id == "CorrectDualTaskHumanPart"){
+          }else if(actionType == "CorrectDualTaskHumanPart"){
             const params = this.getParms(action);
-            return this.correctDualTaskHumanPartWithName(caseId, action.$.processId, params)
+            return this.correctDualTaskHumanPartWithName(caseId, processDefinitionId, params)
 
-          }else if(action.$.id == "CreateAlert"){
-            return this.createAlert(caseId, action.$.processId, action)        
+          }else if(actionType == "CreateAlert"){
+            return this.createAlert(caseId, processDefinitionId, action)        
 
-          }else if(action.$.id == "Delay"){
+          }else if(actionType == "Delay"){
             return Promise.delay(200);  
 
           }else{
-            return Promise.resolve('Action "'+action.$.id+'" not defined!');
+            return Promise.resolve('Action "'+actionType+'" not defined!');
           }
         })
       })
@@ -1103,20 +1108,29 @@ module.exports = class Importer {
     }
 
     getActionConsoleString(action){
-      if(action.$.id != 'Delay'){
-        return action.$.id+'('+action.$.processId+')';
+      let actionType = this.getCurrentOrDeprecatedXMLAttribute(action.$.type, action.$.id);
+      let processDefinitionId = this.getCurrentOrDeprecatedXMLAttribute(action.$.processDefinitionId, action.$.processId);
+      if(actionType != 'Delay'){
+        return actionType+'('+processDefinitionId+')';
       }else{
-        return action.$.id+'('+action.$.ms+')';
+        return actionType+'(200ms)';
       }
     }
 
     getProcessDefinitionXMLIds(actions){
       let XMLIds = new Set();
       actions.forEach(action=>{
-        if(action.$.id != 'Delay')
-          XMLIds.add(action.$.processId);
+        if(this.getCurrentOrDeprecatedXMLAttribute(action.$.type,  action.$.id) != 'Delay')
+          XMLIds.add(this.getCurrentOrDeprecatedXMLAttribute(action.$.processDefinitionId, action.$.processId));
       });
       return XMLIds;
+    }
+    
+    /** Supports using deprecated XML declarations */
+    getCurrentOrDeprecatedXMLAttribute(currentAttribute, deprecatedAttribute){
+      if(currentAttribute != null)
+        return currentAttribute;
+      return deprecatedAttribute;
     }
 
     printHumanTaskDefinitionExecutionCoverage(actions){
