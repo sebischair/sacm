@@ -112,6 +112,9 @@ app.use(cookieParser());
 app.use('/api/v1', (req, res, next)=>{
 
   /** Use different user for test execution as for import */
+  if(req.headers['execution-user'] != null){
+    req.headers.executionuser = req.headers['execution-user'];
+  }
   if(req.headers.executionuser != null){
     req.executionJwt = http.generateJWT(req.headers.executionuser, config.sociocortex.defaultPassword);
     winston.debug(req.executionJwt);    
