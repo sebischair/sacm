@@ -68,7 +68,7 @@ app.use(compression());
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, simulateuser, authorization");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, simulateuser, simulate-user, authorization");
   next();
 });
 
@@ -118,6 +118,9 @@ app.use('/api/v1', (req, res, next)=>{
   }
 
   /** Testing Simulate User Authorization */
+  if(req.headers['simulate-user'] != null){
+    req.headers.simulateuser = req.headers['simulate-user'];
+  }
   if(req.headers.simulateuser != null && req.headers.authorization == null){
     let pw;
     let user;
