@@ -1,0 +1,355 @@
+<SACMDefinition>
+    <Group staticId="2c9480845bee03e7015bfc03da610001" id="DemoProfessionals"/>	
+    <Group staticId="2c9480885d1737ef015d7568f7d4000d" id="DemoAdminOfficers"/>
+    <Group staticId="2c9480885d1737ef015d7568f7b5000c" id="DemoAnesthesiologists"/>
+    <Group staticId="2c9480885d1737ef015d7568f771000a" id="DemoCaseManagers"/>
+    <Group staticId="2c9480845bee03e7015bfc05a3fc0003" id="DemoClinicians"/>
+    <Group staticId="2c9480885d1737ef015d7568f9210017" id="DemoDataManagers"/>
+    <Group staticId="2c9480885d1737ef015d7568f8e30015" id="DemoLabTechnicians"/>
+    <Group staticId="2c9480885d1737ef015d7568f9020016" id="DemoLocalPulmonologists"/>
+    <Group staticId="2c9480885d1737ef015d7568f796000b" id="DemoNurses"/>
+    <Group staticId="2c9480885d1737ef015d7568f8690011" id="DemoNutritionists"/>
+    <Group staticId="2c9480885d1737ef015d7568f810000e" id="DemoPhysicians"/>	
+    <Group staticId="2c9480885d1737ef015d7568f84c0010" id="DemoPhysiotherapists"/>    	
+	<Group staticId="2c9480885d1737ef015d7568f8c30014" id="DemoPrimaryCareClinicians"/>		
+	<Group staticId="095738aa30ea11e8a1e70242ac120003" id="DemoPrimaryCareNurse"/>				
+    <Group staticId="2c9480885d1737ef015d7568f8870012" id="DemoPsychologists"/>
+    <Group staticId="2c9480885d1737ef015d7568f831000f" id="DemoRNSTs"/>	
+    <Group staticId="2c9480885d1737ef015d7568f8a70013" id="DemoSocialCareers"/>    
+	<Group staticId="2c9480845bee03e7015bfc113cfc0007" id="DemoAdmins"/>	
+    <Group staticId="2c9480845bee03e7015bfc056b070002" id="DemoPatients"/>	
+	
+	<User staticId="4deb24bd442f11e9bd8a0242ac13000e" id="casemanager"/>		
+    <User staticId="eb7de7ec442f11e9bd8a0242ac13000e" id="cliniciandemo"/>
+    <User staticId="349ca79c443011e9bd8a0242ac13000e" id="nursedemo"/>
+    <User staticId="6e3c1e76443011e9bd8a0242ac13000e" id="social-career"/>
+    <User staticId="acc58e9a443011e9bd8a0242ac13000e" id="physiotherapist"/>	
+	<User staticId="e8f2d9ce443011e9bd8a0242ac13000e" id="clinician-primary-care"/>    
+    <User staticId="38d6fcb1443111e9bd8a0242ac13000e" id="nurse-primary-care"/>
+    <User staticId="da1125cf443111e9bd8a0242ac13000e" id="anesthesiologist"/>
+    <User staticId="17f9082d443211e9bd8a0242ac13000e" id="nutritionist"/>
+    <User staticId="538dd840443211e9bd8a0242ac13000e" id="physician"/>	
+	<User staticId="9da4a88e443211e9bd8a0242ac13000e" id="psychologist"/>	
+	
+	<User staticId="d367172a443211e9bd8a0242ac13000e" id="patientdemo"/>
+	<User staticId="1024bb47443311e9bd8a0242ac13000e" id="patientdemo2"/>
+	<User staticId="3c86f075443311e9bd8a0242ac13000e" id="patientdemo3"/>
+	<User staticId="5f737af3443311e9bd8a0242ac13000e" id="patientdemo4"/>	
+
+	
+    <Workspace staticId="2c9480845bee03e7015bfc03da610001" id="demo">
+        <EntityDefinition id="DCS1_CaseData" description="Case Data">
+			<AttributeDefinition id="DCS1_Settings" description="Configuració" type="Link.EntityDefinition.DCS1_Settings" multiplicity="any"/> 
+			<AttributeDefinition id="DCS1_Identification" description="Identificació del cas" type="Link.EntityDefinition.DCS1_Identification" multiplicity="any"/><AttributeDefinition id="DCS1_Workplan" description="Pla de treball" type="Link.EntityDefinition.DCS1_Workplan" multiplicity="any"/> 					
+			<AttributeDefinition id="DCS1_Discharge" description="Discharge Form" type="Link.EntityDefinition.DCS1_Discharge" multiplicity="any"/> 		
+		</EntityDefinition>	
+			
+		<!-- Settings Entity Definitions -->
+        <EntityDefinition id="DCS1_Settings" description="Configuració">                       		
+		    <AttributeDefinition id="WorkplanDueDate" type="date.after(TODAY)" description="Workplan default due date" multiplicity="exactlyOne"/>
+			<AttributeDefinition id="CaseManager" type="Link.Users(DemoProfessionals)" description="Case Owner" multiplicity="exactlyOne"/>            
+			<AttributeDefinition id="Patient" type="Link.Users(DemoPatients)" description="Patient" multiplicity="exactlyOne"/>								    
+        </EntityDefinition>
+		
+		<!-- Identification Entity Definitions -->
+        <EntityDefinition id="DCS1_Identification" description="Case Identification">
+			<AttributeDefinition id="DCS1_LifeStyleHabits" type="Link.EntityDefinition.DCS1_LifeStyleHabits" multiplicity="any" description="Life Style Habits"/> 
+        </EntityDefinition>			
+		
+		<EntityDefinition id="DCS1_LifeStyleHabits" description="Life Style Habits">		
+			<AttributeDefinition id="lsh1" type="number" multiplicity="exactlyOne" description="Height(cm)"/>									
+            <AttributeDefinition id="lsh2" type="enumeration" multiplicity="exactlyOne" description="Is your bed comfortable?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>  
+            <AttributeDefinition id="lsh3" type="enumeration" multiplicity="exactlyOne" description="Do you drink coffee or tea?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>  			
+			<AttributeDefinition id="lsh4" type="number" multiplicity="exactlyOne" defaultValues="[0]" description="How many cups of coffe/tea do you drink per day?"/>
+            <AttributeDefinition id="lsh5" type="enumeration" multiplicity="exactlyOne" description="Do you smoke?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>  									
+			<AttributeDefinition id="lsh6" type="number" multiplicity="exactlyOne" defaultValues="[0]" description="How many cigarrettes do you smoke per day?"/>
+			<AttributeDefinition id="lsh7" type="enumeration" multiplicity="exactlyOne" description="Do you use your phone/tablet before bedtime?">
+                <EnumerationOption value="0" description="No"/>
+                <EnumerationOption value="1" description="Yes"/>
+            </AttributeDefinition>  			
+			<AttributeDefinition id="lsh8" type="number" multiplicity="exactlyOne" defaultValues="[0]" description="How much time (minutes) do you use your phone/tablet before bedtime per day?"/>												
+		</EntityDefinition>			
+				
+		<!-- Workplan Entity Definitions -->			
+		<EntityDefinition id="DCS1_Workplan" description="Workplan">			
+			<AttributeDefinition id="DCS1_PhysicalActivityAH" description="Monitoring Prescription - Physical Activity" type="Link.EntityDefinition.DCS1_PhysicalActivity" multiplicity="any" />				
+			<AttributeDefinition id="DCS1_MonitoringPrescriptionWeightAH" description="Monitoring Prescription - Weight" type="Link.EntityDefinition.DCS1_MonitoringPrescriptionWeight" multiplicity="any" />				
+			<AttributeDefinition id="DCS1_PatientQuestionaireAH" description="Prescription - Patient Questionaire" type="Link.EntityDefinition.DCS1_PatientQuestionaire" multiplicity="any" />										
+		</EntityDefinition>				
+		
+		<EntityDefinition id="DCS1_MonitoringPrescriptionWeight" description="Monitoring Prescription - Weight">
+            <AttributeDefinition id="type" type="enumeration" defaultValues="['WEIGHT']" multiplicity="exactlyOne" 
+			description="Measure type" additionalDescription="Select measure type for patient monitory">
+                <EnumerationOption value="WEIGHT" description="Weight"/>
+            </AttributeDefinition>   
+            <AttributeDefinition id="alertmin" type="number.min(0)" defaultValues="[0]" multiplicity="exactlyOne" description="Min value allowed" additionalDescription="Minimum value for this measuremnt greather than 0. If blood pressure is selected, please specify the systolic / diastolic maximum."/>                   
+			<AttributeDefinition id="alertmax" type="number.min(0)" defaultValues="[300]" multiplicity="exactlyOne" description="Max value allowed" additionalDescription="Maximum value for this measuremnt greather than 0. If blood pressure is selected, please specify the systolic / diastolic minimum."/>      
+            <AttributeDefinition id="alertfreq" type="number" defaultValues="[1]" multiplicity="exactlyOne" description="Alert Frecuency Value"/>       
+            <AttributeDefinition id="alertfrequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Alert Frecuency Unit">     
+                <EnumerationOption value="DAYS" description="Days"/>
+                <EnumerationOption value="WEEKS" description="Weeks"/>
+                <EnumerationOption value="MONTHS" description="Months"/>
+            </AttributeDefinition>
+            <AttributeDefinition id="freq" type="number.min(0)" defaultValues="[1]" multiplicity="exactlyOne" description="Measurement Frecuency"/> 
+            <AttributeDefinition id="frequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Measurement Frecuency Unit">     
+                <EnumerationOption value="DAYS" description="Days"/>
+                <EnumerationOption value="WEEKS" description="Weeks"/>
+                <EnumerationOption value="MONTHS" description="Months"/>
+            </AttributeDefinition> 
+            <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="exactlyOne" description="Max delay in minutes" additionalDescription="Maximum delay to fullfill the prescription by the patient"/> 
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Start date"/> 
+            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="End date"/> 
+            <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="Slots to take the measurements" additionalDescription="Multiple slots can be selected, at least one slot need to be selected">     
+                <EnumerationOption value="BREAKFAST" description="Breakfast"/>
+                <EnumerationOption value="LUNCH" description="Lunch"/>
+                <EnumerationOption value="AFTERNOONSNACK" description="Afternoon Snack"/>
+                <EnumerationOption value="DINNER" description="Dinner"/>
+                <EnumerationOption value="BEFORESLEEP" description="Before Sleep"/>
+                <EnumerationOption value="ANYTIMEDURINGDAY" description="Any time a day" additionalDescription="Please select this option when the timeslot of a day doesn't matter."/>
+            </AttributeDefinition>
+            <AttributeDefinition id="comments" type="longtext" multiplicity="maximalOne" description="Comments" additionalDescription="Please provide additional hints for the patient."/>   
+            <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Measurement"/>                      
+        </EntityDefinition>		
+
+		<EntityDefinition id="DCS1_PhysicalActivity" description="Monitoring Prescription - Physical Activity">		
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Start date"/>
+            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="End date"/>       
+            <AttributeDefinition id="dailysteps" type="number.min(0).max(100000)" defaultValues="[10000]" multiplicity="exactlyOne" description="Number of steps daily"/>       
+            <AttributeDefinition id="dailylowlevel" type="number.min(0).max(1440)" defaultValues="[60]" multiplicity="exactlyOne" description="Minutes of low level activity daily"/>       
+            <AttributeDefinition id="dailymediumlevel" type="number.min(0).max(1440)" defaultValues="[40]" multiplicity="exactlyOne" description="Minutes of medium level activity daily"/>       
+            <AttributeDefinition id="dailyhighlevel" type="number.min(0).max(1440)" defaultValues="[20]" multiplicity="exactlyOne" description="Minutes of high level activity daily"/> 			
+			<AttributeDefinition id="handedness" type="enumeration" multiplicity="exactlyOne" description="Handedness">
+                <EnumerationOption value="0" description="Dominant"/>
+                <EnumerationOption value="1" description="Non-dominant"/>
+            </AttributeDefinition>  			
+			<AttributeDefinition id="wristplacement" type="enumeration" multiplicity="exactlyOne" description="Wrist placement">
+                <EnumerationOption value="0" description="Right"/>
+                <EnumerationOption value="1" description="Left"/>
+            </AttributeDefinition>  									
+            <AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Measurement"/>                 
+        </EntityDefinition> 		                
+		
+        <EntityDefinition id="DCS1_PatientQuestionaire" description="Prescription - Patient Questionaire">
+			<AttributeDefinition id="type" type="enumeration" multiplicity="exactlyOne" description="Questionaire type" additionalDescription="Select questionaire type for patient">               
+				<EnumerationOption value="PHONEUSAGE" description="Phone usage"/>
+                <EnumerationOption value="SMOOKING" description="Tabaco"/>
+				<EnumerationOption value="CAFFEINE" description="Caffeine"/>						
+			    <!--<EnumerationOption value="EPWORTH" description="EPWORTH"/>-->
+                <EnumerationOption value="SATED" description="SATED"/>								
+            </AttributeDefinition>   			
+            <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Start date"/> 
+            <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="End date"/> 
+            <AttributeDefinition id="freq" type="number.min(0)" defaultValues="[1]" multiplicity="exactlyOne" description="Questionaire Frecuency"/> 
+            <AttributeDefinition id="frequnit" type="enumeration" defaultValues="['DAYS']" multiplicity="exactlyOne" description="Questionaire Frecuency Unit">     
+                <EnumerationOption value="DAYS" description="Days"/>
+                <EnumerationOption value="WEEKS" description="Weeks"/>
+                <EnumerationOption value="MONTHS" description="Months"/>
+            </AttributeDefinition> 			
+            <AttributeDefinition id="maxdelay" type="number.min(0).max(1440)" defaultValues="[120]" multiplicity="exactlyOne" description="Max delay in minutes" additionalDescription="Maximum delay to fullfill the prescription by the patient"/> 
+            <AttributeDefinition id="timeslot" type="enumeration" multiplicity="atLeastOne" description="Slots to take the measurements" additionalDescription="Multiple slots can be selected, at least one slot need to be selected">     
+                <EnumerationOption value="BREAKFAST" description="Breakfast"/>
+                <EnumerationOption value="LUNCH" description="Lunch"/>
+                <EnumerationOption value="AFTERNOONSNACK" description="Afternoon Snack"/>
+                <EnumerationOption value="DINNER" description="Dinner"/>
+                <EnumerationOption value="BEFORESLEEP" description="Before Sleep"/>
+                <EnumerationOption value="ANYTIMEDURINGDAY" description="Any time a day" additionalDescription="Please select this option when the timeslot of a day doesn't matter."/>
+            </AttributeDefinition>
+            <AttributeDefinition id="repetitionsperday" type="number.min(0)" multiplicity="exactlyOne" description="Max. Repetitions per Day" additionalDescription="Maximun repetitions of the questionaire per day."/>   
+            <AttributeDefinition id="questionaires" type="json" multiplicity="any" uiReference="patientquestionaires" description="Patient Questionaires"/>
+		</EntityDefinition>
+								
+        <!-- Discharge Definitions -->		
+		<EntityDefinition id="DCS1_Discharge" description="Discharge">
+			<AttributeDefinition id="DCS1_DischargeTest" description="Discharge Form" type="Link.EntityDefinition.DCS1_DischargeTest" multiplicity="any"/>									
+		</EntityDefinition>						
+				
+		<EntityDefinition id="DCS1_DischargeTest" description="Discharge Form"> 
+			<AttributeDefinition id="comment" type="longtext" multiplicity="exactlyOne" description="Comment"/> 
+        </EntityDefinition>							
+		
+   <!-- CASE DEFINITION -->				  
+        <CaseDefinition id="DCS1_Demo" description="CS1 Carpe Diem" ownerPath="DCS1_Settings.CaseManager" clientPath="DCS1_Settings.Patient" entityDefinitionId="DCS1_CaseData" newEntityDefinitionId="DCS1_Settings" newEntityAttachPath="DCS1_Settings" 
+		    notesDefaultValue=''									
+            onCompleteHTTPHookURL="http://integration-producer:8081/v1/producer/point-to-point/sacm/case/terminate"
+            onTerminateHTTPHookURL="http://integration-producer:8081/v1/producer/point-to-point/sacm/case/terminate"
+            onDeleteHTTPHookURL="http://integration-producer:8081/v1/producer/point-to-point/sacm/case/terminate">	  
+     	 
+	    <!-- STAGEDEFINITION: CaseIdentification -->	  
+            <StageDefinition id="DCS1_CaseIdentification" description="Case Identification" isMandatory="true" repeatable="ONCE" entityDefinitionId="DCS1_Identification" entityAttachPath="DCS1_Identification">
+            
+                <HumanTaskDefinition id="DCS1_SelectPatient" externalId="SelectPatient" description="Inclusion" ownerPath="DCS1_Settings.CaseManager" isMandatory="true" repeatable="ONCE">
+                    <HttpHookDefinition on="COMPLETE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/case/patient/inclusion" method="POST" failureMessage="Could not COMPLETE SelectPatient on Self-Management System!"/>
+                    <TaskParamDefinition path="DCS1_Settings.Patient" isReadOnly="false" isMandatory="true"/>                
+                    <TaskParamDefinition path="DCS1_Settings.CaseManager" isReadOnly="false" isMandatory="true"/> 
+                </HumanTaskDefinition>								
+				
+				<HumanTaskDefinition id="DCS1_LifeStyleHabits" description="Life Style Habits" ownerPath="DCS1_Settings.CaseManager" isMandatory="true" repeatable="ONCE"  entityDefinitionId="DCS1_LifeStyleHabits" entityAttachPath="DCS1_Identification.DCS1_LifeStyleHabits">
+					<SentryDefinition>
+                        <precondition processDefinitionId="DCS1_SelectPatient"/>
+					</SentryDefinition>
+					<TaskParamDefinition path="DCS1_Identification.DCS1_LifeStyleHabits.lsh1" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="DCS1_Identification.DCS1_LifeStyleHabits.lsh2" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="DCS1_Identification.DCS1_LifeStyleHabits.lsh3" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="DCS1_Identification.DCS1_LifeStyleHabits.lsh4" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="DCS1_Identification.DCS1_LifeStyleHabits.lsh5" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="DCS1_Identification.DCS1_LifeStyleHabits.lsh6" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition path="DCS1_Identification.DCS1_LifeStyleHabits.lsh7" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition path="DCS1_Identification.DCS1_LifeStyleHabits.lsh8" isReadOnly="false" isMandatory="false"/>
+				</HumanTaskDefinition>			 								
+			</StageDefinition>				
+			
+            <!-- STAGEDEFINITION: Workplan -->    
+            <StageDefinition id="DCS1_Workplan" description="Workplan" isMandatory="true" repeatable="ONCE" entityDefinitionId="DCS1_Workplan" entityAttachPath="DCS1_Workplan">			
+                <SentryDefinition>
+                    <precondition processDefinitionId="DCS1_CaseIdentification"/>
+                </SentryDefinition> 		
+				
+                <DualTaskDefinition id="DCS1_MonitoringPrescriptionWeightAHWP" externalId="MonitoringPrescription"
+				description="Monitoring Prescription - Weight"
+				ownerPath="DCS1_Settings.CaseManager" dueDatePath="DCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="DCS1_MonitoringPrescriptionWeight" entityAttachPath="DCS1_Workplan.DCS1_MonitoringPrescriptionWeightAH">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition part="HUMAN" path="DCS1_Workplan.DCS1_MonitoringPrescriptionWeightAH.type" isReadOnly="false" isMandatory="true"/>
+					
+					<TaskParamDefinition part="HUMAN" path="DCS1_Workplan.DCS1_MonitoringPrescriptionWeightAH.alertmin" isReadOnly="false" isMandatory="false"/>
+                    <TaskParamDefinition part="HUMAN" path="DCS1_Workplan.DCS1_MonitoringPrescriptionWeightAH.alertmax" isReadOnly="false" isMandatory="false"/>
+					<TaskParamDefinition part="HUMAN" path="DCS1_Workplan.DCS1_MonitoringPrescriptionWeightAH.alertfreq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="DCS1_Workplan.DCS1_MonitoringPrescriptionWeightAH.alertfrequnit" isReadOnly="false" isMandatory="true"/>
+					
+                    <TaskParamDefinition part="HUMAN" path="DCS1_Workplan.DCS1_MonitoringPrescriptionWeightAH.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="DCS1_Workplan.DCS1_MonitoringPrescriptionWeightAH.frequnit" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition part="HUMAN" path="DCS1_Workplan.DCS1_MonitoringPrescriptionWeightAH.maxdelay" isReadOnly="false" isMandatory="true"/>  	
+                    <TaskParamDefinition part="HUMAN" path="DCS1_Workplan.DCS1_MonitoringPrescriptionWeightAH.startdate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="DCS1_Workplan.DCS1_MonitoringPrescriptionWeightAH.enddate" isReadOnly="false" isMandatory="true"/>  
+                    <TaskParamDefinition part="HUMAN" path="DCS1_Workplan.DCS1_MonitoringPrescriptionWeightAH.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="DCS1_Workplan.DCS1_MonitoringPrescriptionWeightAH.comments" isReadOnly="false" isMandatory="false"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="DCS1_Workplan.DCS1_MonitoringPrescriptionWeightAH.measurement" isReadOnly="false" isMandatory="true"/>
+                </DualTaskDefinition>							
+				                				
+                <DualTaskDefinition id="DCS1_PhysicalActivityAHWP" externalId="PhysicalActivity"
+				description="Monitoring Prescription - Physical Activity"
+				ownerPath="DCS1_Settings.CaseManager" dueDatePath="DCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="DCS1_PhysicalActivity" entityAttachPath="DCS1_Workplan.DCS1_PhysicalActivityAH">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition part="HUMAN" path="DCS1_Workplan.DCS1_PhysicalActivityAH.startdate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="DCS1_Workplan.DCS1_PhysicalActivityAH.enddate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="DCS1_Workplan.DCS1_PhysicalActivityAH.dailysteps" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="DCS1_Workplan.DCS1_PhysicalActivityAH.dailylowlevel" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="DCS1_Workplan.DCS1_PhysicalActivityAH.dailymediumlevel" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition part="HUMAN" path="DCS1_Workplan.DCS1_PhysicalActivityAH.dailyhighlevel" isReadOnly="false" isMandatory="true"/>					
+					<TaskParamDefinition part="HUMAN" path="DCS1_Workplan.DCS1_PhysicalActivityAH.handedness" isReadOnly="false" isMandatory="true"/>
+					<TaskParamDefinition part="HUMAN" path="DCS1_Workplan.DCS1_PhysicalActivityAH.wristplacement" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="AUTOMATED" path="DCS1_Workplan.DCS1_PhysicalActivityAH.measurement" isReadOnly="false" isMandatory="true"/>
+                </DualTaskDefinition>			
+				
+                <DualTaskDefinition id="DCS1_PatientQuestionaireAHWP" externalId="PatientQuestionaire" 
+				description="Prescription - Patient Questionaire"
+                                    dynamicDescriptionPath="DCS1_Workplan.DCS1_PatientQuestionaireAH.type"
+				ownerPath="DCS1_Settings.CaseManager" dueDatePath="DCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" 
+				entityDefinitionId="DCS1_PatientQuestionaire" entityAttachPath="DCS1_Workplan.DCS1_PatientQuestionaireAH">
+                    <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/questionnaires" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
+                    <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/prescription/questionnaires/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
+                    <TaskParamDefinition part="HUMAN" path="DCS1_Workplan.DCS1_PatientQuestionaireAH.type" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="DCS1_Workplan.DCS1_PatientQuestionaireAH.startdate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="DCS1_Workplan.DCS1_PatientQuestionaireAH.enddate" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="DCS1_Workplan.DCS1_PatientQuestionaireAH.freq" isReadOnly="false" isMandatory="true"/>
+                    <TaskParamDefinition part="HUMAN" path="DCS1_Workplan.DCS1_PatientQuestionaireAH.frequnit" isReadOnly="false" isMandatory="true"/>   
+                    <TaskParamDefinition part="HUMAN" path="DCS1_Workplan.DCS1_PatientQuestionaireAH.maxdelay" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="DCS1_Workplan.DCS1_PatientQuestionaireAH.timeslot" isReadOnly="false" isMandatory="true"/> 
+                    <TaskParamDefinition part="HUMAN" path="DCS1_Workplan.DCS1_PatientQuestionaireAH.repetitionsperday" isReadOnly="false" isMandatory="true"/>                    
+                    <TaskParamDefinition part="AUTOMATED" path="DCS1_Workplan.DCS1_PatientQuestionaireAH.questionaires" isReadOnly="false" isMandatory="true"/>
+                </DualTaskDefinition> 	
+												
+			</StageDefinition>			
+		  	 
+            <StageDefinition id="DCS1_Discharge" description="Discharge" isMandatory="false" repeatable="ONCE" entityDefinitionId="DCS1_Discharge" entityAttachPath="DCS1_Discharge">
+			
+                <HumanTaskDefinition id="DCS1_DischargeTestHT" description="Discharge Form"
+				ownerPath="DCS1_Settings.CaseManager" isMandatory="true" repeatable="ONCE" entityDefinitionId="DCS1_DischargeTest" entityAttachPath="DCS1_Discharge.DCS1_DischargeTest">									
+                    <TaskParamDefinition part="HUMAN" path="DCS1_Discharge.DCS1_DischargeTest.comment" isReadOnly="false" isMandatory="true"/>
+				</HumanTaskDefinition>		
+				
+			</StageDefinition> 									 
+		</CaseDefinition>	
+	</Workspace>
+
+<Execution>
+    <Action id="CompleteHumanTask" processId="DCS1_SelectPatient">
+	    <TaskParam path="DCS1_Settings.Patient" userValue="patientdemo2"/>
+	    <TaskParam path="DCS1_Settings.CaseManager" userValue="casemanager"/>
+    </Action>
+		
+    <Action id="CompleteHumanTask" processId="DCS1_LifeStyleHabits" breakpoint="true">
+        <TaskParam path="DCS1_Identification.DCS1_LifeStyleHabits.lsh1" values="['0']"/>
+        <TaskParam path="DCS1_Identification.DCS1_LifeStyleHabits.lsh2" values="['1']"/>
+		<TaskParam path="DCS1_Identification.DCS1_LifeStyleHabits.lsh3" values="['0']"/>
+        <TaskParam path="DCS1_Identification.DCS1_LifeStyleHabits.lsh4" values="['1']"/>
+		<TaskParam path="DCS1_Identification.DCS1_LifeStyleHabits.lsh5" values="['1']"/>
+		<TaskParam path="DCS1_Identification.DCS1_LifeStyleHabits.lsh6" values="['0']"/>
+		<TaskParam path="DCS1_Identification.DCS1_LifeStyleHabits.lsh7" values="['1']"/>
+		<TaskParam path="DCS1_Identification.DCS1_LifeStyleHabits.lsh8" values="['1']"/>
+    </Action>
+			
+	<Action id="ActivateDualTask" processId="DCS1_MonitoringPrescriptionWeightAHWP" breakpoint="true"/>
+	<Action id="CompleteDualTaskHumanPart" processId="DCS1_MonitoringPrescriptionWeightAHWP" breakpoint="true">
+			<TaskParam path="DCS1_Workplan.DCS1_MonitoringPrescriptionWeightAH.type"  values="['WEIGHT']"/>
+			<TaskParam path="DCS1_Workplan.DCS1_MonitoringPrescriptionWeightAH.comments"  values="['Some random comment WEIGHT']"/>
+			<TaskParam path="DCS1_Workplan.DCS1_MonitoringPrescriptionWeightAH.freq"  values="[5]"/>
+			<TaskParam path="DCS1_Workplan.DCS1_MonitoringPrescriptionWeightAH.freqqunit"  values="['WEEKS']"/>
+			<TaskParam path="DCS1_Workplan.DCS1_MonitoringPrescriptionWeightAH.maxdelay"  values="[100]"/>
+			<TaskParam path="DCS1_Workplan.DCS1_MonitoringPrescriptionWeightAH.startdate"  values="['2017-06-09T00:00:00.0']"/>
+			<TaskParam path="DCS1_Workplan.DCS1_MonitoringPrescriptionWeightAH.enddate"  values="['2019-06-09T00:00:00.0']"/>
+			<TaskParam path="DCS1_Workplan.DCS1_MonitoringPrescriptionWeightAH.timeslot"  values="['BREAKFAST']"/>
+	</Action>
+			
+	<Action id="CompleteDualTaskAutomatedPart" processId="DCS1_MonitoringPrescriptionWeightAHWP" breakpoint="true">
+			<TaskParam path="DCS1_Workplan.DCS1_MonitoringPrescriptionWeightAH.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
+	</Action>
+		
+    <Action id="ActivateDualTask" processId="DCS1_PhysicalActivityAHWP" breakpoint="true"/>
+    <Action id="CompleteDualTaskHumanPart" processId="DCS1_PhysicalActivityAHWP" breakpoint="true">
+        <TaskParam path="DCS1_Workplan.DCS1_PhysicalActivityAHWP.startdate"  values="['2017-09-26T00:00:00.000']"/>
+        <TaskParam path="DCS1_Workplan.DCS1_PhysicalActivityAHWP.enddate"  values="['2018-09-27T00:00:00.000']"/>
+        <TaskParam path="DCS1_Workplan.DCS1_PhysicalActivityAHWP.dailysteps"  values="[10000]"/>
+        <TaskParam path="DCS1_Workplan.DCS1_PhysicalActivityAHWP.dailylowlevel"  values="[15]"/>
+        <TaskParam path="DCS1_Workplan.DCS1_PhysicalActivityAHWP.dailymediumlevel"  values="[5]"/>
+		<TaskParam path="DCS1_Workplan.DCS1_LifeStyleHabits.handedness" values="['0']"/>
+		<TaskParam path="DCS1_Workplan.DCS1_LifeStyleHabits.wristplacement" values="['0']"/>
+    </Action>	
+	
+    <Action id="CompleteDualTaskAutomatedPart" processId="DCS1_PhysicalActivityAHWP">
+        <TaskParam path="DCS1_Workplan.DCS1_PhysicalActivityAHWP.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
+    </Action>
+	
+	
+        <Action id="ActivateDualTask" processId="DCS1_PatientQuestionaireAHWP" breakpoint="true"/>
+        <Action id="CompleteDualTaskHumanPart" processId="DCS1_PatientQuestionaireAHWP" breakpoint="true">
+            <TaskParam path="DCS1_Workplan.DCS1_PatientQuestionaireAH.type"  values="['PHONEUSAGE']"/>
+            <TaskParam path="DCS1_Workplan.DCS1_PatientQuestionaireAH.startdate"  values="['2017-06-09T00:00:00.0']"/>
+            <TaskParam path="DCS1_Workplan.DCS1_PatientQuestionaireAH.enddate"  values="['2019-06-09T00:00:00.0']"/>
+            <TaskParam path="DCS1_Workplan.DCS1_PatientQuestionaireAH.freq"  values="[5]"/>
+            <TaskParam path="DCS1_Workplan.DCS1_PatientQuestionaireAH.freqqunit"  values="['WEEKS']"/>
+            <TaskParam path="DCS1_Workplan.DCS1_PatientQuestionaireAH.maxdelay"  values="[100]"/>
+            <TaskParam path="DCS1_Workplan.DCS1_PatientQuestionaireAH.timeslot"  values="['BREAKFAST', 'DINNER', 'BEFORESLEEP']"/>
+            <TaskParam path="DCS1_Workplan.DCS1_PatientQuestionaireAH.repetitionsperday"  values="[1]"/>
+        </Action>
+        <Action id="CompleteDualTaskAutomatedPart" processId="DCS1_PatientQuestionaireAHWP">
+            <TaskParam path="DCS1_Workplan.DCS1_PatientQuestionaireAH.questionaires"  values='[{"id":"18823iSMSID","lastEdit":"2018-05-15 11:09:23.0","state":"COMPLETED","taskParams":[{"description":"In general, would you say your health is:","values":["Excellent"],"type":"enumeration","isMandatory":true,"additionalDescription":null},{"description":"Moderate activities","values":["YES, limited a lot"],"type":"enumeration","isMandatory":false,"additionalDescription":"Moderate activities such as moving a table, pushing a vacuum cleaner, bowling, or playing golf."}]},{"id":"18824iSMSID","lastEdit":"2018-05-16 11:09:23.0","state":"ACTIVE","taskParams":[{"description":"In general, would you say your health is:","values":["Very good"],"type":"enumeration","isMandatory":true,"additionalDescription":null},{"description":"Moderate activities","values":["YES, limited a little"],"type":"enumeration","isMandatory":false,"additionalDescription":"Moderate activities such as moving a table, pushing a vacuum cleaner, bowling, or playing golf."}]}]'/>
+        </Action>			
+		
+	<Action id="CompleteHumanTask" processId="DCS1_DischargeTestHT" breakpoint="true">
+        <TaskParam path="DCS1_Discharge.DCS1_DischargeTest.comment" values="['aaa']"/>
+    </Action>
+	
+</Execution>
+
+</SACMDefinition>
