@@ -29,6 +29,24 @@ router.get('/:id', (req, res, next)=>{
     })
 });
 
+/**
+ * @api {post} /workspaces/ Creates a new workspace
+ * @apiName CreateWorkspace
+ * @apiGroup Workspaces
+ * @apiSampleRequest /workspaces
+ * @apiSuccessExample {json} Success-Response:
+ * {}
+ */
+router.post('/', (req, res, next)=>{
+  Workspace.create(req.jwt, req.body)
+    .then(w=>{
+      res.status(200).send(w);
+    })
+    .catch(err=>{
+      res.status(500).send(err);
+    })
+});
+
 
 /**
  * @api {get} /workspaces Get Workspaces
