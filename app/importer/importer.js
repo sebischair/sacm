@@ -229,6 +229,17 @@ module.exports = class Importer {
       return s;
     }
 
+    getXMLRootElement(xmlAsjson){
+      if(xmlAsjson.ACM4IC){
+        return xmlAsjson.ACM4IC;
+      /** Lagacy support */
+      }else if(xmlAsjson.SACMDefinition){ 
+        return xmlAsjson.SACMDefinition;
+      }else{
+        return null;   
+      }     
+    }
+
     fileExists(filePath) {
       return new Promise((resolve, reject)=>{
         if(fs.existsSync(filePath))

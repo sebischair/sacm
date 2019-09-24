@@ -28,7 +28,7 @@ module.exports = class CaseDefinitionImporter extends Importer{
   import(jwt, json, version){ 
     this.version = version;
     this.jwt = jwt;  
-    this.json = json.SACMDefinition;
+    this.json = this.getXMLRootElement(json);
     return this.initializeMaps()     
       .then(()=>{
         return this.initializeMapsWithWorkspace();

@@ -28,7 +28,7 @@ module.exports = class WorkspaceImporter extends Importer{
 
     import(jwt, json){ 
       this.jwt = jwt;  
-      this.json = json.SACMDefinition;
+      this.json = this.getXMLRootElement(json);
       return this.initializeMaps()
         .then(()=>{
           return Workspace.deleteAll(this.jwt);
