@@ -1347,17 +1347,13 @@
             <AttributeDefinition id="startdate" type="date.after(TODAY)" multiplicity="exactlyOne" description="Data d'inici"/>
             <AttributeDefinition id="enddate" type="date.after(startdate)" multiplicity="exactlyOne" description="Data de fi"/>       
             <AttributeDefinition id="dailysteps" type="number.min(0).max(100000)" defaultValues="[10000]" multiplicity="exactlyOne" description="Número de passos a fer durant el dia"/>       
-            <AttributeDefinition id="dailylowlevel" type="number.min(0).max(1440)" defaultValues="[60]" multiplicity="exactlyOne" description="Mínim de minuts d'intensitat baixa a fer durant el dia (caminar, tasques domèstiques lleugeres, jugar amb nens, passejar mascotes...)"/>       
-            <AttributeDefinition id="dailymediumlevel" type="number.min(0).max(1440)" defaultValues="[40]" multiplicity="exactlyOne" description="Mínim de minuts d'intensitat intermitja a fer durant el dia (caminar pas ràpid, bicileta, nadar...)"/>       			
-            <AttributeDefinition id="dailyhighlevel" type="number.min(0).max(1440)" defaultValues="[20]" multiplicity="exactlyOne" description="Mínim de minuts d'intensitat alta a fer durant el dia (footing, tasques domèstiques pesades, senderisme, activitats i esports competitius)"/>         
 			<AttributeDefinition id="measurement" type="json" multiplicity="exactlyOne" uiReference="linediagram" description="Mesures"/>                 
         </EntityDefinition> 		                
 						
 			<EntityDefinition id="BCS1_Advice" description="Prescripció de consells">
 				<AttributeDefinition id="link" type="enumeration" multiplicity="exactlyOne" description="Escull un consell">
-				<EnumerationOption value="OTHER" description="IC/MPOC/COT: Indicar consejo específico para el paciente"/>
 				<EnumerationOption value="https://youtu.be/Sre61s1-c3Y" description="IC: Video: ¿Qué es la Insuficiencia Cardíaca?" additionalDescription="https://youtu.be/Sre61s1-c3Y"/>
-				<EnumerationOption value="ALIMSALUDABLE" description="IC: Video: Alimentación saludable y dieta sin sal" additionalDescription="https://youtu.be/WAIQQoOdOMU"/>
+				<EnumerationOption value="https://youtu.be/WAIQQoOdOMU" description="IC: Video: Alimentación saludable y dieta sin sal" additionalDescription="https://youtu.be/WAIQQoOdOMU"/>
 				<EnumerationOption value="https://www.youtube.com/watch?v=Q27ztlePMjo" description="IC: Video: La actividad física" additionalDescription="https://www.youtube.com/watch?v=Q27ztlePMjo"/>				
 				<EnumerationOption value="https://www.youtube.com/watch?v=aVwo-Z6UBmU" description="IC: Video: La medicación y controles domiciliarios" additionalDescription="https://www.youtube.com/watch?v=aVwo-Z6UBmU"/>				
 				<EnumerationOption value="https://youtu.be/oZND_apKeCQ" description="IC: Video: Signos de alarma de la Insuficiencia Cardíaca" additionalDescription="https://youtu.be/oZND_apKeCQ"/>
@@ -1630,13 +1626,13 @@
                 </SentryDefinition> 						
 				
                 <HumanTaskDefinition id="BCS1_GMAEvaluationHT" description="Estat comòrbid - GMA"
-				ownerPath="BCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS1_GMADef" entityAttachPath="BCS1_Evaluation.BCS1_GMAEvaluation">
+				ownerPath="BCS1_Settings.Nurse" isMandatory="false" repeatable="ONCE" entityDefinitionId="BCS1_GMADef" entityAttachPath="BCS1_Evaluation.BCS1_GMAEvaluation">
                     <TaskParamDefinition path="BCS1_Evaluation.BCS1_GMAEvaluation.gma" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition> 				
 		  
 		        <HumanTaskDefinition id="BCS1_ComorbidityCharlsonEvaluationHT" description="Estat comòrbid - Índex de comorbilitat de Charlson" 
 				footnote="Pendent rebre autorització"
-				ownerPath="BCS1_Settings.Clinician" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS1_ComorbidityCharlsonDef" entityAttachPath="BCS1_Evaluation.BCS1_ComorbidityCharlsonEvaluation"> 			  
+				ownerPath="BCS1_Settings.Clinician" isMandatory="false" repeatable="ONCE" entityDefinitionId="BCS1_ComorbidityCharlsonDef" entityAttachPath="BCS1_Evaluation.BCS1_ComorbidityCharlsonEvaluation"> 			  
                     <TaskParamDefinition path="BCS1_Evaluation.BCS1_ComorbidityCharlsonEvaluation.ch1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS1_Evaluation.BCS1_ComorbidityCharlsonEvaluation.ch2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS1_Evaluation.BCS1_ComorbidityCharlsonEvaluation.ch3" isReadOnly="false" isMandatory="true"/>
@@ -1662,7 +1658,7 @@
 				
                 <HumanTaskDefinition id="BCS1_ComorbidityPfeifferHT" description="Estat cognitiu/mental - Pfeiffer" 
 				footnote="Pfeiffer, E. (1975). A short portable mental status questionnaire for the assessment of organic brain deficit in elderly patients. Journal of American Geriatrics Society. 23, 433-41."
-				ownerPath="BCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="BCS1_ComorbidityPfeiffer" entityAttachPath="BCS1_Evaluation.BCS1_ComorbidityPfeiffer">
+				ownerPath="BCS1_Settings.Nurse" isMandatory="false" repeatable="ONCE"  entityDefinitionId="BCS1_ComorbidityPfeiffer" entityAttachPath="BCS1_Evaluation.BCS1_ComorbidityPfeiffer">
 					<TaskParamDefinition path="BCS1_Evaluation.BCS1_ComorbidityPfeiffer.pfeiffer0" isReadOnly="true" isMandatory="false"/>
 					<TaskParamDefinition path="BCS1_Evaluation.BCS1_ComorbidityPfeiffer.pfeiffer1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS1_Evaluation.BCS1_ComorbidityPfeiffer.pfeiffer2" isReadOnly="true" isMandatory="false"/>
@@ -1670,7 +1666,7 @@
 				
                 <HumanTaskDefinition id="BCS1_HospitalAnxietyAndDepressionScaleHT" description="*Estat cognitiu/mental - Escala d'ansietat i depressió hospitalària (HAD)" 
 				footnote="Zigmond, A. S., &amp; Snaith, R. P. (1983). The hospital anxiety and depression scale. Acta psychiatrica scandinavica, 67(6), 361-370."
-				ownerPath="BCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="BCS1_HospitalAnxietyAndDepressionScale" entityAttachPath="BCS1_Evaluation.BCS1_HospitalAnxietyAndDepressionScale">
+				ownerPath="BCS1_Settings.Nurse" isMandatory="false" repeatable="ONCE"  entityDefinitionId="BCS1_HospitalAnxietyAndDepressionScale" entityAttachPath="BCS1_Evaluation.BCS1_HospitalAnxietyAndDepressionScale">
                     <TaskParamDefinition path="BCS1_Evaluation.BCS1_HospitalAnxietyAndDepressionScale.hadA1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS1_Evaluation.BCS1_HospitalAnxietyAndDepressionScale.hadD1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS1_Evaluation.BCS1_HospitalAnxietyAndDepressionScale.hadA2" isReadOnly="false" isMandatory="true"/>
@@ -1694,7 +1690,7 @@
 				Loewen SC, Anderson BA. &quot;Predictors of stroke outcome using objective measurement scales.&quot; Stroke.1990;21:78-81.
 				Gresham GE, Phillips TF, Labi ML. &quot;ADL status in stroke: relative merits of three standard indexes.&quot; Arch Phys Med
 				Rehabil.1980;61:355-358. Collin C, Wade DT, Davies S, Horne V. &quot;The Barthel ADL Index: a reliability study.&quot; Int Disability Study.1988;10:61-63."
-				ownerPath="BCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS1_Barthel" entityAttachPath="BCS1_Evaluation.BCS1_Barthel">
+				ownerPath="BCS1_Settings.Nurse" isMandatory="false" repeatable="ONCE" entityDefinitionId="BCS1_Barthel" entityAttachPath="BCS1_Evaluation.BCS1_Barthel">
                     <TaskParamDefinition path="BCS1_Evaluation.BCS1_Barthel.barthel1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS1_Evaluation.BCS1_Barthel.barthel2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS1_Evaluation.BCS1_Barthel.barthel3" isReadOnly="false" isMandatory="true"/>
@@ -1709,7 +1705,7 @@
                 </HumanTaskDefinition>
 				
 				<HumanTaskDefinition id="BCS1_Sleeping" description="Estat funcional - Avaluació del son"
-				ownerPath="BCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS1_Sleeping" entityAttachPath="BCS1_Evaluation.BCS1_Sleeping">                
+				ownerPath="BCS1_Settings.Nurse" isMandatory="false" repeatable="ONCE" entityDefinitionId="BCS1_Sleeping" entityAttachPath="BCS1_Evaluation.BCS1_Sleeping">                
 					<TaskParamDefinition path="BCS1_Evaluation.BCS1_Sleeping.sleeping1" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="BCS1_Evaluation.BCS1_Sleeping.sleeping2" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="BCS1_Evaluation.BCS1_Sleeping.sleeping3" isReadOnly="false" isMandatory="true"/>
@@ -1717,7 +1713,7 @@
 				</HumanTaskDefinition>	
 											
                 <HumanTaskDefinition id="BCS1_DiagnosisCommunicationHT" description="Estat funcional - Comunicació"
-				ownerPath="BCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS1_DiagnosisCommunication" entityAttachPath="BCS1_Evaluation.BCS1_DiagnosisCommunication">
+				ownerPath="BCS1_Settings.Nurse" isMandatory="false" repeatable="ONCE" entityDefinitionId="BCS1_DiagnosisCommunication" entityAttachPath="BCS1_Evaluation.BCS1_DiagnosisCommunication">
                     <TaskParamDefinition path="BCS1_Evaluation.BCS1_DiagnosisCommunication.comm1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS1_Evaluation.BCS1_DiagnosisCommunication.comm2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS1_Evaluation.BCS1_DiagnosisCommunication.comm3" isReadOnly="false" isMandatory="true"/>
@@ -1726,7 +1722,7 @@
                 </HumanTaskDefinition>	
 				
 				<HumanTaskDefinition id="BCS1_DiagnosisIADLHT" description="Estat funcional - Activitats instrumentals de la vida diària" 
-				ownerPath="BCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS1_DiagnosisIADL" entityAttachPath="BCS1_Evaluation.BCS1_DiagnosisIADL">                
+				ownerPath="BCS1_Settings.Nurse" isMandatory="false" repeatable="ONCE" entityDefinitionId="BCS1_DiagnosisIADL" entityAttachPath="BCS1_Evaluation.BCS1_DiagnosisIADL">                
 					<TaskParamDefinition path="BCS1_Evaluation.BCS1_DiagnosisIADL.IADL1" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="BCS1_Evaluation.BCS1_DiagnosisIADL.IADL2" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="BCS1_Evaluation.BCS1_DiagnosisIADL.IADL3" isReadOnly="false" isMandatory="true"/>
@@ -1737,7 +1733,7 @@
 				</HumanTaskDefinition>				
 				
 				<HumanTaskDefinition id="BCS1_FallRisk" description="Diagnòstic - Risc de caigudes"
-				ownerPath="BCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS1_FallRisk" entityAttachPath="BCS1_Evaluation.BCS1_FallRisk">                
+				ownerPath="BCS1_Settings.Nurse" isMandatory="false" repeatable="ONCE" entityDefinitionId="BCS1_FallRisk" entityAttachPath="BCS1_Evaluation.BCS1_FallRisk">                
 					<TaskParamDefinition path="BCS1_Evaluation.BCS1_FallRisk.fallRisk1" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="BCS1_Evaluation.BCS1_FallRisk.fallRisk20" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="BCS1_Evaluation.BCS1_FallRisk.fallRisk21" isReadOnly="false" isMandatory="true"/>
@@ -1778,7 +1774,7 @@
 				</HumanTaskDefinition>  				
 				
                 <HumanTaskDefinition id="BCS1_DiagnosisSmokingAndAlcoholHT" description="Diagnòstic - Consum de tabac i alcohol"
-				ownerPath="BCS1_Settings.Clinician" isMandatory="true" repeatable="ONCE"  entityDefinitionId="BCS1_DiagnosisSmokingAndAlcohol" entityAttachPath="BCS1_Evaluation.BCS1_DiagnosisSmokingAndAlcohol">
+				ownerPath="BCS1_Settings.Clinician" isMandatory="false" repeatable="ONCE"  entityDefinitionId="BCS1_DiagnosisSmokingAndAlcohol" entityAttachPath="BCS1_Evaluation.BCS1_DiagnosisSmokingAndAlcohol">
                     <TaskParamDefinition path="BCS1_Evaluation.BCS1_DiagnosisSmokingAndAlcohol.smalc1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS1_Evaluation.BCS1_DiagnosisSmokingAndAlcohol.smalc2" isReadOnly="false" isMandatory="true"/>
                 </HumanTaskDefinition> 	
@@ -1830,7 +1826,7 @@
 				</HumanTaskDefinition>
 				
                 <HumanTaskDefinition id="BCS1_SF12EvaluationHT" description="*Diagnòstic - SF-12"
-				ownerPath="BCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS1_SF12Def" entityAttachPath="BCS1_Evaluation.BCS1_SF12Evaluation">                
+				ownerPath="BCS1_Settings.Nurse" isMandatory="false" repeatable="ONCE" entityDefinitionId="BCS1_SF12Def" entityAttachPath="BCS1_Evaluation.BCS1_SF12Evaluation">                
                     <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF12Evaluation.sf12-1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF12Evaluation.sf12-2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS1_Evaluation.BCS1_SF12Evaluation.sf12-3" isReadOnly="false" isMandatory="true"/>
@@ -1878,7 +1874,7 @@
 				</HumanTaskDefinition>      
 
                 <HumanTaskDefinition id="BCS1_Medication" description="Barreres - Tractament: Compliment/Complexitat/Habilitat per executar-lo"
-				ownerPath="BCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS1_Medication" entityAttachPath="BCS1_Evaluation.BCS1_Medication">                
+				ownerPath="BCS1_Settings.Nurse" isMandatory="false" repeatable="ONCE" entityDefinitionId="BCS1_Medication" entityAttachPath="BCS1_Evaluation.BCS1_Medication">                
                     <TaskParamDefinition path="BCS1_Evaluation.BCS1_Medication.Medication1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS1_Evaluation.BCS1_Medication.Medication2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS1_Evaluation.BCS1_Medication.Medication3" isReadOnly="false" isMandatory="true"/>
@@ -1887,13 +1883,13 @@
                 </HumanTaskDefinition>              
 
                 <HumanTaskDefinition id="BCS1_MedicationFollowing" description="Barreres - Dades farmàcia Compliment"
-				ownerPath="BCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE" entityDefinitionId="BCS1_MedicationFollowing" entityAttachPath="BCS1_Evaluation.BCS1_MedicationFollowing">                
+				ownerPath="BCS1_Settings.Nurse" isMandatory="false" repeatable="ONCE" entityDefinitionId="BCS1_MedicationFollowing" entityAttachPath="BCS1_Evaluation.BCS1_MedicationFollowing">                
                     <TaskParamDefinition path="BCS1_Evaluation.BCS1_MedicationFollowing.medication1" isReadOnly="false" isMandatory="true"/>
 					<TaskParamDefinition path="BCS1_Evaluation.BCS1_MedicationFollowing.medication2" isReadOnly="true" isMandatory="false"/>
                 </HumanTaskDefinition>
     
               <HumanTaskDefinition id="BCS1_SocialDwelling" description="Barreres - Habitatge social"
-			  ownerPath="BCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="BCS1_SocialDwelling" entityAttachPath="BCS1_Evaluation.BCS1_SocialDwelling">
+			  ownerPath="BCS1_Settings.Nurse" isMandatory="false" repeatable="ONCE"  entityDefinitionId="BCS1_SocialDwelling" entityAttachPath="BCS1_Evaluation.BCS1_SocialDwelling">
                     <TaskParamDefinition path="BCS1_Evaluation.BCS1_SocialDwelling.dwelling1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS1_Evaluation.BCS1_SocialDwelling.dwelling2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS1_Evaluation.BCS1_SocialDwelling.dwelling3" isReadOnly="false" isMandatory="true"/>
@@ -1902,7 +1898,7 @@
                 </HumanTaskDefinition>
             
                 <HumanTaskDefinition id="BCS1_SocialSelfCareCareerAbility" description="Barreres - Capacitat del cuidador"
-				ownerPath="BCS1_Settings.Nurse" isMandatory="true" repeatable="ONCE"  entityDefinitionId="BCS1_SocialSelfCareCareerAbility" entityAttachPath="BCS1_Evaluation.BCS1_SocialSelfCareCareerAbility">
+				ownerPath="BCS1_Settings.Nurse" isMandatory="false" repeatable="ONCE"  entityDefinitionId="BCS1_SocialSelfCareCareerAbility" entityAttachPath="BCS1_Evaluation.BCS1_SocialSelfCareCareerAbility">
                     <TaskParamDefinition path="BCS1_Evaluation.BCS1_SocialSelfCareCareerAbility.career1" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS1_Evaluation.BCS1_SocialSelfCareCareerAbility.career2" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition path="BCS1_Evaluation.BCS1_SocialSelfCareCareerAbility.career3" isReadOnly="false" isMandatory="true"/>
@@ -2043,9 +2039,6 @@
                     <TaskParamDefinition part="HUMAN" path="BCS1_Workplan.BCS1_PhysicalActivityAH.startdate" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition part="HUMAN" path="BCS1_Workplan.BCS1_PhysicalActivityAH.enddate" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition part="HUMAN" path="BCS1_Workplan.BCS1_PhysicalActivityAH.dailysteps" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="BCS1_Workplan.BCS1_PhysicalActivityAH.dailylowlevel" isReadOnly="false" isMandatory="true"/>
-                    <TaskParamDefinition part="HUMAN" path="BCS1_Workplan.BCS1_PhysicalActivityAH.dailymediumlevel" isReadOnly="false" isMandatory="true"/>
-					<TaskParamDefinition part="HUMAN" path="BCS1_Workplan.BCS1_PhysicalActivityAH.dailyhighlevel" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition part="AUTOMATED" path="BCS1_Workplan.BCS1_PhysicalActivityAH.measurement" isReadOnly="false" isMandatory="true"/>
                 </DualTaskDefinition>			
 					
@@ -2053,7 +2046,7 @@
 				dynamicDescriptionPath="BCS1_Workplan.BCS1_Advice.title" ownerPath="BCS1_Settings.Clinician" dueDatePath="BCS1_Settings.WorkplanDueDate"  isMandatory="false" repeatable="PARALLEL" activation="MANUAL" entityDefinitionId="BCS1_Advice" entityAttachPath="BCS1_Workplan.BCS1_Advice">
                     <HttpHookDefinition on="ACTIVATEAUTOMATEDPART" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/advice" method="POST" failureMessage="Could not create prescription on Self-Management System!"/>
                     <HttpHookDefinition on="TERMINATE" url="http://integration-producer:8081/v1/producer/point-to-point/sacm/advice/terminate" method="POST" failureMessage="Could not terminate prescription on Self-Management System!"/>
-                    <TaskParamDefinition part="HUMAN" path="BCS1_Workplan.BCS1_Advice.link" isReadOnly="false" isMandatory="true"/>					
+                    <TaskParamDefinition part="HUMAN" path="BCS1_Workplan.BCS1_Advice.link" isReadOnly="false" isMandatory="false"/>					
 					<TaskParamDefinition part="HUMAN" path="BCS1_Workplan.BCS1_Advice.title" isReadOnly="false" isMandatory="true"/>								
                     <TaskParamDefinition part="HUMAN" path="BCS1_Workplan.BCS1_Advice.expiredate" isReadOnly="false" isMandatory="true"/>
                     <TaskParamDefinition part="HUMAN" path="BCS1_Workplan.BCS1_Advice.explenation" isReadOnly="false" isMandatory="true"/>					
@@ -2460,8 +2453,6 @@
 			<TaskParam path="BCS1_Workplan.BCS1_PhysicalActivityAH.startdate"  values="['2017-09-26T00:00:00.000']"/>
 			<TaskParam path="BCS1_Workplan.BCS1_PhysicalActivityAH.enddate"  values="['2018-09-27T00:00:00.000']"/>
 			<TaskParam path="BCS1_Workplan.BCS1_PhysicalActivityAH.dailysteps"  values="[10000]"/>
-			<TaskParam path="BCS1_Workplan.BCS1_PhysicalActivityAH.dailylowlevel"  values="[15]"/>
-			<TaskParam path="BCS1_Workplan.BCS1_PhysicalActivityAH.dailymediumlevel"  values="[5]"/>
 		</Action>
 		<Action id="CompleteDualTaskAutomatedPart" processId="BCS1_PhysicalActivityAHWP">
 			<TaskParam path="BCS1_Workplan.BCS1_PhysicalActivityAH.measurement"  values="[{'stepsFollowing': [{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'lowFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'mediumFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'highFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}], 'noActivityFollowing':[{'date': '2017-06-09 14:54:53.0', 'value': 12}, {'date': '2017-06-10 14:54:53.0', 'value': 13}, {'date': '2017-06-11 14:54:53.0', 'value': 9}]}]"/>
