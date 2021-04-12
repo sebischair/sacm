@@ -74,6 +74,7 @@ module.exports = {
                     p += key+'='+params[key]+'&';
                 });
             }
+            console.log(`p = ${p}`);
             rq.get({
                 uri: config.sociocortex.url +path+p,
                 headers: header(jwt),                

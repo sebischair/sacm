@@ -3,6 +3,7 @@ import Promise from 'bluebird';
 import Importer from './importer';
 import Workspace from '../models/workspace/model.workspace';
 import CaseDefinition from '../models/casedefinition/model.casedefinition';
+import fs from 'fs';
 
 
 module.exports = class CaseDefinitionImporter extends Importer{
@@ -12,6 +13,7 @@ module.exports = class CaseDefinitionImporter extends Importer{
   }
 
   importLocalFile(jwt, localFile, version){
+
     return this.parseXMLFile(localFile)
       .then(json=>{
         return this.import(jwt, json, version);
@@ -19,8 +21,20 @@ module.exports = class CaseDefinitionImporter extends Importer{
   }
 
   importAttachedFile(jwt, attachedFile, version){
+    let startXML = attachedFile.indexOf("<SACMDefinition");
+    console.log(attachedFile.replace("\ufeff", "").substr(startXML,1000));
+    attachedFile = attachedFile.substr(startXML);
     return this.parseXMLString(attachedFile)
       .then(json=>{
+        // console.log(JSON.stringify(json.SACMDefinition.Workspace[0].EntityDefinition));
+        // let outputFilename = `E:\\TUM\\Thesis\\DSL-Connecare\\dev_environment\\sacm\\entityDefList.json`;
+        // fs.writeFileSync(outputFilename, JSON.stringify(json.SACMDefinition.Workspace[0].EntityDefinition, null, 4), function(err) {
+        //   if(err) {
+        //     console.log(err);
+        //   } else {
+        //     console.log("JSON saved to " + outputFilename);
+        //   }
+        // });
         return this.import(jwt, json, version);
       });
   }
@@ -76,10 +90,20 @@ module.exports = class CaseDefinitionImporter extends Importer{
       this.json.Workspace.forEach(w=>{
         this.workspaceMap.set(w.$.id, w.$.staticId);
       })
+    console.log("finish mapping users");
     return Promise.resolve();
   }
 
-
+  writeToFile(filename) {
+    let outputFilename = `E:\\TUM\\Thesis\\DSL-Connecare\\dev_environment\\sacm\\${filename}.json`;
+    fs.writeFileSync(outputFilename, JSON.stringify(json, null, 4), function(err) {
+      if(err) {
+        console.log(err);
+      } else {
+        console.log("JSON saved to " + outputFilename);
+      }
+    });
+  }
    
 
 }

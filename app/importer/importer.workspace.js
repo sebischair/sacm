@@ -20,6 +20,9 @@ module.exports = class WorkspaceImporter extends Importer{
     }
 
     importAttachedFile(jwt, attachedFile){
+        let startXML = attachedFile.indexOf("<?xml");
+        console.log(attachedFile.replace("\ufeff", "").substr(0,1000));
+        attachedFile = attachedFile.substr(startXML);
       return this.parseXMLString(attachedFile)
         .then(json=>{
           return this.import(jwt, json);
@@ -34,21 +37,28 @@ module.exports = class WorkspaceImporter extends Importer{
           return Workspace.deleteAll(this.jwt);
         })
         .then(()=>{
+            console.log("Del User&AttrDef");
           return this.deleteUserDefinitionAttributeDefinitions();
         })
         .then(()=>{
+            console.log("Create UserDef");
           return this.createUserDefinition();
         })
         .then(()=>{
+            console.log("Del All Groups");
           return Group.deleteAll(this.jwt);                  
         })
         .then(()=>{
+            console.log("Del All Users");
           return User.deleteAll(this.jwt);  
         })
         .then(()=>{
+            console.log("Create Users");
           return this.createUsers();
+
         })
         .then(()=>{
+            console.log("Create Groups");
           return this.createGroups();
         })
         .then(()=>{

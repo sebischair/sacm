@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+AttributeDefintion types = richstring, text, notype, json, link, string, mxl, longtext, image, boolean, number, enumeration or date
+One entit defintion can only belong to one casedefintnion, meaning a entityDefinition can be used only once
+Usernames from https://uinames.com/ OR https://uinames.com/api/?region=United%20States&amount=25&maxlen=25 
+-->
+<SACMDefinition>
+
+<!-- ######################################################################################################################################## -->
+<!-- ####### Settings ################################################################################################ääääää################# -->
+<!-- ######################################################################################################################################## -->
+
+    <Settings 
+        mayCreateWorksapces="['Administrators']"
+        mayCreateGroups="['Administrators']" 
+        mayCreateUsers="['Administrators', 'DemoProfessionals']"
+        mayEditUserDefinition="['Administrators', 'DemoProfessionals']"/>
+
+<!-- ######################################################################################################################################## -->
+<!-- ####### UserDefinition ################################################################################################################# -->
+<!-- ######################################################################################################################################## -->
+
+    <UserDefinition>
+				<AttributeDefinition id="refId" type="string" multiplicity="maximalOne" description="Reference ID with relative to workspace and group"/>
+        <AttributeDefinition id="patientnr" type="string" multiplicity="maximalOne" description="Patient number"/>
+        <AttributeDefinition id="firstname" type="string" multiplicity="maximalOne" description="Firstname"/>
+        <AttributeDefinition id="lastname" type="string" multiplicity="maximalOne" description="Lastname"/>       
+        <AttributeDefinition id="birthdate" type="date" multiplicity="maximalOne" description="Birthdate"/>
+        <DerivedAttributeDefinition id="age" expression="floor((Today - birthdate)/365)" description="Age"/>
+        <AttributeDefinition id="gender" type="enumeration" multiplicity="maximalOne" description="Gender">
+            <EnumerationOption value="MALE" description="Male"/>
+            <EnumerationOption value="FEMALE" description="Female"/>
+            <EnumerationOption value="UNKNOWN" description="Prefer not to say"/>
+        </AttributeDefinition>
+        <AttributeDefinition id="maritalstatus" type="enumeration" multiplicity="maximalOne" description="Marital status">
+            <EnumerationOption value="SINGLE" description="Single"/>
+            <EnumerationOption value="MARRIED" description="Married"/>
+            <EnumerationOption value="WIDOWED" description="Widowed"/>
+            <EnumerationOption value="SEPARATED" description="Separated"/>
+            <EnumerationOption value="DIVORCED" description="Divorced"/>
+            <EnumerationOption value="UNKNOWN" description="Prefer not to say"/>
+        </AttributeDefinition>
+        <AttributeDefinition id="educationallevel" type="enumeration" multiplicity="maximalOne" description="Educational level">
+            <EnumerationOption value="1" description="Early childhood"/>
+            <EnumerationOption value="2" description="Primary education"/>
+            <EnumerationOption value="3" description="Lower secondary education"/>
+            <EnumerationOption value="4" description="Upper secondary education"/>
+            <EnumerationOption value="5" description="Post-secondary non-tertiary education"/>
+            <EnumerationOption value="6" description="Short-cycle tertiary education"/>
+            <EnumerationOption value="7" description="Bachelor"/>
+            <EnumerationOption value="8" description="Master"/>
+            <EnumerationOption value="9" description="Doctoral"/>
+            <EnumerationOption value="10" description="Prefer not to say"/>
+        </AttributeDefinition>
+        <AttributeDefinition id="culturallevel" type="enumeration" multiplicity="maximalOne" description="Socio-cultural level">
+            <EnumerationOption value="LOW" description="Low"/>
+            <EnumerationOption value="MEDIUM" description="Medium"/>
+            <EnumerationOption value="HIGH" description="High"/>
+            <EnumerationOption value="UNKNOWN" description="Prefer not to say"/>
+        </AttributeDefinition>
+        <AttributeDefinition id="phone" type="string" multiplicity="maximalOne" description="Phone"/>
+        <AttributeDefinition id="mobile" type="string" multiplicity="maximalOne" description="Mobile"/>
+        <AttributeDefinition id="carername" type="string" multiplicity="maximalOne" description="Carer Name"/> 
+        <AttributeDefinition id="language" type="enumeration" multiplicity="maximalOne" description="Language">
+            <!-- ISO 2 Letter Language Codes -->
+            <EnumerationOption value="EN" description="English"/>
+            <EnumerationOption value="NL" description="Dutch"/>
+            <EnumerationOption value="IW" description="Hebrew"/>
+            <EnumerationOption value="ES" description="Spanish"/>
+            <EnumerationOption value="CA" description="Catalan"/>
+            <EnumerationOption value="RU" description="Russian"/>
+        </AttributeDefinition>               
+    </UserDefinition>
+
+<!-- ######################################################################################################################################## -->
+<!-- ####### Admin Memberships ############################################################################################################## -->
+<!-- ######################################################################################################################################## -->
+
+    <Administrator>
+        <Membership principalId="integrationenv"/>
+        <Membership principalId="superadmin"/>
+    </Administrator>
+
+<!-- ######################################################################################################################################## -->
+<!-- ####### IntegrationENV User ############################################################################################################ -->
+<!-- ######################################################################################################################################## -->
+
+    <User id="integrationenv"  name="Inegration Enviroment" email="integrationenv@connecare.eu">
+        <Attribute attributeDefinitionId="firstname" values="['Inegration']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Enviroment']"/>         
+        <Attribute attributeDefinitionId="birthdate" values="['1980-03-08T15:36:21.000']"/> 
+    </User>
+
+    <User id="superadmin"  name="Super Admin" email="superadmin@connecare.eu">
+        <Attribute attributeDefinitionId="firstname" values="['Super']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Admin']"/>         
+        <Attribute attributeDefinitionId="birthdate" values="['1980-03-08T15:36:21.000']"/> 
+    </User>
+
+
+<!-- ######################################################################################################################################## -->
+<!-- ####### Demo ########################################################################################################################### -->
+<!-- ######################################################################################################################################## -->
+
+
+    <Group id="DemoProfessionals"  name="Demo Professional" description="Demo Professional">
+        <Administrator principalId="Me"/>
+        <Membership principalId="DemoAdminOfficers"/>
+        <Membership principalId="DemoAnesthesiologists"/>
+        <Membership principalId="DemoCaseManagers"/>
+        <Membership principalId="DemoClinicians"/>
+        <Membership principalId="DemoDataManagers"/>
+    </Group>
+		
+    <Group  id="DemoAdminOfficers" name="Demo Admin Officer" description="Demo Admin Officer">
+        <Administrator principalId="Me"/> 
+        <Administrator principalId="integrationenv"/>         
+        <Administrator principalId="DemoProfessionals"/>
+    </Group>
+    <Group  id="DemoAnesthesiologists" name="Demo Anesthesiologist" description="Demo Anesthesiologist">
+        <Administrator principalId="Me"/>
+        <Administrator principalId="integrationenv"/>    
+        <Administrator principalId="DemoProfessionals"/>
+        <Membership principalId="anesthesiologist"/>
+    </Group>
+    <Group  id="DemoCaseManagers" name="Demo Case Manager" description="Demo Case Manager">
+        <Administrator principalId="Me"/>
+        <Administrator principalId="integrationenv"/>    
+        <Administrator principalId="DemoProfessionals"/>
+        <Membership principalId="casemanager"/>
+    </Group>
+    <Group  id="DemoClinicians" name="Demo Clinician" description="Demo Clinician">
+        <Administrator principalId="Me"/>
+        <Administrator principalId="integrationenv"/>    
+        <Administrator principalId="DemoProfessionals"/>
+        <Membership principalId="cliniciandemo"/>
+    </Group>
+    <Group  id="DemoDataManagers" name="Demo Data Manager" description="Demo Data Manager">
+        <Administrator principalId="Me"/>
+        <Administrator principalId="integrationenv"/>    
+        <Administrator principalId="DemoProfessionals"/>
+    </Group>
+    
+    <Group  id="DemoPatients" name="Demo Patient" description="Demo Patient">
+        <Administrator principalId="Me"/>
+        <Administrator principalId="integrationenv"/>    
+        <Administrator principalId="DemoProfessionals"/>
+        <Membership principalId="patientdemo"/>
+        <Membership principalId="patientdemo2"/>
+        <Membership principalId="patientdemo3"/>
+        <Membership principalId="patientdemo4"/>
+    </Group>
+
+    <User id="casemanager" name="Case Manager Demo" email="casemanager@professionals.demo.org">
+				<Attribute attributeDefinitionId="refId" values="['casemanager']"/> 
+        <Attribute attributeDefinitionId="firstname" values="['Case Manager']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Demo']"/>         
+        <Attribute attributeDefinitionId="birthdate" values="['1980-03-08T15:36:21.000']"/> 
+    </User>
+
+    <User id="cliniciandemo" name="Clinician Demo" email="demo@professionals.demo.org">
+				<Attribute attributeDefinitionId="refId" values="['clinician']"/> 		
+        <Attribute attributeDefinitionId="firstname" values="['Clinician']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Demo']"/>         
+        <Attribute attributeDefinitionId="birthdate" values="['1980-03-08T15:36:21.000']"/> 
+    </User>
+
+	<User id="patientdemo" name="Eloisa Demo" email="eloisa.demo@eurecat.org">
+				<Attribute attributeDefinitionId="refId" values="['patientdemo']"/> 
+        <Attribute attributeDefinitionId="firstname" values="['Eloisa']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Demo']"/>         
+        <Attribute attributeDefinitionId="birthdate" values="['1980-03-08T15:36:21.000']"/> 
+    </User>  
+
+	<User id="patientdemo2" name="Patientdemo2 Demo" email="patientdemo2@patients.demo.org">
+				<Attribute attributeDefinitionId="refId" values="['patientdemo2']"/> 
+        <Attribute attributeDefinitionId="firstname" values="['Patientdemo2']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Demo']"/>         
+        <Attribute attributeDefinitionId="birthdate" values="['1980-03-08T15:36:21.000']"/> 
+    </User>  
+
+	<User id="patientdemo3" name="Patientdemo3 Demo" email="patientdemo3@patients.demo.org">
+				<Attribute attributeDefinitionId="refId" values="['patientdemo3']"/> 
+        <Attribute attributeDefinitionId="firstname" values="['Patientdemo3']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Demo']"/>         
+        <Attribute attributeDefinitionId="birthdate" values="['1980-03-08T15:36:21.000']"/> 
+    </User>  
+
+	<User id="patientdemo4" name="Patientdemo4 Demo" email="patientdemo4@patients.demo.org">
+				<Attribute attributeDefinitionId="refId" values="['patientdemo4']"/> 
+        <Attribute attributeDefinitionId="firstname" values="['Patientdemo4']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Demo']"/>         
+        <Attribute attributeDefinitionId="birthdate" values="['1980-03-08T15:36:21.000']"/> 
+    </User>  
+
+	<User id="anesthesiologist" name="Anesthesiologist Demo" email="anesthesiologist@professionals.demo.org">
+				<Attribute attributeDefinitionId="refId" values="['anesthesiologist']"/> 
+        <Attribute attributeDefinitionId="firstname" values="['Anesthesiologist']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Demo']"/>         
+        <Attribute attributeDefinitionId="birthdate" values="['1980-03-08T15:36:21.000']"/> 
+    </User> 
+
+	<User id="nutritionist" name="Nutritionist Demo" email="nutritionist@professionals.demo.org">
+				<Attribute attributeDefinitionId="refId" values="['nutritionist']"/> 
+        <Attribute attributeDefinitionId="firstname" values="['Nutritionist']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Demo']"/>         
+        <Attribute attributeDefinitionId="birthdate" values="['1980-03-08T15:36:21.000']"/> 
+    </User> 
+
+	<User id="physician" name="Physician Demo" email="physician@professionals.demo.org">
+				<Attribute attributeDefinitionId="refId" values="['physician']"/> 
+        <Attribute attributeDefinitionId="firstname" values="['Physician']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Demo']"/>         
+        <Attribute attributeDefinitionId="birthdate" values="['1980-03-08T15:36:21.000']"/> 
+    </User> 
+
+	<User id="psychologist" name="Psychologist Demo" email="psychologist@professionals.demo.org">
+				<Attribute attributeDefinitionId="refId" values="['psychologist']"/> 
+        <Attribute attributeDefinitionId="firstname" values="['Psychologist']"/> 
+        <Attribute attributeDefinitionId="lastname" values="['Demo']"/>         
+        <Attribute attributeDefinitionId="birthdate" values="['1980-03-08T15:36:21.000']"/> 
+    </User> 
+
+
+    <Workspace id="Demo" description="Demo">        
+        <Administrator principalId="Administrators"/>
+        <Contributor principalId="DemoProfessionals"/>
+        <Client principalId="DemoPatients"/>          
+    </Workspace>
+
+
+</SACMDefinition>

@@ -107,7 +107,8 @@ router.get('/', (req, res, next)=>{
  *    }
  */
 router.get('/:id', (req, res, next)=>{
-  User.findById(req.jwt, req.params.id)
+
+    User.findById(req.jwt, req.params.id)
     .then(user=>{
         res.status(200).send(user);
     })

@@ -94,11 +94,59 @@ router.post('/casedefinition', (req, res, next)=>{
     .catch(err=>{
       res.status(500).send(err)
     });
-  
 
+});
 
+/**
+ * @api {post} /import/casedefinition Import
+ * @apiName Import
+ * @apiGroup Import
+ * @apiParam {string} file (mandatory) Imports the defined file
+ * @apiSuccessExample {json} Success-Response:
+ * see /casedefinition
+ */
+router.post('/acadela/casedefinition', (req, res, next)=>{
+  res.connection.setTimeout(100*60*1000);
+  const cdi = new CaseDefinitionImporter();
+  // const attachedFile = req.rawBody.toString('utf-8');
+  // const isAttachedFile = req.rawBody.length>200;
+  // const localFile = req.query.file;
+  // const isLocalFile = localFile != null;
+  const caseTemplate = req.body.jsonTemplate;
+  const isCaseTemplate = caseTemplate != null;
+  const version = req.query.version;
+  const isExecute = req.query.isExecute === 'true';
+  const isDebug = req.query.isDebug === 'true';
+  const jwt = req.jwt;
+  let executionJwt = req.executionJwt
 
-    
+  if(!executionJwt)
+    executionJwt = jwt;
+
+  console.log(`jsonTemplate = ${JSON.stringify(caseTemplate)} `)
+
+  if(!version)
+    return res.status(500).send('No version defined!')
+  if(!isCaseTemplate)
+    return res.status(500).send('No json case template defined!')
+
+  let Importer = cdi.import(jwt, caseTemplate, version);
+
+  Importer
+      .then(caseDefinition=>{
+        if(isExecute === true)
+          return cdi.createAndExecuteCase(executionJwt, isDebug);
+        else
+          return Promise.resolve(caseDefinition);
+      })
+      .then(result=>{
+        res.status(200).send(result);
+      })
+      .catch(err=>{
+        console.log("error: " + err.toString())
+        res.status(500).send(err)
+      });
+
 });
 
 module.exports = router;

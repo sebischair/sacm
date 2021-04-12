@@ -211,7 +211,8 @@ module.exports = class Importer {
       .then(exist =>{
         if(!exist)
           throw new Error('File does not exist' + filePath);
-        else {  
+        else {
+          console.log("parse file");
           return xml2jspromise.parseStringAsync(fs.readFileSync(filePath).toString(), {explicitChildren:true, preserveChildrenOrder:true});
         }
       })
@@ -222,10 +223,13 @@ module.exports = class Importer {
     }
 
     parseXMLString(xmlString){
+      console.log("parse string");
+
       let s = xml2jspromise.parseStringAsync(xmlString, {explicitChildren:true, preserveChildrenOrder:true});
       s.catch(e=>{
         winston.error(e)
       });
+
       return s;
     }
 
@@ -243,6 +247,7 @@ module.exports = class Importer {
       this.groupMap.set('Everybody', 'everybody'); //Everybody
       return User.me(this.jwt)
         .then(me=>{
+          console.log(`me is ${me} with id = ${me.id}`);
           this.userMap.set('Me', me.id);
           return Promise.resolve();
         })
@@ -284,9 +289,11 @@ module.exports = class Importer {
       let persistedUserDefinitionId = null;
       return UserDefinition.find(this.jwt)
         .then(persistedUserDef => {
+          console.log(`jwt ${this.jwt} persistID ${persistedUserDef.id}`);
           return EntityDefinition.update(this.jwt, {id: persistedUserDef.id, allowFreeAttributes: false})
         })
         .then(persistedUserDef =>{
+          console.log(`CreateUserAttrDef ${persistedUserDef.id}`);
           persistedUserDefinitionId = persistedUserDef.id;
           return this.createUserDefinitionAttributeDefinitions(userDefinition, persistedUserDefinitionId);
         })
@@ -340,20 +347,31 @@ module.exports = class Importer {
         const data = {
           name: u.$.name,
           email: u.$.email,
+          refId: u.$.id,
           password: config.sociocortex.defaultPassword,
           passwordAgain: config.sociocortex.defaultPassword,
           attributes: []
         }
+
         if(u.$.staticId != null)
           data.id = u.$.staticId;
-        if(u.Attribute != null)
+        if(u.Attribute != null) {
+          // Add referenceId as userXMLId for acadela
+          u.Attribute.push({
+            "$": {
+              "attributeDefinitionId": "refId",
+              "values": "['" + u.$.id + "']"
+            }
+          });
           for(let a of u.Attribute){
             data.attributes.push({
               attributeDefinition: {id: this.getUserAttributeDefinitionIdByXMLId(a.$.attributeDefinitionId)},
               name: a.$.attributeDefinitionId,
               values: JSON.parse(a.$.values.replace(/'/g,'"'))
             });
-          }          
+          }
+
+        }
         return User.createAndVerify(this.jwt, data)
           .then(persistedUser =>{
             this.userMap.set(u.$.id, persistedUser.id);     
@@ -502,9 +520,12 @@ module.exports = class Importer {
       })
     }
 
-    createWorkspaceElements(Workspace){        
+    createWorkspaceElements(Workspace){
+      console.log("Create workspace elements starts");
       return this.createEntityDefinitions(Workspace)
         .then(() => {
+
+          console.log("Finish creating entity, now start with Attribute");
           return this.createAttributeDefinitions(Workspace);
         })
         .then(() => {
@@ -528,9 +549,11 @@ module.exports = class Importer {
     }
 
     createEntityDefinitions(Workspace) {
-      if(Workspace.EntityDefinition == null)
+      if(Workspace.EntityDefinition == null) {
         return Promise.resolve();
+      }
       return Promise.each(Workspace.EntityDefinition, ed=>{
+        console.log(`create Entity ${ed.$.id}`)
         return EntityDefinition.create(this.jwt, {
             workspace: this.getWorkspaceIdByXMLId(Workspace.$.id), 
             name: this.addVersion(ed.$.id),
@@ -539,6 +562,7 @@ module.exports = class Importer {
           })
           .then(persistedEntityDefinition =>{
             this.entityDefinitionMap.set(ed.$.id, persistedEntityDefinition.id);
+
             return Promise.resolve();
           });
       });
