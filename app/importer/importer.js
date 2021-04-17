@@ -817,6 +817,7 @@ module.exports = class Importer {
             return this.createStageDefinitionRecursive(caseDefId, persistedStageDef.id, sd.StageDefinition);
           })
           .then(()=>{
+            console.log('createHookDef');
             return this.createHttpHookDefinitions(stageDefinitionId, sd.HttpHookDefinition);
           })
           .catch(err=>{
@@ -1022,6 +1023,16 @@ module.exports = class Importer {
           completedProcessDefinitions: [],
           expression: null
         };
+
+        // console.log(`before data expression parse ${sd.$.expression}`);
+        console.log(`sd is ${JSON.stringify(sd)}`);
+        if(sd.$ != null){
+          if (sd.$.expression != null) {
+            data.expression = sd.$.expression.replace(/'/g, '"');
+          }
+        }
+        console.log(`sd.$.expression = ${data.expression}`);
+
         return Promise.each(sd.precondition, p=>{
           if(p.$.processDefinitionId != null){
             return this.getProcessDefinitionIdByXMLId(p.$.processDefinitionId)
@@ -1029,7 +1040,8 @@ module.exports = class Importer {
                 data.completedProcessDefinitions.push({id: processDefinitionId});
                 return Promise.resolve();
               });
-          }else if(p.$.expression != null){
+          }
+          else if(p.$.expression != null){
             data.expression = p.$.expression.replace(/'/g,'"');
             return Promise.resolve();
           }

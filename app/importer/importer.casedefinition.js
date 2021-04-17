@@ -26,11 +26,11 @@ module.exports = class CaseDefinitionImporter extends Importer{
     attachedFile = attachedFile.substr(startXML);
     return this.parseXMLString(attachedFile)
       .then(json=>{
-        // console.log(JSON.stringify(json.SACMDefinition.Workspace[0].EntityDefinition));
-        // let outputFilename = `E:\\TUM\\Thesis\\DSL-Connecare\\dev_environment\\sacm\\entityDefList.json`;
-        // fs.writeFileSync(outputFilename, JSON.stringify(json.SACMDefinition.Workspace[0].EntityDefinition, null, 4), function(err) {
+        // console.log(JSON.stringify(json.SACMDefinition.Workspace[0]));
+        // let outputFilename = `E:\\TUM\\Thesis\\DSL-Connecare\\dev_environment\\sacm\\generatedCase.json`;
+        // fs.writeFileSync(outputFilename, JSON.stringify(json.SACMDefinition.Workspace[0], null, 4), function(err) {
         //   if(err) {
-        //     console.log(err);
+        //     console.log(`Error: ${err}`);
         //   } else {
         //     console.log("JSON saved to " + outputFilename);
         //   }
