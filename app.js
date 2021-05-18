@@ -16,6 +16,8 @@ import config from './config';
 import RestLogger from './app/logging/rest.logger';
 import uuid from 'uuid/v1';
 import winston from 'winston';
+import rq from "request-promise";
+import axios from "axios"
 
 const logFormatterConsole = function(options) {
   let log = (options.message ? options.message : '') +
@@ -107,7 +109,28 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false, limit:'5mb'}));
 app.use(cookieParser());
 
+app.use('/auth', (req, res, next) => {
+  let authData = {
+    username: req.body.username,
+    password: req.body.password
+  }
+  http.post("", '/jwt', authData)
+      .then(tokenInfo => {
+        console.log(`token ${JSON.stringify(tokenInfo)}`);
 
+        console.log(tokenInfo.token);
+
+        http.get("Bearer " + tokenInfo.token, '/workspaces')
+            .then(wps => {
+              console.log(`workspaces ${JSON.stringify(wps)}`)
+              res.status(200).send(wps)
+            })
+            .catch(err => {console.log(err)})
+      })
+      .catch( err => {
+        console.log(err);
+      });
+});
 
 app.use('/api/v1', (req, res, next)=>{
 
