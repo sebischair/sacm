@@ -30,7 +30,7 @@ import analytics from './route.analytics';
 import statistics from './route.statistics';
 import context from './route.context';
 
-function routes(){
+function routes() {
     const router = express.Router();
 
     /** UserDefinition routes */
@@ -40,7 +40,7 @@ function routes(){
     router.use('/users', user);
     router.use('/groups', group);
 
-    /** Workspace routes*/    
+    /** Workspace routes*/
     router.use('/workspaces', workspace);
 
     /** Entities and Attributes routes **/
@@ -57,6 +57,7 @@ function routes(){
     router.use('/dualtaskdefinitions', dualtaskdefinition);
     router.use('/taskparamdefinitions', taskparamdefinition);
     router.use('/sentrydefinitions', sentrydefinition);
+    //TODO: Add /entitydefinitions if needed
 
     /** Case routes */
     router.use('/cases', case_);

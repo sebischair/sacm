@@ -19,12 +19,12 @@ const router = express.Router();
  * @apiSuccessExample {json} Success-Response:
  * {}
  */
-router.get('/:id', (req, res, next)=>{
+router.get('/:id', (req, res, next) => {
   Workspace.findById(req.jwt, req.params.id)
-    .then(w=>{
+    .then(w => {
       res.status(200).send(w);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -37,12 +37,12 @@ router.get('/:id', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  * {}
  */
-router.post('/', (req, res, next)=>{
+router.post('/', (req, res, next) => {
   Workspace.create(req.jwt, req.body)
-    .then(w=>{
+    .then(w => {
       res.status(200).send(w);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -85,12 +85,12 @@ router.post('/', (req, res, next)=>{
  *     "resourceType": "workspaces"
  * }]
  */
-router.get('/', (req, res, next)=>{
+router.get('/', (req, res, next) => {
   Workspace.findAll(req.jwt)
-    .then(w=>{
+    .then(w => {
       res.status(200).send(w);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -106,12 +106,12 @@ router.get('/', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  * {}
  */
-router.get('/:id/cases/me', (req, res, next)=>{
+router.get('/:id/cases/me', (req, res, next) => {
   Case.findMeByWorkspace(req.jwt, req.params.id)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -126,12 +126,12 @@ router.get('/:id/cases/me', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  * {}
  */
-router.get('/:id/cases/client/search', (req, res, next)=>{
+router.get('/:id/cases/client/search', (req, res, next) => {
   Case.findClientCasesByWorkspace(req.jwt, req.params.id, req.query.query)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -165,12 +165,12 @@ router.get('/:id/cases/client/search', (req, res, next)=>{
  *   "resourceType": "cases"
  * }]
  */
-router.get('/:id/cases', (req, res, next)=>{
+router.get('/:id/cases', (req, res, next) => {
   Case.findByWorkspaceId(req.jwt, req.params.id, req.query)
-    .then(cd=>{
-        res.status(200).send(cd);
+    .then(cd => {
+      res.status(200).send(cd);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -284,12 +284,15 @@ router.get('/:id/cases', (req, res, next)=>{
  *     }
  * ]
  */
-router.get('/:id/casedefinitions', (req, res, next)=>{
+router.get('/:id/casedefinitions', (req, res, next) => {
   CaseDefinition.findByWorkspaceId(req.jwt, req.params.id)
-    .then(cd=>{
-        res.status(200).send(cd);
+    .then(cd => {
+      console.log(cd)
+      res.status(200).send(cd);
     })
-    .catch(err=>{
+    .catch(err => {
+      console.log("_________")
+      console.log(err)
       res.status(500).send(err);
     })
 });
@@ -317,12 +320,12 @@ router.get('/:id/casedefinitions', (req, res, next)=>{
  *     }
  * ]
  */
-router.get('/:id/casedefinitions/caninstantiate', (req, res, next)=>{
+router.get('/:id/casedefinitions/caninstantiate', (req, res, next) => {
   CaseDefinition.canInstantiateByWorkspace(req.jwt, req.params.id)
-    .then(cd=>{
-        res.status(200).send(cd);
+    .then(cd => {
+      res.status(200).send(cd);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -337,12 +340,12 @@ router.get('/:id/casedefinitions/caninstantiate', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  * {}
  */
-router.post('/:id/humantasks/me/active/hideondashboard', (req, res, next)=>{
+router.post('/:id/humantasks/me/active/hideondashboard', (req, res, next) => {
   HumanTask.hideOnDashboardByWorkspace(req.jwt, req.params.id)
-    .then(ht=>{
-        res.status(200).send(ht);
+    .then(ht => {
+      res.status(200).send(ht);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -356,12 +359,12 @@ router.post('/:id/humantasks/me/active/hideondashboard', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  * {}
  */
-router.post('/:id/humantasks/me/active/unhideondashboard', (req, res, next)=>{
+router.post('/:id/humantasks/me/active/unhideondashboard', (req, res, next) => {
   HumanTask.unHideOnDashboardByWorkspace(req.jwt, req.params.id)
-    .then(ht=>{
-        res.status(200).send(ht);
+    .then(ht => {
+      res.status(200).send(ht);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -375,12 +378,12 @@ router.post('/:id/humantasks/me/active/unhideondashboard', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  * {}
  */
-router.get('/:id/humantasks/me/active', (req, res, next)=>{
+router.get('/:id/humantasks/me/active', (req, res, next) => {
   HumanTask.findMeActiveByWorkspaceId(req.jwt, req.params.id, req.query)
-    .then(ht=>{
-        res.status(200).send(ht);
+    .then(ht => {
+      res.status(200).send(ht);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -394,12 +397,12 @@ router.get('/:id/humantasks/me/active', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  * {}
  */
-router.get('/:id/alerts/me/unseen', (req, res, next)=>{
+router.get('/:id/alerts/me/unseen', (req, res, next) => {
   Alert.findMeUnseenByWorkspace(req.jwt, req.params.id)
-    .then(a=>{
-        res.status(200).send(a);
+    .then(a => {
+      res.status(200).send(a);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -413,12 +416,12 @@ router.get('/:id/alerts/me/unseen', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  * {}
  */
-router.post('/:id/alerts/me/seen', (req, res, next)=>{
+router.post('/:id/alerts/me/seen', (req, res, next) => {
   Alert.seenByWorkspaceId(req.jwt, req.params.id)
-    .then(a=>{
-        res.status(200).send(a);
+    .then(a => {
+      res.status(200).send(a);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -432,12 +435,12 @@ router.post('/:id/alerts/me/seen', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  * {}
  */
-router.get('/:id/messages/me/unseen', (req, res, next)=>{
+router.get('/:id/messages/me/unseen', (req, res, next) => {
   Message.findMeUnseenByWorkspace(req.jwt, req.params.id)
-    .then(m=>{
-        res.status(200).send(m);
+    .then(m => {
+      res.status(200).send(m);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -451,12 +454,12 @@ router.get('/:id/messages/me/unseen', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  * {}
  */
-router.post('/:id/messages/me/seen', (req, res, next)=>{
+router.post('/:id/messages/me/seen', (req, res, next) => {
   Message.seenByWorkspaceId(req.jwt, req.params.id)
-    .then(m=>{
+    .then(m => {
       res.status(200).send(m);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });

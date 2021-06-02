@@ -64,12 +64,12 @@ const router = express.Router();
  *   }
  * ]
  */
-router.get('/me', (req, res, next)=>{
+router.get('/me', (req, res, next) => {
   Case.findMe(req.jwt)
-    .then(cases=>{
-        res.status(200).send(cases);
+    .then(cases => {
+      res.status(200).send(cases);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -105,15 +105,15 @@ router.get('/me', (req, res, next)=>{
  *   "resourceType": "cases"
  * }
  */
- router.post('/', (req, res, next)=>{
-   Case.create(req.jwt, req.body)
-     .then(c=>{
-         res.status(200).send(c);
-     })
-     .catch(err=>{
-       res.status(500).send(err);
-     })
- });
+router.post('/', (req, res, next) => {
+  Case.create(req.jwt, req.body)
+    .then(c => {
+      res.status(200).send(c);
+    })
+    .catch(err => {
+      res.status(500).send(err);
+    })
+});
 
 
 
@@ -393,24 +393,24 @@ router.get('/me', (req, res, next)=>{
  *   "resourceType": "cases"
  * }
  */
-router.get('/:id/tree', (req, res, next)=>{
+router.get('/:id/tree', (req, res, next) => {
   Case.findTreeById(req.jwt, req.params.id, {})
-    .then(c=>{
+    .then(c => {
       //Case.addUiVisibility(c.children, true)
       let lean = req.query.lean;
-      if(lean && lean.toLowerCase() !== 'true'){
+      if (lean && lean.toLowerCase() !== 'true') {
         let deleteAttrs = lean.split(',');
         let cleanDelAttrs = [];
-        deleteAttrs.forEach(value=>{
+        deleteAttrs.forEach(value => {
           cleanDelAttrs.push(value.trim());
         });
-        c = Case.cleanObject(c, cleanDelAttrs); 
-      }else if(lean && lean.toLowerCase() === 'true'){
-        c = Case.cleanObject(c);    
+        c = Case.cleanObject(c, cleanDelAttrs);
+      } else if (lean && lean.toLowerCase() === 'true') {
+        c = Case.cleanObject(c);
       }
       res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     });
 });
@@ -429,12 +429,12 @@ router.get('/:id/tree', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  *   {}
  */
-router.post('/:id/complete', (req, res, next)=>{
+router.post('/:id/complete', (req, res, next) => {
   Case.complete(req.jwt, req.params.id)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -449,12 +449,12 @@ router.post('/:id/complete', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  *   {}
  */
-router.post('/:id/terminate', (req, res, next)=>{
+router.post('/:id/terminate', (req, res, next) => {
   Case.terminate(req.jwt, req.params.id)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -469,12 +469,12 @@ router.post('/:id/terminate', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  * {}
  */
-router.get('/:id/owner/autocomplete', (req, res, next)=>{
+router.get('/:id/owner/autocomplete', (req, res, next) => {
   Case.autocompleteOwner(req.jwt, req.params.id)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -490,13 +490,13 @@ router.get('/:id/owner/autocomplete', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  *  {}
  */
-router.post('/:id/owner/:userId', (req, res, next)=>{
+router.post('/:id/owner/:userId', (req, res, next) => {
   Case.setOwner(req.jwt, req.params.id, req.params.userId)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
-        res.status(500).send(err);
+    .catch(err => {
+      res.status(500).send(err);
     })
 });
 
@@ -512,13 +512,13 @@ router.post('/:id/owner/:userId', (req, res, next)=>{
  *   {}
  *
  */
-router.delete('/:id', (req, res, next)=>{
-  res.connection.setTimeout(100*60*1000);
+router.delete('/:id', (req, res, next) => {
+  res.connection.setTimeout(100 * 60 * 1000);
   Case.deleteById(req.jwt, req.params.id)
-    .then(()=>{
-       res.status(200).send();
+    .then(() => {
+      res.status(200).send();
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -533,12 +533,12 @@ router.delete('/:id', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  *     {}
  */
-router.post('/:id/processes/query', (req, res, next)=>{
+router.post('/:id/processes/query', (req, res, next) => {
   Process.findByCaseQuery(req.jwt, req.params.id, req.body)
-    .then(p=>{
-        res.status(200).send(p);
+    .then(p => {
+      res.status(200).send(p);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -574,12 +574,12 @@ router.post('/:id/processes/query', (req, res, next)=>{
  *          "resourceType": "automatedtasks"
  *     }]
  */
-router.get('/:id/processes', (req, res, next)=>{
+router.get('/:id/processes', (req, res, next) => {
   Process.findByCaseId(req.jwt, req.params.id)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -612,12 +612,12 @@ router.get('/:id/processes', (req, res, next)=>{
  *          "resourceType": "automatedtasks"
  *     }]
  */
-router.get('/:id/processes/all', (req, res, next)=>{
+router.get('/:id/processes/all', (req, res, next) => {
   Process.findByCaseId(req.jwt, req.params.id)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -650,12 +650,12 @@ router.get('/:id/processes/all', (req, res, next)=>{
  *       "resourceType": "stages"
  *     }]
  */
-router.get('/:id/stages', (req, res, next)=>{
+router.get('/:id/stages', (req, res, next) => {
   Stage.findByCaseId(req.jwt, req.params.id)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -688,12 +688,12 @@ router.get('/:id/stages', (req, res, next)=>{
  *       "resourceType": "stages"
  *     }]
  */
-router.get('/:id/stages/all', (req, res, next)=>{
+router.get('/:id/stages/all', (req, res, next) => {
   Stage.findALLbyCaseId(req.jwt, req.params.id)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -727,12 +727,12 @@ router.get('/:id/stages/all', (req, res, next)=>{
  *          "resourceType": "automatedtasks"
  *     }]
  */
-router.get('/:id/tasks', (req, res, next)=>{
+router.get('/:id/tasks', (req, res, next) => {
   Task.findByCaseId(req.jwt, req.params.id)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -765,12 +765,12 @@ router.get('/:id/tasks', (req, res, next)=>{
  *          "resourceType": "automatedtasks"
  *     }]
  */
-router.get('/:id/tasks/all', (req, res, next)=>{
+router.get('/:id/tasks/all', (req, res, next) => {
   Task.findALLbyCaseId(req.jwt, req.params.id)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -804,12 +804,12 @@ router.get('/:id/tasks/all', (req, res, next)=>{
  *          "resourceType": "humantasks"
  *     }]
  */
-router.get('/:id/humantasks', (req, res, next)=>{
+router.get('/:id/humantasks', (req, res, next) => {
   HumanTask.findByCaseId(req.jwt, req.params.id)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -842,12 +842,12 @@ router.get('/:id/humantasks', (req, res, next)=>{
  *          "resourceType": "humantasks"
  *     }]
  */
-router.get('/:id/humantasks/all', (req, res, next)=>{
+router.get('/:id/humantasks/all', (req, res, next) => {
   HumanTask.findAllByCaseId(req.jwt, req.params.id)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -880,12 +880,12 @@ router.get('/:id/humantasks/all', (req, res, next)=>{
  *          "resourceType": "automatedtasks"
  *     }]
  */
-router.get('/:id/automatedtasks', (req, res, next)=>{
+router.get('/:id/automatedtasks', (req, res, next) => {
   AutomatedTask.findByCaseId(req.jwt, req.params.id)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -917,12 +917,12 @@ router.get('/:id/automatedtasks', (req, res, next)=>{
  *          "resourceType": "automatedtasks"
  *     }]
  */
-router.get('/:id/automatedtasks/all', (req, res, next)=>{
+router.get('/:id/automatedtasks/all', (req, res, next) => {
   AutomatedTask.findAllByCaseId(req.jwt, req.params.id)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -939,12 +939,12 @@ router.get('/:id/automatedtasks/all', (req, res, next)=>{
  *     TODO TEAM_OBJ
  *   }
  */
-router.get('/:id/team', (req, res, next)=>{
+router.get('/:id/team', (req, res, next) => {
   Case.findTeamById(req.jwt, req.params.id)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -960,12 +960,12 @@ router.get('/:id/team', (req, res, next)=>{
  *     TODO TEAM_OBJ
  *   }
  */
-router.get('/:id/team/member/autocomplete', (req, res, next)=>{
+router.get('/:id/team/member/autocomplete', (req, res, next) => {
   Case.teamMemberAutocomplete(req.jwt, req.params.id, req.body)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -981,12 +981,12 @@ router.get('/:id/team/member/autocomplete', (req, res, next)=>{
  *     TODO TEAM_OBJ
  *   }
  */
-router.post('/:id/team/member/:principalId', (req, res, next)=>{
+router.post('/:id/team/member/:principalId', (req, res, next) => {
   Case.addTeamMember(req.jwt, req.params.id, req.params.principalId, req.body)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -1003,12 +1003,12 @@ router.post('/:id/team/member/:principalId', (req, res, next)=>{
  *     TODO TEAM_OBJ
  *   }
  */
-router.delete('/:id/team/member/:principalId', (req, res, next)=>{
+router.delete('/:id/team/member/:principalId', (req, res, next) => {
   Case.removeTeamMember(req.jwt, req.params.id, req.params.principalId)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -1024,12 +1024,12 @@ router.delete('/:id/team/member/:principalId', (req, res, next)=>{
  *     TODO TEAM_OBJ
  *   }
  */
-router.patch('/:id/team/role/:attributeId', (req, res, next)=>{
+router.patch('/:id/team/role/:attributeId', (req, res, next) => {
   Case.updateTeamRole(req.jwt, req.params.id, req.params.attributeId, req.body)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -1045,12 +1045,12 @@ router.patch('/:id/team/role/:attributeId', (req, res, next)=>{
  *     TODO MESSAGE_OBJ
  *   }
  */
-router.get('/:id/messages', (req, res, next)=>{
+router.get('/:id/messages', (req, res, next) => {
   Message.findByCaseId(req.jwt, req.params.id)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -1067,12 +1067,12 @@ router.get('/:id/messages', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  *  {}
  */
-router.post('/:id/alerts/seen', (req, res, next)=>{
+router.post('/:id/alerts/seen', (req, res, next) => {
   Alert.seenByCaseId(req.jwt, req.params.id)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -1103,12 +1103,12 @@ router.post('/:id/alerts/seen', (req, res, next)=>{
  *  	"seenDate": null
  *  }]
  */
-router.get('/:id/alerts', (req, res, next)=>{
+router.get('/:id/alerts', (req, res, next) => {
   Alert.findByCaseId(req.jwt, req.params.id)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -1123,12 +1123,12 @@ router.get('/:id/alerts', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  * {}
  */
-router.get('/:id/logs', (req, res, next)=>{
+router.get('/:id/logs', (req, res, next) => {
   Log.findByCaseId(req.jwt, req.params.id)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -1236,12 +1236,12 @@ router.get('/:id/logs', (req, res, next)=>{
  *   }
  * ]
  */
-router.get('/:id/summarysections', (req, res, next)=>{
+router.get('/:id/summarysections', (req, res, next) => {
   SummarySection.findByCaseId(req.jwt, req.params.id)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -1255,12 +1255,12 @@ router.get('/:id/summarysections', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  * {}
  */
-router.post('/:id/messages/seen', (req, res, next)=>{
+router.post('/:id/messages/seen', (req, res, next) => {
   Message.seenByCaseId(req.jwt, req.params.id)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -1289,12 +1289,12 @@ router.post('/:id/messages/seen', (req, res, next)=>{
  *     ]
  * }
  */
-router.get('/:id/permissions', (req, res, next)=>{
+router.get('/:id/permissions', (req, res, next) => {
   Case.permissions(req.jwt, req.params.id)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -1309,12 +1309,12 @@ router.get('/:id/permissions', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  * {}
  */
-router.get('/:id/reader/autocomplete', (req, res, next)=>{
+router.get('/:id/reader/autocomplete', (req, res, next) => {
   Case.readerAutocomplete(req.jwt, req.params.id)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -1329,12 +1329,12 @@ router.get('/:id/reader/autocomplete', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  * {}
  */
-router.post('/:id/reader/:principalId', (req, res, next)=>{
+router.post('/:id/reader/:principalId', (req, res, next) => {
   Case.addReader(req.jwt, req.params.id, req.params.principalId)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -1349,12 +1349,12 @@ router.post('/:id/reader/:principalId', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  * {}
  */
-router.delete('/:id/reader/:principalId', (req, res, next)=>{
+router.delete('/:id/reader/:principalId', (req, res, next) => {
   Case.removeReader(req.jwt, req.params.id, req.params.principalId)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -1369,12 +1369,12 @@ router.delete('/:id/reader/:principalId', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  * {}
  */
-router.get('/:id/writer/autocomplete', (req, res, next)=>{
+router.get('/:id/writer/autocomplete', (req, res, next) => {
   Case.writerAutocomplete(req.jwt, req.params.id)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -1389,12 +1389,12 @@ router.get('/:id/writer/autocomplete', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  * {}
  */
-router.post('/:id/writer/:principalId', (req, res, next)=>{
+router.post('/:id/writer/:principalId', (req, res, next) => {
   Case.addWriter(req.jwt, req.params.id, req.params.principalId)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -1409,12 +1409,12 @@ router.post('/:id/writer/:principalId', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  * {}
  */
-router.delete('/:id/writer/:principalId', (req, res, next)=>{
+router.delete('/:id/writer/:principalId', (req, res, next) => {
   Case.removeWriter(req.jwt, req.params.id, req.params.principalId)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -1442,12 +1442,12 @@ router.delete('/:id/writer/:principalId', (req, res, next)=>{
  *     "resourceType": "cases"
  * }
  */
-router.get('/:id/notes', (req, res, next)=>{
+router.get('/:id/notes', (req, res, next) => {
   Case.notes(req.jwt, req.params.id)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     });
 });
@@ -1475,12 +1475,12 @@ router.get('/:id/notes', (req, res, next)=>{
  *     "resourceType": "cases"
  * }
  */
-router.patch('/:id/notes', (req, res, next)=>{
+router.patch('/:id/notes', (req, res, next) => {
   Case.updateNotes(req.jwt, req.params.id, req.body)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     });
 });
@@ -1494,12 +1494,12 @@ router.patch('/:id/notes', (req, res, next)=>{
  * @apiSuccessExample {json} Success-Response:
  * {}
  */
-router.get('/:id/export', (req, res, next)=>{
+router.get('/:id/export', (req, res, next) => {
   Case.export(req.jwt, req.params.id)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -1530,12 +1530,12 @@ router.get('/:id/export', (req, res, next)=>{
  *   "resourceType": "cases"
  * }
  */
-router.get('/:id', (req, res, next)=>{
+router.get('/:id', (req, res, next) => {
   Case.findById(req.jwt, req.params.id)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
@@ -1566,12 +1566,12 @@ router.get('/:id', (req, res, next)=>{
  *   "resourceType": "cases"
  * }
  */
-router.get('/', (req, res, next)=>{
+router.get('/', (req, res, next) => {
   Case.findAll(req.jwt)
-    .then(c=>{
-        res.status(200).send(c);
+    .then(c => {
+      res.status(200).send(c);
     })
-    .catch(err=>{
+    .catch(err => {
       res.status(500).send(err);
     })
 });
