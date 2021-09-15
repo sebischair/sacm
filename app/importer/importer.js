@@ -227,6 +227,7 @@ module.exports = class Importer {
 
       let s = xml2jspromise.parseStringAsync(xmlString, {explicitChildren:true, preserveChildrenOrder:true});
       s.catch(e=>{
+
         winston.error(e)
       });
 
@@ -1024,27 +1025,29 @@ module.exports = class Importer {
           expression: null
         };
 
-        // console.log(`before data expression parse ${sd.$.expression}`);
-        console.log(`sd is ${JSON.stringify(sd)}`);
-        if(sd.$ != null){
-          if (sd.$.expression != null) {
-            data.expression = sd.$.expression.replace(/'/g, '"');
-          }
-        }
-        console.log(`sd.$.expression = ${data.expression}`);
-
         return Promise.each(sd.precondition, p=>{
+
           if(p.$.processDefinitionId != null){
+
+            if (p.$.expression != null) {
+              data.expression = p.$.expression.replace(/'/g, '"');
+              console.log(`precondition.expression = ${data.expression}`);
+            }
+
             return this.getProcessDefinitionIdByXMLId(p.$.processDefinitionId)
-              .then(processDefinitionId=>{
-                data.completedProcessDefinitions.push({id: processDefinitionId});
-                return Promise.resolve();
-              });
+                .then(processDefinitionId=>{
+                  data.completedProcessDefinitions.push({id: processDefinitionId});
+                  return Promise.resolve();
+                });
           }
+          // Expression alone does not work, always need to have process as a precondition
           else if(p.$.expression != null){
             data.expression = p.$.expression.replace(/'/g,'"');
+            console.log(`precondition.expression = ${data.expression}`);
             return Promise.resolve();
           }
+
+
         })
         .then(()=>{
           return SentryDefinition.create(this.jwt, data);
@@ -1052,7 +1055,7 @@ module.exports = class Importer {
       });
     }
 
-    setCaseDefinitionAsInstantiable(){
+    setCaseDefinitionAsInstantiable() {
       return CaseDefinition.updateById(this.jwt, {id: this.caseDefinitionMap.values().next().value, isInstantiable:true});
     }
 
